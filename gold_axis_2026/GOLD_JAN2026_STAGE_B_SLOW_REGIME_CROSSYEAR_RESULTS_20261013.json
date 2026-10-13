@@ -1,0 +1,1663 @@
+{
+  "cohort": "2023/24 exploratory DEV; 2025 provisional validation; JAN2026 prior-exposed stress",
+  "frozen_protocol": "GOLD_JAN2026_STAGE_B_SLOW_REGIME_CANDIDATES_FROZEN_20261013.md",
+  "selection": {
+    "devGate": [
+      {
+        "policy": "S1_SMA20_60",
+        "improvement2023_pp": 1.199677822470957,
+        "improvement2024_pp": 38.257014735553184,
+        "drawdown_change2023_pp": -0.5722068785406158,
+        "drawdown_change2024_pp": 7.510994319326825,
+        "actions2023": 5,
+        "actions2024": 2,
+        "eligible": false,
+        "minimum_dev_improvement": 1.199677822470957
+      },
+      {
+        "policy": "S2_SMA50",
+        "improvement2023_pp": 1.2635965194308652,
+        "improvement2024_pp": 22.725213923122034,
+        "drawdown_change2023_pp": -0.7884915118307809,
+        "drawdown_change2024_pp": 1.4748581092720272,
+        "actions2023": 7,
+        "actions2024": 6,
+        "eligible": false,
+        "minimum_dev_improvement": 1.2635965194308652
+      },
+      {
+        "policy": "S3_R20",
+        "improvement2023_pp": 0.8017109762326169,
+        "improvement2024_pp": 21.417329014210694,
+        "drawdown_change2023_pp": -0.41461327151433025,
+        "drawdown_change2024_pp": 2.777045600600303,
+        "actions2023": 7,
+        "actions2024": 6,
+        "eligible": false,
+        "minimum_dev_improvement": 0.8017109762326169
+      },
+      {
+        "policy": "S4_R60",
+        "improvement2023_pp": 9.635926402774098,
+        "improvement2024_pp": 27.55702058691538,
+        "drawdown_change2023_pp": 2.383785527757464,
+        "drawdown_change2024_pp": 7.510994319326825,
+        "actions2023": 3,
+        "actions2024": 4,
+        "eligible": true,
+        "minimum_dev_improvement": 9.635926402774098
+      },
+      {
+        "policy": "S5_TREND_TRAIL",
+        "improvement2023_pp": 3.9179347707375523,
+        "improvement2024_pp": 32.69119455050373,
+        "drawdown_change2023_pp": -2.5130351854759976,
+        "drawdown_change2024_pp": 3.8229189198966225,
+        "actions2023": 3,
+        "actions2024": 3,
+        "eligible": true,
+        "minimum_dev_improvement": 3.9179347707375523
+      }
+    ],
+    "selected": "S4_R60",
+    "validationGate": {
+      "selected": "S4_R60",
+      "winVsOldPctPoint": 39.081719108766855,
+      "ddDeltaPctPoint": 16.252899998021576,
+      "accept": true
+    },
+    "recommendation": "EXPERIMENTAL_ONLY_PENDING_VINTAGE_AND_UNTOUCHED"
+  },
+  "summary": [
+    {
+      "period": "2023_DEV",
+      "policy": "B0_ORIGINAL",
+      "source": "EV",
+      "tradeDays": 257,
+      "rawNAV": 0.9713693494450298,
+      "netTerminalNAV": 0.9635983946494696,
+      "netReturnPct": -3.6401605350530386,
+      "passiveNetPct": 10.409386615614302,
+      "maxDrawdownPct": -11.610259573639114,
+      "paidActions": 17,
+      "exposurePct": 38.91050583657587,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.13459712392520834,
+      "signalCount": 17
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S1_SMA20_60",
+      "source": "EV",
+      "tradeDays": 257,
+      "rawNAV": 0.983462875881229,
+      "netTerminalNAV": 0.9755951728741792,
+      "netReturnPct": -2.4404827125820816,
+      "passiveNetPct": 10.409386615614302,
+      "maxDrawdownPct": -12.18246645217973,
+      "paidActions": 5,
+      "exposurePct": 53.30739299610895,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.03894143156593859,
+      "signalCount": 5
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S2_SMA50",
+      "source": "EV",
+      "tradeDays": 257,
+      "rawNAV": 0.9841072175844539,
+      "netTerminalNAV": 0.9762343598437783,
+      "netReturnPct": -2.3765640156221735,
+      "passiveNetPct": 10.409386615614302,
+      "maxDrawdownPct": -12.398751085469895,
+      "paidActions": 7,
+      "exposurePct": 60.311284046692606,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.055296576284601974,
+      "signalCount": 7
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S3_R20",
+      "source": "EV",
+      "tradeDays": 257,
+      "rawNAV": 0.9794511133183426,
+      "netTerminalNAV": 0.9716155044117958,
+      "netReturnPct": -2.8384495588204217,
+      "passiveNetPct": 10.409386615614302,
+      "maxDrawdownPct": -12.024872845153444,
+      "paidActions": 7,
+      "exposurePct": 56.42023346303502,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.054917043843512967,
+      "signalCount": 7
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S4_R60",
+      "source": "EV",
+      "tradeDays": 257,
+      "rawNAV": 1.0685057043117043,
+      "netTerminalNAV": 1.0599576586772106,
+      "netReturnPct": 5.995765867721059,
+      "passiveNetPct": 10.409386615614302,
+      "maxDrawdownPct": -9.22647404588165,
+      "paidActions": 3,
+      "exposurePct": 64.59143968871595,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.024620761374476174,
+      "signalCount": 3
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S5_TREND_TRAIL",
+      "source": "EV",
+      "tradeDays": 257,
+      "rawNAV": 1.0108646596339166,
+      "netTerminalNAV": 1.0027777423568451,
+      "netReturnPct": 0.27777423568451365,
+      "passiveNetPct": 10.409386615614302,
+      "maxDrawdownPct": -14.123294759115112,
+      "paidActions": 3,
+      "exposurePct": 95.71984435797665,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.023658004692916214,
+      "signalCount": 3
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "B0_ORIGINAL",
+      "source": "EV",
+      "tradeDays": 259,
+      "rawNAV": 0.875344669235046,
+      "netTerminalNAV": 0.875344669235046,
+      "netReturnPct": -12.465533076495404,
+      "passiveNetPct": 25.43494365808645,
+      "maxDrawdownPct": -15.55944538127897,
+      "paidActions": 26,
+      "exposurePct": 45.173745173745175,
+      "pending": null,
+      "openEnd": "CASH",
+      "feesPortfolioUnits": 0.19544879240587126,
+      "signalCount": 26
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S1_SMA20_60",
+      "source": "EV",
+      "tradeDays": 259,
+      "rawNAV": 1.2579148165905778,
+      "netTerminalNAV": 1.2579148165905778,
+      "netReturnPct": 25.79148165905778,
+      "passiveNetPct": 25.43494365808645,
+      "maxDrawdownPct": -8.048451061952145,
+      "paidActions": 2,
+      "exposurePct": 93.05019305019304,
+      "pending": null,
+      "openEnd": "CASH",
+      "feesPortfolioUnits": 0.01814447432734337,
+      "signalCount": 2
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S2_SMA50",
+      "source": "EV",
+      "tradeDays": 259,
+      "rawNAV": 1.1025968084662663,
+      "netTerminalNAV": 1.1025968084662663,
+      "netReturnPct": 10.25968084662663,
+      "passiveNetPct": 25.43494365808645,
+      "maxDrawdownPct": -14.084587272006942,
+      "paidActions": 6,
+      "exposurePct": 81.85328185328186,
+      "pending": null,
+      "openEnd": "CASH",
+      "feesPortfolioUnits": 0.05360223734627066,
+      "signalCount": 6
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S3_R20",
+      "source": "EV",
+      "tradeDays": 259,
+      "rawNAV": 1.089517959377153,
+      "netTerminalNAV": 1.089517959377153,
+      "netReturnPct": 8.95179593771529,
+      "passiveNetPct": 25.43494365808645,
+      "maxDrawdownPct": -12.782399780678666,
+      "paidActions": 6,
+      "exposurePct": 66.79536679536679,
+      "pending": null,
+      "openEnd": "CASH",
+      "feesPortfolioUnits": 0.05229430417616209,
+      "signalCount": 6
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S4_R60",
+      "source": "EV",
+      "tradeDays": 259,
+      "rawNAV": 1.1509148751041998,
+      "netTerminalNAV": 1.1509148751041998,
+      "netReturnPct": 15.091487510419977,
+      "passiveNetPct": 25.43494365808645,
+      "maxDrawdownPct": -8.048451061952145,
+      "paidActions": 4,
+      "exposurePct": 94.2084942084942,
+      "pending": null,
+      "openEnd": "CASH",
+      "feesPortfolioUnits": 0.0328709986341689,
+      "signalCount": 4
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S5_TREND_TRAIL",
+      "source": "EV",
+      "tradeDays": 259,
+      "rawNAV": 1.2119522326008905,
+      "netTerminalNAV": 1.2022566147400833,
+      "netReturnPct": 20.225661474008326,
+      "passiveNetPct": 25.43494365808645,
+      "maxDrawdownPct": -11.736526461382347,
+      "paidActions": 3,
+      "exposurePct": 92.66409266409266,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.027896844957666846,
+      "signalCount": 3
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "B0_ORIGINAL",
+      "source": "EV",
+      "tradeDays": 258,
+      "rawNAV": 1.0209078022467024,
+      "netTerminalNAV": 1.0209078022467024,
+      "netReturnPct": 2.090780224670241,
+      "passiveNetPct": 59.89554580563612,
+      "maxDrawdownPct": -26.310108219283347,
+      "paidActions": 30,
+      "exposurePct": 60.07751937984496,
+      "pending": null,
+      "openEnd": "CASH",
+      "feesPortfolioUnits": 0.2445560126541143,
+      "signalCount": 30
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S1_SMA20_60",
+      "source": "EV",
+      "tradeDays": 258,
+      "rawNAV": 1.5633137327874955,
+      "netTerminalNAV": 1.5508072229251955,
+      "netReturnPct": 55.080722292519546,
+      "passiveNetPct": 59.89554580563612,
+      "maxDrawdownPct": -9.784683475871459,
+      "paidActions": 1,
+      "exposurePct": 93.02325581395348,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.008,
+      "signalCount": 1
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S2_SMA50",
+      "source": "EV",
+      "tradeDays": 258,
+      "rawNAV": 1.4588225970118267,
+      "netTerminalNAV": 1.447152016235732,
+      "netReturnPct": 44.71520162357321,
+      "passiveNetPct": 59.89554580563612,
+      "maxDrawdownPct": -9.784683475871459,
+      "paidActions": 7,
+      "exposurePct": 89.14728682170542,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.06841808290743893,
+      "signalCount": 7
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S3_R20",
+      "source": "EV",
+      "tradeDays": 258,
+      "rawNAV": 1.4404098854881873,
+      "netTerminalNAV": 1.4288866064042818,
+      "netReturnPct": 42.88866064042818,
+      "passiveNetPct": 59.89554580563612,
+      "maxDrawdownPct": -9.784683475871459,
+      "paidActions": 7,
+      "exposurePct": 82.94573643410853,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.06770980279933346,
+      "signalCount": 7
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S4_R60",
+      "source": "EV",
+      "tradeDays": 258,
+      "rawNAV": 1.423109872312874,
+      "netTerminalNAV": 1.411724993334371,
+      "netReturnPct": 41.172499333437095,
+      "passiveNetPct": 59.89554580563612,
+      "maxDrawdownPct": -10.05720822126177,
+      "paidActions": 5,
+      "exposurePct": 86.82170542635659,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.04484028038441919,
+      "signalCount": 5
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S5_TREND_TRAIL",
+      "source": "EV",
+      "tradeDays": 258,
+      "rawNAV": 1.5205447325912211,
+      "netTerminalNAV": 1.5083803747304914,
+      "netReturnPct": 50.838037473049134,
+      "passiveNetPct": 59.89554580563612,
+      "maxDrawdownPct": -9.924594506851413,
+      "paidActions": 3,
+      "exposurePct": 88.75968992248062,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.03154006967195451,
+      "signalCount": 3
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "B0_ORIGINAL",
+      "source": "HIST",
+      "tradeDays": 21,
+      "rawNAV": 1.078892491325283,
+      "netTerminalNAV": 1.0702613513946808,
+      "netReturnPct": 7.0261351394680815,
+      "passiveNetPct": 10.151439903974314,
+      "maxDrawdownPct": -9.666132614286438,
+      "paidActions": 1,
+      "exposurePct": 85.71428571428571,
+      "pending": "SAT",
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.008,
+      "signalCount": 2
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S1_SMA20_60",
+      "source": "HIST",
+      "tradeDays": 21,
+      "rawNAV": 1.1103975796771606,
+      "netTerminalNAV": 1.1015143990397434,
+      "netReturnPct": 10.151439903974335,
+      "passiveNetPct": 10.151439903974314,
+      "maxDrawdownPct": -9.666132614286438,
+      "paidActions": 1,
+      "exposurePct": 95.23809523809524,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.008,
+      "signalCount": 1
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S2_SMA50",
+      "source": "HIST",
+      "tradeDays": 21,
+      "rawNAV": 1.1103975796771606,
+      "netTerminalNAV": 1.1015143990397434,
+      "netReturnPct": 10.151439903974335,
+      "passiveNetPct": 10.151439903974314,
+      "maxDrawdownPct": -9.666132614286438,
+      "paidActions": 1,
+      "exposurePct": 95.23809523809524,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.008,
+      "signalCount": 1
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S3_R20",
+      "source": "HIST",
+      "tradeDays": 21,
+      "rawNAV": 1.0900737542222376,
+      "netTerminalNAV": 1.0813531641884597,
+      "netReturnPct": 8.135316418845973,
+      "passiveNetPct": 10.151439903974314,
+      "maxDrawdownPct": -9.666132614286438,
+      "paidActions": 1,
+      "exposurePct": 90.47619047619048,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.008,
+      "signalCount": 1
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S4_R60",
+      "source": "HIST",
+      "tradeDays": 21,
+      "rawNAV": 1.1103975796771606,
+      "netTerminalNAV": 1.1015143990397434,
+      "netReturnPct": 10.151439903974335,
+      "passiveNetPct": 10.151439903974314,
+      "maxDrawdownPct": -9.666132614286438,
+      "paidActions": 1,
+      "exposurePct": 95.23809523809524,
+      "pending": null,
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.008,
+      "signalCount": 1
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S5_TREND_TRAIL",
+      "source": "HIST",
+      "tradeDays": 21,
+      "rawNAV": 1.1103975796771606,
+      "netTerminalNAV": 1.1015143990397434,
+      "netReturnPct": 10.151439903974335,
+      "passiveNetPct": 10.151439903974314,
+      "maxDrawdownPct": -9.666132614286438,
+      "paidActions": 1,
+      "exposurePct": 95.23809523809524,
+      "pending": "SAT",
+      "openEnd": "GOLD",
+      "feesPortfolioUnits": 0.008,
+      "signalCount": 2
+    }
+  ],
+  "tradeLogs": [
+    {
+      "period": "2023_DEV",
+      "policy": "B0_ORIGINAL",
+      "actions": [
+        {
+          "day": "2023-01-04",
+          "origin": "2023-01-03",
+          "action": "AL",
+          "price": 1838.635,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-02-03",
+          "origin": "2023-02-02",
+          "action": "SAT",
+          "price": 1912.37,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-03-14",
+          "origin": "2023-03-13",
+          "action": "AL",
+          "price": 1911.3649999999998,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-03-22",
+          "origin": "2023-03-21",
+          "action": "SAT",
+          "price": 1940.405,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-03-23",
+          "origin": "2023-03-22",
+          "action": "AL",
+          "price": 1966.05,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-04-18",
+          "origin": "2023-04-17",
+          "action": "SAT",
+          "price": 1994.435,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-05-04",
+          "origin": "2023-05-03",
+          "action": "AL",
+          "price": 2050.535,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-05-12",
+          "origin": "2023-05-11",
+          "action": "SAT",
+          "price": 2016.27,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-07-13",
+          "origin": "2023-07-12",
+          "action": "AL",
+          "price": 1957.47,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-07-28",
+          "origin": "2023-07-27",
+          "action": "SAT",
+          "price": 1947.0349999999999,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-08-31",
+          "origin": "2023-08-30",
+          "action": "AL",
+          "price": 1944.4499999999998,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-09-06",
+          "origin": "2023-09-05",
+          "action": "SAT",
+          "price": 1926.62,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-10-16",
+          "origin": "2023-10-13",
+          "action": "AL",
+          "price": 1922.26,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-11-07",
+          "origin": "2023-11-06",
+          "action": "SAT",
+          "price": 1977.415,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-11-21",
+          "origin": "2023-11-20",
+          "action": "AL",
+          "price": 1979.9,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2023-12-05",
+          "origin": "2023-12-04",
+          "action": "SAT",
+          "price": 2029.1,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2023-12-19",
+          "origin": "2023-12-18",
+          "action": "AL",
+          "price": 2027.44,
+          "reason": "B0_ORIGINAL_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S1_SMA20_60",
+      "actions": [
+        {
+          "day": "2023-01-04",
+          "origin": "2023-01-03",
+          "action": "AL",
+          "price": 1838.635,
+          "reason": "S1_SMA20_60_ENTER"
+        },
+        {
+          "day": "2023-03-09",
+          "origin": "2023-03-08",
+          "action": "SAT",
+          "price": 1815.45,
+          "reason": "S1_SMA20_60_EXIT"
+        },
+        {
+          "day": "2023-03-30",
+          "origin": "2023-03-29",
+          "action": "AL",
+          "price": 1963.88,
+          "reason": "S1_SMA20_60_ENTER"
+        },
+        {
+          "day": "2023-06-12",
+          "origin": "2023-06-09",
+          "action": "SAT",
+          "price": 1960.28,
+          "reason": "S1_SMA20_60_EXIT"
+        },
+        {
+          "day": "2023-11-03",
+          "origin": "2023-11-02",
+          "action": "AL",
+          "price": 1985.96,
+          "reason": "S1_SMA20_60_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S2_SMA50",
+      "actions": [
+        {
+          "day": "2023-01-04",
+          "origin": "2023-01-03",
+          "action": "AL",
+          "price": 1838.635,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2023-02-14",
+          "origin": "2023-02-13",
+          "action": "SAT",
+          "price": 1853.68,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2023-03-14",
+          "origin": "2023-03-13",
+          "action": "AL",
+          "price": 1911.3649999999998,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2023-06-01",
+          "origin": "2023-05-31",
+          "action": "SAT",
+          "price": 1963.9250000000002,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2023-07-19",
+          "origin": "2023-07-18",
+          "action": "AL",
+          "price": 1978.885,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2023-08-16",
+          "origin": "2023-08-15",
+          "action": "SAT",
+          "price": 1902.165,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2023-10-20",
+          "origin": "2023-10-19",
+          "action": "AL",
+          "price": 1973.175,
+          "reason": "S2_SMA50_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S3_R20",
+      "actions": [
+        {
+          "day": "2023-01-05",
+          "origin": "2023-01-04",
+          "action": "AL",
+          "price": 1855.26,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2023-02-14",
+          "origin": "2023-02-13",
+          "action": "SAT",
+          "price": 1853.68,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2023-03-14",
+          "origin": "2023-03-13",
+          "action": "AL",
+          "price": 1911.3649999999998,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2023-06-01",
+          "origin": "2023-05-31",
+          "action": "SAT",
+          "price": 1963.9250000000002,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2023-07-27",
+          "origin": "2023-07-26",
+          "action": "AL",
+          "price": 1973.1,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2023-08-16",
+          "origin": "2023-08-15",
+          "action": "SAT",
+          "price": 1902.165,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2023-10-25",
+          "origin": "2023-10-24",
+          "action": "AL",
+          "price": 1970.55,
+          "reason": "S3_R20_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S4_R60",
+      "actions": [
+        {
+          "day": "2023-01-04",
+          "origin": "2023-01-03",
+          "action": "AL",
+          "price": 1838.635,
+          "reason": "S4_R60_ENTER"
+        },
+        {
+          "day": "2023-06-22",
+          "origin": "2023-06-21",
+          "action": "SAT",
+          "price": 1933.105,
+          "reason": "S4_R60_EXIT"
+        },
+        {
+          "day": "2023-10-26",
+          "origin": "2023-10-25",
+          "action": "AL",
+          "price": 1981.51,
+          "reason": "S4_R60_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2023_DEV",
+      "policy": "S5_TREND_TRAIL",
+      "actions": [
+        {
+          "day": "2023-01-04",
+          "origin": "2023-01-03",
+          "action": "AL",
+          "price": 1838.635,
+          "reason": "S5_TREND_TRAIL_ENTER"
+        },
+        {
+          "day": "2023-10-06",
+          "origin": "2023-10-05",
+          "action": "SAT",
+          "price": 1821.13,
+          "reason": "S5_TREND_TRAIL_EXIT"
+        },
+        {
+          "day": "2023-10-20",
+          "origin": "2023-10-19",
+          "action": "AL",
+          "price": 1973.175,
+          "reason": "S5_TREND_TRAIL_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "B0_ORIGINAL",
+      "actions": [
+        {
+          "day": "2024-01-16",
+          "origin": "2024-01-15",
+          "action": "AL",
+          "price": 2055.4300000000003,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-01-18",
+          "origin": "2024-01-17",
+          "action": "SAT",
+          "price": 2007.625,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-02-02",
+          "origin": "2024-02-01",
+          "action": "AL",
+          "price": 2055.74,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-02-09",
+          "origin": "2024-02-08",
+          "action": "SAT",
+          "price": 2034.665,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-02-22",
+          "origin": "2024-02-21",
+          "action": "AL",
+          "price": 2026.365,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-03-18",
+          "origin": "2024-03-15",
+          "action": "SAT",
+          "price": 2154.415,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-04-01",
+          "origin": "2024-03-28",
+          "action": "AL",
+          "price": 2240.59,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-04-23",
+          "origin": "2024-04-22",
+          "action": "SAT",
+          "price": 2330.82,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-05-13",
+          "origin": "2024-05-10",
+          "action": "AL",
+          "price": 2361.0550000000003,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-05-23",
+          "origin": "2024-05-22",
+          "action": "SAT",
+          "price": 2379.34,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-06-07",
+          "origin": "2024-06-06",
+          "action": "AL",
+          "price": 2375.76,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-06-10",
+          "origin": "2024-06-07",
+          "action": "SAT",
+          "price": 2295.24,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-06-21",
+          "origin": "2024-06-20",
+          "action": "AL",
+          "price": 2358.9700000000003,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-06-26",
+          "origin": "2024-06-25",
+          "action": "SAT",
+          "price": 2319.76,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-07-04",
+          "origin": "2024-07-03",
+          "action": "AL",
+          "price": 2356.635,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-07-22",
+          "origin": "2024-07-19",
+          "action": "SAT",
+          "price": 2405.32,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-08-01",
+          "origin": "2024-07-31",
+          "action": "AL",
+          "price": 2447.175,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-08-06",
+          "origin": "2024-08-05",
+          "action": "SAT",
+          "price": 2411.66,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-08-13",
+          "origin": "2024-08-12",
+          "action": "AL",
+          "price": 2471.51,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-09-03",
+          "origin": "2024-09-02",
+          "action": "SAT",
+          "price": 2499.145,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-09-13",
+          "origin": "2024-09-12",
+          "action": "AL",
+          "price": 2558.37,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-10-09",
+          "origin": "2024-10-08",
+          "action": "SAT",
+          "price": 2621.165,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-10-16",
+          "origin": "2024-10-15",
+          "action": "AL",
+          "price": 2661.79,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-11-05",
+          "origin": "2024-11-04",
+          "action": "SAT",
+          "price": 2737.5,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2024-12-11",
+          "origin": "2024-12-10",
+          "action": "AL",
+          "price": 2694.95,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2024-12-16",
+          "origin": "2024-12-13",
+          "action": "SAT",
+          "price": 2649.6899999999996,
+          "reason": "B0_ORIGINAL_EXIT"
+        }
+      ]
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S1_SMA20_60",
+      "actions": [
+        {
+          "day": "2024-01-03",
+          "origin": "2024-01-02",
+          "action": "AL",
+          "price": 2059,
+          "reason": "S1_SMA20_60_ENTER"
+        },
+        {
+          "day": "2024-12-06",
+          "origin": "2024-12-05",
+          "action": "SAT",
+          "price": 2631.99,
+          "reason": "S1_SMA20_60_EXIT"
+        }
+      ]
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S2_SMA50",
+      "actions": [
+        {
+          "day": "2024-01-05",
+          "origin": "2024-01-04",
+          "action": "AL",
+          "price": 2044.615,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2024-06-14",
+          "origin": "2024-06-13",
+          "action": "SAT",
+          "price": 2303.95,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2024-07-08",
+          "origin": "2024-07-05",
+          "action": "AL",
+          "price": 2389.32,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2024-11-14",
+          "origin": "2024-11-13",
+          "action": "SAT",
+          "price": 2575.635,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2024-12-12",
+          "origin": "2024-12-11",
+          "action": "AL",
+          "price": 2718.755,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2024-12-19",
+          "origin": "2024-12-18",
+          "action": "SAT",
+          "price": 2589.675,
+          "reason": "S2_SMA50_EXIT"
+        }
+      ]
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S3_R20",
+      "actions": [
+        {
+          "day": "2024-03-05",
+          "origin": "2024-03-04",
+          "action": "AL",
+          "price": 2113.855,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2024-06-14",
+          "origin": "2024-06-13",
+          "action": "SAT",
+          "price": 2303.95,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2024-07-08",
+          "origin": "2024-07-05",
+          "action": "AL",
+          "price": 2389.32,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2024-11-14",
+          "origin": "2024-11-13",
+          "action": "SAT",
+          "price": 2575.635,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2024-12-11",
+          "origin": "2024-12-10",
+          "action": "AL",
+          "price": 2694.95,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2024-12-23",
+          "origin": "2024-12-20",
+          "action": "SAT",
+          "price": 2622.45,
+          "reason": "S3_R20_EXIT"
+        }
+      ]
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S4_R60",
+      "actions": [
+        {
+          "day": "2024-01-03",
+          "origin": "2024-01-02",
+          "action": "AL",
+          "price": 2059,
+          "reason": "S4_R60_ENTER"
+        },
+        {
+          "day": "2024-02-28",
+          "origin": "2024-02-27",
+          "action": "SAT",
+          "price": 2030.4650000000001,
+          "reason": "S4_R60_EXIT"
+        },
+        {
+          "day": "2024-03-07",
+          "origin": "2024-03-06",
+          "action": "AL",
+          "price": 2148.76,
+          "reason": "S4_R60_ENTER"
+        },
+        {
+          "day": "2024-12-19",
+          "origin": "2024-12-18",
+          "action": "SAT",
+          "price": 2589.675,
+          "reason": "S4_R60_EXIT"
+        }
+      ]
+    },
+    {
+      "period": "2024_DEV",
+      "policy": "S5_TREND_TRAIL",
+      "actions": [
+        {
+          "day": "2024-01-05",
+          "origin": "2024-01-04",
+          "action": "AL",
+          "price": 2044.615,
+          "reason": "S5_TREND_TRAIL_ENTER"
+        },
+        {
+          "day": "2024-11-18",
+          "origin": "2024-11-15",
+          "action": "SAT",
+          "price": 2573.385,
+          "reason": "S5_TREND_TRAIL_EXIT"
+        },
+        {
+          "day": "2024-12-10",
+          "origin": "2024-12-09",
+          "action": "AL",
+          "price": 2660.6899999999996,
+          "reason": "S5_TREND_TRAIL_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "B0_ORIGINAL",
+      "actions": [
+        {
+          "day": "2025-01-03",
+          "origin": "2025-01-02",
+          "action": "AL",
+          "price": 2658.21,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-02-26",
+          "origin": "2025-02-25",
+          "action": "SAT",
+          "price": 2914.875,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-03-10",
+          "origin": "2025-03-07",
+          "action": "AL",
+          "price": 2913.49,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-04-07",
+          "origin": "2025-04-04",
+          "action": "SAT",
+          "price": 3032.26,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-04-11",
+          "origin": "2025-04-10",
+          "action": "AL",
+          "price": 3179.915,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-04-24",
+          "origin": "2025-04-23",
+          "action": "SAT",
+          "price": 3310.165,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-05-07",
+          "origin": "2025-05-06",
+          "action": "AL",
+          "price": 3412.76,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-05-09",
+          "origin": "2025-05-08",
+          "action": "SAT",
+          "price": 3313.69,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-05-12",
+          "origin": "2025-05-09",
+          "action": "AL",
+          "price": 3282.02,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-05-13",
+          "origin": "2025-05-12",
+          "action": "SAT",
+          "price": 3236.125,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-05-22",
+          "origin": "2025-05-21",
+          "action": "AL",
+          "price": 3317.355,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-05-29",
+          "origin": "2025-05-28",
+          "action": "SAT",
+          "price": 3290.52,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-06-05",
+          "origin": "2025-06-04",
+          "action": "AL",
+          "price": 3373.68,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-06-09",
+          "origin": "2025-06-06",
+          "action": "SAT",
+          "price": 3317.465,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-06-16",
+          "origin": "2025-06-13",
+          "action": "AL",
+          "price": 3449.915,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-06-19",
+          "origin": "2025-06-18",
+          "action": "SAT",
+          "price": 3374.565,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-07-07",
+          "origin": "2025-07-04",
+          "action": "AL",
+          "price": 3338.355,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-07-09",
+          "origin": "2025-07-08",
+          "action": "SAT",
+          "price": 3303.73,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-07-22",
+          "origin": "2025-07-21",
+          "action": "AL",
+          "price": 3399.4399999999996,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-07-28",
+          "origin": "2025-07-25",
+          "action": "SAT",
+          "price": 3333.04,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-08-05",
+          "origin": "2025-08-04",
+          "action": "AL",
+          "price": 3374.79,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-08-12",
+          "origin": "2025-08-11",
+          "action": "SAT",
+          "price": 3346.3500000000004,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-08-27",
+          "origin": "2025-08-26",
+          "action": "AL",
+          "price": 3389.5,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-10-22",
+          "origin": "2025-10-21",
+          "action": "SAT",
+          "price": 4118.61,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-11-11",
+          "origin": "2025-11-10",
+          "action": "AL",
+          "price": 4119.25,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-11-17",
+          "origin": "2025-11-14",
+          "action": "SAT",
+          "price": 4099.0599999999995,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-11-25",
+          "origin": "2025-11-24",
+          "action": "AL",
+          "price": 4129.094999999999,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-12-09",
+          "origin": "2025-12-08",
+          "action": "SAT",
+          "price": 4191.255,
+          "reason": "B0_ORIGINAL_EXIT"
+        },
+        {
+          "day": "2025-12-12",
+          "origin": "2025-12-11",
+          "action": "AL",
+          "price": 4281.8150000000005,
+          "reason": "B0_ORIGINAL_ENTER"
+        },
+        {
+          "day": "2025-12-30",
+          "origin": "2025-12-29",
+          "action": "SAT",
+          "price": 4340.82,
+          "reason": "B0_ORIGINAL_EXIT"
+        }
+      ]
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S1_SMA20_60",
+      "actions": [
+        {
+          "day": "2025-01-28",
+          "origin": "2025-01-27",
+          "action": "AL",
+          "price": 2740.74,
+          "reason": "S1_SMA20_60_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S2_SMA50",
+      "actions": [
+        {
+          "day": "2025-01-15",
+          "origin": "2025-01-14",
+          "action": "AL",
+          "price": 2676.58,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2025-05-16",
+          "origin": "2025-05-15",
+          "action": "SAT",
+          "price": 3245.27,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2025-05-26",
+          "origin": "2025-05-23",
+          "action": "AL",
+          "price": 3351.51,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2025-08-20",
+          "origin": "2025-08-19",
+          "action": "SAT",
+          "price": 3316.745,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2025-08-28",
+          "origin": "2025-08-27",
+          "action": "AL",
+          "price": 3396.9700000000003,
+          "reason": "S2_SMA50_ENTER"
+        },
+        {
+          "day": "2025-11-14",
+          "origin": "2025-11-13",
+          "action": "SAT",
+          "price": 4176.6,
+          "reason": "S2_SMA50_EXIT"
+        },
+        {
+          "day": "2025-11-25",
+          "origin": "2025-11-24",
+          "action": "AL",
+          "price": 4129.094999999999,
+          "reason": "S2_SMA50_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S3_R20",
+      "actions": [
+        {
+          "day": "2025-01-20",
+          "origin": "2025-01-17",
+          "action": "AL",
+          "price": 2703.04,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2025-05-16",
+          "origin": "2025-05-15",
+          "action": "SAT",
+          "price": 3245.27,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2025-06-12",
+          "origin": "2025-06-11",
+          "action": "AL",
+          "price": 3361.125,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2025-08-20",
+          "origin": "2025-08-19",
+          "action": "SAT",
+          "price": 3316.745,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2025-08-28",
+          "origin": "2025-08-27",
+          "action": "AL",
+          "price": 3396.9700000000003,
+          "reason": "S3_R20_ENTER"
+        },
+        {
+          "day": "2025-11-14",
+          "origin": "2025-11-13",
+          "action": "SAT",
+          "price": 4176.6,
+          "reason": "S3_R20_EXIT"
+        },
+        {
+          "day": "2025-11-25",
+          "origin": "2025-11-24",
+          "action": "AL",
+          "price": 4129.094999999999,
+          "reason": "S3_R20_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S4_R60",
+      "actions": [
+        {
+          "day": "2025-02-03",
+          "origin": "2025-01-31",
+          "action": "AL",
+          "price": 2802.845,
+          "reason": "S4_R60_ENTER"
+        },
+        {
+          "day": "2025-07-15",
+          "origin": "2025-07-14",
+          "action": "SAT",
+          "price": 3342.0299999999997,
+          "reason": "S4_R60_EXIT"
+        },
+        {
+          "day": "2025-07-23",
+          "origin": "2025-07-22",
+          "action": "AL",
+          "price": 3430.2650000000003,
+          "reason": "S4_R60_ENTER"
+        },
+        {
+          "day": "2025-07-30",
+          "origin": "2025-07-29",
+          "action": "SAT",
+          "price": 3326.975,
+          "reason": "S4_R60_EXIT"
+        },
+        {
+          "day": "2025-08-07",
+          "origin": "2025-08-06",
+          "action": "AL",
+          "price": 3371.75,
+          "reason": "S4_R60_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2025_VALIDATION",
+      "policy": "S5_TREND_TRAIL",
+      "actions": [
+        {
+          "day": "2025-01-15",
+          "origin": "2025-01-14",
+          "action": "AL",
+          "price": 2676.58,
+          "reason": "S5_TREND_TRAIL_ENTER"
+        },
+        {
+          "day": "2025-10-28",
+          "origin": "2025-10-27",
+          "action": "SAT",
+          "price": 3985.63,
+          "reason": "S5_TREND_TRAIL_EXIT"
+        },
+        {
+          "day": "2025-11-25",
+          "origin": "2025-11-24",
+          "action": "AL",
+          "price": 4129.094999999999,
+          "reason": "S5_TREND_TRAIL_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "B0_ORIGINAL",
+      "actions": [
+        {
+          "day": "2026-01-07",
+          "origin": "2026-01-06",
+          "action": "AL",
+          "price": 4497.265,
+          "reason": "B0_ORIGINAL_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S1_SMA20_60",
+      "actions": [
+        {
+          "day": "2026-01-05",
+          "origin": "2026-01-02",
+          "action": "AL",
+          "price": 4369.665,
+          "reason": "S1_SMA20_60_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S2_SMA50",
+      "actions": [
+        {
+          "day": "2026-01-05",
+          "origin": "2026-01-02",
+          "action": "AL",
+          "price": 4369.665,
+          "reason": "S2_SMA50_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S3_R20",
+      "actions": [
+        {
+          "day": "2026-01-06",
+          "origin": "2026-01-05",
+          "action": "AL",
+          "price": 4451.135,
+          "reason": "S3_R20_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S4_R60",
+      "actions": [
+        {
+          "day": "2026-01-05",
+          "origin": "2026-01-02",
+          "action": "AL",
+          "price": 4369.665,
+          "reason": "S4_R60_ENTER"
+        }
+      ]
+    },
+    {
+      "period": "2026JAN_PRIOR_EXPOSED",
+      "policy": "S5_TREND_TRAIL",
+      "actions": [
+        {
+          "day": "2026-01-05",
+          "origin": "2026-01-02",
+          "action": "AL",
+          "price": 4369.665,
+          "reason": "S5_TREND_TRAIL_ENTER"
+        }
+      ]
+    }
+  ]
+}
