@@ -1,5 +1,16 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- GOLD_MAJOR_MOVE_MULTIHORIZON_EVENT_ATLAS_V2_20261013 -->
+## 2026-10-13 — 2023–2025 MULTI-HORIZON GOLD EVENT ATLAS V2 (PRICE SCAN COMPLETE; CAUSE RESEARCH PARTIAL; NO MODEL)
+
+**Authority:** `GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_SCIENTIFIC_FINDINGS_20261013.md`. Evidence: `GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_ALL_774_DAYS_20261013.csv`, `GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_174_FLAGGED_DAYS_20261013.csv`, `GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_DIRECTIONAL_CLUSTERS_20261013.csv`, `GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_53_CLUSTER_NEWS_RESEARCH_20261013.csv`.
+
+**Observed:** 774 NY17-session midpoint days (257/259/258 across 2023/24/25); objective >=3% moves at exactly elapsed 1/4/12h or last 1/3/5 eligible session closes occur on 151 distinct days (24/48/79), plus 23 additional 2%-fast days = 174. The signed 3%-candidate days form 53 retrospective directional clusters (10/19/24). Existing 42 ZigZag trends are a different aggregation and not additive. 28/53 clusters have selectively curated **dated context** articles (3 pre / 15 during / 10 after their first threshold-flag); another 25 do not yet have a curated dated cluster-specific source. Every one of 53 is in full source-lead ledger, but no automatic causality verification. The earlier 42-episode news links are candidate context only. Examples with genuine pre-existing vulnerability include 15 May 2024 PBoC demand slowdown before 7 June jobs/PBoC shock and 13 Oct 2025 WGC stretched-market warning before October correction. Federal release surprise is post-publication only.
+
+**Macro control:** Of 68 CPI/NFP release days, 15 were >=3%-flag days (22.1%); 136/706 nonrelease days (19.3%); not independently predictive, 3/5-session returns overlap and event-source vintages incomplete. No ML, no real-time alarm, no transaction P&L; bank/clock constraints deliberately excluded. Next scientific tasks: verify 25 other clusters' timestamped firstprints, other markets and ETF/COT vintages, and matched uneventful controls. **Never promote this descriptive atlas to a forecast without independent as-of validation.**
+<!-- END GOLD_MAJOR_MOVE_MULTIHORIZON_EVENT_ATLAS_V2_20261013 -->
+
+
 <!-- R70_H3_ROLLING_POSITION_MAY_STRATEGY_20261012 -->
 ## R70 2026-10-12 — ART ARDA GELEN DOĞRU H3 TAHMİNLERİNİ TEK POZİSYON STRATEJİSİNE DÖNÜŞTÜRME (ÇALIŞTIRILDI, BANKA ONAYI YOK)
 
