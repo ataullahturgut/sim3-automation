@@ -2,6 +2,8 @@
 
 **Tarih:** 14 Ekim 2026. **Kapsam:** 2023–25 yıllarına ait önceki 18 V1 ZigZag + 20 V2 kısa-ufuklu fiyat kümesi (**aynı piyasa olayı bazen iki kayıt**, 38 ayrı bağımsız kriz değil). Kaynak tablosu: [38 olay / tarihli bağımsız yayın ve WGC sayısal kanıtları](GOLD_HISTORICAL_38_EVENT_CAUSAL_SOURCES_QUANT_V2_20261014.csv); özgün veri: [38 olay sayısal piyasa ve haber envanteri](GOLD_HISTORICAL_38_MISSING_CASES_CAUSAL_DATA_EVIDENCE_V1_20261013.csv). Önceki 42+53 olay kaydı ve 291 kimlik sicili aynen korunur. **İLERİYE DÖNÜK AL/SAT VE NEDENSEL İSPAT YOK.**
 
+**14 Ekim 2026 teknik düzeltme (sayfa biçimlendirme):** 38 vaka başlığındaki `undefined` değerler, kaynak [95 olaylık legacy atlas](GOLD_HISTORICAL_95_PRICE_RECORDS_TRIGGER_REGIME_CROSSMARKET_ATLAS_V1_20261014.csv) ile karşılaştırılarak dolduruldu (18 V1 işaretli ZigZag getirisi; 20 V2 yönlü maksimum mutlak çok-ufuklu hareket). **Bunlar eski/legacy zaman sınırının sayılarıdır; güncel NY17 düzeltilmiş hareket değerleri değildir.** Yeni fiyat tarihlerinin otoritesi [düzeltilmiş 96 olay raporudur](GOLD_HISTORICAL_V2_NY17_FULL_REPLAY_96_EVENT_CAUSAL_REVIEW_AUTHORITY_20261014.md). Mekanizma ve nedensellik sınıflandırması bu düzeltmeyle kanıtlanmış olmaz.
+
 ## 1. Metodoloji: Haber + veri + karşıt kanıt = araştırılmış mekanizma; kanıtlanmış etki değil
 
 1. **Ölçülen:** Kaynak EV/Dukascopy M15 NY17 gold; V1 retrospektif trend bacağı fiyat yüzdesi; V2 farklı ufuklarda işaretlenmiş hareketin maksimum *mutlak* yüzdesi. Değerli metaller (XAG/XPT/XPD) StakTrakr günlük, S&P/Nasdaq FRED günlük seri bitiş-başlangıç değişimleri; **altının barı ile diğerlerinin kapanış saatleri eş değil**. Sağlayıcı source/vintage ve saat eşliği olmadan eşzamanlı günlük co-move doğrudan olayın yön/neden katsayısı değildir.
@@ -30,9 +32,9 @@
 
 ## 2023 kayıtları
 
-### 01. SWING_V1_001 · 2023-01-03 → 2023-02-01 · undefined
+### 01. SWING_V1_001 · 2023-01-03 → 2023-02-01 · UP +6.065% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +6.065%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-january-2023](https://www.gold.org/goldhub/research/gold-market-commentary-january-2023) (yayın günü: **2023-02-09**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Ocak WGC GRAM: USD zayıf; UST 10Y -37bp; altın ETF -26t, COMEX managed money netlong 250t.
 
@@ -48,9 +50,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 02. SWING_V1_002 · 2023-02-01 → 2023-02-24 · undefined
+### 02. SWING_V1_002 · 2023-02-01 → 2023-02-24 · DOWN -7.186% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -7.186%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-february-2023](https://www.gold.org/goldhub/research/gold-market-commentary-february-2023) (yayın günü: **2023-03-07**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Şubat WGC: ayda altın -%5.2; USD/faiz artışı; ETF çıkışları; CFTC yayını gecikmeli.
 
@@ -66,9 +68,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 03. SWING_V1_003 · 2023-02-24 → 2023-05-04 · undefined
+### 03. SWING_V1_003 · 2023-02-24 → 2023-05-04 · UP +13.204% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +13.204%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.gold.org/goldhub/research/gold-market-commentary-march-2023](https://www.gold.org/goldhub/research/gold-market-commentary-march-2023) (yayın günü: **2023-04-06**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Mart WGC: SVB banka stresi; altın ETF +32t; altın Mart +%8.5; 10Y faiz Q1'de -40bp.
 
@@ -84,9 +86,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 04. SWING_V1_004 · 2023-05-04 → 2023-06-28 · undefined
+### 04. SWING_V1_004 · 2023-05-04 → 2023-06-28 · DOWN -6.926% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -6.926%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.gold.org/goldhub/research/gold-market-commentary-may-2023](https://www.gold.org/goldhub/research/gold-market-commentary-may-2023) (yayın günü: **2023-06-07**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Mayıs WGC: altın ETF +19.3t fakat COMEX managed money net longs azalmış; USD/faiz baskısı ve ayrışan fon akışı.
 
@@ -102,9 +104,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 05. SWING_V1_005 · 2023-06-28 → 2023-07-18 · undefined
+### 05. SWING_V1_005 · 2023-06-28 → 2023-07-18 · UP +3.683% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +3.683%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-july-2023](https://www.gold.org/goldhub/research/gold-market-commentary-july-2023) (yayın günü: **2023-08-08**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Temmuz WGC: altın +%3.1 aylık, COMEX netlong +93t, ETF -32t, USD zayıf, breakeven enflasyon yukarı.
 
@@ -120,9 +122,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 06. SWING_V1_006 · 2023-07-18 → 2023-10-05 · undefined
+### 06. SWING_V1_006 · 2023-07-18 → 2023-10-05 · DOWN -8.004% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -8.004%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-september-2023](https://www.gold.org/goldhub/research/gold-market-commentary-september-2023) (yayın günü: **2023-10-10**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Eylül WGC: US 10Y +~50bp, DXY +%2.5, ETF -59t, COMEX managed netlong -70t; 27 Eylül verileri + Çin primi ve teknik kırılma.
 
@@ -140,9 +142,9 @@
 
 ## 2024 kayıtları
 
-### 07. SWING_V1_013 · 2024-02-14 → 2024-04-19 · undefined
+### 07. SWING_V1_013 · 2024-02-14 → 2024-04-19 · UP +19.989% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +19.989%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.gold.org/goldhub/gold-focus/2024/03/you-asked-we-answered-whats-behind-golds-march-rally](https://www.gold.org/goldhub/gold-focus/2024/03/you-asked-we-answered-whats-behind-golds-march-rally) (yayın günü: **2024-03-12**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** WGC 12 Mart: 1 Mart zayıf ISM→USD/faiz gerilemesi; 11 Mart altın Mart içi +%6.5; opsiyon, COMEX, OTC ve Çin talebi ilave kanallar.
 
@@ -158,9 +160,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 08. SWING_V1_014 · 2024-04-19 → 2024-04-30 · undefined
+### 08. SWING_V1_014 · 2024-04-19 → 2024-04-30 · DOWN -4.288% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -4.288%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-april-2024](https://www.gold.org/goldhub/research/gold-market-commentary-april-2024) (yayın günü: **2024-05-08**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Nisan WGC: altın aylık +%4; ay zirvesi sonrası Çin fiziki primleri düşmüş; COMEX pozisyonu düzleşmiş; GRAM'de açıklanamayan güç var.
 
@@ -176,9 +178,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 09. SWING_V1_015 · 2024-04-30 → 2024-05-20 · undefined
+### 09. SWING_V1_015 · 2024-04-30 → 2024-05-20 · UP +6.003% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +6.003%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-may-2024](https://www.gold.org/goldhub/research/gold-market-commentary-may-2024) (yayın günü: **2024-06-06**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Mayıs WGC: altın +%2; ETF +529 milyon USD; COMEX managed netlong 4 yılın zirvesi; OTC/merkez bankası GRAM rezidü adayı.
 
@@ -194,9 +196,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 10. SWING_V1_016 · 2024-05-20 → 2024-06-07 · undefined
+### 10. SWING_V1_016 · 2024-05-20 → 2024-06-07 · DOWN -5.498% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -5.498%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.kitco.com/news/off-the-wire/2024-05-23/gold-falls-one-week-low-hawkish-fed-minutes](https://www.kitco.com/news/off-the-wire/2024-05-23/gold-falls-one-week-low-hawkish-fed-minutes) (yayın günü: **2024-05-23**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Reuters 23 Mayıs: Fed tutanakları daha uzun süre yüksek faiz, zirveden ~-%3.6; NFP/PBoC 7 Haziran son gün gelişmesidir.
 
@@ -212,9 +214,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 11. SWING_V1_017 · 2024-06-07 → 2024-07-16 · undefined
+### 11. SWING_V1_017 · 2024-06-07 → 2024-07-16 · UP +7.741% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +7.741%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-july-2024](https://www.gold.org/goldhub/research/gold-market-commentary-july-2024) (yayın günü: **2024-08-08**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Temmuz WGC: altın aylık +%4.1; 10Y faiz düşüşü ve USD zayıflığı; COMEX netlong/OI oranı aleyhte.
 
@@ -230,9 +232,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 12. SWING_V1_018 · 2024-07-16 → 2024-07-25 · undefined
+### 12. SWING_V1_018 · 2024-07-16 → 2024-07-25 · DOWN -4.248% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -4.248%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-july-2024](https://www.gold.org/goldhub/research/gold-market-commentary-july-2024) (yayın günü: **2024-08-08**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Temmuz WGC ayı +%4.1 fakat 16–25 Temmuz zirve-sonrası altın düzeltmesi; tek günlük tetikleyici bağımsız doğrulanmadı.
 
@@ -250,9 +252,9 @@
 
 ## 2025 kayıtları
 
-### 13. SWING_V1_031 · 2025-05-01 → 2025-05-06 · undefined
+### 13. SWING_V1_031 · 2025-05-01 → 2025-05-06 · UP +5.828% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +5.828%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-may-2025](https://www.gold.org/goldhub/research/gold-market-commentary-may-2025) (yayın günü: **2025-06-05**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Mayıs WGC: ay altın -%0.7; ETF -19t; managed money netlong +4t; tarife/enflasyon beklentisi yükselişi desteklerken momentum ve ETF aleyhte.
 
@@ -268,9 +270,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 14. SWING_V1_032 · 2025-05-06 → 2025-05-14 · undefined
+### 14. SWING_V1_032 · 2025-05-06 → 2025-05-14 · DOWN -7.208% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -7.208%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.kitco.com/news/off-the-wire/2025-05-12/gold-slides-3-us-china-agree-slash-reciprocal-tariffs](https://www.kitco.com/news/off-the-wire/2025-05-12/gold-slides-3-us-china-agree-slash-reciprocal-tariffs) (yayın günü: **2025-05-12**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 12 Mayıs Reuters: ABD–Çin 90 gün süreyle tarifeleri azaltıyor; spot altın ~-%3, hisse/USD ↑, güvenli liman talebi azalıyor.
 
@@ -286,9 +288,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 15. SWING_V1_033 · 2025-05-14 → 2025-06-13 · undefined
+### 15. SWING_V1_033 · 2025-05-14 → 2025-06-13 · UP +7.963% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +7.963%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.kitco.com/news/off-the-wire/2025-06-13/gold-advances-israel-iran-escalation-fuels-safe-haven-bids](https://www.kitco.com/news/off-the-wire/2025-06-13/gold-advances-israel-iran-escalation-fuels-safe-haven-bids) (yayın günü: **2025-06-13**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 13 Haziran İsrail–İran askeri çatışması güvenli liman alımına neden adayı, ancak 14 Mayıs'tan başlayan bacağın önceki bölümünü açıklamaz.
 
@@ -304,9 +306,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 16. SWING_V1_034 · 2025-06-13 → 2025-06-27 · undefined
+### 16. SWING_V1_034 · 2025-06-13 → 2025-06-27 · DOWN -4.675% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -4.675%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.reuters.com/world/india/gold-near-2-week-low-after-trump-announces-israel-iran-ceasefire-2025-06-24/](https://www.reuters.com/world/india/gold-near-2-week-low-after-trump-announces-israel-iran-ceasefire-2025-06-24/) (yayın günü: **2025-06-24**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 24 Haziran Reuters: İsrail–İran ateşkesi, altın gün içinde ~-%0.9 ve hisse ↑/petrol ↓; jeopolitik prim çözülmesi.
 
@@ -322,9 +324,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 17. SWING_V1_035 · 2025-06-27 → 2025-07-22 · undefined
+### 17. SWING_V1_035 · 2025-06-27 → 2025-07-22 · UP +4.741% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi +4.741%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-july-2025](https://www.gold.org/goldhub/research/gold-market-commentary-july-2025) (yayın günü: **2025-08-07**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Temmuz WGC: ay altın +%0.3; ETF +23t, managed-money netlong ↑, USD güçlenmesi düşürücü.
 
@@ -340,9 +342,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 18. SWING_V1_036 · 2025-07-22 → 2025-07-30 · undefined
+### 18. SWING_V1_036 · 2025-07-22 → 2025-07-30 · DOWN -4.498% (legacy ZigZag)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V1 ZigZag getirisi -4.498%; tanım: **sonradan teyit edilmiş NY17 ZigZag fiyat bacağı**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-july-2025](https://www.gold.org/goldhub/research/gold-market-commentary-july-2025) (yayın günü: **2025-08-07**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Temmuz WGC: altın aylık +%0.3, ETF +23t ve COMEX uzunlar ↑; daha güçlü dolar kısa düşüşle uyumlu fakat genel fon satışı kanıtlanmadı.
 
@@ -360,9 +362,9 @@
 
 ## 2023 kayıtları
 
-### 19. MOVE_V2_C001 · 2023-01-05 → 2023-01-12 · undefined
+### 19. MOVE_V2_C001 · 2023-01-05 → 2023-01-12 · UP | azami mutlak ufuk 3.481% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 3.481% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-january-2023](https://www.gold.org/goldhub/research/gold-market-commentary-january-2023) (yayın günü: **2023-02-09**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Ocak WGC: USD/faiz gerilemesi + COMEX longs 250t; 12 Ocak CPI altındaki kısa olay için eş-saat reaksiyonu kanıtlı değil.
 
@@ -378,9 +380,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 20. MOVE_V2_C002 · 2023-01-27 → 2023-02-08 · undefined
+### 20. MOVE_V2_C002 · 2023-01-27 → 2023-02-08 · DOWN | azami mutlak ufuk 4.296% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 4.296% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.aa.com.tr/en/americas/us-stocks-open-lower-after-jobs-figures/2805598](https://www.aa.com.tr/en/americas/us-stocks-open-lower-after-jobs-figures/2805598) (yayın günü: **2023-02-03**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 3 Şubat istihdam 517 bin sürprizi ve yükselen faiz/USD; açıklama öncesi surprise bilinemez.
 
@@ -396,9 +398,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 21. MOVE_V2_C003 · 2023-03-06 → 2023-03-23 · undefined
+### 21. MOVE_V2_C003 · 2023-03-06 → 2023-03-23 · UP | azami mutlak ufuk 6.248% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 6.248% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.moneycontrol.com/news/business/gold-silver-soar-as-svb-collapse-spurs-flight-to-safety-10244241.html](https://www.moneycontrol.com/news/business/gold-silver-soar-as-svb-collapse-spurs-flight-to-safety-10244241.html) (yayın günü: **2023-03-13**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 13 Mart Reuters bankacılık krizi, altın/gümüş alımı ve USD/tahvil faizi düşüşü; Mart ETF +32t 6 Nisan WGC'de açıklandı.
 
@@ -414,9 +416,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 22. MOVE_V2_C004 · 2023-04-27 → 2023-05-04 · undefined
+### 22. MOVE_V2_C004 · 2023-04-27 → 2023-05-04 · UP | azami mutlak ufuk 3.450% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 3.450% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-may-2023](https://www.gold.org/goldhub/research/gold-market-commentary-may-2023) (yayın günü: **2023-06-07**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 4 Mayıs olayına özel ilk haber kanıtlı değil; Mayıs için ETF +19.3t ile COMEX long azalışı birbirine karşıt, 7 Haziran WGC retrospektif.
 
@@ -432,9 +434,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 23. MOVE_V2_C005 · 2023-09-22 → 2023-10-03 · undefined
+### 23. MOVE_V2_C005 · 2023-09-22 → 2023-10-03 · DOWN | azami mutlak ufuk 4.586% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 4.586% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-september-2023](https://www.gold.org/goldhub/research/gold-market-commentary-september-2023) (yayın günü: **2023-10-10**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Eylül WGC: UST10Y +50bp, DXY +2.5%, ETF -59t, COMEX -70t; Çin yerel priminin düşüşü/teknik kırılma da etken adayı.
 
@@ -450,9 +452,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 24. MOVE_V2_C006 · 2023-10-06 → 2023-10-19 · undefined
+### 24. MOVE_V2_C006 · 2023-10-06 → 2023-10-19 · UP | azami mutlak ufuk 5.631% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 5.631% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.gold.org/goldhub/gold-focus/2023/10/you-asked-we-answered-whats-impact-of-geopolitics-on-gold](https://www.gold.org/goldhub/gold-focus/2023/10/you-asked-we-answered-whats-impact-of-geopolitics-on-gold) (yayın günü: **2023-10-13**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 13 Ekim WGC savaş güvenli limanında altın haftalık >%3; Ekim COMEX netlong +171t sayısı Kasım7'de yayımlandı.
 
@@ -468,9 +470,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 25. MOVE_V2_C007 · 2023-11-24 → 2023-12-01 · undefined
+### 25. MOVE_V2_C007 · 2023-11-24 → 2023-12-01 · UP | azami mutlak ufuk 3.549% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 3.549% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-december-2023](https://www.gold.org/goldhub/research/gold-market-commentary-december-2023) (yayın günü: **2024-01-10**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Aralık 2023 yıllık WGC: Fed gevşeme beklentisi ve merkez bankası talebi; 1 Aralık kümesi özel ilk yayını kanıtlanmadı.
 
@@ -488,9 +490,9 @@
 
 ## 2024 kayıtları
 
-### 26. MOVE_V2_C016 · 2024-05-17 → 2024-05-27 · undefined
+### 26. MOVE_V2_C016 · 2024-05-17 → 2024-05-27 · DOWN | azami mutlak ufuk 3.981% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 3.981% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.kitco.com/news/off-the-wire/2024-05-23/gold-falls-one-week-low-hawkish-fed-minutes](https://www.kitco.com/news/off-the-wire/2024-05-23/gold-falls-one-week-low-hawkish-fed-minutes) (yayın günü: **2024-05-23**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 23 Mayıs Reuters: hawkish FOMC minutes + kâr satışı, 20 Mayıs fiyat zirvesi sonrası; 27 Mayıs tatil takvimi veri kapısı.
 
@@ -506,9 +508,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 27. MOVE_V2_C029 · 2024-12-11 → 2024-12-19 · undefined
+### 27. MOVE_V2_C029 · 2024-12-11 → 2024-12-19 · DOWN | azami mutlak ufuk 4.803% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 4.803% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-december-2024](https://www.gold.org/goldhub/research/gold-market-commentary-december-2024) (yayın günü: **2025-01-08**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 18 Aralık 2024 Fed -25bp faiz kararı ama sonraki patika hawkish; WGC altın >%2 ve S&P ~-%3 reaksiyonunu teyit ediyor.
 
@@ -526,9 +528,9 @@
 
 ## 2025 kayıtları
 
-### 28. MOVE_V2_C030 · 2025-01-29 → 2025-02-10 · undefined
+### 28. MOVE_V2_C030 · 2025-01-29 → 2025-02-10 · UP | azami mutlak ufuk 3.906% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 3.906% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.kitco.com/news/off-the-wire/2025-02-04/gold-steadies-after-record-rally-tariff-concerns-loom-large](https://www.kitco.com/news/off-the-wire/2025-02-04/gold-steadies-after-record-rally-tariff-concerns-loom-large) (yayın günü: **2025-02-04**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 4 Şubat tarife belirsizliği; WGC 27 Şubat COMEX registered ~+300t, eligible ~+500t, vadeli-spot +$40–50/oz (eski $13): sonraki rapor sayıları.
 
@@ -544,9 +546,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 29. MOVE_V2_C031 · 2025-03-10 → 2025-03-19 · undefined
+### 29. MOVE_V2_C031 · 2025-03-10 → 2025-03-19 · UP | azami mutlak ufuk 4.018% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 4.018% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-market-commentary-march-2025](https://www.gold.org/goldhub/research/gold-market-commentary-march-2025) (yayın günü: **2025-04-08**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Mart WGC: altın +%9.9, ABD ETF +67t ve tarife/USD faktörleri; 13–19 Mart olayından SONRA yayımlandı.
 
@@ -562,9 +564,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 30. MOVE_V2_C032 · 2025-03-24 → 2025-04-02 · undefined
+### 30. MOVE_V2_C032 · 2025-03-24 → 2025-04-02 · UP | azami mutlak ufuk 3.700% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 3.700% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.reuters.com/markets/commodities/gold-sails-above-3100-uncharted-territory-us-tariffs-approach-2025-03-31/](https://www.reuters.com/markets/commodities/gold-sails-above-3100-uncharted-territory-us-tariffs-approach-2025-03-31/) (yayın günü: **2025-03-31**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 31 Mart Reuters altın $3100 üstü, 2 Nisan tarife beklentisi; Mart WGC aylık altın +%9.9, ABD ETF +67t (8 Nisan post).
 
@@ -580,9 +582,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 31. MOVE_V2_C033 · 2025-03-31 → 2025-04-08 · undefined
+### 31. MOVE_V2_C033 · 2025-03-31 → 2025-04-08 · DOWN | azami mutlak ufuk 4.647% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 4.647% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.gold.org/goldhub/gold-focus/2025/04/weekly-markets-monitor-tariffs-spare-no-land](https://www.gold.org/goldhub/gold-focus/2025/04/weekly-markets-monitor-tariffs-spare-no-land) (yayın günü: **2025-04-07**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 7 Nisan WGC: tarife şoku hisse satışı, margin calls ve altının da nakit ihtiyacıyla satılması; makro baskı eşzamanlı.
 
@@ -598,9 +600,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 32. MOVE_V2_C034 · 2025-04-04 → 2025-04-22 · undefined
+### 32. MOVE_V2_C034 · 2025-04-04 → 2025-04-22 · UP | azami mutlak ufuk 8.567% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 8.567% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.gold.org/goldhub/gold-focus/2025/04/weekly-markets-monitor-gold-above-us3200oz](https://www.gold.org/goldhub/gold-focus/2025/04/weekly-markets-monitor-gold-above-us3200oz) (yayın günü: **2025-04-14**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 14 Nisan WGC: geçici tarife rahatlaması ve USD/UST tahvil güveninin düşmesi; altın $3200 üstüne; aynı krizde farklı likidite ve güvenli liman rejimleri.
 
@@ -616,9 +618,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 33. MOVE_V2_C035 · 2025-04-23 → 2025-04-23 · undefined
+### 33. MOVE_V2_C035 · 2025-04-23 → 2025-04-23 · DOWN | azami mutlak ufuk 3.035% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 3.035% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Öncesinde raporlanan bağlam: https://www.gold.org/goldhub/gold-focus/2025/04/weekly-markets-monitor-easter-gold-surge](https://www.gold.org/goldhub/gold-focus/2025/04/weekly-markets-monitor-easter-gold-surge) (yayın günü: **2025-04-21**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 21 Nisan WGC: DXY 100 altı, Powell ile çatışma kaygısı; 23 Nisan kısa hareketin doğrudan ilk katalizörü teyit değil, same-day baseline=0 hatalı.
 
@@ -634,9 +636,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 34. MOVE_V2_C040 · 2025-05-14 → 2025-05-26 · undefined
+### 34. MOVE_V2_C040 · 2025-05-14 → 2025-05-26 · UP | azami mutlak ufuk 4.967% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 4.967% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.kitco.com/news/off-the-wire/2025-05-21/weaker-dollar-geopolitical-uncertainty-push-gold-one-week-high](https://www.kitco.com/news/off-the-wire/2025-05-21/weaker-dollar-geopolitical-uncertainty-push-gold-one-week-high) (yayın günü: **2025-05-21**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 21 Mayıs Reuters: USD ~-%0.5, mali açık/tahvil getirisi kaygısı, altın yukarı; May26 banka tatili son piyasa gözlemi eksik.
 
@@ -652,9 +654,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 35. MOVE_V2_C050 · 2025-11-12 → 2025-11-17 · undefined
+### 35. MOVE_V2_C050 · 2025-11-12 → 2025-11-17 · DOWN | azami mutlak ufuk 3.668% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 3.668% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.reuters.com/world/india/gold-holds-steady-focus-turns-us-data-more-fed-cues-2025-11-17/](https://www.reuters.com/world/india/gold-holds-steady-focus-turns-us-data-more-fed-cues-2025-11-17/) (yayın günü: **2025-11-17**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 17 Kasım Fed/veri beklentisi haberidir; 12–17 Kasım fiyat kümesi için doğrulanmış özel tetikleyici yok. Kasım ETF +$5.2bn ancak 5 Aralık raporunda.
 
@@ -670,9 +672,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 36. MOVE_V2_C051 · 2025-11-21 → 2025-11-28 · undefined
+### 36. MOVE_V2_C051 · 2025-11-21 → 2025-11-28 · UP | azami mutlak ufuk 3.795% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 3.795% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Yayın sonrası delil: https://www.gold.org/goldhub/research/gold-etfs-holdings-and-flows/2025/12](https://www.gold.org/goldhub/research/gold-etfs-holdings-and-flows/2025/12) (yayın günü: **2025-12-05**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** Kasım ETF toplam +$5.2bn, rapor 5 Aralık tarihinde yayımlandı; 28 Kasım ilk haber kanıtı değil.
 
@@ -688,9 +690,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `RETROSPECTIVE_MONTHLY_CONTEXT_NOT_FIRSTPRINT` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 37. MOVE_V2_C052 · 2025-12-15 → 2025-12-26 · undefined
+### 37. MOVE_V2_C052 · 2025-12-15 → 2025-12-26 · UP | azami mutlak ufuk 4.654% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 UP yönlü maksimum mutlak ufuk hareketi 4.654% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://www.reuters.com/world/india/gold-hits-record-high-fed-rate-cut-bets-silver-scales-fresh-peak-2025-12-22/](https://www.reuters.com/world/india/gold-hits-record-high-fed-rate-cut-bets-silver-scales-fresh-peak-2025-12-22/) (yayın günü: **2025-12-22**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 22 Aralık Reuters altın $4400, Fed indirim beklentisi ve jeopolitik; 26 Aralık metal serileri eksik, WGC Ocak8 post.
 
@@ -706,9 +708,9 @@
 
 **Bilimsel sonuç:** Yayınlanmış ekonomik bağlam/faktör değişimleri ile piyasa hareketinin tutarlılığı incelendi; **olayın tek ve kesin sebebi, nedensel yüzde katkısı, ileri tahmin sinyalinin zamanı veya gerçek banka işlem üstünlüğü kanıtlanmadı**. `EVENT_PERIOD_SOURCE_DATE_CORROBORATION_ONLY` / `NOT_CAUSALLY_IDENTIFIED`.
 
-### 38. MOVE_V2_C053 · 2025-12-23 → 2025-12-31 · undefined
+### 38. MOVE_V2_C053 · 2025-12-23 → 2025-12-31 · DOWN | azami mutlak ufuk 4.798% (legacy V2)
 
-**Fiyat olgusu:** Özgün altın hareket büyüklüğü eksik; tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
+**Fiyat olgusu:** Özgün eski NY17 etiketli V2 DOWN yönlü maksimum mutlak ufuk hareketi 4.798% (aralık uçtan uca getirisi değildir); tanım: **1h/4h/12h ve 1/3/5 NY17 gün ufuklarının maksimum mutlak eşik hareketi (tüm pencerenin net getirisi değil)**. Bu bir Türk banka BID/ASK işlem getirisi değildir.
 
 **Bağımsız kaynak ve ölçüm:** [Olay dönemi tarihli yayın: https://apnews.com/article/c49577dedd4c799005de5b7af552ce81](https://apnews.com/article/c49577dedd4c799005de5b7af552ce81) (yayın günü: **2025-12-29**). **Bu kaynakta doğrulanabilen ekonomik/sayısal bilgi:** 29 Aralık AP: CME marjin artışı ve pozisyon tasfiyesi; WGC 8 Ocak: beyaz metallerin intraday range'i tarihsel 2025 ortalamasının >5x'i, altın ~3x.
 
