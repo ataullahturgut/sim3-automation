@@ -1,0 +1,182 @@
+{
+  "valid_paired_sessions": 18,
+  "mean_abs_mid_close_difference_pct": 0.021808878588284546,
+  "maximum_abs_mid_close_difference_pct": 0.09077536266701713,
+  "top_disagreement": [
+    {
+      "day": "2026-01-30",
+      "delta_pct": 0.09077536266701713,
+      "hist": 4891.195,
+      "duk": 4895.635
+    },
+    {
+      "day": "2026-01-07",
+      "delta_pct": 0.02812169309200918,
+      "hist": 4455.635,
+      "duk": 4456.888
+    },
+    {
+      "day": "2026-01-27",
+      "delta_pct": 0.02722704166606693,
+      "hist": 5178.675,
+      "duk": 5180.085
+    },
+    {
+      "day": "2026-01-26",
+      "delta_pct": 0.024413443563120474,
+      "hist": 5009.535,
+      "duk": 5010.758
+    },
+    {
+      "day": "2026-01-06",
+      "delta_pct": 0.024036401795157758,
+      "hist": 4493.185,
+      "duk": 4494.265
+    },
+    {
+      "day": "2026-01-09",
+      "delta_pct": 0.02113543645343441,
+      "hist": 4509.015,
+      "duk": 4509.968000000001
+    },
+    {
+      "day": "2026-01-21",
+      "delta_pct": 0.020282779196079126,
+      "hist": 4831.685,
+      "duk": 4832.665000000001
+    }
+  ],
+  "coverage_days": [
+    {
+      "day": "2026-01-01",
+      "hist_bars": 0,
+      "duk_bars": 88
+    },
+    {
+      "day": "2026-01-02",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-03",
+      "hist_bars": 0,
+      "duk_bars": 8
+    },
+    {
+      "day": "2026-01-05",
+      "hist_bars": 92,
+      "duk_bars": 88
+    },
+    {
+      "day": "2026-01-06",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-07",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-08",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-09",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-10",
+      "hist_bars": 0,
+      "duk_bars": 8
+    },
+    {
+      "day": "2026-01-12",
+      "hist_bars": 92,
+      "duk_bars": 0
+    },
+    {
+      "day": "2026-01-13",
+      "hist_bars": 92,
+      "duk_bars": 88
+    },
+    {
+      "day": "2026-01-14",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-15",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-16",
+      "hist_bars": 92,
+      "duk_bars": 8
+    },
+    {
+      "day": "2026-01-19",
+      "hist_bars": 82,
+      "duk_bars": 0
+    },
+    {
+      "day": "2026-01-20",
+      "hist_bars": 92,
+      "duk_bars": 88
+    },
+    {
+      "day": "2026-01-21",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-22",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-23",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-24",
+      "hist_bars": 0,
+      "duk_bars": 8
+    },
+    {
+      "day": "2026-01-26",
+      "hist_bars": 92,
+      "duk_bars": 88
+    },
+    {
+      "day": "2026-01-27",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-28",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-29",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-30",
+      "hist_bars": 92,
+      "duk_bars": 96
+    },
+    {
+      "day": "2026-01-31",
+      "hist_bars": 0,
+      "duk_bars": 8
+    }
+  ],
+  "warning": "DUK and HIST session bars not identical; Jan1 alternative duk has price but hist none; one source is not automatically tradable BANK quote."
+}
