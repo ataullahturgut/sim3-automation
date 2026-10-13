@@ -1,0 +1,43 @@
+name: Gold R78 First Passage 3pct 5TD
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'tools/gold_r78_firstpassage_3pct_5td_20261013.py'
+      - '.github/workflows/gold-r78-firstpassage-3pct-5td-20261013.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install "psycopg[binary]" pandas numpy scikit-learn tabulate
+      - name: Require Neon
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Execute R78
+        run: python tools/gold_r78_firstpassage_3pct_5td_20261013.py
+      - name: Commit result artifacts
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_METRICS_20261013.csv             gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_SUMMARY_20261013.json             gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_RESULT_20261013.md
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "gold-r78: record 3pct first-passage results"
+            git push
+          fi
