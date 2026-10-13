@@ -1,5 +1,24 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- GOLD_JAN2026_EXPOST_FAILURE_AND_SCIENTIFIC_RESEARCH_GATE_20261013 -->
+## 2026-10-13 — JAN 2026 sequential-replay lessons; scientific model redevelopment (RESEARCH; NO SIGNAL PROMOTION)
+
+**Independent authority**: open/unmerged PR #123, branch `research-gold-jan2026-blind-daily-walkforward-20261013`, report `gold_axis_2026/GOLD_JAN2026_31DAY_WALKFORWARD_INDEPENDENT_RESEARCH_VERDICT_20261013.md`. Preserve full 31-day locked ledger, original rule, news audit, source QC, alternative risk context and 2023–25 threshold falsification. This manifest note is a governance record, NOT a revision of old model results.
+
+**What actually happened**: from full-CASH, Jan6 NY17-close AL, nominal first-next-session historical HistData quote Jan7 4497.265, 0.8% one-way bank-fee proxy, then GOLD TUT Jan7–29. Jan28 peak nominal mark **+19.43%** after buy fee; Jan29 close price fell only **−0.66%** despite chronological intraday high-to-later-low **−8.90%**; fixed close-only exits did NOT fire. Jan30 close **−9.07%** vs Jan29, DD from previous NAV peak **−9.67%**; model said SAT only at **Jan30 NY17 close**. The sell was **NOT filled in January**. Jan31 terminal open long NAV **+7.889%** after buy fee but before any sell fee, unrealized and ignoring bank spread. At same Jan30 mid close hypothetical 0.8% sale would yield **+7.026%**; not realized return or permitted same-close fill. Passive Jan2-close-to-Jan30-close with both fees roughly +11.12% on different entry/exit dates, not a precisely matched fair benchmark. No proof of executable Türkiye daytime bank fills.
+
+**Lessons / failure modes**:
+1. **Late SELL / close masking**: a 29 Jan 15min chronological -8.90% peak-to-low shock existed before the 30 Jan crash, but daily trailing r3/SMA10/close DD hid it. End-of-day-only price rule can be uneconomic during intraday discontinuity.
+2. **NOT a predictive alarm**: independent 2023–25 EV M15 days with at least -3% sequential intraday drawdown numbered 21; **zero** immediately followed by a <=-3% next NY17 close change. Therefore Jan29 intraday drawdown is an **ex post discovery of a risk-state change**, not validated Jan30 early-warning rule. Do not optimize threshold on Jan2026 then tout Jan2026 success.
+3. **Positive momentum ≠ immunity**: r20 >+24% by Jan28 and Jan29 still +24.56%, did not preclude severe downside; absence of negative daily close trend is not evidence of low intraday risk.
+4. **Opportunity-cost asymmetry**: 0.8% entry plus 0.8% exit plus unmeasured actual bank spread makes frequent de-risk/re-entry expensive, and actual spot provider does not give bank bid/ask executable quotes. Use one continuously held position, nonoverlapping fills, quantify drawdown and failed early exits.
+5. **Availability/vintage**: stored Ag/Pt/Pd/Nasdaq/SP500/rates/USD daily records were research-backfilled Aug/Sep2026; their row dates alone do NOT prove as-of-Jan publication time. Contemporaneous Reuters/Kitco article calendar dates are not proof of first-release minute. Jan1 absent HistData session but alternative Duk bid/ask quotes exist; Jan19 early close, 82 bars, NOT a 17:00 NY full regular session. Audit source/holiday clock. 2026 has been previously studied: chronological replay is still **not untouched OOS**.
+6. **Never use 2026 knowledge to develop Jan2026 successor**: all choice of features, thresholds, position rules and evaluation gates must come from **2023–24 development**, with **2025 validation** without retroactive selection and only then one frozen **Jan2026 test**. Compare to exact original PR#123 fixed rule on matched dates; keep public/non-independent Jan caveat. Evaluate false-sale episodes, next-bar fill and fee-adjusted terminal NAV, maximum intraday/close drawdown, turnover, profit vs fair identical-clock always-gold and always-cash baselines, and multiple vendor/session sensitivities; prefer ABSTAIN/no strategy upgrade over unvalidated lucky fit.
+
+**New research branch**: `research-gold-jan26-scientific-successor-20261013` holds the versioned successor methodology and numerical evidence (to be considered **EXPERIMENTAL only**). Does NOT modify #123 decisions or endorse a live risk-alert policy. Main executable H3/weekly/monthly models remain separate and unchanged.
+<!-- END GOLD_JAN2026_EXPOST_FAILURE_AND_SCIENTIFIC_RESEARCH_GATE_20261013 -->
+
+
 <!-- GOLD_EVENT_CHAIN_2023_2025_V4_CONTROLS_AND_MISSED_SHOCKS_20261013 -->
 ## 2026-10-13 — GOLD EVENT CHAIN V4 / first-crossing and dated-news source audit (RESEARCH ONLY)
 
