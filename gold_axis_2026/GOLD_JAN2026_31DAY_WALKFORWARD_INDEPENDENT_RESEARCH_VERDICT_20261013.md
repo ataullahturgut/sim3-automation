@@ -46,6 +46,20 @@ OCAK fiyat sonuçları çekilmeden önce `GOLD_JAN2026_ASOF_DAILY_DECISION_PROTO
 
 Önemli: Gün içi diplerin bir kısmı sonraki fiyatların görülmesiyle teyit edilir; bu sütun yalnız gün bitiminde geçmişe ilişkin **gözlenebilir risk** niteliğindedir, en kötü dipten satış garantisi değildir. Haber sütunu yalnız tarihli bağlamdır, sonradan okunduğu için karar motorunu beslemez. Bazı Reuters/Kitco metinleri kaynak olarak gün içinde yayımlanmış, fakat orijinal ilk UTC dakika bağımsız arşivden tam doğrulanmamıştır.
 
+
+### Kaynaklarda işlemsiz hafta sonları: haberler kaybolmamalı
+
+Ana HistData altın kaynağında fiyat seansı olmaması, o gün önemli olay olmadığı anlamına **GELMEZ**. Aşağıdakiler yalnızca 2026 Ocak tarihli bağımsız Reuters ve Fed yayınlarından bulundu; projedeki önceden yazılmış 2026 olay manifesti okunmadı:
+
+- **3 Ocak Cumartesi:** Venezuela'da ABD operasyonu ve Maduro'nun yakalanması; Reuters'ın 3 Ocak tarihli haberi. https://www.reuters.com/world/americas/shocked-venezuelans-hunker-down-unsure-what-comes-next-2026-01-03/
+- **4 Ocak Pazar:** Bir sonraki açılış için Venezuela olayının güvenli liman ve petrol kanallarına etkisi gündemde; 4 Ocak tarihli piyasa katılımcısı Reuters derlemesi. https://www.investing.com/news/stock-market-news/market-analysts-react-to-trumps-venezuela-gambit-4428658
+- **11 Ocak Pazar 19:30 EST:** Fed Başkanı Jerome Powell resmî açıklamayla kendisine gönderilen büyük jüri celplerini ve Fed bağımsızlığı üzerindeki baskıyı kamuoyuyla paylaştı. Bu bilgi **12 Ocak Pazartesi'den önce** biliniyordu; 12 Ocak haberlerinden geriye uydurulmadı. https://www.federalreserve.gov/newsevents/speech/powell20260111a.htm
+- **17 Ocak Cumartesi:** Trump, Grönland konusunda sekiz Avrupa ülkesini ithalat tarifesiyle tehdit etti. https://www.reuters.com/world/europe/trump-vows-tariffs-eight-european-nations-over-greenland-2026-01-17/
+- **18 Ocak Pazar:** Tarifelerin AB/ABD ilişkileri üzerindeki karşılıklı etkileri tartışıldı; ilk işlem tepkisi 19/20 Ocak tarihlerinde değerlendirilebilir. https://www.reuters.com/world/europe/world-markets-face-fresh-jolt-trump-vows-tariffs-europe-over-greenland-2026-01-18/
+- **31 Ocak Cumartesi:** 30 Ocak Fed/Warsh ve metal likidasyon olaylarının bilgisi vardı, fakat yeni tam ana kaynak seansı yoktu. Bu gün için yeni yön kararı **yok**.
+
+Tam tarih sıralı belge: `GOLD_JAN2026_WEEKEND_NEWS_CHRONOLOGY_20261013.csv`. Hafta sonu açıklamaları bir sonraki işlem günü başlangıcında erişilebilir olabilir, fakat kilitlenmiş fiyat kararına sonradan takdirî override eklenmedi.
+
 ## 3. İşlem kaydı ve sonucu
 - 06 Ocak 17:00 NY kapanışı: AL kararı. Gerçekleşti varsayılan ilk SONRAKİ HistData M15 kotasyonu **07 Ocak 2026, 4,497.265 US$/ons**. Sermayenin %0.8'i alım komisyonu.
 - 07–29 Ocak: TUT altın. Günlük trend sinyali güçlü olduğu için satış kararı veremedi.
