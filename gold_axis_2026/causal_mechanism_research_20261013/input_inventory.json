@@ -1,0 +1,504 @@
+[
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V3_AGGREGATE_SUMMARY_20261013.json",
+    "bytes": 3408,
+    "sha256": "dd693fb368f5cb290c1e095392c520e38702cf585a650a6619f704990bdb5251"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V3_CORRECTED_V2_NEWS_TIMING_20261013.csv",
+    "bytes": 13758,
+    "sha256": "8909702df83abefc297498dfc1cd8031273311df38223cdfae8ceb031f5c9361",
+    "rows": 53,
+    "columns": [
+      "id",
+      "dir",
+      "original_first_flag",
+      "earliest_qualifying_window_baseline",
+      "lag_calendar_days",
+      "source_publication_date",
+      "old_label",
+      "source_time_vs_corrected_window",
+      "pub_url",
+      "time_assurance",
+      "onset_authority",
+      "causality"
+    ]
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V3_DAILY_VOL_SCALED_CONTROLS_20261013.csv",
+    "bytes": 194055,
+    "sha256": "22b7e2ed3299c5384ba4125480e3ed7dba87b7d2bef266ce02b14e651bffaa7e"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V3_EXPLORATORY_ANALYSIS_CONTRACT_20261013.md",
+    "bytes": 4249,
+    "sha256": "f25b217a6b6caa65cd88f86a3e3d1d9ee3f5d937417f22ee2423be3cec3285f8"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V3_RESEARCH_FINDINGS_20261013.md",
+    "bytes": 11483,
+    "sha256": "9d52930a747d3f9c355b140595777d2fa852f7870a43a66ee9b68d2936fb2bef"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V3_VOL_SCALED_DIRECTIONAL_CLUSTERS_20261013.csv",
+    "bytes": 3982,
+    "sha256": "465c1fb2d12fdc1036b329afdd3293e19dca4a1697a103258b310ef4686383fe",
+    "rows": 24,
+    "columns": [
+      "id",
+      "from",
+      "to",
+      "sign",
+      "n",
+      "max_z",
+      "window_baseline",
+      "prev_20tradingday_ret",
+      "GC_prevd",
+      "SI_prevd",
+      "ZN_prevd",
+      "NQ_prevd",
+      "CL_prevd",
+      "cause_status"
+    ]
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_13_TENSION_ONSETS_MATCHED_CONTROLS_20261013.csv",
+    "bytes": 4078,
+    "sha256": "bcdacfe1c99cedf1b04cd335f1373ec5ca1f84ce0152a72217a7813fd93e88fd"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_CASE_STUDIES_20261013.csv",
+    "bytes": 6757,
+    "sha256": "5bc284a467e04c93e215f2dafb0053d4290a7e2c6aa87ead966330055b86a4eb",
+    "rows": 9,
+    "columns": [
+      "id",
+      "period",
+      "source_mid_return_pct",
+      "intraday_range_pct",
+      "antecedent",
+      "new_event",
+      "amplifier",
+      "contrary",
+      "publication_date",
+      "publication_status",
+      "source_url",
+      "causal_status"
+    ]
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_FACT_CHECKED_CAUSAL_AUDIT_20261013.md",
+    "bytes": 9899,
+    "sha256": "87ed1031f4dbda23cb4cb32bb65708d29d8b36e82dbe695ec134b52001a334dd"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_EVENT_ATLAS_2023_2025_V1_20261013.csv",
+    "bytes": 12523,
+    "sha256": "22e22193dc3361a2b25b9379b418699368b9205c172b7aabe6153bd0ce962bcc",
+    "rows": 42,
+    "columns": [
+      "id",
+      "start",
+      "end",
+      "dir",
+      "start_p",
+      "end_p",
+      "pct",
+      "days",
+      "confirmed",
+      "status",
+      "mechanism",
+      "pub_date",
+      "source_temporality",
+      "url",
+      "causality"
+    ]
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_EVENT_ATLAS_2023_2025_V1_RESEARCH_VERDICT_20261013.md",
+    "bytes": 7806,
+    "sha256": "20af2994593d2c360ad116950b255d5363db60b8df2972ebd78ff5ec18dc7395"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_174_FLAGGED_DAYS_20261013.csv",
+    "bytes": 30172,
+    "sha256": "3555441c75f3e372ef78b4fc220ba540b0df939d9c741d892a6ccf8fe7471f49",
+    "rows": 174,
+    "columns": [
+      "date",
+      "bars",
+      "close_mid",
+      "max_1h_up_pct",
+      "max_1h_down_pct",
+      "max_4h_up_pct",
+      "max_4h_down_pct",
+      "max_12h_up_pct",
+      "max_12h_down_pct",
+      "ret_1tradingday_pct",
+      "ret_3tradingdays_pct",
+      "ret_5tradingdays_pct",
+      "intraday_range_pct",
+      "first_4h_3pct_utc",
+      "first_12h_3pct_utc",
+      "flags_up_3pct",
+      "flags_down_3pct",
+      "tier",
+      "same_date_macro_release",
+      "macro_release_prior_3caldays",
+      "independent_news_cause_verified"
+    ]
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_53_CLUSTER_NEWS_RESEARCH_20261013.csv",
+    "bytes": 16596,
+    "sha256": "2418dbc134068ece052920cd877a06ed6d24093728cdaf33c0f69c911efbeee3",
+    "rows": 53,
+    "columns": [
+      "id",
+      "start",
+      "end",
+      "direction",
+      "first_flagged_window_max_pct",
+      "prelim_development",
+      "main_source_publication_date",
+      "source_timing",
+      "curated_source_url",
+      "legacy_swings_overlap_count",
+      "legacy_42_event_source_lead",
+      "status",
+      "pre_signal_proven"
+    ]
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_ALL_774_DAYS_20261013.csv",
+    "bytes": 128026,
+    "sha256": "14aff1e2832303e07180523c6b226d577e1293205f83f8dff3372d4a1a6770ab"
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_DIRECTIONAL_CLUSTERS_20261013.csv",
+    "bytes": 4284,
+    "sha256": "1a7c05bc7f55b2807ede8235c685828cad6e6103f3b1d1dff32a06818b6dea4d",
+    "rows": 53,
+    "columns": [
+      "id",
+      "start",
+      "end",
+      "direction",
+      "flagged_trading_days",
+      "maximum_observed_window_pct",
+      "horizons",
+      "macro_release_dates_in_cluster",
+      "causal_status"
+    ]
+  },
+  {
+    "commit": "4ecdf810e4e76fba37d20b4a94d30d0bc54b30a3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_SCIENTIFIC_FINDINGS_20261013.md",
+    "bytes": 15154,
+    "sha256": "9c2a9216bf5c66873dc1f1489dedc9c6d9129c23be215566630e47a1e884c071"
+  },
+  {
+    "commit": "1893fcdfeb91ca3e20165fa5f044ccf42dcefec3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_REFEREE_53_CLUSTER_AUDIT_20261013.csv",
+    "bytes": 30848,
+    "sha256": "13e21375707a6331809df69629637e1adf4db60751a443a59347e3a66811704e",
+    "rows": 53,
+    "columns": [
+      "id",
+      "direction",
+      "start",
+      "end",
+      "window_onset",
+      "lag_days",
+      "horizons",
+      "source_timing",
+      "main_source_publication_date",
+      "timing_vs_onset",
+      "max_abs_z5",
+      "max_abs_z1",
+      "vol_status",
+      "cl_win",
+      "cl_pre4w",
+      "gc_win",
+      "gc_pre4w",
+      "nq_win",
+      "nq_pre4w",
+      "si_win",
+      "si_pre4w",
+      "zn_win",
+      "zn_pre4w",
+      "ex_ante_hazirlik",
+      "tetikleyici",
+      "buyutucu",
+      "karsit_kanit",
+      "kaynaklar",
+      "hakem_karari"
+    ]
+  },
+  {
+    "commit": "1893fcdfeb91ca3e20165fa5f044ccf42dcefec3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_REFEREE_CROSSMARKET_20261013.sql",
+    "bytes": 5932,
+    "sha256": "7463b379febcf3e4b7ca7f5646dc14feb5a95fb04ba83412bcdbb14565c1e12d"
+  },
+  {
+    "commit": "1893fcdfeb91ca3e20165fa5f044ccf42dcefec3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_REFEREE_MISSED_AND_NONEVENT_CONTROLS_20261013.csv",
+    "bytes": 3990,
+    "sha256": "3902e824831277dd5ddcacca81e0dfd1c50199f3ff7a4fc9b8b683e24113e7a5",
+    "rows": 16,
+    "columns": [
+      "type",
+      "date_or_window",
+      "observed_xau_metric",
+      "why_relevant",
+      "source",
+      "status"
+    ]
+  },
+  {
+    "commit": "1893fcdfeb91ca3e20165fa5f044ccf42dcefec3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_REFEREE_RECOMPUTED_CLUSTER_TIMING_20261013.csv",
+    "bytes": 6542,
+    "sha256": "b38bc3830a0177316a7073ffbfd39698a90f8063f20a6c27065232b6ed3b4020",
+    "rows": 53,
+    "columns": [
+      "id",
+      "direction",
+      "start",
+      "end",
+      "window_onset",
+      "lag_days",
+      "horizons",
+      "source_timing",
+      "main_source_publication_date",
+      "timing_vs_onset",
+      "max_abs_z5",
+      "max_abs_z1",
+      "vol_status"
+    ]
+  },
+  {
+    "commit": "1893fcdfeb91ca3e20165fa5f044ccf42dcefec3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_REFEREE_REPRODUCE_20261013.py",
+    "bytes": 9943,
+    "sha256": "40f0bb32b7d666fa9ffb0bec5e806ec2b3e37db08ed4af1a0586fb5ee6cb25af"
+  },
+  {
+    "commit": "1893fcdfeb91ca3e20165fa5f044ccf42dcefec3",
+    "path": "gold_axis_2026/GOLD_MAJOR_MOVE_MULTIHORIZON_2023_2025_V2_REFEREE_REVIEW_20261013.md",
+    "bytes": 30337,
+    "sha256": "79d16f1754867d1c6cd4f058379d8615804ae1317d57e044633df31738e7ba2e"
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_CASE_DEEPDIVE_20261013.csv",
+    "bytes": 4523,
+    "sha256": "482eba4f6846b40e8a88967149c817f668ba8bffdd6b58ed04c405ef8eefe414",
+    "rows": 12,
+    "columns": [
+      "vaka",
+      "zaman_katmani",
+      "bilgi",
+      "fiyat_veya_kosul_olcumu",
+      "kaynak"
+    ]
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_DIRECTION_SEPARATORS_20261013.csv",
+    "bytes": 2810,
+    "sha256": "f48de169b37f04dd6f5f0d434b54de4173d94d2b36ba19976c76aa1cac5aeee8",
+    "rows": 33,
+    "columns": [
+      "analysis",
+      "feature",
+      "auc",
+      "n_pos",
+      "n_neg",
+      "loeo_min",
+      "loeo_max",
+      "within_episode_rank_auc",
+      "block_ci_lo",
+      "block_ci_hi",
+      "auc_2023",
+      "auc_2024",
+      "auc_2025"
+    ]
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_HYPOTHESIS_LEDGER_20261013.csv",
+    "bytes": 7452,
+    "sha256": "742247d0471867d23abba7d55ca4091ee685f5776b4c8556c2a856fdd794ead1",
+    "rows": 17,
+    "columns": [
+      "id",
+      "hipotez",
+      "hakem_durumu",
+      "kanit",
+      "kaynak_veya_dosya",
+      "bilgi_zamani"
+    ]
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_MATCHING_SENSITIVITY_20261013.csv",
+    "bytes": 1804,
+    "sha256": "61f725c6b8c4a5512a8ce022cea60c3fb24ca5fa4220f58742de0b9d4988e242",
+    "rows": 39,
+    "columns": [
+      "rule",
+      "risk",
+      "control",
+      "risk_outcome",
+      "control_outcome",
+      "sd_ratio"
+    ]
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_RATIOS_20261013.sql",
+    "bytes": 2106,
+    "sha256": "d67776f2a2b20fb162a83f066697728016109db081f59d5a1a67ae47fb329b98"
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_REPRODUCE_20261013.py",
+    "bytes": 9701,
+    "sha256": "4c0997e6a3c1ae6f9245677adc1ea40703518c220e45c851cb44867c6da8c535"
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_REVIEW_20261013.md",
+    "bytes": 22183,
+    "sha256": "b5a4c6d6292c71c150782838cbb005423d50b5536c74d94dbac8b3a75d2377aa"
+  },
+  {
+    "commit": "e1ead36ec670368dc6688f13179cf97cc6b05a25",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_REFEREE_TENSION_EPISODES_20261013.csv",
+    "bytes": 1393,
+    "sha256": "928eff642381d033dceacb1f484f3467424a7ab3806aa47d7fa95287447fd6f0",
+    "rows": 14,
+    "columns": [
+      "definition",
+      "start",
+      "end",
+      "tension_days",
+      "span_sessions",
+      "peak_date",
+      "gain_20s_before_start_to_peak_pct",
+      "max_drawdown_20s_after_peak_pct",
+      "days_followed_by_next10_down",
+      "volx_at_peak",
+      "silver_vs_gold_20s_at_peak",
+      "nem_vs_gold_20s_at_peak",
+      "spx_20s_at_peak"
+    ]
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_ASTRA_HANDOFF_COMPLETE_INDEX_20261013.md",
+    "bytes": 11225,
+    "sha256": "e7e7230caabe69840f72c9a5e1f714b3c6828b87e8df774fbe1376138bd2539f"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H03_2026_TWELVE_ALTERNATE_SOURCE_QC_20261013.json",
+    "bytes": 316,
+    "sha256": "97c65a000820b28007cb69aba40eb6115e5df18df2c1475009b17c99a12f72c3"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H03_EXTRAPERIOD_2016_2026_DAILY_OUTCOMES_20261013.csv",
+    "bytes": 645013,
+    "sha256": "637b95fa8011b63a5c130db0a434cdea9fadcccbb5180db306974c7f2f04089b"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H03_EXTRAPERIOD_2016_2026_RESULTS_20261013.json",
+    "bytes": 13979,
+    "sha256": "bcf964bdbd3d501b77afab0173cfe281af7120828ba8cedeeffe805a3f91fd8d"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H03_EXTRAPERIOD_BLOCK_UNCERTAINTY_20261013.json",
+    "bytes": 1179,
+    "sha256": "196ff37ab57ea3ac156a14bb18bbeb0297ad60ee985cf889aefb10f82d80a70b"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H03_EXTRAPERIOD_REPRODUCE_20261013.py",
+    "bytes": 2034,
+    "sha256": "92231562c042c434b8b999fa2f2ed46a4faa72c9ec9f26b25907711be3d6d1dc"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H03_H15_EXTRAPERIOD_INDEPENDENT_REPLICATION_VERDICT_20261013.md",
+    "bytes": 12788,
+    "sha256": "1ecdfbf32f8629fd822d4216d26586c9a7a89099e5ec248db7642086e36eb3ae"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H03_H15_EXTRAPERIOD_SOURCE_QUERIES_20261013.sql",
+    "bytes": 2844,
+    "sha256": "f06f0014728e012b9d877fc23dce8a9b9d08ef4127c9365b1c04df98425f02f9"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H15_EXTRAPERIOD_BLIND_NEWS_CODEBOOK_20261013.md",
+    "bytes": 6300,
+    "sha256": "b580b0c8aa65821ba5df16be86d82764ed0da4590128efaf30257776b2751275"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H15_EXTRAPERIOD_DATED_NEWS_AUDIT_20261013.csv",
+    "bytes": 3788,
+    "sha256": "11aedcb2d56270b22744e282b1c9e5c3bf4df0ba8474c5cdd9ee3446cf6409c2",
+    "rows": 13,
+    "columns": [
+      "case_id",
+      "date_anchor",
+      "source_date",
+      "url",
+      "time_class",
+      "firstprint_evidence",
+      "independent_original_notice",
+      "candidate_mechanism",
+      "disconfirming_or_caveat"
+    ]
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H15_EXTRAPERIOD_TEST_PROTOCOL_20261013.md",
+    "bytes": 4565,
+    "sha256": "f42eed2ca4daf8afee1d5f6fd2f5ee20609bddee6a7f6fc3f484878a05835193"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H15_NEWS_BLIND_CODING_UNIVERSE_249_MACRO_RELEASES_20261013.csv",
+    "bytes": 41083,
+    "sha256": "906ba2d2bcf46e24cbd23b199124599da73508911b15bd92c0368d8b127841ab"
+  },
+  {
+    "commit": "2e4f11348470ca99b43ba13c477dffc9a247bcc1",
+    "path": "gold_axis_2026/GOLD_EVENT_CHAIN_H15_NEWS_BLIND_NONEVENT_CALENDAR_20261013.csv",
+    "bytes": 143005,
+    "sha256": "068398824ea009f405779a9049322b6598297790a4f686d01b3bd045ddcea565"
+  }
+]
