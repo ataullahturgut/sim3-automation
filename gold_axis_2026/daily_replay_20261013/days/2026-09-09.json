@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-09",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Zayıf dolar altını toparladı ancak petrol/faiz baskısı yüksek; tek tepki ve CPI öncesi belirsizlik.",
+  "invalidation": "Veri sonrası ikinci gün devam.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold climbs on subdued US dollar as inflation data awaited amid oil rally (https://www.reuters.com/world/india/gold-climbs-subdued-us-dollar-inflation-data-awaited-amid-oil-rally-2026-09-09/)",
+    "The Gulf of uncertainty (https://www.reuters.com/world/middle-east/gulf-uncertainty-2026-09-09/)",
+    "Fearless US stock market vulnerable to shocks as midterms loom (https://www.reuters.com/business/finance/fearless-us-stock-market-vulnerable-shocks-midterms-loom-2026-09-09/)",
+    "Trading Day: $100 oil bites (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-09-09/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-09",
+      "v": 4.83,
+      "change": 0.63
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-09",
+      "v": 29421.55,
+      "change": -0.29
+    },
+    "SP500_FRED": {
+      "d": "2026-09-09",
+      "v": 7636.36,
+      "change": -0.48
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-09",
+      "v": 4399.323,
+      "change": 1.06
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-09",
+      "v": 16.46,
+      "change": 4.71
+    }
+  }
+}

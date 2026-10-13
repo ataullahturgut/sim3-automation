@@ -1,0 +1,55 @@
+{
+  "date": "2026-08-05",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Dolar gevşemesi/İran görüşmeleriyle altın ikinci gün güçlü yükseldi ve aralığın dışına çıktı. İlk büyük kazancı kaçırdım; bu hareket geriye dönük pozisyona yazılmayacak.",
+  "invalidation": "Dolar dönüşü veya yükselişin hızla geri verilmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Lower bonds yields, Iran talks set gold on track for largest daily growth since February (https://www.reuters.com/world/india/gold-ticks-up-softer-dollar-focus-us-jobs-data-2026-08-05/)",
+    "Stocks mixed with Nasdaq down; US oil eases on Iran talks (https://www.reuters.com/world/china/global-markets-global-markets-2026-08-05/)",
+    "Trading Day: Momentum fizzles, gold sizzles (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-05",
+      "v": 4.63,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-05",
+      "v": 29487.79,
+      "change": -0.83
+    },
+    "SP500_FRED": {
+      "d": "2026-08-05",
+      "v": 7723.55,
+      "change": -0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-05",
+      "v": 4249.035,
+      "change": 4.26
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-05",
+      "v": 15.81,
+      "change": -4.18
+    }
+  }
+}

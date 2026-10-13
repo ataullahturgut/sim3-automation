@@ -1,0 +1,52 @@
+{
+  "date": "2026-02-19",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran tehdidi altını desteklerken güçlü işgücü/dolar baskısı karşılıyor. Altın yatay; yön üstünlüğü net değil.",
+  "invalidation": "Veri veya politika haberinin bu dengeyi fiyatla birlikte bozması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold flat as investors weigh US-Iran tensions, focus on inflation data (https://www.reuters.com/world/india/gold-dips-dollar-firms-ahead-inflation-data-2026-02-19/)",
+    "Newmont tops profit estimates, sets $1.4 billion outlay for former Newcrest assets (https://www.reuters.com/business/newmont-beats-fourth-quarter-profit-estimates-2026-02-19/)",
+    "Middle Eastern bourses tumble on US-Iran tensions (https://www.reuters.com/world/middle-east/major-gulf-bourses-retreat-us-iran-tensions-2026-02-19/)",
+    "TSX hits another record high as commodity-linked stocks climb (https://www.reuters.com/business/tsx-futures-fall-investors-assess-fed-minutes-2026-02-19/)",
+    "Canada's global trade gap narrows; US-bound exports hit new low (https://www.reuters.com/world/americas/canadas-trade-deficit-narrows-december-share-exports-us-shrinks-further-2026-02-19/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-19",
+      "v": 4.08,
+      "change": -0.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-19",
+      "v": 24797.34,
+      "change": -0.41
+    },
+    "SP500_FRED": {
+      "d": "2026-02-19",
+      "v": 6861.89,
+      "change": -0.28
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-19",
+      "v": 77.87,
+      "change": -0.01
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-19",
+      "v": 4987.445,
+      "change": 0.24
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-19",
+      "v": 1691.95,
+      "change": -2.25
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-19",
+      "v": 2070.99,
+      "change": -0.69
+    }
+  }
+}

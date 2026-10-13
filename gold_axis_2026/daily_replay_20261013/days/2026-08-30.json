@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-30",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yaptırım baskısı ve merkez bankası belirsizliği sürüyor; pazar tepki küçük. Sonraki petrol kapanışı dışlandı.",
+  "invalidation": "Altında kalıcı toparlanma.",
+  "coverage": "weekend_updated_market_article_excluded",
+  "sources": [
+    "Oil settles up by more than 2.5% as US and Iran resume military attacks (https://www.reuters.com/business/energy/oil-jumps-more-than-2-after-us-attack-irans-larak-island-2026-08-30/)",
+    "Europe's central bankers fear more turbulence in testy U.S. relations (https://www.reuters.com/business/finance/europes-central-bankers-fear-more-turbulence-testy-us-relations-2026-08-30/)",
+    "Bessent expects new US secondary sanctions weekly, aiming to increase pressure on Iran (https://www.reuters.com/business/finance/bessent-expects-new-us-secondary-sanctions-weekly-aiming-increase-pressure-iran-2026-08-30/)",
+    "US Treasury's Bessent faces G20 diplomacy test amid tariffs, Iran war, bond turmoil (https://www.reuters.com/world/china/us-treasurys-bessent-faces-g20-diplomacy-test-amid-tariffs-iran-war-bond-turmoil-2026-08-30/)",
+    "Gulf stocks fall as Fed rate-hike bets rise after Warsh remarks (https://www.reuters.com/world/middle-east/gulf-stocks-fall-fed-rate-hike-bets-rise-after-warsh-remarks-2026-08-30/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-28",
+      "v": 4.73,
+      "change": 1.28
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-28",
+      "v": 29433.43,
+      "change": -0.7
+    },
+    "SP500_FRED": {
+      "d": "2026-08-28",
+      "v": 7711.76,
+      "change": -0.25
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-30",
+      "v": 4460.845,
+      "change": 0.24
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-28",
+      "v": 14.43,
+      "change": -0.55
+    }
+  }
+}

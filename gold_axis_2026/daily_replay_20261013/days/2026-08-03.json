@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-03",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol/faiz düşüşüne altın güçlü cevap vermedi. Kore rezerv alımı planı miktarsız ve henüz gerçekleşme değil; metal serileri eski tarihli.",
+  "invalidation": "Altının makro rahatlamaya katılması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold eases as markets weigh Middle East uncertainty, inflation risks (https://www.reuters.com/world/india/gold-gains-oil-slumps-after-trump-holds-off-iran-attack-2026-08-03/)",
+    "South Korea's central bank to buy gold from domestic producers (https://www.reuters.com/world/asia-pacific/south-koreas-central-bank-buy-gold-domestic-producers-2026-08-03/)",
+    "Oil drops, stocks gain amid Iran peace hopes; yen firms as investors watch for further intervention (https://www.reuters.com/world/china/global-markets-global-markets-2026-08-03/)",
+    "Bank, healthcare stocks lead Australian shares higher on Iran peace progress (https://www.reuters.com/world/asia-pacific/bank-healthcare-stocks-lead-australian-shares-higher-iran-peace-progress-2026-08-03/)",
+    "Wall Street rallies, Dow closes at record on Iran talks optimism (https://www.reuters.com/business/wall-st-futures-edge-up-mideast-deal-hopes-healthcare-focus-2026-08-03/)",
+    "Yen intervention (https://www.reuters.com/podcasts/reuters-morning-bid/yen-intervention-2026-08-03/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-03",
+      "v": 4.7,
+      "change": -1.05
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-03",
+      "v": 28776.8,
+      "change": 1.78
+    },
+    "SP500_FRED": {
+      "d": "2026-08-03",
+      "v": 7600.5,
+      "change": 1.48
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-03",
+      "v": 4052.415,
+      "change": -0.17
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-03",
+      "v": 15.86,
+      "change": -0.81
+    }
+  }
+}

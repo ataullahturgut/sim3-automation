@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-22",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Yeni yaptırım tehdidi risk yaratıyor; henüz enerji/kur tepkisi yok. Hafta sonu mevcut pozisyon korunuyor.",
+  "invalidation": "Açılışta dolar/faiz baskısının altını kırması.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Trump heads into midterms short on foreign policy wins (https://www.reuters.com/world/us/trump-heads-into-midterms-short-foreign-policy-wins-2026-08-22/)",
+    "Iran condemns US plans to announce new sanctions (https://www.reuters.com/world/middle-east/us-iran-keep-up-hostile-rhetoric-ahead-new-sanctions-2026-08-22/)",
+    "Trump tariffs hit Canada, ballroom reprieve, Stars and Stripes and Somali piracy (https://www.reuters.com/podcasts/trump-tariffs-hit-canada-ballroom-reprieve-stars-stripes-somali-piracy-2026-08-22/)",
+    "Putin says Ukraine opened 'Pandora's box' with strikes on economic targets (https://www.reuters.com/world/europe/putin-says-ukraine-opened-pandoras-box-with-strikes-economic-targets-2026-08-22/)",
+    "Germany's Merz to press cabinet for faster pro-growth reforms (https://www.reuters.com/business/germanys-merz-press-cabinet-faster-pro-growth-reforms-2026-08-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-21",
+      "v": 4.74,
+      "change": 1.07
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-21",
+      "v": 29308.86,
+      "change": 0.33
+    },
+    "SP500_FRED": {
+      "d": "2026-08-21",
+      "v": 7674.37,
+      "change": 0.43
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-21",
+      "v": 4602.055,
+      "change": 1.73
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-21",
+      "v": 15.13,
+      "change": -5.5
+    }
+  }
+}

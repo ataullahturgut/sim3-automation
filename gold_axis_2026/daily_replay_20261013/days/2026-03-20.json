@@ -1,0 +1,57 @@
+{
+  "date": "2026-03-20",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yeni askeri sevkiyat haberi enerji/faiz baskısını artırıyor; tahvil faizi sert yükseldi, altın satışı sürüyor. Fon akımı haberlerinin kapsamı farklı, tekleştirilmedi.",
+  "invalidation": "Enerji gerilimi ve yükselen faiz döngüsünün kırılması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls 1.8% after report of US sending more troops to Middle East (https://www.reuters.com/world/india/gold-set-third-weekly-fall-hawkish-us-fed-elevated-dollar-2026-03-20/)",
+    "Investors buy the dip in both stocks and bonds, BofA says (https://www.reuters.com/business/global-markets-flows-bofa-2026-03-20/)",
+    "Global equity funds see $20 billion weekly outflows, biggest in three months (https://www.reuters.com/world/china/global-markets-flows-graphic-2026-03-20/)",
+    "Morning Bid: Battle of the barrel (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-20/)",
+    "Dire Straits (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-03-20/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-20",
+      "v": 4.39,
+      "change": 3.29
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-20",
+      "v": 23898.15,
+      "change": -1.88
+    },
+    "SP500_FRED": {
+      "d": "2026-03-20",
+      "v": 6506.48,
+      "change": -1.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-20",
+      "v": 71.16,
+      "change": -2.45
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-20",
+      "v": 4490.055,
+      "change": -3.3
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-20",
+      "v": 1445.3,
+      "change": -1.1
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-20",
+      "v": 1967.58,
+      "change": -0.31
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-20",
+      "v": 26.78,
+      "change": 11.31
+    }
+  }
+}

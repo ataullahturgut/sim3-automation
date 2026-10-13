@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-26",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Normal seansta altın kazancı kaybetti; yeni saldırı/barış haberleri çelişiyor. Düşük nominal faiz tek başına destek olmadı.",
+  "invalidation": "Altının olumlu haber ve faiz gevşemesine yeniden cevap vermesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls as war-driven inflation fears fuel rate-hike bets (https://www.reuters.com/business/gold-slips-us-iran-tensions-lift-oil-stoke-inflation-fears-2026-05-26/)",
+    "S&P 500, Nasdaq nab record closing highs, WTI crude falls on hopes for Iran peace deal (https://www.reuters.com/world/china/global-markets-global-markets-2026-05-26/)",
+    "Morning Bid: Wrong sort of 'boom' to start the week (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-26/)",
+    "Trading Day: The AI train rolls on (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-05-26/)",
+    "From deal hopes to fresh strikes (https://www.reuters.com/podcasts/reuters-morning-bid/deal-hopes-fresh-strikes-2026-05-26/)",
+    "Sunshine Silver eyes $2.32 billion valuation in US IPO (https://www.reuters.com/legal/transactional/sunshine-silver-eyes-232-billion-valuation-us-ipo-2026-05-26/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-26",
+      "v": 4.5,
+      "change": -1.32
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-26",
+      "v": 30001.32,
+      "change": 1.76
+    },
+    "SP500_FRED": {
+      "d": "2026-05-26",
+      "v": 7519.12,
+      "change": 0.61
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-26",
+      "v": 76.95,
+      "change": -1.24
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-26",
+      "v": 4510.535,
+      "change": -1.4
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-26",
+      "v": 1384.63,
+      "change": 0.11
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-26",
+      "v": 1955.04,
+      "change": -0.53
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-26",
+      "v": 17.01,
+      "change": 2.53
+    }
+  }
+}

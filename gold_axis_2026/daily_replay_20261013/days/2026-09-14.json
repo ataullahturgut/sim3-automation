@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-14",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Fed artışı beklentisi, yüksek petrol ve devam eden altın zayıflığı; yeni alım teyidi yok.",
+  "invalidation": "Karar sonrası beklenti/fiyat dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls to over one-month low as oil rally, inflation data boost rate-hike bets (https://www.reuters.com/world/india/gold-slips-oil-rally-fans-rate-hike-bets-ahead-fed-meeting-2026-09-14/)",
+    "UK financial regulator seeks views on tokenising gold (https://www.reuters.com/business/uk-financial-regulator-seeks-views-tokenising-gold-2026-09-14/)",
+    "Trump dismisses AI safety alarm, says US already has tools to police industry (https://www.reuters.com/world/trump-says-there-is-sick-conspiracy-against-ai-data-centers-2026-09-14/)",
+    "Morning Bid: Go slow AI (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-14/)",
+    "Saudi crown prince, US CENTCOM chief discuss developments after Houthi escalation (https://www.reuters.com/world/middle-east/saudi-crown-prince-us-centcom-chief-discuss-developments-after-houthi-escalation-2026-09-14/)",
+    "AI go slow (https://www.reuters.com/podcasts/reuters-morning-bid/ai-go-slow-2026-09-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-14",
+      "v": 4.97,
+      "change": 0.2
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-14",
+      "v": 29127.16,
+      "change": -0.82
+    },
+    "SP500_FRED": {
+      "d": "2026-09-14",
+      "v": 7619.98,
+      "change": -0.48
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-14",
+      "v": 4295.285,
+      "change": -0.98
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-14",
+      "v": 17.1,
+      "change": 7.95
+    }
+  }
+}

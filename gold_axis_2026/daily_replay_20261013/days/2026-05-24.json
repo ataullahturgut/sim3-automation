@@ -1,0 +1,56 @@
+{
+  "date": "2026-05-24",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Anlaşmanın büyük ölçüde görüşüldüğü açıklaması pazar altını yükseltti; abluka kalkmadı. Pazartesi tatil seansı özetlerini dışlayıp teyit bekliyorum.",
+  "invalidation": "Yeni seansta fiyat ve enerji kanalının teyidi.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Trump says there is no rush for Iran deal, US blockade stays (https://www.reuters.com/world/us/trump-says-iran-deal-largely-negotiated-dispute-over-strait-reopening-2026-05-24/)",
+    "Stocks jump while oil and dollar ease on Iran peace hopes (https://www.reuters.com/world/china/global-markets-wrapup-1-2026-05-24/)",
+    "Oil tumbles nearly 7% as US and Iran seen moving closer to deal (https://www.reuters.com/business/energy/oil-falls-more-than-4-us-iran-remain-odds-over-peace-deal-2026-05-24/)",
+    "Week Ahead: Inflation's summer test (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-inflations-summer-test-2026-05-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-22",
+      "v": 4.56,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-22",
+      "v": 29481.64,
+      "change": 0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-05-22",
+      "v": 7473.47,
+      "change": 0.37
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-24",
+      "v": 75.52,
+      "change": 0
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-24",
+      "v": 4564.948,
+      "change": 1.25
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-24",
+      "v": 1349.02,
+      "change": 0.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-24",
+      "v": 1925.52,
+      "change": 0.06
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-22",
+      "v": 16.7,
+      "change": -0.36
+    }
+  }
+}

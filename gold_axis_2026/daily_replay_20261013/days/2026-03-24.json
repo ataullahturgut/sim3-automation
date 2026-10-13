@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-24",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol/dolar yeniden güçleniyor; zayıf faaliyet verisi stagflasyon riskini artırıyor. UTC geç saat altın toparlanması gün içi haberlerle tam örtüşmüyor; teyitsiz alım yok.",
+  "invalidation": "Rahatlamanın faiz ve enerji piyasalarında da kalıcı olması.",
+  "coverage": "mixed_clocks_daily_reconstruction",
+  "sources": [
+    "Gold extends decline on expectations of higher interest rates (https://www.reuters.com/world/india/gold-loses-over-1-dollar-firms-fed-cut-hopes-fade-2026-03-24/)",
+    "South Africa's gold producers stay in the shallows as prices surge (https://www.reuters.com/world/africa/south-africas-gold-producers-stay-shallows-prices-surge-2026-03-24/)",
+    "Oil prices drop 2% as Iran considers US proposal to end war (https://www.reuters.com/business/energy/us-oil-prices-fall-prospect-middle-east-ceasefire-easing-supply-disruption-2026-03-24/)",
+    "Trading Day: This ain't over (https://www.reuters.com/business/global-markets-trading-day-graphic-2026-03-24/)",
+    "Markets get whiplash (https://www.reuters.com/podcasts/reuters-morning-bid/markets-get-whiplash-2026-03-24/)",
+    "Morning Bid: Little relief from Trump (https://www.reuters.com/world/china/global-markets-view-europe-2026-03-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-24",
+      "v": 4.39,
+      "change": 1.15
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-24",
+      "v": 24002.45,
+      "change": -0.77
+    },
+    "SP500_FRED": {
+      "d": "2026-03-24",
+      "v": 6556.37,
+      "change": -0.37
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-24",
+      "v": 69.17,
+      "change": 3.04
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-24",
+      "v": 4546.375,
+      "change": 2.37
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-24",
+      "v": 1415.82,
+      "change": 0.4
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-24",
+      "v": 1882.33,
+      "change": 1.76
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-24",
+      "v": 26.95,
+      "change": 3.06
+    }
+  }
+}

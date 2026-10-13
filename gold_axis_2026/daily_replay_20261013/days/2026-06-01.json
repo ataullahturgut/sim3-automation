@@ -1,0 +1,57 @@
+{
+  "date": "2026-06-01",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Yeni çatışma/diplomasi tıkanıklığı petrol ve doları yükseltti; altın toparlanmayı geri verdi. Ateşkes rahatlaması alım tezi bozuldu.",
+  "invalidation": "Somut anlaşma ve altın fiyatında kalıcı iyileşme.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls with inflation worries rising on Middle East conflict (https://www.reuters.com/business/gold-slips-stronger-dollar-oil-trumps-decision-iran-ceasefire-focus-2026-06-01/)",
+    "Wall St ends higher, boosted by tech gains, US-Iran peace hopes (https://www.reuters.com/world/africa/wall-street-futures-gain-ai-advances-overshadow-us-iran-tensions-2026-06-01/)",
+    "Elliott takes A$1 billion stake in Australia's Northern Star, calls for strategic review (https://www.reuters.com/legal/transactional/elliott-takes-a1-billion-stake-australias-northern-star-calls-strategic-review-2026-06-01/)",
+    "Morning Bid: AI and 1984 (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-01/)",
+    "Trading Day: Talks + tech = boom! (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-01/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-01",
+      "v": 4.47,
+      "change": 0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-01",
+      "v": 30513.86,
+      "change": 0.6
+    },
+    "SP500_FRED": {
+      "d": "2026-06-01",
+      "v": 7599.96,
+      "change": 0.26
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-01",
+      "v": 75.3,
+      "change": 0.04
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-01",
+      "v": 4485.388,
+      "change": -1.09
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-01",
+      "v": 1364.4,
+      "change": 0.51
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-01",
+      "v": 1933.34,
+      "change": 0.65
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-01",
+      "v": 16.05,
+      "change": 4.77
+    }
+  }
+}

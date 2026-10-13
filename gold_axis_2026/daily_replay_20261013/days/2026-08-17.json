@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-17",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar zayıflığı ve faiz artışı ihtimalinin azalması altını destekliyor; uzun faiz yükselişine rağmen güç korunuyor.",
+  "invalidation": "Dolar dönüşü ve fiyatın iki seans zayıflaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold climbs on weaker dollar, easing Fed rate hike concerns (https://www.reuters.com/business/gold-gains-weaker-dollar-reduced-fed-rate-hike-bets-2026-08-17/)",
+    "Gold shows early signs of reclaiming safe-haven appeal after Iran war selloff (https://www.reuters.com/world/india/gold-shows-early-signs-reclaiming-safe-haven-appeal-after-iran-war-selloff-2026-08-17/)",
+    "Wall Street indexes slip as oil prices rise, retail results awaited (https://www.reuters.com/business/nasdaq-futures-gain-tech-stocks-climb-2026-08-17/)",
+    "Trump says Iran won't make deal he thinks is needed, threatens to bomb Oman (https://www.reuters.com/world/middle-east/trump-says-iran-should-surrender-threatens-bomb-oman-2026-08-17/)",
+    "Morning Bid: Retail risk (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-08-17/)",
+    "Retail therapy (https://www.reuters.com/podcasts/reuters-morning-bid/retail-therapy-2026-08-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-17",
+      "v": 4.72,
+      "change": 0.85
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-17",
+      "v": 29995.38,
+      "change": -0.17
+    },
+    "SP500_FRED": {
+      "d": "2026-08-17",
+      "v": 7745.06,
+      "change": -0.52
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-17",
+      "v": 4410.885,
+      "change": 0.6
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-17",
+      "v": 15.19,
+      "change": 6.6
+    }
+  }
+}

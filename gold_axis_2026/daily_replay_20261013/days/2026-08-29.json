@@ -1,0 +1,55 @@
+{
+  "date": "2026-08-29",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dizel ihracat kısıtı enerji riskini koruyor; yen müdahalesi açıklaması yeni altın teyidi değil.",
+  "invalidation": "Normal seansta dolar/faiz ve altın dönüşü.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "War weighs on Iran's economy as US intensifies sanctions (https://www.reuters.com/world/asia-pacific/war-weighs-irans-economy-us-intensifies-sanctions-2026-08-29/)",
+    "Bessent says disorderly yen moves can destabilize global markets (https://www.reuters.com/business/finance/bessent-says-disorderly-yen-moves-can-destabilize-global-markets-2026-08-29/)",
+    "Russia extends ban on diesel exports until September 30 (https://www.reuters.com/business/energy/russia-extends-ban-diesel-exports-until-september-30-2026-08-29/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-28",
+      "v": 4.73,
+      "change": 1.28
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-28",
+      "v": 29433.43,
+      "change": -0.7
+    },
+    "SP500_FRED": {
+      "d": "2026-08-28",
+      "v": 7711.76,
+      "change": -0.25
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-28",
+      "v": 4450.065,
+      "change": -3.45
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-28",
+      "v": 14.43,
+      "change": -0.55
+    }
+  }
+}

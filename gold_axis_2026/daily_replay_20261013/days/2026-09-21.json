@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-21",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar baskısıyla küçük kayıp; petrol/faiz gevşemesi ve önceki kazancın korunması mevcut pozisyonu destekliyor.",
+  "invalidation": "İkinci satış ve dolar baskısının sürmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls on rising odds of Fed rate hike, stronger dollar (https://www.reuters.com/world/india/gold-eases-firmer-dollar-profit-taking-mideast-conflict-focus-2026-09-21/)",
+    "Morning Bid: Summiteering (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-21/)",
+    "Uganda's export earnings up 10.2% y/y in July (https://www.reuters.com/world/africa/ugandas-export-earnings-up-102-yy-july-2026-09-21/)",
+    "All the presidents meet (https://www.reuters.com/podcasts/reuters-morning-bid/all-presidents-meet-2026-09-21/)",
+    "Porsche CEO assures staff no further job cuts planned, according to memo (https://www.reuters.com/business/world-at-work/porsche-ceo-assures-staff-no-further-job-cuts-planned-according-memo-2026-09-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-21",
+      "v": 4.96,
+      "change": -1
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-21",
+      "v": 30482.35,
+      "change": 2.83
+    },
+    "SP500_FRED": {
+      "d": "2026-09-21",
+      "v": 7764.7,
+      "change": 1.49
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-21",
+      "v": 4359.135,
+      "change": -0.31
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-21",
+      "v": 14.87,
+      "change": 0.41
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-18",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Saldırının ertelenmesi ve zayıf dolar olumlu, fakat faiz yükselişi ve diğer metallerin zayıflığı sürüyor; ilk tepki yeterli değil.",
+  "invalidation": "İkinci seans toparlanması ve faiz rahatlaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises on weaker dollar but rising oil, bond yields limit gains (https://www.reuters.com/business/gold-slips-1-12-month-low-middle-east-tensions-lift-oil-cloud-rate-outlook-2026-05-18/)",
+    "Gina Rinehart's Hancock Prospecting adds defence stocks to US portfolio (https://www.reuters.com/business/aerospace-defense/gina-rineharts-hancock-prospecting-adds-defence-stocks-us-portfolio-2026-05-18/)",
+    "Trump says he paused attack on Iran, signals a nuclear deal may be possible (https://www.reuters.com/world/asia-pacific/pakistan-hands-us-revised-iranian-proposal-ending-war-2026-05-18/)",
+    "Investors bet on stability after Trump-Xi summit as Iran war concerns linger (https://www.reuters.com/world/asia-pacific/investors-bet-stability-after-trump-xi-summit-iran-war-concerns-linger-2026-05-18/)",
+    "U.S. Treasury Secretary Bessent: will call on G7 to follow sanctions regime on Iran (https://www.reuters.com/world/china/us-treasury-secretary-bessent-will-call-g7-follow-sanctions-regime-iran-2026-05-18/)",
+    "A new day at the Fed, but policy forecast cloudy for Warsh, Trump, US (https://www.reuters.com/business/new-day-fed-policy-forecast-cloudy-warsh-trump-us-2026-05-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-18",
+      "v": 4.61,
+      "change": 0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-18",
+      "v": 28994.37,
+      "change": -0.45
+    },
+    "SP500_FRED": {
+      "d": "2026-05-18",
+      "v": 7403.05,
+      "change": -0.07
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-18",
+      "v": 75.07,
+      "change": -1.18
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-18",
+      "v": 4573.348,
+      "change": 0.61
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-18",
+      "v": 1398.27,
+      "change": -0.96
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-18",
+      "v": 1967.7,
+      "change": -0.59
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-18",
+      "v": 17.82,
+      "change": -3.31
+    }
+  }
+}

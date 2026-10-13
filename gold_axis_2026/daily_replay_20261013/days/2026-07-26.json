@@ -1,0 +1,55 @@
+{
+  "date": "2026-07-26",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Pazar altın yükseldi; saldırı durması haberi güncellenmiş petrol kapanışıyla iç içe, ileri fiyatı dışladım. Tam seans teyidi bekliyorum.",
+  "invalidation": "Haber ve aktarımın normal seansta teyidi.",
+  "coverage": "weekend_updated_market_article_excluded",
+  "sources": [
+    "Oil prices settle at lowest in over a week, as US pauses attacks on Iran (https://www.reuters.com/business/energy/oil-slips-more-than-5-after-us-pauses-strikes-iran-2026-07-26/)",
+    "Romania shoots down third Russian drone, as president calls breaches 'intolerable' (https://www.reuters.com/business/aerospace-defense/romania-shoots-down-third-russian-drone-president-calls-breaches-intolerable-2026-07-26/)",
+    "India finance minister says budget has buffers to absorb inflation risks (https://www.reuters.com/world/india/nbull-india-finance-minister-says-budget-has-buffers-absorb-inflation-risks-2026-07-26/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-24",
+      "v": 4.69,
+      "change": -0.42
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-24",
+      "v": 28128.34,
+      "change": -1.15
+    },
+    "SP500_FRED": {
+      "d": "2026-07-24",
+      "v": 7411.98,
+      "change": 0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-26",
+      "v": 58.17,
+      "change": 0
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-26",
+      "v": 4084.675,
+      "change": 0.88
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-26",
+      "v": 1245.52,
+      "change": 0
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-26",
+      "v": 1593.77,
+      "change": -0.01
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-24",
+      "v": 18.58,
+      "change": -0.64
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-02-04",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın gün içi yükselişini koruyamadı; dolar güçlü, ADP zayıflığına rağmen tepki karışık. UTC son fiyatı ile haber saati farklı; temiz devam teyidi yok. Ertesi gün güncellenmiş Trading Day yazısı kullanılmadı.",
+  "invalidation": "Dolar baskısı gevşerken altının kalıcı toparlanması.",
+  "coverage": "mixed_clocks_updated_article_excluded",
+  "sources": [
+    "Gold slips on firmer dollar, focus on geopolitics and US jobs data (https://www.reuters.com/world/india/gold-extends-rally-jumps-over-2-after-best-day-since-2008-2026-02-04/)",
+    "Analysts ramp up gold forecasts as global uncertainties mount (https://www.reuters.com/business/finance/analysts-ramp-up-gold-forecasts-global-uncertainties-mount-2026-02-04/)",
+    "Record volatility is not what gold buyers signed up for (https://www.reuters.com/markets/europe/record-volatility-is-not-what-gold-buyers-signed-up-2026-02-04/)",
+    "Global stock index dips with tech slump while dollar rises, ... (https://www.reuters.com/world/china/global-markets-global-markets-2026-02-04/)",
+    "Morning Bid: AI scatters the tech herd (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-04/)",
+    "U.S. dollar rebound to be cut short by rate cut bets, doubts over Fed independence: Reuters poll (https://www.reuters.com/business/us-dollar-rebound-be-cut-short-by-rate-cut-bets-doubts-over-fed-independence-2026-02-04/)",
+    "Kevin Warsh (https://www.reuters.com/podcasts/reuters-morning-bid/kevin-warsh-2026-02-04/)",
+    "Tech wreck (https://www.reuters.com/podcasts/reuters-morning-bid/tech-wreck-2026-02-04/)",
+    "Trading Day: Tech it to the limit (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-02-04/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-04",
+      "v": 4.29,
+      "change": 0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-04",
+      "v": 24891.24,
+      "change": -1.77
+    },
+    "SP500_FRED": {
+      "d": "2026-02-04",
+      "v": 6882.72,
+      "change": -0.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-04",
+      "v": 90.59,
+      "change": 3.54
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-04",
+      "v": 5011.895,
+      "change": 1.31
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-04",
+      "v": 1834,
+      "change": 1.44
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-04",
+      "v": 2283,
+      "change": 1.87
+    }
+  }
+}

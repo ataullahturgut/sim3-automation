@@ -1,0 +1,53 @@
+{
+  "date": "2026-07-25",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Hafta sonu ilgili güvenilir yeni altın/makro haber kapsamı yetersiz; pozisyon değişimi yok.",
+  "invalidation": "Doğrulanmış yeni bilgi.",
+  "coverage": "weekend_limited_relevant_news",
+  "sources": [
+    "India's education minister, Troy Jackson and LeBron James (https://www.reuters.com/podcasts/indias-education-minister-troy-jackson-lebron-james-2026-07-25/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-24",
+      "v": 4.69,
+      "change": -0.42
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-24",
+      "v": 28128.34,
+      "change": -1.15
+    },
+    "SP500_FRED": {
+      "d": "2026-07-24",
+      "v": 7411.98,
+      "change": 0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-25",
+      "v": 58.17,
+      "change": 0.14
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-24",
+      "v": 4049.125,
+      "change": 0.01
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-25",
+      "v": 1245.52,
+      "change": -0.2
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-25",
+      "v": 1593.91,
+      "change": -0.11
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-24",
+      "v": 18.58,
+      "change": -0.64
+    }
+  }
+}

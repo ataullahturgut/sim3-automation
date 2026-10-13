@@ -1,0 +1,58 @@
+{
+  "date": "2026-01-03",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "ABD'nin Maduro'yu yakalaması jeopolitik risk yarattı; hafta sonu yeni piyasa teyidi yok. Haber tek başına alım için yeterli değil.",
+  "invalidation": "İşlem açılışında altın ve diğer güvenli limanların kalıcı güçlenmesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Trump says U.S. will run Venezuela after U.S. captures ... (https://www.reuters.com/world/americas/loud-noises-heard-venezuela-capital-southern-area-without-electricity-2026-01-03/)",
+    "Nicolas Maduro's tight grip on Venezuela shaken loose by ... (https://www.reuters.com/world/americas/newsmaker-nicolas-maduros-heavy-handed-rule-venezuela-is-finally-ended-by-trump-2026-01-03/)",
+    "World reacts to US strikes on Venezuela (https://www.reuters.com/world/americas/world-reacts-us-strikes-venezuela-2026-01-03/)",
+    "Was the US capture of Venezuela's president legal? (https://www.reuters.com/world/us/was-us-capture-venezuelas-president-legal-2026-01-03/)",
+    "US raid on Venezuela threatens new global ruptures (https://www.reuters.com/commentary/breakingviews/us-raid-venezuela-threatens-new-global-ruptures-2026-01-03/)",
+    "UN Security Council to meet Monday over US action in ... (https://www.reuters.com/world/americas/un-chief-venezuela-us-action-sets-dangerous-precedent-2026-01-03/)",
+    "Investors and economists react to US capture of ... (https://www.reuters.com/world/americas/view-investors-economists-react-us-capture-venezuelas-maduro-2026-01-03/)",
+    "Trump says US has captured Venezuela President Maduro (https://www.reuters.com/world/americas/trump-says-us-has-captured-venezuela-president-maduro-2026-01-03/)",
+    "Spain will not recognize US intervention in Venezuela, PM says (https://www.reuters.com/world/americas/spain-will-not-recognize-us-intervention-venezuela-pm-says-2026-01-03/)",
+    "US captures Maduro, Trump says, after 'large scale' strike (https://www.reuters.com/world/us/live-trump-says-us-has-captured-venezuela-president-maduro-2026-01-03/)",
+    "Condemnation and applause in Latin America after US ... (https://www.reuters.com/world/americas/condemnation-applause-latin-america-after-us-seizes-venezuelas-maduro-2026-01-03/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-02",
+      "v": 4.19,
+      "change": 0.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-02",
+      "v": 25206.17,
+      "change": -0.17
+    },
+    "SP500_FRED": {
+      "d": "2026-01-02",
+      "v": 6858.47,
+      "change": 0.19
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-02",
+      "v": 74.215,
+      "change": 3.09
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-02",
+      "v": 4331.575,
+      "change": -0.37
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-02",
+      "v": 1649,
+      "change": 5.23
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-02",
+      "v": 2133,
+      "change": 5.23
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-02",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Hızlı savaş sonu beklentisi yeni tehditlerle bozuldu; petrol/dolar yükseldi, altın/metal kazancı geri verildi. Alım gerekçesini sürdürmüyorum.",
+  "invalidation": "Somut ateşkes veya arz normalleşmesiyle yeniden güçlü altın tepkisi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Trump's fresh Iran threats give investors a risk-off reality check (https://www.reuters.com/world/asia-pacific/trumps-fresh-iran-threats-give-investors-risk-off-reality-check-2026-04-02/)",
+    "Canada's February trade deficit surges to a six-month high on gold imports (https://www.reuters.com/world/americas/canadas-february-trade-deficit-surges-six-month-high-gold-imports-2026-04-02/)",
+    "US crude jumps more than 11%, Brent nearly 8% after Trump vows more attacks on Iran (https://www.reuters.com/business/energy/oil-prices-drop-hopes-us-pullback-iran-war-2026-04-02/)",
+    "Morning Bid: No Easter truce (https://www.reuters.com/business/finance/global-markets-view-usa-2026-04-02/)",
+    "Markets space out (https://www.reuters.com/podcasts/reuters-morning-bid/markets-space-out-2026-04-02/)",
+    "Vague timelines (https://www.reuters.com/markets/econ-world/vague-timelines-2026-04-02/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-02",
+      "v": 4.31,
+      "change": -0.46
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-02",
+      "v": 24045.53,
+      "change": 0.11
+    },
+    "SP500_FRED": {
+      "d": "2026-04-02",
+      "v": 6582.69,
+      "change": 0.11
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-02",
+      "v": 72.12,
+      "change": -3.76
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-02",
+      "v": 4675.805,
+      "change": -2.1
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-02",
+      "v": 1474.51,
+      "change": -0.52
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-02",
+      "v": 1945.39,
+      "change": -1.03
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-02",
+      "v": 23.87,
+      "change": -2.73
+    }
+  }
+}

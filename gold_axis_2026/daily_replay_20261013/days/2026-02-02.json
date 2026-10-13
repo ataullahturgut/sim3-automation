@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-02",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Teminat artışı, pozisyon çözülmesi ve güçlü dolar satış baskısını sürdürüyor. Gün içi toparlanma likidasyonun bittiğini kanıtlamıyor.",
+  "invalidation": "Metallerde birkaç seanslık toparlanma ve dolar/faiz baskısının hafiflemesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold, silver extend fall as CME margin hikes compound sharp selloff (https://www.reuters.com/world/india/gold-falls-15-firm-dollar-silver-recovers-over-three-week-low-2026-02-02/)",
+    "Slump in commodities rattles global markets (https://www.reuters.com/world/china/slump-commodities-rattles-global-markets-2026-02-02/)",
+    "Investors flock to gold, gold miner ETFs in January in bid for safety (https://www.reuters.com/markets/wealth/investors-flock-gold-gold-miner-etfs-january-bid-safety-2026-02-02/)",
+    "JP Morgan sees gold at $6,300 an ounce by year-end on robust central-bank, investor demand (https://www.reuters.com/world/africa/jp-morgan-sees-gold-6300-an-ounce-by-year-end-robust-centralbank-investor-demand-2026-02-02/)",
+    "Morning Bid: Metals meltdown (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-02/)",
+    "Warsh's balancing act (https://www.reuters.com/podcasts/reuters-morning-bid/warshs-balancing-act-2026-02-02/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-02",
+      "v": 4.29,
+      "change": 0.7
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-02",
+      "v": 25738.61,
+      "change": 0.73
+    },
+    "SP500_FRED": {
+      "d": "2026-02-02",
+      "v": 6976.44,
+      "change": 0.54
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-02",
+      "v": 81.975,
+      "change": -20.56
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-02",
+      "v": 4773.935,
+      "change": 0.68
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-02",
+      "v": 1671,
+      "change": -5.86
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-02",
+      "v": 2063,
+      "change": -6.65
+    }
+  }
+}

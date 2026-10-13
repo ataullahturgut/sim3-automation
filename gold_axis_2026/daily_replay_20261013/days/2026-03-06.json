@@ -1,0 +1,52 @@
+{
+  "date": "2026-03-06",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İstihdam kaybı altını destekledi fakat faiz hâlâ yükseliyor; enerji kaynaklı enflasyon/güçlü dolar baskısı çözülmedi. Tek olumlu veriyle alım yapmıyorum.",
+  "invalidation": "İşgücü zayıflığının gerçekten daha düşük faiz/dolar fiyatlamasına dönüşmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises after US payrolls report, but heads for first weekly fall in five (https://www.reuters.com/world/india/gold-rises-1-middle-east-conflict-spurs-safe-haven-demand-2026-03-06/)",
+    "College sports needs Congress to fix NIL, Trump says, while promising executive order (https://www.reuters.com/world/us/trump-soaring-college-football-costs-are-hitting-sports-congress-must-act-2026-03-06/)",
+    "Hungary to expel seven Ukrainian nationals, government spokesperson says (https://www.reuters.com/world/hungary-expel-seven-ukrainian-nationals-government-spokesperson-says-2026-03-06/)",
+    "The fog of war (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-03-06/)",
+    "A widening Middle East crisis (https://www.reuters.com/world/middle-east/widening-middle-east-crisis-2026-03-06/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-06",
+      "v": 4.15,
+      "change": 0.48
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-06",
+      "v": 24643.01,
+      "change": -1.51
+    },
+    "SP500_FRED": {
+      "d": "2026-03-06",
+      "v": 6740.02,
+      "change": -1.33
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-06",
+      "v": 5171.798,
+      "change": 1.69
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

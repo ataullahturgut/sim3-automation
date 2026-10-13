@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-17",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol yeniden yüksek, altın Fed öncesi yatay; dolar/faiz gevşemesine rağmen alım gücü sınırlı. Yeni pozisyon için karar sonrası bilgi bekleniyor.",
+  "invalidation": "Fed'in enerji enflasyonunu sınırlı görmesi ve altının güçlenmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold steady as markets track Iran tensions, await Fed decision (https://www.reuters.com/world/india/gold-firms-investors-assess-middle-east-fallout-ahead-policy-decisions-2026-03-17/)",
+    "Ghana weighs local bids for $1 billion revival of Gold Fields' Damang mine (https://www.reuters.com/world/africa/ghana-weighs-local-bids-1-billion-revival-gold-fields-damang-mine-2026-03-17/)",
+    "Morning Bid: A Rumble Down Under (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-17/)",
+    "Oil prices settle up 3% after renewed Iranian attacks on UAE (https://www.reuters.com/business/energy/oil-gains-over-2-market-weighs-iran-war-supply-risks-2026-03-17/)",
+    "Trading Day: Oil back above $100... and so? (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-03-17/)",
+    "Oil's not well (https://www.reuters.com/podcasts/reuters-morning-bid/oils-not-well-2026-03-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-17",
+      "v": 4.2,
+      "change": -0.71
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-17",
+      "v": 24780.42,
+      "change": 0.51
+    },
+    "SP500_FRED": {
+      "d": "2026-03-17",
+      "v": 6716.09,
+      "change": 0.25
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-17",
+      "v": 80.39,
+      "change": 0.35
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-17",
+      "v": 5002.695,
+      "change": -0.2
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-17",
+      "v": 1615.62,
+      "change": 2.42
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-17",
+      "v": 2131.36,
+      "change": 2.87
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-17",
+      "v": 22.37,
+      "change": -4.85
+    }
+  }
+}

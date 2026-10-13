@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-26",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Görüşmeler anlaşmasız ama ilerleme sinyaliyle bitti; altın yatay, diğer metaller zayıf. İki yönlü risk devam ediyor.",
+  "invalidation": "Diplomatik sürecin kopması veya kalıcı altın yükselişi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold steady as markets await US-Iran nuclear talks outcome (https://www.reuters.com/world/india/gold-gains-softer-dollar-iran-us-talks-focus-2026-02-26/)",
+    "US-Iran talks end with no deal but potential signs of progress (https://www.reuters.com/world/middle-east/us-iran-nuclear-talks-resume-geneva-against-backdrop-military-threat-2026-02-26/)",
+    "Trading Day: Nvidia swings and misses (https://www.reuters.com/business/global-markets-trading-day-graphic-2026-02-26/)",
+    "India markets regulator changes gold, silver valuation for mutual funds (https://www.reuters.com/sustainability/boards-policy-regulation/india-markets-regulator-changes-gold-silver-valuation-mutual-funds-2026-02-26/)",
+    "Blistering EM equity rally can't keep this pace up. Can it? (https://www.reuters.com/markets/blistering-em-equity-rally-cant-keep-this-pace-up-can-it-2026-02-26/)",
+    "Nvidia's 'meh' moment (https://www.reuters.com/podcasts/reuters-morning-bid/nvidias-meh-moment-2026-02-26/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-26",
+      "v": 4.02,
+      "change": -0.74
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-26",
+      "v": 25034.37,
+      "change": -1.16
+    },
+    "SP500_FRED": {
+      "d": "2026-02-26",
+      "v": 6908.86,
+      "change": -0.54
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-26",
+      "v": 5184.345,
+      "change": 0.42
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

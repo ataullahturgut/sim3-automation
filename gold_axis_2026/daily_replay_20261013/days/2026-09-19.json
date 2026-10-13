@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-19",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Suudi saldırıları enerji rahatlamasına risk; teyitli fiyat tepkisi olmadan pozisyon değişmiyor.",
+  "invalidation": "Açılışta petrol/dolar baskısı ve altın kaybı.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Turkey says it could help meet Saudi military needs under defence pact (https://www.reuters.com/business/aerospace-defense/turkey-says-it-could-help-meet-saudi-military-needs-under-defence-pact-2026-09-19/)",
+    "Flames, smoke seen near Riyadh airport; Houthis claim attacks on Saudi capital (https://www.reuters.com/world/middle-east/saudi-civil-defence-sends-all-clear-after-danger-warning-capital-riyadh-2026-09-19/)",
+    "US Treasury's Bessent, China's He to meet on Sunday at JPMorgan headquarters (https://www.reuters.com/business/finance/us-treasurys-bessent-chinas-he-meet-sunday-jpmorgan-headquarters-2026-09-19/)",
+    "Defence firm Anduril says US delay on Taiwan arms sales affecting its business (https://www.reuters.com/world/china/defence-firm-anduril-says-us-delay-taiwan-arms-sales-affecting-its-business-2026-09-19/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-18",
+      "v": 5.01,
+      "change": 1.42
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-18",
+      "v": 29644.17,
+      "change": 0.67
+    },
+    "SP500_FRED": {
+      "d": "2026-09-18",
+      "v": 7650.5,
+      "change": 0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-18",
+      "v": 4376.595,
+      "change": 0.79
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-18",
+      "v": 14.81,
+      "change": -4.08
+    }
+  }
+}

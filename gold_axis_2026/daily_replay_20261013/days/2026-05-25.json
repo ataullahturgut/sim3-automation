@@ -1,0 +1,59 @@
+{
+  "date": "2026-05-25",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol/dolar gevşemesi ve metaller olumlu; ABD tatili nedeniyle tahvil ve tam seans teyidi eksik. Bir normal seans bekliyorum.",
+  "invalidation": "Normal seansta kazancın korunması.",
+  "coverage": "holiday_partial_market",
+  "sources": [
+    "Pictures of the Day | May 26, 2026 (https://jp.reuters.com/pictures/pictures-day-may-26-2026-2026-05-25/OQ4SXBH7SRPLNATYWTPT4U2N7A/)",
+    "Gold climbs as Middle East peace hopes push oil and dollar lower (https://www.reuters.com/world/india/gold-rises-weaker-dollar-investor-weigh-us-iran-peace-deal-prospects-2026-05-25/)",
+    "Ghana commits to renewing Gold Fields Tarkwa lease but rules out automatic extension (https://www.reuters.com/world/africa/ghana-commits-renewing-gold-fields-tarkwa-lease-rules-out-automatic-extension-2026-05-25/)",
+    "Indian finance minister calls for focus on '3Fs' - fuel, fertiliser, forex (https://www.reuters.com/world/india/indian-finance-minister-calls-focus-3fs-fuel-fertiliser-forex-2026-05-25/)",
+    "Morning Bid: Will they or won't they? (https://www.reuters.com/world/china/global-markets-view-europe-2026-05-25/)",
+    "Brent crude jumps 4%, as US strikes in Iran set back hopes for Hormuz re-opening (https://www.reuters.com/business/energy/us-crude-futures-fall-over-6-report-possible-strait-hormuz-reopening-2026-05-25/)",
+    "No Reuters foreign exchange reports from U.S. on Monday, May 25 (https://www.reuters.com/world/asia-pacific/dollar-slumps-signs-deal-reopen-hormuz-spur-risk-appetite-2026-05-25/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-22",
+      "v": 4.56,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-22",
+      "v": 29481.64,
+      "change": 0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-05-22",
+      "v": 7473.47,
+      "change": 0.37
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-25",
+      "v": 77.92,
+      "change": 3.18
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-25",
+      "v": 4574.638,
+      "change": 0.21
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-25",
+      "v": 1383.17,
+      "change": 2.53
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-25",
+      "v": 1965.5,
+      "change": 2.08
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-25",
+      "v": 16.59,
+      "change": -0.66
+    }
+  }
+}

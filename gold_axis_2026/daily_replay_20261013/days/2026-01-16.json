@@ -1,0 +1,54 @@
+{
+  "date": "2026-01-16",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "İki gündür güçlü dolar/azalan indirim beklentisi ve sakinleşen jeopolitik risk birleşiyor; tahvil faizi bugün 7 baz puan arttı. Altın zayıflığı sınırlı olsa da başlangıç gerekçesinin ağırlığı azaldı; savunmaya geçiyorum.",
+  "invalidation": "Yeni güven şoku veya dolar zayıflamasıyla altının yeniden güçlenmesi; erken satış riski yüksek.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips as upbeat US data boosts dollar, dims rate-cut bets (https://www.reuters.com/world/india/gold-slips-upbeat-us-data-boosts-dollar-dims-rate-cut-bets-2026-01-16/)",
+    "Stocks notch weekly losses, dollar up on uncertainty about ... (https://www.reuters.com/world/china/global-markets-wrapup-1-pix-2026-01-16/)",
+    "European shares subdued as luxury stocks, miners weigh (https://www.reuters.com/markets/europe/european-shares-subdued-gold-retreat-hits-miners-2026-01-16/)",
+    "ASIA GOLD Record rally stalls retail buying in India; China demand steady (https://www.reuters.com/world/china/asia-gold-record-rally-stalls-retail-buying-india-china-demand-steady-2026-01-16/)",
+    "Take Five: From the ski slopes of Switzerland to the Supreme Court (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-01-16/)",
+    "London's FTSE 100 subdued; eyes weekly advance (https://www.reuters.com/world/uk/londons-ftse-100-subdued-eyes-weekly-advance-2026-01-16/)",
+    "Morning Bid: Chips Ahoy (https://www.reuters.com/podcasts/reuters-morning-bid/morning-bid-chips-ahoy-2026-01-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-16",
+      "v": 4.24,
+      "change": 1.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-16",
+      "v": 25529.26,
+      "change": -0.07
+    },
+    "SP500_FRED": {
+      "d": "2026-01-16",
+      "v": 6940.01,
+      "change": -0.06
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 90.8,
+      "change": -0.51
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-16",
+      "v": 4595.515,
+      "change": -0.31
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 1755,
+      "change": -2.55
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 2346,
+      "change": 0.17
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-29",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Taslak ateşkes sonrası ikinci gün yükseliş, petrol/dolar gevşemesi ve metallerin toparlanması var. Önceki başarısız umutlara rağmen aktarım yeniden olumlu.",
+  "invalidation": "Taslağın bozulması veya dolar/faiz dönüşüyle altın satışı.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains on US-Iran ceasefire optimism but set for monthly drop (https://www.reuters.com/world/india/gold-edges-higher-investors-weigh-us-iran-ceasefire-deal-reports-fed-rate-2026-05-29/)",
+    "Mapping the Market: Gold approaches potential crossroads (https://www.reuters.com/markets/commodities/global-markets-technicals-2026-05-29/)",
+    "Illegal miners extract billions in Amazon gold despite Brazil crackdown, Greenpeace finds (https://www.reuters.com/business/environment/illegal-miners-extract-billions-amazon-gold-despite-brazil-crackdown-greenpeace-2026-05-29/)",
+    "Morning Bid: Deal or no deal (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-29/)",
+    "Take Five: Definitely, maybe (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-05-29/)",
+    "Pictures of the Day | May 29, 2026 (https://jp.reuters.com/pictures/pictures-day-may-29-2026-2026-05-29/GC33DIYKJBPQXMUAQ5EG4BMIG4/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-29",
+      "v": 4.45,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-29",
+      "v": 30333.18,
+      "change": 0.36
+    },
+    "SP500_FRED": {
+      "d": "2026-05-29",
+      "v": 7580.06,
+      "change": 0.22
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-29",
+      "v": 75.58,
+      "change": 1.94
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-29",
+      "v": 4537.498,
+      "change": 1.04
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-29",
+      "v": 1370.43,
+      "change": 0.36
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-29",
+      "v": 1921.14,
+      "change": 0.87
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-29",
+      "v": 15.32,
+      "change": -2.67
+    }
+  }
+}

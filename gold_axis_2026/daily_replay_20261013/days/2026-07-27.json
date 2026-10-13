@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-27",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol sert düştü ama altın pazar kazancına devam edemedi. Fed öncesi sınırlı tepki alım için yetersiz.",
+  "invalidation": "Fed sonrası kalıcı toparlanma.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises as oil retreats on pause in US-Iran strikes; Fed rate decision in focus (https://www.reuters.com/world/india/gold-rises-over-1-oil-tumbles-pause-us-iran-fighting-2026-07-27/)",
+    "China's June net gold imports via Hong Kong up from year ago, down from May (https://www.reuters.com/world/asia-pacific/chinas-june-net-gold-imports-via-hong-kong-up-year-ago-down-may-2026-07-27/)",
+    "As fashion stumbles, jewellery will help shape luxury's winners (https://www.reuters.com/business/autos-transportation/fashion-stumbles-jewellery-will-help-shape-luxurys-winners-2026-07-27/)",
+    "Gulf stocks advance on Iran de-escalation hopes; Saudi ends flat after oil-site attacks (https://www.reuters.com/world/middle-east/gulf-stocks-gain-iran-war-de-escalation-hopes-outweigh-attacks-saudi-oil-sites-2026-07-27/)",
+    "Trading Day: Oil plunges, stocks 'n' bonds shrug (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-07-27/)",
+    "Morning Bid: China chip champ (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-07-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-27",
+      "v": 4.65,
+      "change": -0.85
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-27",
+      "v": 28039.21,
+      "change": -0.32
+    },
+    "SP500_FRED": {
+      "d": "2026-07-27",
+      "v": 7413.18,
+      "change": 0.02
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-27",
+      "v": 59.67,
+      "change": 2.58
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-27",
+      "v": 4073.305,
+      "change": -0.28
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-27",
+      "v": 1272.69,
+      "change": 2.18
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-27",
+      "v": 1623.98,
+      "change": 1.9
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-27",
+      "v": 18.67,
+      "change": 0.48
+    }
+  }
+}

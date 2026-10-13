@@ -1,0 +1,52 @@
+{
+  "date": "2026-01-17",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Grönland egemenliği gerilimi yeni risk işareti. Cumartesi fiyat teyidi yok; nakitte kalıyorum. Spor haberi karar girdisi değil.",
+  "invalidation": "Grönland/tarife geriliminin işlem açılışında güvenli liman talebine dönüşmesi.",
+  "coverage": "weekend_limited_news",
+  "sources": [
+    "Protesters rally in Denmark and Greenland against Trump annexation threat (https://www.reuters.com/world/europe/protesters-denmark-support-greenland-after-trumps-takeover-threat-2026-01-17/)",
+    "Vance to lead US delegation to Milano Cortina Winter Games (https://www.reuters.com/sports/vance-lead-us-delegation-milano-cortina-winter-games-2026-01-17/)",
+    "EU calls emergency envoys meeting for Sunday after Trump vows tariffs linked to Greenland (https://www.reuters.com/world/europe/eu-calls-emergency-envoys-meeting-sunday-after-trump-vows-tariffs-linked-2026-01-17/)",
+    "Week in Review: All roads lead to Jerome (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-all-roads-lead-jerome-2026-01-17/)",
+    "Minnesota protests, Machado-Trump and Lebanon's holy DJ (https://www.reuters.com/podcasts/minnesota-protests-machado-trump-lebanons-holy-dj-2026-01-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-16",
+      "v": 4.24,
+      "change": 1.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-16",
+      "v": 25529.26,
+      "change": -0.07
+    },
+    "SP500_FRED": {
+      "d": "2026-01-16",
+      "v": 6940.01,
+      "change": -0.06
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 90.8,
+      "change": -0.51
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-16",
+      "v": 4595.515,
+      "change": -0.31
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 1755,
+      "change": -2.55
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 2346,
+      "change": 0.17
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-07",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Çin merkez bankasının Ocak alımları bugün açıklandı; yapısal destek ama geçen ayki alımı bugünün yeni talebi saymıyorum. İran görüşmeleri belirsiz, piyasa kapalı.",
+  "invalidation": "Yeni haftada fiyat toparlanmasının sürmesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "China's central bank buys gold for 15th consecutive month (https://www.reuters.com/world/china/chinas-central-bank-buys-gold-15th-consecutive-month-2026-02-07/)",
+    "Ghana curbs offshore investments to protect cedi, boost stability (https://www.reuters.com/world/africa/ghana-curbs-offshore-investments-protect-cedi-boost-stability-2026-02-07/)",
+    "Israel's Netanyahu expected to meet Trump in US on Wednesday and discuss Iran (https://www.reuters.com/world/middle-east/israels-netanyahu-expected-meet-trump-us-wednesday-discuss-iran-2026-02-07/)",
+    "Trump says good talks ongoing on Ukraine (https://www.reuters.com/world/europe/trump-says-good-talks-ongoing-ukraine-2026-02-07/)",
+    "US plans initial payment towards billions owed to UN, envoy Waltz says (https://www.reuters.com/business/finance/us-plans-initial-payment-towards-billions-owed-un-envoy-waltz-2026-02-07/)",
+    "Week in Review: Friday flip (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-out-sync-2026-02-07/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-06",
+      "v": 4.22,
+      "change": 0.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-06",
+      "v": 25075.77,
+      "change": 2.15
+    },
+    "SP500_FRED": {
+      "d": "2026-02-06",
+      "v": 6932.3,
+      "change": 1.97
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 74.94,
+      "change": -4.79
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-06",
+      "v": 4964.298,
+      "change": 5.55
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 1651,
+      "change": -5.01
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 2012,
+      "change": -5.09
+    }
+  }
+}

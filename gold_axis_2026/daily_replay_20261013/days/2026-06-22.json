@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-22",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran petrol satışına geçici izin ve görüşme ilerlemesi olumlu; faiz yine arttı, altın tepkisi sınırlı. Devam teyidi bekliyorum.",
+  "invalidation": "Faiz/dolar baskısının azalması ve altın devamı.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises as US-Iran peace optimism pulls oil prices lower (https://www.reuters.com/world/india/gold-rebounds-one-week-low-iran-cites-progress-peace-talks-2026-06-22/)",
+    "Italian cash-for-gold trader Gens Aurea plans Milan listing, ending IPO drought (https://www.reuters.com/business/retail-consumer/italys-cash-for-gold-trader-gens-aurea-plans-milan-ipo-2026-06-22/)",
+    "India's central bank sold net $8.9 billion in April, gold holdings unchanged (https://www.reuters.com/world/india/indias-central-bank-sold-net-89-billion-april-gold-holdings-unchanged-2026-06-22/)",
+    "Stocks flat, oil falls as rate worries offset Iran talks optimism (https://www.reuters.com/business/energy/global-markets-wrapup-1-pix-2026-06-22/)",
+    "Morning Bid: Seventh in a decade (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-22/)",
+    "Hot under the collar (https://www.reuters.com/podcasts/reuters-morning-bid/hot-under-collar-2026-06-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-22",
+      "v": 4.51,
+      "change": 1.12
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-22",
+      "v": 30347.08,
+      "change": -0.19
+    },
+    "SP500_FRED": {
+      "d": "2026-06-22",
+      "v": 7472.79,
+      "change": -0.37
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-22",
+      "v": 64.42,
+      "change": -0.65
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-22",
+      "v": 4189.438,
+      "change": 0.8
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-22",
+      "v": 1264.1,
+      "change": 0.45
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-22",
+      "v": 1662.39,
+      "change": -0.21
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-22",
+      "v": 17.28,
+      "change": 2.98
+    }
+  }
+}

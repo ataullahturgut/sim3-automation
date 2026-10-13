@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-11",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Enflasyon öncesi kâr satışı var; altın toparlanmanın büyük kısmını koruyor. Tek geri çekilme çıkış için yeterli değil.",
+  "invalidation": "CPI sonrası dolar/faiz artışı ve satışın devamı.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold edges lower as markets await key US inflation data (https://www.reuters.com/world/india/gold-rises-third-straight-session-inflation-prints-focus-2026-08-11/)",
+    "Oil prices continue climb on US-Iran deal doubts; stocks retreat (https://www.reuters.com/world/china/global-markets-global-markets-2026-08-11/)",
+    "Democratic senators question Belgian diamond industry about ring given to Trump (https://www.reuters.com/world/us/democratic-senators-question-belgian-diamond-industry-about-ring-given-trump-2026-08-11/)",
+    "Morning Bid: Middle East deadlock (https://www.reuters.com/world/china/global-markets-view-europe-2026-08-11/)",
+    "Oil hits new one-week high as supply disruptions outweigh Strait of Hormuz talks (https://www.reuters.com/business/energy/oil-steadies-near-one-week-highs-us-iran-peace-deal-hopes-dim-2026-08-11/)",
+    "Trading Day: Peace fog (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-11/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-11",
+      "v": 4.7,
+      "change": -0.42
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-11",
+      "v": 29525.48,
+      "change": -0.33
+    },
+    "SP500_FRED": {
+      "d": "2026-08-11",
+      "v": 7728.2,
+      "change": -0.32
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-11",
+      "v": 4367.975,
+      "change": -0.68
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-11",
+      "v": 15.28,
+      "change": -1.16
+    }
+  }
+}

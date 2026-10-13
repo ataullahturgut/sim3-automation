@@ -1,0 +1,55 @@
+{
+  "date": "2026-06-14",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Pazar altın yükseldi; imza haberi ikincil yazıda var ancak güncellenmiş pazartesi kaynaklarından ayrıştırma yetersiz. Doğrulama olmadan yeni alım yok.",
+  "invalidation": "İmzanın ve normal seans tepkisinin teyidi.",
+  "coverage": "weekend_publication_time_uncertain",
+  "sources": [
+    "White House's UFC fights concentrate Trump's sporting, political and economic power (https://www.reuters.com/business/media-telecom/trump-hosts-white-house-cage-fights-amid-war-political-scrutiny-2026-06-14/)",
+    "Stocks gain, oil slides as Trump says Iran deal signed (https://www.reuters.com/world/china/global-markets-global-markets-2026-06-14/)",
+    "Oil settles at three-month low after Trump says deal signed to end Iran war (https://www.reuters.com/business/energy/oil-slips-over-4-after-us-iran-reach-peace-deal-reopen-strait-hormuz-2026-06-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-12",
+      "v": 4.48,
+      "change": 0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-12",
+      "v": 29635.95,
+      "change": 0.64
+    },
+    "SP500_FRED": {
+      "d": "2026-06-12",
+      "v": 7431.46,
+      "change": 0.5
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-14",
+      "v": 68.02,
+      "change": 0.01
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-14",
+      "v": 4285.038,
+      "change": 1.59
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-14",
+      "v": 1287.91,
+      "change": 0.2
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-14",
+      "v": 1718.61,
+      "change": 0.01
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-12",
+      "v": 17.68,
+      "change": -9.05
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-10",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın yatay, faiz ve enerji riski sürüyor; önceki tepkinin devam teyidi yok.",
+  "invalidation": "Beklenti/fiyat dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold under pressure as Middle East tensions lift rate-hike bets (https://www.reuters.com/world/india/gold-heads-weekly-drop-gulf-attacks-reinforce-rate-hike-bets-2026-07-10/)",
+    "ASIA GOLD Gold discounts in India deepen as volatility hurts demand; purchases in China steady (https://www.reuters.com/world/china/asia-gold-gold-discounts-india-deepen-volatility-hurts-demand-purchases-china-2026-07-10/)",
+    "Wall St Week Ahead Investors to grapple with packed week of earnings, CPI, Iran headlines (https://www.reuters.com/markets/europe/wall-st-week-ahead-investors-grapple-with-packed-week-earnings-cpi-iran-2026-07-10/)",
+    "Morning Bid: Lather, rinse, retaliate (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-07-10/)",
+    "Oil prices settle lower on hopes for smoother shipping in Strait of Hormuz (https://www.reuters.com/business/energy/oil-edges-lower-heads-weekly-gain-middle-east-supply-risks-persist-2026-07-10/)",
+    "Chips, banks and volatility (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-07-10/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-10",
+      "v": 4.56,
+      "change": 0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-10",
+      "v": 29825.11,
+      "change": 0.33
+    },
+    "SP500_FRED": {
+      "d": "2026-07-10",
+      "v": 7575.39,
+      "change": 0.42
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-10",
+      "v": 59.86,
+      "change": 1
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-10",
+      "v": 4120.555,
+      "change": 0
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-10",
+      "v": 1272.76,
+      "change": 2.29
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-10",
+      "v": 1628.79,
+      "change": 0.86
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-10",
+      "v": 15.03,
+      "change": -5.11
+    }
+  }
+}

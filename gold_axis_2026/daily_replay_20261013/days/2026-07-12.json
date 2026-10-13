@@ -1,0 +1,56 @@
+{
+  "date": "2026-07-12",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Karşılıklı saldırılar ve pazar altın düşüşü sürüyor. Sonraki petrol kapanışı olabilecek yazı dışlandı.",
+  "invalidation": "Enerji gerilimi ve fiyatın düzelmesi.",
+  "coverage": "weekend_updated_market_article_excluded",
+  "sources": [
+    "Gulf bourses subdued as US and Iran exchange strikes (https://www.reuters.com/world/middle-east/gulf-bourses-subdued-us-iran-exchange-strikes-2026-07-12/)",
+    "Oil up 9% to one-month high as US  says it will blockade entire Iranian coastline, all vessels (https://www.reuters.com/business/energy/oil-jumps-more-than-3-after-us-iran-launch-strikes-mideast-2026-07-12/)",
+    "Australia's Regis folds on Vault battle, paves way for Genesis' $3.9 billion offer (https://www.reuters.com/business/australias-regis-drops-out-race-acquire-vault-minerals-2026-07-12/)",
+    "The Week in Breakingviews: Causes of correlation (https://www.reuters.com/commentary/breakingviews/global-markets-breakingviews-2026-07-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-10",
+      "v": 4.56,
+      "change": 0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-10",
+      "v": 29825.11,
+      "change": 0.33
+    },
+    "SP500_FRED": {
+      "d": "2026-07-10",
+      "v": 7575.39,
+      "change": 0.42
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-12",
+      "v": 59.75,
+      "change": -0.15
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-12",
+      "v": 4075.325,
+      "change": -1.1
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-12",
+      "v": 1276.19,
+      "change": -0.1
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-12",
+      "v": 1632.18,
+      "change": -0.09
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-10",
+      "v": 15.03,
+      "change": -5.11
+    }
+  }
+}

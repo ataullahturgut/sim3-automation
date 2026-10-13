@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-30",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Şahin Fed ve yükselen faiz karşısında altın yatay; enerji rahatlaması yeterli destek üretmedi.",
+  "invalidation": "Veri veya politika iletişimiyle beklenti dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold set for worst quarterly loss in 13 years on hawkish Fed stance (https://www.reuters.com/business/gold-set-fourth-monthly-fall-bets-fed-rate-hikes-2026-06-30/)",
+    "Stocks end quarter with big gains as oil tumbles the most in years; gold, yen also fall (https://www.reuters.com/world/china/global-markets-global-markets-2026-06-30/)",
+    "Iran war and AI boom drive wild ride on global markets (https://www.reuters.com/world/americas/global-markets-h1-analysis-pix-2026-06-30/)",
+    "Trading Day: Stocks cap weak month, stellar quarter (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-30/)",
+    "Morning Bid: Doubled by halftime (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-30/)",
+    "Surprisingly quick oil price retreat eases urgency for ECB to act, sources say (https://www.reuters.com/business/energy/surprisingly-quick-oil-price-retreat-eases-urgency-ecb-act-sources-say-2026-06-30/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-30",
+      "v": 4.44,
+      "change": 1.37
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-30",
+      "v": 30276.35,
+      "change": 1.68
+    },
+    "SP500_FRED": {
+      "d": "2026-06-30",
+      "v": 7499.36,
+      "change": 0.79
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-30",
+      "v": 57.75,
+      "change": -0.93
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-30",
+      "v": 4012.865,
+      "change": -0.02
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-30",
+      "v": 1216.24,
+      "change": -0.1
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-30",
+      "v": 1576.41,
+      "change": -1.27
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-30",
+      "v": 16.45,
+      "change": -6.8
+    }
+  }
+}

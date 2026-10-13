@@ -1,0 +1,51 @@
+{
+  "date": "2026-01-25",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Fed toplantısı öncesi politika/güven riski ve Kanada'ya tarife tehdidi sürüyor. Altın pazar açılışında güçlü; yalnız yüksek fiyat nedeniyle satış yapmıyorum.",
+  "invalidation": "Fed/dolar gelişmesiyle güven anlatısının tersine dönmesi.",
+  "coverage": "weekend_news_partial_market",
+  "sources": [
+    "Week Ahead: Powell play (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-powell-play-2026-01-25/)",
+    "Poland cools on joining euro zone after its economy surges, FT reports (https://www.reuters.com/business/finance/poland-cools-joining-euro-zone-after-its-economy-surges-ft-reports-2026-01-25/)",
+    "ICE shooting, winter storm and Japan's panda send-off (https://www.reuters.com/podcasts/ice-shooting-winter-storm-japans-panda-send-off-2026-01-25/)",
+    "Airbus CEO warns of new risks after 'significant' trade damage (https://www.reuters.com/business/aerospace-defense/airbus-ceo-warns-new-risks-after-significant-trade-damage-2026-01-25/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-23",
+      "v": 4.24,
+      "change": -0.47
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-23",
+      "v": 25605.47,
+      "change": 0.34
+    },
+    "SP500_FRED": {
+      "d": "2026-01-23",
+      "v": 6915.61,
+      "change": 0.03
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-23",
+      "v": 99,
+      "change": 6.02
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-25",
+      "v": 5039.395,
+      "change": 1.12
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-23",
+      "v": 1912,
+      "change": 2.8
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-23",
+      "v": 2663,
+      "change": 7.38
+    }
+  }
+}

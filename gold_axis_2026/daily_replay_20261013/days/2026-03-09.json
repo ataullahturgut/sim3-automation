@@ -1,0 +1,53 @@
+{
+  "date": "2026-03-09",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrolde aşırı sıçrama ve sonra geri çekilme var; altın toparlansa da enerji/dolar baskısı çözülmüş değil. Söylem kaynaklı tek seans rahatlaması yeterli değil.",
+  "invalidation": "Hürmüz/arz akışında gerçek iyileşme ve dolar/faiz baskısının düşmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips on stronger dollar, higher rate expectations (https://www.reuters.com/world/india/gold-prices-fall-firmer-dollar-dimming-rate-cut-hopes-2026-03-09/)",
+    "Oil soars then retreats, gold drops as Iran war jolts global commodity markets (https://www.reuters.com/business/energy/oil-soars-25-gold-drops-iran-war-jolts-global-commodity-markets-2026-03-09/)",
+    "Congo state gold trader targets volumes of 15 tons of artisanal bullion in 2026 (https://www.reuters.com/world/africa/congo-state-gold-trader-targets-volumes-15-tons-artisanal-bullion-2026-2026-03-09/)",
+    "Middle East conflict sticks 2026 consensus trades into reverse (https://www.reuters.com/business/finance/middle-east-conflict-sticks-2026-consensus-trades-into-reverse-2026-03-09/)",
+    "Morning Bid: Oil's triple-digit trouble (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-09/)",
+    "Oil shock (https://www.reuters.com/podcasts/reuters-morning-bid/oil-shock-2026-03-09/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-09",
+      "v": 4.12,
+      "change": -0.72
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-09",
+      "v": 24967.25,
+      "change": 1.32
+    },
+    "SP500_FRED": {
+      "d": "2026-03-09",
+      "v": 6795.99,
+      "change": 0.83
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-09",
+      "v": 86.21,
+      "change": -0.57
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-09",
+      "v": 5139.475,
+      "change": 1.26
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-09",
+      "v": 1691.97,
+      "change": -3.95
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-09",
+      "v": 2185.18,
+      "change": -2.31
+    }
+  }
+}

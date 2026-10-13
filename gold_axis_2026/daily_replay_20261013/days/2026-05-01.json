@@ -1,0 +1,59 @@
+{
+  "date": "2026-05-01",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran teklifi ve petrol gevşemesi olumlu; metaller toparlandı fakat altın önceki tepkiyi sürdüremedi. Fed kaynaklı faiz baskısı sürüyor.",
+  "invalidation": "Petrol/dolar baskısının kalıcı azalması ve altının devam teyidi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Asset Tokenization in the US: A Practical Guide (https://www.reuters.com/practical-law-the-journal/transactional/asset-tokenization-us-practical-guide-2026-05-01/)",
+    "Pictures of the Day | May 1, 2026 (https://jp.reuters.com/pictures/pictures-day-may-1-2026-2026-05-01/)",
+    "Gold turns positive as oil eases on hopes for Iran talks (https://www.reuters.com/world/india/gold-heads-weekly-loss-oil-driven-inflation-concerns-2026-05-01/)",
+    "Tether slows gold purchases for USDT reserves in first quarter, data shows (https://www.reuters.com/world/americas/tether-slows-gold-purchases-usdt-reserves-first-quarter-data-shows-2026-05-01/)",
+    "Morning Bid: Never mind the oil, feel the earnings (https://www.reuters.com/world/china/global-markets-view-europe-2026-05-01/)",
+    "Take Five: Sell in May? Let's find out (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-05-01/)",
+    "Oil's price boom foreshadows a post-war bust (https://www.reuters.com/commentary/breakingviews/oils-price-boom-foreshadows-post-war-bust-2026-05-01/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-01",
+      "v": 4.39,
+      "change": -0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-01",
+      "v": 27710.36,
+      "change": 0.94
+    },
+    "SP500_FRED": {
+      "d": "2026-05-01",
+      "v": 7230.12,
+      "change": 0.29
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-01",
+      "v": 74.65,
+      "change": 3.38
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-01",
+      "v": 4613.558,
+      "change": -0.35
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-01",
+      "v": 1529.14,
+      "change": 3.81
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-01",
+      "v": 1985.88,
+      "change": 4.44
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-01",
+      "v": 16.99,
+      "change": 0.59
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-11",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Güçlü CPI şahin beklentiyi koruyor; altın tepki alımı var ama faiz desteği yok. Fed öncesi devam teyidi yetersiz.",
+  "invalidation": "Fed kararı sonrası fiyat/kur dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises on dip-buying even as Fed rate hike bets rise after US inflation data (https://www.reuters.com/world/india/gold-track-third-weekly-loss-us-inflation-data-looms-2026-09-11/)",
+    "Wall Street jumps, oil lower ahead of Fed vote next week (https://www.reuters.com/world/china/global-markets-corrected-2026-09-11/)",
+    "Morning Bid: Take a hike (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-11/)",
+    "Oil falls but head for 8% weekly gain on tight supply; US diesel hits record (https://www.reuters.com/business/energy/oil-prices-set-end-week-over-100-first-time-nearly-4-months-2026-09-11/)",
+    "IEA warns 2026 oil supply gap will widen on delayed return of normal Gulf flows (https://www.reuters.com/business/energy/global-2026-oil-supply-gap-deepen-delayed-return-normal-gulf-flows-iea-says-2026-09-11/)",
+    "The 5% question (https://www.reuters.com/podcasts/reuters-morning-bid/5-question-2026-09-11/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-11",
+      "v": 4.96,
+      "change": 0.2
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-11",
+      "v": 29368.44,
+      "change": 0.91
+    },
+    "SP500_FRED": {
+      "d": "2026-09-11",
+      "v": 7656.98,
+      "change": 0.86
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-11",
+      "v": 4347.508,
+      "change": 0.68
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-11",
+      "v": 15.84,
+      "change": -11.21
+    }
+  }
+}

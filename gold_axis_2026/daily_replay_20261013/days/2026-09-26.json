@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-26",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran planı reddedildi; enerji riskinde çözülme yok. Madenci birleşmesi küresel spot talebiyle eşitlenmedi.",
+  "invalidation": "Diplomatik ve piyasa teyidi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Gold Fields expresses interest in buying Northern Star, Bloomberg reports (https://www.reuters.com/world/africa/gold-fields-expresses-interest-buying-northern-star-bloomberg-reports-2026-09-26/)",
+    "Trump rejects Iranian proposal to open Hormuz and end fighting (https://www.reuters.com/world/middle-east/iran-awaits-us-move-after-wsj-report-says-trump-rejects-peace-plan-2026-09-26/)",
+    "Six big takeaways from a turbulent week of UN diplomacy (https://www.reuters.com/world/americas/six-big-takeaways-turbulent-week-un-diplomacy-2026-09-26/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-25",
+      "v": 5.17,
+      "change": -0.19
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-25",
+      "v": 30608.13,
+      "change": 0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-09-25",
+      "v": 7743.41,
+      "change": 0.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-25",
+      "v": 4264.545,
+      "change": -0.15
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-25",
+      "v": 14.87,
+      "change": -5.11
+    }
+  }
+}

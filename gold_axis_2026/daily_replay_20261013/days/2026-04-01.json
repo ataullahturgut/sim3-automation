@@ -1,0 +1,57 @@
+{
+  "date": "2026-04-01",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar gevşemesi ve gerilimin azalacağı beklentisi altın/metal toparlanmasını sürdürüyor. Faizde küçük artışa rağmen fiyat güçlü.",
+  "invalidation": "Beklenen açıklamanın gerilimi yeniden artırması ve altının kazancını silmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold extends gains on softer dollar, focus on Iran war (https://www.reuters.com/world/india/gold-ticks-up-dollar-slips-mideast-de-escalation-hopes-2026-04-01/)",
+    "Hedge funds hammered by market turbulence triggered by Iran conflict (https://www.reuters.com/business/finance/hedge-funds-face-worst-monthly-drawdown-over-four-years-goldman-sachs-tells-2026-04-01/)",
+    "War-driven US dollar rebound to fade as broad safe-haven appeal erodes (https://www.reuters.com/markets/wealth/war-driven-us-dollar-rebound-fade-broad-safe-haven-appeal-erodes-2026-04-01/)",
+    "Trading Day: April fool of hope (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-04-01/)",
+    "End in sight? (https://www.reuters.com/podcasts/reuters-morning-bid/end-sight-2026-04-01/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-01",
+      "v": 4.33,
+      "change": 0.7
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-01",
+      "v": 24019.99,
+      "change": 1.18
+    },
+    "SP500_FRED": {
+      "d": "2026-04-01",
+      "v": 6575.32,
+      "change": 0.72
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-01",
+      "v": 74.94,
+      "change": 2.28
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-01",
+      "v": 4775.878,
+      "change": 2.05
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-01",
+      "v": 1482.23,
+      "change": 1.94
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-01",
+      "v": 1965.7,
+      "change": 1.88
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-01",
+      "v": 24.54,
+      "change": -2.81
+    }
+  }
+}

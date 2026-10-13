@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-28",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Taslak ateşkes ve düşük dolar/faiz altını toparladı; henüz onay yok, önceki düşüş sonrası ilk tepki.",
+  "invalidation": "Anlaşmanın onayı ve kazancın korunması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rebounds after Iran and US reach outline ceasefire deal (https://www.reuters.com/world/asia-pacific/gold-eases-us-iran-tensions-cloud-interest-rate-outlook-2026-05-28/)",
+    "S&P 500 and Nasdaq hit record closing highs as US and Iran agree to extend ceasefire (https://www.reuters.com/business/wall-st-futures-dip-escalating-mideast-tensions-2026-05-28/)",
+    "Morning Bid: Three months, and counting (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-28/)",
+    "Bank of Canada says financial system is solid, but vulnerabilities have grown (https://www.reuters.com/world/americas/bank-canada-says-financial-system-is-solid-vulnerabilities-have-grown-2026-05-28/)",
+    "Alerts, story on KKR consortium weighing revised bid for DCC withdrawn (https://www.reuters.com/business/energy/kkr-energy-capital-weigh-739-billion-bid-irelands-dcc-sky-news-reports-2026-05-28/)",
+    "UK business sentiment edges up in May, Lloyds says (https://www.reuters.com/world/uk/uk-business-sentiment-edges-up-may-lloyds-says-2026-05-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-28",
+      "v": 4.45,
+      "change": -0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-28",
+      "v": 30223.89,
+      "change": 0.84
+    },
+    "SP500_FRED": {
+      "d": "2026-05-28",
+      "v": 7563.63,
+      "change": 0.58
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-28",
+      "v": 74.14,
+      "change": -2.07
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-28",
+      "v": 4490.638,
+      "change": 0.75
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-28",
+      "v": 1365.45,
+      "change": -0.94
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-28",
+      "v": 1904.52,
+      "change": -1.55
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-28",
+      "v": 15.74,
+      "change": -3.38
+    }
+  }
+}

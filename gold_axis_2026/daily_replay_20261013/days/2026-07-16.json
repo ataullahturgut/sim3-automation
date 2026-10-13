@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-16",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Enerji gerilimi ve dolar/faiz baskısı yumuşak enflasyon etkisini tersine çevirdi; altın iki günlük kazancı aştı. Dünkü alım tezi yanlışlandı.",
+  "invalidation": "Gerilimin çözülmesi ve kalıcı fiyat dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls 2% as escalating Middle East tensions reinforce US rate-hike bets (https://www.reuters.com/business/gold-falls-mideast-escalation-dims-hopes-easing-inflation-2026-07-16/)",
+    "Global 'FOMO' keeps fueling Wall Street's AI exceptionalism (https://www.reuters.com/commentary/reuters-open-interest/global-fomo-keeps-fueling-wall-streets-ai-exceptionalism-2026-07-16/)",
+    "TSX retreats from record high as mining shares slide (https://www.reuters.com/business/tsx-futures-edge-lower-gold-slips-middle-east-tensions-linger-2026-07-16/)",
+    "Chipmakers put pressure on equity indexes globally, oil dips (https://www.reuters.com/world/china/global-markets-global-markets-2026-07-16/)",
+    "Oil settles lower, but remains near one-month high on U.S.-Iran tension (https://www.reuters.com/business/energy/oil-prices-rise-4th-day-us-strikes-iran-raise-fears-wider-conflict-2026-07-16/)",
+    "SpaceX grounded (https://www.reuters.com/podcasts/reuters-morning-bid/spacex-grounded-2026-07-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-16",
+      "v": 4.57,
+      "change": 0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-16",
+      "v": 29025.77,
+      "change": -1.62
+    },
+    "SP500_FRED": {
+      "d": "2026-07-16",
+      "v": 7533.77,
+      "change": -0.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-16",
+      "v": 56.45,
+      "change": -2.89
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-16",
+      "v": 3977.745,
+      "change": -1.98
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-16",
+      "v": 1286.09,
+      "change": -1.68
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-16",
+      "v": 1652.35,
+      "change": 0.18
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-16",
+      "v": 16.73,
+      "change": 6.76
+    }
+  }
+}

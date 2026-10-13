@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-17",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Fed projeksiyonu faiz rahatlaması tezine ters; faiz 6 baz puan arttı ve altın son kazancı verdi. Barış tek başına yeterli olmadı.",
+  "invalidation": "Şahin fiyatlamanın çözülmesi ve altın toparlanması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls 1% after Fed holds rates steady, signals rate hike this year (https://www.reuters.com/world/india/gold-edges-up-rate-hike-fears-ease-fed-rate-decision-focus-2026-06-17/)",
+    "G7 sets up critical minerals alliance, platform to cut reliance on China (https://www.reuters.com/world/europe/g7-sets-up-critical-minerals-alliance-crisis-platform-2026-06-17/)",
+    "Trump's Iran war weighs on G7 economies, but don't expect hard talk in France (https://www.reuters.com/world/china/trumps-iran-war-weighs-g7-economies-dont-expect-hard-talk-france-2026-06-17/)",
+    "Judge formally ends US prosecution of Turkey's Halkbank after Trump deal (https://www.reuters.com/legal/government/judge-weigh-us-deal-end-halkbank-prosecution-2026-06-17/)",
+    "The deal: calm now, risks ahead (https://www.reuters.com/world/middle-east/deal-calm-now-risks-ahead-2026-06-17/)",
+    "Warsh's World (https://www.reuters.com/podcasts/reuters-morning-bid/warshs-world-2026-06-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-17",
+      "v": 4.49,
+      "change": 1.35
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-17",
+      "v": 29670.95,
+      "change": -0.99
+    },
+    "SP500_FRED": {
+      "d": "2026-06-17",
+      "v": 7420.1,
+      "change": -1.21
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-17",
+      "v": 70.12,
+      "change": 0.13
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-17",
+      "v": 4266.238,
+      "change": -1.58
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-17",
+      "v": 1359.61,
+      "change": 0.71
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-17",
+      "v": 1807.73,
+      "change": 0.91
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-17",
+      "v": 18.44,
+      "change": 12.37
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "date": "2026-02-13",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yumuşak CPI ve düşen faiz yeni olumlu kanıt; fakat dünkü ortak satışın ardından tek günlük geri dönüş. Hızlı al-sat döngüsüne girmeden kalıcılık bekliyorum.",
+  "invalidation": "Altının yeni destekle birkaç seans güçlenmesi; beklemek fırsat kaybettirebilir.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises over 2% as soft inflation data rekindles Fed rate-cut hopes (https://www.reuters.com/world/india/gold-silver-rise-near-one-week-lows-bargain-hunting-2026-02-13/)",
+    "Trading Day: Bears barge bulls aside (https://www.reuters.com/markets/europe/global-markets-trading-day-graphic-2026-02-13/)",
+    "US stocks edge up, yields fall as US CPI data cooler than expected (https://www.reuters.com/world/china/global-markets-pix-2026-02-13/)",
+    "Mali renews Barrick Mining's Loulo license for 10 more years (https://www.reuters.com/world/africa/mali-renews-barrick-minings-loulo-license-10-more-years-2026-02-13/)",
+    "Take Five: Giddy Up (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-02-13/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-13",
+      "v": 4.04,
+      "change": -1.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-13",
+      "v": 24732.73,
+      "change": 0.18
+    },
+    "SP500_FRED": {
+      "d": "2026-02-13",
+      "v": 6836.17,
+      "change": 0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-13",
+      "v": 76.56,
+      "change": -7.08
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-13",
+      "v": 5040.285,
+      "change": 2.45
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-13",
+      "v": 1650.97,
+      "change": -2.69
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-13",
+      "v": 2025.47,
+      "change": -2.79
+    }
+  }
+}

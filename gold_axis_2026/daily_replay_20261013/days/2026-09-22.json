@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-22",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Şahin beklenti sürüyor fakat altın yatay, petrol gevşiyor. Belirgin kırılma olmadan küçük dalgalanmaya işlem yok.",
+  "invalidation": "Altının birkaç seans güç kaybetmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold eases as traders cement bets for higher for longer interest rates (https://www.reuters.com/world/india/gold-muted-higher-for-longer-rate-outlook-weighs-2026-09-22/)",
+    "'One after another, they started dying': survivors recount deaths in detention in Nigeria (https://www.reuters.com/world/africa/one-after-another-they-started-dying-survivors-recount-deaths-detention-nigeria-2026-09-22/)",
+    "Oil prices settle lower as crude flows from Middle East improve (https://www.reuters.com/business/energy/oil-rises-slightly-ahead-potential-us-iran-talks-2026-09-22/)",
+    "Morning Bid: As oil swoons, AI recharges (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-22/)",
+    "Gulf stocks mixed ahead of potential US-Iran UN talks (https://www.reuters.com/world/middle-east/major-gulf-stocks-subdued-ahead-potential-us-iran-un-talks-2026-09-22/)",
+    "Trading Day: Oil slips, Nasdaq rips (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-09-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-22",
+      "v": 4.96,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-22",
+      "v": 30732.4,
+      "change": 0.82
+    },
+    "SP500_FRED": {
+      "d": "2026-09-22",
+      "v": 7764.64,
+      "change": 0
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-22",
+      "v": 4361.165,
+      "change": 0.05
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-22",
+      "v": 14.21,
+      "change": -4.44
+    }
+  }
+}

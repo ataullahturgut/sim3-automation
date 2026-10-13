@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-29",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Sert satış sonrası tepki var; faiz baskısı devam ediyor ve ilk tepki. Teknik dolar yorumu gerçekleşmiş dönüş değil.",
+  "invalidation": "İkinci seans toparlanma ve kur/faiz desteği.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises after hitting seven-week low, Fed hike bets curb gains (https://www.reuters.com/world/india/gold-lingers-near-seven-week-low-ahead-us-economic-data-2026-09-29/)",
+    "Mapping the Market: Dollar gains still possible, but signs of trouble emerge (https://www.reuters.com/default/global-markets-technicals-graphics-2026-09-29/)",
+    "Qatari mediators press peace deal between US and Iran (https://www.reuters.com/world/middle-east/trump-denies-offering-iran-sanctions-relief-tehran-says-ready-talks-2026-09-29/)",
+    "Trump says he does not know if Iran is going to 'give up yet' (https://www.reuters.com/world/middle-east/trump-says-he-does-not-know-if-iran-is-going-give-up-yet-2026-09-29/)",
+    "Morning Bid: Existential risks (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-29/)",
+    "Trump, AI CEOs sign voluntary safety pact, back data center expansion (https://www.reuters.com/legal/government/trump-host-zuckerberg-anthropics-amodei-other-ai-titans-tuesday-2026-09-29/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-29",
+      "v": 5.26,
+      "change": 0.38
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-29",
+      "v": 30339.33,
+      "change": 0.21
+    },
+    "SP500_FRED": {
+      "d": "2026-09-29",
+      "v": 7670.84,
+      "change": -0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-29",
+      "v": 4178.355,
+      "change": 1.41
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-29",
+      "v": 16.04,
+      "change": -0.19
+    }
+  }
+}

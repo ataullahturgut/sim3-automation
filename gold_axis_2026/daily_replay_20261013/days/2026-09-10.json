@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-10",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Güçlü üretici enflasyonu ve enerji baskısıyla faiz 12 baz puan arttı; altın düştü. Geri alım desteği baskıyı engellemedi.",
+  "invalidation": "Enflasyon ve politika beklentisinde dönüş.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls over 1% as US inflation data boosts Fed hike bets (https://www.reuters.com/world/india/gold-edges-higher-weaker-dollar-us-inflation-data-focus-2026-09-10/)",
+    "Playing the game (https://www.reuters.com/markets/econ-world/playing-game-2026-09-10/)",
+    "Trump administration to sanction unnamed 'large' bank on Monday, Bessent says (https://www.reuters.com/business/finance/trump-administration-sanction-unnamed-large-bank-monday-bessent-says-2026-09-10/)",
+    "UK bond yields soar to multi-decade highs on fresh Mideast conflict (https://www.reuters.com/world/uk/uk-10-year-gilt-yield-hits-new-19-year-high-2026-09-10/)",
+    "Morning Bid: Forever war? (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-10/)",
+    "Lagarde comments at ECB press conference (https://www.reuters.com/markets/us/lagarde-comments-ecb-press-conference-2026-09-10/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-10",
+      "v": 4.95,
+      "change": 2.48
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-10",
+      "v": 29103.51,
+      "change": -1.08
+    },
+    "SP500_FRED": {
+      "d": "2026-09-10",
+      "v": 7591.7,
+      "change": -0.58
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-10",
+      "v": 4318.285,
+      "change": -1.84
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-10",
+      "v": 17.84,
+      "change": 8.38
+    }
+  }
+}

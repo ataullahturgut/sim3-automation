@@ -1,0 +1,55 @@
+{
+  "date": "2026-05-02",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Hafta sonu; Irak arz toparlanması Hürmüz çözümüne bağlı. Şartlı üretim hedefi gerçekleşmiş arz artışı değil; yeni altın teyidi yok.",
+  "invalidation": "Arzın fiilen açılması ve piyasa tepkisi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Week in Review: OPEC minus one (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-opec-minus-one-2026-05-02/)",
+    "Berkshire Hathaway profit rises despite consumer stress, cash sets record (https://www.reuters.com/business/berkshire-hathaway-operating-profit-rises-2026-05-02/)",
+    "Iraq aims to restore oil output above 3 million bpd from southern fields within 1-2 months (https://www.reuters.com/business/energy/iraq-says-oil-output-exports-can-recover-within-week-once-hormuz-crisis-ends-2026-05-02/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-01",
+      "v": 4.39,
+      "change": -0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-01",
+      "v": 27710.36,
+      "change": 0.94
+    },
+    "SP500_FRED": {
+      "d": "2026-05-01",
+      "v": 7230.12,
+      "change": 0.29
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-02",
+      "v": 75.35,
+      "change": 0.94
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-01",
+      "v": 4613.558,
+      "change": -0.35
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-02",
+      "v": 1527.97,
+      "change": -0.08
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-02",
+      "v": 1988.33,
+      "change": 0.12
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-01",
+      "v": 16.99,
+      "change": 0.59
+    }
+  }
+}

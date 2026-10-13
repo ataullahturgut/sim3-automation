@@ -1,0 +1,54 @@
+{
+  "date": "2026-06-27",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Yeni saldırılar alım için karşıt kanıt; hafta sonu aktarım teyidi yok. Mevcut pozisyonu açılışa kadar koruyorum.",
+  "invalidation": "Petrol/dolar yükselişi ve altın satışının birleşmesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "U.S. conducts further strikes on Iran (https://www.reuters.com/world/middle-east/us-conducts-further-strikes-iran-2026-06-27/)",
+    "US Iran strikes, Cape Verde and Sweden's immigration crackdown (https://www.reuters.com/podcasts/us-iran-strikes-cape-verde-swedens-immigration-crackdown-2026-06-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-26",
+      "v": 4.38,
+      "change": -0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-26",
+      "v": 29118.24,
+      "change": -1.09
+    },
+    "SP500_FRED": {
+      "d": "2026-06-26",
+      "v": 7354.02,
+      "change": -0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-27",
+      "v": 59.16,
+      "change": 1.74
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-26",
+      "v": 4087.915,
+      "change": 1.54
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-27",
+      "v": 1205.58,
+      "change": 0.51
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-27",
+      "v": 1619.3,
+      "change": 0.73
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-26",
+      "v": 18.41,
+      "change": -2.54
+    }
+  }
+}

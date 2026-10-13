@@ -1,0 +1,55 @@
+{
+  "date": "2026-05-23",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Hafta sonu taramasında altın tezini değiştirecek doğrulanmış haber yok; metal saatleri belirsiz.",
+  "invalidation": "Yeni işlem seansında haber ve aktarım teyidi.",
+  "coverage": "weekend_limited_relevant_news",
+  "sources": [
+    "Tens of thousands march in Madrid to demand prime minister's resignation (https://www.reuters.com/world/tens-thousands-march-madrid-demand-spanish-prime-minister-resigns-2026-05-23/)",
+    "Week in Review: SpaceX shoots for the stars (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-spacex-shoots-stars-2026-05-23/)",
+    "India's Goyal to visit Canada with 150 business leaders to boost trade ties (https://www.reuters.com/world/india/indias-goyal-visit-canada-with-150-business-leaders-boost-trade-ties-2026-05-23/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-22",
+      "v": 4.56,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-22",
+      "v": 29481.64,
+      "change": 0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-05-22",
+      "v": 7473.47,
+      "change": 0.37
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-23",
+      "v": 75.52,
+      "change": -1.27
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-22",
+      "v": 4508.395,
+      "change": -0.76
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-23",
+      "v": 1348.78,
+      "change": -2.74
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-23",
+      "v": 1924.43,
+      "change": -2.09
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-22",
+      "v": 16.7,
+      "change": -0.36
+    }
+  }
+}

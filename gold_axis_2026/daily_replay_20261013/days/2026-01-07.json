@@ -1,0 +1,48 @@
+{
+  "date": "2026-01-07",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar güçlenmesi ve kâr satışı karşıt kanıt; ancak faiz geriliyor, altın önceki yükselişin tamamını vermedi. Tek düzeltmeyle çıkmıyorum.",
+  "invalidation": "Dolar baskısının sürmesi ve altının birkaç seans güç kaybetmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips from one-week high on profit-booking, dollar strength (https://www.reuters.com/world/india/gold-slides-1-week-high-profit-booking-dollar-strength-2026-01-07/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-07",
+      "v": 4.15,
+      "change": -0.72
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-07",
+      "v": 25653.9,
+      "change": 0.06
+    },
+    "SP500_FRED": {
+      "d": "2026-01-07",
+      "v": 6920.93,
+      "change": -0.34
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-07",
+      "v": 78.985,
+      "change": 0.65
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-07",
+      "v": 4463.205,
+      "change": -0.67
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-07",
+      "v": 1755,
+      "change": 2.21
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-07",
+      "v": 2319,
+      "change": 0.39
+    }
+  }
+}

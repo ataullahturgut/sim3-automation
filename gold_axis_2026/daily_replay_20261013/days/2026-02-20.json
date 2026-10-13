@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-20",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Zayıf büyüme ve tarife kararının ardından yeni tarife tehdidi belirsizliği artırdı; altın ve metaller birkaç günlük toparlanmayı güçlendirdi. Yeniden alım.",
+  "invalidation": "Tarife belirsizliğinin çözülmesi veya petrol-faiz-dolar kanalının altını baskılaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains over 1% on soft US data, Trump's fresh tariff move (https://www.reuters.com/world/india/gold-heads-weekly-loss-dollar-advances-2026-02-20/)",
+    "Asia Gold: India discounts widen as price volatility dampens demand; China on holiday (https://www.reuters.com/world/china/asia-gold-india-discounts-widen-price-volatility-dampens-demand-china-holiday-2026-02-20/)",
+    "Brent rises late, settles higher and with weekly gain on Iran-US jitters (https://www.reuters.com/business/energy/oil-prices-rise-trump-puts-time-limit-iran-stand-off-2026-02-20/)",
+    "Sibanye still committed to battery metals despite lithium impairment, CEO says (https://www.reuters.com/world/africa/sibanye-stillwater-profit-up-nearly-four-fold-firmer-metal-prices-2026-02-20/)",
+    "UK businesses and consumers show signs of recovery in early 2026 (https://www.reuters.com/world/uk/uk-businesses-report-another-strong-month-pmi-survey-shows-2026-02-20/)",
+    "Morning Bid: Oil engulfed (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-20/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-20",
+      "v": 4.08,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-20",
+      "v": 25012.62,
+      "change": 0.87
+    },
+    "SP500_FRED": {
+      "d": "2026-02-20",
+      "v": 6909.51,
+      "change": 0.69
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-20",
+      "v": 82.36,
+      "change": 5.77
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-20",
+      "v": 5106.169,
+      "change": 2.38
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-20",
+      "v": 1757.19,
+      "change": 3.86
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-20",
+      "v": 2154.44,
+      "change": 4.03
+    }
+  }
+}

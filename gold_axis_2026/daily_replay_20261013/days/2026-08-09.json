@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-09",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Diplomasi yavaş ve şartlı; pazar altın kazancını koruyor. Pazartesi petrol kapanışı dışlandı.",
+  "invalidation": "Tam seansta kazancın bozulması.",
+  "coverage": "weekend_updated_monday_article_excluded",
+  "sources": [
+    "Trump says U.S. is 'low-keying it' with Iran, stresses economic pain, according to Axios interview (https://www.reuters.com/world/middle-east/trump-says-us-is-low-keying-it-with-iran-stresses-economic-pain-according-axios-2026-08-09/)",
+    "Oil climbs 5% as Iran, US both demand compensation and Hormuz hopes fade (https://www.reuters.com/business/energy/oil-rises-uncertainty-continues-over-reopening-strait-2026-08-09/)",
+    "Most Gulf bourses subdued as investors await Strait of Hormuz deal clarity (https://www.reuters.com/world/middle-east/most-gulf-bourses-subdued-investors-await-strait-hormuz-deal-clarity-2026-08-09/)",
+    "Iran says Oman deal is in 'final stages' but US must act to open Hormuz (https://www.reuters.com/world/asia-pacific/iran-says-oman-deal-is-final-stages-us-must-act-open-hormuz-2026-08-09/)",
+    "Yemen's Houthis attack Saudi refinery after kingdom signs defence pact (https://www.reuters.com/business/energy/fire-extinguished-aramco-facility-jizan-saudi-arabia-says-2026-08-09/)",
+    "Pope Leo renews call for Ukraine war to end (https://www.reuters.com/world/pope-leo-renews-call-ukraine-war-end-2026-08-09/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-07",
+      "v": 4.65,
+      "change": -0.85
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-07",
+      "v": 29722.3,
+      "change": 1.19
+    },
+    "SP500_FRED": {
+      "d": "2026-08-07",
+      "v": 7757.64,
+      "change": 0.62
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-09",
+      "v": 4340.075,
+      "change": -0.01
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-07",
+      "v": 14.9,
+      "change": -1.65
+    }
+  }
+}

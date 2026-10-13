@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-04",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yeniden ateşkes umudu altını toparladı; diğer metaller zayıf ve önceki gün kaybı tam telafi edilmedi. İstihdam öncesi teyit yetersiz.",
+  "invalidation": "Veri sonrası altın ve faiz/dolar uyumu.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold climbs as Middle East ceasefire hopes pressure dollar, bond yields (https://www.reuters.com/business/gold-rises-softer-dollar-oil-markets-weigh-us-iran-peace-optimism-2026-06-04/)",
+    "Physical investment to surpass jewellery as top gold demand category, consultancy Metals Focus says (https://www.reuters.com/world/china/physical-investment-surpass-jewellery-top-gold-demand-category-consultancy-2026-06-04/)",
+    "India's Rajesh Exports chair asserts accuracy of financials after SEBI allegations (https://www.reuters.com/world/india/indias-rajesh-exports-says-financial-disclosures-were-correct-after-sebi-2026-06-04/)",
+    "India gold ETFs see first monthly outflow in a year as investors book profits (https://www.reuters.com/world/india/india-gold-etfs-see-first-monthly-outflow-year-investors-book-profits-2026-06-04/)",
+    "Morning Bid: Summer clouds (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-04/)",
+    "Trading Day: Who needs tech? (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-04/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-04",
+      "v": 4.47,
+      "change": -0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-04",
+      "v": 30407.81,
+      "change": -0.53
+    },
+    "SP500_FRED": {
+      "d": "2026-06-04",
+      "v": 7584.31,
+      "change": 0.41
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-04",
+      "v": 73.24,
+      "change": -2.05
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-04",
+      "v": 4469.278,
+      "change": 0.47
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-04",
+      "v": 1311.96,
+      "change": -3.99
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-04",
+      "v": 1866.33,
+      "change": -3.26
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-04",
+      "v": 15.4,
+      "change": -4.11
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-17",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran görüşmelerinde ilerleme ve güçlü dolar aynı yönde altını baskılıyor; fiyat düşüşü teyit ediyor.",
+  "invalidation": "Görüşmelerin bozulması veya dolar-faiz baskısının tersine dönmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slides more than 2% on progress in US-Iran talks, firmer dollar (https://www.reuters.com/world/asia-pacific/gold-falls-1-firmer-dollar-thin-asia-trade-2026-02-17/)",
+    "Quiet markets, loud diplomacy: All eyes on Iran (https://www.reuters.com/world/china/global-markets-view-europe-2026-02-17/)",
+    "Wall Street wakes up (https://www.reuters.com/podcasts/reuters-morning-bid/wall-street-wakes-up-2026-02-17/)",
+    "New paint scheme for Trump's Air Force One includes gold, red, white and blue (https://www.reuters.com/business/aerospace-defense/us-air-force-unveils-new-paint-scheme-air-force-one-executive-aircraft-fleet-2026-02-17/)",
+    "Morning Bid: Sleepy 'uber-bulls' (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-17/)",
+    "European shares rise as banks, healthcare rally; investors weigh geopolitics, AI impact (https://www.reuters.com/markets/europe/european-shares-steady-geopolitical-uncertainty-dominates-mood-2026-02-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-17",
+      "v": 4.05,
+      "change": 0.25
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-17",
+      "v": 24701.6,
+      "change": -0.13
+    },
+    "SP500_FRED": {
+      "d": "2026-02-17",
+      "v": 6843.22,
+      "change": 0.1
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-17",
+      "v": 73.48,
+      "change": -2.26
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-17",
+      "v": 4858.815,
+      "change": -2.62
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-17",
+      "v": 1691.01,
+      "change": -0.49
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-17",
+      "v": 2018.12,
+      "change": -1.47
+    }
+  }
+}

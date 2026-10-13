@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-13",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Savaşın uzayabileceği açıklaması ve pazar altın zayıflığı var. Pazartesi hisse/petrol kapanışları dışlandı.",
+  "invalidation": "Enerji/politika baskısında çözülme.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Trump says US could stay in Iran and keep oil, like Venezuela deal (https://www.reuters.com/business/energy/trump-says-us-could-stay-iran-keep-oil-like-venezuela-deal-2026-09-13/)",
+    "Stocks fall as oil and bond yields rise (https://www.reuters.com/world/china/global-markets-global-markets-2026-09-13/)",
+    "Oil settles higher after Saudi strikes stoke supply worries (https://www.reuters.com/business/energy/oil-prices-jump-more-than-3-after-new-strikes-saudi-strait-hormuz-2026-09-13/)",
+    "AI slowdown, Trump's Houthi problem, Irish unity and the US Open (https://www.reuters.com/podcasts/ai-slowdown-trumps-houthi-problem-irish-unity-us-open-2026-09-13/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-11",
+      "v": 4.96,
+      "change": 0.2
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-11",
+      "v": 29368.44,
+      "change": 0.91
+    },
+    "SP500_FRED": {
+      "d": "2026-09-11",
+      "v": 7656.98,
+      "change": 0.86
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-13",
+      "v": 4337.788,
+      "change": -0.22
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-11",
+      "v": 15.84,
+      "change": -11.21
+    }
+  }
+}

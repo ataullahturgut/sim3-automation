@@ -1,0 +1,52 @@
+{
+  "date": "2026-02-22",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Körfez hisseleri gerilimle düşüyor; İran görüşmesi planlı ama askeri baskı sürüyor. Altın pazar açılışında güçlü.",
+  "invalidation": "Görüşmelerden güvenilir uzlaşma ve altının bunu satışla karşılaması.",
+  "coverage": "weekend_news_partial_market",
+  "sources": [
+    "Mar-a-Lago, blizzard, French far-right death and hockey (https://www.reuters.com/podcasts/mar-a-lago-blizzard-french-far-right-death-hockey-2026-02-22/)",
+    "Gulf shares fall on growing US-Iran tensions; Egypt extends loss (https://www.reuters.com/world/middle-east/gulf-shares-fall-growing-us-iran-tensions-egypt-extends-loss-2026-02-22/)",
+    "Iran and U.S. to meet on Thursday for talks (https://www.reuters.com/business/media-telecom/trump-curious-why-iran-has-not-capitulated-amid-us-military-buildup-says-witkoff-2026-02-22/)",
+    "Week Ahead: Chip check (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-chip-check-2026-02-22/)",
+    "U.S.-Iran talks expected Friday if Iran sends nuclear proposal soon, Axios reports (https://www.reuters.com/world/middle-east/us-iran-talks-expected-friday-if-iran-sends-nuclear-proposal-soon-axios-reports-2026-02-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-20",
+      "v": 4.08,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-20",
+      "v": 25012.62,
+      "change": 0.87
+    },
+    "SP500_FRED": {
+      "d": "2026-02-20",
+      "v": 6909.51,
+      "change": 0.69
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-22",
+      "v": 84.75,
+      "change": 0.04
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-22",
+      "v": 5165.025,
+      "change": 1.15
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-22",
+      "v": 1766.71,
+      "change": 0.13
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-22",
+      "v": 2163.5,
+      "change": 0.09
+    }
+  }
+}

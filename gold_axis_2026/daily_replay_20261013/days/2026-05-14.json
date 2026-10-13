@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-14",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "ABD-Çin zirvesi enerji/faiz baskısını çözmedi; dolar ve petrol güçlenirken metaller zayıf.",
+  "invalidation": "Somut anlaşma ve altın tepkisi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold edges down as oil, dollar rise as markets await signals from Trump-Xi meeting (https://www.reuters.com/business/gold-edges-up-weaker-dollar-ahead-trump-xi-talks-2026-05-14/)",
+    "India caps duty-free gold imports for jewellery exporters to curb demand (https://www.reuters.com/world/india/india-restricts-gold-imports-under-advance-authorization-100-kilograms-2026-05-14/)",
+    "Trading Day: Summits, in Beijing and stocks (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-05-14/)",
+    "Rupee stuck under oil pressure; Iran war shadows Trump's China trip (https://www.reuters.com/world/china/rupee-stuck-under-oil-pressure-iran-war-shadows-trumps-china-trip-2026-05-14/)",
+    "Morning Bid: 'G2' choreography (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-14/)",
+    "A weakened hand (https://www.reuters.com/markets/econ-world/weakened-hand-2026-05-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-14",
+      "v": 4.47,
+      "change": 0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-14",
+      "v": 29580.3,
+      "change": 0.73
+    },
+    "SP500_FRED": {
+      "d": "2026-05-14",
+      "v": 7501.24,
+      "change": 0.77
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-14",
+      "v": 85.86,
+      "change": -1.55
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-14",
+      "v": 4661.948,
+      "change": -0.8
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-14",
+      "v": 1472.02,
+      "change": -1.37
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-14",
+      "v": 2101.14,
+      "change": -0.88
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-14",
+      "v": 17.26,
+      "change": -3.41
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-03-08",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Enerji enflasyonu ve ertelenen indirim beklentisi sürüyor; pazar altın açılışı zayıf. Pazartesi sonuçlarını anlatan 8 Mart URL'li ilk iki yazı kullanılmadı.",
+  "invalidation": "Enerji baskısının somut biçimde hafiflemesi.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Shares turn higher, oil prices retreat after Trump hints at end to Iran war (https://www.reuters.com/world/china/global-markets-global-markets-2026-03-08/)",
+    "Dollar whipsawed on hopes of an end to the Iran war (https://www.reuters.com/world/asia-pacific/dollar-surges-us-iran-war-pushes-oil-past-100-barrel-2026-03-08/)",
+    "Week Ahead: Will rate cuts have to wait? (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-will-rate-cuts-have-wait-2026-03-08/)",
+    "Saudi extends rally on energy-led gains; Qatar slips (https://www.reuters.com/world/middle-east/saudi-index-extends-gains-riyadh-warns-tehran-over-attacks-2026-03-08/)",
+    "US considers idea of special operation to seize Iran's uranium, Bloomberg News reports (https://www.reuters.com/world/middle-east/us-considers-idea-special-operation-seize-irans-uranium-bloomberg-news-reports-2026-03-08/)",
+    "Iran's supreme leader, oil and lunar hummus (https://www.reuters.com/podcasts/irans-supreme-leader-oil-lunar-hummus-2026-03-08/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-06",
+      "v": 4.15,
+      "change": 0.48
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-06",
+      "v": 24643.01,
+      "change": -1.51
+    },
+    "SP500_FRED": {
+      "d": "2026-03-06",
+      "v": 6740.02,
+      "change": -1.33
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-08",
+      "v": 5075.675,
+      "change": -1.86
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-08",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "İstihdam güçlü olmasına rağmen dolar/petrol gevşemesi ve altın dayanıklılığı sürüyor. Haber yönünü doğrudan satışa çevirmiyorum.",
+  "invalidation": "Dolar/faiz dönüşüyle fiyatın toparlanmayı kaybetmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold firms and heads for weekly gain on US-Iran deal hopes (https://www.reuters.com/world/india/gold-track-weekly-gain-markets-focus-us-iran-peace-deal-prospects-2026-05-08/)",
+    "Global equity funds draw inflows for the seventh week on earnings optimism (https://www.reuters.com/world/china/global-markets-flows-graphic-2026-05-08/)",
+    "Wall St Week Ahead Data, Iran, US-China meeting in focus for scorching US stock market (https://www.reuters.com/world/china/wall-st-week-ahead-data-iran-us-china-meeting-focus-scorching-us-stock-market-2026-05-08/)",
+    "Morning Bid: Chip push, crude pull (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-08/)",
+    "Unstoppable stock rally? (https://www.reuters.com/podcasts/reuters-morning-bid/unstoppable-stock-rally-2026-05-08/)",
+    "Trump on Tour (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-05-08/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-08",
+      "v": 4.38,
+      "change": -0.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-08",
+      "v": 29234.99,
+      "change": 2.35
+    },
+    "SP500_FRED": {
+      "d": "2026-05-08",
+      "v": 7398.93,
+      "change": 0.84
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-08",
+      "v": 80.26,
+      "change": 1.2
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-08",
+      "v": 4712.655,
+      "change": 0.58
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-08",
+      "v": 1495.52,
+      "change": -2.14
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-08",
+      "v": 2048.57,
+      "change": -0.63
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-08",
+      "v": 17.19,
+      "change": 0.64
+    }
+  }
+}

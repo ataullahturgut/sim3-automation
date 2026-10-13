@@ -1,0 +1,57 @@
+{
+  "date": "2026-07-31",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Dolar toparlanması ve 7 baz puan faiz artışı altının kazancını geri aldı; dünkü alım gerekçesi fiyatla bozuldu. Diğer metallerin saat farkı teyit sayılmadı.",
+  "invalidation": "Dolar/faiz baskısının kalıcı azalması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold retreats but poised to end best month since February (https://www.reuters.com/world/india/gold-track-end-four-month-slump-investors-weigh-fed-signals-2026-07-31/)",
+    "Zijin's Canada gold rush crosses China's red line (https://www.reuters.com/commentary/breakingviews/zijins-canada-gold-rush-crosses-chinas-red-line-2026-07-31/)",
+    "Oil prices seen gaining as Middle East supply disruptions persist: Reuters poll (https://www.reuters.com/business/energy/oil-prices-seen-gaining-middle-east-supply-disruptions-persist-2026-07-31/)",
+    "Take Five: Wild times (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-07-31/)",
+    "Two VLCCs exit Strait of Hormuz, where traffic remains thin (https://www.reuters.com/world/middle-east/bab-el-mandeb-sees-25-commodity-vessels-transit-hormuz-traffic-stays-thin-2026-07-31/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-31",
+      "v": 4.75,
+      "change": 1.5
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-31",
+      "v": 28274.2,
+      "change": 0.6
+    },
+    "SP500_FRED": {
+      "d": "2026-07-31",
+      "v": 7489.72,
+      "change": 0.7
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-31",
+      "v": 4042.025,
+      "change": -1.62
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-31",
+      "v": 15.99,
+      "change": -6.44
+    }
+  }
+}

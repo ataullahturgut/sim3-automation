@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-16",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Diplomasi tıkanıklığı sürse de altın pazar kazancını koruyor; yeni çıkış teyidi yok.",
+  "invalidation": "Tam seansta dolar/faiz kaynaklı satış.",
+  "coverage": "weekend_limited_market",
+  "sources": [
+    "Most Gulf bourses gain despite stalled Iran talks, Hormuz disruption (https://www.reuters.com/business/energy/most-gulf-bourses-gain-despite-stalled-iran-talks-hormuz-disruption-2026-08-16/)",
+    "Trump orders Pentagon to cut back military exercises with South Korea (https://www.reuters.com/world/china/trump-instructs-pentagon-reduce-military-exercises-with-south-korea-2026-08-16/)",
+    "Trump's envoys meet mediators, Israel strikes Gaza (https://www.reuters.com/world/middle-east/trumps-envoys-middle-east-push-gaza-peace-plan-2026-08-16/)",
+    "Indonesia evacuations, Hurricane Lala and Ceuta arrests (https://www.reuters.com/podcasts/indonesia-evacuations-hurricane-lala-ceuta-arrests-2026-08-16/)",
+    "Suspected Russian drone shot down in Romanian airspace (https://www.reuters.com/business/aerospace-defense/romania-shoots-down-drone-breaching-its-airspace-defence-ministry-2026-08-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-14",
+      "v": 4.68,
+      "change": 1.08
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-14",
+      "v": 30046.14,
+      "change": -0.13
+    },
+    "SP500_FRED": {
+      "d": "2026-08-14",
+      "v": 7785.76,
+      "change": -0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-16",
+      "v": 4384.605,
+      "change": 0.24
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-14",
+      "v": 14.25,
+      "change": -2.6
+    }
+  }
+}

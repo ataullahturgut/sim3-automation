@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-15",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Beklenti altı PPI, önceki CPI'ı destekledi; dolar/faiz gevşiyor ve altın gün içi kaybı telafi ederek kazancı koruyor.",
+  "invalidation": "Enerji şokunun yeniden şahin fiyatlanması ve altının kayıp vermesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold trims losses after US PPI data, focus on Middle East tensions (https://www.reuters.com/business/gold-slips-oil-rally-keeps-inflation-rate-outlook-investors-radar-2026-07-15/)",
+    "Trump criticizes New York data center moratorium (https://www.reuters.com/world/us/trump-criticizes-new-york-data-center-moratorium-2026-07-15/)",
+    "Stocks rise after soft US inflation reading with Middle East in focus (https://www.reuters.com/world/china/global-markets-global-markets-2026-07-15/)",
+    "Oil prices make small gain on smaller US inventory draw (https://www.reuters.com/business/energy/oil-rises-after-us-iran-hostilities-flare-again-with-strikes-energy-targets-2026-07-15/)",
+    "G7 urges halt to attacks in Sudan's El-Obeid, calls for wider arms embargo (https://www.reuters.com/markets/commodities/g7-urges-halt-attacks-sudans-el-obeid-calls-wider-arms-embargo-2026-07-15/)",
+    "EU envoys fail to agree on 21st package of sanctions against Russia, says EU diplomat (https://www.reuters.com/business/energy/eu-envoys-fail-agree-21st-package-sanctions-against-russia-says-eu-diplomat-2026-07-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-15",
+      "v": 4.55,
+      "change": -0.66
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-15",
+      "v": 29502.6,
+      "change": -0.28
+    },
+    "SP500_FRED": {
+      "d": "2026-07-15",
+      "v": 7572.4,
+      "change": 0.38
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-15",
+      "v": 58.13,
+      "change": -0.27
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-15",
+      "v": 4058.245,
+      "change": 0.35
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-15",
+      "v": 1308.02,
+      "change": 2.11
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-15",
+      "v": 1649.39,
+      "change": 1.7
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-15",
+      "v": 15.67,
+      "change": -5.03
+    }
+  }
+}

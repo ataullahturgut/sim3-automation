@@ -1,0 +1,55 @@
+{
+  "date": "2026-07-04",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "LNG akışının toparlanması enerji baskısının azalmasına somut destek; hafta sonu tez değişmedi.",
+  "invalidation": "Arzda yeniden kesinti ve fiyat kaybı.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Trump gives campaign-style July 4 speech on National Mall for US 250th anniversary (https://www.reuters.com/world/us/trump-mark-us-250th-anniversary-with-campaign-style-rally-national-mall-2026-07-04/)",
+    "See how abnormal global temperatures are right now (https://www.reuters.com/business/environment/see-how-abnormal-global-temperatures-are-right-now-2026-07-04/)",
+    "India withdraws gas curbs as Middle East LNG supply resumes (https://www.reuters.com/business/energy/india-withdraws-gas-curbs-middle-east-lng-supply-resumes-2026-07-04/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-02",
+      "v": 4.49,
+      "change": 0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-02",
+      "v": 29329.21,
+      "change": -1.61
+    },
+    "SP500_FRED": {
+      "d": "2026-07-02",
+      "v": 7483.24,
+      "change": 0
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-04",
+      "v": 62.38,
+      "change": 0.11
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-03",
+      "v": 4175.245,
+      "change": 1.25
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-04",
+      "v": 1270.43,
+      "change": -0.59
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-04",
+      "v": 1643.92,
+      "change": -0.47
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-03",
+      "v": 15.81,
+      "change": -2.11
+    }
+  }
+}

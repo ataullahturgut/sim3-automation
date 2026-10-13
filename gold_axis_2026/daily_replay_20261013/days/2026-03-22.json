@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-22",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Elektrik/enerji altyapısına karşılıklı tehditler artıyor; pazar altın zayıf. Pazartesi hisse/emtia kapanışlarını içeren 22 Mart URL'li yazılar kullanılmadı.",
+  "invalidation": "Tehditlerin somut geri çekilmesi ve piyasa teyidi.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Oil craters, stocks rally as Trump says Iran talks underway (https://www.reuters.com/world/china/global-markets-pix-2026-03-22/)",
+    "Oil prices to rise further on Monday as Mideast war escalates (https://www.reuters.com/business/energy/oil-prices-rise-further-monday-mideast-war-escalates-2026-03-22/)",
+    "Oil prices plunge 11% on US-Iran talks to resolve hostilities in the Middle East (https://www.reuters.com/business/energy/oil-prices-rise-after-us-iran-threaten-hit-energy-targets-middle-east-2026-03-22/)",
+    "Iran says Hormuz open to all but 'enemy-linked' ships (https://www.reuters.com/world/middle-east/iran-says-hormuz-open-all-enemy-linked-ships-amid-us-threat-2026-03-22/)",
+    "US and Iran threaten energy and water facilities as investors brace for Monday shock (https://www.reuters.com/podcasts/us-iran-threaten-energy-water-facilities-investors-brace-monday-shock-2026-03-22/)",
+    "Week ahead: Bubble, oil and trouble (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-bubble-oil-trouble-2026-03-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-20",
+      "v": 4.39,
+      "change": 3.29
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-20",
+      "v": 23898.15,
+      "change": -1.88
+    },
+    "SP500_FRED": {
+      "d": "2026-03-20",
+      "v": 6506.48,
+      "change": -1.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-22",
+      "v": 67.95,
+      "change": 0.06
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-22",
+      "v": 4464.415,
+      "change": -0.57
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-22",
+      "v": 1409.99,
+      "change": 0.09
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-22",
+      "v": 1921.58,
+      "change": -0.01
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-20",
+      "v": 26.78,
+      "change": 11.31
+    }
+  }
+}

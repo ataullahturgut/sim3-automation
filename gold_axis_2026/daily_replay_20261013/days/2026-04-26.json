@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-26",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Arz darlığı ve diplomasi tıkanıklığı sürüyor; pazar altın zayıf. Pazartesi petrol kapanışını anlatan yazı dışlandı; analist tahmini gerçekleşme sayılmadı.",
+  "invalidation": "Somut arz/diplomasi iyileşmesi.",
+  "coverage": "weekend_updated_monday_article_excluded",
+  "sources": [
+    "Goldman Sachs raises oil price forecasts on tight supply (https://www.reuters.com/business/energy/goldman-sachs-raises-oil-price-forecasts-tight-supply-2026-04-26/)",
+    "Oil prices hit two-week high as Iran talks stall and Strait of Hormuz shipments lag (https://www.reuters.com/business/energy/oil-jumps-more-than-2-us-iran-peace-talks-stall-2026-04-26/)",
+    "Most Gulf equities nudge higher despite stalled diplomacy in Iran (https://www.reuters.com/world/middle-east/most-gulf-equities-nudge-higher-despite-stalled-diplomacy-iran-2026-04-26/)",
+    "Trump says he speaks with Putin and Zelenskiy -Fox News (https://www.reuters.com/world/trump-says-he-speaks-with-putin-zelenskiy-fox-news-2026-04-26/)",
+    "Trump says shooting suspect didn't come close to ballroom (https://www.reuters.com/business/media-telecom/trump-says-shooting-suspect-didnt-come-close-ballroom-2026-04-26/)",
+    "Week Ahead: The Fed is watching inflation (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-fed-is-watching-inflation-2026-04-26/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-24",
+      "v": 4.31,
+      "change": -0.69
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-24",
+      "v": 27303.67,
+      "change": 1.95
+    },
+    "SP500_FRED": {
+      "d": "2026-04-24",
+      "v": 7165.08,
+      "change": 0.8
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-26",
+      "v": 75.65,
+      "change": -0.05
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-26",
+      "v": 4684.078,
+      "change": -0.51
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-26",
+      "v": 1500.29,
+      "change": -0.24
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-26",
+      "v": 2014.14,
+      "change": 0
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-24",
+      "v": 18.71,
+      "change": -3.11
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-17",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yeni tehditler diplomasi kırılganlığını koruyor; pazar altın yatay. Pazartesi petrol kapanışını içeren yazı dışlandı.",
+  "invalidation": "Tehdit yerine somut anlaşma ve fiyat teyidi.",
+  "coverage": "weekend_updated_monday_article_excluded",
+  "sources": [
+    "Gulf bourses fall as Iran uncertainty weighs; Egypt extends loss (https://www.reuters.com/world/middle-east/gulf-bourses-fall-iran-uncertainty-weighs-egypt-extends-loss-2026-05-17/)",
+    "Oil prices rise 3% to two-week high on Iran war supply concerns (https://www.reuters.com/business/energy/oil-rises-more-than-1-after-drone-attack-uae-nuclear-power-plant-2026-05-17/)",
+    "Trump says 'clock is ticking' for Iran (https://www.reuters.com/world/middle-east/trump-says-clock-is-ticking-iran-2026-05-17/)",
+    "Trump to meet US security advisers Tuesday, Axios reports (https://www.reuters.com/world/trump-meet-us-security-advisers-tuesday-axios-reports-2026-05-17/)",
+    "Week Ahead: Nvidia's moment (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-nvidias-moment-2026-05-17/)",
+    "Shippers Hapag-Lloyd, CMA CGM suspend Cuba bookings after US executive order (https://www.reuters.com/world/americas/frances-cma-cgm-suspends-cuba-bookings-after-us-executive-order-2026-05-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-15",
+      "v": 4.59,
+      "change": 2.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-15",
+      "v": 29125.2,
+      "change": -1.54
+    },
+    "SP500_FRED": {
+      "d": "2026-05-15",
+      "v": 7408.5,
+      "change": -1.24
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-17",
+      "v": 75.97,
+      "change": 0
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-17",
+      "v": 4545.688,
+      "change": 0.15
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-17",
+      "v": 1411.78,
+      "change": -0.05
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-17",
+      "v": 1979.3,
+      "change": 0.06
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-15",
+      "v": 18.43,
+      "change": 6.78
+    }
+  }
+}

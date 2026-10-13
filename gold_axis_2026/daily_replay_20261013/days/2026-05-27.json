@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-27",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Faiz indirimi beklentisi zayıf; altın ve diğer metaller düşüşe devam ediyor. Hisse iyimserliği altın alım teyidi değil.",
+  "invalidation": "Beklenti ve metal fiyatlarında birlikte dönüş.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold hits two-month low as war-driven inflation fuels rate-hike bets (https://www.reuters.com/world/india/gold-edges-higher-weaker-dollar-focus-us-iran-talks-fed-outlook-2026-05-27/)",
+    "Rescue teams find five trapped in Laos cave, search for two more continues (https://www.reuters.com/world/asia-pacific/rescue-teams-find-five-trapped-laos-cave-search-two-more-continues-2026-05-27/)",
+    "Morning Bid: Markets cheer, central banks warn (https://www.reuters.com/world/china/global-markets-view-europe-2026-05-27/)",
+    "Investors expect US dollar to break higher as Fed battles inflation (https://www.reuters.com/world/africa/investors-expect-us-dollar-break-higher-fed-battles-inflation-2026-05-27/)",
+    "Trillion-dollar club (https://www.reuters.com/podcasts/reuters-morning-bid/trillion-dollar-club-2026-05-27/)",
+    "Trump's inflation problem (https://www.reuters.com/podcasts/trumps-problem-2026-05-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-27",
+      "v": 4.48,
+      "change": -0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-27",
+      "v": 29973.57,
+      "change": -0.09
+    },
+    "SP500_FRED": {
+      "d": "2026-05-27",
+      "v": 7520.36,
+      "change": 0.02
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-27",
+      "v": 75.71,
+      "change": -1.61
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-27",
+      "v": 4457.088,
+      "change": -1.18
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-27",
+      "v": 1378.44,
+      "change": -0.45
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-27",
+      "v": 1934.43,
+      "change": -1.05
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-27",
+      "v": 16.29,
+      "change": -4.23
+    }
+  }
+}

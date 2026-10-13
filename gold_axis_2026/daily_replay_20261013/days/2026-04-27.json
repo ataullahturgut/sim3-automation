@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-27",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Fed haftası öncesi yüksek petrol ve faiz altını baskılıyor; yeni alım teyidi yok.",
+  "invalidation": "Politika iletişimi/enerji haberinin beklentiyi değiştirip fiyatla teyit edilmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls with focus on key central bank meetings (https://www.reuters.com/world/india/gold-falls-firm-dollar-oil-driven-inflation-fears-us-iran-talks-stall-2026-04-27/)",
+    "Venezuela central bank says it and US hired firms to audit assets abroad (https://www.reuters.com/world/americas/venezuela-central-bank-says-it-us-have-each-hired-firms-audit-assets-abroad-2026-04-27/)",
+    "Forget 'fiscal discipline,' record government debt is here to stay (https://www.reuters.com/commentary/reuters-open-interest/forget-fiscal-discipline-record-govt-debt-is-here-stay-2026-04-27/)",
+    "Galp CEO excited for 2026 as Brazil, oil price insulate it from Gulf (https://www.reuters.com/business/energy/galp-core-profit-jumps-41-higher-output-crude-prices-2026-04-27/)",
+    "Morning Bid: Oil and chips (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-04-27/)",
+    "The Powell hour (https://www.reuters.com/podcasts/reuters-morning-bid/powell-hour-2026-04-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-27",
+      "v": 4.35,
+      "change": 0.93
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-27",
+      "v": 27305.68,
+      "change": 0.01
+    },
+    "SP500_FRED": {
+      "d": "2026-04-27",
+      "v": 7173.91,
+      "change": 0.12
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-27",
+      "v": 75.64,
+      "change": -0.01
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-27",
+      "v": 4687.455,
+      "change": 0.07
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-27",
+      "v": 1485.96,
+      "change": -0.96
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-27",
+      "v": 2007.87,
+      "change": -0.31
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-27",
+      "v": 18.02,
+      "change": -3.69
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "date": "2026-03-27",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın tepki verdi fakat hisse satışı, yüksek VIX/faiz ve enerji riski sürüyor. Ucuzluk/dip alımı tek başına yeni mekanizma değil.",
+  "invalidation": "Toparlanmanın sürmesi ve dolar/faiz baskısının hafiflemesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold jumps over 3% on dip-buying as investors track Middle East tensions (https://www.reuters.com/world/india/gold-rises-softer-dollar-track-fourth-weekly-drop-2026-03-27/)",
+    "Singapore sets out plans to build Asia gold trading hub (https://www.reuters.com/world/asia-pacific/singapore-sets-out-plans-build-asia-gold-trading-hub-2026-03-27/)",
+    "Markets in Q1: Everything everywhere all at once (https://www.reuters.com/world/china/global-markets-q1-analysis-pix-2026-03-27/)",
+    "Morning Bid: You can't handle the 'Truth' (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-27/)",
+    "With 'no place to hide' traders spend sleepless nights as Iran war roils markets (https://www.reuters.com/business/finance/with-no-place-hide-traders-spend-sleepless-nights-iran-war-roils-markets-2026-03-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-27",
+      "v": 4.44,
+      "change": 0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-27",
+      "v": 23132.77,
+      "change": -1.93
+    },
+    "SP500_FRED": {
+      "d": "2026-03-27",
+      "v": 6368.85,
+      "change": -1.67
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-27",
+      "v": 69.3,
+      "change": 0.2
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-27",
+      "v": 4492.375,
+      "change": 1.99
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-27",
+      "v": 1387.53,
+      "change": 0.33
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-27",
+      "v": 1858.84,
+      "change": -0.46
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-27",
+      "v": 31.05,
+      "change": 13.16
+    }
+  }
+}

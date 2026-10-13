@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-17",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Fed artışına rağmen ertesi gün petrol/dolar/faiz gevşedi; altın tepki verdi. İlk seans dönüşünü kalıcı saymıyorum.",
+  "invalidation": "İkinci gün destekli toparlanma.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains over 2% on weaker dollar, easing oil prices (https://www.reuters.com/world/india/gold-rises-over-1-investors-digest-fed-hike-oil-rally-stalls-2026-09-17/)",
+    "UN mission finds grounds to believe US committed war crimes in Iran, and Tehran crimes against humanity (https://www.reuters.com/world/middle-east/un-mission-finds-grounds-believe-us-committed-war-crimes-iran-tehran-crimes-2026-09-17/)",
+    "US Democrats look to stop Trump's Saudi nuclear deal (https://www.reuters.com/legal/government/us-democrats-look-stop-trumps-saudi-nuclear-deal-2026-09-17/)",
+    "Morning Bid: A timely hike (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-17/)",
+    "Fed's hawkish turn (https://www.reuters.com/podcasts/reuters-morning-bid/feds-hawkish-turn-2026-09-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-17",
+      "v": 4.94,
+      "change": -1.4
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-17",
+      "v": 29446.98,
+      "change": 1.73
+    },
+    "SP500_FRED": {
+      "d": "2026-09-17",
+      "v": 7637.76,
+      "change": 1.14
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-17",
+      "v": 4342.185,
+      "change": 1.81
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-17",
+      "v": 15.44,
+      "change": -12.82
+    }
+  }
+}

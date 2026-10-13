@@ -1,0 +1,57 @@
+{
+  "date": "2026-07-23",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Güçlü işsizlik başvuruları ve petrol/dolar/faiz artışı metal dayanıklılığını bozdu; dünkü alım ikinci kez hızlı yanlışlandı.",
+  "invalidation": "Baskıların birlikte çözülmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls 2% as Middle East tensions fuel inflation fears, rate-hike bets (https://www.reuters.com/world/india/gold-off-two-week-peak-oil-advances-fed-meeting-eyed-2026-07-23/)",
+    "Mapping the Market: Gold faces tipping point trouble (https://www.reuters.com/default/global-markets-technicals-graphic-2026-07-23/)",
+    "Trump vows to punish Iran for Houthi attacks in Red Sea; oil surges over $100 (https://www.reuters.com/world/middle-east/houthis-say-they-attacked-saudi-tankers-red-sea-threatening-new-chokepoint-iran-2026-07-23/)",
+    "Trading Day: Burn, baby, burn (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-07-23/)",
+    "Alphabet's AI bill (https://www.reuters.com/podcasts/reuters-morning-bid/morning-bid-2026-07-23/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-23",
+      "v": 4.71,
+      "change": 0.86
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-23",
+      "v": 28454.81,
+      "change": -1.87
+    },
+    "SP500_FRED": {
+      "d": "2026-07-23",
+      "v": 7408.3,
+      "change": -1.21
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-23",
+      "v": 58.9,
+      "change": -1.27
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-23",
+      "v": 4048.905,
+      "change": -1.75
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-23",
+      "v": 1281.63,
+      "change": -1.86
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-23",
+      "v": 1633.56,
+      "change": -1.2
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-23",
+      "v": 18.7,
+      "change": 12.38
+    }
+  }
+}

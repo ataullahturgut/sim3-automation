@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-08",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Petrol/dolar/faiz gerilemesi ve risk iştahı toparlanması ateşkes kanalını doğruluyor. Altın geç saat kazancını kısmen verdi; Fed tutanakları şahin karşıt kanıt, şimdilik tutuyorum.",
+  "invalidation": "Ateşkesin bozulması veya kanal desteğine rağmen altın zayıflığının sürmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Safe havens (https://www.reuters.com/podcasts/safe-havens-2026-04-08/)",
+    "Trading Day: Markets gorge on huge TACO (https://www.reuters.com/business/global-markets-trading-day-graphic-2026-04-08/)",
+    "Iran ceasefire provides hope, but physical oil markets to remain stressed (https://www.reuters.com/markets/commodities/iran-ceasefire-provides-hope-physical-oil-markets-remain-stressed-2026-04-08/)",
+    "Morning Bid: Big relief rally, for now (https://www.reuters.com/business/finance/global-markets-view-usa-2026-04-08/)",
+    "Oil pares gains to close up 1% as Israel plans peace talks with Lebanon (https://www.reuters.com/business/energy/us-crude-futures-rise-after-settling-previous-session-with-biggest-fall-six-2026-04-08/)",
+    "Trump's mixed messages and Iran's bombs kept the Kurds out of the war (https://www.reuters.com/investigations/trumps-mixed-messages-irans-bombs-kept-kurds-out-war-2026-04-08/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-08",
+      "v": 4.29,
+      "change": -0.92
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-08",
+      "v": 24903.17,
+      "change": 2.9
+    },
+    "SP500_FRED": {
+      "d": "2026-04-08",
+      "v": 6782.81,
+      "change": 2.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-08",
+      "v": 75.95,
+      "change": 4.82
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-08",
+      "v": 4717.085,
+      "change": -2.09
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-08",
+      "v": 1557.7,
+      "change": 5.83
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-08",
+      "v": 2042.99,
+      "change": 4.42
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-08",
+      "v": 21.04,
+      "change": -18.39
+    }
+  }
+}

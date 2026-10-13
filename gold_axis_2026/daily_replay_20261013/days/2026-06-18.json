@@ -1,0 +1,56 @@
+{
+  "date": "2026-06-18",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar/şahin Fed baskısı altını düşürüyor; enerji akışı hemen normale dönmeyecek. Hisse toparlanması yeterli değil.",
+  "invalidation": "Dolar ve altın fiyatlarında dönüş.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips as hawkish Fed signals lift dollar, boost rate hike bets (https://www.reuters.com/world/india/gold-climbs-over-1-oil-drops-us-iran-interim-deal-2026-06-18/)",
+    "Oil flows through Hormuz will take time to recover, banks say (https://www.reuters.com/business/energy/oil-flows-through-hormuz-will-take-time-recover-banks-say-2026-06-18/)",
+    "TSX falls for second day on lower oil and gold prices (https://www.reuters.com/business/tsx-futures-rise-gold-gains-middle-east-deal-optimism-2026-06-18/)",
+    "Morning Bid: Kevin who? MoU trumps Fed (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-18",
+      "v": 4.46,
+      "change": -0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-18",
+      "v": 30406.19,
+      "change": 2.48
+    },
+    "SP500_FRED": {
+      "d": "2026-06-18",
+      "v": 7500.58,
+      "change": 1.08
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-18",
+      "v": 68.69,
+      "change": -2.04
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-18",
+      "v": 4206.938,
+      "change": -1.39
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-18",
+      "v": 1325.39,
+      "change": -2.52
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-18",
+      "v": 1755.73,
+      "change": -2.88
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-18",
+      "v": 16.4,
+      "change": -11.06
+    }
+  }
+}

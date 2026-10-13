@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-18",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Petrol gevşemesiyle ikinci gün altın yükselişi; Fed artışı sonrası fiyatın toparlanması destek. Uzun faiz tekrar yüksek, önemli karşıt risk.",
+  "invalidation": "Enerji/dolar baskısı ve altın kazancının çözülmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Reuters (https://www.reuters.com/account/subscribe/offer/?journeyStart=navigation&redirect=https%3A%2F%2Fwww.reuters.com%2Fbusiness%2Fgold-extends-gains-scale-one-week-high-crude-prices-ease-2026-09-18%2F%3Fref%3Dbiztoc.com&referrer=subscription_button&website=reuters)",
+    "Gold rises to one-week high, heads for weekly gain on easing oil prices (https://www.reuters.com/business/gold-extends-gains-scale-one-week-high-crude-prices-ease-2026-09-18/)",
+    "Venezuela, opposition faction weighing deal to move $4 bln in gold to US from UK, sources say (https://www.reuters.com/world/americas/venezuela-nears-deal-move-4-billion-gold-reserve-new-york-ft-says-2026-09-18/)",
+    "Europe's STOXX 600 falls as autos, telecoms lead broad sell-off (https://www.reuters.com/markets/europe/european-shares-inch-lower-telecoms-energy-shares-dip-2026-09-18/)",
+    "High stakes, low bars (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-09-18/)",
+    "Morning Bid: Apocalypse later (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-18/)",
+    "If not now, yen? (https://www.reuters.com/podcasts/reuters-morning-bid/if-not-now-yen-2026-09-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-18",
+      "v": 5.01,
+      "change": 1.42
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-18",
+      "v": 29644.17,
+      "change": 0.67
+    },
+    "SP500_FRED": {
+      "d": "2026-09-18",
+      "v": 7650.5,
+      "change": 0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-18",
+      "v": 4376.595,
+      "change": 0.79
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-18",
+      "v": 14.81,
+      "change": -4.08
+    }
+  }
+}

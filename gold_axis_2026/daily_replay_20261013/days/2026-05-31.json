@@ -1,0 +1,56 @@
+{
+  "date": "2026-05-31",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Lübnan operasyonu anlaşma için risk, fakat pazar altın yatay. Pazartesi petrol kapanışını anlatan yazı dışlandı; tek haberle pozisyon çevirmiyorum.",
+  "invalidation": "Yeni seansta petrol/faiz yükselişiyle altın kaybı.",
+  "coverage": "weekend_updated_monday_article_excluded",
+  "sources": [
+    "Oil closes up more than 4% on halt in US-Iran talks, risk of blockades (https://www.reuters.com/business/energy/oil-prices-rise-more-than-2-israel-moves-further-into-lebanon-2026-05-31/)",
+    "Netanyahu orders deeper Israeli incursion into Lebanon to hit Hezbollah (https://www.reuters.com/business/aerospace-defense/israel-troops-capture-beaufort-castle-southern-lebanon-push-against-hezbollah-2026-05-31/)",
+    "Saudi shares gain, Qatar slips on Iran-US deal uncertainty (https://www.reuters.com/world/middle-east/saudi-shares-gain-qatar-slips-iran-us-deal-uncertainty-2026-05-31/)",
+    "The Week in Breakingviews: The AI backlash arrives (https://www.reuters.com/commentary/breakingviews/global-markets-breakingviews-2026-05-31/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-29",
+      "v": 4.45,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-29",
+      "v": 30333.18,
+      "change": 0.36
+    },
+    "SP500_FRED": {
+      "d": "2026-05-29",
+      "v": 7580.06,
+      "change": 0.22
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-31",
+      "v": 75.27,
+      "change": -0.03
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-31",
+      "v": 4534.765,
+      "change": -0.06
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-31",
+      "v": 1357.53,
+      "change": 0.04
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-31",
+      "v": 1920.89,
+      "change": 0
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-29",
+      "v": 15.32,
+      "change": -2.67
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "date": "2026-03-21",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "G7 enerji güvenliği desteği açıklıyor fakat arz kaybının giderildiğine dair kanıt yok. Katar üretim riski uzun süreli olabilir.",
+  "invalidation": "Fiili sevkiyat/enerji fiyatında normalleşme.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "G7 ready to act to protect global energy supplies, backs Hormuz Strait security (https://www.reuters.com/business/energy/g7-ready-act-protect-global-energy-supplies-backs-hormuz-strait-security-2026-03-21/)",
+    "Trump's mixed messages, World Cup and a charcoal-powered car (https://www.reuters.com/podcasts/trumps-mixed-signals-world-cup-charcoalpowered-car-2026-03-21/)",
+    "Week in Review: Shock to the system (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-shock-system-2026-03-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-20",
+      "v": 4.39,
+      "change": 3.29
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-20",
+      "v": 23898.15,
+      "change": -1.88
+    },
+    "SP500_FRED": {
+      "d": "2026-03-20",
+      "v": 6506.48,
+      "change": -1.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-21",
+      "v": 67.91,
+      "change": -4.57
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-20",
+      "v": 4490.055,
+      "change": -3.3
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-21",
+      "v": 1408.7,
+      "change": -2.53
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-21",
+      "v": 1921.69,
+      "change": -2.33
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-20",
+      "v": 26.78,
+      "change": 11.31
+    }
+  }
+}

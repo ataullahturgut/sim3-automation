@@ -1,0 +1,57 @@
+{
+  "date": "2026-07-17",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın sınırlı tepki verdi; diğer metaller ve risk varlıkları zayıf, önceki alımı hemen tekrarlayacak teyit yok.",
+  "invalidation": "Birkaç seansta fiyat/aktarım iyileşmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold set for biggest weekly drop since early June on inflation, rate-hike worries (https://www.reuters.com/world/india/gold-track-biggest-weekly-loss-six-iran-war-fans-inflation-worries-2026-07-17/)",
+    "Oil settles up on renewed US-Iran hostilities and threat of Red Sea closure (https://www.reuters.com/business/energy/oil-rises-intensifying-us-iran-hostilities-threat-red-sea-closure-2026-07-17/)",
+    "Saudi PIF set to win EU nod for Electronic Arts deal under subsidy rules, sources say (https://www.reuters.com/business/saudi-pif-set-win-eu-nod-electronic-arts-deal-under-subsidy-rules-sources-say-2026-07-17/)",
+    "Lagarde, Google and Messi chase their goals (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-07-17/)",
+    "Morning Bid: Chips and ships (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-07-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-17",
+      "v": 4.55,
+      "change": -0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-17",
+      "v": 28592.66,
+      "change": -1.49
+    },
+    "SP500_FRED": {
+      "d": "2026-07-17",
+      "v": 7457.69,
+      "change": -1.01
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-17",
+      "v": 55.62,
+      "change": -1.47
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-17",
+      "v": 4013.975,
+      "change": 0.91
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-17",
+      "v": 1248.15,
+      "change": -2.95
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-17",
+      "v": 1597.95,
+      "change": -3.29
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-17",
+      "v": 18.77,
+      "change": 12.19
+    }
+  }
+}

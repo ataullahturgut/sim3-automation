@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-06",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Ültimatom ve güçlü istihdam sonrası faiz beklentisi altını baskılıyor; Paskalya likiditesi sınırlı. Net alım teyidi yok.",
+  "invalidation": "Ültimatomun somut anlaşmayla çözülmesi ve altının güçlenmesi.",
+  "coverage": "easter_partial_market",
+  "sources": [
+    "Gold edges lower as Trump's Iran war deadline nears (https://www.reuters.com/world/india/gold-falls-iran-war-robust-us-jobs-data-dim-fed-rate-cut-hopes-2026-04-06/)",
+    "India seen holding rates as 'Goldilocks' phase gives way to stress (https://www.reuters.com/world/india/india-seen-holding-rates-goldilocks-phase-gives-way-stress-2026-04-06/)",
+    "Trading Day: Seeking signals from the noise (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-04-06/)",
+    "Brent settles down on economic worries, US crude up ahead of Trump deadline for Iran (https://www.reuters.com/business/energy/us-crude-oil-futures-rise-over-1-trump-sharpens-rhetoric-iran-2026-04-06/)",
+    "Markets play the guessing game (https://www.reuters.com/podcasts/reuters-morning-bid/markets-play-guessing-game-2026-04-06/)",
+    "Ceasefire, Hormuz and Alcatraz (https://www.reuters.com/podcasts/us-iran-peace-proposal-tehran-wont-immediately-reopen-strait-2026-04-06/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-06",
+      "v": 4.34,
+      "change": -0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-06",
+      "v": 24192.17,
+      "change": 0.61
+    },
+    "SP500_FRED": {
+      "d": "2026-04-06",
+      "v": 6611.83,
+      "change": 0.44
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-06",
+      "v": 72.76,
+      "change": -0.25
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-06",
+      "v": 4657.838,
+      "change": 0.28
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-06",
+      "v": 1496.07,
+      "change": -0.62
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-06",
+      "v": 1981.49,
+      "change": -0.02
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-06",
+      "v": 24.17,
+      "change": 1.26
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-07",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Zayıf resmi istihdam faiz artışı beklentisini azalttı; altın yükselişi ve faiz gerilemesi tezi destekliyor.",
+  "invalidation": "Yeni enflasyon/enerji şokuyla beklenti dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold hits seven-week high as weak US jobs data dents rate hike bets (https://www.reuters.com/world/india/gold-heads-strongest-week-since-january-us-payrolls-data-focus-2026-08-07/)",
+    "China's gold reserves rise by most since October 2023 as buying pace quickens (https://www.reuters.com/world/asia-pacific/chinas-gold-reserves-rise-by-most-since-october-2023-buying-pace-quickens-2026-08-07/)",
+    "Gold to reach $5,000 in first half of 2027, UBS says (https://www.reuters.com/markets/us/gold-reach-5000-first-half-2027-ubs-says-2026-08-07/)",
+    "China wants more than a Fort Knox from Hong Kong (https://www.reuters.com/commentary/breakingviews/china-wants-more-than-fort-knox-hong-kong-2026-08-07/)",
+    "India's Titan posts profit surge on strong jewellery demand (https://www.reuters.com/world/india/indias-titan-posts-profit-surge-strong-jewellery-demand-2026-08-07/)",
+    "Morning Bid: Dealjà vu (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-08-07/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-07",
+      "v": 4.65,
+      "change": -0.85
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-07",
+      "v": 29722.3,
+      "change": 1.19
+    },
+    "SP500_FRED": {
+      "d": "2026-08-07",
+      "v": 7757.64,
+      "change": 0.62
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-07",
+      "v": 4340.395,
+      "change": 2.36
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-07",
+      "v": 14.9,
+      "change": -1.65
+    }
+  }
+}

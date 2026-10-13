@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-12",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Beklentiye uygun düşük aylık CPI faiz artışı ihtimalini azalttı; altın yeniden güçlendi. Dünki düzeltme tezi bozmadı.",
+  "invalidation": "PPI/enerji sürpriziyle beklenti ve fiyat dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises to over two-month peak as US inflation data dampens rate hike bets (https://www.reuters.com/world/india/gold-rises-over-two-month-peak-us-inflation-data-dampens-rate-hike-bets-2026-08-12/)",
+    "Venezuela looks to UK-held gold reserves for reconstruction as inflation surges (https://www.reuters.com/world/americas/venezuela-inflation-grows-199-july-central-bank-says-2026-08-12/)",
+    "Slim gains for Gulf bourses capped by lack of progress to end Iran war (https://www.reuters.com/world/middle-east/major-gulf-bourse-see-cautious-gains-tensions-weigh-sentiment-2026-08-12/)",
+    "Morning Bid: Hot spots sizzle, CPI looms (https://www.reuters.com/world/china/global-markets-view-europe-2026-08-12/)",
+    "Oil prices climb again, as global stocks gain (https://www.reuters.com/world/china/global-markets-global-markets-2026-08-12/)",
+    "Trading Day: AI cheer, new highs near (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-12",
+      "v": 4.68,
+      "change": -0.43
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-12",
+      "v": 29742.6,
+      "change": 0.74
+    },
+    "SP500_FRED": {
+      "d": "2026-08-12",
+      "v": 7748.5,
+      "change": 0.26
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-12",
+      "v": 4401.055,
+      "change": 0.76
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-12",
+      "v": 14.55,
+      "change": -4.78
+    }
+  }
+}

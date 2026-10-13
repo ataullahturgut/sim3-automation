@@ -1,0 +1,48 @@
+{
+  "date": "2026-02-21",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Tarife yetkisi ve İran seçenekleri belirsizliği sürüyor; hafta sonu işlem teyidi yok. Mevcut gerekçe değişmedi.",
+  "invalidation": "Yeni uzlaşma haberi veya piyasa açılışında ters fiyat tepkisi.",
+  "coverage": "weekend_limited_news",
+  "sources": [
+    "Trump tariffs, Iran, Andrew photo and Canada-US hockey (https://www.reuters.com/podcasts/trump-tariffs-iran-photographing-andrew-canada-us-olympic-showdown-2026-02-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-20",
+      "v": 4.08,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-20",
+      "v": 25012.62,
+      "change": 0.87
+    },
+    "SP500_FRED": {
+      "d": "2026-02-20",
+      "v": 6909.51,
+      "change": 0.69
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-21",
+      "v": 84.72,
+      "change": 2.87
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-20",
+      "v": 5106.169,
+      "change": 2.38
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-21",
+      "v": 1764.33,
+      "change": 0.41
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-21",
+      "v": 2161.6,
+      "change": 0.33
+    }
+  }
+}

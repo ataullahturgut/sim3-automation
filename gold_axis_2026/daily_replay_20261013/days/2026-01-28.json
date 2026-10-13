@@ -1,0 +1,56 @@
+{
+  "date": "2026-01-28",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Fed beklenildiği gibi sabit tuttu; dolar toparlandı ancak altın yükselişi hâlâ çok güçlü. Faiz/dolar karşıt kanıtını not ediyorum; yalnız aşırı yükseliş nedeniyle satış yapmıyorum.",
+  "invalidation": "Dolar toparlanmasına eşlik eden belirgin altın/gümüş satışı. Aşırı hız nedeniyle güven düşük.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold's blistering rally continues past $5,200 as dollar plunges (https://www.reuters.com/world/asia-pacific/golds-blistering-rally-continues-past-5200-dollar-plunges-4-year-low-2026-01-28/)",
+    "Gold vaults past $5200 to record high (https://www.reuters.com/business/gold-vaults-past-5200-record-high-2026-01-28/)",
+    "TSX gains as energy, material stocks lift index (https://www.reuters.com/business/tsx-futures-edge-up-ahead-fed-boc-rate-calls-gold-rallies-2026-01-28/)",
+    "Tether CEO aims to allocate up to 15% of its portfolio to gold (https://www.reuters.com/business/tether-ceo-aims-allocate-up-15-its-portfolio-gold-2026-01-28/)",
+    "Key quotes from Fed Chair Powell's news conference (https://www.reuters.com/business/key-quotes-fed-chair-powells-news-conference-2026-01-28/)",
+    "S&P 500 crosses 7,000 mark ahead of Fed decision, Big Tech earnings (https://www.reuters.com/business/us-stock-index-futures-rise-wall-street-braces-big-tech-earnings-2026-01-28/)",
+    "Dollar drop (https://www.reuters.com/podcasts/reuters-morning-bid/dollar-drop-2026-01-28/)",
+    "Why India may increase duties on gold and silver imports (https://www.reuters.com/world/india/why-india-may-increase-duties-gold-silver-imports-2026-01-28/)",
+    "Stocks edge higher, dollar pares some gains after Fed ... (https://www.reuters.com/world/china/global-markets-wrapup-1-2026-01-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-28",
+      "v": 4.26,
+      "change": 0.47
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-28",
+      "v": 26022.79,
+      "change": 0.32
+    },
+    "SP500_FRED": {
+      "d": "2026-01-28",
+      "v": 6978.03,
+      "change": -0.01
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-28",
+      "v": 112.795,
+      "change": 1.1
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-28",
+      "v": 5512.255,
+      "change": 6.58
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-28",
+      "v": 1947,
+      "change": -5.07
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-28",
+      "v": 2630,
+      "change": -2.05
+    }
+  }
+}

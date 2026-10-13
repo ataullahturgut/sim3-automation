@@ -1,0 +1,57 @@
+{
+  "date": "2026-07-18",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Sert siyasi açıklamalar ve Körfez saldırıları gerilimin sürdüğünü gösteriyor; hafta sonu alım teyidi yok.",
+  "invalidation": "Diplomasi ve normal seans tepkisi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Iran's Supreme Leader says US breaches show Trump's signature is 'worthless' (https://www.reuters.com/world/middle-east/irans-supreme-leader-says-us-breaches-show-trumps-signature-is-worthless-2026-07-18/)",
+    "Data center opponents stage 142 protests across 42 US states (https://www.reuters.com/business/retail-consumer/us-data-center-protests-go-national-backlash-grows-2026-07-18/)",
+    "Iran hits Gulf allies, Trump Media and Taco Bell's shredded lettuce (https://www.reuters.com/podcasts/iran-hits-gulf-allies-trump-media-taco-bells-shredded-lettuce-2026-07-18/)",
+    "Two US service members in Jordan killed in Iranian attack, US says (https://www.reuters.com/world/middle-east/two-us-service-members-jordan-killed-iranian-attack-us-says-2026-07-18/)",
+    "Trump administration to fund Maga-aligned projects in Europe as he reorders US aid, FT reports (https://www.reuters.com/business/media-telecom/trump-administration-to-fund-maga-aligned-projects-europe-he-reorders-us-aid-ft-2026-07-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-17",
+      "v": 4.55,
+      "change": -0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-17",
+      "v": 28592.66,
+      "change": -1.49
+    },
+    "SP500_FRED": {
+      "d": "2026-07-17",
+      "v": 7457.69,
+      "change": -1.01
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-18",
+      "v": 55.9,
+      "change": 0.5
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-17",
+      "v": 4013.975,
+      "change": 0.91
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-18",
+      "v": 1249.71,
+      "change": 0.12
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-18",
+      "v": 1596.67,
+      "change": -0.08
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-17",
+      "v": 18.77,
+      "change": 12.19
+    }
+  }
+}

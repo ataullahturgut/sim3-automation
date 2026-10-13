@@ -1,0 +1,53 @@
+{
+  "date": "2026-03-11",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Rezerv salımına rağmen petrol yükseliyor; dolar/faiz artışı altını baskılıyor. Savaş öncesi enflasyon verisi yeni enerji şokunu ölçmüyor.",
+  "invalidation": "Arz önlemlerinin gerçekten fiyat baskısını azaltması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold eases as firmer dollar, lingering inflation concerns persist (https://www.reuters.com/world/india/gold-edges-higher-inflation-jitters-ease-key-us-data-focus-2026-03-11/)",
+    "Harmony doubles dividend after gold price rally, flags lower copper output (https://www.reuters.com/world/africa/harmony-gold-half-year-profit-rises-13-dividend-up-2026-03-11/)",
+    "Higher oil clouds Wall Street's sunny earnings outlook (https://www.reuters.com/markets/us/higher-oil-clouds-wall-streets-sunny-earnings-outlook-2026-03-11/)",
+    "Turkey's Erdogan says Iran war must stop before whole region dragged in (https://www.reuters.com/world/middle-east/turkeys-erdogan-says-iran-war-must-stop-before-whole-region-dragged-2026-03-11/)",
+    "Trading Day: Oil and yields up, up, and away (https://www.reuters.com/business/energy/global-markets-trading-day-graphic-2026-03-11/)",
+    "Strait ahead (https://www.reuters.com/podcasts/reuters-morning-bid/strait-ahead-2026-03-11/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-11",
+      "v": 4.21,
+      "change": 1.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-11",
+      "v": 24965.01,
+      "change": 0.03
+    },
+    "SP500_FRED": {
+      "d": "2026-03-11",
+      "v": 6775.8,
+      "change": -0.08
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-11",
+      "v": 86.57,
+      "change": -2.35
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-11",
+      "v": 5134.205,
+      "change": -1.21
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-11",
+      "v": 1650.38,
+      "change": -1.71
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-11",
+      "v": 2182.6,
+      "change": -0.91
+    }
+  }
+}

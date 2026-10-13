@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-06",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "OPEC politikası değişmedi, çatışma ve yaptırım sürüyor; pazar altın yatay.",
+  "invalidation": "Enerji/politika baskısında teyitli değişim.",
+  "coverage": "weekend_limited_market",
+  "sources": [
+    "Iran's Hormuz leverage wanes as US economic squeeze bites (https://www.reuters.com/business/energy/irans-hormuz-leverage-wanes-us-economic-squeeze-bites-2026-09-06/)",
+    "Iran to tackle economic issues, says further attacks will be 'more painful' (https://www.reuters.com/world/middle-east/iran-tackle-economic-issues-says-further-attacks-will-be-more-painful-2026-09-06/)",
+    "OPEC+ keeps oil output policy unchanged for October (https://www.reuters.com/business/energy/opec-set-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-06/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-04",
+      "v": 4.78,
+      "change": 0.21
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-04",
+      "v": 29544.16,
+      "change": 0.21
+    },
+    "SP500_FRED": {
+      "d": "2026-09-04",
+      "v": 7718.6,
+      "change": -0.38
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-06",
+      "v": 4428.195,
+      "change": -0.05
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-04",
+      "v": 14.53,
+      "change": 1.47
+    }
+  }
+}

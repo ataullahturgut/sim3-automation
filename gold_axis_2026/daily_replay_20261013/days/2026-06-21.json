@@ -1,0 +1,57 @@
+{
+  "date": "2026-06-21",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Pazar altın yatay; petrol kapanışı ve sevkiyat haberlerinin güncelleme zamanı belirsiz. Sonraki seans bilgisi olabilecek içerikle alım yok.",
+  "invalidation": "Normal seansta doğrulanmış arz ve fiyat iyileşmesi.",
+  "coverage": "weekend_publication_time_uncertain",
+  "sources": [
+    "Oil settles down more 3% after US-Iran talks signal easing supply risks (https://www.reuters.com/business/energy/brent-oil-rises-more-than-1bbl-after-bumpy-start-us-iran-peace-talks-2026-06-21/)",
+    "Europe braces for prolonged heatwave as temperatures approach 40C (https://www.reuters.com/business/environment/europe-braces-prolonged-heatwave-temperatures-approach-40c-2026-06-21/)",
+    "Tanker traffic through Hormuz picks up after slower flows due to crossing concerns (https://www.reuters.com/world/middle-east/shipping-slows-after-iran-says-it-has-again-shut-strait-hormuz-2026-06-21/)",
+    "Iran talks, JD Vance, Reflecting Pool and Keir Starmer (https://www.reuters.com/podcasts/iran-talks-jd-vance-reflecting-pool-keir-starmer-2026-06-21/)",
+    "Taiwan to stage five days of combat readiness drills (https://www.reuters.com/business/aerospace-defense/taiwan-stage-five-days-combat-readiness-drills-2026-06-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-18",
+      "v": 4.46,
+      "change": -0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-18",
+      "v": 30406.19,
+      "change": 2.48
+    },
+    "SP500_FRED": {
+      "d": "2026-06-18",
+      "v": 7500.58,
+      "change": 1.08
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-21",
+      "v": 64.84,
+      "change": 0
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-21",
+      "v": 4156.038,
+      "change": 0.04
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-21",
+      "v": 1258.47,
+      "change": -0.23
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-21",
+      "v": 1665.87,
+      "change": 0.04
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-19",
+      "v": 16.78,
+      "change": 2.32
+    }
+  }
+}

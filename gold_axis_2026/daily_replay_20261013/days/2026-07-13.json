@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-13",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Abluka petrol/faiz baskısını artırdı, metaller ve hisseler düştü. Jeopolitik şok bu rejimde altın alımı değil.",
+  "invalidation": "Enerji/faiz/dolar baskısının çözülmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold drops 3% as rising Middle East tensions fuel rate-hike prospects (https://www.reuters.com/world/india/gold-slides-over-1-oil-surges-strait-hormuz-closure-fears-2026-07-13/)",
+    "EU announces restrictions on trading Sudanese gold (https://www.reuters.com/world/africa/eu-announces-restrictions-trading-sudanese-gold-2026-07-13/)",
+    "Hormuz traffic slows to two-month low as renewed US, Iran strikes raise safety risk (https://www.reuters.com/world/middle-east/hormuz-traffic-slows-multi-week-low-renewed-us-iran-strikes-raise-safety-risk-2026-07-13/)",
+    "Morning Bid: Crude up, chips down (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-07-13/)",
+    "Prosus-backed Indian jeweller BlueStone to double workforce, expand beyond malls (https://www.reuters.com/world/india/prosus-backed-indian-jeweller-bluestone-double-workforce-expand-beyond-malls-2026-07-13/)",
+    "Iran's trump card (https://www.reuters.com/podcasts/reuters-morning-bid/irans-trump-card-2026-07-13/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-13",
+      "v": 4.62,
+      "change": 1.32
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-13",
+      "v": 29264.1,
+      "change": -1.88
+    },
+    "SP500_FRED": {
+      "d": "2026-07-13",
+      "v": 7515.34,
+      "change": -0.79
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-13",
+      "v": 58.14,
+      "change": -2.69
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-13",
+      "v": 4000.425,
+      "change": -1.84
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-13",
+      "v": 1257.99,
+      "change": -1.43
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-13",
+      "v": 1614.23,
+      "change": -1.1
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-13",
+      "v": 17.16,
+      "change": 14.17
+    }
+  }
+}

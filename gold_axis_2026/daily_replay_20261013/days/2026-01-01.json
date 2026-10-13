@@ -1,0 +1,10 @@
+{
+  "date": "2026-01-01",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yılbaşı; tarih filtresinden geçen güvenilir günlük haber bulunamadı. Yeni işlem gerekçesi yok.",
+  "invalidation": "İşlem açılışında doğrulanmış yeni haber ve piyasa tepkisi.",
+  "coverage": "news_search_gap_holiday",
+  "sources": [],
+  "panel": null
+}

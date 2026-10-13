@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-29",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Tam seansta altın önceki toparlanmayı kaybetti; petrol/faiz beklentisi baskısı sürüyor. PCE rahatlaması kalıcı olmadı.",
+  "invalidation": "Altının düşük petrol/faize yeniden olumlu cevap vermesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips as US-Iran tensions spark inflation, rate hike fears (https://www.reuters.com/world/india/gold-slips-fresh-us-iran-strikes-boost-oil-fed-rate-hike-bets-weigh-2026-06-29/)",
+    "TSX ends lower as metal mining shares fall (https://www.reuters.com/business/futures-edge-higher-us-iran-tensions-ease-2026-06-29/)",
+    "Trading Day: Wall Street gains, Dow hits record closing high as fragile U.S.-Iran truce holds (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-2026-06-29/)",
+    "Morning Bid: Weekend wars (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-29/)",
+    "What's good for the US economy now may not be good for stocks (https://www.reuters.com/business/whats-good-us-economy-now-may-not-be-good-stocks-2026-06-29/)",
+    "Halfway there (https://www.reuters.com/podcasts/reuters-morning-bid/halfway-there-2026-06-29/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-29",
+      "v": 4.38,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-29",
+      "v": 29774.75,
+      "change": 2.25
+    },
+    "SP500_FRED": {
+      "d": "2026-06-29",
+      "v": 7440.43,
+      "change": 1.18
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-29",
+      "v": 58.29,
+      "change": -1.44
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-29",
+      "v": 4013.628,
+      "change": -1.28
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-29",
+      "v": 1217.4,
+      "change": 0.89
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-29",
+      "v": 1596.72,
+      "change": -1.4
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-29",
+      "v": 17.65,
+      "change": -4.13
+    }
+  }
+}

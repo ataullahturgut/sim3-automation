@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-28",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Hürmüz kısıtı petrol baskısını sürdürüyor; merkez bankalarında şahin eğilim ve metal satışı var. OPEC üyelik değişimini anlık arz artışı saymıyorum.",
+  "invalidation": "Fiili arzın düzelmesi ve faiz/dolar baskısının çözülmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls as Middle East tensions keep oil soaring, Fed meeting in focus (https://www.reuters.com/world/india/gold-steady-with-us-iran-talks-central-bank-decisions-focus-2026-04-28/)",
+    "Oil ends up nearly 3% as Hormuz disruption outweighs UAE OPEC exit (https://www.reuters.com/business/energy/oil-prices-rise-no-end-iran-war-stand-off-seems-sight-2026-04-28/)",
+    "UAE to leave OPEC and OPEC+ oil producer groups (https://www.reuters.com/business/energy/view-uae-leave-opec-opec-oil-producer-groups-2026-04-28/)",
+    "Global inflation worries stir on energy price flare-up, but still relatively subdued - Reuters poll (https://www.reuters.com/world/middle-east/global-inflation-worries-stir-energy-price-flare-up-still-relatively-subdued-2026-04-28/)",
+    "Morning Bid: Talons on show (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-04-28/)",
+    "Yen and bear it (https://www.reuters.com/podcasts/reuters-morning-bid/yen-bear-it-2026-04-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-28",
+      "v": 4.36,
+      "change": 0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-28",
+      "v": 27029.01,
+      "change": -1.01
+    },
+    "SP500_FRED": {
+      "d": "2026-04-28",
+      "v": 7138.8,
+      "change": -0.49
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-28",
+      "v": 73.56,
+      "change": -2.75
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-28",
+      "v": 4593.585,
+      "change": -2
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-28",
+      "v": 1458.79,
+      "change": -1.83
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-28",
+      "v": 1953.67,
+      "change": -2.7
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-28",
+      "v": 17.83,
+      "change": -1.05
+    }
+  }
+}

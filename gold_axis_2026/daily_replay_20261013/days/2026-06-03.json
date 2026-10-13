@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-03",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yeni Körfez saldırıları petrol/faiz baskısını artırdı; altın ve diğer metaller düşüyor.",
+  "invalidation": "Enerji şokunun çözülmesi ve fiyat teyidi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips on bets of higher rates as war fuels inflation fears (https://www.reuters.com/business/gold-eases-stronger-oil-fresh-mideast-hostilities-erupt-2026-06-03/)",
+    "Indian central bank rebuts media report it sold gold reserves (https://www.reuters.com/world/india/indian-central-bank-rebuts-media-report-it-sold-gold-reserves-2026-06-03/)",
+    "World shares drop, oil jumps as Middle East unrest deepens (https://www.reuters.com/business/energy/global-markets-global-markets-2026-06-03/)",
+    "Ghana says Africa debt is 'mispriced' and targets investment-grade rating (https://www.reuters.com/world/africa/ghanas-president-calls-fairer-debt-restructuring-tools-2026-06-03/)",
+    "Israel, Lebanon agree to implement ceasefire, boosting hopes for Iran deal (https://www.reuters.com/world/middle-east/hostilities-flare-iran-war-oil-jumps-with-talks-stalemate-2026-06-03/)",
+    "Morning Bid: Quantum leap (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-03/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-03",
+      "v": 4.49,
+      "change": 0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-03",
+      "v": 30571.24,
+      "change": -0.29
+    },
+    "SP500_FRED": {
+      "d": "2026-06-03",
+      "v": 7553.68,
+      "change": -0.74
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-03",
+      "v": 74.77,
+      "change": -1.23
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-03",
+      "v": 4448.548,
+      "change": -0.8
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-03",
+      "v": 1366.45,
+      "change": -0.39
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-03",
+      "v": 1929.32,
+      "change": -0.85
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-03",
+      "v": 16.06,
+      "change": 1.84
+    }
+  }
+}

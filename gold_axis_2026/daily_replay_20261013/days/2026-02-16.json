@@ -1,0 +1,52 @@
+{
+  "date": "2026-02-16",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "ABD ve Asya tatilleri likiditeyi azaltıyor; güçlü dolar altında ve diğer metallerde baskı yaratıyor. CPI sonrası yükseliş kalıcılaşmadı.",
+  "invalidation": "Normal likiditede doların gevşemesi ve metal toparlanması.",
+  "coverage": "holiday_thin_market",
+  "sources": [
+    "Gold falls more than 1% on stronger dollar in thin trading (https://www.reuters.com/world/india/gold-drops-over-1-thin-trading-profittaking-weigh-2026-02-16/)",
+    "Why investors are getting the US debasement trade all wrong (https://www.reuters.com/markets/us/why-investors-are-getting-us-debasement-trade-all-wrong-klement-2026-02-16/)",
+    "Goldilocks zone (https://www.reuters.com/podcasts/reuters-morning-bid/goldilocks-zone-2026-02-16/)",
+    "India's January trade deficit widens before US tariff relief kicks in (https://www.reuters.com/world/india/india-trade-deficit-widens-3468-billion-january-2026-02-16/)",
+    "Most Gulf equities retreat on US-Iran caution (https://www.reuters.com/world/middle-east/major-gulf-bourses-ease-us-iran-caution-2026-02-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-13",
+      "v": 4.04,
+      "change": -1.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-13",
+      "v": 24732.73,
+      "change": 0.18
+    },
+    "SP500_FRED": {
+      "d": "2026-02-13",
+      "v": 6836.17,
+      "change": 0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-16",
+      "v": 75.18,
+      "change": -2.87
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-16",
+      "v": 4989.435,
+      "change": -0.61
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-16",
+      "v": 1699.33,
+      "change": -0.21
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-16",
+      "v": 2048.2,
+      "change": -0.84
+    }
+  }
+}

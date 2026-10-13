@@ -1,0 +1,56 @@
+{
+  "date": "2026-08-24",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Geri alım/dolar kanalı ve fiyat devamı sürüyor; Jackson Hole yaklaşırken aşırı yükseliş tek başına satış değil.",
+  "invalidation": "Şahin iletişim sonrası dolar/faiz ve altın dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rally gains momentum ahead of US inflation data, Jackson Hole event (https://www.reuters.com/world/india/gold-hits-over-3-month-high-ahead-us-inflation-data-fed-chair-speech-2026-08-24/)",
+    "Museum heists have turned more violent, with thieves hired on social media, Europol says (https://www.reuters.com/world/museum-heists-have-turned-more-violent-with-thieves-hired-social-media-europol-2026-08-24/)",
+    "TRADING DAY Tech, tariffs & Treasuries (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-24/)",
+    "Carney ride (https://www.reuters.com/podcasts/reuters-morning-bid/carney-ride-2026-08-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-24",
+      "v": 4.7,
+      "change": -0.84
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-24",
+      "v": 29023.18,
+      "change": -0.97
+    },
+    "SP500_FRED": {
+      "d": "2026-08-24",
+      "v": 7652.86,
+      "change": -0.28
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-24",
+      "v": 4666.555,
+      "change": 1.35
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-24",
+      "v": 15.85,
+      "change": 4.76
+    }
+  }
+}

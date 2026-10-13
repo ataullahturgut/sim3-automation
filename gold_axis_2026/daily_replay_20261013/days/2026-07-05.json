@@ -1,0 +1,55 @@
+{
+  "date": "2026-07-05",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Görüşmelerde ilerleme yok ama altın pazar kazancını koruyor; Katar duyurusu ticari petrol akışıyla eşitlenmedi.",
+  "invalidation": "Yeni seansta olumsuz haberin dolar/faize taşınması.",
+  "coverage": "weekend_limited_market",
+  "sources": [
+    "Most Gulf markets slip on caution over US-Iran talks (https://www.reuters.com/world/middle-east/most-gulf-markets-slip-caution-over-us-iran-talks-2026-07-05/)",
+    "American party, Iranian prayers, Russia's gasoline crisis and England's pubs (https://www.reuters.com/podcasts/american-party-iranian-prayers-russias-gasoline-crisis-englands-pubs-2026-07-05/)",
+    "Qatar says all maritime activities will resume immediately (https://www.reuters.com/world/middle-east/qatar-says-all-maritime-activities-will-resume-immediately-2026-07-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-02",
+      "v": 4.49,
+      "change": 0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-02",
+      "v": 29329.21,
+      "change": -1.61
+    },
+    "SP500_FRED": {
+      "d": "2026-07-02",
+      "v": 7483.24,
+      "change": 0
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-05",
+      "v": 62.43,
+      "change": 0.08
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-05",
+      "v": 4187.405,
+      "change": 0.29
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-05",
+      "v": 1271.26,
+      "change": 0.07
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-05",
+      "v": 1644.47,
+      "change": 0.03
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-03",
+      "v": 15.81,
+      "change": -2.11
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-22",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Dolar gevşemesiyle ikinci gün tüm metaller yükseldi; yüksek petrol/faize rağmen altın dayanıklılık gösteriyor. Faiz tek etken değil; küçük değil tam varsayımsal pozisyon protokolü korunuyor.",
+  "invalidation": "Dolar dönüşü veya altının bu dayanıklılığı kaybetmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold firms to two-week peak on softer dollar, Fed outlook in focus (https://www.reuters.com/world/india/gold-nears-two-week-high-fed-outlook-middle-east-conflict-stay-focus-2026-07-22/)",
+    "India's central bank sold $6 billion in May to defend oil-hit rupee, data shows (https://www.reuters.com/world/india/indias-central-bank-sold-6-billion-may-defend-oil-hit-rupee-data-shows-2026-07-22/)",
+    "Most Gulf markets retreat as US-Iran hostilities escalate (https://www.reuters.com/world/middle-east/most-gulf-markets-slip-amid-escalating-us-iran-hostilities-2026-07-22/)",
+    "Morning Bid: Alphabetting (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-07-22/)",
+    "Trump to seek Congress approval for Saudi Arabia nuclear energy pact that lacks safeguards, sources say (https://www.reuters.com/business/energy/trump-seek-congress-approval-saudi-arabia-nuclear-energy-pact-that-lacks-2026-07-22/)",
+    "Trading Day: $100 oil looms (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-07-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-22",
+      "v": 4.67,
+      "change": 0.86
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-22",
+      "v": 28998.1,
+      "change": -0.54
+    },
+    "SP500_FRED": {
+      "d": "2026-07-22",
+      "v": 7498.96,
+      "change": -0.14
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-22",
+      "v": 59.66,
+      "change": 2.05
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-22",
+      "v": 4121.095,
+      "change": 1.03
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-22",
+      "v": 1305.96,
+      "change": 2.24
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-22",
+      "v": 1653.35,
+      "change": 1.76
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-22",
+      "v": 16.64,
+      "change": -2.4
+    }
+  }
+}

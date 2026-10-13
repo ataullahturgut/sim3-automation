@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-15",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Hürmüz/enerji riski sürüyor; ABD-Çin görüşmesi henüz somut sonuç vermedi. Altının pazar açılışı zayıf.",
+  "invalidation": "Enerji akışında veya dolar/faiz yönünde somut değişim.",
+  "coverage": "weekend_news_partial_market",
+  "sources": [
+    "Trump pressures allies, Iran arrests, fuel shock and F1 cancellations (https://www.reuters.com/podcasts/trump-pressures-allies-iran-arrests-fuel-shock-f1-cancellations-2026-03-15/)",
+    "UK's Starmer resists being drawn into wider Iran war, offers help on strait (https://www.reuters.com/world/uk/uks-starmer-vows-protect-working-people-conflict-fallout-2026-03-15/)",
+    "US, China economic chiefs meet in Paris to clear path to Trump-Xi summit (https://www.reuters.com/world/china/us-china-economic-chiefs-meet-paris-clear-path-trump-xi-summit-2026-03-15/)",
+    "Oil prices slide 3% as some ships transit Strait of Hormuz (https://www.reuters.com/business/energy/oil-extends-gains-middle-east-conflict-threatens-export-facilities-2026-03-15/)",
+    "Oil poised for further gains as Middle East conflict threatens export facilities (https://www.reuters.com/business/energy/oil-poised-further-gains-middle-east-conflict-threatens-export-facilities-2026-03-15/)",
+    "Week Ahead: Gulf drives markets (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-gulf-drives-markets-2026-03-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-13",
+      "v": 4.28,
+      "change": 0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-13",
+      "v": 24380.73,
+      "change": -0.62
+    },
+    "SP500_FRED": {
+      "d": "2026-03-13",
+      "v": 6632.19,
+      "change": -0.61
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-15",
+      "v": 80.56,
+      "change": -0.05
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-15",
+      "v": 4997.255,
+      "change": -0.42
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-15",
+      "v": 1551.39,
+      "change": -0.08
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-15",
+      "v": 2022.47,
+      "change": -0.05
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-13",
+      "v": 27.19,
+      "change": null
+    }
+  }
+}

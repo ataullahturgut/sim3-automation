@@ -1,0 +1,52 @@
+{
+  "date": "2026-02-27",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Tahliye uyarıları ve askeri risk artarken altın birkaç günlük tutunmanın ardından güçlendi; tahvil faizi düşüyor. Yeni risk fiyat tarafından teyit edildi.",
+  "invalidation": "Çatışmanın petrol/faiz/dolar baskısını artırması veya diplomatik çözümle altının geri dönmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold nears one-month high, set for seventh straight monthly rise (https://www.reuters.com/world/india/gold-steady-investors-weigh-progress-us-iran-talks-2026-02-27/)",
+    "Gold's rise cheers Turks, takes shine off anti-inflation efforts (https://www.reuters.com/world/middle-east/golds-rise-cheers-turks-takes-shine-off-anti-inflation-efforts-2026-02-27/)",
+    "South African rand slips after mixed month-end data (https://www.reuters.com/world/africa/south-african-rand-strengthens-slightly-ahead-month-end-data-2026-02-27/)",
+    "UAE stocks retreat on US-Iran impasse; oil prices jump (https://www.reuters.com/world/middle-east/uae-stocks-retreat-us-iran-impasse-oil-prices-jump-2026-02-27/)",
+    "Paramount's Hollywood ending (https://www.reuters.com/podcasts/reuters-morning-bid/paramounts-hollywood-ending-2026-02-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-27",
+      "v": 3.97,
+      "change": -1.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-27",
+      "v": 24960.04,
+      "change": -0.3
+    },
+    "SP500_FRED": {
+      "d": "2026-02-27",
+      "v": 6878.88,
+      "change": -0.43
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-27",
+      "v": 5278.718,
+      "change": 1.82
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

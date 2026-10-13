@@ -1,0 +1,55 @@
+{
+  "date": "2026-07-19",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Gerilim ve sevkiyatın yeniden yavaşlaması risk; pazar altın zayıf. Pazartesi dolar yazısı dışlandı.",
+  "invalidation": "Arz/kur baskısının tersine dönmesi.",
+  "coverage": "weekend_updated_monday_article_excluded",
+  "sources": [
+    "Dollar gains as US-Iran war gauged; sterling eases as Burnham steps in (https://www.reuters.com/world/asia-pacific/dollar-firmer-us-iran-conflict-intensifies-brent-hits-90-2026-07-19/)",
+    "Gulf bourses retreat as US-Iran hostilities intensify (https://www.reuters.com/world/middle-east/gulf-bourses-retreat-usiran-hostilities-intensify-2026-07-19/)",
+    "RPT Gulf crude exports jump in July but shipments slowing on renewed hostilities, data shows (https://www.reuters.com/business/energy/gulf-crude-exports-jump-july-shipments-slowing-renewed-hostilities-data-shows-2026-07-19/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-17",
+      "v": 4.55,
+      "change": -0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-17",
+      "v": 28592.66,
+      "change": -1.49
+    },
+    "SP500_FRED": {
+      "d": "2026-07-17",
+      "v": 7457.69,
+      "change": -1.01
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-19",
+      "v": 55.89,
+      "change": -0.02
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-19",
+      "v": 3993.405,
+      "change": -0.51
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-19",
+      "v": 1249.71,
+      "change": 0
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-19",
+      "v": 1596.97,
+      "change": 0.02
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-17",
+      "v": 18.77,
+      "change": 12.19
+    }
+  }
+}

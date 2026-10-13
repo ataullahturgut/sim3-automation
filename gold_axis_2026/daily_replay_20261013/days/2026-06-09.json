@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-09",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Enflasyon öncesi faiz artışı beklentisi ve geniş satış sürüyor; nominal faiz düşüşü altını kurtarmadı.",
+  "invalidation": "Veri sonrası beklenti ve fiyat dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips over 1% on rate-hike fears ahead of U.S. inflation data (https://www.reuters.com/world/india/gold-extends-falls-rising-treasury-yields-2026-06-09/)",
+    "India's gold tariff hike fuels smuggling revival, squeezes banks and refiners (https://www.reuters.com/world/china/indias-gold-tariff-hike-fuels-smuggling-revival-squeezes-banks-refiners-2026-06-09/)",
+    "Fed to hold rates this year, cut calls fade as war inflation persists, economists say: Reuters poll (https://www.reuters.com/business/fed-hold-rates-this-year-cut-calls-fade-war-inflation-persists-economists-say-2026-06-09/)",
+    "Equities fall while oil slips amid uncertain Middle East outlook (https://www.reuters.com/world/china/global-markets-global-markets-2026-06-09/)",
+    "US energy chief says oil exports through Strait of Hormuz, Gulf will 'continue to rise' (https://www.reuters.com/world/middle-east/us-energy-secretary-says-ship-traffic-through-strait-hormuz-rising-very-2026-06-09/)",
+    "Morning Bid: Buy the chip (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-09/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-09",
+      "v": 4.53,
+      "change": -0.66
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-09",
+      "v": 29084.5,
+      "change": -1.12
+    },
+    "SP500_FRED": {
+      "d": "2026-06-09",
+      "v": 7386.65,
+      "change": -0.26
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-09",
+      "v": 67.09,
+      "change": -1.64
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-09",
+      "v": 4236.738,
+      "change": -2.1
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-09",
+      "v": 1227.72,
+      "change": -0.95
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-09",
+      "v": 1746.05,
+      "change": -2.42
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-09",
+      "v": 19.87,
+      "change": 5.02
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-03-10",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar/petrol gevşemesi altını destekliyor; ancak saldırılar ve abluka tehdidi artıyor, faiz hâlâ yukarı. Beklentideki rahatlama ile fiili arz riski çelişiyor.",
+  "invalidation": "Enerji akışının düzelmesi veya faiz/dolar desteğinin kalıcılaşması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains nearly 2% on softer dollar, cooling inflation concerns (https://www.reuters.com/world/india/gold-gains-weaker-dollar-easing-inflation-concerns-2026-03-10/)",
+    "Heaviest day of strikes yet on Iran despite market bets that war will end soon (https://www.reuters.com/world/asia-pacific/iran-says-oil-blockade-will-continue-until-attacks-end-trump-threatens-hit-2026-03-10/)",
+    "Reuters Imagen integrates Magnifi AI to automate highlights from live and archive video, accelerating monetization and secure distribution at scale (https://www.reuters.com/media-center/reuters-imagen-integrates-magnifi-ai-automate-highlights-live-archive-video-2026-03-10/)",
+    "Morning Bid: Oil's combustible calm (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-10/)",
+    "Trump says US 'destroyed' mine-laying vessels in Strait of Hormuz; US Navy says escorts not possible - as it happened (https://www.reuters.com/world/iran-war-live-trump-tehran-trade-threats-over-oil-blockade-2026-03-10/)",
+    "Buckle up (https://www.reuters.com/podcasts/reuters-morning-bid/buckle-up-2026-03-10/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-10",
+      "v": 4.15,
+      "change": 0.73
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-10",
+      "v": 24956.47,
+      "change": -0.04
+    },
+    "SP500_FRED": {
+      "d": "2026-03-10",
+      "v": 6781.48,
+      "change": -0.21
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-10",
+      "v": 88.65,
+      "change": 2.83
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-10",
+      "v": 5197.175,
+      "change": 1.12
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-10",
+      "v": 1679.12,
+      "change": -0.76
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-10",
+      "v": 2202.55,
+      "change": 0.79
+    }
+  }
+}

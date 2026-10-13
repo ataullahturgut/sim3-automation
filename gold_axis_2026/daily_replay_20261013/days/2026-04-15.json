@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-15",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Kâr satışı/dolar toparlanması sınırlı; petrolün düşük kalması ve diplomasi alım gerekçesini koruyor.",
+  "invalidation": "Artan faiz/dolar baskısıyla altın zayıflığının sürmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold drifts lower with eyes on US-Iran developments (https://www.reuters.com/world/india/gold-slips-onemonth-high-firmer-dollar-usiran-talks-focus-2026-04-15/)",
+    "Goldman Sachs flags two-way risks to their 2026 oil price outlook (https://www.reuters.com/business/energy/goldman-sachs-flags-twoway-risks-their-2026-oil-price-outlook-2026-04-15/)",
+    "TSX notches six-week high on Middle East optimism (https://www.reuters.com/business/tsx-futures-down-investors-pause-after-mideast-talks-rally-2026-04-15/)",
+    "Finance ministers, stung by hit to economies, call for full Iran war ceasefire (https://www.reuters.com/world/middle-east/finance-ministers-warn-prolonged-market-impact-middle-east-conflict-2026-04-15/)",
+    "Morning Bid: Back to business (https://www.reuters.com/business/finance/global-markets-view-usa-2026-04-15/)",
+    "VIEW S&P 500, Nasdaq notch fresh records, casting aside war fears (https://www.reuters.com/business/view-sp-500-nasdaq-notch-fresh-records-casting-aside-war-fears-2026-04-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-15",
+      "v": 4.29,
+      "change": 0.7
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-15",
+      "v": 26204.58,
+      "change": 1.4
+    },
+    "SP500_FRED": {
+      "d": "2026-04-15",
+      "v": 7022.95,
+      "change": 0.8
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-15",
+      "v": 79.39,
+      "change": 1.8
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-15",
+      "v": 4807.058,
+      "change": -0.57
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-15",
+      "v": 1581.15,
+      "change": 0.19
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-15",
+      "v": 2114.26,
+      "change": 1.24
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-15",
+      "v": 18.17,
+      "change": -1.03
+    }
+  }
+}

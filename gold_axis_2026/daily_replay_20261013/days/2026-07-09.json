@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-09",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın ve metaller tepki verdi; kalıcı makro değişim henüz yok. Banka fiyat hedefi veri yerine konmadı.",
+  "invalidation": "İkinci gün toparlanma ve faiz/dolar desteği.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains over 1%; focus turns to Middle East tensions (https://www.reuters.com/world/india/gold-dips-mideast-hostilities-revive-inflation-concerns-2026-07-09/)",
+    "HSBC lowers 2026-27 gold price forecasts on hawkish Fed tilt (https://www.reuters.com/business/hsbc-lowers-2026-27-gold-price-forecasts-hawkish-fed-tilt-2026-07-09/)",
+    "Fortuna expects Senegal gold project permit within weeks, CEO says (https://www.reuters.com/world/africa/fortuna-expects-senegal-gold-project-permit-within-weeks-ceo-says-2026-07-09/)",
+    "South African rand firms, shrugging off dour manufacturing data (https://www.reuters.com/world/africa/south-african-rand-firms-ahead-key-manufacturing-data-2026-07-09/)",
+    "Trading Day: What war? Chip-led rally helps markets ignore on-again, off-again US-Iran truce (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-2026-07-09/)",
+    "Oil's three-day surge (https://www.reuters.com/podcasts/reuters-morning-bid/oils-three-day-surge-2026-07-09/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-09",
+      "v": 4.54,
+      "change": -0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-09",
+      "v": 29727.1,
+      "change": 1.62
+    },
+    "SP500_FRED": {
+      "d": "2026-07-09",
+      "v": 7543.64,
+      "change": 0.81
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-09",
+      "v": 59.27,
+      "change": 0.36
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-09",
+      "v": 4120.415,
+      "change": 1.16
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-09",
+      "v": 1244.24,
+      "change": 0.53
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-09",
+      "v": 1614.87,
+      "change": 0.68
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-09",
+      "v": 15.84,
+      "change": -6.27
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-18",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Diplomatik ilerleme anlatısı zayıfladı ve altın toparlandı; fakat faiz yükseliyor, son günler iki yönlü. Yeni alım için toparlanmanın kalıcılığını bekliyorum.",
+  "invalidation": "Gerilim sürerken altının kazancını koruması veya doların zayıflaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold surges over 2% on geopolitical jitters despite Fed rate-path split (https://www.reuters.com/world/india/gold-rises-one-week-low-ahead-fomc-minutes-2026-02-18/)",
+    "TRADING DAY Wall St rally fades as European shares close at record high; crude surges on supply worries (https://www.reuters.com/business/global-markets-trading-day-graphic-2026-02-18/)",
+    "TSX rises as tech stocks rebound, miners gain (https://www.reuters.com/business/tsx-futures-rise-gold-oil-prices-recover-2026-02-18/)",
+    "India File: AI fanfare meets policy pushback (https://www.reuters.com/world/india/india-file-ai-fanfare-meets-policy-pushback-2026-02-18/)",
+    "Starmer, Trump discussed Russia-Ukraine, Iran after Geneva talks, Downing Street says (https://www.reuters.com/world/europe/starmer-trump-discussed-russia-ukraine-iran-after-geneva-talks-downing-street-2026-02-18/)",
+    "Morning Bid: Changing of Lagarde (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-18",
+      "v": 4.09,
+      "change": 0.99
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-18",
+      "v": 24898.87,
+      "change": 0.8
+    },
+    "SP500_FRED": {
+      "d": "2026-02-18",
+      "v": 6881.31,
+      "change": 0.56
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-18",
+      "v": 77.88,
+      "change": 5.99
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-18",
+      "v": 4975.635,
+      "change": 2.4
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-18",
+      "v": 1730.83,
+      "change": 2.35
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-18",
+      "v": 2085.34,
+      "change": 3.33
+    }
+  }
+}

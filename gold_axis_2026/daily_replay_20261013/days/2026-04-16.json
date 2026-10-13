@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-16",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Diplomasi sürüyor; altın yatay, dolar baskısı sınırlı. Faiz son iki gün yükseldiği için güçlü alım teyidi yok ama mevcut gerekçe tamamen bozulmadı.",
+  "invalidation": "Petrol ve doların yeniden birlikte yükselmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold holds ground with market focus on Iran peace talks (https://www.reuters.com/world/india/gold-gains-softer-dollar-us-iran-peace-deal-hopes-rise-2026-04-16/)",
+    "US imposes sanctions on Nicaraguan officials linked to gold sector (https://www.reuters.com/world/americas/us-imposes-sanctions-nicaragua-government-officials-others-alleged-seizure-us-2026-04-16/)",
+    "Israel and Lebanon begin ceasefire, Trump says Iran may meet US over weekend (https://www.reuters.com/world/asia-pacific/hopes-middle-east-peace-grow-israel-discusses-lebanon-ceasefire-2026-04-16/)",
+    "G7 finance chiefs push for 'lasting peace' in Middle East, warn of war's economic damage (https://www.reuters.com/world/china/g7-finance-leaders-ready-act-mitigate-iran-war-fallout-lescure-says-2026-04-16/)",
+    "Morning Bid: Six-week roundtrip (https://www.reuters.com/business/finance/global-markets-view-usa-2026-04-16/)",
+    "China's surprise (https://www.reuters.com/podcasts/reuters-morning-bid/chinas-surprise-2026-04-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-16",
+      "v": 4.32,
+      "change": 0.7
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-16",
+      "v": 26333,
+      "change": 0.49
+    },
+    "SP500_FRED": {
+      "d": "2026-04-16",
+      "v": 7041.28,
+      "change": 0.26
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-16",
+      "v": 79.42,
+      "change": 0.04
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-16",
+      "v": 4794.568,
+      "change": -0.26
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-16",
+      "v": 1576.6,
+      "change": -0.29
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-16",
+      "v": 2121.6,
+      "change": 0.35
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-16",
+      "v": 17.94,
+      "change": -1.27
+    }
+  }
+}

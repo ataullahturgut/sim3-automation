@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-04",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol/faiz gevşemesi altını destekledi; henüz önceki dalgalanma aralığında ve resmi istihdam öncesi. Devam teyidi yok.",
+  "invalidation": "Veri sonrası dolar/altın uyumu.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises on softer oil prices; US jobs data, Fed rate outlook on tap (https://www.reuters.com/world/india/gold-steady-with-middle-east-turmoil-us-jobs-data-focus-2026-08-04/)",
+    "Goldman sees Brent at $80-$90 until US-Iran deal or major escalation (https://www.reuters.com/business/energy/goldman-sees-brent-80-90-until-us-iran-deal-or-major-escalation-2026-08-04/)",
+    "Trading Day: The only way is up (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-04/)",
+    "Oil prices settle 5% lower after claims of progress in US-Iran talks (https://www.reuters.com/business/energy/oil-ticks-up-after-selloff-talks-end-us-iran-war-remain-uncertain-2026-08-04/)",
+    "Morning Bid: Earnings overload (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-08-04/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-04",
+      "v": 4.63,
+      "change": -1.49
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-04",
+      "v": 29733.16,
+      "change": 3.32
+    },
+    "SP500_FRED": {
+      "d": "2026-08-04",
+      "v": 7736.52,
+      "change": 1.79
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-04",
+      "v": 4075.265,
+      "change": 0.56
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-04",
+      "v": 16.5,
+      "change": 4.04
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-20",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yeni gemi/abluka gerilimi petrolü yükseltti; altın açılış kaybını toparlasa da cuma düzeyini aşamadı. Görüşme umudu henüz yeterli teyit değil.",
+  "invalidation": "Dolar/enerji baskısının kalıcı azalması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "US-Iran tensions and firmer dollar push gold to one-week low (https://www.reuters.com/world/india/gold-falls-stronger-dollar-amid-renewed-us-iran-tensions-2026-04-20/)",
+    "Wall St Week Ahead Surging record-high US stocks to wade deeper into earnings season (https://www.reuters.com/business/wall-st-week-ahead-surging-record-high-us-stocks-wade-deeper-into-earnings-2026-04-20/)",
+    "Congo peace project plans first gold exports in September from restive east, founder says (https://www.reuters.com/world/africa/congo-peace-project-plans-first-gold-exports-september-restive-east-founder-says-2026-04-20/)",
+    "Middle Eastern bourses fall on renewed US-Iran tensions (https://www.reuters.com/world/middle-east/uae-bourses-ease-renewed-us-iran-tensions-2026-04-20/)",
+    "Trading Day: Cooling off, but still optimistic (https://www.reuters.com/business/global-markets-trading-day-graphic-2026-04-20/)",
+    "Strait talk (https://www.reuters.com/podcasts/reuters-morning-bid/strait-talk-2026-04-20/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-20",
+      "v": 4.26,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-20",
+      "v": 26590.34,
+      "change": -0.31
+    },
+    "SP500_FRED": {
+      "d": "2026-04-20",
+      "v": 7109.14,
+      "change": -0.24
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-20",
+      "v": 79.77,
+      "change": -1.19
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-20",
+      "v": 4827.318,
+      "change": 1.02
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-20",
+      "v": 1552.12,
+      "change": -0.46
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-20",
+      "v": 2084.39,
+      "change": -0.74
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-20",
+      "v": 18.87,
+      "change": 7.95
+    }
+  }
+}

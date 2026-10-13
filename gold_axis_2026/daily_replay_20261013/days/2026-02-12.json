@@ -1,0 +1,51 @@
+{
+  "date": "2026-02-12",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Dünkü dayanıklılık bozuldu; altın/gümüş ve hisseler birlikte satılıyor. Tahvil faizi düşmesine rağmen metal satışı likidite/pozisyon kanalını düşündürüyor; nakde geçiyorum.",
+  "invalidation": "Enflasyon haberi sonrası satışın tersine dönmesi ve kazanımların korunması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold cascades down as strong US jobs data and stop-selling weigh (https://www.reuters.com/world/india/gold-silver-dip-dollar-rises-after-strong-us-jobs-data-2026-02-12/)",
+    "Ghana's gold output hits record 6 million ounces in 2025, industry group says (https://www.reuters.com/world/africa/ghanas-gold-output-hits-record-6-million-ounces-2025-industry-group-says-2026-02-12/)",
+    "Rate expectations (https://www.reuters.com/podcasts/reuters-morning-bid/rate-expectations-2026-02-12/)",
+    "Oil market tightens as geopolitics squeezes supply, Vitol CEO says (https://www.reuters.com/business/energy/oil-market-tightens-geopolitics-squeezes-supply-vitol-ceo-says-2026-02-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-12",
+      "v": 4.09,
+      "change": -2.15
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-12",
+      "v": 24687.61,
+      "change": -2.04
+    },
+    "SP500_FRED": {
+      "d": "2026-02-12",
+      "v": 6832.76,
+      "change": -1.57
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-12",
+      "v": 82.39,
+      "change": -4.31
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-12",
+      "v": 4919.775,
+      "change": -2.79
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-12",
+      "v": 1696.59,
+      "change": -3.66
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-12",
+      "v": 2083.54,
+      "change": -4.34
+    }
+  }
+}

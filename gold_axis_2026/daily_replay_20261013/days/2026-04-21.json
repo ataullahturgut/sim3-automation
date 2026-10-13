@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-21",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar/faiz/petrol birlikte yükseldi, altın ve gümüş satıldı. Görüşme beklentisi ve Warsh oturumu belirsizliği yeni alımı desteklemiyor.",
+  "invalidation": "Bu baskıların çözülmesi ve altın toparlanmasının korunması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips over 2% as dollar, yields rise ahead of tentative US-Iran talks (https://www.reuters.com/world/india/gold-eases-firmer-dollar-investors-await-clarity-us-iran-talks-2026-04-21/)",
+    "HSBC hires JPMorgan executive as global precious metals sales lead, sources say (https://www.reuters.com/business/finance/hsbc-hires-jp-morgan-executive-global-precious-metals-sales-lead-sources-say-2026-04-21/)",
+    "Bridgewater China backs Chinese equities, gold after March fund drawdown (https://www.reuters.com/world/asia-pacific/bridgewater-china-backs-chinese-equities-gold-after-march-fund-drawdown-2026-04-21/)",
+    "Oil up $3 on drop in US fuel stocks, reports of gunfire hitting container ships in Hormuz (https://www.reuters.com/business/energy/us-oil-prices-rise-us-iran-peace-talks-remain-uncertain-2026-04-21/)",
+    "Morning Bid: Tech overwhelms Iran tension (https://www.reuters.com/business/finance/global-markets-view-usa-2026-04-21/)",
+    "Another bite at the Apple (https://www.reuters.com/podcasts/reuters-morning-bid/another-bite-apple-2026-04-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-21",
+      "v": 4.3,
+      "change": 0.94
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-21",
+      "v": 26479.47,
+      "change": -0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-04-21",
+      "v": 7064.01,
+      "change": -0.63
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-21",
+      "v": 78.17,
+      "change": -2.01
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-21",
+      "v": 4718.998,
+      "change": -2.24
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-21",
+      "v": 1553.61,
+      "change": 0.1
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-21",
+      "v": 2061.59,
+      "change": -1.09
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-21",
+      "v": 19.5,
+      "change": 3.34
+    }
+  }
+}

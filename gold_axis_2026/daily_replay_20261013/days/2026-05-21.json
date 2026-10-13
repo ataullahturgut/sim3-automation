@@ -1,0 +1,57 @@
+{
+  "date": "2026-05-21",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın kaybı telafi etti ancak net devam sınırlı; diplomasi hâlâ belirsiz ve geniş metal teyidi yok.",
+  "invalidation": "Fiyat ve faiz/dolar tarafında güçlü devam.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold steady as oil falls on uncertainty over end to Iran war; dollar, yields ease (https://www.reuters.com/world/india/gold-steady-us-iran-peace-deal-hopes-offset-inflation-fears-2026-05-21/)",
+    "Wall St indexes end slightly higher as investors focus on Mideast peace hopes (https://www.reuters.com/business/us-stock-futures-muted-after-nvidia-results-retail-earnings-data-focus-2026-05-21/)",
+    "Asia's currencies are flashing oil shock alarm (https://www.reuters.com/world/china/asias-currencies-are-flashing-oil-shock-alarm-2026-05-21/)",
+    "Stock markets keep powering forward. These three reasons justify it (https://www.reuters.com/commentary/reuters-open-interest/stock-markets-keep-powering-forward-these-three-reasons-justify-it-2026-05-21/)",
+    "Oil market clock is ticking as supply crunch looms (https://www.reuters.com/commentary/reuters-open-interest/oil-market-clock-is-ticking-supply-crunch-looms-2026-05-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-21",
+      "v": 4.57,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-21",
+      "v": 29357.27,
+      "change": 0.2
+    },
+    "SP500_FRED": {
+      "d": "2026-05-21",
+      "v": 7445.72,
+      "change": 0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-21",
+      "v": 75.38,
+      "change": 0.28
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-21",
+      "v": 4542.875,
+      "change": 0.08
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-21",
+      "v": 1364.83,
+      "change": -0.37
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-21",
+      "v": 1937.06,
+      "change": -0.08
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-21",
+      "v": 16.76,
+      "change": -3.9
+    }
+  }
+}

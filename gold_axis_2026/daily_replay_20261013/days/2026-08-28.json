@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-28",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Warsh'ın şahin konuşması faiz artışı olasılığını yükseltti; altın sert düştü. Bu düşüş önceden öngörülmedi, karar sonrasında satış.",
+  "invalidation": "Şahin beklentinin çözülmesi ve toparlanma teyidi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold drops 3% as Fed's Warsh comments lift rate hike bets (https://www.reuters.com/world/india/gold-slips-fed-chief-warshs-jackson-hole-speech-looms-2026-08-28/)",
+    "GMF LENS Aggressive Treasury yield cap could weigh on dollar, says Citi's asset allocation head (https://www.reuters.com/markets/wealth/gmf-lens-aggressive-treasury-yield-cap-could-weigh-dollar-says-citis-asset-2026-08-28/)",
+    "Summer's over, buckle up! (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-08-28/)",
+    "Oil settles lower on clues about Fed policy, rumors of Hormuz deal (https://www.reuters.com/business/energy/oil-track-weekly-loss-even-iran-tensions-simmer-2026-08-28/)",
+    "Morning Bid: Six months and counting (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-08-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-28",
+      "v": 4.73,
+      "change": 1.28
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-28",
+      "v": 29433.43,
+      "change": -0.7
+    },
+    "SP500_FRED": {
+      "d": "2026-08-28",
+      "v": 7711.76,
+      "change": -0.25
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-28",
+      "v": 4450.065,
+      "change": -3.45
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-28",
+      "v": 14.43,
+      "change": -0.55
+    }
+  }
+}

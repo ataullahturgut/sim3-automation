@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-25",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Powell soruşturmasının kapanması kurumsal güven kaygısını azaltabilir; İran görüşmeleri dolaylı ve belirsiz. Hafta sonu yeni alım teyidi yok.",
+  "invalidation": "Dolar/faiz/fiyat tepkisinin yeni haftada netleşmesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Turkey may consider role in Hormuz demining after Iran-US deal, minister says (https://www.reuters.com/world/middle-east/turkey-may-consider-role-hormuz-demining-after-iran-us-deal-minister-says-2026-04-25/)",
+    "Iran talks, Jerome Powell and the White House Correspondents' Dinner (https://www.reuters.com/podcasts/kushner-witkoff-head-pakistan-jerome-powell-white-house-correspondents-dinner-2026-04-25/)",
+    "Romania finds parts of second drone after overnight Russian attack on Ukraine (https://www.reuters.com/business/aerospace-defense/romania-says-drone-fragments-damage-property-during-overnight-russian-attack-2026-04-25/)",
+    "Macron reaffirms efforts to reopen Strait of Hormuz, as TotalEnergies warns of energy shortages (https://www.reuters.com/business/energy/macron-reaffirms-efforts-reopen-strait-hormuz-totalenergies-warns-energy-2026-04-25/)",
+    "Week in Review: Talking about Kevin (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-fed-focus-2026-04-25/)",
+    "Fresh EU sanctions set to hit condensate imports from Russia's Yamal LNG (https://www.reuters.com/business/energy/fresh-eu-sanctions-set-hit-condensate-imports-russias-yamal-lng-2026-04-25/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-24",
+      "v": 4.31,
+      "change": -0.69
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-24",
+      "v": 27303.67,
+      "change": 1.95
+    },
+    "SP500_FRED": {
+      "d": "2026-04-24",
+      "v": 7165.08,
+      "change": 0.8
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-25",
+      "v": 75.69,
+      "change": 0.26
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-24",
+      "v": 4707.865,
+      "change": 0.32
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-25",
+      "v": 1503.95,
+      "change": 1.26
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-25",
+      "v": 2014.23,
+      "change": 0.72
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-24",
+      "v": 18.71,
+      "change": -3.11
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "date": "2026-02-08",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Pazar altın açılışı yukarı; güncel çoklu piyasa teyidi sınırlı. Bulunan spor haberleri dışlandı, genel piyasa yazısı yeni altın tetikleyicisi sağlamıyor.",
+  "invalidation": "Pazartesi toparlanmanın korunması ve doların zayıflaması.",
+  "coverage": "weekend_limited_news",
+  "sources": [
+    "Alpine Skiing-Odermatt gets fresh shot at gold in combined ... (https://www.reuters.com/sports/alpine-skiing-odermatt-gets-fresh-shot-gold-combined-event-2026-02-08/)",
+    "Figure skating-U.S. win team gold medal at Milano Cortina ... (https://www.reuters.com/sports/figure-skating-us-win-team-gold-medal-milano-cortina-games-2026-02-08/)",
+    "Crosscountry-Norway's Klaebo wins gold in men's ... (https://www.reuters.com/sports/crosscountry-norways-klaebo-wins-gold-medal-mens-skiathlon-2026-02-08/)",
+    "Snowboard-Austria's Gasser advances in quest for third gold (https://www.reuters.com/sports/snowboard-austrias-gasser-advances-quest-third-gold-2026-02-08/)",
+    "Most Gulf markets gain on upbeat US-Iran talks; Egypt at record high (https://www.reuters.com/world/middle-east/most-gulf-markets-gain-upbeat-us-iran-talks-egypt-record-high-2026-02-08/)",
+    "The Week in Breakingviews: Shooting for the moon (https://www.reuters.com/commentary/breakingviews/global-markets-breakingviews-2026-02-08/)",
+    "Trump meets with Honduran president Asfura (https://www.reuters.com/world/americas/trump-meets-with-honduran-president-asfura-2026-02-08/)",
+    "Snowboard-Austria's Karl retains Olympic title in parallel ... (https://www.reuters.com/sports/snowboard-ledeckas-bid-third-gold-ends-quarter-finals-2026-02-08/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-06",
+      "v": 4.22,
+      "change": 0.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-06",
+      "v": 25075.77,
+      "change": 2.15
+    },
+    "SP500_FRED": {
+      "d": "2026-02-06",
+      "v": 6932.3,
+      "change": 1.97
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 74.94,
+      "change": -4.79
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-08",
+      "v": 5035.475,
+      "change": 1.43
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 1651,
+      "change": -5.01
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 2012,
+      "change": -5.09
+    }
+  }
+}

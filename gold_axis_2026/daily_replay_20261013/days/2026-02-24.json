@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-24",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Uygulanan tarife açıklanan %15 yerine %10; risk iştahı toparlandı, dolar güçlendi ve altın kazançlarının bir kısmını verdi. Yeni alım gerekçesi zayıfladığı için çıkıyorum.",
+  "invalidation": "İran riskinin artması veya altının yeni zirveyle satış tezini reddetmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips from three-week high on dollar strength, profit-taking (https://www.reuters.com/world/india/gold-falls-three-week-high-dollar-firms-2026-02-24/)",
+    "Newmont to invest $800 million in Argentina's Cerro Negro (https://www.reuters.com/world/americas/newmont-invest-800-million-argentinas-cerro-negro-2026-02-24/)",
+    "Turkish central bank total reserves fell nearly $6 bln last week, bankers say (https://www.reuters.com/world/middle-east/turkish-central-bank-total-reserves-fell-nearly-6-bln-last-week-bankers-say-2026-02-24/)",
+    "Trading Day: A welcome dose of AI, tariff relief (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-02-24/)",
+    "Oil prices ease as Iran says prepared to take steps to reach deal with US (https://www.reuters.com/business/energy/oil-hovers-below-seven-month-high-traders-eye-usiran-talks-trade-policy-2026-02-24/)",
+    "Fate of the union (https://www.reuters.com/podcasts/reuters-morning-bid/fate-union-2026-02-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-24",
+      "v": 4.04,
+      "change": 0.25
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-24",
+      "v": 24977.04,
+      "change": 1.09
+    },
+    "SP500_FRED": {
+      "d": "2026-02-24",
+      "v": 6890.07,
+      "change": 0.77
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-24",
+      "v": 87.08,
+      "change": -0.07
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-24",
+      "v": 5146.365,
+      "change": -1.7
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-24",
+      "v": 1774.73,
+      "change": 0.73
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-24",
+      "v": 2147.33,
+      "change": -0.15
+    }
+  }
+}

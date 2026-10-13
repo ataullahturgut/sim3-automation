@@ -1,0 +1,56 @@
+{
+  "date": "2026-02-06",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın ve hisseler toparlandı, dolar hafif zayıf; fakat ikinci teminat artışı ve gümüşte uç oynaklık var. Bir günlük sıçramayı yeniden kovalamıyorum.",
+  "invalidation": "Toparlanmanın sonraki seansta korunması ve ortak satış baskısının bitmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold bounces back on softer dollar, US-Iran concerns (https://www.reuters.com/world/india/spot-silver-falls-nearly-9-2026-02-06/)",
+    "CME Group hikes gold, silver margins again as volatility ... (https://www.reuters.com/world/india/cme-group-hikes-gold-silver-margins-again-volatility-grips-markets-2026-02-06/)",
+    "TSX jumps as miners rise, index set for weekly gains (https://www.reuters.com/business/gold-oil-prices-lift-tsx-futures-ahead-us-iran-talks-2026-02-06/)",
+    "As global metals fever spreads, markets buckle under the ... (https://www.reuters.com/commentary/reuters-open-interest/global-metals-fever-spreads-markets-buckle-under-heat-2026-02-06/)",
+    "Asia Gold: India gold premiums more than halve; China demand up ahead of Lunar New Year (https://www.reuters.com/world/china/asia-gold-india-gold-premiums-more-than-halve-china-demand-up-ahead-lunar-new-2026-02-06/)",
+    "Morning Bid: Rise of the job-killer robots? (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-06/)",
+    "AI hangover (https://www.reuters.com/podcasts/reuters-morning-bid/ai-hangover-2026-02-06/)",
+    "Bitcoin rallies, tops $70,000 as risk assets stabilize (https://www.reuters.com/business/finance/bitcoin-cusp-60000-investors-flee-risky-bets-2026-02-06/)",
+    "Zimbabwe agrees a staff-monitored programme with the IMF (https://www.reuters.com/world/africa/zimbabwe-says-it-has-agreed-staff-monitored-programme-with-imf-2026-02-06/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-06",
+      "v": 4.22,
+      "change": 0.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-06",
+      "v": 25075.77,
+      "change": 2.15
+    },
+    "SP500_FRED": {
+      "d": "2026-02-06",
+      "v": 6932.3,
+      "change": 1.97
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 74.94,
+      "change": -4.79
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-06",
+      "v": 4964.298,
+      "change": 5.55
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 1651,
+      "change": -5.01
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-06",
+      "v": 2012,
+      "change": -5.09
+    }
+  }
+}

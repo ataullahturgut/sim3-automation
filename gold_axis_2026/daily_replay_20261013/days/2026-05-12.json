@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-12",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Enflasyon/enerji baskısı arttı; altın düzeltmesi karşıt kanıt. Henüz önceki toparlanma tamamen bozulmadı; farklı saatli metal serileri çeliştiği için ek teyit sayılmadı.",
+  "invalidation": "Altında ikinci satış ve faiz baskısının sürmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold dips as oil gains add to rate uncertainty (https://www.reuters.com/world/china/gold-rises-with-uschina-talks-mideast-conflict-focus-2026-05-12/)",
+    "Indian banks resume bullion imports after month-long halt over 3% levy, sources say (https://www.reuters.com/sustainability/boards-policy-regulation/indian-banks-resume-bullion-imports-after-month-long-halt-over-3-levy-sources-2026-05-12/)",
+    "Oil settles higher as hopes of peace in the Middle East dwindle (https://www.reuters.com/business/energy/oil-prices-rise-fragile-us-iran-talks-sustain-supply-worries-2026-05-12/)",
+    "Morning Bid: Peace talks stutter (https://www.reuters.com/world/china/global-markets-view-europe-2026-05-12/)",
+    "Warshed and ready (https://www.reuters.com/podcasts/reuters-morning-bid/warshed-ready-2026-05-12/)",
+    "New Iran sanctions, AIPAC and Eurovision (https://www.reuters.com/podcasts/new-iran-sanctions-aipac-eurovision-2026-05-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-12",
+      "v": 4.46,
+      "change": 0.9
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-12",
+      "v": 29064.8,
+      "change": -0.87
+    },
+    "SP500_FRED": {
+      "d": "2026-05-12",
+      "v": 7400.96,
+      "change": -0.16
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-12",
+      "v": 86.64,
+      "change": 4.51
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-12",
+      "v": 4716.435,
+      "change": -0.72
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-12",
+      "v": 1512.28,
+      "change": 1.05
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-12",
+      "v": 2135.84,
+      "change": 2.75
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-12",
+      "v": 17.99,
+      "change": -2.12
+    }
+  }
+}

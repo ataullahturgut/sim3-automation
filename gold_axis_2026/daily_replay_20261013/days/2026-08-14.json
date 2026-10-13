@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-14",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Zayıf dolar ve sabit faiz beklentisi altını toparladı; petrol ve uzun faiz artışı karşıt risk ama fiyat dayanıyor.",
+  "invalidation": "Dolar/faiz baskısının altına taşınması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises on weaker dollar as inflation data cements rate-hold bets (https://www.reuters.com/world/india/gold-heads-weekly-loss-investors-unwind-inflation-fuelled-rally-2026-08-14/)",
+    "Oil prices rally, US data dents chances of Fed rate hike (https://www.reuters.com/world/china/global-markets-wrapup-1-2026-08-14/)",
+    "Take Five: The heat is on (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-08-14/)",
+    "Wall St Week Ahead With Fed mum on next move, investors look to earnings to keep stocks afloat (https://www.reuters.com/legal/transactional/wall-st-week-ahead-with-fed-mum-next-move-investors-look-earnings-keep-stocks-2026-08-14/)",
+    "Hot yields, cool prices (https://www.reuters.com/podcasts/reuters-morning-bid/hot-yields-cool-prices-2026-08-14/)",
+    "Morning Bid: Stay of execution? (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-08-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-14",
+      "v": 4.68,
+      "change": 1.08
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-14",
+      "v": 30046.14,
+      "change": -0.13
+    },
+    "SP500_FRED": {
+      "d": "2026-08-14",
+      "v": 7785.76,
+      "change": -0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-14",
+      "v": 4374.205,
+      "change": 0.47
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-14",
+      "v": 14.25,
+      "change": -2.6
+    }
+  }
+}

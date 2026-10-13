@@ -1,0 +1,57 @@
+{
+  "date": "2026-01-29",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Rekor sonrası altın geriledi; diğer metaller güçlü ve tahvil faizi düştü. İran riski sürüyor. Mevcut günlük bilgilerde dolar kaynaklı ortak metal çözülmesi teyidi yok; pozisyon korunuyor.",
+  "invalidation": "Doların güçlenmesiyle geniş metal satışı veya Fed başkanlığı beklentisinin değişmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "The Trump and China metals rally extends beyond gold ... (https://www.reuters.com/markets/commodities/trump-china-metals-rally-extends-beyond-gold-silver-2026-01-29/)",
+    "India's gold demand to fall in 2026 as jewellery slump ... (https://www.reuters.com/world/india/indias-gold-demand-fall-2026-jewellery-slump-offsets-investment-rise-2026-01-29/)",
+    "Global gold demand hits record high in 2025, WGC says (https://www.reuters.com/world/china/global-gold-demand-hits-record-high-2025-wgc-says-2026-01-29/)",
+    "Indian gold, silver extend rally to record highs (https://www.reuters.com/world/india/indian-gold-silver-extend-rally-record-highs-2026-01-29/)",
+    "Australian dollar hits fresh 3-year peak, kiwi rises to 7-month top (https://www.reuters.com/business/australian-dollar-hits-fresh-3-year-peak-kiwi-rises-7-month-top-2026-01-29/)",
+    "Morning Bid: Mixed megacaps and Tehran tensions (https://www.reuters.com/business/finance/global-markets-view-usa-2026-01-29/)",
+    "Hold steady (https://www.reuters.com/podcasts/reuters-morning-bid/hold-steady-2026-01-29/)",
+    "Oil prices surge 3% to five-month high on worries US could attack Iran (https://www.reuters.com/business/energy/oil-prices-rise-third-day-increasing-concerns-iran-attack-2026-01-29/)",
+    "Copper's ascent above $14,000 creates investor dilemma (https://www.reuters.com/business/finance/coppers-ascent-above-14000-creates-investor-dilemma-2026-01-29/)",
+    "Stocks slip as Microsoft drags, oil jumps on Iran attack worry (https://www.reuters.com/world/china/global-markets-global-markets-2026-01-29/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-29",
+      "v": 4.24,
+      "change": -0.47
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-29",
+      "v": 25884.3,
+      "change": -0.53
+    },
+    "SP500_FRED": {
+      "d": "2026-01-29",
+      "v": 6969.01,
+      "change": -0.13
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-29",
+      "v": 118.45,
+      "change": 5.01
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-29",
+      "v": 5437.995,
+      "change": -1.35
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-29",
+      "v": 2076,
+      "change": 6.63
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-29",
+      "v": 2755,
+      "change": 4.75
+    }
+  }
+}

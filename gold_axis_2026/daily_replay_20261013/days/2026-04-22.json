@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-22",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Ateşkes uzatıldı fakat Hürmüz/abluka sürüyor ve petrol yeniden yüksek. Altın tepkisi sınırlı; hisse rallisi tek başına altın alımı değil.",
+  "invalidation": "Arz akışında somut rahatlama veya altının güçlü ve kalıcı toparlanması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises on bargain-hunting after one-week low, U.S.-Iran talks in focus (https://www.reuters.com/world/india/gold-rises-oil-weakens-after-us-extends-ceasefire-with-iran-2026-04-22/)",
+    "Gulf markets fall as Hormuz closure dulls ceasefire optimism (https://www.reuters.com/world/middle-east/gulf-markets-mixed-hormuz-closure-dulls-ceasefire-optimism-2026-04-22/)",
+    "Ghana directs Newmont, AngloGold, Zijin to shift mining ops to local firms by December, sources say (https://www.reuters.com/world/africa/ghana-directs-newmont-anglogold-zijin-shift-mining-ops-local-firms-by-december-2026-04-22/)",
+    "Trading Day: Nasdaq hits new high (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-04-22/)",
+    "UK's Senior expects 2026 performance above expectations on stronger aerospace demand (https://www.reuters.com/business/aerospace-defense/uks-senior-expects-2026-performance-above-expectations-stronger-aerospace-demand-2026-04-22/)",
+    "Oil shrugs (https://www.reuters.com/podcasts/reuters-morning-bid/oil-shrugs-2026-04-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-22",
+      "v": 4.3,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-22",
+      "v": 26937.27,
+      "change": 1.73
+    },
+    "SP500_FRED": {
+      "d": "2026-04-22",
+      "v": 7137.9,
+      "change": 1.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-22",
+      "v": 77.91,
+      "change": -0.33
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-22",
+      "v": 4725.638,
+      "change": 0.14
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-22",
+      "v": 1561.75,
+      "change": 0.52
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-22",
+      "v": 2073.75,
+      "change": 0.59
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-22",
+      "v": 18.92,
+      "change": -2.97
+    }
+  }
+}

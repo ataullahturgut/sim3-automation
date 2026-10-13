@@ -1,0 +1,57 @@
+{
+  "date": "2026-06-05",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Beklenti üstü istihdam sonrası faiz/dolar baskısı ve ortak altın/hisse satışı belirgin. Düşüşü ucuzluk diye almıyorum.",
+  "invalidation": "Tasfiyenin durması ve politika beklentisinin yumuşaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls about 3% as robust US jobs data cements bets on higher rates (https://www.reuters.com/world/india/gold-slips-set-weekly-loss-mideast-tensions-rate-hike-fears-2026-06-05/)",
+    "History suggests gold will drop more, but are new drivers in charge? (https://www.reuters.com/commentary/reuters-open-interest/history-suggests-gold-will-drop-more-are-new-drivers-charge-2026-06-05/)",
+    "Peru's presidential runoff may hinge on small gold miners seeking continued loose regulations (https://www.reuters.com/world/americas/perus-presidential-runoff-may-hinge-small-gold-miners-seeking-continued-loose-2026-06-05/)",
+    "An Indian gold firm allegedly inflated revenue by $159 billion using its Swiss unit (https://www.reuters.com/world/india/an-indian-gold-firm-allegedly-inflated-revenue-by-159-billion-using-its-swiss-2026-06-05/)",
+    "Take Five: Houston, we have an IPO (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-06-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-05",
+      "v": 4.55,
+      "change": 1.79
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-05",
+      "v": 28957.6,
+      "change": -4.77
+    },
+    "SP500_FRED": {
+      "d": "2026-06-05",
+      "v": 7383.74,
+      "change": -2.64
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-05",
+      "v": 72.78,
+      "change": -0.63
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-05",
+      "v": 4326.705,
+      "change": -3.19
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-05",
+      "v": 1302.33,
+      "change": -0.73
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-05",
+      "v": 1877.83,
+      "change": 0.62
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-05",
+      "v": 21.51,
+      "change": 39.68
+    }
+  }
+}

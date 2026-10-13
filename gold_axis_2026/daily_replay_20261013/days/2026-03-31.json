@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-31",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Üçüncü toparlanma seansı, düşen faiz/dolar ve geniş piyasa rahatlamasıyla desteklendi. Enerji riski bitmedi ama likidasyon baskısı hafifliyor; yeniden alıyorum.",
+  "invalidation": "Enerji/dolar/faiz baskısının geri gelmesi ve altının toparlanmayı vermesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises over 3%, but on track for worst month since 2008 (https://www.reuters.com/world/india/gold-set-worst-month-more-than-17-years-us-rate-cut-hopes-fade-2026-03-31/)",
+    "Brazil's central bank boosts gold holdings to second-largest reserve asset in 2025 (https://www.reuters.com/world/americas/brazils-central-bank-boosts-gold-holdings-second-largest-reserve-asset-2025-2026-03-31/)",
+    "Morning Bid: March is the cruellest month (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-31/)",
+    "WTI, June Brent crude futures settle down on reports that Iran may be ready to end war (https://www.reuters.com/business/energy/oil-rises-fourth-day-supply-cuts-widening-middle-east-conflict-2026-03-31/)",
+    "Trading Day: Q1 ends with a BANG! (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-03-31/)",
+    "Q1 and done (https://www.reuters.com/podcasts/reuters-morning-bid/q1-done-2026-03-31/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-31",
+      "v": 4.3,
+      "change": -1.15
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-31",
+      "v": 23740.19,
+      "change": 3.43
+    },
+    "SP500_FRED": {
+      "d": "2026-03-31",
+      "v": 6528.52,
+      "change": 2.91
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-31",
+      "v": 73.27,
+      "change": 4.31
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-31",
+      "v": 4680.148,
+      "change": 3.77
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-31",
+      "v": 1454,
+      "change": 2.8
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-31",
+      "v": 1929.39,
+      "change": 1.5
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-31",
+      "v": 25.25,
+      "change": -17.51
+    }
+  }
+}

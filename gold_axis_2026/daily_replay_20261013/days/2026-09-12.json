@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-12",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İkinci deniz geçidinin tehdit altında olması enerji riskini artırıyor; hafta sonu yeni altın teyidi yok.",
+  "invalidation": "Arz riskinin azalması.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Houthi advance in Yemen puts U.S. in a new bind (https://www.reuters.com/world/middle-east/houthi-advance-yemen-puts-us-new-bind-2026-09-12/)",
+    "Russian attacks kill 10, injure dozens in Ukraine; Russia says it hits ships, plants (https://www.reuters.com/world/europe/russian-attacks-kill-six-injure-dozens-ukraine-moscow-says-it-hits-ships-plants-2026-09-12/)",
+    "The Week in Breakingviews: Wall Street's new gods (https://www.reuters.com/commentary/breakingviews/global-markets-breakingviews-2026-09-12/)",
+    "Trump says Iran probably responsible for attack on Saudi pipeline (https://www.reuters.com/business/energy/trump-says-iran-probably-responsible-attack-saudi-pipeline-2026-09-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-11",
+      "v": 4.96,
+      "change": 0.2
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-11",
+      "v": 29368.44,
+      "change": 0.91
+    },
+    "SP500_FRED": {
+      "d": "2026-09-11",
+      "v": 7656.98,
+      "change": 0.86
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-11",
+      "v": 4347.508,
+      "change": 0.68
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-11",
+      "v": 15.84,
+      "change": -11.21
+    }
+  }
+}

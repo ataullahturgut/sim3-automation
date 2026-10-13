@@ -1,0 +1,51 @@
+{
+  "date": "2026-02-14",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran ve Ukrayna için diplomatik görüşmeler planlandı; risk primi azalabilir. Hafta sonu metal referans güncellemeleri işlem teyidi sayılmadı; piyasa dışı arama sonucu dışlandı.",
+  "invalidation": "Piyasa açılışında CPI desteğinin korunması.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Powerball Resultados del sorteo - sáb, feb 14, 2026 (https://www.powerball.com/es/resultados-del-sorteo?date=2026-02-14&gc=powerball&oc=wy)",
+    "Separate talks on Iran and Ukraine-Russia set for Tuesday in Geneva, source says (https://www.reuters.com/world/europe/separate-talks-iran-ukraine-russia-set-tuesday-geneva-source-says-2026-02-14/)",
+    "Week in Review: Irreplaceable? (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-irreplaceable-2026-02-14/)",
+    "Canada wants Iran government change, increases sanctions (https://www.reuters.com/world/americas/canada-wants-iran-government-change-increases-sanctions-2026-02-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-13",
+      "v": 4.04,
+      "change": -1.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-13",
+      "v": 24732.73,
+      "change": 0.18
+    },
+    "SP500_FRED": {
+      "d": "2026-02-13",
+      "v": 6836.17,
+      "change": 0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-14",
+      "v": 77.4,
+      "change": 1.1
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-13",
+      "v": 5040.285,
+      "change": 2.45
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-14",
+      "v": 1698.11,
+      "change": 2.86
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-14",
+      "v": 2061.04,
+      "change": 1.76
+    }
+  }
+}

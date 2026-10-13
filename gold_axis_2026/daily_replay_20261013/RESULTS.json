@@ -1,0 +1,99 @@
+{
+  "period": [
+    "2026-01-01",
+    "2026-09-30"
+  ],
+  "days": 273,
+  "action_counts": {
+    "BEKLE": 158,
+    "AL": 20,
+    "TUT": 75,
+    "SAT": 20
+  },
+  "weekend_days": 78,
+  "no_source_days": [
+    "2026-01-01",
+    "2026-01-04",
+    "2026-01-10",
+    "2026-05-30",
+    "2026-07-11"
+  ],
+  "coverage_counts": {
+    "news_search_gap_holiday": 1,
+    "daily_news_and_reconstructed_market": 182,
+    "weekend_news_market_stale": 29,
+    "news_search_gap_partial_sunday": 1,
+    "news_search_gap_weekend": 3,
+    "weekend_limited_news": 4,
+    "weekend_news_partial_market": 5,
+    "us_holiday_partial_markets": 1,
+    "weekend_news_partial_market_updated_article_excluded": 1,
+    "mixed_clocks_updated_article_excluded": 1,
+    "holiday_thin_market": 1,
+    "weekend_updated_monday_articles_excluded": 10,
+    "mixed_clocks_daily_reconstruction": 1,
+    "good_friday_market_closed_macro_release": 1,
+    "weekend_updated_article_excluded": 1,
+    "easter_partial_market": 1,
+    "late_day_ceasefire_updated_next_day_articles_excluded": 1,
+    "weekend_news_sell_pending_market": 1,
+    "weekend_updated_monday_article_excluded": 9,
+    "updated_nextday_wrap_excluded": 1,
+    "weekend_metal_clock_uncertain": 2,
+    "weekend_limited_relevant_news": 2,
+    "holiday_partial_market": 4,
+    "weekend_publication_time_uncertain": 3,
+    "weekend_limited_market": 3,
+    "weekend_updated_market_article_excluded": 4
+  },
+  "results": [
+    {
+      "mode": "next_0900",
+      "fee_per_side": 0.0,
+      "final_equity": 92.5874979697219,
+      "return_pct": -7.412502030278105,
+      "daily_mark_max_drawdown_pct": -24.499769777818393,
+      "buy_hold_return_pct": -5.3041787736190855,
+      "cash_return_pct": 0.0,
+      "executed_sides": 38,
+      "closed_episodes": 19,
+      "winning_episodes": 4
+    },
+    {
+      "mode": "next_0900",
+      "fee_per_side": 0.008,
+      "final_equity": 68.31624840233755,
+      "return_pct": -31.68375159766245,
+      "daily_mark_max_drawdown_pct": -42.30695429618015,
+      "buy_hold_return_pct": -6.80728704705372,
+      "cash_return_pct": 0.0,
+      "executed_sides": 38,
+      "closed_episodes": 19,
+      "winning_episodes": 2
+    },
+    {
+      "mode": "next_eligible_close",
+      "fee_per_side": 0.0,
+      "final_equity": 95.19145164985144,
+      "return_pct": -4.8085483501485555,
+      "daily_mark_max_drawdown_pct": -23.641884795255073,
+      "buy_hold_return_pct": -4.101279557666658,
+      "cash_return_pct": 0.0,
+      "executed_sides": 38,
+      "closed_episodes": 19,
+      "winning_episodes": 7
+    },
+    {
+      "mode": "next_eligible_close",
+      "fee_per_side": 0.008,
+      "final_equity": 70.23759145988605,
+      "return_pct": -29.762408540113952,
+      "daily_mark_max_drawdown_pct": -41.06246340015408,
+      "buy_hold_return_pct": -5.623481469449729,
+      "cash_return_pct": 0.0,
+      "executed_sides": 38,
+      "closed_episodes": 19,
+      "winning_episodes": 2
+    }
+  ]
+}

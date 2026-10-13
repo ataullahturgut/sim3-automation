@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-07",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "ABD tatilinde altın zayıf, güçlü istihdamın şahin etkisi sürüyor. Petrol tahmini gerçekleşme sayılmadı.",
+  "invalidation": "Enflasyon sonrası beklenti dönüşü.",
+  "coverage": "holiday_partial_market",
+  "sources": [
+    "Gold eases as strong US jobs data boosts Fed rate-hike bets (https://www.reuters.com/world/india/gold-eases-robust-us-payrolls-boost-rate-hike-bets-inflation-data-focus-2026-09-07/)",
+    "Goldman sees $120/bbl oil risk if attacks on Middle East vessels intensify, Bloomberg reports (https://www.reuters.com/business/energy/goldman-sees-120bbl-oil-risk-if-attacks-middle-east-vessels-intensify-bloomberg-2026-09-07/)",
+    "Labor gains (https://www.reuters.com/podcasts/reuters-morning-bid/labor-gains-2026-09-07/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-04",
+      "v": 4.78,
+      "change": 0.21
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-04",
+      "v": 29544.16,
+      "change": 0.21
+    },
+    "SP500_FRED": {
+      "d": "2026-09-04",
+      "v": 7718.6,
+      "change": -0.38
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-07",
+      "v": 4406.095,
+      "change": -0.5
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-07",
+      "v": 15.3,
+      "change": 5.3
+    }
+  }
+}

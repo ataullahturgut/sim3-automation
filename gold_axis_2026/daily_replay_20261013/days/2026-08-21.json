@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-21",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Zayıf dolar ve fiyat devamı güçlü; yüksek uzun faize rağmen altın yükseliyor. Sırf çok yükseldi diye satış gerekçesi yok.",
+  "invalidation": "Dolar dönüşü ve yükseliş anlatısını bozan fiyat tepkisi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rallies to 3-month high on weaker dollar, bullish technicals (https://www.reuters.com/business/gold-steadies-heads-third-straight-weekly-gain-2026-08-21/)",
+    "Duplantis swaps pole for microphone with anthem for World Athletics Ultimate (https://www.reuters.com/business/media-telecom/duplantis-swaps-pole-microphone-with-anthem-world-athletics-ultimate-2026-08-21/)",
+    "South African rand hits strongest level since start of Iran war (https://www.reuters.com/world/africa/south-african-rand-strengthens-against-weaker-dollar-supported-by-gold-gains-2026-08-21/)",
+    "TSX rises boosted by miners as choppy week ends (https://www.reuters.com/business/tsx-futures-gain-ahead-domestic-retail-sales-data-global-bond-market-jitters-2026-08-21/)",
+    "The financial week in five charts: Diesel cracks, US debt alarm and Trump slump (https://www.reuters.com/commentary/reuters-open-interest/financial-week-five-charts-diesel-cracks-us-debt-alarm-trump-slump-2026-08-21/)",
+    "Calling Bessent's bluff? (https://www.reuters.com/podcasts/reuters-morning-bid/calling-bessents-bluff-2026-08-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-21",
+      "v": 4.74,
+      "change": 1.07
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-21",
+      "v": 29308.86,
+      "change": 0.33
+    },
+    "SP500_FRED": {
+      "d": "2026-08-21",
+      "v": 7674.37,
+      "change": 0.43
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-21",
+      "v": 4602.055,
+      "change": 1.73
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-21",
+      "v": 15.13,
+      "change": -5.5
+    }
+  }
+}

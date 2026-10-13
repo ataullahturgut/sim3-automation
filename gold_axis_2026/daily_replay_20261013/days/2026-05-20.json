@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-20",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol/faizde belirgin gevşeme altını toparladı; önceki sahte başlangıçlar sonrası bir seans daha teyit bekliyorum.",
+  "invalidation": "İkinci gün kazancın korunması ve aktarımın sürmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises as Treasury yields, oil ease; market eyes MidEast developments (https://www.reuters.com/world/india/gold-rises-interest-rate-fears-ease-usiran-deal-optimism-2026-05-20/)",
+    "Success of Uzbekistan's first London IPO will inspire others, fund chief says (https://www.reuters.com/world/asia-pacific/success-uzbekistans-first-london-ipo-will-inspire-others-fund-chief-says-2026-05-20/)",
+    "Agnico Eagle CEO bets on Arctic barge shipping to keep costs low at Hope Bay gold mine (https://www.reuters.com/business/agnico-eagle-ceo-bets-arctic-barge-shipping-keep-costs-low-hope-bay-gold-mine-2026-05-20/)",
+    "Oil prices slide after Trump says US-Iran negotiations in 'final stages' (https://www.reuters.com/business/energy/oil-prices-ease-after-trump-says-us-will-end-iran-war-very-quickly-2026-05-20/)",
+    "Trading Day: Lift off for stocks and bonds (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-05-20/)",
+    "Nvidia's moment of truth (https://www.reuters.com/podcasts/reuters-morning-bid/nvidias-moment-truth-2026-05-20/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-20",
+      "v": 4.57,
+      "change": -2.14
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-20",
+      "v": 29297.7,
+      "change": 1.66
+    },
+    "SP500_FRED": {
+      "d": "2026-05-20",
+      "v": 7432.97,
+      "change": 1.08
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-20",
+      "v": 75.17,
+      "change": -2.76
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-20",
+      "v": 4539.398,
+      "change": 1.24
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-20",
+      "v": 1369.88,
+      "change": -2.95
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-20",
+      "v": 1938.64,
+      "change": -1.93
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-20",
+      "v": 17.44,
+      "change": -3.43
+    }
+  }
+}

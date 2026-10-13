@@ -1,0 +1,57 @@
+{
+  "date": "2026-05-04",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yeni çatışma petrol/dolar/faizi yükseltti; altın ve diğer metaller düştü. Güvenli liman varsayımı fiyatla doğrulanmıyor.",
+  "invalidation": "Enerji/enflasyon baskısının çözülmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls 2% as Middle East risks support dollar, keep inflation fears in focus (https://www.reuters.com/world/india/gold-dips-inflation-concerns-linger-markets-watch-us-iran-talks-2026-05-04/)",
+    "Australia's Regis to take over Vault, creating $7.7 billion gold producer (https://www.reuters.com/legal/transactional/australias-regis-vault-merge-creating-77-billion-gold-producer-2026-05-04/)",
+    "Trading Day: The oil, bonds tango (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-05-04/)",
+    "Morning Bid: Strait talk (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-04/)",
+    "Oil prices fall 4% as fragile US-Iran ceasefire holds, two ships pass through Strait of Hormuz (https://www.reuters.com/business/energy/us-crude-eases-1-traders-weigh-supply-risks-2026-05-04/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-04",
+      "v": 4.45,
+      "change": 1.37
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-04",
+      "v": 27651.82,
+      "change": -0.21
+    },
+    "SP500_FRED": {
+      "d": "2026-05-04",
+      "v": 7200.75,
+      "change": -0.41
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-04",
+      "v": 74.14,
+      "change": -1.64
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-04",
+      "v": 4516.988,
+      "change": -2.19
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-04",
+      "v": 1500.26,
+      "change": -1.89
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-04",
+      "v": 1971.26,
+      "change": -0.94
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-04",
+      "v": 18.29,
+      "change": 7.65
+    }
+  }
+}

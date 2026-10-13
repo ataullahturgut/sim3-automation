@@ -1,0 +1,61 @@
+{
+  "date": "2026-04-03",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İstihdam beklentiden güçlü; Fed'in beklemesi ve dolar/faiz desteği lehine. Good Friday nedeniyle altın işlem teyidi yok; hafta sonu referans metal değerleri işlem fiyatı sayılmıyor.",
+  "invalidation": "Normal seans açılışında yeni bilgi ve fiyat tepkisi.",
+  "coverage": "good_friday_market_closed_macro_release",
+  "sources": [
+    "Trump issues executive order to bolster college sports rules (https://www.reuters.com/legal/government/trump-issues-executive-order-bolster-college-sports-rules-2026-04-03/)",
+    "Nevada judge extends ban on Kalshi operating prediction market in state (https://www.reuters.com/world/us/nevada-judge-extends-ban-kalshi-operating-prediction-market-state-2026-04-03/)",
+    "Wall St Week Ahead Inflation in focus for markets jostled by Middle East war signals (https://www.reuters.com/world/us/wall-st-week-ahead-inflation-focus-markets-jostled-by-middle-east-war-signals-2026-04-03/)",
+    "Trump says US can take Strait of Hormuz with more time (https://www.reuters.com/world/trump-us-can-take-strait-hormuz-with-more-time-2026-04-03/)",
+    "Trump proposes to begin privatizing TSA screening operations (https://www.reuters.com/world/us/trump-proposes-begin-privatizing-us-airport-security-operations-2026-04-03/)",
+    "Highs and lows from the US jobs report (https://www.reuters.com/sustainability/sustainable-finance-reporting/highs-lows-us-jobs-report-2026-04-03/)",
+    "Instant View: US jobs report for March is stronger than expected, likely keeping Fed on sidelines (https://www.reuters.com/business/view-us-jobs-report-march-is-stronger-than-expected-likely-keeping-fed-sidelines-2026-04-03/)",
+    "US employment growth likely rebounded in March, war casting shadow over labor market (https://www.reuters.com/world/us/us-employment-growth-likely-rebounded-march-war-casting-shadow-over-labor-market-2026-04-03/)",
+    "178K Jobs, Frozen Tape: Good Friday After the BLS Print | Real Market Color (https://realmarketcolor.com/archive/2026-04-03_16-01-00)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-03",
+      "v": 4.35,
+      "change": 0.93
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-02",
+      "v": 24045.53,
+      "change": 0.11
+    },
+    "SP500_FRED": {
+      "d": "2026-04-02",
+      "v": 6582.69,
+      "change": 0.11
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-03",
+      "v": 73.01,
+      "change": 1.23
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-02",
+      "v": 4675.805,
+      "change": -2.1
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-03",
+      "v": 1505.54,
+      "change": 2.1
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-03",
+      "v": 1987.84,
+      "change": 2.18
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-02",
+      "v": 23.87,
+      "change": -2.73
+    }
+  }
+}

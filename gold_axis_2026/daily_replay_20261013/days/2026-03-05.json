@@ -1,0 +1,53 @@
+{
+  "date": "2026-03-05",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın gün içi yükselişi verdi; dolar ve faiz artışı güvenli liman talebine baskın. Nakit pozisyon korunuyor.",
+  "invalidation": "Petrol/dolar/faiz üçlüsünün gevşemesi ve altının bunu sürdürülebilir yükselişle karşılaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls as rising yields, firm dollar eclipse safe-haven demand (https://www.reuters.com/world/middle-east/gold-gains-safe-haven-demand-softer-dollar-2026-03-05/)",
+    "China, US pressure Ghana to halt gold royalty hike, document, sources say (https://www.reuters.com/world/africa/china-us-pressure-ghana-halt-gold-royalty-hike-document-sources-say-2026-03-05/)",
+    "ECB's Nagel says long Iran war would push up inflation (https://www.reuters.com/business/finance/ecbs-nagel-says-long-iran-war-would-push-up-inflation-2026-03-05/)",
+    "Trafigura, Venezuelan mining firm sign deal for up to 1,000 kg of gold, Axios reports (https://www.reuters.com/world/americas/trafigura-venezuelan-mining-firm-sign-deal-up-1000-kg-gold-axios-reports-2026-03-05/)",
+    "Morning Bid: 'Bump on the road' or gaping chasm? (https://www.reuters.com/world/china/global-markets-view-europe-pix-2026-03-05/)",
+    "Global stocks take a breather (https://www.reuters.com/podcasts/reuters-morning-bid/global-stocks-take-breather-2026-03-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-05",
+      "v": 4.13,
+      "change": 0.98
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-05",
+      "v": 25020.41,
+      "change": -0.29
+    },
+    "SP500_FRED": {
+      "d": "2026-03-05",
+      "v": 6830.71,
+      "change": -0.56
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-05",
+      "v": 5085.885,
+      "change": -1.53
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

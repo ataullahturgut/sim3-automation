@@ -1,0 +1,53 @@
+{
+  "date": "2026-08-15",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Liman saldırısı lojistik risk ekliyor; hafta sonu yeni piyasa tepkisi yok, mevcut pozisyon korunuyor.",
+  "invalidation": "Enerji/kur şokuyla altının kırılması.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Yemen's Mocha port halts operations after Houthi attacks, port director says (https://www.reuters.com/world/middle-east/yemens-mocha-port-halts-operations-after-houthi-attacks-port-director-says-2026-08-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-14",
+      "v": 4.68,
+      "change": 1.08
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-14",
+      "v": 30046.14,
+      "change": -0.13
+    },
+    "SP500_FRED": {
+      "d": "2026-08-14",
+      "v": 7785.76,
+      "change": -0.17
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-14",
+      "v": 4374.205,
+      "change": 0.47
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-14",
+      "v": 14.25,
+      "change": -2.6
+    }
+  }
+}

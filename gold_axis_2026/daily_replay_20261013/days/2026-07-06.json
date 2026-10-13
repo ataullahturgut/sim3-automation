@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-06",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar toparlanmasıyla küçük düzeltme; istihdam sonrası kazanımlar korunuyor ve faiz artmadı.",
+  "invalidation": "Birkaç seans kayıp veya şahin beklenti dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold pulls back from two-week high on stronger dollar; Fed minutes on tap (https://www.reuters.com/world/india/gold-trades-near-two-week-high-cooling-us-rate-hike-bets-2026-07-06/)",
+    "Citi gains seat at heart of global bullion trading with clearing approval (https://www.reuters.com/business/finance/citi-gains-seat-heart-global-bullion-trading-with-clearing-approval-2026-07-06/)",
+    "Gold miners' $9 bln tie-up banks on proximity (https://www.reuters.com/commentary/breakingviews/gold-miners-9-bln-tie-up-banks-proximity-2026-07-06/)",
+    "TSX slips as gold falls, oil prices settle at pre-Iran war levels (https://www.reuters.com/business/tsx-futures-tick-higher-oil-prices-retreat-2026-07-06/)",
+    "Trading Day: Chips bounce back, oil eases (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-2026-07-06/)",
+    "Glut feeling (https://www.reuters.com/podcasts/reuters-morning-bid/glut-feeling-2026-07-06/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-06",
+      "v": 4.48,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-06",
+      "v": 29697.87,
+      "change": 1.26
+    },
+    "SP500_FRED": {
+      "d": "2026-07-06",
+      "v": 7537.43,
+      "change": 0.72
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-06",
+      "v": 62.01,
+      "change": -0.67
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-06",
+      "v": 4163.355,
+      "change": -0.57
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-06",
+      "v": 1274.83,
+      "change": 0.28
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-06",
+      "v": 1638.94,
+      "change": -0.34
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-06",
+      "v": 15.57,
+      "change": -1.52
+    }
+  }
+}

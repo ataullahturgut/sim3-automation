@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-22",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın tepkiyi sürdüremedi; petrol kaynaklı faiz artışı beklentisi devam ediyor.",
+  "invalidation": "Enerji/faiz baskısının somut azalması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Pictures of the Day | May 22, 2026 (https://jp.reuters.com/pictures/pictures-day-may-22-2026-2026-05-22/G2PX6ZMY45K7HDC6A3BMQTMTKM/)",
+    "Gold on track for second weekly loss as rising oil prices drive up rate hike bets (https://www.reuters.com/world/india/gold-slips-oil-strength-interest-rate-worries-dampen-appeal-2026-05-22/)",
+    "Dollar near six-week high amid Iran war jitters (https://www.reuters.com/world/africa/dollar-perched-near-six-week-high-uncertainty-over-us-iran-deal-2026-05-22/)",
+    "Take Five: When does this end? (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-05-22/)",
+    "Morning Bid: Brittle bonds and AI boom face off (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-22/)",
+    "US, Japan, Australia, India to have 'Quad' top diplomats' meeting in Delhi, Japan says (https://www.reuters.com/world/china/us-japan-australia-india-have-quad-top-diplomats-meeting-delhi-japan-says-2026-05-22/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-22",
+      "v": 4.56,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-22",
+      "v": 29481.64,
+      "change": 0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-05-22",
+      "v": 7473.47,
+      "change": 0.37
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-22",
+      "v": 76.49,
+      "change": 1.47
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-22",
+      "v": 4508.395,
+      "change": -0.76
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-22",
+      "v": 1386.8,
+      "change": 1.61
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-22",
+      "v": 1965.46,
+      "change": 1.47
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-22",
+      "v": 16.7,
+      "change": -0.36
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "date": "2026-02-23",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Yeni tarifeler ve İran riskiyle dolar/hisseler zayıf, tahvil faizi geriliyor, altın güçlü. Alım gerekçesi teyit ediliyor.",
+  "invalidation": "Belirsizliğin çözülmesi veya dolar yön değişimi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold hits three-week high on uncertainty over Trump tariff plans (https://www.reuters.com/business/gold-rises-dollar-falls-us-supreme-court-tariff-verdict-2026-02-23/)",
+    "Dollar weakens as US tariffs struck down, Iran tensions rise (https://www.reuters.com/world/asia-pacific/dollar-dips-trumps-tariff-wall-slips-2026-02-23/)",
+    "Morning Bid: Supreme uncertainty (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-23/)",
+    "South Africa 2026 budget: What will Godongwana do on debt, taxes? (https://www.reuters.com/world/africa/south-africa-2026-budget-what-will-godongwana-do-debt-taxes-2026-02-23/)",
+    "Levy let die (https://www.reuters.com/podcasts/reuters-morning-bid/levy-let-die-2026-02-23/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-23",
+      "v": 4.03,
+      "change": -1.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-23",
+      "v": 24708.94,
+      "change": -1.21
+    },
+    "SP500_FRED": {
+      "d": "2026-02-23",
+      "v": 6837.75,
+      "change": -1.04
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-23",
+      "v": 87.14,
+      "change": 2.82
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-23",
+      "v": 5235.345,
+      "change": 1.36
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-23",
+      "v": 1761.83,
+      "change": -0.28
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-23",
+      "v": 2150.46,
+      "change": -0.6
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-01-09",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "İstihdam beklenti altı, işsizlik de beklenti altı: veri karışık. Buna rağmen altın ve diğer metaller yükselişi korudu; faiz artmadı.",
+  "invalidation": "Güçlenen doların metal fiyatlarını kalıcı baskılaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Wall St rises after soft jobs report; tariff ruling in spotlight (https://www.reuters.com/business/us-stock-futures-subdued-ahead-crucial-jobs-report-tariff-ruling-2026-01-09/)",
+    "Gold falls as commodity index adjustments weigh ahead of US jobs data (https://www.reuters.com/world/india/gold-falls-commodity-index-adjustments-weigh-ahead-us-jobs-data-2026-01-09/)",
+    "US job growth stuck at stall speed in December; unemployment rate dips to 4.4% (https://www.reuters.com/business/us-job-growth-slows-december-unemployment-rate-eases-44-2026-01-09/)",
+    "Morning Bid: A one-two payrolls, tariff sucker punch? (https://www.reuters.com/world/china/global-markets-view-europe-2026-01-09/)",
+    "Gold set for weekly gain on US payrolls miss, broader uncertainty | Kitco News (https://www.kitco.com/news/off-the-wire/2026-01-09/gold-set-weekly-gain-us-payrolls-miss-broader-uncertainty)",
+    "Global stocks rise, dollar dips after US jobs miss expectations | Kitco News (https://www.kitco.com/news/off-the-wire/2026-01-09/global-stocks-rise-dollar-dips-after-us-jobs-miss-expectations)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-09",
+      "v": 4.18,
+      "change": -0.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-09",
+      "v": 25766.26,
+      "change": 1.02
+    },
+    "SP500_FRED": {
+      "d": "2026-01-09",
+      "v": 6966.28,
+      "change": 0.65
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-09",
+      "v": 78.14,
+      "change": 3.9
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-09",
+      "v": 4509.015,
+      "change": 0.75
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-09",
+      "v": 1850,
+      "change": 7.25
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-09",
+      "v": 2295,
+      "change": 3.15
+    }
+  }
+}

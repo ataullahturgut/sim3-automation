@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-28",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Pazar altın hafif geriledi, henüz tüm tepkiyi vermedi. Pazartesi petrol kapanışı dışlandı; Fed bağımsızlığı davası yaklaşan risk, sonuç bilinmiyor.",
+  "invalidation": "Tam seansta dolar/faiz artışıyla devam eden kayıp.",
+  "coverage": "weekend_updated_monday_article_excluded",
+  "sources": [
+    "As Supreme Court's term nears its end, three major Trump rulings due (https://www.reuters.com/legal/government/supreme-courts-term-nears-its-end-three-major-trump-rulings-due-2026-06-28/)",
+    "Oil settles up on US-Iran strikes; cautious hopes for shipping cap gains (https://www.reuters.com/business/energy/oil-climbs-following-renewed-us-iran-strikes-middle-east-2026-06-28/)",
+    "Gulf markets mixed as US-Iran trade attacks (https://www.reuters.com/world/middle-east/gulf-markets-mixed-us-iran-trade-attacks-2026-06-28/)",
+    "Sovereign investors with $29 trillion pivot to energy assets, flag dollar fears (https://www.reuters.com/business/finance/sovereign-investors-with-29-trillion-pivot-energy-assets-flag-dollar-fears-2026-06-28/)",
+    "South Korea, Japan reaffirm denuclearisation goal, closer defence ties (https://www.reuters.com/world/asia-pacific/south-korea-japan-reaffirm-denuclearisation-goal-closer-defence-ties-2026-06-28/)",
+    "Saudi Aramco crash, Venezuela shortages and Bauhaus culture wars (https://www.reuters.com/podcasts/saudi-aramco-crash-venezuela-shortages-bauhaus-culture-wars-2026-06-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-26",
+      "v": 4.38,
+      "change": -0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-26",
+      "v": 29118.24,
+      "change": -1.09
+    },
+    "SP500_FRED": {
+      "d": "2026-06-26",
+      "v": 7354.02,
+      "change": -0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-28",
+      "v": 59.14,
+      "change": -0.03
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-28",
+      "v": 4065.798,
+      "change": -0.54
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-28",
+      "v": 1206.72,
+      "change": 0.09
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-28",
+      "v": 1619.37,
+      "change": 0
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-26",
+      "v": 18.41,
+      "change": -2.54
+    }
+  }
+}

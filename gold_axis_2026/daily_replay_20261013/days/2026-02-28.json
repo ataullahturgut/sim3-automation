@@ -1,0 +1,52 @@
+{
+  "date": "2026-02-28",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "ABD-İsrail saldırısı gerçekleşti; güvenli liman talebi yanında Hürmüz/petrol/enflasyon riski de var. Mevcut altını tutuyor, savaşın otomatik yükseliş garantisi olmadığını kaydediyorum.",
+  "invalidation": "Petrol, dolar ve tahvil faizlerinin birlikte yükselip altın kazancını silmesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "How US-Iran tensions could shape world markets (https://www.reuters.com/business/energy/how-us-iran-tensions-could-shape-world-markets-2026-02-28/)",
+    "Trump says Iran's Khamenei is dead (https://www.reuters.com/world/middle-east/trump-says-irans-khamenei-is-dead-2026-02-28/)",
+    "Market analysts react to US-Israel strikes on Iran (https://www.reuters.com/business/energy/market-analysts-react-us-israel-strikes-iran-2026-02-28/)",
+    "US and Israel attack Iran; Tehran retaliates (https://www.reuters.com/podcasts/us-israel-attack-iran-tehran-retaliates-2026-02-28/)",
+    "Week in Review: AI angst (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-ai-angst-2026-02-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-27",
+      "v": 3.97,
+      "change": -1.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-27",
+      "v": 24960.04,
+      "change": -0.3
+    },
+    "SP500_FRED": {
+      "d": "2026-02-27",
+      "v": 6878.88,
+      "change": -0.43
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-27",
+      "v": 5278.718,
+      "change": 1.82
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

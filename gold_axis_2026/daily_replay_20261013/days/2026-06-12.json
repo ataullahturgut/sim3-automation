@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-12",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol rahatlamasına rağmen altın devam edemedi; faiz hafif yükseldi. Diğer metal toparlanması tek başına alım değil.",
+  "invalidation": "Altının da toparlanmaya katılması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold's record rally falters as bulls run into Fed rate expectations, stronger dollar (https://www.reuters.com/world/china/golds-record-rally-falters-bulls-run-into-fed-rate-expectations-stronger-dollar-2026-06-12/)",
+    "Rolex raises gold watch prices again as super-rich buyers are undeterred (https://www.reuters.com/business/rolex-raises-gold-watch-prices-again-super-rich-buyers-are-undeterred-2026-06-12/)",
+    "ASIA GOLD India gold demand ticks up as prices slip; China premiums ease (https://www.reuters.com/world/china/asia-gold-india-gold-demand-ticks-up-prices-slip-china-premiums-ease-2026-06-12/)",
+    "Stocks rise as SpaceX makes market debut; oil slides on Gulf peace hopes (https://www.reuters.com/world/china/global-markets-global-markets-2026-06-12/)",
+    "What just happened? The financial week in five charts (https://www.reuters.com/commentary/reuters-open-interest/what-just-happened-financial-week-five-charts-2026-06-12/)",
+    "Morning Bid: Chips and ships (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-12",
+      "v": 4.48,
+      "change": 0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-12",
+      "v": 29635.95,
+      "change": 0.64
+    },
+    "SP500_FRED": {
+      "d": "2026-06-12",
+      "v": 7431.46,
+      "change": 0.5
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-12",
+      "v": 67.21,
+      "change": 5.96
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-12",
+      "v": 4217.765,
+      "change": -0.59
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-12",
+      "v": 1285.11,
+      "change": 3.92
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-12",
+      "v": 1724.34,
+      "change": 3.5
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-12",
+      "v": 17.68,
+      "change": -9.05
+    }
+  }
+}

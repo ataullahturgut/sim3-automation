@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-06",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Yeni teklifin değerlendirilmesi petrol/dolar/faizi düşürüyor; ikinci gün altın toparlanması diğer metallerle teyitli. Anlaşma kesinleşmedi, fakat aktarım yön değiştirdi.",
+  "invalidation": "Görüşmelerin bozulmasıyla petrol/faiz yükselip altının kazancı vermesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold climbs to more than one-week high on US-Iran peace deal hopes (https://www.reuters.com/world/india/gold-jumps-weaker-dollar-middle-east-peace-hopes-2026-05-06/)",
+    "Kyiv hails Hungary returning seized cash, eyes mending ties (https://www.reuters.com/world/hungary-returns-seized-cash-gold-ukraines-oschadbank-zelenskiy-says-2026-05-06/)",
+    "Ted Turner, outspoken founder of CNN, dies at 87 (https://www.reuters.com/business/cnn-founder-ted-turner-dead-87-2026-05-06/)",
+    "Trading Day: A peace wish and chips (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-05-06/)",
+    "Israel shekel surges to 1993 peak vs dollar on Iran ceasefire optimism (https://www.reuters.com/world/middle-east/israel-shekel-surges-1993-peak-vs-dollar-iran-ceasefire-optimism-2026-05-06/)",
+    "Oil prices settle 1% lower in volatile trading after US mulls resuming Strait of Hormuz military escorts (https://www.reuters.com/business/energy/us-oil-prices-rebound-investors-assess-prospects-middle-east-peace-deal-2026-05-06/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-06",
+      "v": 4.36,
+      "change": -1.58
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-06",
+      "v": 28599.17,
+      "change": 2.08
+    },
+    "SP500_FRED": {
+      "d": "2026-05-06",
+      "v": 7365.12,
+      "change": 1.46
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-06",
+      "v": 76.5,
+      "change": 4.51
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-06",
+      "v": 4694.495,
+      "change": 2.66
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-06",
+      "v": 1534.3,
+      "change": 2.28
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-06",
+      "v": 2026.81,
+      "change": 2.93
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-06",
+      "v": 17.39,
+      "change": 0.06
+    }
+  }
+}

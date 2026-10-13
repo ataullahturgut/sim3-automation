@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-28",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar/faiz/petrol baskısıyla altın sert düştü; yeni alım için istikrar yok.",
+  "invalidation": "Tasfiye baskısının durması ve beklenti dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold hits seven-week low as oil surge fuels rate hike bets (https://www.reuters.com/world/india/gold-drops-more-than-1-us-rate-hike-bets-2026-09-28/)",
+    "Northern Star rejects Gold Fields' $27 billion bid to create world's No.2 gold miner (https://www.reuters.com/world/asia-pacific/australias-northern-star-rejects-27-billion-takeover-approach-gold-fields-2026-09-28/)",
+    "Dollar flat as US-Iran stand-off lifts oil, yields (https://www.reuters.com/world/africa/dollar-firms-us-iran-tensions-lift-oil-hawkish-fed-bets-build-2026-09-28/)",
+    "Trading Day: Blue Monday (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-09-28/)",
+    "Fresh tremors (https://www.reuters.com/podcasts/reuters-morning-bid/fresh-tremors-2026-09-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-28",
+      "v": 5.24,
+      "change": 1.35
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-28",
+      "v": 30276.81,
+      "change": -1.08
+    },
+    "SP500_FRED": {
+      "d": "2026-09-28",
+      "v": 7683.69,
+      "change": -0.77
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-28",
+      "v": 4120.215,
+      "change": -3.25
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-28",
+      "v": 16.07,
+      "change": 8.07
+    }
+  }
+}

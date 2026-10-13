@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-24",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altında sınırlı tepki var; diğer metaller zayıf, Hürmüz çözümsüz. Hisse/AI iyimserliği altın için tek başına destek değil.",
+  "invalidation": "Altının toparlanmasının geniş ve kalıcı olması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains but heads for first weekly loss in five weeks (https://www.reuters.com/world/india/gold-set-weekly-drop-higher-oil-prices-stoke-inflation-fears-2026-04-24/)",
+    "Global equity fund inflows surge to 17-month high on AI optimism (https://www.reuters.com/world/china/global-markets-flows-graphic-2026-04-24/)",
+    "Up, or down? War scrambles financial markets' signalling efforts (https://www.reuters.com/business/finance/global-markets-correlations-graphic-2026-04-24/)",
+    "Lots of talk, lots of tech (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-04-24/)",
+    "Morning Bid: Schrödinger's ceasefire (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-04-24/)",
+    "Stocks over shocks (https://www.reuters.com/podcasts/reuters-morning-bid/stocks-over-shocks-2026-04-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-24",
+      "v": 4.31,
+      "change": -0.69
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-24",
+      "v": 27303.67,
+      "change": 1.95
+    },
+    "SP500_FRED": {
+      "d": "2026-04-24",
+      "v": 7165.08,
+      "change": 0.8
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-24",
+      "v": 75.49,
+      "change": -0.68
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-24",
+      "v": 4707.865,
+      "change": 0.32
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-24",
+      "v": 1485.23,
+      "change": -1.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-24",
+      "v": 1999.78,
+      "change": -1.38
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-24",
+      "v": 18.71,
+      "change": -3.11
+    }
+  }
+}

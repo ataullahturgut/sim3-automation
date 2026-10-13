@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-01",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Zayıf ADP ve Warsh'ın enflasyon riski azaldı açıklaması olumlu; gün sonu kazanç sınırlı ve nominal faiz yüksek. Resmi istihdam teyidi bekliyorum.",
+  "invalidation": "Resmi veriyle gevşeme ve fiyat devamı.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains over 2% after soft jobs data, Fed Chair Warsh's comments (https://www.reuters.com/world/india/gold-slips-fading-us-iran-peace-prospects-reinforce-fed-rate-hike-bets-2026-07-01/)",
+    "Trading Day: Stocks dip as sluggish July shuffles in (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-07-01/)",
+    "US, Iran talks conclude in Doha, focused on Strait of Hormuz (https://www.reuters.com/world/asia-pacific/us-iran-enter-technical-talks-secure-peace-deal-restart-shipping-2026-07-01/)",
+    "Most Gulf markets gain amid US-Iran talks (https://www.reuters.com/world/middle-east/major-gulf-markets-gain-despite-caution-over-iran-us-negotiations-2026-07-01/)",
+    "Morning Bid: Kicking off H2 (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-07-01/)",
+    "New quarter, old pressures (https://www.reuters.com/podcasts/reuters-morning-bid/new-quarter-old-pressures-2026-07-01/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-01",
+      "v": 4.48,
+      "change": 0.9
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-01",
+      "v": 29809.13,
+      "change": -1.54
+    },
+    "SP500_FRED": {
+      "d": "2026-07-01",
+      "v": 7483.23,
+      "change": -0.22
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-01",
+      "v": 58.73,
+      "change": 1.7
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-01",
+      "v": 4044.155,
+      "change": 0.78
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-01",
+      "v": 1206.82,
+      "change": -0.77
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-01",
+      "v": 1565.43,
+      "change": -0.7
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-01",
+      "v": 16.59,
+      "change": 0.85
+    }
+  }
+}

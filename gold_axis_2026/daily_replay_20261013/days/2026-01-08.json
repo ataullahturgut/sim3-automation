@@ -1,0 +1,48 @@
+{
+  "date": "2026-01-08",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "İstihdam öncesi dolar baskısı ve gümüş/platin zayıflığı var; altın kapanışta dayanıklı. Yeni alım yapmadan mevcut altını koruyorum.",
+  "invalidation": "İstihdam sonrası şahin fiyatlama ile altının dayanıklılığını kaybetmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold dips on caution ahead of key US jobs data (https://www.reuters.com/world/india/gold-edges-down-firm-dollar-investors-await-key-jobs-data-2026-01-08/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-08",
+      "v": 4.19,
+      "change": 0.96
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-08",
+      "v": 25507.1,
+      "change": -0.57
+    },
+    "SP500_FRED": {
+      "d": "2026-01-08",
+      "v": 6921.46,
+      "change": 0.01
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-08",
+      "v": 75.205,
+      "change": -4.79
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-08",
+      "v": 4475.485,
+      "change": 0.28
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-08",
+      "v": 1725,
+      "change": -1.71
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-08",
+      "v": 2225,
+      "change": -4.05
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-04",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Güçlü resmi istihdam şahin beklentiyi geri getirdi; altın alım gerekçesine ters düştü. Veri öncesi alımın riski gerçekleşti.",
+  "invalidation": "Enflasyon/iletişimle beklentinin yeniden yumuşaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slides after robust US payrolls boost rate hike bets (https://www.reuters.com/world/india/gold-holds-ground-with-us-payrolls-data-radar-2026-09-04/)",
+    "US sanctions Turkish bank, two subsidiaries in latest pressure on Iran (https://www.reuters.com/world/middle-east/us-targets-turkish-entities-with-iran-related-sanctions-2026-09-04/)",
+    "Oil ends week higher on renewed US-Iran strikes, diesel hits record (https://www.reuters.com/business/energy/oil-set-steepest-weekly-gain-since-mid-july-over-intensifying-us-iran-tensions-2026-09-04/)",
+    "Good evening, Mr Bond (https://www.reuters.com/business/take-five/global-markets-themes-2026-09-04/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-04",
+      "v": 4.78,
+      "change": 0.21
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-04",
+      "v": 29544.16,
+      "change": 0.21
+    },
+    "SP500_FRED": {
+      "d": "2026-09-04",
+      "v": 7718.6,
+      "change": -0.38
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-04",
+      "v": 4430.455,
+      "change": -0.96
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-04",
+      "v": 14.53,
+      "change": 1.47
+    }
+  }
+}

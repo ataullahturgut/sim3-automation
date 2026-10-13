@@ -1,0 +1,57 @@
+{
+  "date": "2026-04-05",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "OPEC+ kota artışı Hürmüz kapalıyken fiili arz artışı değil. Türkiye rezerv kullanımı haberini yerel kur riski olarak not ediyorum; XAU yönüne doğrudan çevirmiyorum. Pazartesi petrol yazısı dışlandı.",
+  "invalidation": "Fiili sevkiyat artışı veya enerji enflasyonunun düşmesi.",
+  "coverage": "weekend_updated_article_excluded",
+  "sources": [
+    "Turkish policymakers defend steps; investors see rate hike possible (https://www.reuters.com/world/middle-east/turkish-policymakers-defend-steps-investors-see-rate-hike-possible-2026-04-05/)",
+    "Oil rises in choppy trade; US, Iran rhetoric heats up (https://www.reuters.com/business/energy/oil-prices-open-higher-us-israeli-war-with-iran-continues-disrupt-supply-2026-04-05/)",
+    "OPEC+ agrees to boost oil output when Strait of Hormuz reopens (https://www.reuters.com/business/energy/opec-debates-theoretical-oil-output-hike-amid-iran-war-paralysis-sources-say-2026-04-05/)",
+    "Trump says deal with Iran possible by Monday, Fox News reports (https://www.reuters.com/world/middle-east/trump-says-deal-with-iran-possible-by-monday-fox-news-reports-2026-04-05/)",
+    "Most Gulf stocks subdued amid escalating conflict (https://www.reuters.com/world/middle-east/most-gulf-stocks-subdued-amid-escalating-conflict-2026-04-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-03",
+      "v": 4.35,
+      "change": 0.93
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-02",
+      "v": 24045.53,
+      "change": 0.11
+    },
+    "SP500_FRED": {
+      "d": "2026-04-02",
+      "v": 6582.69,
+      "change": 0.11
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-05",
+      "v": 72.94,
+      "change": -0.08
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-05",
+      "v": 4644.778,
+      "change": -0.66
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-05",
+      "v": 1505.43,
+      "change": 0.14
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-05",
+      "v": 1981.81,
+      "change": -0.05
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-02",
+      "v": 23.87,
+      "change": -2.73
+    }
+  }
+}

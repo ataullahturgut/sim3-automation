@@ -1,0 +1,7662 @@
+[
+  {
+    "mode": "next_0900",
+    "fee_per_side": 0.0,
+    "final_equity": 92.5874979697219,
+    "return_pct": -7.412502030278105,
+    "daily_mark_max_drawdown_pct": -24.499769777818393,
+    "buy_hold_return_pct": -5.3041787736190855,
+    "cash_return_pct": 0.0,
+    "executed_sides": 38,
+    "closed_episodes": 19,
+    "winning_episodes": 4,
+    "trades": [
+      {
+        "execution_date": "2026-01-06",
+        "information_cutoff_date": "2026-01-05",
+        "action": "AL",
+        "price": 4467.948,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022381639177537428
+      },
+      {
+        "execution_date": "2026-01-22",
+        "information_cutoff_date": "2026-01-21",
+        "action": "SAT",
+        "price": 4830.495,
+        "fee_rate": 0.0,
+        "cash": 108.11439613889866,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-01-23",
+        "information_cutoff_date": "2026-01-22",
+        "action": "AL",
+        "price": 4913.635,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02200293594027612
+      },
+      {
+        "execution_date": "2026-02-02",
+        "information_cutoff_date": "2026-02-01",
+        "action": "SAT",
+        "price": 4639.715,
+        "fee_rate": 0.0,
+        "cash": 102.08735192613821,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-10",
+        "information_cutoff_date": "2026-02-09",
+        "action": "AL",
+        "price": 5041.505,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.020249380279527284
+      },
+      {
+        "execution_date": "2026-02-13",
+        "information_cutoff_date": "2026-02-12",
+        "action": "SAT",
+        "price": 4982.389,
+        "fee_rate": 0.0,
+        "cash": 100.89028956153366,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-23",
+        "information_cutoff_date": "2026-02-22",
+        "action": "AL",
+        "price": 5139.925,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.01962874741587351
+      },
+      {
+        "execution_date": "2026-02-25",
+        "information_cutoff_date": "2026-02-24",
+        "action": "SAT",
+        "price": 5185.155,
+        "fee_rate": 0.0,
+        "cash": 101.77809780715361,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-03-02",
+        "information_cutoff_date": "2026-03-01",
+        "action": "AL",
+        "price": 5393.835,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.01886933838486969
+      },
+      {
+        "execution_date": "2026-03-03",
+        "information_cutoff_date": "2026-03-02",
+        "action": "SAT",
+        "price": 5295.235,
+        "fee_rate": 0.0,
+        "cash": 99.91758104240546,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-01",
+        "information_cutoff_date": "2026-03-31",
+        "action": "AL",
+        "price": 4712.725,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.021201657436494905
+      },
+      {
+        "execution_date": "2026-04-06",
+        "information_cutoff_date": "2026-04-05",
+        "action": "SAT",
+        "price": 4684.445,
+        "fee_rate": 0.0,
+        "cash": 99.31799817010138,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-08",
+        "information_cutoff_date": "2026-04-07",
+        "action": "AL",
+        "price": 4813.355,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.020633840256972815
+      },
+      {
+        "execution_date": "2026-04-13",
+        "information_cutoff_date": "2026-04-12",
+        "action": "SAT",
+        "price": 4733.465,
+        "fee_rate": 0.0,
+        "cash": 97.66956067197182,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-15",
+        "information_cutoff_date": "2026-04-14",
+        "action": "AL",
+        "price": 4810.755,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.0203023352201415
+      },
+      {
+        "execution_date": "2026-04-20",
+        "information_cutoff_date": "2026-04-19",
+        "action": "SAT",
+        "price": 4789.445,
+        "fee_rate": 0.0,
+        "cash": 97.2369179084306,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-05-07",
+        "information_cutoff_date": "2026-05-06",
+        "action": "AL",
+        "price": 4743.125,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.020500602009947154
+      },
+      {
+        "execution_date": "2026-05-14",
+        "information_cutoff_date": "2026-05-13",
+        "action": "SAT",
+        "price": 4692.935,
+        "fee_rate": 0.0,
+        "cash": 96.20799269355136,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-01",
+        "information_cutoff_date": "2026-05-31",
+        "action": "AL",
+        "price": 4502.915,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02136571369736079
+      },
+      {
+        "execution_date": "2026-06-02",
+        "information_cutoff_date": "2026-06-01",
+        "action": "SAT",
+        "price": 4534.808,
+        "fee_rate": 0.0,
+        "cash": 96.88940940050128,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-16",
+        "information_cutoff_date": "2026-06-15",
+        "action": "AL",
+        "price": 4334.945,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.0223507817055352
+      },
+      {
+        "execution_date": "2026-06-18",
+        "information_cutoff_date": "2026-06-17",
+        "action": "SAT",
+        "price": 4288.535,
+        "fee_rate": 0.0,
+        "cash": 95.8521096215474,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-29",
+        "information_cutoff_date": "2026-06-28",
+        "action": "AL",
+        "price": 4061.238,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02360169722177016
+      },
+      {
+        "execution_date": "2026-06-30",
+        "information_cutoff_date": "2026-06-29",
+        "action": "SAT",
+        "price": 4031.828,
+        "fee_rate": 0.0,
+        "cash": 95.15798370625514,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-06",
+        "information_cutoff_date": "2026-07-05",
+        "action": "AL",
+        "price": 4164.655,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02284894756138387
+      },
+      {
+        "execution_date": "2026-07-08",
+        "information_cutoff_date": "2026-07-07",
+        "action": "SAT",
+        "price": 4120.915,
+        "fee_rate": 0.0,
+        "cash": 94.15857073992022,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-16",
+        "information_cutoff_date": "2026-07-15",
+        "action": "AL",
+        "price": 4030.445,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.023361829956721956
+      },
+      {
+        "execution_date": "2026-07-17",
+        "information_cutoff_date": "2026-07-16",
+        "action": "SAT",
+        "price": 3992.725,
+        "fee_rate": 0.0,
+        "cash": 93.27736251395267,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-23",
+        "information_cutoff_date": "2026-07-22",
+        "action": "AL",
+        "price": 4095.195,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022777270072353736
+      },
+      {
+        "execution_date": "2026-07-24",
+        "information_cutoff_date": "2026-07-23",
+        "action": "SAT",
+        "price": 4048.545,
+        "fee_rate": 0.0,
+        "cash": 92.21480286507736,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-31",
+        "information_cutoff_date": "2026-07-30",
+        "action": "AL",
+        "price": 4067.885,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022668979792958097
+      },
+      {
+        "execution_date": "2026-08-03",
+        "information_cutoff_date": "2026-08-02",
+        "action": "SAT",
+        "price": 4060.865,
+        "fee_rate": 0.0,
+        "cash": 92.05566662693077,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-08-06",
+        "information_cutoff_date": "2026-08-05",
+        "action": "AL",
+        "price": 4262.635,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02159595335442297
+      },
+      {
+        "execution_date": "2026-08-31",
+        "information_cutoff_date": "2026-08-30",
+        "action": "SAT",
+        "price": 4442.955,
+        "fee_rate": 0.0,
+        "cash": 95.9498489358003,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-04",
+        "information_cutoff_date": "2026-09-03",
+        "action": "AL",
+        "price": 4483.125,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.021402447831769204
+      },
+      {
+        "execution_date": "2026-09-08",
+        "information_cutoff_date": "2026-09-07",
+        "action": "SAT",
+        "price": 4392.315,
+        "fee_rate": 0.0,
+        "cash": 94.00629264819734,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-21",
+        "information_cutoff_date": "2026-09-20",
+        "action": "AL",
+        "price": 4343.865,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.021641163491083942
+      },
+      {
+        "execution_date": "2026-09-24",
+        "information_cutoff_date": "2026-09-23",
+        "action": "SAT",
+        "price": 4278.305,
+        "fee_rate": 0.0,
+        "cash": 92.5874979697219,
+        "units": 0.0
+      }
+    ],
+    "episodes": [
+      {
+        "buy_decision": "2026-01-05",
+        "buy_execution": "2026-01-06",
+        "buy_price": 4467.948,
+        "starting_equity": 100.0,
+        "sell_decision": "2026-01-21",
+        "sell_execution": "2026-01-22",
+        "sell_price": 4830.495,
+        "return_pct": 8.11439613889866
+      },
+      {
+        "buy_decision": "2026-01-22",
+        "buy_execution": "2026-01-23",
+        "buy_price": 4913.635,
+        "starting_equity": 108.11439613889866,
+        "sell_decision": "2026-01-30",
+        "sell_execution": "2026-02-02",
+        "sell_price": 4639.715,
+        "return_pct": -5.574691648850605
+      },
+      {
+        "buy_decision": "2026-02-09",
+        "buy_execution": "2026-02-10",
+        "buy_price": 5041.505,
+        "starting_equity": 102.08735192613821,
+        "sell_decision": "2026-02-12",
+        "sell_execution": "2026-02-13",
+        "sell_price": 4982.389,
+        "return_pct": -1.1725863606204978
+      },
+      {
+        "buy_decision": "2026-02-20",
+        "buy_execution": "2026-02-23",
+        "buy_price": 5139.925,
+        "starting_equity": 100.89028956153366,
+        "sell_decision": "2026-02-24",
+        "sell_execution": "2026-02-25",
+        "sell_price": 5185.155,
+        "return_pct": 0.8799739295806797
+      },
+      {
+        "buy_decision": "2026-02-27",
+        "buy_execution": "2026-03-02",
+        "buy_price": 5393.835,
+        "starting_equity": 101.77809780715361,
+        "sell_decision": "2026-03-02",
+        "sell_execution": "2026-03-03",
+        "sell_price": 5295.235,
+        "return_pct": -1.828012907328458
+      },
+      {
+        "buy_decision": "2026-03-31",
+        "buy_execution": "2026-04-01",
+        "buy_price": 4712.725,
+        "starting_equity": 99.91758104240546,
+        "sell_decision": "2026-04-02",
+        "sell_execution": "2026-04-06",
+        "sell_price": 4684.445,
+        "return_pct": -0.6000774498830408
+      },
+      {
+        "buy_decision": "2026-04-07",
+        "buy_execution": "2026-04-08",
+        "buy_price": 4813.355,
+        "starting_equity": 99.31799817010138,
+        "sell_decision": "2026-04-12",
+        "sell_execution": "2026-04-13",
+        "sell_price": 4733.465,
+        "return_pct": -1.6597570717306276
+      },
+      {
+        "buy_decision": "2026-04-14",
+        "buy_execution": "2026-04-15",
+        "buy_price": 4810.755,
+        "starting_equity": 97.66956067197182,
+        "sell_decision": "2026-04-18",
+        "sell_execution": "2026-04-20",
+        "sell_price": 4789.445,
+        "return_pct": -0.44296581305846017
+      },
+      {
+        "buy_decision": "2026-05-06",
+        "buy_execution": "2026-05-07",
+        "buy_price": 4743.125,
+        "starting_equity": 97.2369179084306,
+        "sell_decision": "2026-05-13",
+        "sell_execution": "2026-05-14",
+        "sell_price": 4692.935,
+        "return_pct": -1.0581631308472672
+      },
+      {
+        "buy_decision": "2026-05-29",
+        "buy_execution": "2026-06-01",
+        "buy_price": 4502.915,
+        "starting_equity": 96.20799269355136,
+        "sell_decision": "2026-06-01",
+        "sell_execution": "2026-06-02",
+        "sell_price": 4534.808,
+        "return_pct": 0.708274528832975
+      },
+      {
+        "buy_decision": "2026-06-15",
+        "buy_execution": "2026-06-16",
+        "buy_price": 4334.945,
+        "starting_equity": 96.88940940050128,
+        "sell_decision": "2026-06-17",
+        "sell_execution": "2026-06-18",
+        "sell_price": 4288.535,
+        "return_pct": -1.0706018184775012
+      },
+      {
+        "buy_decision": "2026-06-26",
+        "buy_execution": "2026-06-29",
+        "buy_price": 4061.238,
+        "starting_equity": 95.8521096215474,
+        "sell_decision": "2026-06-29",
+        "sell_execution": "2026-06-30",
+        "sell_price": 4031.828,
+        "return_pct": -0.7241634201196834
+      },
+      {
+        "buy_decision": "2026-07-02",
+        "buy_execution": "2026-07-06",
+        "buy_price": 4164.655,
+        "starting_equity": 95.15798370625514,
+        "sell_decision": "2026-07-07",
+        "sell_execution": "2026-07-08",
+        "sell_price": 4120.915,
+        "return_pct": -1.0502670689408689
+      },
+      {
+        "buy_decision": "2026-07-15",
+        "buy_execution": "2026-07-16",
+        "buy_price": 4030.445,
+        "starting_equity": 94.15857073992022,
+        "sell_decision": "2026-07-16",
+        "sell_execution": "2026-07-17",
+        "sell_price": 3992.725,
+        "return_pct": -0.9358768076477952
+      },
+      {
+        "buy_decision": "2026-07-22",
+        "buy_execution": "2026-07-23",
+        "buy_price": 4095.195,
+        "starting_equity": 93.27736251395267,
+        "sell_decision": "2026-07-23",
+        "sell_execution": "2026-07-24",
+        "sell_price": 4048.545,
+        "return_pct": -1.1391398944372688
+      },
+      {
+        "buy_decision": "2026-07-30",
+        "buy_execution": "2026-07-31",
+        "buy_price": 4067.885,
+        "starting_equity": 92.21480286507736,
+        "sell_decision": "2026-07-31",
+        "sell_execution": "2026-08-03",
+        "sell_price": 4060.865,
+        "return_pct": -0.17257125017056119
+      },
+      {
+        "buy_decision": "2026-08-05",
+        "buy_execution": "2026-08-06",
+        "buy_price": 4262.635,
+        "starting_equity": 92.05566662693077,
+        "sell_decision": "2026-08-28",
+        "sell_execution": "2026-08-31",
+        "sell_price": 4442.955,
+        "return_pct": 4.230247253166164
+      },
+      {
+        "buy_decision": "2026-09-03",
+        "buy_execution": "2026-09-04",
+        "buy_price": 4483.125,
+        "starting_equity": 95.9498489358003,
+        "sell_decision": "2026-09-04",
+        "sell_execution": "2026-09-08",
+        "sell_price": 4392.315,
+        "return_pct": -2.02559598494354
+      },
+      {
+        "buy_decision": "2026-09-18",
+        "buy_execution": "2026-09-21",
+        "buy_price": 4343.865,
+        "starting_equity": 94.00629264819734,
+        "sell_decision": "2026-09-23",
+        "sell_execution": "2026-09-24",
+        "sell_price": 4278.305,
+        "return_pct": -1.509255006773913
+      }
+    ],
+    "curve": [
+      {
+        "date": "2026-01-01",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-02",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-03",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-04",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-05",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-06",
+        "equity": 100.56596450988238,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-07",
+        "equity": 99.89384388538093,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-08",
+        "equity": 100.16869041448109,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-09",
+        "equity": 100.91914677610393,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-10",
+        "equity": 100.91914677610393,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-11",
+        "equity": 101.60939652833916,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-12",
+        "equity": 102.9352848332165,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-13",
+        "equity": 102.88403087949995,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-14",
+        "equity": 103.2916005289229,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-15",
+        "equity": 103.17611127076678,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-16",
+        "equity": 102.85515856496092,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-17",
+        "equity": 102.85515856496092,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-18",
+        "equity": 104.57518753575465,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-19",
+        "equity": 104.41336828450108,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-20",
+        "equity": 106.88631559722718,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-21",
+        "equity": 106.93756955094373,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-22",
+        "equity": 108.11439613889866,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-23",
+        "equity": 109.65790209510901,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-24",
+        "equity": 109.65790209510901,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-25",
+        "equity": 110.88148536274778,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-26",
+        "equity": 110.96509651932081,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-27",
+        "equity": 113.79687437483436,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-28",
+        "equity": 121.28579365146673,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-29",
+        "equity": 119.65185562854182,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-30",
+        "equity": 107.62065025639885,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-31",
+        "equity": 107.62065025639885,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-01",
+        "equity": 104.33231148012459,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-02",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-03",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-04",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-05",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-06",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-07",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-08",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-09",
+        "equity": 102.08735192613821,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-10",
+        "equity": 102.08876938275776,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-11",
+        "equity": 102.47775997792748,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-12",
+        "equity": 99.62239486471134,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-13",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-14",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-15",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-16",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-17",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-18",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-19",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-20",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-21",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-22",
+        "equity": 100.89028956153366,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-23",
+        "equity": 102.76326463995632,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-24",
+        "equity": 101.01669869489187,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-25",
+        "equity": 101.77809780715361,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-26",
+        "equity": 101.77809780715361,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-27",
+        "equity": 101.77809780715361,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-28",
+        "equity": 101.77809780715361,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-01",
+        "equity": 101.77809780715361,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-02",
+        "equity": 100.86972785730597,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-03-03",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-04",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-05",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-06",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-07",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-08",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-09",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-10",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-11",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-12",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-13",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-14",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-15",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-16",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-17",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-18",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-19",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-20",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-21",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-22",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-23",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-24",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-25",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-26",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-27",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-28",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-29",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-30",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-31",
+        "equity": 99.91758104240546,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-01",
+        "equity": 101.25652931449241,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-02",
+        "equity": 99.13481584985007,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-03",
+        "equity": 99.13481584985007,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-04",
+        "equity": 99.13481584985007,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-05",
+        "equity": 98.47699202456793,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-06",
+        "equity": 99.31799817010138,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-07",
+        "equity": 99.31799817010138,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-08",
+        "equity": 97.33157836856262,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-09",
+        "equity": 98.29627230209685,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-10",
+        "equity": 97.94749850023325,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-11",
+        "equity": 97.94749850023325,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-12",
+        "equity": 96.12064018540165,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-13",
+        "equity": 97.66956067197182,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-14",
+        "equity": 97.66956067197182,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-15",
+        "equity": 97.59450293866296,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-16",
+        "equity": 97.34092677176339,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-17",
+        "equity": 98.04231154661362,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-18",
+        "equity": 98.04231154661362,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-19",
+        "equity": 97.01872871181975,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-20",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-21",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-22",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-23",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-24",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-25",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-26",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-27",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-28",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-29",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-30",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-01",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-02",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-03",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-04",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-05",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-06",
+        "equity": 97.2369179084306,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-07",
+        "equity": 96.05265963212199,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-08",
+        "equity": 96.6122645651875,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-09",
+        "equity": 96.6122645651875,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-10",
+        "equity": 96.17539673635554,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-11",
+        "equity": 97.38841735728411,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-12",
+        "equity": 96.68975684078511,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-13",
+        "equity": 96.34514172099789,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-14",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-15",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-16",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-17",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-18",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-19",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-20",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-21",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-22",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-23",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-24",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-25",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-26",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-27",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-28",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-29",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-30",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-31",
+        "equity": 96.20799269355136,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-01",
+        "equity": 95.8335158295777,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-02",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-03",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-04",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-05",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-06",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-07",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-08",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-09",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-10",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-11",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-12",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-13",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-14",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-15",
+        "equity": 96.88940940050128,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-16",
+        "equity": 96.88806835359895,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-17",
+        "equity": 95.3537542418591,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-18",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-19",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-20",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-21",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-22",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-23",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-24",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-25",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-26",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-27",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-28",
+        "equity": 95.8521096215474,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-29",
+        "equity": 94.72843281681892,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-30",
+        "equity": 95.15798370625514,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-01",
+        "equity": 95.15798370625514,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-02",
+        "equity": 95.15798370625514,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-03",
+        "equity": 95.15798370625514,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-04",
+        "equity": 95.15798370625514,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-05",
+        "equity": 95.15798370625514,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-06",
+        "equity": 95.12828007442533,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-07",
+        "equity": 93.62413385645944,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-08",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-09",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-10",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-11",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-12",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-13",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-14",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-15",
+        "equity": 94.15857073992022,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-16",
+        "equity": 92.92740230120097,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-17",
+        "equity": 93.27736251395267,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-18",
+        "equity": 93.27736251395267,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-19",
+        "equity": 93.27736251395267,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-20",
+        "equity": 93.27736251395267,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-21",
+        "equity": 93.27736251395267,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-22",
+        "equity": 93.27736251395267,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-23",
+        "equity": 92.2230026823034,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-24",
+        "equity": 92.21480286507736,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-25",
+        "equity": 92.21480286507736,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-26",
+        "equity": 92.21480286507736,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-27",
+        "equity": 92.21480286507736,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-28",
+        "equity": 92.21480286507736,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-29",
+        "equity": 92.21480286507736,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-30",
+        "equity": 92.21480286507736,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-31",
+        "equity": 91.62858304763145,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-01",
+        "equity": 91.62858304763145,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-02",
+        "equity": 92.02211653683722,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-03",
+        "equity": 92.05566662693077,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-04",
+        "equity": 92.05566662693077,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-05",
+        "equity": 92.05566662693077,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-06",
+        "equity": 91.57105343365751,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-07",
+        "equity": 93.7349679597707,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-08",
+        "equity": 93.7349679597707,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-09",
+        "equity": 93.72805725469728,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-10",
+        "equity": 94.97479164184813,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-11",
+        "equity": 94.33058435328569,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-12",
+        "equity": 95.04497849025,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-13",
+        "equity": 94.02111434171681,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-14",
+        "equity": 94.46512714268373,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-15",
+        "equity": 94.46512714268373,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-16",
+        "equity": 94.68972505756972,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-17",
+        "equity": 95.25726671172397,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-18",
+        "equity": 93.57019083567646,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-19",
+        "equity": 97.56069109650673,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-20",
+        "equity": 97.69372216916996,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-21",
+        "equity": 99.38576511448902,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-22",
+        "equity": 99.38576511448902,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-23",
+        "equity": 99.43975499787507,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-24",
+        "equity": 100.7787041058493,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-25",
+        "equity": 100.87955720801445,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-26",
+        "equity": 99.52678668989338,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-27",
+        "equity": 99.53823254517123,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-28",
+        "equity": 96.10339616415025,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-29",
+        "equity": 96.10339616415025,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-30",
+        "equity": 96.33620054131094,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-31",
+        "equity": 95.9498489358003,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-01",
+        "equity": 95.9498489358003,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-02",
+        "equity": 95.9498489358003,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-03",
+        "equity": 95.9498489358003,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-04",
+        "equity": 94.82258200850103,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-05",
+        "equity": 94.82258200850103,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-06",
+        "equity": 94.77421247640122,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-07",
+        "equity": 94.30121837931914,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-08",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-09",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-10",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-11",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-12",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-13",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-14",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-15",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-16",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-17",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-18",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-19",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-20",
+        "equity": 94.00629264819734,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-21",
+        "equity": 94.3367532147062,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-22",
+        "equity": 94.3806847765931,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-23",
+        "equity": 92.80066343010905,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-24",
+        "equity": 92.5874979697219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-25",
+        "equity": 92.5874979697219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-26",
+        "equity": 92.5874979697219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-27",
+        "equity": 92.5874979697219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-28",
+        "equity": 92.5874979697219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-29",
+        "equity": 92.5874979697219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-30",
+        "equity": 92.5874979697219,
+        "executed_position": 0
+      }
+    ]
+  },
+  {
+    "mode": "next_0900",
+    "fee_per_side": 0.008,
+    "final_equity": 68.31624840233755,
+    "return_pct": -31.68375159766245,
+    "daily_mark_max_drawdown_pct": -42.30695429618015,
+    "buy_hold_return_pct": -6.80728704705372,
+    "cash_return_pct": 0.0,
+    "executed_sides": 38,
+    "closed_episodes": 19,
+    "winning_episodes": 2,
+    "trades": [
+      {
+        "execution_date": "2026-01-06",
+        "information_cutoff_date": "2026-01-05",
+        "action": "AL",
+        "price": 4467.948,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.022204007120572845
+      },
+      {
+        "execution_date": "2026-01-22",
+        "information_cutoff_date": "2026-01-21",
+        "action": "SAT",
+        "price": 4830.495,
+        "fee_rate": 0.008,
+        "cash": 106.3982946128844,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-01-23",
+        "information_cutoff_date": "2026-01-22",
+        "action": "AL",
+        "price": 4913.635,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.021481828361947588
+      },
+      {
+        "execution_date": "2026-02-02",
+        "information_cutoff_date": "2026-02-01",
+        "action": "SAT",
+        "price": 4639.715,
+        "fee_rate": 0.008,
+        "cash": 98.87220478812682,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-10",
+        "information_cutoff_date": "2026-02-09",
+        "action": "AL",
+        "price": 5041.505,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01945599672124213
+      },
+      {
+        "execution_date": "2026-02-13",
+        "information_cutoff_date": "2026-02-12",
+        "action": "SAT",
+        "price": 4982.389,
+        "fee_rate": 0.008,
+        "cash": 96.16184529556924,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-23",
+        "information_cutoff_date": "2026-02-22",
+        "action": "AL",
+        "price": 5139.925,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018560320636427905
+      },
+      {
+        "execution_date": "2026-02-25",
+        "information_cutoff_date": "2026-02-24",
+        "action": "SAT",
+        "price": 5185.155,
+        "fee_rate": 0.008,
+        "cash": 95.46823423478071,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-03-02",
+        "information_cutoff_date": "2026-03-01",
+        "action": "AL",
+        "price": 5393.835,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01755903727794639
+      },
+      {
+        "execution_date": "2026-03-03",
+        "information_cutoff_date": "2026-03-02",
+        "action": "SAT",
+        "price": 5295.235,
+        "fee_rate": 0.008,
+        "cash": 92.23539493040256,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-01",
+        "information_cutoff_date": "2026-03-31",
+        "action": "AL",
+        "price": 4712.725,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.019416233280429154
+      },
+      {
+        "execution_date": "2026-04-06",
+        "information_cutoff_date": "2026-04-05",
+        "action": "SAT",
+        "price": 4684.445,
+        "fee_rate": 0.008,
+        "cash": 90.22664269406522,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-08",
+        "information_cutoff_date": "2026-04-07",
+        "action": "AL",
+        "price": 4813.355,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018596292654134032
+      },
+      {
+        "execution_date": "2026-04-13",
+        "information_cutoff_date": "2026-04-12",
+        "action": "SAT",
+        "price": 4733.465,
+        "fee_rate": 0.008,
+        "cash": 87.32070120483574,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-15",
+        "information_cutoff_date": "2026-04-14",
+        "action": "AL",
+        "price": 4810.755,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01800708615730839
+      },
+      {
+        "execution_date": "2026-04-20",
+        "information_cutoff_date": "2026-04-19",
+        "action": "SAT",
+        "price": 4789.445,
+        "fee_rate": 0.008,
+        "cash": 85.55399717060436,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-05-07",
+        "information_cutoff_date": "2026-05-06",
+        "action": "AL",
+        "price": 4743.125,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01789432013557726
+      },
+      {
+        "execution_date": "2026-05-14",
+        "information_cutoff_date": "2026-05-13",
+        "action": "SAT",
+        "price": 4692.935,
+        "fee_rate": 0.008,
+        "cash": 83.30506621533164,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-01",
+        "information_cutoff_date": "2026-05-31",
+        "action": "AL",
+        "price": 4502.915,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018353425480197236
+      },
+      {
+        "execution_date": "2026-06-02",
+        "information_cutoff_date": "2026-06-01",
+        "action": "SAT",
+        "price": 4534.808,
+        "fee_rate": 0.008,
+        "cash": 82.56342660944225,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-16",
+        "information_cutoff_date": "2026-06-15",
+        "action": "AL",
+        "price": 4334.945,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01889485594832025
+      },
+      {
+        "execution_date": "2026-06-18",
+        "information_cutoff_date": "2026-06-17",
+        "action": "SAT",
+        "price": 4288.535,
+        "fee_rate": 0.008,
+        "cash": 80.38300104589494,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-29",
+        "information_cutoff_date": "2026-06-28",
+        "action": "AL",
+        "price": 4061.238,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.019635648223554954
+      },
+      {
+        "execution_date": "2026-06-30",
+        "information_cutoff_date": "2026-06-29",
+        "action": "SAT",
+        "price": 4031.828,
+        "fee_rate": 0.008,
+        "cash": 78.5342158554321,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-06",
+        "information_cutoff_date": "2026-07-05",
+        "action": "AL",
+        "price": 4164.655,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018707654878497265
+      },
+      {
+        "execution_date": "2026-07-08",
+        "information_cutoff_date": "2026-07-07",
+        "action": "SAT",
+        "price": 4120.915,
+        "fee_rate": 0.008,
+        "cash": 76.47591435879357,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-16",
+        "information_cutoff_date": "2026-07-15",
+        "action": "AL",
+        "price": 4030.445,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018823966747476596
+      },
+      {
+        "execution_date": "2026-07-17",
+        "information_cutoff_date": "2026-07-16",
+        "action": "SAT",
+        "price": 3992.725,
+        "fee_rate": 0.008,
+        "cash": 74.55765125076394,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-23",
+        "information_cutoff_date": "2026-07-22",
+        "action": "AL",
+        "price": 4095.195,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018061636591147637
+      },
+      {
+        "execution_date": "2026-07-24",
+        "information_cutoff_date": "2026-07-23",
+        "action": "SAT",
+        "price": 4048.545,
+        "fee_rate": 0.008,
+        "cash": 72.53836172480455,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-31",
+        "information_cutoff_date": "2026-07-30",
+        "action": "AL",
+        "price": 4067.885,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01769043629337465
+      },
+      {
+        "execution_date": "2026-08-03",
+        "information_cutoff_date": "2026-08-02",
+        "action": "SAT",
+        "price": 4060.865,
+        "fee_rate": 0.008,
+        "cash": 71.2637657898669,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-08-06",
+        "information_cutoff_date": "2026-08-05",
+        "action": "AL",
+        "price": 4262.635,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.016585558075483866
+      },
+      {
+        "execution_date": "2026-08-31",
+        "information_cutoff_date": "2026-08-30",
+        "action": "SAT",
+        "price": 4442.955,
+        "fee_rate": 0.008,
+        "cash": 73.09937707382731,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-04",
+        "information_cutoff_date": "2026-09-03",
+        "action": "AL",
+        "price": 4483.125,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.016176043114463037
+      },
+      {
+        "execution_date": "2026-09-08",
+        "information_cutoff_date": "2026-09-07",
+        "action": "SAT",
+        "price": 4392.315,
+        "fee_rate": 0.008,
+        "cash": 70.48187459780429,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-21",
+        "information_cutoff_date": "2026-09-20",
+        "action": "AL",
+        "price": 4343.865,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.016096838792337895
+      },
+      {
+        "execution_date": "2026-09-24",
+        "information_cutoff_date": "2026-09-23",
+        "action": "SAT",
+        "price": 4278.305,
+        "fee_rate": 0.008,
+        "cash": 68.31624840233755,
+        "units": 0.0
+      }
+    ],
+    "episodes": [
+      {
+        "buy_decision": "2026-01-05",
+        "buy_execution": "2026-01-06",
+        "buy_price": 4467.948,
+        "starting_equity": 100.0,
+        "sell_decision": "2026-01-21",
+        "sell_execution": "2026-01-22",
+        "sell_price": 4830.495,
+        "return_pct": 6.398294612884392
+      },
+      {
+        "buy_decision": "2026-01-22",
+        "buy_execution": "2026-01-23",
+        "buy_price": 4913.635,
+        "starting_equity": 106.3982946128844,
+        "sell_decision": "2026-01-30",
+        "sell_execution": "2026-02-02",
+        "sell_price": 4639.715,
+        "return_pct": -7.073506067122803
+      },
+      {
+        "buy_decision": "2026-02-09",
+        "buy_execution": "2026-02-10",
+        "buy_price": 5041.505,
+        "starting_equity": 98.87220478812682,
+        "sell_decision": "2026-02-12",
+        "sell_execution": "2026-02-13",
+        "sell_price": 4982.389,
+        "return_pct": -2.7412754660074756
+      },
+      {
+        "buy_decision": "2026-02-20",
+        "buy_execution": "2026-02-23",
+        "buy_price": 5139.925,
+        "starting_equity": 96.16184529556924,
+        "sell_decision": "2026-02-24",
+        "sell_execution": "2026-02-25",
+        "sell_price": 5185.155,
+        "return_pct": -0.7212954978729869
+      },
+      {
+        "buy_decision": "2026-02-27",
+        "buy_execution": "2026-03-02",
+        "buy_price": 5393.835,
+        "starting_equity": 95.46823423478071,
+        "sell_decision": "2026-03-02",
+        "sell_execution": "2026-03-03",
+        "sell_price": 5295.235,
+        "return_pct": -3.3862984167359444
+      },
+      {
+        "buy_decision": "2026-03-31",
+        "buy_execution": "2026-04-01",
+        "buy_price": 4712.725,
+        "starting_equity": 92.23539493040256,
+        "sell_decision": "2026-04-02",
+        "sell_execution": "2026-04-06",
+        "sell_price": 4684.445,
+        "return_pct": -2.1778539982975853
+      },
+      {
+        "buy_decision": "2026-04-07",
+        "buy_execution": "2026-04-08",
+        "buy_price": 4813.355,
+        "starting_equity": 90.22664269406522,
+        "sell_decision": "2026-04-12",
+        "sell_execution": "2026-04-13",
+        "sell_price": 4733.465,
+        "return_pct": -3.220713308687284
+      },
+      {
+        "buy_decision": "2026-04-14",
+        "buy_execution": "2026-04-15",
+        "buy_price": 4810.755,
+        "starting_equity": 87.32070120483574,
+        "sell_decision": "2026-04-18",
+        "sell_execution": "2026-04-20",
+        "sell_price": 4789.445,
+        "return_pct": -2.023236196978162
+      },
+      {
+        "buy_decision": "2026-05-06",
+        "buy_execution": "2026-05-07",
+        "buy_price": 4743.125,
+        "starting_equity": 85.55399717060436,
+        "sell_decision": "2026-05-13",
+        "sell_execution": "2026-05-14",
+        "sell_price": 4692.935,
+        "return_pct": -2.62866847797667
+      },
+      {
+        "buy_decision": "2026-05-29",
+        "buy_execution": "2026-06-01",
+        "buy_price": 4502.915,
+        "starting_equity": 83.30506621533164,
+        "sell_decision": "2026-06-01",
+        "sell_execution": "2026-06-02",
+        "sell_price": 4534.808,
+        "return_pct": -0.8902695113072179
+      },
+      {
+        "buy_decision": "2026-06-15",
+        "buy_execution": "2026-06-16",
+        "buy_price": 4334.945,
+        "starting_equity": 82.56342660944225,
+        "sell_decision": "2026-06-17",
+        "sell_execution": "2026-06-18",
+        "sell_price": 4288.535,
+        "return_pct": -2.6409097261207215
+      },
+      {
+        "buy_decision": "2026-06-26",
+        "buy_execution": "2026-06-29",
+        "buy_price": 4061.238,
+        "starting_equity": 80.38300104589494,
+        "sell_decision": "2026-06-29",
+        "sell_execution": "2026-06-30",
+        "sell_price": 4031.828,
+        "return_pct": -2.299970349959035
+      },
+      {
+        "buy_decision": "2026-07-02",
+        "buy_execution": "2026-07-06",
+        "buy_price": 4164.655,
+        "starting_equity": 78.5342158554321,
+        "sell_decision": "2026-07-07",
+        "sell_execution": "2026-07-08",
+        "sell_price": 4120.915,
+        "return_pct": -2.620897750386275
+      },
+      {
+        "buy_decision": "2026-07-15",
+        "buy_execution": "2026-07-16",
+        "buy_price": 4030.445,
+        "starting_equity": 76.47591435879357,
+        "sell_decision": "2026-07-16",
+        "sell_execution": "2026-07-17",
+        "sell_price": 3992.725,
+        "return_pct": -2.5083232075263973
+      },
+      {
+        "buy_decision": "2026-07-22",
+        "buy_execution": "2026-07-23",
+        "buy_price": 4095.195,
+        "starting_equity": 74.55765125076394,
+        "sell_decision": "2026-07-23",
+        "sell_execution": "2026-07-24",
+        "sell_price": 4048.545,
+        "return_pct": -2.7083598961128774
+      },
+      {
+        "buy_decision": "2026-07-30",
+        "buy_execution": "2026-07-31",
+        "buy_price": 4067.885,
+        "starting_equity": 72.53836172480455,
+        "sell_decision": "2026-07-31",
+        "sell_execution": "2026-08-03",
+        "sell_price": 4060.865,
+        "return_pct": -1.7571336112789604
+      },
+      {
+        "buy_decision": "2026-08-05",
+        "buy_execution": "2026-08-06",
+        "buy_price": 4262.635,
+        "starting_equity": 71.2637657898669,
+        "sell_decision": "2026-08-28",
+        "sell_execution": "2026-08-31",
+        "sell_price": 4442.955,
+        "return_pct": 2.57579888406827
+      },
+      {
+        "buy_decision": "2026-09-03",
+        "buy_execution": "2026-09-04",
+        "buy_price": 4483.125,
+        "starting_equity": 73.09937707382731,
+        "sell_decision": "2026-09-04",
+        "sell_execution": "2026-09-08",
+        "sell_price": 4392.315,
+        "return_pct": -3.5807452550237873
+      },
+      {
+        "buy_decision": "2026-09-18",
+        "buy_execution": "2026-09-21",
+        "buy_price": 4343.865,
+        "starting_equity": 70.48187459780429,
+        "sell_decision": "2026-09-23",
+        "sell_execution": "2026-09-24",
+        "sell_price": 4278.305,
+        "return_pct": -3.0726001653965773
+      }
+    ],
+    "curve": [
+      {
+        "date": "2026-01-01",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-02",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-03",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-04",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-05",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-06",
+        "equity": 99.76782193440712,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-07",
+        "equity": 99.10103560057632,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-08",
+        "equity": 99.37370080801695,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-09",
+        "equity": 100.11820116676978,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-10",
+        "equity": 100.11820116676978,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-11",
+        "equity": 100.80297274636823,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-12",
+        "equity": 102.11833812819097,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-13",
+        "equity": 102.06749095188486,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-14",
+        "equity": 102.47182592155049,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-15",
+        "equity": 102.35725324480832,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-16",
+        "equity": 102.03884778269932,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-17",
+        "equity": 102.03884778269932,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-18",
+        "equity": 103.74522572991533,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-19",
+        "equity": 103.58469075843361,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-20",
+        "equity": 106.0380115051857,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-21",
+        "equity": 106.0888586814918,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-22",
+        "equity": 106.3982946128844,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-23",
+        "equity": 107.06081396284895,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-24",
+        "equity": 107.06081396284895,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-25",
+        "equity": 108.25541843805688,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-26",
+        "equity": 108.33704938583226,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-27",
+        "equity": 111.10176069601494,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-28",
+        "equity": 118.41331579728741,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-29",
+        "equity": 116.81807522312917,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-30",
+        "equity": 105.07181147481623,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-31",
+        "equity": 105.07181147481623,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-01",
+        "equity": 101.86135222612316,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-02",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-03",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-04",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-05",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-06",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-07",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-08",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-09",
+        "equity": 98.87220478812682,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-10",
+        "equity": 98.08886666989629,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-11",
+        "equity": 98.46261636691136,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-12",
+        "equity": 95.719126269249,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-13",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-14",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-15",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-16",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-17",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-18",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-19",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-20",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-21",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-22",
+        "equity": 96.16184529556924,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-23",
+        "equity": 97.16968184231966,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-24",
+        "equity": 95.51818451209029,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-25",
+        "equity": 95.46823423478071,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-26",
+        "equity": 95.46823423478071,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-27",
+        "equity": 95.46823423478071,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-28",
+        "equity": 95.46823423478071,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-01",
+        "equity": 95.46823423478071,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-02",
+        "equity": 93.86525778153162,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-03-03",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-04",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-05",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-06",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-07",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-08",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-09",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-10",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-11",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-12",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-13",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-14",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-15",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-16",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-17",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-18",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-19",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-20",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-21",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-22",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-23",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-24",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-25",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-26",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-27",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-28",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-29",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-30",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-31",
+        "equity": 92.23539493040256,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-01",
+        "equity": 92.72956136686942,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-02",
+        "equity": 90.78652065379704,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-03",
+        "equity": 90.78652065379704,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-04",
+        "equity": 90.78652065379704,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-05",
+        "equity": 90.18409318380517,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-06",
+        "equity": 90.22664269406522,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-07",
+        "equity": 90.22664269406522,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-08",
+        "equity": 87.72029313442583,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-09",
+        "equity": 88.58972560488455,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-10",
+        "equity": 88.27539247015174,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-11",
+        "equity": 88.27539247015174,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-12",
+        "equity": 86.62893250743267,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-13",
+        "equity": 87.32070120483574,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-14",
+        "equity": 87.32070120483574,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-15",
+        "equity": 86.56110756917856,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-16",
+        "equity": 86.33619906307378,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-17",
+        "equity": 86.95828986855031,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-18",
+        "equity": 86.95828986855031,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-19",
+        "equity": 86.0504266057573,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-20",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-21",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-22",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-23",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-24",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-25",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-26",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-27",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-28",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-29",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-30",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-01",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-02",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-03",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-04",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-05",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-06",
+        "equity": 85.55399717060436,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-07",
+        "equity": 83.841296001788,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-08",
+        "equity": 84.32975725852884,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-09",
+        "equity": 84.32975725852884,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-10",
+        "equity": 83.9484292964397,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-11",
+        "equity": 85.0072362188618,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-12",
+        "equity": 84.39739778864134,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-13",
+        "equity": 84.09659426716227,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-14",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-15",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-16",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-17",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-18",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-19",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-20",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-21",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-22",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-23",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-24",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-25",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-26",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-27",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-28",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-29",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-30",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-31",
+        "equity": 83.30506621533164,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-01",
+        "equity": 82.32223440777092,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-02",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-03",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-04",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-05",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-06",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-07",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-08",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-09",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-10",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-11",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-12",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-13",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-14",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-15",
+        "equity": 82.56342660944225,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-16",
+        "equity": 81.90702762753423,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-17",
+        "equity": 80.6099524512499,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-18",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-19",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-20",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-21",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-22",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-23",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-24",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-25",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-26",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-27",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-28",
+        "equity": 80.38300104589494,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-29",
+        "equity": 78.81018750821043,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-30",
+        "equity": 78.5342158554321,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-01",
+        "equity": 78.5342158554321,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-02",
+        "equity": 78.5342158554321,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-03",
+        "equity": 78.5342158554321,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-04",
+        "equity": 78.5342158554321,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-05",
+        "equity": 78.5342158554321,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-06",
+        "equity": 77.88660847666597,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-07",
+        "equity": 76.6550835560145,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-08",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-09",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-10",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-11",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-12",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-13",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-14",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-15",
+        "equity": 76.47591435879357,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-16",
+        "equity": 74.87693960994129,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-17",
+        "equity": 74.55765125076394,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-18",
+        "equity": 74.55765125076394,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-19",
+        "equity": 74.55765125076394,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-20",
+        "equity": 74.55765125076394,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-21",
+        "equity": 74.55765125076394,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-22",
+        "equity": 74.55765125076394,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-23",
+        "equity": 73.12985070208063,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-24",
+        "equity": 72.53836172480455,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-25",
+        "equity": 72.53836172480455,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-26",
+        "equity": 72.53836172480455,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-27",
+        "equity": 72.53836172480455,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-28",
+        "equity": 72.53836172480455,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-29",
+        "equity": 72.53836172480455,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-30",
+        "equity": 72.53836172480455,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-31",
+        "equity": 71.50518575872768,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-01",
+        "equity": 71.50518575872768,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-02",
+        "equity": 71.81229173278066,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-03",
+        "equity": 71.2637657898669,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-04",
+        "equity": 71.2637657898669,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-05",
+        "equity": 71.2637657898669,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-06",
+        "equity": 70.32600042387631,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-07",
+        "equity": 71.98787334303981,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-08",
+        "equity": 71.98787334303981,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-09",
+        "equity": 71.98256596445563,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-10",
+        "equity": 72.94005023215333,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-11",
+        "equity": 72.44530303476165,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-12",
+        "equity": 72.99395329589865,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-13",
+        "equity": 72.20763198753997,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-14",
+        "equity": 72.5486310615719,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-15",
+        "equity": 72.5486310615719,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-16",
+        "equity": 72.72112086555693,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-17",
+        "equity": 73.15698933178065,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-18",
+        "equity": 71.86132553492386,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-19",
+        "equity": 74.92600495611177,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-20",
+        "equity": 75.02817199385674,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-21",
+        "equity": 76.3276504690709,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-22",
+        "equity": 76.3276504690709,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-23",
+        "equity": 76.36911436425962,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-24",
+        "equity": 77.39741896493962,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-25",
+        "equity": 77.47487352115213,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-26",
+        "equity": 76.43595416330382,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-27",
+        "equity": 76.44474450908382,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-28",
+        "equity": 73.8068114971781,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-29",
+        "equity": 73.8068114971781,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-30",
+        "equity": 73.98560381323183,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-31",
+        "equity": 73.09937707382731,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-01",
+        "equity": 73.09937707382731,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-02",
+        "equity": 73.09937707382731,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-03",
+        "equity": 73.09937707382731,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-04",
+        "equity": 71.66723109668834,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-05",
+        "equity": 71.66723109668834,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-06",
+        "equity": 71.63067323924965,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-07",
+        "equity": 71.27318268642001,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-08",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-09",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-10",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-11",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-12",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-13",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-14",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-15",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-16",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-17",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-18",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-19",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-20",
+        "equity": 70.48187459780429,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-21",
+        "equity": 70.16829336903785,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-22",
+        "equity": 70.20096995178629,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-23",
+        "equity": 69.02573975155771,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-24",
+        "equity": 68.31624840233755,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-25",
+        "equity": 68.31624840233755,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-26",
+        "equity": 68.31624840233755,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-27",
+        "equity": 68.31624840233755,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-28",
+        "equity": 68.31624840233755,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-29",
+        "equity": 68.31624840233755,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-30",
+        "equity": 68.31624840233755,
+        "executed_position": 0
+      }
+    ]
+  },
+  {
+    "mode": "next_eligible_close",
+    "fee_per_side": 0.0,
+    "final_equity": 95.19145164985144,
+    "return_pct": -4.8085483501485555,
+    "daily_mark_max_drawdown_pct": -23.641884795255073,
+    "buy_hold_return_pct": -4.101279557666658,
+    "cash_return_pct": 0.0,
+    "executed_sides": 38,
+    "closed_episodes": 19,
+    "winning_episodes": 7,
+    "trades": [
+      {
+        "execution_date": "2026-01-06",
+        "information_cutoff_date": "2026-01-05",
+        "action": "AL",
+        "price": 4493.235,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022255679927713552
+      },
+      {
+        "execution_date": "2026-01-22",
+        "information_cutoff_date": "2026-01-21",
+        "action": "SAT",
+        "price": 4958.795,
+        "fee_rate": 0.0,
+        "cash": 110.36135434714633,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-01-23",
+        "information_cutoff_date": "2026-01-22",
+        "action": "AL",
+        "price": 4983.785,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022144084134276727
+      },
+      {
+        "execution_date": "2026-02-02",
+        "information_cutoff_date": "2026-02-01",
+        "action": "SAT",
+        "price": 4773.935,
+        "fee_rate": 0.0,
+        "cash": 105.71441829156838,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-10",
+        "information_cutoff_date": "2026-02-09",
+        "action": "AL",
+        "price": 5041.575,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.020968530328631108
+      },
+      {
+        "execution_date": "2026-02-13",
+        "information_cutoff_date": "2026-02-12",
+        "action": "SAT",
+        "price": 5040.285,
+        "fee_rate": 0.0,
+        "cash": 105.68736888744444,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-23",
+        "information_cutoff_date": "2026-02-22",
+        "action": "AL",
+        "price": 5235.345,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.020187278753825092
+      },
+      {
+        "execution_date": "2026-02-25",
+        "information_cutoff_date": "2026-02-24",
+        "action": "SAT",
+        "price": 5162.905,
+        "fee_rate": 0.0,
+        "cash": 104.22500241451733,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-03-02",
+        "information_cutoff_date": "2026-03-01",
+        "action": "AL",
+        "price": 5345.695,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.019496997568046313
+      },
+      {
+        "execution_date": "2026-03-03",
+        "information_cutoff_date": "2026-03-02",
+        "action": "SAT",
+        "price": 5125.035,
+        "fee_rate": 0.0,
+        "cash": 99.92279493115224,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-01",
+        "information_cutoff_date": "2026-03-31",
+        "action": "AL",
+        "price": 4775.878,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.020922392684895267
+      },
+      {
+        "execution_date": "2026-04-06",
+        "information_cutoff_date": "2026-04-05",
+        "action": "SAT",
+        "price": 4657.838,
+        "fee_rate": 0.0,
+        "cash": 97.4531156986272,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-08",
+        "information_cutoff_date": "2026-04-07",
+        "action": "AL",
+        "price": 4717.085,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.020659605603593575
+      },
+      {
+        "execution_date": "2026-04-13",
+        "information_cutoff_date": "2026-04-12",
+        "action": "SAT",
+        "price": 4757.468,
+        "fee_rate": 0.0,
+        "cash": 98.28741255171711,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-15",
+        "information_cutoff_date": "2026-04-14",
+        "action": "AL",
+        "price": 4807.058,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02044647943746822
+      },
+      {
+        "execution_date": "2026-04-20",
+        "information_cutoff_date": "2026-04-19",
+        "action": "SAT",
+        "price": 4827.318,
+        "fee_rate": 0.0,
+        "cash": 98.70165822512023,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-05-07",
+        "information_cutoff_date": "2026-05-06",
+        "action": "AL",
+        "price": 4685.358,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02106598006494279
+      },
+      {
+        "execution_date": "2026-05-14",
+        "information_cutoff_date": "2026-05-13",
+        "action": "SAT",
+        "price": 4661.948,
+        "fee_rate": 0.0,
+        "cash": 98.20850363179991,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-01",
+        "information_cutoff_date": "2026-05-31",
+        "action": "AL",
+        "price": 4485.388,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.021895208091652255
+      },
+      {
+        "execution_date": "2026-06-02",
+        "information_cutoff_date": "2026-06-01",
+        "action": "SAT",
+        "price": 4484.418,
+        "fee_rate": 0.0,
+        "cash": 98.187265279951,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-16",
+        "information_cutoff_date": "2026-06-15",
+        "action": "AL",
+        "price": 4334.885,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022650489062558985
+      },
+      {
+        "execution_date": "2026-06-18",
+        "information_cutoff_date": "2026-06-17",
+        "action": "SAT",
+        "price": 4206.938,
+        "fee_rate": 0.0,
+        "cash": 95.28920315586377,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-29",
+        "information_cutoff_date": "2026-06-28",
+        "action": "AL",
+        "price": 4013.628,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.023741413792175998
+      },
+      {
+        "execution_date": "2026-06-30",
+        "information_cutoff_date": "2026-06-29",
+        "action": "SAT",
+        "price": 4012.865,
+        "fee_rate": 0.0,
+        "cash": 95.27108845714034,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-06",
+        "information_cutoff_date": "2026-07-05",
+        "action": "AL",
+        "price": 4163.355,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022883248835888447
+      },
+      {
+        "execution_date": "2026-07-08",
+        "information_cutoff_date": "2026-07-07",
+        "action": "SAT",
+        "price": 4073.095,
+        "fee_rate": 0.0,
+        "cash": 93.20564641721305,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-16",
+        "information_cutoff_date": "2026-07-15",
+        "action": "AL",
+        "price": 3977.745,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02343178017123095
+      },
+      {
+        "execution_date": "2026-07-17",
+        "information_cutoff_date": "2026-07-16",
+        "action": "SAT",
+        "price": 4013.975,
+        "fee_rate": 0.0,
+        "cash": 94.05457981281674,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-23",
+        "information_cutoff_date": "2026-07-22",
+        "action": "AL",
+        "price": 4048.905,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02322963364485379
+      },
+      {
+        "execution_date": "2026-07-24",
+        "information_cutoff_date": "2026-07-23",
+        "action": "SAT",
+        "price": 4049.125,
+        "fee_rate": 0.0,
+        "cash": 94.05969033221861,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-31",
+        "information_cutoff_date": "2026-07-30",
+        "action": "AL",
+        "price": 4042.025,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02327043754856009
+      },
+      {
+        "execution_date": "2026-08-03",
+        "information_cutoff_date": "2026-08-02",
+        "action": "SAT",
+        "price": 4052.415,
+        "fee_rate": 0.0,
+        "cash": 94.30147017834814,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-08-06",
+        "information_cutoff_date": "2026-08-05",
+        "action": "AL",
+        "price": 4240.195,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022239889952784753
+      },
+      {
+        "execution_date": "2026-08-31",
+        "information_cutoff_date": "2026-08-30",
+        "action": "SAT",
+        "price": 4446.435,
+        "fee_rate": 0.0,
+        "cash": 98.88822508221048,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-04",
+        "information_cutoff_date": "2026-09-03",
+        "action": "AL",
+        "price": 4430.455,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.02232010596704187
+      },
+      {
+        "execution_date": "2026-09-08",
+        "information_cutoff_date": "2026-09-07",
+        "action": "SAT",
+        "price": 4352.975,
+        "fee_rate": 0.0,
+        "cash": 97.15886327188409,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-21",
+        "information_cutoff_date": "2026-09-20",
+        "action": "AL",
+        "price": 4359.135,
+        "fee_rate": 0.0,
+        "cash": 0.0,
+        "units": 0.022288564880850004
+      },
+      {
+        "execution_date": "2026-09-24",
+        "information_cutoff_date": "2026-09-23",
+        "action": "SAT",
+        "price": 4270.865,
+        "fee_rate": 0.0,
+        "cash": 95.19145164985144,
+        "units": 0.0
+      }
+    ],
+    "episodes": [
+      {
+        "buy_decision": "2026-01-05",
+        "buy_execution": "2026-01-06",
+        "buy_price": 4493.235,
+        "starting_equity": 100.0,
+        "sell_decision": "2026-01-21",
+        "sell_execution": "2026-01-22",
+        "sell_price": 4958.795,
+        "return_pct": 10.361354347146335
+      },
+      {
+        "buy_decision": "2026-01-22",
+        "buy_execution": "2026-01-23",
+        "buy_price": 4983.785,
+        "starting_equity": 110.36135434714633,
+        "sell_decision": "2026-01-30",
+        "sell_execution": "2026-02-02",
+        "sell_price": 4773.935,
+        "return_pct": -4.210655154666565
+      },
+      {
+        "buy_decision": "2026-02-09",
+        "buy_execution": "2026-02-10",
+        "buy_price": 5041.575,
+        "starting_equity": 105.71441829156838,
+        "sell_decision": "2026-02-12",
+        "sell_execution": "2026-02-13",
+        "sell_price": 5040.285,
+        "return_pct": -0.0255872420820924
+      },
+      {
+        "buy_decision": "2026-02-20",
+        "buy_execution": "2026-02-23",
+        "buy_price": 5235.345,
+        "starting_equity": 105.68736888744444,
+        "sell_decision": "2026-02-24",
+        "sell_execution": "2026-02-25",
+        "sell_price": 5162.905,
+        "return_pct": -1.3836719452108848
+      },
+      {
+        "buy_decision": "2026-02-27",
+        "buy_execution": "2026-03-02",
+        "buy_price": 5345.695,
+        "starting_equity": 104.22500241451733,
+        "sell_decision": "2026-03-02",
+        "sell_execution": "2026-03-03",
+        "sell_price": 5125.035,
+        "return_pct": -4.127807516141491
+      },
+      {
+        "buy_decision": "2026-03-31",
+        "buy_execution": "2026-04-01",
+        "buy_price": 4775.878,
+        "starting_equity": 99.92279493115224,
+        "sell_decision": "2026-04-02",
+        "sell_execution": "2026-04-06",
+        "sell_price": 4657.838,
+        "return_pct": -2.4715874232968282
+      },
+      {
+        "buy_decision": "2026-04-07",
+        "buy_execution": "2026-04-08",
+        "buy_price": 4717.085,
+        "starting_equity": 97.4531156986272,
+        "sell_decision": "2026-04-12",
+        "sell_execution": "2026-04-13",
+        "sell_price": 4757.468,
+        "return_pct": 0.8561007486615146
+      },
+      {
+        "buy_decision": "2026-04-14",
+        "buy_execution": "2026-04-15",
+        "buy_price": 4807.058,
+        "starting_equity": 98.28741255171711,
+        "sell_decision": "2026-04-18",
+        "sell_execution": "2026-04-20",
+        "sell_price": 4827.318,
+        "return_pct": 0.4214636062223498
+      },
+      {
+        "buy_decision": "2026-05-06",
+        "buy_execution": "2026-05-07",
+        "buy_price": 4685.358,
+        "starting_equity": 98.70165822512023,
+        "sell_decision": "2026-05-13",
+        "sell_execution": "2026-05-14",
+        "sell_price": 4661.948,
+        "return_pct": -0.4996416495815281
+      },
+      {
+        "buy_decision": "2026-05-29",
+        "buy_execution": "2026-06-01",
+        "buy_price": 4485.388,
+        "starting_equity": 98.20850363179991,
+        "sell_decision": "2026-06-01",
+        "sell_execution": "2026-06-02",
+        "sell_price": 4484.418,
+        "return_pct": -0.021625776855871415
+      },
+      {
+        "buy_decision": "2026-06-15",
+        "buy_execution": "2026-06-16",
+        "buy_price": 4334.885,
+        "starting_equity": 98.187265279951,
+        "sell_decision": "2026-06-17",
+        "sell_execution": "2026-06-18",
+        "sell_price": 4206.938,
+        "return_pct": -2.9515661891837963
+      },
+      {
+        "buy_decision": "2026-06-26",
+        "buy_execution": "2026-06-29",
+        "buy_price": 4013.628,
+        "starting_equity": 95.28920315586377,
+        "sell_decision": "2026-06-29",
+        "sell_execution": "2026-06-30",
+        "sell_price": 4012.865,
+        "return_pct": -0.01901023213910502
+      },
+      {
+        "buy_decision": "2026-07-02",
+        "buy_execution": "2026-07-06",
+        "buy_price": 4163.355,
+        "starting_equity": 95.27108845714034,
+        "sell_decision": "2026-07-07",
+        "sell_execution": "2026-07-08",
+        "sell_price": 4073.095,
+        "return_pct": -2.1679630970695474
+      },
+      {
+        "buy_decision": "2026-07-15",
+        "buy_execution": "2026-07-16",
+        "buy_price": 3977.745,
+        "starting_equity": 93.20564641721305,
+        "sell_decision": "2026-07-16",
+        "sell_execution": "2026-07-17",
+        "sell_price": 4013.975,
+        "return_pct": 0.9108175612061675
+      },
+      {
+        "buy_decision": "2026-07-22",
+        "buy_execution": "2026-07-23",
+        "buy_price": 4048.905,
+        "starting_equity": 94.05457981281674,
+        "sell_decision": "2026-07-23",
+        "sell_execution": "2026-07-24",
+        "sell_price": 4049.125,
+        "return_pct": 0.005433567841173215
+      },
+      {
+        "buy_decision": "2026-07-30",
+        "buy_execution": "2026-07-31",
+        "buy_price": 4042.025,
+        "starting_equity": 94.05969033221861,
+        "sell_decision": "2026-07-31",
+        "sell_execution": "2026-08-03",
+        "sell_price": 4052.415,
+        "return_pct": 0.2570493750038594
+      },
+      {
+        "buy_decision": "2026-08-05",
+        "buy_execution": "2026-08-06",
+        "buy_price": 4240.195,
+        "starting_equity": 94.30147017834814,
+        "sell_decision": "2026-08-28",
+        "sell_execution": "2026-08-31",
+        "sell_price": 4446.435,
+        "return_pct": 4.863927248628919
+      },
+      {
+        "buy_decision": "2026-09-03",
+        "buy_execution": "2026-09-04",
+        "buy_price": 4430.455,
+        "starting_equity": 98.88822508221048,
+        "sell_decision": "2026-09-04",
+        "sell_execution": "2026-09-08",
+        "sell_price": 4352.975,
+        "return_pct": -1.7488045810193253
+      },
+      {
+        "buy_decision": "2026-09-18",
+        "buy_execution": "2026-09-21",
+        "buy_price": 4359.135,
+        "starting_equity": 97.15886327188409,
+        "sell_decision": "2026-09-23",
+        "sell_execution": "2026-09-24",
+        "sell_price": 4270.865,
+        "return_pct": -2.024943021952763
+      }
+    ],
+    "curve": [
+      {
+        "date": "2026-01-01",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-02",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-03",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-04",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-05",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-06",
+        "equity": 100.0,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-07",
+        "equity": 99.33166193177077,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-08",
+        "equity": 99.60496168128309,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-09",
+        "equity": 100.35119462925933,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-10",
+        "equity": 100.35119462925933,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-11",
+        "equity": 101.03755979822999,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-12",
+        "equity": 102.35598627714776,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-13",
+        "equity": 102.3050207701133,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-14",
+        "equity": 102.71029670159696,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-15",
+        "equity": 102.59545739316995,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-16",
+        "equity": 102.27631094300655,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-17",
+        "equity": 102.27631094300655,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-18",
+        "equity": 103.98665994545132,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-19",
+        "equity": 103.82575137957397,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-20",
+        "equity": 106.28478145478704,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-21",
+        "equity": 106.3357469618215,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-22",
+        "equity": 110.36135434714633,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-23",
+        "equity": 110.36135434714633,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-24",
+        "equity": 110.36135434714633,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-25",
+        "equity": 111.59278686585347,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-26",
+        "equity": 111.67693438556371,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-27",
+        "equity": 114.52687801364515,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-28",
+        "equity": 122.06383848958755,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-29",
+        "equity": 120.41941880177616,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-30",
+        "equity": 108.31103359715365,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-31",
+        "equity": 108.31103359715365,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-01",
+        "equity": 105.00160022328599,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-02",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-03",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-04",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-05",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-06",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-07",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-08",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-09",
+        "equity": 105.71441829156838,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-10",
+        "equity": 105.71441829156838,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-11",
+        "equity": 106.11722375918137,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-12",
+        "equity": 103.1604512975411,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-13",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-14",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-15",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-16",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-17",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-18",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-19",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-20",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-21",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-22",
+        "equity": 105.68736888744444,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-23",
+        "equity": 105.68736888744444,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-24",
+        "equity": 103.89110482392907,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-25",
+        "equity": 104.22500241451733,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-26",
+        "equity": 104.22500241451733,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-27",
+        "equity": 104.22500241451733,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-28",
+        "equity": 104.22500241451733,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-01",
+        "equity": 104.22500241451733,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-02",
+        "equity": 104.22500241451733,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-03-03",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-04",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-05",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-06",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-07",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-08",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-09",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-10",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-11",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-12",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-13",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-14",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-15",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-16",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-17",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-18",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-19",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-20",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-21",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-22",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-23",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-24",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-25",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-26",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-27",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-28",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-29",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-30",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-31",
+        "equity": 99.92279493115224,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-01",
+        "equity": 99.92279493115223,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-02",
+        "equity": 97.82902832799672,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-03",
+        "equity": 97.82902832799672,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-04",
+        "equity": 97.82902832799672,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-05",
+        "equity": 97.17986925016247,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-06",
+        "equity": 97.4531156986272,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-07",
+        "equity": 97.4531156986272,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-08",
+        "equity": 97.4531156986272,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-09",
+        "equity": 98.41901423941201,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-10",
+        "equity": 98.06980492589447,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-11",
+        "equity": 98.06980492589447,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-12",
+        "equity": 96.2406654245691,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-13",
+        "equity": 98.28741255171711,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-14",
+        "equity": 98.28741255171711,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-15",
+        "equity": 98.28741255171711,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-16",
+        "equity": 98.03203602354314,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-17",
+        "equity": 98.73840054866935,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-18",
+        "equity": 98.73840054866935,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-19",
+        "equity": 97.70755039487052,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-20",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-21",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-22",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-23",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-24",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-25",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-26",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-27",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-28",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-29",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-30",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-01",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-02",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-03",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-04",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-05",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-06",
+        "equity": 98.70165822512023,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-07",
+        "equity": 98.70165822512021,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-08",
+        "equity": 99.27669628295295,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-09",
+        "equity": 99.27669628295295,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-10",
+        "equity": 98.82778024776903,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-11",
+        "equity": 100.0742542882117,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-12",
+        "equity": 99.35632568759846,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-13",
+        "equity": 99.00220656270676,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-14",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-15",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-16",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-17",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-18",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-19",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-20",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-21",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-22",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-23",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-24",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-25",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-26",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-27",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-28",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-29",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-30",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-31",
+        "equity": 98.20850363179991,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-01",
+        "equity": 98.20850363179991,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-02",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-03",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-04",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-05",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-06",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-07",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-08",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-09",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-10",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-11",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-12",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-13",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-14",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-15",
+        "equity": 98.187265279951,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-16",
+        "equity": 98.187265279951,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-17",
+        "equity": 96.63237715727352,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-18",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-19",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-20",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-21",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-22",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-23",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-24",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-25",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-26",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-27",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-28",
+        "equity": 95.28920315586377,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-29",
+        "equity": 95.28920315586377,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-30",
+        "equity": 95.27108845714034,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-01",
+        "equity": 95.27108845714034,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-02",
+        "equity": 95.27108845714034,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-03",
+        "equity": 95.27108845714034,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-04",
+        "equity": 95.27108845714034,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-05",
+        "equity": 95.27108845714034,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-06",
+        "equity": 95.27108845714034,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-07",
+        "equity": 93.7646841862738,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-08",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-09",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-10",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-11",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-12",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-13",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-14",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-15",
+        "equity": 93.20564641721305,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-16",
+        "equity": 93.20564641721305,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-17",
+        "equity": 94.05457981281674,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-18",
+        "equity": 94.05457981281674,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-19",
+        "equity": 94.05457981281674,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-20",
+        "equity": 94.05457981281674,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-21",
+        "equity": 94.05457981281674,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-22",
+        "equity": 94.05457981281674,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-23",
+        "equity": 94.05457981281674,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-24",
+        "equity": 94.05969033221861,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-25",
+        "equity": 94.05969033221861,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-26",
+        "equity": 94.05969033221861,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-27",
+        "equity": 94.05969033221861,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-28",
+        "equity": 94.05969033221861,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-29",
+        "equity": 94.05969033221861,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-30",
+        "equity": 94.05969033221861,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-31",
+        "equity": 94.05969033221861,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-01",
+        "equity": 94.05969033221861,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-02",
+        "equity": 94.4636651280616,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-03",
+        "equity": 94.30147017834814,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-04",
+        "equity": 94.30147017834814,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-05",
+        "equity": 94.30147017834814,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-06",
+        "equity": 94.30147017834814,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-07",
+        "equity": 96.52990715161718,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-08",
+        "equity": 96.52990715161718,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-09",
+        "equity": 96.52279038683228,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-10",
+        "equity": 97.80669923380655,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-11",
+        "equity": 97.14328331651498,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-12",
+        "equity": 97.87897887615311,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-13",
+        "equity": 96.82458569349158,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-14",
+        "equity": 97.28183783092082,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-15",
+        "equity": 97.28183783092082,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-16",
+        "equity": 97.51313268642978,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-17",
+        "equity": 98.09759699438898,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-18",
+        "equity": 96.36021679127744,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-19",
+        "equity": 100.469703656753,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-20",
+        "equity": 100.60670137886214,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-21",
+        "equity": 102.34919675666283,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-22",
+        "equity": 102.34919675666283,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-23",
+        "equity": 102.4047964815448,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-24",
+        "equity": 103.78366965861746,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-25",
+        "equity": 103.88752994469696,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-26",
+        "equity": 102.49442323805452,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-27",
+        "equity": 102.5062103797295,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-28",
+        "equity": 98.96895588273907,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-29",
+        "equity": 98.96895588273907,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-30",
+        "equity": 99.2087018964301,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-31",
+        "equity": 98.88822508221048,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-01",
+        "equity": 98.88822508221048,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-02",
+        "equity": 98.88822508221048,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-03",
+        "equity": 98.88822508221048,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-04",
+        "equity": 98.88822508221048,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-05",
+        "equity": 98.88822508221048,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-06",
+        "equity": 98.83778164272496,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-07",
+        "equity": 98.34450730085335,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-08",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-09",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-10",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-11",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-12",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-13",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-14",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-15",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-16",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-17",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-18",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-19",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-20",
+        "equity": 97.15886327188409,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-21",
+        "equity": 97.15886327188409,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-22",
+        "equity": 97.20410905859221,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-23",
+        "equity": 95.57682093664134,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-24",
+        "equity": 95.19145164985144,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-25",
+        "equity": 95.19145164985144,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-26",
+        "equity": 95.19145164985144,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-27",
+        "equity": 95.19145164985144,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-28",
+        "equity": 95.19145164985144,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-29",
+        "equity": 95.19145164985144,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-30",
+        "equity": 95.19145164985144,
+        "executed_position": 0
+      }
+    ]
+  },
+  {
+    "mode": "next_eligible_close",
+    "fee_per_side": 0.008,
+    "final_equity": 70.23759145988605,
+    "return_pct": -29.762408540113952,
+    "daily_mark_max_drawdown_pct": -41.06246340015408,
+    "buy_hold_return_pct": -5.623481469449729,
+    "cash_return_pct": 0.0,
+    "executed_sides": 38,
+    "closed_episodes": 19,
+    "winning_episodes": 2,
+    "trades": [
+      {
+        "execution_date": "2026-01-06",
+        "information_cutoff_date": "2026-01-05",
+        "action": "AL",
+        "price": 4493.235,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.022079047547334873
+      },
+      {
+        "execution_date": "2026-01-22",
+        "information_cutoff_date": "2026-01-21",
+        "action": "SAT",
+        "price": 4958.795,
+        "fee_rate": 0.008,
+        "cash": 108.60958681782654,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-01-23",
+        "information_cutoff_date": "2026-01-22",
+        "action": "AL",
+        "price": 4983.785,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.021619633665992014
+      },
+      {
+        "execution_date": "2026-02-02",
+        "information_cutoff_date": "2026-02-01",
+        "action": "SAT",
+        "price": 4773.935,
+        "fee_rate": 0.008,
+        "cash": 102.38504003849553,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-10",
+        "information_cutoff_date": "2026-02-09",
+        "action": "AL",
+        "price": 5041.575,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.020146970015451588
+      },
+      {
+        "execution_date": "2026-02-13",
+        "information_cutoff_date": "2026-02-12",
+        "action": "SAT",
+        "price": 5040.285,
+        "fee_rate": 0.008,
+        "cash": 100.73409899821577,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-02-23",
+        "information_cutoff_date": "2026-02-22",
+        "action": "AL",
+        "price": 5235.345,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.019088450144553883
+      },
+      {
+        "execution_date": "2026-02-25",
+        "information_cutoff_date": "2026-02-24",
+        "action": "SAT",
+        "price": 5162.905,
+        "fee_rate": 0.008,
+        "cash": 97.76343985601942,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-03-02",
+        "information_cutoff_date": "2026-03-01",
+        "action": "AL",
+        "price": 5345.695,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018143111333456512
+      },
+      {
+        "execution_date": "2026-03-03",
+        "information_cutoff_date": "2026-03-02",
+        "action": "SAT",
+        "price": 5125.035,
+        "fee_rate": 0.008,
+        "cash": 92.2402079481184,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-01",
+        "information_cutoff_date": "2026-03-31",
+        "action": "AL",
+        "price": 4775.878,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.0191604858427441
+      },
+      {
+        "execution_date": "2026-04-06",
+        "information_cutoff_date": "2026-04-05",
+        "action": "SAT",
+        "price": 4657.838,
+        "fee_rate": 0.008,
+        "cash": 88.53246754434113,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-08",
+        "information_cutoff_date": "2026-04-07",
+        "action": "AL",
+        "price": 4717.085,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01861951372787152
+      },
+      {
+        "execution_date": "2026-04-13",
+        "information_cutoff_date": "2026-04-12",
+        "action": "SAT",
+        "price": 4757.468,
+        "fee_rate": 0.008,
+        "cash": 87.87308681002219,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-04-15",
+        "information_cutoff_date": "2026-04-14",
+        "action": "AL",
+        "price": 4807.058,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01813493437340448
+      },
+      {
+        "execution_date": "2026-04-20",
+        "information_cutoff_date": "2026-04-19",
+        "action": "SAT",
+        "price": 4827.318,
+        "fee_rate": 0.008,
+        "cash": 86.84275036851774,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-05-07",
+        "information_cutoff_date": "2026-05-06",
+        "action": "AL",
+        "price": 4685.358,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018387820565896957
+      },
+      {
+        "execution_date": "2026-05-14",
+        "information_cutoff_date": "2026-05-13",
+        "action": "SAT",
+        "price": 4661.948,
+        "fee_rate": 0.008,
+        "cash": 85.03727880504985,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-01",
+        "information_cutoff_date": "2026-05-31",
+        "action": "AL",
+        "price": 4485.388,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018808268039891874
+      },
+      {
+        "execution_date": "2026-06-02",
+        "information_cutoff_date": "2026-06-01",
+        "action": "SAT",
+        "price": 4484.418,
+        "fee_rate": 0.008,
+        "cash": 83.6693826609405,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-16",
+        "information_cutoff_date": "2026-06-15",
+        "action": "AL",
+        "price": 4334.885,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.019148221911633
+      },
+      {
+        "execution_date": "2026-06-18",
+        "information_cutoff_date": "2026-06-17",
+        "action": "SAT",
+        "price": 4206.938,
+        "fee_rate": 0.008,
+        "cash": 79.91093933334167,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-06-29",
+        "information_cutoff_date": "2026-06-28",
+        "action": "AL",
+        "price": 4013.628,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.019751886704275735
+      },
+      {
+        "execution_date": "2026-06-30",
+        "information_cutoff_date": "2026-06-29",
+        "action": "SAT",
+        "price": 4012.865,
+        "fee_rate": 0.008,
+        "cash": 78.62756160083701,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-06",
+        "information_cutoff_date": "2026-07-05",
+        "action": "AL",
+        "price": 4163.355,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01873573916568818
+      },
+      {
+        "execution_date": "2026-07-08",
+        "information_cutoff_date": "2026-07-07",
+        "action": "SAT",
+        "price": 4073.095,
+        "fee_rate": 0.008,
+        "cash": 75.70194595293215,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-16",
+        "information_cutoff_date": "2026-07-15",
+        "action": "AL",
+        "price": 3977.745,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018880329648599297
+      },
+      {
+        "execution_date": "2026-07-17",
+        "information_cutoff_date": "2026-07-16",
+        "action": "SAT",
+        "price": 4013.975,
+        "fee_rate": 0.008,
+        "cash": 75.17888983162648,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-23",
+        "information_cutoff_date": "2026-07-22",
+        "action": "AL",
+        "price": 4048.905,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018420346235789656
+      },
+      {
+        "execution_date": "2026-07-24",
+        "information_cutoff_date": "2026-07-23",
+        "action": "SAT",
+        "price": 4049.125,
+        "fee_rate": 0.008,
+        "cash": 73.98959417637585,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-07-31",
+        "information_cutoff_date": "2026-07-30",
+        "action": "AL",
+        "price": 4042.025,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.018159802370093216
+      },
+      {
+        "execution_date": "2026-08-03",
+        "information_cutoff_date": "2026-08-02",
+        "action": "SAT",
+        "price": 4052.415,
+        "fee_rate": 0.008,
+        "cash": 73.00232707742848,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-08-06",
+        "information_cutoff_date": "2026-08-05",
+        "action": "AL",
+        "price": 4240.195,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.0170800973844823
+      },
+      {
+        "execution_date": "2026-08-31",
+        "information_cutoff_date": "2026-08-30",
+        "action": "SAT",
+        "price": 4446.435,
+        "fee_rate": 0.008,
+        "cash": 75.3379784712604,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-04",
+        "information_cutoff_date": "2026-09-03",
+        "action": "AL",
+        "price": 4430.455,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01686961226492601
+      },
+      {
+        "execution_date": "2026-09-08",
+        "information_cutoff_date": "2026-09-07",
+        "action": "SAT",
+        "price": 4352.975,
+        "fee_rate": 0.008,
+        "cash": 72.84553644532497,
+        "units": 0.0
+      },
+      {
+        "execution_date": "2026-09-21",
+        "information_cutoff_date": "2026-09-20",
+        "action": "AL",
+        "price": 4359.135,
+        "fee_rate": 0.008,
+        "cash": 0.0,
+        "units": 0.01657838017569712
+      },
+      {
+        "execution_date": "2026-09-24",
+        "information_cutoff_date": "2026-09-23",
+        "action": "SAT",
+        "price": 4270.865,
+        "fee_rate": 0.008,
+        "cash": 70.23759145988605,
+        "units": 0.0
+      }
+    ],
+    "episodes": [
+      {
+        "buy_decision": "2026-01-05",
+        "buy_execution": "2026-01-06",
+        "buy_price": 4493.235,
+        "starting_equity": 100.0,
+        "sell_decision": "2026-01-21",
+        "sell_execution": "2026-01-22",
+        "sell_price": 4958.795,
+        "return_pct": 8.609586817826532
+      },
+      {
+        "buy_decision": "2026-01-22",
+        "buy_execution": "2026-01-23",
+        "buy_price": 4983.785,
+        "starting_equity": 108.60958681782654,
+        "sell_decision": "2026-01-30",
+        "sell_execution": "2026-02-02",
+        "sell_price": 4773.935,
+        "return_pct": -5.731120945862345
+      },
+      {
+        "buy_decision": "2026-02-09",
+        "buy_execution": "2026-02-10",
+        "buy_price": 5041.575,
+        "starting_equity": 102.38504003849553,
+        "sell_decision": "2026-02-12",
+        "sell_execution": "2026-02-13",
+        "sell_price": 5040.285,
+        "return_pct": -1.6124826826839467
+      },
+      {
+        "buy_decision": "2026-02-20",
+        "buy_execution": "2026-02-23",
+        "buy_price": 5235.345,
+        "starting_equity": 100.73409899821577,
+        "sell_decision": "2026-02-24",
+        "sell_execution": "2026-02-25",
+        "sell_price": 5162.905,
+        "return_pct": -2.9490104857630928
+      },
+      {
+        "buy_decision": "2026-02-27",
+        "buy_execution": "2026-03-02",
+        "buy_price": 5345.695,
+        "starting_equity": 97.76343985601942,
+        "sell_decision": "2026-03-02",
+        "sell_execution": "2026-03-03",
+        "sell_price": 5125.035,
+        "return_pct": -5.6495883492186145
+      },
+      {
+        "buy_decision": "2026-03-31",
+        "buy_execution": "2026-04-01",
+        "buy_price": 4775.878,
+        "starting_equity": 92.2402079481184,
+        "sell_decision": "2026-04-02",
+        "sell_execution": "2026-04-06",
+        "sell_price": 4657.838,
+        "return_pct": -4.01965746419688
+      },
+      {
+        "buy_decision": "2026-04-07",
+        "buy_execution": "2026-04-08",
+        "buy_price": 4717.085,
+        "starting_equity": 88.53246754434113,
+        "sell_decision": "2026-04-12",
+        "sell_execution": "2026-04-13",
+        "sell_price": 4757.468,
+        "return_pct": -0.744789739412488
+      },
+      {
+        "buy_decision": "2026-04-14",
+        "buy_execution": "2026-04-15",
+        "buy_price": 4807.058,
+        "starting_equity": 87.87308681002219,
+        "sell_decision": "2026-04-18",
+        "sell_execution": "2026-04-20",
+        "sell_price": 4827.318,
+        "return_pct": -1.1725278795907013
+      },
+      {
+        "buy_decision": "2026-05-06",
+        "buy_execution": "2026-05-07",
+        "buy_price": 4685.358,
+        "starting_equity": 86.84275036851774,
+        "sell_decision": "2026-05-13",
+        "sell_execution": "2026-05-14",
+        "sell_price": 4661.948,
+        "return_pct": -2.0790124170484647
+      },
+      {
+        "buy_decision": "2026-05-29",
+        "buy_execution": "2026-06-01",
+        "buy_price": 4485.388,
+        "starting_equity": 85.03727880504985,
+        "sell_decision": "2026-06-01",
+        "sell_execution": "2026-06-02",
+        "sell_price": 4484.418,
+        "return_pct": -1.608584097858179
+      },
+      {
+        "buy_decision": "2026-06-15",
+        "buy_execution": "2026-06-16",
+        "buy_price": 4334.885,
+        "starting_equity": 83.6693826609405,
+        "sell_decision": "2026-06-17",
+        "sell_execution": "2026-06-18",
+        "sell_price": 4206.938,
+        "return_pct": -4.492017519514202
+      },
+      {
+        "buy_decision": "2026-06-26",
+        "buy_execution": "2026-06-29",
+        "buy_price": 4013.628,
+        "starting_equity": 79.91093933334167,
+        "sell_decision": "2026-06-29",
+        "sell_execution": "2026-06-30",
+        "sell_price": 4012.865,
+        "return_pct": -1.6060100697241952
+      },
+      {
+        "buy_decision": "2026-07-02",
+        "buy_execution": "2026-07-06",
+        "buy_price": 4163.355,
+        "starting_equity": 78.62756160083701,
+        "sell_decision": "2026-07-07",
+        "sell_execution": "2026-07-08",
+        "sell_price": 4073.095,
+        "return_pct": -3.7208525717192242
+      },
+      {
+        "buy_decision": "2026-07-15",
+        "buy_execution": "2026-07-16",
+        "buy_price": 3977.745,
+        "starting_equity": 75.70194595293215,
+        "sell_decision": "2026-07-16",
+        "sell_execution": "2026-07-17",
+        "sell_price": 4013.975,
+        "return_pct": -0.6909414477018649
+      },
+      {
+        "buy_decision": "2026-07-22",
+        "buy_execution": "2026-07-23",
+        "buy_price": 4048.905,
+        "starting_equity": 75.17888983162648,
+        "sell_decision": "2026-07-23",
+        "sell_execution": "2026-07-24",
+        "sell_price": 4049.125,
+        "return_pct": -1.5819542665690078
+      },
+      {
+        "buy_decision": "2026-07-30",
+        "buy_execution": "2026-07-31",
+        "buy_price": 4042.025,
+        "starting_equity": 73.98959417637585,
+        "sell_decision": "2026-07-31",
+        "sell_execution": "2026-08-03",
+        "sell_price": 4052.415,
+        "return_pct": -1.3343323611073377
+      },
+      {
+        "buy_decision": "2026-08-05",
+        "buy_execution": "2026-08-06",
+        "buy_price": 4240.195,
+        "starting_equity": 73.00232707742848,
+        "sell_decision": "2026-08-28",
+        "sell_execution": "2026-08-31",
+        "sell_price": 4446.435,
+        "return_pct": 3.1994204669046455
+      },
+      {
+        "buy_decision": "2026-09-03",
+        "buy_execution": "2026-09-04",
+        "buy_price": 4430.455,
+        "starting_equity": 75.3379784712604,
+        "sell_decision": "2026-09-04",
+        "sell_execution": "2026-09-08",
+        "sell_price": 4352.975,
+        "return_pct": -3.308347365447606
+      },
+      {
+        "buy_decision": "2026-09-18",
+        "buy_execution": "2026-09-21",
+        "buy_price": 4359.135,
+        "starting_equity": 72.84553644532497,
+        "sell_decision": "2026-09-23",
+        "sell_execution": "2026-09-24",
+        "sell_price": 4270.865,
+        "return_pct": -3.5801026565249305
+      }
+    ],
+    "curve": [
+      {
+        "date": "2026-01-01",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-02",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-03",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-04",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-05",
+        "equity": 100.0,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-06",
+        "equity": 99.2063492063492,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-07",
+        "equity": 98.54331540850274,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-08",
+        "equity": 98.814446112384,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-09",
+        "equity": 99.55475657664616,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-10",
+        "equity": 99.55475657664616,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-11",
+        "equity": 100.23567440300594,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-12",
+        "equity": 101.54363717971009,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-13",
+        "equity": 101.49307616082669,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-14",
+        "equity": 101.89513561666365,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-15",
+        "equity": 101.78120773131938,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-16",
+        "equity": 101.46459418949063,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-17",
+        "equity": 101.46459418949063,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-18",
+        "equity": 103.1613689935033,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-19",
+        "equity": 103.00173747973608,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-20",
+        "equity": 105.4412514432411,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-21",
+        "equity": 105.4918124621245,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-22",
+        "equity": 108.60958681782654,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-01-23",
+        "equity": 107.747605970066,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-24",
+        "equity": 107.747605970066,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-25",
+        "equity": 108.94987379823183,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-26",
+        "equity": 109.0320284061626,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-27",
+        "equity": 111.81447525897578,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-28",
+        "equity": 119.17293377353282,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-29",
+        "equity": 117.56745977749624,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-30",
+        "equity": 105.7458440889318,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-01-31",
+        "equity": 105.7458440889318,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-01",
+        "equity": 102.5147898375493,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-02",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-03",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-04",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-05",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-06",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-07",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-08",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-09",
+        "equity": 102.38504003849553,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-10",
+        "equity": 101.57246035565034,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-11",
+        "equity": 101.95948364964717,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-12",
+        "equity": 99.11855940776833,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-13",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-14",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-15",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-16",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-17",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-18",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-19",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-20",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-21",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-22",
+        "equity": 100.73409899821577,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-23",
+        "equity": 99.93462202203945,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-24",
+        "equity": 98.23613172817704,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-02-25",
+        "equity": 97.76343985601942,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-26",
+        "equity": 97.76343985601942,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-27",
+        "equity": 97.76343985601942,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-02-28",
+        "equity": 97.76343985601942,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-01",
+        "equity": 97.76343985601942,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-02",
+        "equity": 96.9875395397018,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-03-03",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-04",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-05",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-06",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-07",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-08",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-09",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-10",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-11",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-12",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-13",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-14",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-15",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-16",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-17",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-18",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-19",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-20",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-21",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-22",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-23",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-24",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-25",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-26",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-27",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-28",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-29",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-30",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-03-31",
+        "equity": 92.2402079481184,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-01",
+        "equity": 91.508142805673,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-02",
+        "equity": 89.59069550593209,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-03",
+        "equity": 89.59069550593209,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-04",
+        "equity": 89.59069550593209,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-05",
+        "equity": 88.99620311168927,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-06",
+        "equity": 88.53246754434113,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-07",
+        "equity": 88.53246754434113,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-08",
+        "equity": 87.82982891303683,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-09",
+        "equity": 88.700347038356,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-10",
+        "equity": 88.38562139781381,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-11",
+        "equity": 88.38562139781381,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-12",
+        "equity": 86.73710551088924,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-13",
+        "equity": 87.87308681002219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-14",
+        "equity": 87.87308681002219,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-15",
+        "equity": 87.175681359149,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-16",
+        "equity": 86.94917602882518,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-17",
+        "equity": 87.57568360662317,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-18",
+        "equity": 87.57568360662317,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-19",
+        "equity": 86.66137462031925,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-04-20",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-21",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-22",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-23",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-24",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-25",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-26",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-27",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-28",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-29",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-04-30",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-01",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-02",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-03",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-04",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-05",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-06",
+        "equity": 86.84275036851774,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-07",
+        "equity": 86.15352219098983,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-08",
+        "equity": 86.65545452897712,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-09",
+        "equity": 86.65545452897712,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-10",
+        "equity": 86.26361007271787,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-11",
+        "equity": 87.35161741560199,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-12",
+        "equity": 86.72496049071623,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-13",
+        "equity": 86.41586122700349,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-05-14",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-15",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-16",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-17",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-18",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-19",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-20",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-21",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-22",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-23",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-24",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-25",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-26",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-27",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-28",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-29",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-30",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-05-31",
+        "equity": 85.03727880504985,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-01",
+        "equity": 84.36237976691453,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-02",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-03",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-04",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-05",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-06",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-07",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-08",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-09",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-10",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-11",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-12",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-13",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-14",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-15",
+        "equity": 83.6693826609405,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-16",
+        "equity": 83.00533994140923,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-17",
+        "equity": 81.69087195184136,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-18",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-19",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-20",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-21",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-22",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-23",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-24",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-25",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-26",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-27",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-28",
+        "equity": 79.91093933334167,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-06-29",
+        "equity": 79.27672552910882,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-06-30",
+        "equity": 78.62756160083701,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-01",
+        "equity": 78.62756160083701,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-02",
+        "equity": 78.62756160083701,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-03",
+        "equity": 78.62756160083701,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-04",
+        "equity": 78.62756160083701,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-05",
+        "equity": 78.62756160083701,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-06",
+        "equity": 78.0035333341637,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-07",
+        "equity": 76.77015962488645,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-08",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-09",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-10",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-11",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-12",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-13",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-14",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-15",
+        "equity": 75.70194595293215,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-16",
+        "equity": 75.1011368580676,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-17",
+        "equity": 75.17888983162648,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-18",
+        "equity": 75.17888983162648,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-19",
+        "equity": 75.17888983162648,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-20",
+        "equity": 75.17888983162648,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-21",
+        "equity": 75.17888983162648,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-22",
+        "equity": 75.17888983162648,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-23",
+        "equity": 74.58223197581992,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-07-24",
+        "equity": 73.98959417637585,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-25",
+        "equity": 73.98959417637585,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-26",
+        "equity": 73.98959417637585,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-27",
+        "equity": 73.98959417637585,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-28",
+        "equity": 73.98959417637585,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-29",
+        "equity": 73.98959417637585,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-30",
+        "equity": 73.98959417637585,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-07-31",
+        "equity": 73.40237517497603,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-01",
+        "equity": 73.40237517497603,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-02",
+        "equity": 73.71762934412085,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-03",
+        "equity": 73.00232707742848,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-04",
+        "equity": 73.00232707742848,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-05",
+        "equity": 73.00232707742848,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-08-06",
+        "equity": 72.42294352919492,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-07",
+        "equity": 74.13436928712005,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-08",
+        "equity": 74.13436928712005,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-09",
+        "equity": 74.12890365595702,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-10",
+        "equity": 75.11493767796318,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-11",
+        "equity": 74.60543837298408,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-12",
+        "equity": 75.17044799446275,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-13",
+        "equity": 74.36068057746445,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-14",
+        "equity": 74.71184737968939,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-15",
+        "equity": 74.71184737968939,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-16",
+        "equity": 74.889480392488,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-17",
+        "equity": 75.33834535175221,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-18",
+        "equity": 74.00404814407645,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-19",
+        "equity": 77.16010853878109,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-20",
+        "equity": 77.2653219386695,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-21",
+        "equity": 78.60354756874369,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-22",
+        "equity": 78.60354756874369,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-23",
+        "equity": 78.64624781220489,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-24",
+        "equity": 79.7052138500428,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-25",
+        "equity": 79.78497790482834,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-26",
+        "equity": 78.71508060466435,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-27",
+        "equity": 78.72413305627813,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-28",
+        "equity": 76.00754356727622,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-29",
+        "equity": 76.00754356727622,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-30",
+        "equity": 76.19166701708095,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-08-31",
+        "equity": 75.3379784712604,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-01",
+        "equity": 75.3379784712604,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-02",
+        "equity": 75.3379784712604,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-03",
+        "equity": 75.3379784712604,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-04",
+        "equity": 74.74005800720276,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-05",
+        "equity": 74.74005800720276,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-06",
+        "equity": 74.70193268348403,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-07",
+        "equity": 74.32911425242918,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-08",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-09",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-10",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-11",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-12",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-13",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-14",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-15",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-16",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-17",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-18",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-19",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-20",
+        "equity": 72.84553644532497,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-21",
+        "equity": 72.26739726718748,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-22",
+        "equity": 72.30105137894414,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-23",
+        "equity": 71.09066384231647,
+        "executed_position": 1
+      },
+      {
+        "date": "2026-09-24",
+        "equity": 70.23759145988605,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-25",
+        "equity": 70.23759145988605,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-26",
+        "equity": 70.23759145988605,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-27",
+        "equity": 70.23759145988605,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-28",
+        "equity": 70.23759145988605,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-29",
+        "equity": 70.23759145988605,
+        "executed_position": 0
+      },
+      {
+        "date": "2026-09-30",
+        "equity": 70.23759145988605,
+        "executed_position": 0
+      }
+    ]
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "date": "2026-02-25",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Tarife/İran belirsizliği geri güçleniyor ama altın kapanış toparlanması sınırlı; diğer metaller daha güçlü. Dünkü satışın tersine hemen dönmüyorum.",
+  "invalidation": "Altın toparlanmasının sürmesi ve yeni risk haberinin fiyatla teyidi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold climbs as tariff and geopolitical risks spur safe-haven demand (https://www.reuters.com/world/india/gold-largely-flat-dollar-strength-keeps-pressure-prices-2026-02-25/)",
+    "JP Morgan raises long-term gold price forecast to $4,500 (https://www.reuters.com/world/asia-pacific/jp-morgan-raises-long-term-gold-price-forecast-4500-2026-02-25/)",
+    "Oil settles little changed, supply worries persist despite large US crude stock build (https://www.reuters.com/business/energy/oil-prices-hover-near-seven-month-highs-ahead-us-iran-talks-2026-02-25/)",
+    "Takeaways from Trump's State of the Union address to Congress (https://www.reuters.com/legal/government/takeaways-trumps-state-union-address-congress-2026-02-25/)",
+    "US housing-related stocks drop after downbeat comments from Lowe's, Home Depot (https://www.reuters.com/business/us-housing-related-stocks-drop-after-downbeat-comments-lowes-home-depot-2026-02-25/)",
+    "AI relief rally (https://www.reuters.com/podcasts/reuters-morning-bid/ai-relief-rally-2026-02-25/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-25",
+      "v": 4.05,
+      "change": 0.25
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-25",
+      "v": 25329.04,
+      "change": 1.41
+    },
+    "SP500_FRED": {
+      "d": "2026-02-25",
+      "v": 6946.13,
+      "change": 0.81
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-25",
+      "v": 90.78,
+      "change": 4.25
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-25",
+      "v": 5162.905,
+      "change": 0.32
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-25",
+      "v": 1816.48,
+      "change": 2.35
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-25",
+      "v": 2320.54,
+      "change": 8.07
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-16",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Fed artışı ve ek sıkılaşma mesajı doları güçlendirdi; altın gün içi yükselişi geri verdi.",
+  "invalidation": "Şahin beklentinin doygunlaşıp fiyatla tersine dönmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls more than 1% after Fed hikes interest rates (https://www.reuters.com/world/india/gold-muted-investors-brace-fed-rate-decision-2026-09-16/)",
+    "At least 60 killed in gold mine collapse on Sunday in Sudan's West Kordofan, sources say (https://www.reuters.com/world/least-60-killed-gold-mine-collapse-sunday-sudans-west-kordofan-sources-say-2026-09-16/)",
+    "US firm Heeney Capital to operate Venezuela gold mine, Continental seeks to enter oil project (https://www.reuters.com/business/energy/us-energy-producer-unveil-venezuela-investment-energy-secretary-says-2026-09-16/)",
+    "Morning Bid: A time to hike? (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-16/)",
+    "TRADING DAY Lift off! (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-09-16/)",
+    "Between a hike and a hard place (https://www.reuters.com/podcasts/reuters-morning-bid/between-hike-hard-place-2026-09-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-16",
+      "v": 5.01,
+      "change": 0.2
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-16",
+      "v": 28945.06,
+      "change": 0.02
+    },
+    "SP500_FRED": {
+      "d": "2026-09-16",
+      "v": 7551.81,
+      "change": -0.45
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-16",
+      "v": 4265.155,
+      "change": -0.52
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-16",
+      "v": 17.71,
+      "change": 2.97
+    }
+  }
+}

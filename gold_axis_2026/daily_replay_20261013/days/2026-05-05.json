@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-05",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol gevşemesiyle altın tepki verdi fakat Hürmüz fiilen kapalı ve diğer metaller teyitsiz. Bir günlük tepki yeterli değil.",
+  "invalidation": "Diplomasiyle desteklenen ikinci güçlü toparlanma.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains after hitting more than one-month low, Middle East risks linger (https://www.reuters.com/business/gold-steady-investors-weigh-middle-east-risks-stalled-usiran-peace-talks-2026-05-05/)",
+    "Miners' $8 bln tie-up grants gold price resistance (https://www.reuters.com/commentary/breakingviews/miners-8-bln-tie-up-grants-gold-price-resistance-2026-05-05/)",
+    "Wall Street stocks touch records on upbeat earnings, dip in oil (https://www.reuters.com/world/china/global-markets-global-markets-2026-05-05/)",
+    "India's IIFL Finance revives dollar-bond plan, to meet investors, sources say (https://www.reuters.com/world/india/indias-iifl-finance-revives-dollar-bond-plan-meet-investors-sources-say-2026-05-05/)",
+    "Trump pauses effort to escort ships in Strait of Hormuz, citing deal progress (https://www.reuters.com/world/asia-pacific/middle-east-truce-doubt-us-iran-fight-control-strait-hormuz-2026-05-05/)",
+    "Morning Bid: Freedom? What freedom? (https://www.reuters.com/world/china/global-markets-view-europe-2026-05-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-05",
+      "v": 4.43,
+      "change": -0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-05",
+      "v": 28015.06,
+      "change": 1.31
+    },
+    "SP500_FRED": {
+      "d": "2026-05-05",
+      "v": 7259.22,
+      "change": 0.81
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-05",
+      "v": 73.2,
+      "change": -1.27
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-05",
+      "v": 4572.758,
+      "change": 1.23
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-05",
+      "v": 1500.17,
+      "change": -0.01
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-05",
+      "v": 1969.05,
+      "change": -0.11
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-05",
+      "v": 17.38,
+      "change": -4.98
+    }
+  }
+}

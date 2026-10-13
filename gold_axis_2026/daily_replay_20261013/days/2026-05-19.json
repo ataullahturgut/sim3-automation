@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-19",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Diplomasi umudu fiyatı tutamadı; nominal faiz 6 baz puan arttı, dolar güçlü ve altın düştü.",
+  "invalidation": "Faiz/dolar baskısında sürdürülebilir dönüş.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls more than 1% as Treasury yields, dollar weigh amid inflation concerns (https://www.reuters.com/world/india/gold-steady-weaker-dollar-after-trump-pauses-planned-iran-attack-2026-05-19/)",
+    "Agnico Eagle to redevelop Hope Bay gold mine in Canada's Arctic, government says (https://www.reuters.com/world/agnico-eagle-redevelop-hope-bay-gold-mine-canadas-arctic-government-says-2026-05-19/)",
+    "China's outbound M&A spree has staying power (https://www.reuters.com/commentary/breakingviews/chinas-outbound-ma-spree-has-staying-power-2026-05-19/)",
+    "G7 finance ministers urge action on economic imbalances, some point to China (https://www.reuters.com/world/china/g7-finance-ministers-explore-responses-iran-war-fallout-2026-05-19/)",
+    "Morning Bid: Ceasefire on a knife edge (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-19/)",
+    "Four US LNG vessels sailing to China after Trump-Xi summit (https://www.reuters.com/business/energy/four-us-lng-vessels-sailing-china-after-trump-xi-summit-2026-05-19/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-19",
+      "v": 4.67,
+      "change": 1.3
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-19",
+      "v": 28818.84,
+      "change": -0.61
+    },
+    "SP500_FRED": {
+      "d": "2026-05-19",
+      "v": 7353.61,
+      "change": -0.67
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-19",
+      "v": 77.3,
+      "change": 2.97
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-19",
+      "v": 4483.885,
+      "change": -1.96
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-19",
+      "v": 1411.54,
+      "change": 0.95
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-19",
+      "v": 1976.87,
+      "change": 0.47
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-19",
+      "v": 18.06,
+      "change": 1.35
+    }
+  }
+}

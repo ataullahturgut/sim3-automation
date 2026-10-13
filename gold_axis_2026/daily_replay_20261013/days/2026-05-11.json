@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-11",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Teklif reddi petrol/faizi yükseltti ancak altın ilk kaybı geri aldı, gümüş güçlü. Olumsuz habere dayanıklılık çıkışı henüz doğrulamıyor.",
+  "invalidation": "Enflasyon verisiyle faiz/dolar baskısının altını kırması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold ticks up as markets digest US-Iran updates, await inflation data (https://www.reuters.com/world/india/gold-falls-oil-driven-inflation-worries-usiran-peace-talks-falter-2026-05-11/)",
+    "TSX gains as commodity stocks rise, closes near three-week high (https://www.reuters.com/business/tsx-futures-down-after-trump-rejects-iran-proposal-2026-05-11/)",
+    "India's Modi to begin five-nation tour, including UAE, amid Middle East crisis (https://www.reuters.com/world/india/indias-modi-begin-five-nation-tour-including-uae-amid-middle-east-crisis-2026-05-11/)",
+    "Freeport says Grasberg recovery not delayed until 2028, stands by 2027 forecast (https://www.reuters.com/world/asia-pacific/freeport-says-grasberg-recovery-not-delayed-until-2028-stands-by-2027-forecast-2026-05-11/)",
+    "Morning Bid: 11 weeks and counting (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-05-11/)",
+    "Xi marks the spot (https://www.reuters.com/podcasts/reuters-morning-bid/xi-marks-spot-2026-05-11/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-11",
+      "v": 4.42,
+      "change": 0.91
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-11",
+      "v": 29320.66,
+      "change": 0.29
+    },
+    "SP500_FRED": {
+      "d": "2026-05-11",
+      "v": 7412.84,
+      "change": 0.19
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-11",
+      "v": 82.9,
+      "change": 3.19
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-11",
+      "v": 4750.515,
+      "change": 1.26
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-11",
+      "v": 1496.51,
+      "change": 0.11
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-11",
+      "v": 2078.6,
+      "change": 0.97
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-11",
+      "v": 18.38,
+      "change": 6.92
+    }
+  }
+}

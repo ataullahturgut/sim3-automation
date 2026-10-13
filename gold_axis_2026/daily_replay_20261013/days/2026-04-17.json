@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-17",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Hürmüz'ün açık olduğu açıklaması petrol/faiz/doları aşağı itti; altın yükseldi. Alım mekanizması destekleniyor; açıklama ile fiili trafik ayrımı korunuyor.",
+  "invalidation": "Geçişin yeniden engellenmesi veya anlaşmanın bozulması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold extends gains after Iran minister declares Strait of Hormuz open (https://www.reuters.com/world/india/gold-holds-steady-eyes-fourth-weekly-gain-us-iran-peace-deal-hopes-2026-04-17/)",
+    "ASIA GOLD India gold demand lacklustre as elevated prices curb festive buying (https://www.reuters.com/world/china/asia-gold-india-gold-demand-lacklustre-elevated-prices-curb-festive-buying-2026-04-17/)",
+    "Stocks romp to records, oil plunges on hopes of US-Iran peace deal (https://www.reuters.com/world/china/global-markets-wrapup-1-2026-04-17/)",
+    "Take Five: Warsh, war and worsening conditions? (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-04-17/)",
+    "Morning Bid: Investors give peace a chance (https://www.reuters.com/world/global-markets-view-usa-2026-04-17/)",
+    "Deutsche Bank expects Fed to hold rates in 2026 (https://www.reuters.com/business/deutsche-bank-expects-fed-hold-rates-2026-2026-04-17/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-17",
+      "v": 4.26,
+      "change": -1.39
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-17",
+      "v": 26672.43,
+      "change": 1.29
+    },
+    "SP500_FRED": {
+      "d": "2026-04-17",
+      "v": 7126.06,
+      "change": 1.2
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-17",
+      "v": 80.19,
+      "change": 0.97
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-17",
+      "v": 4829.115,
+      "change": 0.72
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-17",
+      "v": 1563.58,
+      "change": -0.83
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-17",
+      "v": 2100.92,
+      "change": -0.97
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-17",
+      "v": 17.48,
+      "change": -2.56
+    }
+  }
+}

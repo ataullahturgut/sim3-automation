@@ -1,0 +1,57 @@
+{
+  "date": "2026-03-23",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Enerji hedeflerine saldırının ertelenmesi faiz/petrolde rahatlama yarattı; altın büyük gün içi kaybın bir kısmını geri aldı. Kalıcı diplomasi/arz çözümü teyit edilmedi.",
+  "invalidation": "Rahatlamanın birkaç seans sürmesi ve altının satış baskısından çıkması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold trims losses as Trump postpones strikes on Iran's energy assets (https://www.reuters.com/world/india/gold-slides-over-2-middle-east-tensions-stoke-inflation-fears-2026-03-23/)",
+    "Risk-off trade keeps gold volatile as Iran war spooks investors (https://www.reuters.com/world/india/risk-off-trade-keeps-gold-volatile-iran-war-spooks-investors-2026-03-23/)",
+    "Goldman Sachs raises 2026 Brent crude average price forecast by $8 to $85 a barrel (https://www.reuters.com/business/energy/goldman-sachs-raises-2026-brent-crude-average-price-forecast-by-8-85-barrel-2026-03-23/)",
+    "Morning Bid: Ticking time bomb (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-23/)",
+    "Trump's Iran war oil shield is cracking (https://www.reuters.com/markets/commodities/trumps-iran-war-oil-shield-is-cracking-2026-03-23/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-23",
+      "v": 4.34,
+      "change": -1.14
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-23",
+      "v": 24188.59,
+      "change": 1.22
+    },
+    "SP500_FRED": {
+      "d": "2026-03-23",
+      "v": 6581,
+      "change": 1.15
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-23",
+      "v": 67.13,
+      "change": -1.21
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-23",
+      "v": 4440.915,
+      "change": -0.53
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-23",
+      "v": 1410.13,
+      "change": 0.01
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-23",
+      "v": 1849.78,
+      "change": -3.74
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-23",
+      "v": 26.15,
+      "change": -2.35
+    }
+  }
+}

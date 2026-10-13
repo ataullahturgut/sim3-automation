@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-20",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar/faiz toparlandı fakat altın önceki büyük kazancı koruyor; mali güven ve likidite kanalı nominal faizden ayrışabilir, henüz kanıtlanmış değil.",
+  "invalidation": "Bu dayanıklılığın belirgin satışla bozulması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold steadies as inflation concerns balance hopes of lower real rates (https://www.reuters.com/business/gold-hovers-near-early-june-high-lower-bond-yields-2026-08-20/)",
+    "Dollar rebounds from losses sparked by Treasury buyback plan (https://www.reuters.com/world/africa/dollar-hugs-three-month-lows-treasury-seeks-sooth-bond-market-2026-08-20/)",
+    "India's Aditya Birla Capital to enter gold loan market, targets 1,000 branches (https://www.reuters.com/world/india/indias-aditya-birla-capital-enter-gold-loan-market-target-1000-branches-3-years-2026-08-20/)",
+    "Oil settles up more than 2% after Trump threatens countries supporting Iran (https://www.reuters.com/business/energy/oil-prices-steady-investors-assess-us-iran-war-outlook-2026-08-20/)",
+    "Trading Day: Can't get no relief (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-20/)",
+    "Bessent's buyback (https://www.reuters.com/podcasts/reuters-morning-bid/bessents-buyback-2026-08-20/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-20",
+      "v": 4.69,
+      "change": 0.86
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-20",
+      "v": 29213.16,
+      "change": -0.72
+    },
+    "SP500_FRED": {
+      "d": "2026-08-20",
+      "v": 7641.16,
+      "change": -0.87
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-20",
+      "v": 4523.705,
+      "change": 0.14
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-20",
+      "v": 16.01,
+      "change": 7.52
+    }
+  }
+}

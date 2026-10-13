@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-23",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Şahin faiz beklentisi doları güçlendiriyor; altın ve teknoloji satışta. Barış haberleri bu kanalı kıramadı.",
+  "invalidation": "Dolar/faiz beklentisinde dönüş.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls as rate-hike bets boost dollar to one-year high (https://www.reuters.com/world/india/gold-steady-investors-focus-us-iran-peace-talks-2026-06-23/)",
+    "'Pure' New Zealand chases gold as record prices burnish allure (https://www.reuters.com/world/asia-pacific/pure-new-zealand-chases-gold-record-prices-burnish-allure-2026-06-23/)",
+    "Keep Calm and Carry On (https://www.reuters.com/podcasts/reuters-morning-bid/keep-calm-carry-2026-06-23/)",
+    "Dollar climbs to 13-month high on Fed hike bets, safe-haven bid (https://www.reuters.com/world/asia-pacific/dollar-firms-hawkish-fed-bets-oil-rebound-yen-near-40-year-low-2026-06-23/)",
+    "Tech selloff drags global stocks lower (https://www.reuters.com/world/asia-pacific/global-markets-global-markets-2026-06-23/)",
+    "Oil prices finish 1% lower as investors focus on Hormuz flows after peace talks (https://www.reuters.com/business/energy/oil-gains-after-selloff-awaits-progress-strait-hormuz-flows-2026-06-23/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-23",
+      "v": 4.5,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-23",
+      "v": 29347.27,
+      "change": -3.29
+    },
+    "SP500_FRED": {
+      "d": "2026-06-23",
+      "v": 7365.46,
+      "change": -1.44
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-23",
+      "v": 64.97,
+      "change": 0.85
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-23",
+      "v": 4103.898,
+      "change": -2.04
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-23",
+      "v": 1256.55,
+      "change": -0.6
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-23",
+      "v": 1672.38,
+      "change": 0.6
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-23",
+      "v": 19.49,
+      "change": 12.79
+    }
+  }
+}

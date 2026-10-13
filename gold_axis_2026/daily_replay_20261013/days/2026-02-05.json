@@ -1,0 +1,55 @@
+{
+  "date": "2026-02-05",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Hisse/kripto/metal ortak satışı ve güçlü dolar likidite kanalını öne çıkarıyor. Zayıf işgücü ve düşen tahvil faizi altını desteklemeye yetmedi; dip alımı yok.",
+  "invalidation": "Çapraz varlık satışının durması ve altının yeniden dayanıklılık göstermesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips, silver down nearly 14% on firmer dollar (https://www.reuters.com/world/india/gold-rises-over-1-geopolitical-economic-tensions-lift-precious-metals-2026-02-05/)",
+    "Silver tumbles, oil drops in commodity sell-off (https://www.reuters.com/world/china/precious-metals-oil-slide-global-tensions-ease-copper-down-2026-02-05/)",
+    "Equities sink in extended AI rout, bond yields dip, silver savaged (https://www.reuters.com/business/retail-consumer/global-markets-global-markets-2026-02-05/)",
+    "TSX falls as precious metals volatility spooks investors (https://www.reuters.com/business/commodities-drop-keeps-canadian-futures-under-pressure-2026-02-05/)",
+    "Barrick reviews Reko Diq project amid Balochistan security concerns (https://www.reuters.com/world/asia-pacific/barrick-reviews-reko-diq-project-amid-balochistan-security-concerns-2026-02-05/)",
+    "Trading Day: AI, crypto routs deepen (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-02-05/)",
+    "US dollar hits two-week high, pound slumps after BoE holds rates (https://www.reuters.com/world/asia-pacific/dollar-recovers-central-bank-decisions-loom-2026-02-05/)",
+    "Morning Bid: Selling begets selling (https://www.reuters.com/business/finance/global-markets-view-usa-2026-02-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-05",
+      "v": 4.21,
+      "change": -1.86
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-05",
+      "v": 24548.69,
+      "change": -1.38
+    },
+    "SP500_FRED": {
+      "d": "2026-02-05",
+      "v": 6798.4,
+      "change": -1.23
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-05",
+      "v": 78.71,
+      "change": -13.11
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-05",
+      "v": 4703.275,
+      "change": -6.16
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-05",
+      "v": 1738,
+      "change": -5.23
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-05",
+      "v": 2120,
+      "change": -7.14
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-18",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Hürmüz yeniden sıkı kontrol altında ve gemilere ateş bildiriliyor; son alımın arz normalleşmesi gerekçesi doğrudan bozuldu. İşlem uygulanması sonraki açık piyasaya ait.",
+  "invalidation": "Gerçek geçiş güvencesi ve piyasa teyidi.",
+  "coverage": "weekend_news_sell_pending_market",
+  "sources": [
+    "Iran tightens control of Strait of Hormuz, Trump warns against 'blackmail' (https://www.reuters.com/world/asia-pacific/trump-says-he-has-good-news-iran-no-clarity-peace-deal-2026-04-18/)",
+    "Trump, without elaborating, cites 'some pretty good news' on Iran (https://www.reuters.com/world/middle-east/trump-without-elaborating-cites-some-pretty-good-news-iran-2026-04-18/)",
+    "Hormuz gunfire, enriched uranium and chimp violence (https://www.reuters.com/podcasts/hormuz-gunfire-enriched-uranium-chimp-violence-2026-04-18/)",
+    "Brazil, Mexico, Spain pledge to send more aid to Cuba (https://www.reuters.com/world/americas/brazil-mexico-spain-pledge-send-more-aid-cuba-2026-04-18/)",
+    "US renews Russian oil waiver after pressure from countries dealing with Iran war price shocks (https://www.reuters.com/business/energy/us-extends-waiver-allowing-countries-buy-russian-oil-2026-04-18/)",
+    "Week in Review: Strait expectations (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-strait-expectations-2026-04-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-17",
+      "v": 4.26,
+      "change": -1.39
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-17",
+      "v": 26672.43,
+      "change": 1.29
+    },
+    "SP500_FRED": {
+      "d": "2026-04-17",
+      "v": 7126.06,
+      "change": 1.2
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-18",
+      "v": 80.82,
+      "change": 0.79
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-17",
+      "v": 4829.115,
+      "change": 0.72
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-18",
+      "v": 1558.01,
+      "change": -0.36
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-18",
+      "v": 2102.73,
+      "change": 0.09
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-17",
+      "v": 17.48,
+      "change": -2.56
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-24",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol ve faiz artışı altını baskılıyor; yeni toparlanma yok.",
+  "invalidation": "Baskıların tersine dönmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold at one week-low as higher oil, hawkish Fed weigh (https://www.reuters.com/world/india/gold-muted-fed-policy-tightening-prospects-weigh-2026-09-24/)",
+    "Turkey's Erdogan tells Ukraine's Zelenskiy that Black Sea attacks are inexplicable (https://www.reuters.com/world/middle-east/turkeys-erdogan-tells-ukraines-zelenskiy-that-black-sea-attacks-are-inexplicable-2026-09-24/)",
+    "Morning Bid: Bonds bomb (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-24/)",
+    "The 5% threshold (https://www.reuters.com/markets/econ-world/5-threshold-2026-09-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-24",
+      "v": 5.18,
+      "change": 1.37
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-24",
+      "v": 30478.86,
+      "change": 0.03
+    },
+    "SP500_FRED": {
+      "d": "2026-09-24",
+      "v": 7704.13,
+      "change": -0.02
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-24",
+      "v": 4270.865,
+      "change": -0.4
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-24",
+      "v": 15.67,
+      "change": 3.23
+    }
+  }
+}

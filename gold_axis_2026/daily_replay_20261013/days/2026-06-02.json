@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-02",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın yatay, yeni anlaşma veya faiz beklentisinde teyitli dönüş yok. Hisse rekorlarını altın sinyali saymıyorum.",
+  "invalidation": "Altında kalıcı toparlanma ve aktarım desteği.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold steadies with focus on Middle East developments, US economic data (https://www.reuters.com/world/india/gold-steady-amid-uncertainty-over-us-iran-peace-negotiations-2026-06-02/)",
+    "Euro fails to nab big market share from dollar despite erratic US policy, report shows (https://www.reuters.com/world/china/euro-fails-nab-big-market-share-dollar-despite-erratic-us-policy-report-shows-2026-06-02/)",
+    "Goldman Sachs expects elevated refined fuel margins through 2026 on Hormuz disruption (https://www.reuters.com/business/energy/goldman-sachs-expects-elevated-refined-fuel-margins-through-2026-hormuz-2026-06-02/)",
+    "South African rand gains on higher gold prices (https://www.reuters.com/world/africa/south-african-rand-gains-higher-gold-prices-2026-06-02/)",
+    "Trading Day: New high? Still a buy (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-02/)",
+    "IPO, therefore I am (https://www.reuters.com/podcasts/reuters-morning-bid/ipo-therefore-i-am-2026-06-02/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-02",
+      "v": 4.46,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-02",
+      "v": 30660.6,
+      "change": 0.48
+    },
+    "SP500_FRED": {
+      "d": "2026-06-02",
+      "v": 7609.78,
+      "change": 0.13
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-02",
+      "v": 75.7,
+      "change": 0.53
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-02",
+      "v": 4484.418,
+      "change": -0.02
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-02",
+      "v": 1371.8,
+      "change": 0.54
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-02",
+      "v": 1945.9,
+      "change": 0.65
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-02",
+      "v": 15.77,
+      "change": -1.74
+    }
+  }
+}

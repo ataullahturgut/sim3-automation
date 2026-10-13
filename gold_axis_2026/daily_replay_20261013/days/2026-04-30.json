@@ -1,0 +1,57 @@
+{
+  "date": "2026-04-30",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yen müdahalesi sonrası dolar ve petrol gevşedi; altın tepki verdi. Ancak Fed/enerji temel baskısı henüz çözülmedi; tek gün için yeniden alım yok.",
+  "invalidation": "Dolar/faiz rahatlamasının sürmesi ve altının kazancı koruması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold up on dollar, oil price drop; headed for second straight monthly decline (https://www.reuters.com/business/gold-rebounds-one-month-low-softer-dollar-2026-04-30/)",
+    "Inventory clean-up helps Puma beat first-quarter expectations (https://www.reuters.com/business/puma-reports-q1-operating-profit-above-expectations-2026-04-30/)",
+    "TSX posts biggest daily gain in a month, boosting April rally (https://www.reuters.com/business/tsx-futures-rise-gold-gains-easing-oil-prices-2026-04-30/)",
+    "Oil retreats after hitting four-year high on concern of US-Iran war escalation (https://www.reuters.com/business/energy/oil-retreats-after-hitting-four-year-high-concern-us-iran-war-escalation-2026-04-30/)",
+    "Powell era ends, hawks rise (https://www.reuters.com/podcasts/reuters-morning-bid/powell-era-ends-hawks-rise-2026-04-30/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-30",
+      "v": 4.4,
+      "change": -0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-30",
+      "v": 27452.12,
+      "change": 0.98
+    },
+    "SP500_FRED": {
+      "d": "2026-04-30",
+      "v": 7209.01,
+      "change": 1.02
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-30",
+      "v": 72.21,
+      "change": -1.14
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-30",
+      "v": 4629.858,
+      "change": 1.72
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-30",
+      "v": 1473.06,
+      "change": 1.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-30",
+      "v": 1901.51,
+      "change": -1.18
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-30",
+      "v": 16.89,
+      "change": -10.21
+    }
+  }
+}

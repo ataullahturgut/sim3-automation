@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-10",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Pazar altın hafif zayıf; ABD-Çin zirvesi öncesi belirsizlik var. Pazartesi kapanışlı petrol/hisse yazıları dışlandı; doğrulanmış yeni satış teyidi yok.",
+  "invalidation": "Diplomasi tıkanıklığının fiyatlarda belirginleşmesi.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Stocks edge up ahead of US-China meeting; oil rallies on US-Iran stalemate (https://www.reuters.com/business/energy/global-markets-global-markets-2026-05-10/)",
+    "Oil prices settle higher after Trump says Iran ceasefire \"on life support\" (https://www.reuters.com/business/energy/oil-jumps-us-iran-fail-reach-agreement-peace-proposal-2026-05-10/)",
+    "Week ahead: Yuan to watch (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-yuan-watch-2026-05-10/)",
+    "UK's Starmer says his government is a 10-year project despite calls to quit (https://www.reuters.com/world/uk/uks-starmer-says-his-government-is-ten-year-project-despite-calls-quit-2026-05-10/)",
+    "China's He to hold trade talks with US delegation in South Korea (https://www.reuters.com/world/china/chinas-he-hold-trade-talks-with-us-delegation-south-korea-2026-05-10/)",
+    "Hantavirus ship, Putin talks war end and Congo misinformation killings (https://www.reuters.com/podcasts/hantavirus-ship-putin-talks-war-end-congo-misinformation-killings-2026-05-10/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-08",
+      "v": 4.38,
+      "change": -0.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-08",
+      "v": 29234.99,
+      "change": 2.35
+    },
+    "SP500_FRED": {
+      "d": "2026-05-08",
+      "v": 7398.93,
+      "change": 0.84
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-10",
+      "v": 80.34,
+      "change": 0
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-10",
+      "v": 4691.345,
+      "change": -0.45
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-10",
+      "v": 1494.87,
+      "change": 0.01
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-10",
+      "v": 2058.62,
+      "change": 0.01
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-08",
+      "v": 17.19,
+      "change": 0.64
+    }
+  }
+}

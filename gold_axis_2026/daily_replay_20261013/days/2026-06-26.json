@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-26",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "PCE sonrası dolar/faiz gevşemesi ikinci gün altın ve diğer metallerde toparlanmayla teyitli. Güçlü yeni istihdam verisi bu tezi bozabilir.",
+  "invalidation": "Dolar/faiz yeniden yükselirken altının kayıplara dönmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains as dollar weakens; still on track for fourth straight weekly loss (https://www.reuters.com/business/gold-poised-fourth-weekly-loss-hawkish-fed-bets-buoy-dollar-2026-06-26/)",
+    "IMF chief economist Gourinchas says global economy remains firmly 'dollar-centered' (https://www.reuters.com/markets/us/imf-chief-economist-gourinchas-says-global-economy-remains-firmly-dollar-2026-06-26/)",
+    "TSX ends higher as gold mining shares rally (https://www.reuters.com/business/tsx-futures-slip-tech-weakness-softer-oil-2026-06-26/)",
+    "Copper soars but smelters can't bank on it to survive (https://www.reuters.com/commentary/reuters-open-interest/copper-soars-smelters-cant-bank-it-survive-2026-06-26/)",
+    "Take Five: Time to keep your cool (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-06-26/)",
+    "Morning Bid: Chipflation (https://www.reuters.com/world/china/global-markets-view-europe-2026-06-26/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-26",
+      "v": 4.38,
+      "change": -0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-26",
+      "v": 29118.24,
+      "change": -1.09
+    },
+    "SP500_FRED": {
+      "d": "2026-06-26",
+      "v": 7354.02,
+      "change": -0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-26",
+      "v": 58.15,
+      "change": 0.71
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-26",
+      "v": 4087.915,
+      "change": 1.54
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-26",
+      "v": 1199.47,
+      "change": 1.79
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-26",
+      "v": 1607.58,
+      "change": 1.19
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-26",
+      "v": 18.41,
+      "change": -2.54
+    }
+  }
+}

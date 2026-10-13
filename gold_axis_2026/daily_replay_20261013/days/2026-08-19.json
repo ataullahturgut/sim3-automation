@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-19",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Hazine geri alım genişlemesi dolar/faizi düşürdü ve altın güçlü yükseldi. Likidite operasyonunu QE saymıyorum; aktarım fiilen olumlu.",
+  "invalidation": "Operasyon etkisinin çözülmesi ve fiyat kazancının geri verilmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold surges over 3% as US Treasury announcement hurts yields, dollar (https://www.reuters.com/world/india/gold-inches-higher-focus-fed-minutes-2026-08-19/)",
+    "Global yields fall after US Treasury boosts debt buybacks (https://www.reuters.com/world/china/global-markets-global-markets-2026-08-19/)",
+    "Trading Day: Bessent makes his mark (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-19/)",
+    "Landslide at gold-mining site in Central African Republic kills over 100, mining group says (https://www.reuters.com/world/africa/landslide-gold-mining-site-central-african-republic-kills-over-100-mining-group-2026-08-19/)",
+    "A conflict on autopilot? (https://www.reuters.com/world/middle-east/conflict-autopilot-2026-08-19/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-19",
+      "v": 4.65,
+      "change": -1.27
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-19",
+      "v": 29426.02,
+      "change": -0.22
+    },
+    "SP500_FRED": {
+      "d": "2026-08-19",
+      "v": 7707.98,
+      "change": 0.21
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-19",
+      "v": 4517.545,
+      "change": 4.26
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-19",
+      "v": 14.89,
+      "change": -6
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-28",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar güçlü, altın/metaller düşüyor; nominal faiz gerilemesi yine yeterli değil.",
+  "invalidation": "Fed iletişimi ve dolar tepkisinin değişmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls as dollar hovers near one-month peak, Fed meet in focus (https://www.reuters.com/world/india/gold-slips-firm-dollar-weighs-focus-turns-fed-meeting-2026-07-28/)",
+    "Gold forecasts fall, but central bank buying expected to cushion retreat (https://www.reuters.com/world/india/gold-forecasts-fall-central-bank-buying-expected-cushion-retreat-2026-07-28/)",
+    "Oil prices fall 5% to two-week low after several days without US-Iran strikes (https://www.reuters.com/business/energy/oil-prices-fall-1-investors-weigh-pause-us-strikes-iran-2026-07-28/)",
+    "Trading Day: A show of resilience (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-07-28/)",
+    "US consumer confidence eases in July (https://www.reuters.com/business/us-consumer-confidence-eases-july-2026-07-28/)",
+    "Chip rout (https://www.reuters.com/podcasts/reuters-morning-bid/chip-rout-2026-07-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-28",
+      "v": 4.61,
+      "change": -0.86
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-28",
+      "v": 27763.13,
+      "change": -0.98
+    },
+    "SP500_FRED": {
+      "d": "2026-07-28",
+      "v": 7428.78,
+      "change": 0.21
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-28",
+      "v": 57.29,
+      "change": -3.99
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-28",
+      "v": 4017.765,
+      "change": -1.36
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-28",
+      "v": 1267.83,
+      "change": -0.38
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-28",
+      "v": 1608.57,
+      "change": -0.95
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-28",
+      "v": 18.21,
+      "change": -2.46
+    }
+  }
+}

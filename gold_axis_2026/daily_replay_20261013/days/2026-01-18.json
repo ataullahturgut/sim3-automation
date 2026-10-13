@@ -1,0 +1,53 @@
+{
+  "date": "2026-01-18",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Avrupa'ya Grönland bağlantılı tarife tehdidi yeni güven/ticaret şoku; pazar altın açılışı güçlü. Önceki sakinleşme gerekçesi bozuldu; yeniden altına geçme kararı.",
+  "invalidation": "Tarife tehdidinin geri çekilmesi ve altın kazancının çözülmesi. Pazar likiditesi nedeniyle uygulama sonraki uygun fiyatla.",
+  "coverage": "weekend_news_partial_market",
+  "sources": [
+    "Markets on edge as Trump threatens more tariffs on Europe over Greenland (https://www.reuters.com/world/asia-pacific/view-markets-edge-trump-threatens-more-tariffs-europe-over-greenland-2026-01-18/)",
+    "UK PM Starmer tells Trump tariffs on allies over Greenland are 'wrong' (https://www.reuters.com/world/europe/uk-pm-starmer-tells-trump-tariffs-allies-over-greenland-are-wrong-2026-01-18/)",
+    "Week Ahead: No business like snow business (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-no-business-like-snow-business-2026-01-18/)",
+    "Tariffs, troops and tanneries (https://www.reuters.com/podcasts/trump-tariffs-gaza-peace-board-fez-tanneries-2026-01-18/)",
+    "Greenland welcomes European response to Trump's tariffs (https://www.reuters.com/world/europe/greenland-welcomes-european-response-trumps-tariffs-2026-01-18/)",
+    "Dutch minister calls Trump's Greenland tariff threat 'blackmail' (https://www.reuters.com/world/china/dutch-minister-calls-trumps-greenland-tariff-threat-blackmail-2026-01-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-16",
+      "v": 4.24,
+      "change": 1.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-16",
+      "v": 25529.26,
+      "change": -0.07
+    },
+    "SP500_FRED": {
+      "d": "2026-01-16",
+      "v": 6940.01,
+      "change": -0.06
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 90.8,
+      "change": -0.51
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-18",
+      "v": 4672.365,
+      "change": 1.67
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 1755,
+      "change": -2.55
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-16",
+      "v": 2346,
+      "change": 0.17
+    }
+  }
+}

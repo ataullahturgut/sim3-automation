@@ -1,0 +1,56 @@
+{
+  "date": "2026-03-28",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Diplomatik toplantı hazırlığı var ama sanayi altyapısına saldırılar sürüyor. Arz riskinin çözüldüğü söylenemez.",
+  "invalidation": "Somut uzlaşma ve ilk piyasa teyidi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Week in Review: Trump tries to steady markets (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-trump-tries-steady-markets-2026-03-28/)",
+    "Pakistan to host talks with Saudi Arabia, Turkey, Egypt amid Iran war diplomacy (https://www.reuters.com/world/asia-pacific/pakistan-host-talks-with-saudi-arabia-turkey-egypt-amid-iran-war-diplomacy-2026-03-28/)",
+    "Bahrain's Alba confirms Iranian attack on its facilities (https://www.reuters.com/world/middle-east/bahrains-alba-confirms-iranian-attack-its-facilities-2026-03-28/)",
+    "Italian state finances can absorb shock due to Middle East crisis, FinMin says (https://www.reuters.com/business/italian-state-finances-can-absorb-shock-due-middle-east-crisis-finmin-says-2026-03-28/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-27",
+      "v": 4.44,
+      "change": 0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-27",
+      "v": 23132.77,
+      "change": -1.93
+    },
+    "SP500_FRED": {
+      "d": "2026-03-27",
+      "v": 6368.85,
+      "change": -1.67
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-28",
+      "v": 69.76,
+      "change": 0.66
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-27",
+      "v": 4492.375,
+      "change": 1.99
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-28",
+      "v": 1378.91,
+      "change": -0.62
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-28",
+      "v": 1863.27,
+      "change": 0.24
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-27",
+      "v": 31.05,
+      "change": 13.16
+    }
+  }
+}

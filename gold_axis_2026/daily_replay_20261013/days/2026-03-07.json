@@ -1,0 +1,51 @@
+{
+  "date": "2026-03-07",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Enerji fiyatını düşürme arayışı var ama somut arz normalleşmesi yok. Hafta sonu yeni piyasa teyidi bulunmuyor.",
+  "invalidation": "Uygulanabilir enerji önlemi ve piyasalarda enflasyon baskısının gevşemesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Week in Review: Seven days of war (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-seven-days-war-2026-03-07/)",
+    "White House seeks bolder action on energy prices amid Iran conflict (https://www.reuters.com/business/energy/white-house-seeks-bolder-action-energy-prices-amid-iran-conflict-2026-03-07/)",
+    "OpenAI hardware leader resigns after deal with Pentagon (https://www.reuters.com/business/openai-robotics-head-resigns-after-deal-with-pentagon-2026-03-07/)",
+    "Carney condemns gunfire attacks at Toronto-area synagogues (https://www.reuters.com/world/carney-condemns-gunfire-attacks-toronto-area-synagogues-2026-03-07/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-06",
+      "v": 4.15,
+      "change": 0.48
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-06",
+      "v": 24643.01,
+      "change": -1.51
+    },
+    "SP500_FRED": {
+      "d": "2026-03-06",
+      "v": 6740.02,
+      "change": -1.33
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-06",
+      "v": 5171.798,
+      "change": 1.69
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

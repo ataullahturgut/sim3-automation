@@ -1,0 +1,48 @@
+{
+  "date": "2026-01-05",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Venezuela şokundan sonra altın ve diğer metaller birlikte yükseldi; nominal tahvil faizi geriledi. Risk talebi ve faiz kanalı aynı yönde; ilk tam seans teyidi var.",
+  "invalidation": "Altının yükselişi geri vermesi, dolar/faizde karşı baskı veya jeopolitik riskin hızlı çözülmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold surges as US capture of Venezuela president spurs safe-haven demand (https://www.reuters.com/world/india/gold-surges-us-capture-venezuela-president-spurs-safe-haven-demand-2026-01-05/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-05",
+      "v": 4.17,
+      "change": -0.48
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-05",
+      "v": 25401.32,
+      "change": 0.77
+    },
+    "SP500_FRED": {
+      "d": "2026-01-05",
+      "v": 6902.05,
+      "change": 0.64
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-05",
+      "v": 75.07,
+      "change": 1.15
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-05",
+      "v": 4440.285,
+      "change": 1.55
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-05",
+      "v": 1677,
+      "change": 1.7
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-05",
+      "v": 2221,
+      "change": 4.13
+    }
+  }
+}

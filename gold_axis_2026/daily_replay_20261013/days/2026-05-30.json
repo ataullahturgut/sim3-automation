@@ -1,0 +1,51 @@
+{
+  "date": "2026-05-30",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Cumartesi tarihli güvenilir ilgili haber bulunamadı; yeni altın seansı yok. Mevcut kararı değiştirecek kanıt yok.",
+  "invalidation": "Yeni diplomasi haberi veya açılışta ters fiyatlama.",
+  "coverage": "news_search_gap_weekend",
+  "sources": [],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-29",
+      "v": 4.45,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-29",
+      "v": 30333.18,
+      "change": 0.36
+    },
+    "SP500_FRED": {
+      "d": "2026-05-29",
+      "v": 7580.06,
+      "change": 0.22
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-30",
+      "v": 75.29,
+      "change": -0.38
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-29",
+      "v": 4537.498,
+      "change": 1.04
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-30",
+      "v": 1357.03,
+      "change": -0.98
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-30",
+      "v": 1920.82,
+      "change": -0.02
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-29",
+      "v": 15.32,
+      "change": -2.67
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-30",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yumuşak PCE'ye rağmen enerji/faiz baskısı altını düşürdü; olumlu veriye zayıf tepki karşıt kanıt.",
+  "invalidation": "Dolar/faiz ve fiyatın birlikte düzelmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls despite cooler inflation data, monthly loss in sight (https://www.reuters.com/world/india/gold-track-monthly-decline-investors-brace-us-inflation-data-2026-09-30/)",
+    "Six years after a mining reboot, Egypt's gold ambitions start to take shape (https://www.reuters.com/world/africa/six-years-after-mining-reboot-egypts-gold-ambitions-start-take-shape-2026-09-30/)",
+    "Trading Day: Shrugging off a volatile September, markets shuffle into Q4 (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-2026-09-30/)",
+    "Global stocks weather third-quarter AI, bond and crude maelstrom (https://www.reuters.com/world/china/global-markets-q3-analysis-pix-2026-09-30/)",
+    "Is the US security umbrella closing? (https://www.reuters.com/world/middle-east/is-us-security-umbrella-closing-2026-09-30/)",
+    "Morning Bid: October doubts (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-30/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-30",
+      "v": 5.29,
+      "change": 0.57
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-30",
+      "v": 30408.5,
+      "change": 0.23
+    },
+    "SP500_FRED": {
+      "d": "2026-09-30",
+      "v": 7651.54,
+      "change": -0.25
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-30",
+      "v": 4153.925,
+      "change": -0.58
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-30",
+      "v": 16.34,
+      "change": 1.87
+    }
+  }
+}

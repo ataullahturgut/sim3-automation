@@ -1,0 +1,51 @@
+{
+  "date": "2026-07-11",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Cumartesi tarihli ilgili haber bulunamadı; yeni altın fiyatı yok.",
+  "invalidation": "Yeni haber ve açılış teyidi.",
+  "coverage": "news_search_gap_weekend",
+  "sources": [],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-10",
+      "v": 4.56,
+      "change": 0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-10",
+      "v": 29825.11,
+      "change": 0.33
+    },
+    "SP500_FRED": {
+      "d": "2026-07-10",
+      "v": 7575.39,
+      "change": 0.42
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-11",
+      "v": 59.84,
+      "change": -0.03
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-10",
+      "v": 4120.555,
+      "change": 0
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-11",
+      "v": 1277.44,
+      "change": 0.37
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-11",
+      "v": 1633.73,
+      "change": 0.3
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-10",
+      "v": 15.03,
+      "change": -5.11
+    }
+  }
+}

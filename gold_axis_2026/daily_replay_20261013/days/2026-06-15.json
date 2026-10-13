@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-15",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Ön anlaşma normal seansta petrol/dolar baskısını azalttı; altın ve diğer metaller toparlanmayı korudu. Nükleer ayrıntılar çözülmedi ama enerji aktarımı olumlu.",
+  "invalidation": "Uygulamanın bozulması ve altının toparlanmayı kaybetmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold drifts higher as Iran, US agree to halt war (https://www.reuters.com/world/india/gold-gains-over-1-after-us-iran-reach-peace-deal-2026-06-15/)",
+    "Singapore to establish OTC gold clearing system, introduce central bank gold-vaulting services (https://www.reuters.com/world/asia-pacific/singapore-establish-otc-gold-clearing-system-introduce-central-bank-gold-2026-06-15/)",
+    "Citi cuts Brent forecasts as U.S.-Iran MoU points to Strait of Hormuz flow normalization (https://www.reuters.com/business/citi-cuts-brent-forecasts-us-iran-mou-points-strait-hormuz-flow-normalization-2026-06-15/)",
+    "Morning Bid: 'Let the oil flow' (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-15/)",
+    "After taking Iran deal to G7 summit, Trump eyes ending Ukraine war (https://www.reuters.com/world/china/g7-leaders-meet-france-after-us-iran-declare-agreement-end-war-2026-06-15/)",
+    "Special Edition: Iran deal (https://www.reuters.com/podcasts/reuters-morning-bid/special-edition-iran-deal-2026-06-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-15",
+      "v": 4.47,
+      "change": -0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-15",
+      "v": 30543.92,
+      "change": 3.06
+    },
+    "SP500_FRED": {
+      "d": "2026-06-15",
+      "v": 7554.29,
+      "change": 1.65
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-15",
+      "v": 70.4,
+      "change": 3.5
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-15",
+      "v": 4311.458,
+      "change": 0.62
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-15",
+      "v": 1340.25,
+      "change": 4.06
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-15",
+      "v": 1777.73,
+      "change": 3.44
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-15",
+      "v": 16.2,
+      "change": -8.37
+    }
+  }
+}

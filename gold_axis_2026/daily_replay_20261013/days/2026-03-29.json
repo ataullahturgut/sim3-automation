@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-29",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran kara harekâtı uyarısı ve diplomasi yan yana; pazar fiyatı zayıf. 29 Mart URL'li pazartesi piyasa kapanışı anlatan ilk iki yazı dışlandı.",
+  "invalidation": "Gerçek uzlaşma veya belirgin fiyat-kanal değişimi.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Oil heads toward record monthly gain, equities mixed (https://www.reuters.com/world/china/global-markets-global-markets-2026-03-29/)",
+    "Brent eyes record monthly rise; US crude settles above $100 as Houthis join Iran war (https://www.reuters.com/business/energy/oil-prices-jump-after-yemeni-houthis-attack-israel-widening-iran-conflict-2026-03-29/)",
+    "Iran warns against ground attack, 'No Kings' protests and robot umpires (https://www.reuters.com/podcasts/iran-warns-against-ground-attack-no-kings-protests-robot-umpires-2026-03-29/)",
+    "US fighter jets escort plane out of no-fly zone near Trump's Mar-a-Lago resort (https://www.reuters.com/world/us/us-fighter-jets-escort-plane-out-no-fly-zone-near-trumps-mar-a-lago-resort-2026-03-29/)",
+    "Most Gulf markets ease on fears of broader Iran conflict (https://www.reuters.com/world/middle-east/most-gulf-markets-ease-fears-broader-iran-conflict-2026-03-29/)",
+    "Week Ahead: Treasury tremors (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-treasury-tremors-2026-03-29/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-27",
+      "v": 4.44,
+      "change": 0.45
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-27",
+      "v": 23132.77,
+      "change": -1.93
+    },
+    "SP500_FRED": {
+      "d": "2026-03-27",
+      "v": 6368.85,
+      "change": -1.67
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-29",
+      "v": 69.68,
+      "change": -0.11
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-29",
+      "v": 4483.998,
+      "change": -0.19
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-29",
+      "v": 1377.41,
+      "change": -0.11
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-29",
+      "v": 1862.02,
+      "change": -0.07
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-27",
+      "v": 31.05,
+      "change": 13.16
+    }
+  }
+}

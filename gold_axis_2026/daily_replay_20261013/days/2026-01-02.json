@@ -1,0 +1,49 @@
+{
+  "date": "2026-01-02",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar toparlanıyor; altın/gümüş ilk kazançlarını veriyor. Yeni yıl açılışında net devam teyidi yok; tarife/Fed başkanlığı ve istihdam belirsiz.",
+  "invalidation": "Dolar zayıflamasıyla desteklenen kalıcı metal yükselişi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Wall Street ends mixed at the top of the new year; Treasury ... (https://www.reuters.com/world/china/global-markets-global-markets-2026-01-02/)",
+    "Take Five: New Year, same FOMO (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-01-02/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-02",
+      "v": 4.19,
+      "change": 0.24
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-02",
+      "v": 25206.17,
+      "change": -0.17
+    },
+    "SP500_FRED": {
+      "d": "2026-01-02",
+      "v": 6858.47,
+      "change": 0.19
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-02",
+      "v": 74.215,
+      "change": 3.09
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-02",
+      "v": 4331.575,
+      "change": -0.37
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-02",
+      "v": 1649,
+      "change": 5.23
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-02",
+      "v": 2133,
+      "change": 5.23
+    }
+  }
+}

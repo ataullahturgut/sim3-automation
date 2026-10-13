@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-13",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar dört aylık zirvede, enflasyon baskısı ve indirim beklentisindeki erime sürüyor; altın/diğer metaller zayıf. VIX yüksek ama tek başına altın alımı demek değil.",
+  "invalidation": "Dolar/faiz baskısı azalırken altının güçlenmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips and heads for second consecutive weekly fall (https://www.reuters.com/world/india/gold-set-weekly-drop-oil-price-surge-weighs-rate-cut-hopes-2026-03-13/)",
+    "Partial flight resumptions restore some gold flows from key hub Dubai (https://www.reuters.com/world/india/partial-flight-resumptions-restore-some-gold-flows-key-hub-dubai-2026-03-13/)",
+    "Trump says US struck military targets on Iran's Kharg Island oil hub (https://www.reuters.com/world/middle-east/both-sides-dig-iran-war-approaches-two-week-mark-2026-03-13/)",
+    "Echoes of 2022? Markets look back to Russia play book for Middle East conflict (https://www.reuters.com/world/europe/global-markets-iran-2022-graphic-2026-03-13/)",
+    "Morning Bid: Crude shock (https://www.reuters.com/world/china/global-markets-view-europe-2026-03-13/)",
+    "Deja vu? (https://www.reuters.com/business/take-five/global-markets-themes-graphic-pix-2026-03-13/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-13",
+      "v": 4.28,
+      "change": 0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-13",
+      "v": 24380.73,
+      "change": -0.62
+    },
+    "SP500_FRED": {
+      "d": "2026-03-13",
+      "v": 6632.19,
+      "change": -0.61
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-13",
+      "v": 82.57,
+      "change": -3.38
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-13",
+      "v": 5018.098,
+      "change": -1.52
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-13",
+      "v": 1599.01,
+      "change": -2.51
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-13",
+      "v": 2080.28,
+      "change": -3.69
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-13",
+      "v": 27.19,
+      "change": null
+    }
+  }
+}

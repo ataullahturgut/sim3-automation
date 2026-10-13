@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-23",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Pazar altın yatay; yaptırımların ayrıntıları pazartesi güncellemeleriyle karışık, petrol kapanışı dışlandı. Fiyat bozulmadı.",
+  "invalidation": "Tam seansta güçlü dolar ve altın satışı.",
+  "coverage": "weekend_publication_time_uncertain",
+  "sources": [
+    "Gulf markets rise as oil gains lift sentiment (https://www.reuters.com/world/middle-east/gulf-markets-rise-oil-gains-lift-sentiment-2026-08-23/)",
+    "US widens sanctions on Iran but withholds more punishing options (https://www.reuters.com/business/energy/iran-says-it-discovered-over-75-trillion-cubic-feet-gas-2026-08-23/)",
+    "Oil drops more than $2 despite new US sanctions on Iran (https://www.reuters.com/world/asia-pacific/oil-falls-1-ahead-us-announcement-impose-further-sanctions-iran-2026-08-23/)",
+    "Canada retaliates, robot runners and Ebola (https://www.reuters.com/podcasts/canada-retaliates-robot-runners-ebola-2026-08-23/)",
+    "UK's Burnham to visit Ukraine with plan to support long-range missile production (https://www.reuters.com/world/uk/uks-burnham-visit-ukraine-with-plan-support-long-range-missile-production-2026-08-23/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-21",
+      "v": 4.74,
+      "change": 1.07
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-21",
+      "v": 29308.86,
+      "change": 0.33
+    },
+    "SP500_FRED": {
+      "d": "2026-08-21",
+      "v": 7674.37,
+      "change": 0.43
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-23",
+      "v": 4604.555,
+      "change": 0.05
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-21",
+      "v": 15.13,
+      "change": -5.5
+    }
+  }
+}

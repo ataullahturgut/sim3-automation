@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-27",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Siyasi tıkanıklık sürüyor, pazar altın zayıf. Pazartesi petrol sonucu dışlandı.",
+  "invalidation": "Dolar/faiz ve fiyat dönüşü.",
+  "coverage": "weekend_updated_monday_article_excluded",
+  "sources": [
+    "Oil prices settle slightly higher on supply worries as Trump rejects Iran proposal (https://www.reuters.com/business/energy/oil-rebounds-after-trump-rejects-iran-peace-deal-2026-09-27/)",
+    "Gulf bourses mixed on Iran-US standoff, while Saudi gains (https://www.reuters.com/world/middle-east/gulf-bourses-mixed-iranus-standoff-while-saudi-gains-2026-09-27/)",
+    "Trump confirms meeting with Anthropic's Amodei, repeats dismissal of AI fears (https://www.reuters.com/legal/litigation/bill-gates-joins-calls-ai-safeguards-including-legislation-2026-09-27/)",
+    "Pakistan Finance Minister's US Exim talks covered financing for Boeing aircraft, adviser says (https://www.reuters.com/world/asia-pacific/pakistan-finance-ministers-us-exim-talks-covered-financing-boeing-aircraft-2026-09-27/)",
+    "Armani unveils shimmering collection in pursuit of 'evolution' (https://www.reuters.com/lifestyle/armani-unveils-shimmering-collection-pursuit-evolution-2026-09-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-25",
+      "v": 5.17,
+      "change": -0.19
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-25",
+      "v": 30608.13,
+      "change": 0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-09-25",
+      "v": 7743.41,
+      "change": 0.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-27",
+      "v": 4258.405,
+      "change": -0.14
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-25",
+      "v": 14.87,
+      "change": -5.11
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "date": "2026-06-08",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Ateşkes umuduyla gün içi kayıp telafi edildi; güçlü istihdam sonrası faiz baskısı sürüyor. Sınırlı tepki yeterli değil.",
+  "invalidation": "Birkaç seansta toparlanma ve faiz rahatlaması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold erases losses despite strong US jobs data as ceasefire hopes emerge (https://www.reuters.com/world/india/gold-extends-losses-us-interest-rate-hike-fears-2026-06-08/)",
+    "Goldman Sachs pushes Fed rate-cut call to 2027 on strong US jobs data (https://www.reuters.com/business/goldman-sachs-pushes-fed-rate-cut-call-2027-strong-us-jobs-data-2026-06-08/)",
+    "Trading Day: Recovery, but on mute (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-08/)",
+    "Trump says Israel and Iran 'looking to do an immediate ceasefire' (https://www.reuters.com/business/finance/trump-says-israel-iran-looking-do-an-immediate-ceasefire-2026-06-08/)",
+    "Morning Bid: Blistering AI rally turns ugly (https://www.reuters.com/world/china/global-markets-view-europe-2026-06-08/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-08",
+      "v": 4.56,
+      "change": 0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-08",
+      "v": 29414.26,
+      "change": 1.58
+    },
+    "SP500_FRED": {
+      "d": "2026-06-08",
+      "v": 7405.73,
+      "change": 0.3
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-08",
+      "v": 68.21,
+      "change": 0.56
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-08",
+      "v": 4327.588,
+      "change": 0.25
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-08",
+      "v": 1239.51,
+      "change": 1.17
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-08",
+      "v": 1789.39,
+      "change": 0.8
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-08",
+      "v": 18.92,
+      "change": -12.04
+    }
+  }
+}

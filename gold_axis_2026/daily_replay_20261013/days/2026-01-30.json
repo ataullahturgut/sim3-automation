@@ -1,0 +1,57 @@
+{
+  "date": "2026-01-30",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Warsh adaylığı beklenti değişimi, güçlü dolar ve bütün metallerde sert satış birleşti; yükseliş tezi bozuldu. Günün düşüşü zaten yaşandı; bunu önceden önlediğimi iddia etmiyorum.",
+  "invalidation": "Likidasyonun sona ermesi ve dolar baskısı azalırken kalıcı metal toparlanması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold set for steepest daily drop since 1983; silver eyes worst day ever (https://www.reuters.com/world/india/gold-slips-firmer-dollar-set-best-month-since-1980-2026-01-30/)",
+    "Citi sees gold supported by risks, with some fading ... (https://www.reuters.com/business/finance/citi-sees-gold-supported-by-risks-with-some-fading-expected-later-2026-2026-01-30/)",
+    "Gold, silver and copper tumble as nervous investors ... (https://www.reuters.com/business/gold-silver-copper-tumble-nervous-investors-discover-gravity-2026-01-30/)",
+    "Gold falls below $5000/oz, but set for best month since 1999 (https://www.reuters.com/world/india/gold-falls-below-5000oz-set-best-month-since-1999-2026-01-30/)",
+    "ASIA GOLD India gold premiums at decadal high; China demand undeterred by price rise (https://www.reuters.com/world/china/asia-gold-india-gold-premiums-decadal-high-china-demand-undeterred-by-price-rise-2026-01-30/)",
+    "TSX crashes over 3% as gold, silver lose sheen (https://www.reuters.com/business/tsx-futures-fall-gold-slumps-ahead-trumps-fed-chair-decision-oil-retreats-2026-01-30/)",
+    "Our currency, your problem (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-01-30/)",
+    "Trump says he is planning to talk to Iran (https://www.reuters.com/world/middle-east/trump-says-he-is-planning-talk-iran-2026-01-30/)",
+    "Wall St Week Ahead Heavy earnings week, jobs data to test US stocks after Microsoft swoon (https://www.reuters.com/business/wall-st-week-ahead-heavy-earnings-week-jobs-data-test-us-stocks-after-microsoft-2026-01-30/)",
+    "Chair-in-waiting (https://www.reuters.com/podcasts/reuters-morning-bid/chairmaninwaiting-2026-01-30/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-30",
+      "v": 4.26,
+      "change": 0.47
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-30",
+      "v": 25552.39,
+      "change": -1.28
+    },
+    "SP500_FRED": {
+      "d": "2026-01-30",
+      "v": 6939.03,
+      "change": -0.43
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-30",
+      "v": 103.19,
+      "change": -12.88
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-30",
+      "v": 4891.195,
+      "change": -10.06
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-30",
+      "v": 1775,
+      "change": -14.5
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-30",
+      "v": 2210,
+      "change": -19.78
+    }
+  }
+}

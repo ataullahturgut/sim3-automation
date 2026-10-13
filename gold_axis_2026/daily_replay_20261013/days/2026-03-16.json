@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-16",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar/faiz/petrolde rahatlama var ama altın buna güçlü yanıt veremedi; merkez bankası haftası öncesi teyit eksik.",
+  "invalidation": "Rahatlamanın birkaç seans sürmesi ve altının belirgin güçlenmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold eases as conflict-driven inflation fears counter dollar softness (https://www.reuters.com/world/india/gold-edges-lower-higher-energy-prices-dim-ratecut-hopes-2026-03-16/)",
+    "Severe oil shock could drag S&P 500 down to 5,400, Goldman warns (https://www.reuters.com/markets/europe/severe-oil-shock-could-drag-sp-500-down-5400-goldman-warns-2026-03-16/)",
+    "Morning Bid: Central banks' straitjacket (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-16/)",
+    "Russian gold producer Polyus 2025 pre-tax profit rises 12% to $6.3 bln (https://www.reuters.com/business/russia-gold-producer-polyus-2025-pretax-profit-climbs-12-63-bln-2026-03-16/)",
+    "Trading Day: Banking on oil relief (https://www.reuters.com/business/global-markets-trading-day-graphic-2026-03-16/)",
+    "US allies rebuff Trump's request for support in Strait of Hormuz (https://www.reuters.com/business/aerospace-defense/us-allies-rebuff-trumps-request-support-strait-hormuz-2026-03-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-16",
+      "v": 4.23,
+      "change": -1.17
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-16",
+      "v": 24655.34,
+      "change": 1.13
+    },
+    "SP500_FRED": {
+      "d": "2026-03-16",
+      "v": 6699.38,
+      "change": 1.01
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-16",
+      "v": 80.11,
+      "change": -0.56
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-16",
+      "v": 5012.645,
+      "change": 0.31
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-16",
+      "v": 1577.49,
+      "change": 1.68
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-16",
+      "v": 2071.98,
+      "change": 2.45
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-16",
+      "v": 23.51,
+      "change": -13.53
+    }
+  }
+}

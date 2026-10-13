@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-23",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Güçlü PMI ve şahin mesajlarla faiz 15 baz puan arttı, dolar güçlendi ve altın toparlanmasını kaybetti.",
+  "invalidation": "Makro beklenti ve fiyat dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold loses shine as rate hike bets foster a stronger dollar (https://www.reuters.com/world/india/gold-lacklustre-higher-for-longer-rate-outlook-weighs-sentiment-2026-09-23/)",
+    "US stocks fall as 10-year Treasury yield hits highest since 2007 (https://www.reuters.com/world/china/global-markets-global-markets-2026-09-23/)",
+    "Britain's JD Sports says Nike turnaround is only a matter of time (https://www.reuters.com/business/retail-consumer/britains-jd-sports-says-nike-turnaround-is-only-matter-time-2026-09-23/)",
+    "Morning Bid: Speechifying (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-23/)",
+    "Crude hopes (https://www.reuters.com/podcasts/reuters-morning-bid/crude-hopes-2026-09-23/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-23",
+      "v": 5.11,
+      "change": 3.02
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-23",
+      "v": 30470.29,
+      "change": -0.85
+    },
+    "SP500_FRED": {
+      "d": "2026-09-23",
+      "v": 7706.03,
+      "change": -0.75
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-23",
+      "v": 4288.155,
+      "change": -1.67
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-23",
+      "v": 15.18,
+      "change": 6.83
+    }
+  }
+}

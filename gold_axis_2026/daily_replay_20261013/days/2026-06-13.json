@@ -1,0 +1,57 @@
+{
+  "date": "2026-06-13",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Pazar imza açıklaması somutlaşma yönünde; gerçekleşmeden olmuş saymıyorum. Hafta sonu altın teyidi yok.",
+  "invalidation": "İmza ve açılışta olumlu tepki.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Gold fever sends some vintage luxury watches to the melting furnace (https://www.reuters.com/business/gold-fever-sends-some-vintage-luxury-watches-melting-furnace-2026-06-13/)",
+    "Trump says Iran deal to be signed on Sunday (https://www.reuters.com/world/middle-east/trump-says-iran-deal-be-signed-sunday-2026-06-13/)",
+    "Iran peace deal, SpaceX IPO and World Cup concerns (https://www.reuters.com/podcasts/iran-peace-deal-spacex-ipo-world-cup-concerns-2026-06-13/)",
+    "US forces shoot down Iranian attack drones, source says (https://www.reuters.com/world/middle-east/us-forces-shoot-down-iranian-attack-drones-source-says-2026-06-13/)",
+    "Iran says signing of Islamabad memorandum will not take place on Sunday (https://www.reuters.com/world/middle-east/iran-says-signing-islamabad-memorandum-will-not-take-place-sunday-2026-06-13/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-12",
+      "v": 4.48,
+      "change": 0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-12",
+      "v": 29635.95,
+      "change": 0.64
+    },
+    "SP500_FRED": {
+      "d": "2026-06-12",
+      "v": 7431.46,
+      "change": 0.5
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-13",
+      "v": 68.01,
+      "change": 1.19
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-12",
+      "v": 4217.765,
+      "change": -0.59
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-13",
+      "v": 1285.31,
+      "change": 0.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-13",
+      "v": 1718.46,
+      "change": -0.34
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-12",
+      "v": 17.68,
+      "change": -9.05
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "date": "2026-03-12",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Güçlü dolar/yükselen faiz ve tanker saldırıları enerji enflasyonunu besliyor. Altın bu riske yükselişle cevap veremiyor.",
+  "invalidation": "Enerji-dolar-faiz kanalının tersine dönmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips over 1% on strong dollar, easing rate-cut bets (https://www.reuters.com/world/india/gold-steady-dipbuying-offsets-firm-dollar-us-inflation-woes-2026-03-12/)",
+    "Hungary returns seized Ukrainian bank vehicles, withholds cash and gold (https://www.reuters.com/business/finance/hungary-returns-seized-ukrainian-bank-vehicles-withholds-cash-gold-2026-03-12/)",
+    "Dollar flirts with new 2026 highs as oil price jump hurts euro (https://www.reuters.com/world/asia-pacific/us-dollar-hovers-near-2026-highs-oils-rise-spurs-hawkish-central-bank-bets-2026-03-12/)",
+    "Morning Bid: Triple digit crude (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-12/)",
+    "$100 today, $200 tomorrow? (https://www.reuters.com/podcasts/reuters-morning-bid/100-today-200-tomorrow-2026-03-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-12",
+      "v": 4.27,
+      "change": 1.43
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-12",
+      "v": 24533.58,
+      "change": -1.73
+    },
+    "SP500_FRED": {
+      "d": "2026-03-12",
+      "v": 6672.62,
+      "change": -1.52
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-12",
+      "v": 85.46,
+      "change": -1.28
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-12",
+      "v": 5095.298,
+      "change": -0.76
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-12",
+      "v": 1640.13,
+      "change": -0.62
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-12",
+      "v": 2159.93,
+      "change": -1.04
+    }
+  }
+}

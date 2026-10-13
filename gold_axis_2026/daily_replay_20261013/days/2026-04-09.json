@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-09",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar zayıflığı altını destekliyor; ateşkes/Hürmüz sorunları karşıt kanıt. Fiyat toparlanması sürdüğü için mevcut pozisyon korunuyor.",
+  "invalidation": "CPI sonrası dolar/faiz artışıyla altının yeniden düşmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains over 1%, spotlight on US-Iran ceasefire and CPI data (https://www.reuters.com/world/india/gold-steady-investors-eye-us-iran-talks-brace-inflation-data-2026-04-09/)",
+    "India March consumer inflation likely rose modestly to 3.48% despite energy shock: Reuters poll (https://www.reuters.com/world/india/india-march-consumer-inflation-likely-rose-modestly-348-despite-energy-shock-2026-04-09/)",
+    "Morning Bid: Relief rally hits pause (https://www.reuters.com/business/finance/global-markets-view-usa-2026-04-09/)",
+    "NATO's Rutte tells allies Trump wants Hormuz pledges within days, diplomats say (https://www.reuters.com/world/natos-rutte-told-allies-trump-wants-hormuz-commitments-within-days-diplomats-say-2026-04-09/)",
+    "A fragile ceasefire (https://www.reuters.com/podcasts/reuters-morning-bid/fragile-ceasefire-2026-04-09/)",
+    "Crisis point (https://www.reuters.com/world/us/crisis-point-2026-04-09/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-09",
+      "v": 4.29,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-09",
+      "v": 25082.09,
+      "change": 0.72
+    },
+    "SP500_FRED": {
+      "d": "2026-04-09",
+      "v": 6824.66,
+      "change": 0.62
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-09",
+      "v": 74.67,
+      "change": -1.69
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-09",
+      "v": 4763.838,
+      "change": 0.99
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-09",
+      "v": 1557.77,
+      "change": 0
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-09",
+      "v": 2054.03,
+      "change": 0.54
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-09",
+      "v": 19.49,
+      "change": -7.37
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-07",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yeni saldırılar ve zayıf pazar altını; toparlanma teyidi yok. Pazartesi kapanışlı piyasa yazıları dışlandı.",
+  "invalidation": "Enerji/faiz baskısının azalması.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Stocks bounce back, oil pares gains as Iran and Israel signal a pause (https://www.reuters.com/world/china/global-markets-global-markets-2026-06-07/)",
+    "Oil prices settle $1 higher after Iran and Israel say they have halted attacks (https://www.reuters.com/business/energy/oil-prices-rise-more-than-2-israel-strikes-lebanon-2026-06-07/)",
+    "Most Gulf markets end lower amid fresh US-Iran escalation (https://www.reuters.com/world/middle-east/most-gulf-markets-end-lower-amid-fresh-us-iran-escalation-2026-06-07/)",
+    "Iranian assets, Supreme Court, Armenia and the Tonys (https://www.reuters.com/podcasts/iranian-assets-supreme-court-armenia-tonys-2026-06-07/)",
+    "Israel kills nine in Gaza as Egypt hosts new ceasefire talks (https://www.reuters.com/world/middle-east/israel-kills-five-gaza-egypt-hosts-new-ceasefire-talks-2026-06-07/)",
+    "OPEC+ to make small oil output quota hike for July (https://www.reuters.com/business/energy/opec-make-small-oil-output-quota-hike-july-2026-06-07/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-05",
+      "v": 4.55,
+      "change": 1.79
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-05",
+      "v": 28957.6,
+      "change": -4.77
+    },
+    "SP500_FRED": {
+      "d": "2026-06-05",
+      "v": 7383.74,
+      "change": -2.64
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-07",
+      "v": 67.83,
+      "change": 0.03
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-07",
+      "v": 4316.698,
+      "change": -0.23
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-07",
+      "v": 1225.23,
+      "change": -0.05
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-07",
+      "v": 1775.24,
+      "change": -0.04
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-05",
+      "v": 21.51,
+      "change": 39.68
+    }
+  }
+}

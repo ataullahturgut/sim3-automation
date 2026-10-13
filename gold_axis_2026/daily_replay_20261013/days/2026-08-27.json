@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-27",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Dolar gevşemesi altını yatay tuttu; petrol riski sürüyor. Yarınki konuşma bilinmeden pozisyonu değiştirmiyorum.",
+  "invalidation": "Şahin sürpriz ve fiyat kırılması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold ticks up on weaker dollar, Warsh's Jackson Hole speech in focus (https://www.reuters.com/world/india/gold-drifts-higher-eyes-fed-chair-warshs-comments-2026-08-27/)",
+    "Thailand not planning tax on gold soon, trade group says (https://www.reuters.com/world/asia-pacific/thailand-not-planning-tax-gold-soon-trade-group-says-2026-08-27/)",
+    "Oil settles up 2% after Trump rejects return to Iran ceasefire deal terms (https://www.reuters.com/business/energy/oil-prices-extend-losses-expectations-talks-ease-middle-east-supply-woes-2026-08-27/)",
+    "South Africa's Harmony raises dividend after profit surge (https://www.reuters.com/world/africa/harmonys-annual-profit-up-87-spurred-by-record-gold-prices-2026-08-27/)",
+    "Gulf markets close mixed as investors assess U.S.-Iran diplomacy (https://www.reuters.com/world/middle-east/gulf-stocks-rise-hopes-renewed-us-iran-diplomacy-2026-08-27/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-27",
+      "v": 4.67,
+      "change": 0.21
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-27",
+      "v": 29641.56,
+      "change": 1.43
+    },
+    "SP500_FRED": {
+      "d": "2026-08-27",
+      "v": 7730.99,
+      "change": 0.72
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-27",
+      "v": 4609.115,
+      "change": 0.01
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-27",
+      "v": 14.51,
+      "change": -4.6
+    }
+  }
+}

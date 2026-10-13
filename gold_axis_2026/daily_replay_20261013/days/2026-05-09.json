@@ -1,0 +1,56 @@
+{
+  "date": "2026-05-09",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Çin tüketimi destekleyici, Ukrayna açıklamaları çelişkili ve kesin barış değil. Hafta sonu yeni çıkış gerekçesi yok.",
+  "invalidation": "Piyasa açılışında dolar/faiz baskısı ve altın zayıflığı.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "China gold production slips in first quarter, consumption rises (https://www.reuters.com/world/asia-pacific/china-gold-production-slips-first-quarter-consumption-rises-2026-05-09/)",
+    "Putin says he thinks Russia-Ukraine war is coming to an end (https://www.reuters.com/world/europe/putin-says-he-thinks-ukraine-conflict-is-coming-an-end-2026-05-09/)",
+    "Kremlin says peace in Ukraine is still a very long way off (https://www.reuters.com/world/europe/kremlin-says-peace-ukraine-is-still-very-long-way-off-2026-05-09/)",
+    "Ukrainians welcome respite from Russian attacks, Moscow says peace still far off (https://www.reuters.com/world/ukrainians-welcome-respite-russian-attacks-moscow-says-peace-still-far-off-2026-05-09/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-08",
+      "v": 4.38,
+      "change": -0.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-08",
+      "v": 29234.99,
+      "change": 2.35
+    },
+    "SP500_FRED": {
+      "d": "2026-05-08",
+      "v": 7398.93,
+      "change": 0.84
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-09",
+      "v": 80.34,
+      "change": 0.1
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-08",
+      "v": 4712.655,
+      "change": 0.58
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-09",
+      "v": 1494.73,
+      "change": -0.05
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-09",
+      "v": 2058.41,
+      "change": 0.48
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-08",
+      "v": 17.19,
+      "change": 0.64
+    }
+  }
+}

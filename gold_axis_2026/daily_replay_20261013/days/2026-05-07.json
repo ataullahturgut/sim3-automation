@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-07",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Petrol/faiz geri yükseldi ancak altın kazancını büyük ölçüde koruyor; gümüş/platin güçlü. Ertesi cuma istihdam sonucunu içeren güncellenmiş piyasa yazısı dışlandı.",
+  "invalidation": "Petrol/faiz baskısıyla belirgin metal satışı.",
+  "coverage": "updated_nextday_wrap_excluded",
+  "sources": [
+    "Gold gains as US-Iran peace hopes ease inflation concerns (https://www.reuters.com/world/india/gold-steady-markets-focus-potential-us-iran-peace-deal-2026-05-07/)",
+    "Barrick contractor to exit Mali, lay off more than 600 people, sources say (https://www.reuters.com/sustainability/barrick-contractor-exit-mali-lay-off-more-than-600-people-sources-say-2026-05-07/)",
+    "Stocks mixed, dollar down as investors digest US job growth, chipmaker strength and elevated oil (https://www.reuters.com/world/asia-pacific/global-markets-wrapup-1-2026-05-07/)",
+    "Oil jumps after renewed US-Iran fighting, then pares gains (https://www.reuters.com/business/energy/us-oil-prices-jump-us-iran-hostilities-2026-05-07/)",
+    "Trading Day: Markets draw breath (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-05-07/)",
+    "Chip stock boom (https://www.reuters.com/podcasts/reuters-morning-bid/chip-stock-boom-2026-05-07/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-07",
+      "v": 4.41,
+      "change": 1.15
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-07",
+      "v": 28563.95,
+      "change": -0.12
+    },
+    "SP500_FRED": {
+      "d": "2026-05-07",
+      "v": 7337.11,
+      "change": -0.38
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-07",
+      "v": 79.31,
+      "change": 3.67
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-07",
+      "v": 4685.358,
+      "change": -0.19
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-07",
+      "v": 1528.22,
+      "change": -0.4
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-07",
+      "v": 2061.64,
+      "change": 1.72
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-07",
+      "v": 17.08,
+      "change": -1.78
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-08",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Hürmüz açılışı için ek şartlar karşıt kanıt; istihdam kaynaklı destek henüz bozulmadı. Hafta sonu yeni fiyat yok.",
+  "invalidation": "Açılışta enerji/dolar baskısı ve altın kaybı.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Iran's Revolutionary Guard says re-opening Strait of Hormuz does not depend on talks with Oman (https://www.reuters.com/world/middle-east/irans-revolutionary-guard-says-re-opening-strait-hormuz-does-not-depend-talks-2026-08-08/)",
+    "The Week in Breakingviews: A yen for intervention (https://www.reuters.com/commentary/breakingviews/global-markets-breakingviews-2026-08-08/)",
+    "US Senate advances landmark crypto bill before heading on August recess (https://www.reuters.com/legal/government/us-senate-advances-landmark-crypto-bill-before-heading-august-recess-2026-08-08/)",
+    "Berkshire says operating profit rises, conducts stock buybacks (https://www.reuters.com/business/finance/urgent-berkshire-says-operating-profit-rises-conducts-stock-buybacks-2026-08-08/)",
+    "Todd Blanche, Lisa Cook, Typhoon Dolphin and pet tarot (https://www.reuters.com/podcasts/todd-blanche-lisa-cook-typhoon-dolphin-pet-tarot-2026-08-08/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-07",
+      "v": 4.65,
+      "change": -0.85
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-07",
+      "v": 29722.3,
+      "change": 1.19
+    },
+    "SP500_FRED": {
+      "d": "2026-08-07",
+      "v": 7757.64,
+      "change": 0.62
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-07",
+      "v": 4340.395,
+      "change": 2.36
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-07",
+      "v": 14.9,
+      "change": -1.65
+    }
+  }
+}

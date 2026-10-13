@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-26",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Ateşkes iyimserliği zayıfladı; dolar/petrol/faiz ve metal satışı yeniden aynı yönde. Ortak risk azaltma baskısı sürüyor.",
+  "invalidation": "Güvenilir anlaşma ve finansal baskının gevşemesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls as markets assess prospects of Iran ceasefire (https://www.reuters.com/world/india/gold-steady-markets-assess-mideast-ceasefire-talks-2026-03-26/)",
+    "Why gold and defense stocks sold off as war broke out (https://www.reuters.com/markets/commodities/why-gold-defense-stocks-sold-off-war-broke-out-2026-03-26/)",
+    "Morning Bid: Reality check (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-26/)",
+    "Trump signature to appear on US currency, ending 165-year tradition (https://www.reuters.com/world/us/trumps-signature-appear-us-currency-treasury-says-ending-165-year-tradition-2026-03-26/)",
+    "Oil's new normal (https://www.reuters.com/podcasts/reuters-morning-bid/morning-bid-2026-03-26/)",
+    "Where's the door? (https://www.reuters.com/world/us/wheres-the-door-2026-03-26/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-26",
+      "v": 4.42,
+      "change": 2.08
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-26",
+      "v": 23586.99,
+      "change": -2.38
+    },
+    "SP500_FRED": {
+      "d": "2026-03-26",
+      "v": 6477.16,
+      "change": -1.74
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-26",
+      "v": 69.16,
+      "change": -4.9
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-26",
+      "v": 4404.665,
+      "change": -2.07
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-26",
+      "v": 1382.91,
+      "change": -4.17
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-26",
+      "v": 1867.36,
+      "change": -4.16
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-26",
+      "v": 27.44,
+      "change": 8.33
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-03-14",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Ateşkes girişimleri reddediliyor; Hürmüz güvenliği çözümsüz. Enerji baskısının yakın çözümü için kanıt yok, hafta sonu yeni emir yok.",
+  "invalidation": "Güvenilir ateşkes/arz normalleşmesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Trump rejects efforts to launch Iran ceasefire talks, sources say (https://www.reuters.com/world/middle-east/trump-rejects-efforts-launch-iran-ceasefire-talks-sources-say-2026-03-14/)",
+    "Trump urges other nations to help secure shipping through Strait of Hormuz (https://www.reuters.com/world/asia-pacific/trump-says-many-countries-will-send-warships-keep-strait-hormuz-open-2026-03-14/)",
+    "Week in Review: A bad time to be a forecaster (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-bad-time-be-forecaster-2026-03-14/)",
+    "Iran vows retaliation, Russia-Ukraine, Oscars and ant-smuggling (https://www.reuters.com/podcasts/iran-vows-retaliation-russia-ukraine-oscars-ant-smuggling-2026-03-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-13",
+      "v": 4.28,
+      "change": 0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-13",
+      "v": 24380.73,
+      "change": -0.62
+    },
+    "SP500_FRED": {
+      "d": "2026-03-13",
+      "v": 6632.19,
+      "change": -0.61
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-14",
+      "v": 80.6,
+      "change": -2.39
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-13",
+      "v": 5018.098,
+      "change": -1.52
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-14",
+      "v": 1552.67,
+      "change": -2.9
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-14",
+      "v": 2023.48,
+      "change": -2.73
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-13",
+      "v": 27.19,
+      "change": null
+    }
+  }
+}

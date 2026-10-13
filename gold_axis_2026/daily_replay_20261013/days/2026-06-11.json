@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-11",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Saldırının iptaliyle güçlü tepki ve faiz düşüşü var; önceki çöküş sonrası ilk tepkiyi yakalayamadım, devam teyidi bekliyorum.",
+  "invalidation": "Anlaşma somutlaşması ve kazancın korunması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises 2% as Trump canceling Iran strikes eases inflation fears (https://www.reuters.com/world/india/gold-hits-over-6-month-low-rate-hike-concerns-amid-mideast-conflict-2026-06-11/)",
+    "Singapore bank DBS to offer tokenised physical gold to retail customers (https://www.reuters.com/world/asia-pacific/singapore-bank-dbs-offer-tokenised-physical-gold-retail-customers-2026-06-11/)",
+    "Wall Street indexes jump, Trump says strikes against Iran canceled (https://www.reuters.com/business/wall-st-futures-rise-tech-buying-middle-east-peace-hopes-2026-06-11/)",
+    "Trump says US will hit Iran 'very hard,' take control of energy infrastructure (https://www.reuters.com/world/middle-east/trump-says-us-will-hit-iran-very-hard-2026-06-11/)",
+    "Trading Day: Peace beckons ... again (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-11/)",
+    "Hike and seek (https://www.reuters.com/podcasts/reuters-morning-bid/hike-seek-2026-06-11/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-11",
+      "v": 4.45,
+      "change": -2.2
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-11",
+      "v": 29446.18,
+      "change": 3.29
+    },
+    "SP500_FRED": {
+      "d": "2026-06-11",
+      "v": 7394.3,
+      "change": 1.75
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-11",
+      "v": 63.43,
+      "change": -1.32
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-11",
+      "v": 4242.838,
+      "change": 4.87
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-11",
+      "v": 1236.58,
+      "change": 1.2
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-11",
+      "v": 1666.02,
+      "change": -0.66
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-11",
+      "v": 19.44,
+      "change": -12.51
+    }
+  }
+}

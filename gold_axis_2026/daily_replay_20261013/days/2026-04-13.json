@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-13",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Abluka riski sürerken altın açılış kaybını toparladı; piyasa hâlâ uzlaşma ihtimalini fiyatlıyor. Somut yeni anlaşma yok, tek günle geri dönmüyorum.",
+  "invalidation": "Toparlanmanın sürmesi ve enerji/dolar baskısının azalması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slips as dollar firms, US-Iran peace talks falter (https://www.reuters.com/world/india/gold-falls-stronger-dollar-fading-fed-rate-cut-hopes-2026-04-13/)",
+    "Venezuela hopes to lure back international miners, but it's a risky business (https://www.reuters.com/world/americas/venezuela-hopes-lure-back-international-miners-its-risky-business-2026-04-13/)",
+    "The commodities supercycle is here. How might investors participate? (https://www.reuters.com/markets/commodities/commodities-supercycle-is-here-how-might-investors-participate-2026-04-13/)",
+    "Morning Bid: Blockade takes its toll (https://www.reuters.com/business/finance/global-markets-view-usa-2026-04-13/)",
+    "ECB rate rise will depend on effects of oil price surge, De Guindos says (https://www.reuters.com/business/finance/ecbs-de-guindos-says-rate-hikes-will-depend-iran-wars-secondary-effects-2026-04-13/)",
+    "Blockade and a hard place? (https://www.reuters.com/podcasts/reuters-morning-bid/blockade-hard-place-2026-04-13/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-13",
+      "v": 4.3,
+      "change": -0.23
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-13",
+      "v": 25383.72,
+      "change": 1.06
+    },
+    "SP500_FRED": {
+      "d": "2026-04-13",
+      "v": 6886.24,
+      "change": 1.02
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-13",
+      "v": 74.64,
+      "change": -1.47
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-13",
+      "v": 4757.468,
+      "change": 2.13
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-13",
+      "v": 1545.59,
+      "change": 1.51
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-13",
+      "v": 2047.7,
+      "change": 0.13
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-13",
+      "v": 19.12,
+      "change": -0.57
+    }
+  }
+}

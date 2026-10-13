@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-15",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "On yıllık faiz 12 baz puan arttı; dolar baskısı ve ortak metal satışı belirgin. Hindistan talep bozulması ek karşıt kanıt.",
+  "invalidation": "Faiz/dolar dönüşü ve satışın durulması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold at over one-week low as dollar, yields climb, Middle East tensions stoke inflation (https://www.reuters.com/business/gold-heads-weekly-loss-oil-driven-inflation-fears-markets-eye-trump-xi-talks-2026-05-15/)",
+    "Asia Gold: India discounts soar to record high on import duty hike; China premiums firm (https://www.reuters.com/world/china/asia-gold-india-discounts-soar-record-high-import-duty-hike-china-premiums-firm-2026-05-15/)",
+    "Oil prices climb more than 3% on fears of new US-Iran combat (https://www.reuters.com/world/middle-east/oil-rises-fears-ship-attacks-seizures-persist-2026-05-15/)",
+    "A barrel of uncertainty (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-05-15/)",
+    "Trump leaves China, big tech deflects, Adani and Starmer (https://www.reuters.com/podcasts/trump-leaves-china-sesame-street-smokescreen-adani-starmer-2026-05-15/)",
+    "UK stocks drop as Burnham challenge and rising oil frazzle nerves (https://www.reuters.com/world/uk/uk-shares-slide-burnham-leadership-threat-oil-prices-unsettle-investors-2026-05-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-05-15",
+      "v": 4.59,
+      "change": 2.68
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-05-15",
+      "v": 29125.2,
+      "change": -1.54
+    },
+    "SP500_FRED": {
+      "d": "2026-05-15",
+      "v": 7408.5,
+      "change": -1.24
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-15",
+      "v": 83.47,
+      "change": -2.78
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-05-15",
+      "v": 4538.898,
+      "change": -2.64
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-15",
+      "v": 1444.85,
+      "change": -1.85
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-05-15",
+      "v": 2064.06,
+      "change": -1.76
+    },
+    "VIX_CBOE": {
+      "d": "2026-05-15",
+      "v": 18.43,
+      "change": 6.78
+    }
+  }
+}

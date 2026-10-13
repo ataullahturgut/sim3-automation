@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-10",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Çekirdek enflasyon aylık yavaşlasa da savaş/enerji ve faiz beklentisi baskın; altın ve teknoloji sert satılıyor. Tek olumlu veriyle dip alımı yok.",
+  "invalidation": "Satışın durulması ve haberin fiyatla teyidi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold slides 3% as Middle East escalation fuels inflation, rate-hike concerns (https://www.reuters.com/world/india/gold-drops-oil-climbs-renewed-us-iran-hostilities-2026-06-10/)",
+    "Indian gold falls below pre-duty-hike levels as overseas prices drop (https://www.reuters.com/world/india/indian-gold-falls-below-pre-duty-hike-levels-overseas-prices-drop-2026-06-10/)",
+    "Elliott raises heat on Australia's Northern Star for board overhaul, sales (https://www.reuters.com/business/elliott-calls-australias-northern-star-take-measures-restore-shareholder-value-2026-06-10/)",
+    "Iran war drags India MF equity flows to annual low; gold ETFs see record outflows (https://www.reuters.com/world/india/india-equity-mutual-fund-inflows-slip-one-year-low-may-amid-iran-war-jitters-2026-06-10/)",
+    "AI boom sparks rally, frenzy and fear (https://www.reuters.com/data/ai-boom-sparks-rally-frenzy-fear-2026-06-10/)",
+    "Trading Day: Sizzling AI now fizzling (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-10/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-10",
+      "v": 4.55,
+      "change": 0.44
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-10",
+      "v": 28508.03,
+      "change": -1.98
+    },
+    "SP500_FRED": {
+      "d": "2026-06-10",
+      "v": 7266.99,
+      "change": -1.62
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-10",
+      "v": 64.28,
+      "change": -4.19
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-10",
+      "v": 4045.748,
+      "change": -4.51
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-10",
+      "v": 1221.94,
+      "change": -0.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-10",
+      "v": 1677.02,
+      "change": -3.95
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-10",
+      "v": 22.22,
+      "change": 11.83
+    }
+  }
+}

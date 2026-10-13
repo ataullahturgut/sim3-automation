@@ -1,0 +1,58 @@
+{
+  "date": "2026-03-30",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın iki seanstır toparlanıyor ve faiz geriledi; olumlu değişim. Ancak petrol yüksek, dolar güçlü ve likidite bozulmuş. Yeni pozisyon için destek daha net olmalı.",
+  "invalidation": "Altın toparlanmasına dolar/enerji gevşemesinin eşlik etmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains for second straight session, yet set for monthly fall (https://www.reuters.com/world/india/gold-falls-houthi-attack-lifts-oil-fed-rate-cut-hopes-dim-2026-03-30/)",
+    "Iran war volatility strains trading in world's biggest markets (https://www.reuters.com/business/finance/global-markets-trading-analysis-pix-2026-03-30/)",
+    "Turkey's Simsek, central bank chief to meet investors in London amid Iran war (https://www.reuters.com/world/middle-east/turkeys-simsek-central-bank-chief-meet-investors-london-amid-iran-war-2026-03-30/)",
+    "Morning Bid: Crude escalation (https://www.reuters.com/business/finance/global-markets-view-usa-2026-03-30/)",
+    "Morgan Stanley downgrades global equities; sees US as 'defensive' market amid Mideast conflict (https://www.reuters.com/business/morgan-stanley-downgrades-global-equities-sees-us-defensive-market-amid-mideast-2026-03-30/)",
+    "Fuel on the fire (https://www.reuters.com/podcasts/reuters-morning-bid/fuel-fire-2026-03-30/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-30",
+      "v": 4.35,
+      "change": -2.03
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-30",
+      "v": 22953.38,
+      "change": -0.78
+    },
+    "SP500_FRED": {
+      "d": "2026-03-30",
+      "v": 6343.72,
+      "change": -0.39
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-30",
+      "v": 70.24,
+      "change": 0.8
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-30",
+      "v": 4510.148,
+      "change": 0.58
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-30",
+      "v": 1414.44,
+      "change": 2.69
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-30",
+      "v": 1900.89,
+      "change": 2.09
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-30",
+      "v": 30.61,
+      "change": -1.42
+    }
+  }
+}

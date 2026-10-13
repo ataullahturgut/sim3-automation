@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-12",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Görüşmeler başarısız; abluka açıklaması ve pazar dolar yükselişi ateşkes alımını bozuyor. Altın açılışı düşüyor; satış kararı. Pazartesi kapanışlı yazılar kullanılmadı.",
+  "invalidation": "Yeni uzlaşma ve dolar/enerji baskısının gevşemesi.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "Wall Street rallies, oil stays higher as investors hope for US-Iran resolution (https://www.reuters.com/world/china/global-markets-wrapup-1-2026-04-12/)",
+    "Oil prices jump 4% on US blockade of Iran after talks break down (https://www.reuters.com/business/energy/oil-bounces-back-above-100-after-us-iran-talks-end-stalemate-2026-04-12/)",
+    "Dollar jumps as failed US/Iran peace talks spark fresh safe-haven push (https://www.reuters.com/business/global-markets-dollar-urgent-2026-04-12/)",
+    "Week ahead: Markets look for reassurance (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-markets-look-reassurance-2026-04-12/)",
+    "Australia and US boost support for critical minerals with $3.5 billion (https://www.reuters.com/world/china/australia-us-boost-support-critical-minerals-with-35-billion-2026-04-12/)",
+    "Israel's Ben-Gvir visits flashpoint Al-Aqsa Mosque compound (https://www.reuters.com/world/middle-east/israels-ben-gvir-visits-flashpoint-al-aqsa-mosque-compound-2026-04-12/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-10",
+      "v": 4.31,
+      "change": 0.47
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-10",
+      "v": 25116.34,
+      "change": 0.14
+    },
+    "SP500_FRED": {
+      "d": "2026-04-10",
+      "v": 6816.89,
+      "change": -0.11
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-12",
+      "v": 75.75,
+      "change": -0.25
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-12",
+      "v": 4658.398,
+      "change": -1.87
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-12",
+      "v": 1522.58,
+      "change": -0.1
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-12",
+      "v": 2045.06,
+      "change": -0.08
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-10",
+      "v": 19.23,
+      "change": -1.33
+    }
+  }
+}

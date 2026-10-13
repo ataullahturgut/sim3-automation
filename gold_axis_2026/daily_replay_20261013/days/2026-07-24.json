@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-24",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol biraz gevşedi fakat altın yatay, diğer metaller zayıf ve Fed öncesi belirsizlik yüksek.",
+  "invalidation": "Kalıcı politika/fiyat iyileşmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold edges up as Brent eases, Mideast developments in focus ahead of Fed meet (https://www.reuters.com/business/gold-softens-prospects-fed-rate-hikes-brent-tops-100-2026-07-24/)",
+    "ASIA GOLD India gold discounts hit seven-week high as demand weakens; China buying improves (https://www.reuters.com/world/china/asia-gold-india-gold-discounts-hit-seven-week-high-demand-weakens-china-buying-2026-07-24/)",
+    "US hits network of Iranian financier Zanjani with more sanctions (https://www.reuters.com/world/middle-east/us-hits-network-iranian-financier-zanjani-with-more-sanctions-2026-07-24/)",
+    "Mali's gold output seen staying below 60 tons through 2029, ministry plan shows (https://www.reuters.com/world/africa/malis-gold-output-seen-staying-below-60-tons-through-2029-ministry-plan-shows-2026-07-24/)",
+    "A crude summer (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-07-24/)",
+    "Trump's tariff wall (https://www.reuters.com/podcasts/reuters-morning-bid/trumps-tariff-wall-2026-07-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-24",
+      "v": 4.69,
+      "change": -0.42
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-24",
+      "v": 28128.34,
+      "change": -1.15
+    },
+    "SP500_FRED": {
+      "d": "2026-07-24",
+      "v": 7411.98,
+      "change": 0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-24",
+      "v": 58.09,
+      "change": -1.38
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-24",
+      "v": 4049.125,
+      "change": 0.01
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-24",
+      "v": 1248.06,
+      "change": -2.62
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-24",
+      "v": 1595.65,
+      "change": -2.32
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-24",
+      "v": 18.58,
+      "change": -0.64
+    }
+  }
+}

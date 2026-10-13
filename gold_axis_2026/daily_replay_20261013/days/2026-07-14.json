@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-14",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Yumuşak CPI dolar/faizi düşürüp altını toparladı; enerji gerilimi sürüyor ve ilk tepki. Devam bekliyorum.",
+  "invalidation": "İkinci veri/seansta rahatlamanın korunması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains over 2% after soft US inflation data (https://www.reuters.com/world/india/gold-recovers-two-week-low-ahead-us-inflation-figures-2026-07-14/)",
+    "Goldman Sachs profit tops estimates on trading boom, corporate deal spree (https://www.reuters.com/legal/transactional/goldmans-profit-jumps-trading-surge-corporate-deal-spree-2026-07-14/)",
+    "Ghana's 2026 artisanal gold output likely to surpass record 2025 level, Gold Board says (https://www.reuters.com/world/africa/ghanas-2026-artisanal-gold-output-likely-surpass-record-2025-level-gold-board-2026-07-14/)",
+    "US derivatives regulator blocks Kalshi from canceling Michigan trades despite court order (https://www.reuters.com/legal/government/us-derivatives-regulator-blocks-kalshi-canceling-michigan-trades-despite-court-2026-07-14/)",
+    "Spot Mideast crude prices strengthen after Iran attacks UAE tankers (https://www.reuters.com/business/energy/spot-mideast-crude-prices-strengthen-after-iran-attacks-uae-tankers-2026-07-14/)",
+    "Morning Bid: Oil boils (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-07-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-14",
+      "v": 4.58,
+      "change": -0.87
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-14",
+      "v": 29586.29,
+      "change": 1.1
+    },
+    "SP500_FRED": {
+      "d": "2026-07-14",
+      "v": 7543.59,
+      "change": 0.38
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-14",
+      "v": 58.29,
+      "change": 0.26
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-14",
+      "v": 4044.285,
+      "change": 1.1
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-14",
+      "v": 1280.98,
+      "change": 1.83
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-14",
+      "v": 1621.79,
+      "change": 0.47
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-14",
+      "v": 16.5,
+      "change": -3.85
+    }
+  }
+}

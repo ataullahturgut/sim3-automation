@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-19",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Pazar altın açılışı zayıf; Hindistan fiziki talebi yüksek fiyat nedeniyle sınırlı. Pazartesi sonuçlarıyla güncellenmiş dolar/petrol yazıları dışlandı.",
+  "invalidation": "Hürmüz'de somut çözüm ve destekleyici piyasa tepkisi.",
+  "coverage": "weekend_updated_monday_articles_excluded",
+  "sources": [
+    "India's gold-buying festival sees tepid demand on price surge (https://www.reuters.com/world/asia-pacific/indias-gold-buying-festival-sees-tepid-demand-price-surge-2026-04-19/)",
+    "US dollar drops as traders remain optimistic on Iran peace breakthrough (https://www.reuters.com/world/asia-pacific/dollar-rebounds-middle-east-tensions-reignite-hormuz-closed-2026-04-19/)",
+    "Oil prices rise 6% on fears of US-Iran ceasefire collapse (https://www.reuters.com/business/energy/oil-prices-rebound-7-strait-hormuz-is-closed-again-2026-04-19/)",
+    "Week Ahead: Back to business (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-back-business-2026-04-19/)",
+    "Lukashenko says meeting with Trump possible once 'big deal' is ready (https://www.reuters.com/world/lukashenko-says-meeting-with-trump-possible-once-big-deal-is-ready-2026-04-19/)",
+    "South Korea, U.S. agree that Korean won's excessive volatility not desirable (https://www.reuters.com/world/asia-pacific/south-korea-us-agree-that-korean-wons-excessive-volatility-not-desirable-2026-04-19/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-17",
+      "v": 4.26,
+      "change": -1.39
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-17",
+      "v": 26672.43,
+      "change": 1.29
+    },
+    "SP500_FRED": {
+      "d": "2026-04-17",
+      "v": 7126.06,
+      "change": 1.2
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-19",
+      "v": 80.73,
+      "change": -0.11
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-19",
+      "v": 4778.698,
+      "change": -1.04
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-19",
+      "v": 1559.22,
+      "change": 0.08
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-19",
+      "v": 2100,
+      "change": -0.13
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-17",
+      "v": 17.48,
+      "change": -2.56
+    }
+  }
+}

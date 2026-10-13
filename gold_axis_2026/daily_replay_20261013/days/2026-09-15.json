@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-15",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "On yıllık faiz yüzde 5, dolar ve petrol baskısı sürüyor; Fed kararını önceden gerçekleşmiş saymıyorum.",
+  "invalidation": "Karar sonrası aktarımın değişmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Pictures of the Day | September 15, 2026 (https://www.reuters.com/jp/pictures/pictures-day-september-15-2026-2026-09-15/)",
+    "Gold edges down as oil-driven inflation fears lift rate-hike bets (https://www.reuters.com/world/india/gold-holds-ground-investors-await-fed-policy-cues-2026-09-15/)",
+    "India's August goods trade deficit narrows as gold imports plunge (https://www.reuters.com/world/india/indias-august-merchandise-trade-deficit-2686-billion-2026-09-15/)",
+    "Most Gulf bourses in red on Houthi attack and Hormuz shipping slump (https://www.reuters.com/world/middle-east/most-gulf-stocks-red-houthi-attack-hormuz-shipping-slump-2026-09-15/)",
+    "Trading Day: No hiding place (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-09-15/)",
+    "Some physical oil cargoes top $130 a barrel, nearing April's record, on Saudi disruptions (https://www.reuters.com/business/energy/some-physical-oil-cargoes-top-130-barrel-nearing-aprils-record-saudi-disruptions-2026-09-15/)",
+    "Bessent's big test (https://www.reuters.com/podcasts/reuters-morning-bid/bessents-big-test-2026-09-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-15",
+      "v": 5,
+      "change": 0.6
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-15",
+      "v": 28937.84,
+      "change": -0.65
+    },
+    "SP500_FRED": {
+      "d": "2026-09-15",
+      "v": 7585.73,
+      "change": -0.45
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-15",
+      "v": 4287.575,
+      "change": -0.18
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-15",
+      "v": 17.2,
+      "change": 0.58
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-13",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Olumlu enflasyon/faiz ortamına rağmen kâr satışı var; önceki kazanımlar korunuyor, rezerv talebi haberleri destekleyici fakat gecikmeli.",
+  "invalidation": "Olumlu habere rağmen satışın ikinci seans sürmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold retreats on profit-taking after hitting two-month peak following inflation data (https://www.reuters.com/world/india/gold-pauses-after-tame-us-inflation-fuels-rally-over-two-month-peak-2026-08-13/)",
+    "Central banks spearhead renewed gold rush (https://www.reuters.com/commentary/reuters-open-interest/central-banks-spearhead-renewed-gold-rush-2026-08-13/)",
+    "Trading Day: Hiking pressure eases (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-08-13/)",
+    "Gulf markets mixed as US-Iran tensions, Hormuz disruption weigh (https://www.reuters.com/world/middle-east/gulf-markets-ease-us-iran-tensions-hormuz-disruption-weigh-2026-08-13/)",
+    "Oil settles down 2% on weak demand outlook, hefty US crude build (https://www.reuters.com/business/energy/oil-drops-lower-demand-forecasts-despite-deadlock-us-iran-talks-2026-08-13/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-13",
+      "v": 4.63,
+      "change": -1.07
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-13",
+      "v": 30084.5,
+      "change": 1.15
+    },
+    "SP500_FRED": {
+      "d": "2026-08-13",
+      "v": 7798.99,
+      "change": 0.65
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-13",
+      "v": 4353.645,
+      "change": -1.08
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-13",
+      "v": 14.63,
+      "change": 0.55
+    }
+  }
+}

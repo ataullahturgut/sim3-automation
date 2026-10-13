@@ -1,0 +1,57 @@
+{
+  "date": "2026-01-21",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Grönland için çerçeve anlaşma ve tarife geri adımı, yeniden alımın tetikleyicisini zayıflattı. Altın gün içi zirveden geri geldi; hisseler toparlandı. Haber değişince nakde dönüyorum.",
+  "invalidation": "Altının risk azalmasına rağmen yeni zirvelerle güçlenmesi; erken çıkış ihtimali var.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Spot gold crosses $4800/oz for the first time (https://www.reuters.com/world/india/spot-gold-crosses-4800oz-first-time-2026-01-21/)",
+    "Stocks shaken by geopolitical fears, Japanese bonds bounce after selloff (https://www.reuters.com/world/china/global-markets-wrapup-1-pix-2026-01-21/)",
+    "Trading Day: Relief on Greenland deal hopes (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-01-21/)",
+    "Gold zooms past $4,800 as Greenland tensions simmer (https://www.reuters.com/world/india/gold-crosses-4800-first-time-us-eu-spar-over-greenland-2026-01-21/)",
+    "US policy factors 'critical' to extent of de-dollarisation shift, Morgan Stanley says (https://www.reuters.com/business/us-policy-factors-critical-extent-de-dollarisation-shift-morgan-stanley-says-2026-01-21/)",
+    "Morning Bid: Trump lands, markets wait (https://www.reuters.com/business/finance/global-markets-view-usa-2026-01-21/)",
+    "Treasury jolt may be Trump's kryptonite (https://www.reuters.com/markets/us/treasury-jolt-may-be-trumps-kryptonite-2026-01-21/)",
+    "Curve your enthusiasm (https://www.reuters.com/podcasts/reuters-morning-bid/names-bonds-lame-bonds-2026-01-21/)",
+    "Energy shares lift TSX as geopolitical risk recedes (https://www.reuters.com/business/tsx-futures-gain-geopolitical-risks-fan-precious-metals-rally-2026-01-21/)",
+    "Thailand to introduce gold trade cap to curb baht rise ... (https://www.reuters.com/world/asia-pacific/thailand-introduce-gold-trade-cap-curb-baht-rise-central-bank-chief-says-2026-01-21/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-01-21",
+      "v": 4.26,
+      "change": -0.93
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-01-21",
+      "v": 25326.58,
+      "change": 1.36
+    },
+    "SP500_FRED": {
+      "d": "2026-01-21",
+      "v": 6875.62,
+      "change": 1.16
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-21",
+      "v": 94.855,
+      "change": -0.88
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-01-21",
+      "v": 4777.915,
+      "change": 0.05
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-21",
+      "v": 1867,
+      "change": 0.48
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-01-21",
+      "v": 2462,
+      "change": 2.71
+    }
+  }
+}

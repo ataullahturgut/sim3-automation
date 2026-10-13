@@ -1,0 +1,58 @@
+{
+  "date": "2026-06-16",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Petrol/faiz gevşemesi ve altının devamı alım tezini destekliyor; teknoloji zayıflığı altına taşınmadı.",
+  "invalidation": "Fed iletişimiyle dolar/faiz tersine dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises over 1% as US-Iran peace deal optimism eases rate hike bets (https://www.reuters.com/world/india/gold-steady-investors-await-details-us-iran-peace-deal-2026-06-16/)",
+    "More central banks signal plans to increase gold holdings, WGC survey shows (https://www.reuters.com/markets/asia/more-central-banks-signal-plans-increase-gold-holdings-wgc-survey-shows-2026-06-16/)",
+    "Gold miners help lift TSX to another record high (https://www.reuters.com/business/tsx-futures-climb-investors-weigh-us-iran-deal-2026-06-16/)",
+    "Trading Day: US stocks mixed, oil slides, SpaceX continues its ascent (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-2026-06-16/)",
+    "Oil prices tumble again on US-Iran deal; S&P 500 falls (https://www.reuters.com/world/china/global-markets-wrapup-1pix-2026-06-16/)",
+    "Anti-capitalist protests at the G7 summit (https://www.reuters.com/sustainability/anti-capitalist-protests-g7-summit-2026-06-16/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-16",
+      "v": 4.43,
+      "change": -0.89
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-16",
+      "v": 29968.13,
+      "change": -1.89
+    },
+    "SP500_FRED": {
+      "d": "2026-06-16",
+      "v": 7511.35,
+      "change": -0.57
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-16",
+      "v": 70.03,
+      "change": -0.53
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-16",
+      "v": 4334.885,
+      "change": 0.54
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-16",
+      "v": 1349.97,
+      "change": 0.73
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-16",
+      "v": 1791.42,
+      "change": 0.77
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-16",
+      "v": 16.41,
+      "change": 1.3
+    }
+  }
+}

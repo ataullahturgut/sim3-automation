@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-02",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Zayıf resmi istihdam faiz artışı beklentisini azalttı; dolar düştü, altın ve metaller ikinci gün toparlandı. Nominal uzun faiz ters kanıt olarak not edildi.",
+  "invalidation": "Dolar/faiz beklentisinin tekrar sertleşmesi ve fiyat kaybı.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains more than 2% after weak US payrolls report (https://www.reuters.com/world/india/gold-extends-gains-weak-jobs-data-lower-oil-prices-2026-07-02/)",
+    "TSX ends higher as gold rallies on US jobs data (https://www.reuters.com/business/canadian-futures-rise-investors-await-us-payrolls-data-2026-07-02/)",
+    "Australia trade swings to $2.1 billion deficit in May, largest since 2015 (https://www.reuters.com/world/asia-pacific/australia-trade-swings-21-billion-deficit-may-largest-since-2015-2026-07-02/)",
+    "US World Cup win, Trump's crypto conflict, UK racism and Taylor Swift's wedding (https://www.reuters.com/podcasts/us-world-cup-win-trumps-crypto-conflict-uk-racism-taylor-swifts-wedding-2026-07-02/)",
+    "LME metals whipsawed by war and peace in first half of 2026 (https://www.reuters.com/commentary/reuters-open-interest/lme-metals-whipsawed-by-war-peace-first-half-2026-2026-07-02/)",
+    "Hire expectations (https://www.reuters.com/podcasts/reuters-morning-bid/hire-expectations-2026-07-02/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-02",
+      "v": 4.49,
+      "change": 0.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-02",
+      "v": 29329.21,
+      "change": -1.61
+    },
+    "SP500_FRED": {
+      "d": "2026-07-02",
+      "v": 7483.24,
+      "change": 0
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-02",
+      "v": 59.79,
+      "change": 1.8
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-02",
+      "v": 4123.685,
+      "change": 1.97
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-02",
+      "v": 1226.75,
+      "change": 1.65
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-02",
+      "v": 1600.66,
+      "change": 2.25
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-02",
+      "v": 16.15,
+      "change": -2.65
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-25",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın yatay/zayıf; yüksek faiz ve dolar baskısı sürüyor. Hisse fon akımları altın talebi olarak yorumlanmadı.",
+  "invalidation": "Veri veya politika kaynaklı dönüş.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Mounting rate hike bets keep weekly loss in sight for gold (https://www.reuters.com/world/india/gold-heads-weekly-loss-stronger-dollar-fed-rate-outlook-weighs-2026-09-25/)",
+    "Global equity funds snap two-week outflow as AI optimism returns (https://www.reuters.com/world/china/global-markets-flows-graphic-2026-09-25/)",
+    "It's Q4 already? (https://www.reuters.com/business/take-five/global-markets-themes-graphic-2026-09-25/)",
+    "Yields hit home (https://www.reuters.com/podcasts/reuters-morning-bid/yields-hit-home-2026-09-25/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-25",
+      "v": 5.17,
+      "change": -0.19
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-25",
+      "v": 30608.13,
+      "change": 0.42
+    },
+    "SP500_FRED": {
+      "d": "2026-09-25",
+      "v": 7743.41,
+      "change": 0.51
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-25",
+      "v": 4264.545,
+      "change": -0.15
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-25",
+      "v": 14.87,
+      "change": -5.11
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "date": "2026-03-02",
+  "action": "SAT",
+  "position_after": 0,
+  "reason": "Petrol ve dolar yükselişi faiz indirimi beklentisini baskılıyor; 10 yıllık faiz 8 baz puan arttı, altın açılış kazancının bir bölümünü verdi. Savaşın faiz/enflasyon kanalı ağır basabilir; nakde dönüyorum.",
+  "invalidation": "Petrol/faiz baskısının çözülmesi ve altının yeniden güçlenmesi. 1 Mart URL'li pazartesi güncellemeleri ancak bugün kullanıldı.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "US attacks do not augur well for World Cup, says Iran soccer chief (https://www.reuters.com/world/middle-east/us-attacks-do-not-augur-well-world-cup-says-iran-soccer-chief-2026-03-02/)",
+    "From oil spikes to equity swings: How the Mideast conflict is driving markets (https://www.reuters.com/business/energy/global-markets-iran-crisis-2026-03-02/)",
+    "How Dubai's safe-haven status is being put to the test (https://www.reuters.com/world/middle-east/how-dubais-safe-haven-status-is-being-put-test-2026-03-02/)",
+    "Morning Bid: Middle East maelstrom (https://www.reuters.com/business/global-markets-view-usa-2026-03-02/)",
+    "Special Edition: Iran (https://www.reuters.com/podcasts/reuters-morning-bid/special-edition-iran-2026-03-02/)",
+    "Gold gains on fears of prolonged Middle East conflict (https://www.reuters.com/world/india/gold-rises-1-us-israel-strikes-iran-raise-regional-temperature-2026-03-01/)",
+    "Oil jumps, dollar rallies with gold as conflict grips Middle East (https://www.reuters.com/world/china/global-markets-global-markets-2026-03-01/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-02",
+      "v": 4.05,
+      "change": 2.02
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-02",
+      "v": 24992.6,
+      "change": 0.13
+    },
+    "SP500_FRED": {
+      "d": "2026-03-02",
+      "v": 6881.62,
+      "change": 0.04
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 86.7,
+      "change": -4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-02",
+      "v": 5345.695,
+      "change": -0.76
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 1761.6,
+      "change": -3.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-26",
+      "v": 2236.96,
+      "change": -3.6
+    }
+  }
+}

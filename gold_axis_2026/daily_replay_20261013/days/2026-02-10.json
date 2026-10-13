@@ -1,0 +1,51 @@
+{
+  "date": "2026-02-10",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Veri öncesi kâr satışı var; zayıf perakende satış ve düşen tahvil faizi destekliyor. Altın ana toparlanmasını koruyor.",
+  "invalidation": "İstihdam/enflasyon sonrası dolar/faizde güçlenme ve altın satışının kalıcılaşması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold drops as investors brace for US jobs and inflation numbers (https://www.reuters.com/business/gold-silver-retreat-dollar-ticks-up-2026-02-10/)",
+    "India's gold ETF inflows top equity mutual funds for the first time (https://www.reuters.com/world/india/india-equity-mutual-fund-inflows-ease-second-straight-month-january-2026-02-10/)",
+    "South African rand weakens as precious metal prices retreat (https://www.reuters.com/world/africa/south-african-rand-weakens-precious-metal-prices-retreat-2026-02-10/)",
+    "TSX climbs to record high, led by industrial shares (https://www.reuters.com/business/tsx-futures-steady-upcoming-us-data-takes-center-stage-2026-02-10/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-10",
+      "v": 4.16,
+      "change": -1.42
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-10",
+      "v": 25127.64,
+      "change": -0.56
+    },
+    "SP500_FRED": {
+      "d": "2026-02-10",
+      "v": 6941.81,
+      "change": -0.33
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-10",
+      "v": 82.28,
+      "change": 2.39
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-10",
+      "v": 5041.575,
+      "change": 0.21
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-10",
+      "v": 1729,
+      "change": 1.65
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-10",
+      "v": 2099,
+      "change": 1.45
+    }
+  }
+}

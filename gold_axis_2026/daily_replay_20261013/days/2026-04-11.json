@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-11",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Hürmüz mayın temizliği hazırlığı olumlu fakat sevkiyat normalleşmesi henüz yok; hafta sonu yeni fiyat yok. Mevcut pozisyon korunuyor.",
+  "invalidation": "Görüşmelerin kopması veya arz engellerinin büyümesi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Trump says empty oil tankers heading to U.S. to load up with oil, gas (https://www.reuters.com/business/energy/trump-says-empty-oil-tankers-heading-us-load-up-with-oil-gas-2026-04-11/)",
+    "US military 'setting conditions' to clear mines from Strait of Hormuz (https://www.reuters.com/world/asia-pacific/trump-says-us-forces-are-clearing-strait-hormuz-2026-04-11/)",
+    "Week in Review: Whither the ceasefire (https://www.reuters.com/podcasts/reuters-morning-bid/week-review-whither-ceasefire-2026-04-11/)",
+    "France's Macron says discussed Iran ceasefire, Ukraine with Turkey's Erdogan (https://www.reuters.com/world/middle-east/frances-macron-says-discussed-iran-ceasefire-ukraine-with-turkeys-erdogan-2026-04-11/)",
+    "Iran talks, Artemis splashdown, Hungary elections (https://www.reuters.com/podcasts/iran-talks-artemis-splashdown-hungary-elections-2026-04-11/)",
+    "Russia, Ukraine carry out POW swap, defence ministry says (https://www.reuters.com/world/europe/russia-ukraine-carry-out-pow-swap-defence-ministry-says-2026-04-11/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-10",
+      "v": 4.31,
+      "change": 0.47
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-10",
+      "v": 25116.34,
+      "change": 0.14
+    },
+    "SP500_FRED": {
+      "d": "2026-04-10",
+      "v": 6816.89,
+      "change": -0.11
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-11",
+      "v": 75.94,
+      "change": 0.16
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-10",
+      "v": 4746.935,
+      "change": -0.35
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-11",
+      "v": 1524.03,
+      "change": -0.91
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-11",
+      "v": 2046.77,
+      "change": -0.72
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-10",
+      "v": 19.23,
+      "change": -1.33
+    }
+  }
+}

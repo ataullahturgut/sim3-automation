@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-01",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Küresel tahvil satışı, dolar ve faiz artışı altını sert baskılıyor; teknik kırılma sonuç, bağımsız neden sayılmadı.",
+  "invalidation": "Tahvil/kur baskısının azalması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold falls to two-week low as rising Treasury yields, dollar weigh (https://www.reuters.com/world/india/gold-muted-traders-await-us-jobs-data-monitor-mideast-tensions-2026-09-01/)",
+    "US launches new strikes on Iran and Tehran hits back in widening conflict (https://www.reuters.com/world/middle-east/iran-urges-us-comply-with-interim-deal-after-trump-threatens-further-strikes-2026-09-01/)",
+    "Mapping the Market: Death cross to golden cross for global oil prices (https://www.reuters.com/markets/commodities/global-markets-technicals-graphic-2026-09-01/)",
+    "Morning Bid: September storm (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-01/)",
+    "Trading Day: Over and rout (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-09-01/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-01",
+      "v": 4.79,
+      "change": 0.84
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-01",
+      "v": 29077.22,
+      "change": -1.29
+    },
+    "SP500_FRED": {
+      "d": "2026-09-01",
+      "v": 7631.47,
+      "change": -0.71
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-01",
+      "v": 4328.705,
+      "change": -2.65
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-01",
+      "v": 16.34,
+      "change": 9.52
+    }
+  }
+}

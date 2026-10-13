@@ -1,0 +1,51 @@
+{
+  "date": "2026-02-11",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Güçlü istihdama rağmen altın ve metaller yükseldi: olumsuz veriye dayanıklılık. Faiz artışı sınırlı, pozisyon korunuyor.",
+  "invalidation": "CPI veya likidite satışının bu dayanıklılığı bozması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold gains over 1% as buyers shrug off strong US jobs data (https://www.reuters.com/business/gold-silver-climb-us-yields-fall-softer-retail-sales-2026-02-11/)",
+    "Russia, facing labour crunch worsened by war, pivots to India for workers (https://www.reuters.com/business/world-at-work/russia-facing-labour-crunch-worsened-by-war-pivots-india-workers-2026-02-11/)",
+    "Oil up 1% as Middle East tension offsets large US crude stocks build (https://www.reuters.com/business/energy/oil-holds-steady-usiran-tensions-provide-support-2026-02-11/)",
+    "TSX pulls back from record intra-day high as Shopify slides (https://www.reuters.com/business/tsx-futures-rise-gold-oil-gain-ahead-us-jobs-data-2026-02-11/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-11",
+      "v": 4.18,
+      "change": 0.48
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-11",
+      "v": 25201.26,
+      "change": 0.29
+    },
+    "SP500_FRED": {
+      "d": "2026-02-11",
+      "v": 6941.47,
+      "change": 0
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-11",
+      "v": 86.1,
+      "change": 4.64
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-11",
+      "v": 5060.785,
+      "change": 0.38
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-11",
+      "v": 1761,
+      "change": 1.85
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-11",
+      "v": 2178,
+      "change": 3.76
+    }
+  }
+}

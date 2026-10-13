@@ -1,0 +1,59 @@
+{
+  "date": "2026-06-19",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "ABD tatilinde altın/metaller zayıf; barış beklentisi satış baskısını çözmedi. Yeni ABD faiz verisi yok.",
+  "invalidation": "Normal seansta dolar ve metal dönüşü.",
+  "coverage": "holiday_partial_market",
+  "sources": [
+    "Reuters (https://www.reuters.com/account/subscribe/offer/?journeyStart=navigation&redirect=https%3A%2F%2Fwww.reuters.com%2F5f374b32b07b%2Fworld%2Fchina%2Fasia-gold-price-volatility-keeps-india-demand-modest-china-flips-discount-2026-06-19%2F&referrer=subscription_button&website=reuters)",
+    "Hawkish Fed signals send gold to third straight weekly loss (https://www.reuters.com/world/india/gold-track-third-weekly-loss-firm-dollar-hawkish-fed-signals-2026-06-19/)",
+    "ASIA GOLD Price volatility keeps India demand modest, China flips to discount (https://www.reuters.com/world/china/asia-gold-price-volatility-keeps-india-demand-modest-china-flips-discount-2026-06-19/)",
+    "TSX posts slight weekly decline as gold mining shares fall (https://www.reuters.com/business/canada-stock-futures-fall-fresh-middle-east-uncertainty-2026-06-19/)",
+    "Brent set for 8% weekly fall as Israel, Hezbollah agree ceasefire (https://www.reuters.com/business/energy/oil-falls-supply-starts-moving-through-strait-hormuz-2026-06-19/)",
+    "Morning Bid: What a great week for peace (https://www.reuters.com/world/china/global-markets-view-europe-2026-06-19/)",
+    "Take Five: The economic consequences of the peace (https://www.reuters.com/business/take-five/global-markets-themes-2026-06-19/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-18",
+      "v": 4.46,
+      "change": -0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-18",
+      "v": 30406.19,
+      "change": 2.48
+    },
+    "SP500_FRED": {
+      "d": "2026-06-18",
+      "v": 7500.58,
+      "change": 1.08
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-19",
+      "v": 64.59,
+      "change": -5.97
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-19",
+      "v": 4154.335,
+      "change": -1.25
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-19",
+      "v": 1261.66,
+      "change": -4.81
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-19",
+      "v": 1670.18,
+      "change": -4.87
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-19",
+      "v": 16.78,
+      "change": 2.32
+    }
+  }
+}

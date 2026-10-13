@@ -1,0 +1,56 @@
+{
+  "date": "2026-04-04",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Enerji şokunun enflasyona geçişi ana belirsizlik. Yeni fiyat yok; diplomatik ziyaret ihtimali tek başına işlem nedeni değil.",
+  "invalidation": "Somut risk azalması ve piyasa teyidi.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Week ahead: What the oil shock means for inflation (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-what-oil-shock-means-inflation-2026-04-04/)",
+    "US envoys Witkoff and Kushner could visit Ukraine, Kyiv says (https://www.reuters.com/business/aerospace-defense/us-envoys-witkoff-kushner-could-visit-ukraine-kyiv-says-2026-04-04/)",
+    "Flying to the moon (https://www.reuters.com/podcasts/flying-moon-2026-04-04/)",
+    "Fire reported at foreign oil companies' storage facilities in Iraq after drone strike (https://www.reuters.com/business/energy/fire-reported-foreign-oil-companies-storage-facilities-iraq-after-drone-strike-2026-04-04/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-03",
+      "v": 4.35,
+      "change": 0.93
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-02",
+      "v": 24045.53,
+      "change": 0.11
+    },
+    "SP500_FRED": {
+      "d": "2026-04-02",
+      "v": 6582.69,
+      "change": 0.11
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-04",
+      "v": 73,
+      "change": -0.01
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-02",
+      "v": 4675.805,
+      "change": -2.1
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-04",
+      "v": 1503.33,
+      "change": -0.15
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-04",
+      "v": 1982.77,
+      "change": -0.26
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-02",
+      "v": 23.87,
+      "change": -2.73
+    }
+  }
+}

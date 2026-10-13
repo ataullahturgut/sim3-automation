@@ -1,0 +1,56 @@
+{
+  "date": "2026-06-24",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Petrol ve nominal faiz düşse de dolar/pozisyon baskısıyla metal satışı sürüyor. Faiz tek başına açıklayıcı değil; dip alımı teyitsiz.",
+  "invalidation": "Satışın durması ve altının olumlu kanala cevap vermesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold hits over seven-month low as dollar firms, rate hike bets rise (https://www.reuters.com/world/india/gold-slips-fed-rate-hike-expectations-buoy-dollar-2026-06-24/)",
+    "Gold falls below $4,000/oz on strong dollar, hawkish Fed signals (https://www.reuters.com/world/india/gold-falls-below-4000oz-strong-dollar-hawkish-fed-signals-2026-06-24/)",
+    "India financial crime agency flags forex breaches, missing records at Rajesh Exports (https://www.reuters.com/world/india/india-financial-crime-agency-flags-forex-breaches-missing-records-rajesh-exports-2026-06-24/)",
+    "Trading Day: Tech jitters smother inflation relief (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-06-24/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-24",
+      "v": 4.41,
+      "change": -2
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-24",
+      "v": 29220.06,
+      "change": -0.43
+    },
+    "SP500_FRED": {
+      "d": "2026-06-24",
+      "v": 7358.22,
+      "change": -0.1
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-24",
+      "v": 61.52,
+      "change": -5.31
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-24",
+      "v": 3995.898,
+      "change": -2.63
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-24",
+      "v": 1227.12,
+      "change": -2.34
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-24",
+      "v": 1644.9,
+      "change": -1.64
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-24",
+      "v": 18.63,
+      "change": -4.41
+    }
+  }
+}

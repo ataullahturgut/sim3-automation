@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-14",
+  "action": "AL",
+  "position_after": 1,
+  "reason": "Yeniden görüşme olasılığı, düşük petrol/dolar ve daha sınırlı üretici enflasyonu altın toparlanmasını ikinci seansa taşıdı. Yeniden alım kararı.",
+  "invalidation": "Görüşme umudunun bozulması ve enerji/faiz baskısının dönüşü.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold rises 2% on softer dollar, hopes of US-Iran talks resuming (https://www.reuters.com/world/india/gold-rises-lower-oil-prices-ease-inflation-fears-2026-04-14/)",
+    "War is over for Wall Street: stocks, dollar and fear index unwind moves (https://www.reuters.com/world/americas/war-is-over-wall-street-while-oil-drags-down-bonds-gold-2026-04-14/)",
+    "Higher oil prices, higher yields, no more rate cuts? No problem for US stocks (https://www.reuters.com/business/higher-oil-prices-higher-yields-no-more-rate-cuts-no-problem-us-stocks-2026-04-14/)",
+    "Dollar falls on hopes for Middle East talks (https://www.reuters.com/world/china/dollar-steady-us-blocks-iranian-ships-talks-continue-2026-04-14/)",
+    "Markets tune out the noise (https://www.reuters.com/podcasts/reuters-morning-bid/markets-tune-out-noise-2026-04-14/)",
+    "UK hit with big IMF growth downgrade as Iran war fuels inflation (https://www.reuters.com/business/uk-hit-with-big-imf-growth-downgrade-iran-war-fuels-inflation-2026-04-14/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-14",
+      "v": 4.26,
+      "change": -0.93
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-14",
+      "v": 25842,
+      "change": 1.81
+    },
+    "SP500_FRED": {
+      "d": "2026-04-14",
+      "v": 6967.38,
+      "change": 1.18
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-14",
+      "v": 77.99,
+      "change": 4.49
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-14",
+      "v": 4834.448,
+      "change": 1.62
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-14",
+      "v": 1578.1,
+      "change": 2.1
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-14",
+      "v": 2088.32,
+      "change": 1.98
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-14",
+      "v": 18.36,
+      "change": -3.97
+    }
+  }
+}

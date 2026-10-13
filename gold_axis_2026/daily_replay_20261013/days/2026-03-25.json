@@ -1,0 +1,57 @@
+{
+  "date": "2026-03-25",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "15 maddelik teklif enerji/faiz baskısını hafifletti; altın gün içinde toparlandı ama teklif kabul edilmedi ve geç saat fiyatı gücü korumadı. Henüz kalıcı değişim yok.",
+  "invalidation": "Anlaşma yönünde somut adım ve altın toparlanmasının korunması.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold up nearly 2% as uncertainty over Middle East war persists (https://www.reuters.com/world/india/gold-climbs-more-than-2-softer-dollar-easing-fears-higher-interest-rates-2026-03-25/)",
+    "Stocks gain, oil prices fall on guarded hope for possible Iran war ceasefire (https://www.reuters.com/business/energy/global-markets-global-markets-2026-03-25/)",
+    "Morning Bid: Deal, or no deal? (https://www.reuters.com/world/china/global-markets-view-europe-2026-03-25/)",
+    "Trading Day: Giving peace a chance (https://www.reuters.com/world/asia-pacific/global-markets-trading-day-graphic-2026-03-25/)",
+    "Oil down, expectations up (https://www.reuters.com/podcasts/reuters-morning-bid/oil-down-expectations-up-2026-03-25/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-03-25",
+      "v": 4.33,
+      "change": -1.37
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-03-25",
+      "v": 24162.98,
+      "change": 0.67
+    },
+    "SP500_FRED": {
+      "d": "2026-03-25",
+      "v": 6591.9,
+      "change": 0.54
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-25",
+      "v": 72.72,
+      "change": 5.13
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-03-25",
+      "v": 4497.875,
+      "change": -1.07
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-25",
+      "v": 1443.02,
+      "change": 1.92
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-03-25",
+      "v": 1948.36,
+      "change": 3.51
+    },
+    "VIX_CBOE": {
+      "d": "2026-03-25",
+      "v": 25.33,
+      "change": -6.01
+    }
+  }
+}

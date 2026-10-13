@@ -1,0 +1,57 @@
+{
+  "date": "2026-08-18",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Enerji/uzun tahvil baskısı altına satış getirdi; büyük toparlanmanın önemli kısmı korunuyor. Tek seansla çıkmıyorum.",
+  "invalidation": "İkinci seans satış ve dolar/faiz baskısının sürmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold retreats as bond yields surge to highest levels in decades (https://www.reuters.com/world/india/gold-extends-gains-easing-rate-hike-fears-markets-await-fed-minutes-2026-08-18/)",
+    "Trump says no talks planned with Iran, Tehran says Strait of Hormuz still shut (https://www.reuters.com/world/middle-east/trump-says-no-talks-planned-with-iran-tehran-says-strait-hormuz-still-shut-2026-08-18/)",
+    "Oil closes at three-week high as hopes of US-Iran peace deal fade (https://www.reuters.com/business/energy/oil-climbs-fading-us-iran-peace-hopes-raise-supply-risks-2026-08-18/)",
+    "Morning Bid: Yields give way (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-08-18/)",
+    "Bonds come back to bite (https://www.reuters.com/podcasts/reuters-morning-bid/bonds-come-back-bite-2026-08-18/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-08-18",
+      "v": 4.71,
+      "change": -0.21
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-08-18",
+      "v": 29490.96,
+      "change": -1.68
+    },
+    "SP500_FRED": {
+      "d": "2026-08-18",
+      "v": 7691.76,
+      "change": -0.69
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-08-18",
+      "v": 4332.765,
+      "change": -1.77
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-08-18",
+      "v": 15.84,
+      "change": 4.28
+    }
+  }
+}

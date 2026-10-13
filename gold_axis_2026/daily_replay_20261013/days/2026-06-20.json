@@ -1,0 +1,53 @@
+{
+  "date": "2026-06-20",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Görüşmeler başladı ama yeni saldırı tehdidi ve Hürmüz anlaşmazlığı sürüyor; hafta sonu alım gerekçesi yok.",
+  "invalidation": "Anlaşmanın fiili uygulanması.",
+  "coverage": "weekend_news_market_stale",
+  "sources": [
+    "Trump threatens new attacks as US-Iran peace talks open in Switzerland (https://www.reuters.com/world/asia-pacific/us-disputes-iranian-claims-about-closing-strait-hormuz-negotiators-head-2026-06-20/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-06-18",
+      "v": 4.46,
+      "change": -0.67
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-06-18",
+      "v": 30406.19,
+      "change": 2.48
+    },
+    "SP500_FRED": {
+      "d": "2026-06-18",
+      "v": 7500.58,
+      "change": 1.08
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-20",
+      "v": 64.84,
+      "change": 0.39
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-06-19",
+      "v": 4154.335,
+      "change": -1.25
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-20",
+      "v": 1261.4,
+      "change": -0.02
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-06-20",
+      "v": 1665.18,
+      "change": -0.3
+    },
+    "VIX_CBOE": {
+      "d": "2026-06-19",
+      "v": 16.78,
+      "change": 2.32
+    }
+  }
+}

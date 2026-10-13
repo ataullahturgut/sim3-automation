@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-02",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Dolar/faiz tepeden gevşedi, altın ilk tepkiyi verdi; resmi istihdam öncesi kalıcılık bilinmiyor.",
+  "invalidation": "Veriyle desteklenen devam.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Pictures of the Day | September 2, 2026 (https://www.reuters.com/jp/pictures/pictures-day-september-2-2026-2026-09-02/TXYVFTEG7FKUPMY6FFPJVVZC7A/)",
+    "Gold rebounds over 1% as US dollar, yields pull back from highs (https://www.reuters.com/world/india/gold-hits-over-3-week-low-mideast-tensions-fan-rate-hike-fears-2026-09-02/)",
+    "New Jersey takes fight over Kalshi's prediction market to US Supreme Court (https://www.reuters.com/world/new-jersey-asks-us-supreme-court-assess-power-regulate-sports-bets-kalshi-2026-09-02/)",
+    "Italy's Lottomatica to buy Spain's CIRSA to create Blackstone-backed betting giant (https://www.reuters.com/business/italys-lottomatica-take-over-spains-cirsa-create-combined-betting-company-2026-09-02/)",
+    "OPEC+ likely to keep oil output policy unchanged on Sunday, sources say (https://www.reuters.com/business/energy/opec-likely-to-keep-oil-output-policy-unchanged-sunday-sources-say-2026-09-02/)",
+    "Morning Bid: Bonds boil (https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-09-02/)",
+    "Iran faces pressure from all sides (https://www.reuters.com/world/middle-east/iran-faces-pressure-all-sides-2026-09-02/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-09-02",
+      "v": 4.79,
+      "change": 0
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-09-02",
+      "v": 29143.33,
+      "change": 0.23
+    },
+    "SP500_FRED": {
+      "d": "2026-09-02",
+      "v": 7666.6,
+      "change": 0.46
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 59.06,
+      "change": 2.43
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-09-02",
+      "v": 4384.025,
+      "change": 1.28
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1318.68,
+      "change": 4.47
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-31",
+      "v": 1661.74,
+      "change": 3.49
+    },
+    "VIX_CBOE": {
+      "d": "2026-09-02",
+      "v": 15.2,
+      "change": -6.98
+    }
+  }
+}

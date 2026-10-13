@@ -1,0 +1,58 @@
+{
+  "date": "2026-07-20",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "Altın yatay ama dolar/faiz/petrol baskısı sürüyor; alım için aktarım değişmedi.",
+  "invalidation": "Faiz ve kurda rahatlama, fiyat teyidi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Gold edges down as US-Iran escalation lifts oil prices, rate hike bets (https://www.reuters.com/world/india/gold-slips-oil-prices-advance-fed-rate-hike-voices-grow-2026-07-20/)",
+    "Wall Street indexes fall, with Iran and earnings season in focus (https://www.reuters.com/business/autos-transportation/wall-st-futures-edge-higher-ahead-this-weeks-megacap-earnings-2026-07-20/)",
+    "Morning Bid: Rising oil, yields rain on AI party (https://www.reuters.com/world/china/global-markets-view-europe-2026-07-20/)",
+    "Trump says new Air Force One from Qatar will get 'maxed out' upgrades (https://www.reuters.com/business/aerospace-defense/trump-says-new-air-force-one-qatar-will-get-maxed-out-upgrades-2026-07-20/)",
+    "Trading Day: War clouds darken (https://www.reuters.com/commentary/reuters-open-interest/global-markets-trading-day-graphic-2026-07-20/)",
+    "Oil above $90 (https://www.reuters.com/podcasts/reuters-morning-bid/oil-above-90-2026-07-20/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-07-20",
+      "v": 4.6,
+      "change": 1.1
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-07-20",
+      "v": 28604.23,
+      "change": 0.04
+    },
+    "SP500_FRED": {
+      "d": "2026-07-20",
+      "v": 7443.28,
+      "change": -0.19
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-20",
+      "v": 56.76,
+      "change": 1.56
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-07-20",
+      "v": 3999.755,
+      "change": 0.16
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-20",
+      "v": 1259.14,
+      "change": 0.75
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-07-20",
+      "v": 1598.65,
+      "change": 0.11
+    },
+    "VIX_CBOE": {
+      "d": "2026-07-20",
+      "v": 18.65,
+      "change": -0.64
+    }
+  }
+}

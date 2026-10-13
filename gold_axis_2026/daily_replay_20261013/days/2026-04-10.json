@@ -1,0 +1,57 @@
+{
+  "date": "2026-04-10",
+  "action": "TUT",
+  "position_after": 1,
+  "reason": "Enflasyon enerjiyle arttı ama haber akışında beklenen yönde; petrol geriliyor, faiz artışı sınırlı. Altın düşüşü küçük, ateşkes tezi henüz bozulmadı.",
+  "invalidation": "Hafta sonu görüşmelerinin başarısızlığı ve enerji/dolar baskısının geri dönmesi.",
+  "coverage": "daily_news_and_reconstructed_market",
+  "sources": [
+    "Equities mixed, oil dips in cautious trade ahead of US-Iran talks (https://www.reuters.com/world/china/global-markets-wrapup-1pix-2026-04-10/)",
+    "Oil whiplash: Iran war shock to flip market to deficit in 2026, analysts say (https://www.reuters.com/business/energy/oil-whiplash-iran-war-shock-flip-market-deficit-2026-analysts-say-2026-04-10/)",
+    "Oil ends lower ahead of U.S.-Iran ceasefire talks, posts steepest weekly loss since 2022 (https://www.reuters.com/business/energy/oil-prices-rise-after-strikes-saudi-oil-facilities-2026-04-10/)",
+    "Trump says US will have Strait of Hormuz 'open fairly soon' (https://www.reuters.com/business/energy/trump-says-us-will-have-strait-hormuz-open-fairly-soon-2026-04-10/)",
+    "U.S. Democrats keep pressure on Trump regulators over 'suspicious' trades (https://www.reuters.com/legal/government/us-democrats-keep-pressure-trump-regulators-over-suspicious-trades-2026-04-10/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-04-10",
+      "v": 4.31,
+      "change": 0.47
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-04-10",
+      "v": 25116.34,
+      "change": 0.14
+    },
+    "SP500_FRED": {
+      "d": "2026-04-10",
+      "v": 6816.89,
+      "change": -0.11
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-10",
+      "v": 75.82,
+      "change": 1.54
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-04-10",
+      "v": 4746.935,
+      "change": -0.35
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-10",
+      "v": 1537.96,
+      "change": -1.27
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-04-10",
+      "v": 2061.64,
+      "change": 0.37
+    },
+    "VIX_CBOE": {
+      "d": "2026-04-10",
+      "v": 19.23,
+      "change": -1.33
+    }
+  }
+}

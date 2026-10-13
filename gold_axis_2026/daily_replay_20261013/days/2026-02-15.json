@@ -1,0 +1,50 @@
+{
+  "date": "2026-02-15",
+  "action": "BEKLE",
+  "position_after": 0,
+  "reason": "İran için hem askeri hazırlık hem anlaşma esnekliği haberleri var; sinyal çift yönlü. Pazar altın açılışı teyit vermiyor.",
+  "invalidation": "Diplomasi/çatışma yönünün netleşmesi ve altın tepkisinin desteklemesi.",
+  "coverage": "weekend_news_partial_market",
+  "sources": [
+    "Most Gulf markets slip on US-Iran caution; Egypt jumps on rate cut (https://www.reuters.com/world/middle-east/most-gulf-markets-slip-us-iran-caution-egypt-jumps-rate-cut-2026-02-15/)",
+    "Iran says potential energy, mining and aircraft deals on table in talks with US (https://www.reuters.com/world/middle-east/iran-open-nuclear-deal-compromises-if-us-discusses-lifting-sanctions-minister-2026-02-15/)",
+    "Week Ahead: Horse power (https://www.reuters.com/podcasts/reuters-morning-bid/week-ahead-horse-power-2026-02-15/)"
+  ],
+  "panel": {
+    "DGS10_FRB_H15": {
+      "d": "2026-02-13",
+      "v": 4.04,
+      "change": -1.22
+    },
+    "NASDAQ100_FRED": {
+      "d": "2026-02-13",
+      "v": 24732.73,
+      "change": 0.18
+    },
+    "SP500_FRED": {
+      "d": "2026-02-13",
+      "v": 6836.17,
+      "change": 0.05
+    },
+    "XAG_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-15",
+      "v": 77.4,
+      "change": 0
+    },
+    "XAU_HIST_UTC_LAST": {
+      "d": "2026-02-15",
+      "v": 5019.898,
+      "change": -0.4
+    },
+    "XPD_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-15",
+      "v": 1702.87,
+      "change": 0.28
+    },
+    "XPT_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "d": "2026-02-15",
+      "v": 2065.64,
+      "change": 0.22
+    }
+  }
+}
