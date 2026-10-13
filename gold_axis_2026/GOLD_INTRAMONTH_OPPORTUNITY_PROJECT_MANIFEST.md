@@ -4884,7 +4884,11 @@ The separate authority and CSV are controlling on detailed source identity, exac
 
 **YERLEŞİM VE YETKİ KURALI:** Bu bölüm bilerek manifestin **en sonuna** taşındı. Önce 2010–2026 geniş tarihler, 2023–25 büyük hareketler, veri kaynağı, makro/metal/ETF/GVZ/CFTC, H3 ve strateji araştırmalarını okuyun. Ocak 2026 birden fazla kez görülen retrospektif özel testtir; kapsamı tüm genel araştırmaları ve geçmiş yılları temsil etmez. PR#123/#125/#126/#127/#128 açık bağımlı çalışma zinciri; gerçek banka AL/SAT yetkisi yok.
 
-**Ocak özel araştırma hattı, yönetim tablosundan fiziksel olarak en sona alınmıştır:** **JAN2026 S4/V2/V3/V4** | 16:30TR alarm, 16:45 teorik uygulama; 2023–25 başka kohortlarla stres | PR#123/#125/#126/#127/#128; V4 **2024 event coverage 0/12; FAIL/REVIEW ONLY** | Ocak V4 +23.99% daha önce görülmüş dönem; ileri-körü kanıt/gerçek banka emri değildir
+**Özel vaka statüsü (genel araştırmalardan ayrı):**
+
+| Konu | Karar/araştırma saati | Tarihsel çapraz yıl doğrulaması | Hüküm |
+|---|---|---|---|
+| **JAN2026 B0 / S4 / V2 / V3 / V4** | Türkiye 16:30 alarm, 16:45 teorik spot quote; önceki B0/NY17 ayrı saat | 2023–25 stres + 2026 Ocak **önceden incelenmiş retrospektif** dönem; PR #123/#125/#126/#127/#128 | 2024'te **0/12** sonraki banka günü sert aşağı hareket kapsaması; **FAIL / REVIEW ONLY**, gerçek banka emri ve ileri-tahmin üstünlüğü yok |
 
 **Ocak nedensellik muhasebesi:** B0 günlük kapanış-gözlem körlüğü; S4 düşük devirli ama geç tepki; V2 18:15 banka sonrasına kayan ve yanlış alarm üreten risk-state; V3 16:30 doğru karar saati fakat tekil A/T yanlış SAT; V4 A AND T Ocak +10.953 getiri puanı karşıolgusal artı ama 2024'te 12 ilgili olaydan hiçbiri yakalanmadı. A ve T aynı fiyat yolundan türetilmiştir; ekonomik haber/metal **nedeni ispatlanmış değil**. Tam iz aşağıdaki V1–V4 ve [V4 bilimsel hüküm](GOLD_JAN2026_V4_DUAL_FACTOR_31DAY_SCIENTIFIC_VERDICT_20261013.md). Araştırma spot ürünü, banka teklif ve masrafı değildir.
 
