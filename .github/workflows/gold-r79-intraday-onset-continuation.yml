@@ -1,0 +1,32 @@
+name: R79 start-detected XAU continuation versus reversal
+on:
+  pull_request:
+    paths:
+      - 'gold_axis_2026/tools/gold_r79_started_move_continuation_reversal.py'
+      - 'gold_axis_2026/GOLD_R79_20261013_ONSET_CONDITIONED_CONTINUATION_REVERSAL_PREREG.md'
+      - 'gold_axis_2026/data_r79/GOLD_R79_20261013_GOLD_75BP_FIRST_STARTED_MOVEMENT_OBSERVED_TR.csv'
+      - '.github/workflows/gold-r79-intraday-onset-continuation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  onset:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install mathematical dependencies
+        run: pip install 'numpy>=1.24,<3' 'scikit-learn>=1.4,<2'
+      - name: Reproduce confirmed after-onset 16:30 continuation/reversal forecasts
+        run: python -u gold_axis_2026/tools/gold_r79_started_move_continuation_reversal.py
+      - name: Save scored predictions
+        uses: actions/upload-artifact@v4
+        with:
+          name: r79-confirmed-start-continuation-reversal
+          retention-days: 30
+          path: |
+            gold_axis_2026/GOLD_R79_20261013_SUMMARY.json
+            gold_axis_2026/GOLD_R79_20261013_ROWS.csv
