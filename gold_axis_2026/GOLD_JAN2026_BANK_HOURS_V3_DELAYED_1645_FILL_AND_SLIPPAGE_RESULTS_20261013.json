@@ -1,0 +1,939 @@
+{
+  "frozen_protocol": "GOLD_JAN2026_BANK_HOURS_V3_DELAYED_FILL_SENSITIVITY_PROTOCOL_20261013.md",
+  "qa_original_first_open_exact": {
+    "comparisons": 20,
+    "maxAbsReturnErrorPctPoint": 0,
+    "pass": true
+  },
+  "slippage_definition": "Extra adverse fraction 0/0.0015/0.003 on both buy and sell quotes on top of fixed 0.008 every leg",
+  "same_day_action_time": "signal at 16:30TR, fill at completed bar 16:45TR",
+  "bank_ask_bid_verified": false,
+  "results": [
+    {
+      "cohort": "2022",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": -6.436680437816278,
+      "maxDDpct": -14.22063691636607,
+      "openMarkPct": -5.682137538121246,
+      "passivePct": -0.9128042565068495,
+      "actions": 17,
+      "feesPortfolioUnits": 0.1337426418495381
+    },
+    {
+      "cohort": "2022",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": -8.929092954002972,
+      "maxDDpct": -15.750853336105608,
+      "openMarkPct": -8.05673525813213,
+      "passivePct": -1.209620619193319,
+      "actions": 17,
+      "feesPortfolioUnits": 0.13208798511820447
+    },
+    {
+      "cohort": "2022",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": -11.355121416448288,
+      "maxDDpct": -17.25377895684852,
+      "openMarkPct": -10.371357435662109,
+      "passivePct": -1.5055491961488698,
+      "actions": 17,
+      "feesPortfolioUnits": 0.13046090532194995
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": -7.591857929415258,
+      "maxDDpct": -13.082682128169942,
+      "openMarkPct": -6.846630977233126,
+      "passivePct": -0.9128042565068495,
+      "actions": 3,
+      "feesPortfolioUnits": 0.022723945673218837
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": -8.144647170340214,
+      "maxDDpct": -13.343043539668198,
+      "openMarkPct": -7.264775358945896,
+      "passivePct": -1.209620619193319,
+      "actions": 3,
+      "feesPortfolioUnits": 0.022679839994716934
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": -8.69413206895777,
+      "maxDDpct": -13.602626203175916,
+      "openMarkPct": -7.680836935158064,
+      "passivePct": -1.5055491961488698,
+      "actions": 3,
+      "feesPortfolioUnits": 0.022635866237486722
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0,
+      "netPct": -11.332885386010172,
+      "maxDDpct": -14.900690015393836,
+      "openMarkPct": -10.617828010090902,
+      "passivePct": -0.9128042565068495,
+      "actions": 5,
+      "feesPortfolioUnits": 0.03760905501173677
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": -12.1273097413943,
+      "maxDDpct": -15.53645284809152,
+      "openMarkPct": -11.28558739459421,
+      "passivePct": -1.209620619193319,
+      "actions": 5,
+      "feesPortfolioUnits": 0.037478167542521486
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": -12.91461987712802,
+      "maxDDpct": -16.16728020657032,
+      "openMarkPct": -11.948162913264005,
+      "passivePct": -1.5055491961488698,
+      "actions": 5,
+      "feesPortfolioUnits": 0.03734792396524774
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0,
+      "netPct": -7.591857929415258,
+      "maxDDpct": -13.082682128169942,
+      "openMarkPct": -6.846630977233126,
+      "passivePct": -0.9128042565068495,
+      "actions": 3,
+      "feesPortfolioUnits": 0.022723945673218837
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": -8.144647170340214,
+      "maxDDpct": -13.343043539668198,
+      "openMarkPct": -7.264775358945896,
+      "passivePct": -1.209620619193319,
+      "actions": 3,
+      "feesPortfolioUnits": 0.022679839994716934
+    },
+    {
+      "cohort": "2022",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": -8.69413206895777,
+      "maxDDpct": -13.602626203175916,
+      "openMarkPct": -7.680836935158064,
+      "passivePct": -1.5055491961488698,
+      "actions": 3,
+      "feesPortfolioUnits": 0.022635866237486722
+    },
+    {
+      "cohort": "2023",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": -14.426630940785646,
+      "maxDDpct": -20.765705083486086,
+      "openMarkPct": -13.736523125791978,
+      "passivePct": 10.427941774779836,
+      "actions": 23,
+      "feesPortfolioUnits": 0.17317002809730242
+    },
+    {
+      "cohort": "2023",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": -17.452482385165837,
+      "maxDDpct": -22.876409890511383,
+      "openMarkPct": -16.661769251827174,
+      "passivePct": 10.097154130921293,
+      "actions": 23,
+      "feesPortfolioUnits": 0.17033467282515805
+    },
+    {
+      "cohort": "2023",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": -20.371353431628634,
+      "maxDDpct": -24.930897221323743,
+      "openMarkPct": -19.487649876675018,
+      "passivePct": 9.76735588181008,
+      "actions": 23,
+      "feesPortfolioUnits": 0.16756228141551102
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 7.185369222061122,
+      "maxDDpct": -7.9028151235304485,
+      "openMarkPct": 8.049767360948712,
+      "passivePct": 10.427941774779836,
+      "actions": 3,
+      "feesPortfolioUnits": 0.024778731510427247
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 6.544182011033106,
+      "maxDDpct": -8.178692861552793,
+      "openMarkPct": 7.56475641994554,
+      "passivePct": 10.097154130921293,
+      "actions": 3,
+      "feesPortfolioUnits": 0.024728470707100964
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 5.906827548313975,
+      "maxDDpct": -8.453745441834325,
+      "openMarkPct": 7.0821613513059045,
+      "passivePct": 9.76735588181008,
+      "actions": 3,
+      "feesPortfolioUnits": 0.0246783602351904
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0,
+      "netPct": 4.9398444478023995,
+      "maxDDpct": -9.964479297025552,
+      "openMarkPct": 5.786133515929848,
+      "passivePct": 10.427941774779836,
+      "actions": 7,
+      "feesPortfolioUnits": 0.05872162755304385
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 3.6880909178105936,
+      "maxDDpct": -10.503075421030129,
+      "openMarkPct": 4.681307160146053,
+      "passivePct": 10.097154130921293,
+      "actions": 7,
+      "feesPortfolioUnits": 0.0584201832657031
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 2.451263142076354,
+      "maxDDpct": -11.038452043229297,
+      "openMarkPct": 3.5882477493734743,
+      "passivePct": 9.76735588181008,
+      "actions": 7,
+      "feesPortfolioUnits": 0.058120826699022396
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0,
+      "netPct": 2.7551659842738996,
+      "maxDDpct": -7.902815123530427,
+      "openMarkPct": 3.583836677695462,
+      "passivePct": 10.427941774779836,
+      "actions": 5,
+      "feesPortfolioUnits": 0.040626519161359606
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 1.8345179305414572,
+      "maxDDpct": -8.178692861552793,
+      "openMarkPct": 2.809979011401631,
+      "passivePct": 10.097154130921293,
+      "actions": 5,
+      "feesPortfolioUnits": 0.04048074712148827
+    },
+    {
+      "cohort": "2023",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 0.9221144534393266,
+      "maxDDpct": -8.634734690638524,
+      "openMarkPct": 2.042128859804526,
+      "passivePct": 9.76735588181008,
+      "actions": 5,
+      "feesPortfolioUnits": 0.04033569846337733
+    },
+    {
+      "cohort": "2024",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": -8.69884790307548,
+      "maxDDpct": -14.113964120840416,
+      "openMarkPct": -8.69884790307548,
+      "passivePct": 24.20081457335357,
+      "actions": 22,
+      "feesPortfolioUnits": 0.17187219724591607
+    },
+    {
+      "cohort": "2024",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": -11.662616997675723,
+      "maxDDpct": -16.024918050730065,
+      "openMarkPct": -11.662616997675723,
+      "passivePct": 23.828770196199244,
+      "actions": 22,
+      "feesPortfolioUnits": 0.16908202811868092
+    },
+    {
+      "cohort": "2024",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": -14.530190499800732,
+      "maxDDpct": -17.893546540912386,
+      "openMarkPct": -14.530190499800732,
+      "passivePct": 23.45783861379216,
+      "actions": 22,
+      "feesPortfolioUnits": 0.16635227009038017
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 23.68472659791625,
+      "maxDDpct": -7.823323502759072,
+      "openMarkPct": 23.68472659791625,
+      "passivePct": 24.20081457335357,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017974574725638407
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 23.31422816577071,
+      "maxDDpct": -7.823323502759072,
+      "openMarkPct": 23.31422816577071,
+      "passivePct": 23.828770196199244,
+      "actions": 2,
+      "feesPortfolioUnits": 0.01794469581982022
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 22.94483790440931,
+      "maxDDpct": -7.823323502759072,
+      "openMarkPct": 22.94483790440931,
+      "passivePct": 23.45783861379216,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017914906282613656
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0,
+      "netPct": 10.590094542908046,
+      "maxDDpct": -9.787817918375364,
+      "openMarkPct": 10.590094542908046,
+      "passivePct": 24.20081457335357,
+      "actions": 12,
+      "feesPortfolioUnits": 0.10360366612241445
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 8.617279958529256,
+      "maxDDpct": -10.596085503375697,
+      "openMarkPct": 8.617279958529256,
+      "passivePct": 23.828770196199244,
+      "actions": 12,
+      "feesPortfolioUnits": 0.10266760630095065
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 6.679649734732207,
+      "maxDDpct": -11.397114899998273,
+      "openMarkPct": 6.679649734732207,
+      "passivePct": 23.45783861379216,
+      "actions": 12,
+      "feesPortfolioUnits": 0.10174291534837046
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0,
+      "netPct": 21.61125669917383,
+      "maxDDpct": -7.823323502759094,
+      "openMarkPct": 21.61125669917383,
+      "passivePct": 24.20081457335357,
+      "actions": 4,
+      "feesPortfolioUnits": 0.034310976832806886
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 20.883773246175497,
+      "maxDDpct": -7.823323502759094,
+      "openMarkPct": 20.883773246175497,
+      "passivePct": 23.828770196199244,
+      "actions": 4,
+      "feesPortfolioUnits": 0.03420287211518487
+    },
+    {
+      "cohort": "2024",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 20.160638384238204,
+      "maxDDpct": -7.823323502759083,
+      "openMarkPct": 20.160638384238204,
+      "passivePct": 23.45783861379216,
+      "actions": 4,
+      "feesPortfolioUnits": 0.034095265956882545
+    },
+    {
+      "cohort": "2025",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 13.556920997216704,
+      "maxDDpct": -21.512292091798003,
+      "openMarkPct": 13.556920997216704,
+      "passivePct": 61.56332225756513,
+      "actions": 26,
+      "feesPortfolioUnits": 0.22709827366837462
+    },
+    {
+      "cohort": "2025",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 9.213446103053368,
+      "maxDDpct": -23.143349141194236,
+      "openMarkPct": 9.213446103053368,
+      "passivePct": 61.07935823682355,
+      "actions": 26,
+      "feesPortfolioUnits": 0.2227075085052098
+    },
+    {
+      "cohort": "2025",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 5.03608773166051,
+      "maxDDpct": -24.74051822317159,
+      "openMarkPct": 5.03608773166051,
+      "passivePct": 60.59684176549598,
+      "actions": 26,
+      "feesPortfolioUnits": 0.21843011413020158
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 41.31225193601764,
+      "maxDDpct": -9.893694207275539,
+      "openMarkPct": 42.45186687098552,
+      "passivePct": 61.56332225756513,
+      "actions": 5,
+      "feesPortfolioUnits": 0.044778412472676124
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 40.04614673860731,
+      "maxDDpct": -10.432713770548075,
+      "openMarkPct": 41.387632596684654,
+      "passivePct": 61.07935823682355,
+      "actions": 5,
+      "feesPortfolioUnits": 0.04461454895894015
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 38.79137975158018,
+      "maxDDpct": -10.96851130087283,
+      "openMarkPct": 40.33166005231439,
+      "passivePct": 60.59684176549598,
+      "actions": 5,
+      "feesPortfolioUnits": 0.044451496764423025
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0,
+      "netPct": 29.06476236917419,
+      "maxDDpct": -9.89369420727555,
+      "openMarkPct": 29.06476236917419,
+      "passivePct": 61.56332225756513,
+      "actions": 22,
+      "feesPortfolioUnits": 0.2005505231636281
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 24.875131185707833,
+      "maxDDpct": -10.575456492759262,
+      "openMarkPct": 24.875131185707833,
+      "passivePct": 61.07935823682355,
+      "actions": 22,
+      "feesPortfolioUnits": 0.19715174762929577
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 20.821483623462388,
+      "maxDDpct": -11.376670718469285,
+      "openMarkPct": 20.821483623462388,
+      "passivePct": 60.59684176549598,
+      "actions": 22,
+      "feesPortfolioUnits": 0.19382838446346287
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0,
+      "netPct": 39.49734175528652,
+      "maxDDpct": -9.89369420727555,
+      "openMarkPct": 40.62232031782915,
+      "passivePct": 61.56332225756513,
+      "actions": 9,
+      "feesPortfolioUnits": 0.08302481233003474
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 37.42049536003893,
+      "maxDDpct": -10.432713770548085,
+      "openMarkPct": 38.73683040693998,
+      "passivePct": 61.07935823682355,
+      "actions": 9,
+      "feesPortfolioUnits": 0.08245032886619212
+    },
+    {
+      "cohort": "2025",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 35.37456006453095,
+      "maxDDpct": -10.968511300872763,
+      "openMarkPct": 36.87692115108525,
+      "passivePct": 60.59684176549598,
+      "actions": 9,
+      "feesPortfolioUnits": 0.08188110890225304
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 11.82089488977891,
+      "maxDDpct": -9.563450458186784,
+      "openMarkPct": 11.82089488977891,
+      "passivePct": 13.37479581856542,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017017814104014428
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 11.485934645476025,
+      "maxDDpct": -9.699105282499488,
+      "openMarkPct": 11.485934645476025,
+      "passivePct": 13.035180853557215,
+      "actions": 2,
+      "feesPortfolioUnits": 0.016990801181086777
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 11.151976276280728,
+      "maxDDpct": -9.834760106812224,
+      "openMarkPct": 11.151976276280728,
+      "passivePct": 12.696581686051589,
+      "actions": 2,
+      "feesPortfolioUnits": 0.01696386905453877
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 13.37479581856542,
+      "maxDDpct": -8.834123445752805,
+      "openMarkPct": 14.289108688069984,
+      "passivePct": 13.37479581856542,
+      "actions": 1,
+      "feesPortfolioUnits": 0.008
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 13.035180853557238,
+      "maxDDpct": -8.834123445752795,
+      "openMarkPct": 14.117931790384407,
+      "passivePct": 13.035180853557215,
+      "actions": 1,
+      "feesPortfolioUnits": 0.008
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 12.696581686051589,
+      "maxDDpct": -8.834123445752784,
+      "openMarkPct": 13.947266887407771,
+      "passivePct": 12.696581686051589,
+      "actions": 1,
+      "feesPortfolioUnits": 0.008
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0,
+      "netPct": 24.36100008439348,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 24.36100008439348,
+      "passivePct": 13.37479581856542,
+      "actions": 2,
+      "feesPortfolioUnits": 0.018029112910031734
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 23.9884758704612,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 23.9884758704612,
+      "passivePct": 13.035180853557215,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017999070634714613
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 23.617065886480848,
+      "maxDDpct": -1.3036342032771153,
+      "openMarkPct": 23.617065886480848,
+      "passivePct": 12.696581686051589,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017969118216651682
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0,
+      "netPct": 24.36100008439348,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 24.36100008439348,
+      "passivePct": 13.37479581856542,
+      "actions": 2,
+      "feesPortfolioUnits": 0.018029112910031734
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 23.9884758704612,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 23.9884758704612,
+      "passivePct": 13.035180853557215,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017999070634714613
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 23.617065886480848,
+      "maxDDpct": -1.3036342032771153,
+      "openMarkPct": 23.617065886480848,
+      "passivePct": 12.696581686051589,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017969118216651682
+    }
+  ],
+  "gates": [
+    {
+      "policy": "S4_BANK_ANOMALY",
+      "scenarios": [
+        {
+          "extra_slippage_per_leg_pct": 0,
+          "criteria": [
+            {
+              "year": "2024",
+              "net_gain_pp": -13.094632055008203,
+              "drawdown_change_pp": -1.9644944156162918,
+              "paid_actions": 12,
+              "pass": false
+            },
+            {
+              "year": "2025",
+              "net_gain_pp": -12.247489566843448,
+              "drawdown_change_pp": -1.0658141036401503e-14,
+              "paid_actions": 22,
+              "pass": false
+            }
+          ],
+          "all_years_pass": false
+        },
+        {
+          "extra_slippage_per_leg_pct": 0.15,
+          "criteria": [
+            {
+              "year": "2024",
+              "net_gain_pp": -14.696948207241455,
+              "drawdown_change_pp": -2.772762000616625,
+              "paid_actions": 12,
+              "pass": false
+            },
+            {
+              "year": "2025",
+              "net_gain_pp": -15.17101555289948,
+              "drawdown_change_pp": -0.142742722211187,
+              "paid_actions": 22,
+              "pass": false
+            }
+          ],
+          "all_years_pass": false
+        },
+        {
+          "extra_slippage_per_leg_pct": 0.3,
+          "criteria": [
+            {
+              "year": "2024",
+              "net_gain_pp": -16.265188169677103,
+              "drawdown_change_pp": -3.5737913972392015,
+              "paid_actions": 12,
+              "pass": false
+            },
+            {
+              "year": "2025",
+              "net_gain_pp": -17.969896128117792,
+              "drawdown_change_pp": -0.4081594175964547,
+              "paid_actions": 22,
+              "pass": false
+            }
+          ],
+          "all_years_pass": false
+        }
+      ]
+    },
+    {
+      "policy": "S4_BANK_OVERHEAT",
+      "scenarios": [
+        {
+          "extra_slippage_per_leg_pct": 0,
+          "criteria": [
+            {
+              "year": "2024",
+              "net_gain_pp": -2.0734698987424203,
+              "drawdown_change_pp": -2.220446049250313e-14,
+              "paid_actions": 4,
+              "pass": false
+            },
+            {
+              "year": "2025",
+              "net_gain_pp": -1.8149101807311183,
+              "drawdown_change_pp": -1.0658141036401503e-14,
+              "paid_actions": 9,
+              "pass": false
+            }
+          ],
+          "all_years_pass": false
+        },
+        {
+          "extra_slippage_per_leg_pct": 0.15,
+          "criteria": [
+            {
+              "year": "2024",
+              "net_gain_pp": -2.4304549195952134,
+              "drawdown_change_pp": -2.220446049250313e-14,
+              "paid_actions": 4,
+              "pass": false
+            },
+            {
+              "year": "2025",
+              "net_gain_pp": -2.625651378568385,
+              "drawdown_change_pp": -1.0658141036401503e-14,
+              "paid_actions": 9,
+              "pass": false
+            }
+          ],
+          "all_years_pass": false
+        },
+        {
+          "extra_slippage_per_leg_pct": 0.3,
+          "criteria": [
+            {
+              "year": "2024",
+              "net_gain_pp": -2.784199520171107,
+              "drawdown_change_pp": -1.0658141036401503e-14,
+              "paid_actions": 4,
+              "pass": false
+            },
+            {
+              "year": "2025",
+              "net_gain_pp": -3.416819687049234,
+              "drawdown_change_pp": 6.750155989720952e-14,
+              "paid_actions": 9,
+              "pass": false
+            }
+          ],
+          "all_years_pass": false
+        }
+      ]
+    }
+  ],
+  "jan": [
+    {
+      "cohort": "JAN2026",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 11.82089488977891,
+      "maxDDpct": -9.563450458186784,
+      "openMarkPct": 11.82089488977891,
+      "passivePct": 13.37479581856542,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017017814104014428
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 11.485934645476025,
+      "maxDDpct": -9.699105282499488,
+      "openMarkPct": 11.485934645476025,
+      "passivePct": 13.035180853557215,
+      "actions": 2,
+      "feesPortfolioUnits": 0.016990801181086777
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "B0_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 11.151976276280728,
+      "maxDDpct": -9.834760106812224,
+      "openMarkPct": 11.151976276280728,
+      "passivePct": 12.696581686051589,
+      "actions": 2,
+      "feesPortfolioUnits": 0.01696386905453877
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0,
+      "netPct": 13.37479581856542,
+      "maxDDpct": -8.834123445752805,
+      "openMarkPct": 14.289108688069984,
+      "passivePct": 13.37479581856542,
+      "actions": 1,
+      "feesPortfolioUnits": 0.008
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 13.035180853557238,
+      "maxDDpct": -8.834123445752795,
+      "openMarkPct": 14.117931790384407,
+      "passivePct": 13.035180853557215,
+      "actions": 1,
+      "feesPortfolioUnits": 0.008
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 12.696581686051589,
+      "maxDDpct": -8.834123445752784,
+      "openMarkPct": 13.947266887407771,
+      "passivePct": 12.696581686051589,
+      "actions": 1,
+      "feesPortfolioUnits": 0.008
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0,
+      "netPct": 24.36100008439348,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 24.36100008439348,
+      "passivePct": 13.37479581856542,
+      "actions": 2,
+      "feesPortfolioUnits": 0.018029112910031734
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 23.9884758704612,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 23.9884758704612,
+      "passivePct": 13.035180853557215,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017999070634714613
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_ANOMALY",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 23.617065886480848,
+      "maxDDpct": -1.3036342032771153,
+      "openMarkPct": 23.617065886480848,
+      "passivePct": 12.696581686051589,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017969118216651682
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0,
+      "netPct": 24.36100008439348,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 24.36100008439348,
+      "passivePct": 13.37479581856542,
+      "actions": 2,
+      "feesPortfolioUnits": 0.018029112910031734
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.15,
+      "netPct": 23.9884758704612,
+      "maxDDpct": -1.3036342032771264,
+      "openMarkPct": 23.9884758704612,
+      "passivePct": 13.035180853557215,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017999070634714613
+    },
+    {
+      "cohort": "JAN2026",
+      "policy": "S4_BANK_OVERHEAT",
+      "slippage_per_leg_pct": 0.3,
+      "netPct": 23.617065886480848,
+      "maxDDpct": -1.3036342032771153,
+      "openMarkPct": 23.617065886480848,
+      "passivePct": 12.696581686051589,
+      "actions": 2,
+      "feesPortfolioUnits": 0.017969118216651682
+    }
+  ]
+}
