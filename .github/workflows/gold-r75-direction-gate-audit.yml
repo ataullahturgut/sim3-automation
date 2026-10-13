@@ -1,0 +1,30 @@
+name: R75 preissue direction success failure audit
+on:
+  pull_request:
+    paths:
+      - 'gold_axis_2026/tools/gold_r75_preissue_correctness_mechanisms.py'
+      - 'gold_axis_2026/GOLD_R75_20261013_PREISSUE_DIRECTION_SUCCESS_FAILURE_PREREG.md'
+      - '.github/workflows/gold-r75-direction-gate-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Execute preregistered 9-gate audit for DAY and OVN
+        run: python gold_axis_2026/tools/gold_r75_preissue_correctness_mechanisms.py
+      - name: Upload full measured results
+        uses: actions/upload-artifact@v4
+        with:
+          name: r75-preissue-direction-gates
+          retention-days: 30
+          path: |
+            gold_axis_2026/GOLD_R75_20261013_PREISSUE_CORRECT_ERROR_SUMMARY.json
+            gold_axis_2026/GOLD_R75_20261013_PREISSUE_CORRECT_ERROR_GATE_METRICS.csv
+            gold_axis_2026/GOLD_R75_20261013_PREISSUE_CORRECT_ERROR_RESULT.md
