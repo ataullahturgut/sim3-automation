@@ -1,5 +1,29 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+## 0. YÖNETİM ÖZETİ / BELGE OTORİTESİ — 2026-10-13
+
+**Belge sınıfı:** GOLD INTRAMONTH araştırma ana defteri (tarihli bilimsel kanıt günlüğü). **Geçerli Git kapsamı:** `research-gold-jan26-two-factor-confirmation-v4-20261013` araştırma dalı; [PR #128](https://github.com/ataullahturgut/sim3-automation/pull/128) **OPEN / UNMERGED**. "CANONICAL" dosya adı, bu daldaki yeni sonuçlara üretim veya canlı emir yetkisi vermez. **Karar durumu:** `RESEARCH ONLY / NO AUTOMATED AL-SAT / NO NEW MODEL PROMOTION`. Bağımlı PR zinciri **#125 → #126 → #127 → #128**; orijinal Ocak kilitli gün gün defteri **#123** ayrı açık PR'dadır. Eski raporlar ve canlı sistem değişmemiştir.
+
+**Önce okunacak kurumsal yetki ve kalite kontrol dosyası:** [GOLD_INTRAMONTH_MANIFEST_AUTHORITY_AND_CHANGE_CONTROL_20261013.md](GOLD_INTRAMONTH_MANIFEST_AUTHORITY_AND_CHANGE_CONTROL_20261013.md). Bu kayıt `study_id, source_vintage, origin_clock, target, cohort, costs, evidence, status, approvals` ayrımını zorunlu kılar. İlgili deneyin **orijinal protokolü ve sayı üreten JSON/CSV'si**, bu uzun ana manifestteki özet cümlelerden önceliklidir; veri kaynağı/clock kabulü ayrı doğrulanır.
+
+| Çalışma hattı | Hedef / gözlem birimi | As-of araştırma statüsü | Bu belgeden çıkarılamayacak sonuç |
+|---|---|---|---|
+| **Aylık H=1** | Önceki ay sonundan sonraki ay altın ortalaması | `GOLD_MONTHLY_PROJECT_MANIFEST.md` ayrı otorite | Aylık H=1 başarısı banka-günlük al/sat başarısı değildir |
+| **Legacy K100/MFE5/MAE5** | Gelecek 5 BIST gözleminde altın yolunun fırsat/risk olayları | Tarihsel Stage 0–5, paralel araştırma (#1–#8) | K100 olasılığı otomatik SAT/AL emri değildir |
+| **DAILY CIG / H3 D0→D3** | Günlük referans veya üçüncü kaynak gününün **günlük ortalaması** | Kaynak-vintage düzeltmeli tarihsel tanı; R60 issue-date ve COT source-clock; H3 modelleri ayrı | CIG 74.40% eski karma-vintage label sonucu, kaynak tutarlı 88/125=70.40% tanısı; ikisi banka-kotasyon başarı oranı değildir |
+| **SESSION WGC/Sobti V5** | Uluslararası session clock'a bağlı UP/DOWN | #0.0/#0.1 ve eski #9: **2026-10-07 tarihli session aşaması** | SESSION etiketleri 09→16:45 Türkiye banka hedefi ile eş değildir |
+| **BANK DAY/OVN 09/15/16:45** | DAY 09:00→16:45; OVN 16:45→sonraki uygun 09:00; H3 aynı-hour ufuk ayrımı | R65–R70 araştırma, banka gerçek BID/ASK/fill ve tüm PIT issue-time eksik; **NO PROMOTION** | HistData / EV / Dukascopy spot-broker sonuçları Türk bankasının net kârı değildir |
+| **JAN2026 S4/V2/V3/V4** | 16:30TR alarm, 16:45 teorik uygulama; 2023–25 başka kohortlarla stres | PR#123/#125/#126/#127/#128; V4 **2024 event coverage 0/12; FAIL/REVIEW ONLY** | Ocak V4 +23.99% daha önce görülmüş dönem; ileri-körü kanıt/gerçek banka emri değildir |
+| **2023–25 olay atlası** | Geçmiş çok-ufuklu fiyat hareketi ve tarihli olay bağlamı | V2/V3/V4 PRICE/EVENT RESEARCH; mekanizma/first-print kısmi | Haber-anekdotları kanıtlı nedensellik ya da öngörü değişkeni sayılamaz |
+
+**Yetki hiyerarşisi / çelişki çözümü:** Bir önermenin "BINDING", "current", "next" veya "authoritative" olması yalnız yazıldığı **sürüm, alt-proje, saat, veri ve kohort** içinde geçerlidir. Her eski "next action" cümlesi otomatik bugünkü emir değildir. Düzeltmeler, kanıt yolu ve açık `supersedes` kapsamı olmadan eski kayıtları geçersiz kılamaz; **LATEST TEXT ≠ PROMOTED MODEL**. Karar sırası: source/label + PIT gate → frozen protocol → aynı evren sayısal evidence → bilimsel verdict → summary → ayrıca onaylanmış production release.
+
+**Ocak nedensellik muhasebesi:** B0 günlük kapanış-gözlem körlüğü; S4 düşük devirli ama geç tepki; V2 18:15 banka sonrasına kayan ve yanlış alarm üreten risk-state; V3 16:30 doğru karar saati fakat tekil A/T yanlış SAT; V4 A AND T Ocak +10.953 getiri puanı karşıolgusal artı ama 2024'te 12 ilgili olaydan hiçbiri yakalanmadı. A ve T aynı fiyat yolundan türetilmiştir; ekonomik haber/metal **nedeni ispatlanmış değil**. Tam iz aşağıdaki V1–V4 ve [V4 bilimsel hüküm](GOLD_JAN2026_V4_DUAL_FACTOR_31DAY_SCIENTIFIC_VERDICT_20261013.md). Araştırma spot ürünü, banka teklif ve masrafı değildir.
+
+**Değişiklik kuralı:** Yeni deney tekil ayrı metodoloji/protokol + sonuç + QA raporunda yazılır. Manifestte kısa karar/kanıt bağlantısı ve kapsam değişikliği; büyük eski bölümler silinmez, vaka öyküsü topluca piyasa nedenselliği diye sunulmaz. V4 yeni FULL/HALF bağımsız ikinci kodla yeniden üretilmiş değildir (eski S4 baseline 12/12 parity ise vardır). Ayrıca gerçek Türkiye banka BID/ASK fill ve dokunulmamış ileri dönem şartları açıktır.
+
+---
+
 <!-- GOLD_JAN2026_EXPOST_FAILURE_AND_SCIENTIFIC_RESEARCH_GATE_20261013 -->
 ## 2026-10-13 — JAN 2026 sequential-replay lessons; scientific model redevelopment (RESEARCH; NO SIGNAL PROMOTION)
 
@@ -533,9 +557,9 @@ SECOND INDEPENDENT prereg `GOLD_R5_20261009_US_MACRO_INTRADAY_DAY_DIR4_ERROR_DIA
 
 > **Separation:** monthly average forecast ≠ intramonth path opportunity. A monthly DOWN forecast does not imply that every daily/weekly move inside that month is DOWN.
 
-## 0.0 Current binding single-model evidence map — 2026-10-07
+## 0.0 2026-10-07 session-model kanıt haritası — TARİHSEL KESİT
 
-**This section governs the immediate task and overrides older “next action”, hybrid/router and replay-queue instructions below.** Those entries are chronological history, not authorization to begin a consensus.
+****Tarihsel statü:** Bu bölüm 2026-10-07 itibarıyla tamamlanan SESSION tekil model incelemesidir; kendi tarihindeki eski next-action ve consensus sıralamasını düzeltir. 2026-10-12 R65–R70 banka saatli araştırmalarından sonra **bugünün tek proje görevi veya canlı model yetkisi DEĞİLDİR**. En üstteki alan-bazlı yönetim kaydını ve ilgili en yeni kanıt raporlarını oku.** Those entries are chronological history, not authorization to begin a consensus.
 
 The standalone inventory is reconciled: Models 01–09 (including four SAGE identities), shallow CART, RIFT/VEGA/TURN/OPAL/PRISM/TWIN and canonical/selected disagreement audits had already run. Completed identities were not indiscriminately replayed. This work recovered archived row evidence and completed a window-specific metrics/role/error/calibration map.
 
@@ -578,7 +602,7 @@ This does not authorize consensus or a larger model family. It authorizes a **sm
 
 **Independent reconciliation verification:** after fetching and fast-forwarding to `cba14856a021adffc77124602fb5141edba25118`, the evaluation-only audit reproduced every tracked output without a diff. Both future-counterfactual regression tests passed. All 1,304 selector blocks have matured training labels by cutoff; all 12,946 repair prediction rows are confined to 2023–2024. The 75,133-row evaluation ledger keeps `NESTED_*` development and `FROZEN_*` historical transport identities separate. Ledger SHA-256: `17c4c3caaa6be8fd135a95353db07715f8e9fc7547c25c2e3387ce08b52040d1`. No further fitting, target changes or consensus construction was needed during this verification.
 
-## 0.1 Binding project evolution and current target identity — 2026-10-07
+## 0.1 Proje hedeflerinin tarihsel evrimi — 2026-10-07 SESSION kesiti
 
 This project is one continuous short-horizon Gold research program whose **target identity evolved after empirical failure analysis**. The daily/H3, consensus and session work must therefore be read chronologically, not as unrelated projects and not as interchangeable horizons.
 
@@ -601,10 +625,10 @@ This project is one continuous short-horizon Gold research program whose **targe
 5. **Clock, label and data repair.**  
    The session targets were rebuilt from governed intraday XAU/USD with date-aware DST, venue/calendar eligibility, internal-gap rules, exact start-`OPEN` and final-15m-`CLOSE` semantics, and source-ready / PIT checks. The V5 session target files are the modelling authority. Old daily/H3 prediction CSVs may not be treated as session outcomes.
 
-6. **Current phase: model-family revalidation on corrected session targets.**  
+6. **2026-10-07 tarihi SESSION aşaması: model-family revalidation on corrected session targets.**  
    The models used in the earlier near-term research are now being replayed or rebuilt **model by model against the corrected V5 session targets**, preserving each model's legitimate algorithmic identity while enforcing the new target/clock and leakage contract. Only after this replay ledger is clean may a new session-specific router/consensus be built.
 
-### Binding status by lane
+### 2026-10-07 tarihli SESSION hat durumu (güncel genel otorite tablosu değil)
 
 | Lane | Current status | Authority meaning |
 |---|---|---|
@@ -687,9 +711,9 @@ The next task is therefore **not HELIOS yet**. First freeze a development-only s
 
 ---
 
-# 1. Executive State
+# 1. LEGACY K100/MFE/MAE fırsat hattı — tarihsel Stage 0–5 yönetim bölümü
 
-## 1.1 Primary business question
+## 1.1 Tarihsel K100 hattının iş sorusu (güncel DAY/OVN değildir)
 
 Can we identify, from information known at a daily origin, whether Gold is likely to produce a meaningful upward excursion over the next few Borsa İstanbul observation days?
 
@@ -698,7 +722,7 @@ Primary focus:
 
 The system is not primarily a “tomorrow price” model.
 
-## 1.2 Primary output horizon
+## 1.2 Tarihsel K100 hattının hedef ufku
 
 Primary:
 - **5 future Borsa İstanbul Gold observations**
@@ -712,9 +736,9 @@ Primary path targets:
 - **MFE_5** = Maximum Favorable Excursion
 - **MAE_5** = Maximum Adverse Excursion.
 
-## 1.3 Current stage
+## 1.3 2026-10-07 SESSION durum kesiti (sonraki R65–R70'ten önce)
 
-The project has several preserved historical lanes, but **the active near-term direction task is now the corrected global-session model-family revalidation**.
+**2026-10-07 tarihli durum kaydı:** O tarihte öncelikli yakın-vade SESSION görevi corrected global-session model-family revalidation idi. **Bugünün global görevi olduğu iddiası artık geçerli değil**; banka 09/15/16:45 karar araştırması R65–R70 ve ayrı Ocak2026 PR zinciri sonradan eklendi. Bu bölüm SESSION geliştirme geçmişidir.
 
 Current state:
 - legacy intramonth K100 opportunity research: Stage 0–5 COMPLETE; its frozen-2025 transport remains a separate preserved branch, not the immediate task;
@@ -755,7 +779,7 @@ Current state:
 - **SESSION BOCPD V1:** **COMPLETE / 2025 TRANSPORT FAILED / NOT PROMOTED / 2026 DATA-BLOCKED** via `GOLD_SESSION_BOCPD_V1_FINAL_AUTHORITY_2026-10-07.md`; Stage-2 retained only Sobti Asia Afternoon and Sobti NY/London, but frozen 2025 transport produced zero ACTs in both heads, so BOCPD added no 2025 correction value;
 - **SESSION horizon/clock/maturity audit:** **COMPLETE / NO LEGACY-HORIZON CONTAMINATION FOUND** via `GOLD_SESSION_HORIZON_CLOCK_MATURITY_AUDIT_2026-10-07.md`;
 - **SESSION DPTC:** **COMPLETE / DEVELOPMENT-BLOCKED BY INSUFFICIENT 2023 SESSION-SELLR HISTORY / NOT PROMOTED / 2025 NOT OPENED / 2026 DATA-BLOCKED** via `GOLD_SESSION_DPTC_FINAL_AUTHORITY_2026-10-07.md`; original SELLR producer was recovered, historical H3 SELLR was correctly rejected as horizon-dependent, and a preregistered SESSION-SELLR successor was attempted with 2023-only fitting. No partition/window reached the frozen minimum 80 same-window 2023 rows (maximum 77), therefore no SELLR spec/threshold or DPTC head was authorized and 2025 remained closed;
-- **current immediate task:** **RTE Stage-1 horizon/clock identity audit** before any SESSION RTE replay;
+- **2026-10-07 as-of next task (HISTORICAL):** RTE Stage-1 horizon/clock identity audit before SESSION RTE replay; **güncel yetki ilanı değildir**;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -3991,9 +4015,9 @@ The former K100/MFE-MAE opportunity roadmap remains preserved as a parallel rese
 
 ---
 
-# 9. Exact Next Action — Corrected Session Model Replay
+# 9. Historical Session Model Replay Queue — 2026-10-07 SNAPSHOT
 
-The next action is **not** another DAILY/H3 run and is **not** immediate consensus construction.
+**2026-10-07 tarihli SESSION iş kuyruğu:** Bu aşamadaki next action başka DAILY/H3 veya doğrudan consensus inşası değildi. Bu, 2026-10-12 banka-uyumlu son deneyleri geçersiz kılan **güncel talimat değildir**. Gerçek proje önceliği için en üstteki alan tablosunu ve R65–R70 sonuçlarını oku.
 
 1. Reconfirm the binding V5 target files and clock semantics before every model run.
 2. Reconcile the legacy model inventory used in the earlier near-term prediction/consensus work with the session-readiness matrix. Preserve model role: primary direction engine, structural/path model, specialist correction layer, controller/meta layer, or not applicable.
@@ -4152,11 +4176,11 @@ Method:
 
 2025 frozen-specification transport confirms that this model family does not carry a robust session edge. Its highest 2025 BA is only about 49.88% (WGC US), while several heads are materially worse and/or one-sided. Model-02 is therefore retained as a negative but informative benchmark, not a consensus candidate.
 
-This section is the single current next-action authority for the near-term/session direction work.
+**Yürürlük notu:** Bu ifade yalnızca 2026-10-07 tarihli SESSION-Model02 deney aşamasının kapanış hükmüdür. 2026-10-12 sonrası BANK DAY/OVN iş akışı veya 2026-10-13 JAN V4 araştırması için bugünkü tek otorite sayılamaz.
 
 ---
 
-# 10. Document Hierarchy
+# 10. 2026-10-07 Tarihli Temel Belge Hiyerarşisi — KORUNAN TARİHSEL İNDEKS
 
 Canonical intramonth project:
 - `GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md`
@@ -4201,6 +4225,10 @@ Prior daily evidence:
 Monthly parent:
 - `GOLD_MONTHLY_PROJECT_MANIFEST.md`
 
+
+# 11. Tarihli ekler ve kapsam-sınırlı kaynak/etiket düzeltmeleri
+
+**Yönetim notu:** Bu başlıktan sonraki notlar eski #10 hiyerarşiye sonradan eklenmiş R/5E kanıtlarıdır. İçlerinde belirli veri/target alanında gerçekten bağlayıcı bir **source correction** bulunabilir; fakat alt başlığın eski sıra numarası veya BINDING kelimesi otomatik global canlı sinyal yetkisi vermez. Eski tarihli statü, ilgili daha yeni QC raporuyla yalnız aynı veri/saat kapsamında supersede edilir. Belge sonu = en alt başlık değil; geçerli alan kararı = en üstteki kanıt matrisi + ilgili protokol + güncel sayısal rapor.
 
 ## 5E.11E Daily Realization Source Correction — 2026-10-06
 
