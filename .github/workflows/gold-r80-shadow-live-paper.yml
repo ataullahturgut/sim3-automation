@@ -1,0 +1,21 @@
+name: Gold R80 shadow live-stream logic — deterministic safety checks
+on:
+  pull_request:
+    paths:
+      - 'gold_axis_2026/tools/gold_r80_paper_live_watch.py'
+      - 'gold_axis_2026/tools/test_gold_r80_paper_live_watch.py'
+      - '.github/workflows/gold-r80-shadow-live-paper.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test causal processing, quote staleness, forecast provenance and no-bank-order safety
+        run: python -m unittest -v gold_axis_2026/tools/test_gold_r80_paper_live_watch.py
