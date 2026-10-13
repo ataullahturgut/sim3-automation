@@ -1,0 +1,44 @@
+{
+  "warning": "FOMC USMPD official [-10,+20] min; 15min bars cannot resolve it. Alternative [-15,+30] min 45min ENCOMPASSING window, broader but includes contaminating news, secondary only.",
+  "n": 46,
+  "slope_per_10bp": -0.16755481518550208,
+  "correlation": -0.6279223270021331,
+  "leave_one_year_out": [
+    {
+      "exclude": 2020,
+      "n": 40,
+      "slope_per_10bp": -0.16537551974138562,
+      "correlation": -0.651997193367158
+    },
+    {
+      "exclude": 2021,
+      "n": 38,
+      "slope_per_10bp": -0.16678346971450175,
+      "correlation": -0.7103915548613057
+    },
+    {
+      "exclude": 2022,
+      "n": 38,
+      "slope_per_10bp": -0.20465698736457852,
+      "correlation": -0.6369757421808137
+    },
+    {
+      "exclude": 2023,
+      "n": 38,
+      "slope_per_10bp": -0.14749117222489205,
+      "correlation": -0.5086176210036015
+    },
+    {
+      "exclude": 2024,
+      "n": 38,
+      "slope_per_10bp": -0.14843747185555017,
+      "correlation": -0.5889962027676923
+    },
+    {
+      "exclude": 2025,
+      "n": 38,
+      "slope_per_10bp": -0.18616599223888275,
+      "correlation": -0.6750721325329025
+    }
+  ]
+}
