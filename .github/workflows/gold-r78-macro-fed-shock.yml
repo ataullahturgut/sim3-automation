@@ -1,0 +1,31 @@
+name: R78 gold macro Fed shock alert ablation
+on:
+  pull_request:
+    paths:
+      - 'gold_axis_2026/tools/gold_r78_macro_fed_first_touch_ablation.py'
+      - 'gold_axis_2026/data_r78/GOLD_R78_20261013_CME_NQ_ZN_CL_01_04UTC_AVAILABLE.csv'
+      - '.github/workflows/gold-r78-macro-fed-shock.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  macro-fed-ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install packages
+        run: pip install 'numpy>=1.24,<3' 'scikit-learn>=1.4,<2'
+      - name: Strict same-day preissue Fed-CME shock classification
+        run: python -u gold_axis_2026/tools/gold_r78_macro_fed_first_touch_ablation.py
+      - name: Save ablation evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: r78-macro-fed-shock
+          retention-days: 30
+          path: |
+            gold_axis_2026/GOLD_R78_20261013_SUMMARY.json
+            gold_axis_2026/GOLD_R78_20261013_MATCHED_ROW_SCORES.csv
