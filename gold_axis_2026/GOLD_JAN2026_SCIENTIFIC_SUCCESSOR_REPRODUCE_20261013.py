@@ -46,7 +46,7 @@ def run(per,policy):
                 assert position=="GOLD"
                 cash=units*z["open"]*.992;units=0;position="CASH"
                 if policy.startswith("C") or policy.startswith("S"):cool=5
-                elif policy.startswith("B") and policy!="B0_ORIGINAL":cool=3
+                elif policy.startswith("B") and policy!="B0_ORIGINAL" and reason=="INTRADAY_DD":cool=3
             actions.append((origin,z["date"],signal,reason))
             pending=None
         def ret(k):
@@ -62,7 +62,7 @@ def run(per,policy):
             buy=r5 is not None and r20 is not None and m10 is not None and r5>=1.2 and r20>0 and z["c"]>=m10
             sell=(r3 is not None and r3<=-1.5) or (d10 is not None and d10<=-2) or (m10 is not None and r5 is not None and z["c"]<m10 and r5<=-.5)
             reason="BASELINE"
-            if policy!="B0_ORIGINAL" and z["dd"]<=-float(policy.split("DD")[1]):
+            if policy!="B0_ORIGINAL" and not sell and z["dd"]<=-float(policy.split("DD")[1]):
                 sell=True;reason="INTRADAY_DD"
         elif policy=="S1_SMA20_60":
             buy=m20 is not None and m60 is not None and m20>=m60*1.01 and z["c"]>m60
