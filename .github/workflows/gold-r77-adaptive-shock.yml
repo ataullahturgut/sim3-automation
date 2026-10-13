@@ -1,0 +1,31 @@
+name: R77 adaptive volatility-standardized short gold shock pilot
+on:
+  pull_request:
+    paths:
+      - 'gold_axis_2026/tools/gold_r77_vol_scaled_first_passage_hazard.py'
+      - 'gold_axis_2026/data_r77/GOLD_R77_20261013_VOL_SCALED_FIRST_TOUCH_EVENTS.csv'
+      - '.github/workflows/gold-r77-adaptive-shock.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  adaptive-shock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install model libraries
+        run: pip install 'numpy>=1.24,<3' 'scikit-learn>=1.4,<2'
+      - name: Train and test fixed R77 as-of standardized shock classification
+        run: python -u gold_axis_2026/tools/gold_r77_vol_scaled_first_passage_hazard.py
+      - name: Archive row-level forecasts and metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: r77-vol-standardized-first-pass-shock
+          retention-days: 30
+          path: |
+            gold_axis_2026/GOLD_R77_20261013_RESULT.json
+            gold_axis_2026/GOLD_R77_20261013_ROW_FORECASTS.csv
