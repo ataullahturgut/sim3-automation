@@ -1,0 +1,213 @@
+{
+  "warmup_price_start": "2022-01-03",
+  "last": "2025-12-31",
+  "total_days": 1032,
+  "cme_rows": 4254,
+  "cme_symbols": [
+    "CL",
+    "GC",
+    "NQ",
+    "SI",
+    "ZN"
+  ],
+  "coverage": {
+    "CL": {
+      "n": 924,
+      "start": "2023-01-03",
+      "last": "2026-01-02"
+    },
+    "GC": {
+      "n": 802,
+      "start": "2023-01-03",
+      "last": "2025-12-31"
+    },
+    "NQ": {
+      "n": 917,
+      "start": "2023-01-03",
+      "last": "2026-01-02"
+    },
+    "SI": {
+      "n": 692,
+      "start": "2023-01-03",
+      "last": "2025-12-31"
+    },
+    "ZN": {
+      "n": 919,
+      "start": "2023-01-03",
+      "last": "2026-01-02"
+    }
+  },
+  "summary": [
+    {
+      "year": 2023,
+      "n": 257,
+      "fixed3_5": 22,
+      "z1_25": 8,
+      "z5_2": 19,
+      "union": 24,
+      "up": 15,
+      "down": 9
+    },
+    {
+      "year": 2024,
+      "n": 259,
+      "fixed3_5": 40,
+      "z1_25": 8,
+      "z5_2": 21,
+      "union": 26,
+      "up": 16,
+      "down": 10
+    },
+    {
+      "year": 2025,
+      "n": 258,
+      "fixed3_5": 62,
+      "z1_25": 10,
+      "z5_2": 24,
+      "union": 30,
+      "up": 24,
+      "down": 6
+    }
+  ],
+  "flagged": 80,
+  "clusters": 24,
+  "clustersSensitivity": [
+    {
+      "gap": 1,
+      "n": 27
+    },
+    {
+      "gap": 2,
+      "n": 25
+    },
+    {
+      "gap": 3,
+      "n": 24
+    },
+    {
+      "gap": 5,
+      "n": 21
+    }
+  ],
+  "clustersYears": [
+    {
+      "year": 2023,
+      "n": 7,
+      "UP": 4,
+      "DOWN": 3
+    },
+    {
+      "year": 2024,
+      "n": 9,
+      "UP": 3,
+      "DOWN": 6
+    },
+    {
+      "year": 2025,
+      "n": 8,
+      "UP": 5,
+      "DOWN": 3
+    }
+  ],
+  "aggr": [
+    {
+      "condition": "ALL",
+      "n": 764,
+      "up": 291,
+      "down": 88,
+      "first_up": 286,
+      "first_down": 85,
+      "both": 8
+    },
+    {
+      "condition": "RET20_GE_5",
+      "n": 193,
+      "up": 78,
+      "down": 41,
+      "first_up": 73,
+      "first_down": 38,
+      "both": 8
+    },
+    {
+      "condition": "RET20_GE_8",
+      "n": 74,
+      "up": 33,
+      "down": 21,
+      "first_up": 33,
+      "first_down": 19,
+      "both": 2
+    },
+    {
+      "condition": "RET20_LT_5",
+      "n": 571,
+      "up": 213,
+      "down": 47,
+      "first_up": 213,
+      "first_down": 47,
+      "both": 0
+    },
+    {
+      "condition": "RET20_LE_NEG3",
+      "n": 60,
+      "up": 28,
+      "down": 1,
+      "first_up": 28,
+      "first_down": 1,
+      "both": 0
+    },
+    {
+      "condition": "ret20_ge8_2023",
+      "n": 12,
+      "up": 0,
+      "down": 1,
+      "first_up": 0,
+      "first_down": 1,
+      "both": 0
+    },
+    {
+      "condition": "ret20_lt5_2023",
+      "n": 215,
+      "up": 55,
+      "down": 19,
+      "first_up": 55,
+      "first_down": 19,
+      "both": 0
+    },
+    {
+      "condition": "ret20_ge8_2024",
+      "n": 13,
+      "up": 2,
+      "down": 4,
+      "first_up": 2,
+      "first_down": 4,
+      "both": 0
+    },
+    {
+      "condition": "ret20_lt5_2024",
+      "n": 206,
+      "up": 76,
+      "down": 20,
+      "first_up": 76,
+      "first_down": 20,
+      "both": 0
+    },
+    {
+      "condition": "ret20_ge8_2025",
+      "n": 49,
+      "up": 31,
+      "down": 16,
+      "first_up": 31,
+      "first_down": 14,
+      "both": 2
+    },
+    {
+      "condition": "ret20_lt5_2025",
+      "n": 150,
+      "up": 82,
+      "down": 8,
+      "first_up": 82,
+      "first_down": 8,
+      "both": 0
+    }
+  ]
+}
