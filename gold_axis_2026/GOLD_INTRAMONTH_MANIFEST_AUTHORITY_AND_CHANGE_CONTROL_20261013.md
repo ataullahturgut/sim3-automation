@@ -31,6 +31,8 @@
 | GOV-07 | V4 Jan29+%23.99 kesiti başarı gibi genellenebilir | 2024 0/12 eksik kapsama ve 2025 n=2; test gate başarısız, selection/ex-post uyarısı | **MODEL REJECTED** |
 | GOV-08 | EV2023–25 / HIST Jan2026 araştırma spot fiyatları ve gerçek Türk bankası kotasyonu ayrı | Banka BID/ASK, işlem anı, spread, masraf, fill eksikleri açık; net banka kârı iddiası yok | **VERİ KAPISI AÇIK/UNVERIFIED** |
 | GOV-09 | V4 kendi çift-alarm/half-recovery kodu farklı bağımsız uygulama ile birebir yeniden koşulmadı | Önceki S4 12/12 parity var; **yeni strateji tam bağımsız hesap testi henüz yok** | **OPEN** |
+| GOV-10 | **Farklı maliyet sözleşmesi:** R70 25 baz puan varsayımsal **toplam tur** maliyeti; V4 her yönde **%0.8** ücret + ayrıca her yönde **%0.15** aleyhte spot–kotasyon farkı; ayrıca hedef ve test pencereleri farklı | Bankada gerçek kullanıcının %0.8 alış / %0.8 satış kuralını ayrı varsayımsal stresle uygula; R70 ve V4 skorlarını aynı-maliyetli gibi karşılaştırma | **BLOK / yeni eş-maliyetli test gerekir** |
+| GOV-11 | GitHub deposunun erişim seviyesi sorguda **public** göründü | Özel Neon erişimi/kimlik bilgileri, API anahtarları, lisanslı veya gizli ham fiyatlar ve hesap verileri bu açık kayıt deposuna asla eklenmemeli; repo gizliliği hakkında ayrı yetkili karar gerekli | **GİZLİLİK KONTROLÜ AÇIK** |
 
 ## 4. İş akışı: durum makinesi ve go/no-go
 1. **INVENTORY:** Her model için tek `study_id`, `target_id`, `origin_clock`, `horizon`, `feature_vintage`, `source_snapshot`, `cohort`, `code_commit`, `protocol_path`, `results_path`, `run_id`, `status`, `owner_review` kayıt alanları gereklidir. Verilmeyen alanı tahmin etme, UNKNOWN yaz.
