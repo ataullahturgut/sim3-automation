@@ -66,6 +66,18 @@ Kullanıcının komisyonu **alışta %0.8 + satışta %0.8**, ek banka makası v
 
 ---
 
+## 0.1B. 38 tarihsel olayın veri ve etken dosyası (2026-10-14)
+
+**ÖNCE GENEL ARAŞTIRMA, SONRA OCAK:** 2023–25 V1/V2 tarihsel fiyat taramasında eksik işaretlenmiş **18 ZigZag + 20 kısa-ufuk kümesi = 38 kayıt** için kaynaklı tek tek retrospektif veri ve ekonomi-etken incelemesi tamamlandı. [38 olayın ayrı ayrı ayrıntılı vaka raporu](GOLD_HISTORICAL_38_CASES_NEWS_DATA_REGIME_INDIVIDUAL_AUDIT_20261013.md), [38 satırlık, 30 sütunlu sayısal/haber/regime kanıt CSV'si](GOLD_HISTORICAL_38_MISSING_CASES_CAUSAL_DATA_EVIDENCE_V1_20261013.csv). Önceki 42/53/291 kaynak delili değişmedi. Rapor, *neden kesin bulundu* veya *tahmin modeli geliştirildi* iddiası değildir.
+
+**Sayısal kontrol:** Önceki çapraz piyasa uç verisi sorgu engeli büyük ölçüde aşıldı. 38/38 özgün fiyat/olay başlığı, haber adayları, WGC/Reuters tarihli bağlam, ekonomik mekanizma ve karşıt kanıt raporda mevcut. Gümüş/platin/paladyum + S&P500/Nasdaq100 **35/38** olayda exact-date başlangıç/bitiş günlük değerleriyle hesaplandı; **3/38** (V2 C016, C040, C052) kaynak takvimi/tatil kaynaklı eksik; otomatik önceki gün imputasyonu yapılmadı. V2 **C035** aynı güne dayanan kaynak başlangıcı/bitişi nedeniyle beş seri **%0 matematiksel otomatik** sonuç verir: gerçek piyasa sakinliği değil. Dolayısıyla **34** vaka farklı tarihler arası beşli karşılaştırmaya uygundur. Başka saatli fiyat hedefleri ve oranları birbirine karıştırmayın.
+
+**Ayrıştırıcı temel bulgular:** 2023 Ocak altın +%6.065 iken diğer üç metal düşmüş, hisseler yükselmiş (genel kıymetli-metal talebi tek açıklama olamaz). 2023 Şubat metal+ABD hisse zayıflığı, 2023 Mart bankacılık/güvenli liman/ETF; 2024 Mart altın-özgü opsiyon/Çin/OTC; 2024 Aralık 18 Fed hawkish yol; 2025 Mayıs 12 ABD–Çin tarife rahatlamasında hisse endeksleri yükselirken altın aşağı; 2025 Nisan likidite satışı ve sonraki yükseliş iki ayrı mekanizma; 2025 Aralık CME marjin artışı. Her biri **veriyle tutarlılık / nedensellik kanıtı değil** olarak kaydedilmiştir. 2023–25 çapraz piyasalar tarihli olmakla birlikte 2026'da arşivlenmiş, **gerçek 2023–25 saatli PIT özellik** değillerdir.
+
+**Kalan bilimsel eksik:** Her kayıt için eşzamanlı 2Y/10Y nominal/reel faiz, USD/DXY, GVZ/VIX, CFTC pozisyon *ilk yayın* zamanı, ETF/COMEX-EFP/opsiyon fon akışı, daha güvenilir orijinal haber UTC first-print, kaynaklar arası eş-saatlilik, bağımsız negatif kontroller ve geleceği görmeyen model–olay eşleştirmesi henüz tamamlanmış değildir. 38 adet eski fiyat kaydını 38 bağımsız ekonomik şok veya doğrulanmış makro neden saymayın. **Ocak 2026 B0/S4/V2/V3/V4 özel stres testi hâlen dosyanın en sonundaki #12 bölümündedir.** Araştırma statüsü: `38_CASES_RECORDED / 35_CROSS_ASSET_DATE_MATCHES / CAUSALITY_PARTIAL / NO_LIVE_TRADING_AUTHORITY`.
+
+---
+
 ## 0.2. Tarihsel Olaylar — Kurumsal Ana Sicil ve Model Eşleştirme Kapısı (2026-10-13)
 
 **AUTHORITATIVE RECORD CONTROL — RESEARCH, NOT SIGNAL:** [GOLD_HISTORICAL_EVENT_MASTER_CROSSWALK_AUTHORITY_20261013.md](GOLD_HISTORICAL_EVENT_MASTER_CROSSWALK_AUTHORITY_20261013.md) (sözleşme, QA ve nedensellik sınırları); [GOLD_HISTORICAL_EVENT_MASTER_CROSSWALK_V1_20261013.csv](GOLD_HISTORICAL_EVENT_MASTER_CROSSWALK_V1_20261013.csv) (291 satır, 39 alan, her satır için kaynak kimliği/blob SHA). Bu kayıt geçmiş incelemeleri **tekrar yapmaz**; V1/V2/V3/V4, H3, makro ve aylık hata kaynaklarını kurumsal olarak kayıp olmadan bulmamızı sağlar. Belgeler PR #128 **OPEN/UNMERGED** araştırma dalındadır.
