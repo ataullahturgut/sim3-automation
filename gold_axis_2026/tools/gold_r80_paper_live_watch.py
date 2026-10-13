@@ -123,7 +123,7 @@ class ShadowEngine:
                   if 0 <= (t-tt).total_seconds() <= 90*60]
         lookback = [(tt, p) for tt, p in recent
                     if 45*60 <= (t-tt).total_seconds() <= 75*60]
-        move = math.log(e["_mid"]/lookback[-1][1]) if lookback and len(recent) >= 5 else None
+        move = math.log(e["_mid"]/lookback[0][1]) if lookback and len(recent) >= 5 else None
         # Observed at receive time, NOT a future-prediction or a 15m intra-bar high.
         if source_ok and in_session and move is not None:
             new_sign = "UP" if move >= ONSET_LOG_ABS else (
