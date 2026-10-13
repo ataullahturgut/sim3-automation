@@ -6,13 +6,16 @@
   "year_metrics": [
     {
       "period": "2022",
+      "provider": "EV",
       "n": 198,
       "known_futures": 198,
+      "events": 9,
       "alerts": 2,
       "flag_with_label": 2,
       "flag_predict_next3_drop3": 0,
       "false_or_nonmatching": 2,
-      "events": 9,
+      "precision": 0,
+      "recall": 0,
       "dates": [
         {
           "date": "2022-03-28",
@@ -32,13 +35,16 @@
     },
     {
       "period": "2023",
+      "provider": "EV",
       "n": 257,
       "known_futures": 257,
+      "events": 4,
       "alerts": 3,
       "flag_with_label": 3,
       "flag_predict_next3_drop3": 0,
       "false_or_nonmatching": 3,
-      "events": 4,
+      "precision": 0,
+      "recall": 0,
       "dates": [
         {
           "date": "2023-02-02",
@@ -65,13 +71,16 @@
     },
     {
       "period": "2024",
+      "provider": "EV",
       "n": 259,
       "known_futures": 259,
+      "events": 17,
       "alerts": 10,
       "flag_with_label": 10,
       "flag_predict_next3_drop3": 1,
       "false_or_nonmatching": 9,
-      "events": 17,
+      "precision": 0.1,
+      "recall": 0.058823529411764705,
       "dates": [
         {
           "date": "2024-04-12",
@@ -147,13 +156,16 @@
     },
     {
       "period": "2025",
-      "n": 305,
-      "known_futures": 302,
-      "alerts": 19,
-      "flag_with_label": 18,
+      "provider": "EV",
+      "n": 258,
+      "known_futures": 255,
+      "events": 24,
+      "alerts": 14,
+      "flag_with_label": 13,
       "flag_predict_next3_drop3": 4,
-      "false_or_nonmatching": 14,
-      "events": 30,
+      "false_or_nonmatching": 9,
+      "precision": 0.3076923076923077,
+      "recall": 0.16666666666666666,
       "dates": [
         {
           "date": "2025-04-03",
@@ -252,53 +264,19 @@
           "dd": 5.461338138824489,
           "weakness": 4.79490588636038,
           "y3": null
-        },
-        {
-          "date": "2025-10-27",
-          "score": 9.774030391668262,
-          "dd": 3.347370562902474,
-          "weakness": 3.1033213762942946,
-          "y3": 0
-        },
-        {
-          "date": "2025-10-28",
-          "score": 5.979058881794561,
-          "dd": 3.3140726052736658,
-          "weakness": 1.6783578664006193,
-          "y3": 0
-        },
-        {
-          "date": "2025-10-29",
-          "score": 7.530072704021148,
-          "dd": 2.5402268759824875,
-          "weakness": 2.519134829048944,
-          "y3": 0
-        },
-        {
-          "date": "2025-11-14",
-          "score": 8.84793704515821,
-          "dd": 4.252181481186845,
-          "weakness": 3.0632994658057666,
-          "y3": 0
-        },
-        {
-          "date": "2025-12-29",
-          "score": 8.305832431964268,
-          "dd": 5.464579370267664,
-          "weakness": 4.788057410176233,
-          "y3": 0
         }
       ]
     },
     {
       "period": "2026-01",
+      "provider": "HIST",
       "n": 21,
       "known_futures": 18,
+      "events": 1,
       "alerts": 2,
       "flag_with_label": 0,
       "flag_predict_next3_drop3": 0,
       "false_or_nonmatching": 0,
-      "events": 1,
       "dates": [
         {
           "date": "2026-01-29",
@@ -1446,5 +1424,334 @@
         }
       ]
     }
-  ]
+  ],
+  "year_metrics_initial_mixed_provider_do_not_use": [
+    {
+      "period": "2022",
+      "n": 198,
+      "known_futures": 198,
+      "alerts": 2,
+      "flag_with_label": 2,
+      "flag_predict_next3_drop3": 0,
+      "false_or_nonmatching": 2,
+      "events": 9,
+      "dates": [
+        {
+          "date": "2022-03-28",
+          "score": 6.093740073682278,
+          "dd": 2.1654035571206154,
+          "weakness": 1.8650641761718736,
+          "y3": 0
+        },
+        {
+          "date": "2022-06-13",
+          "score": 7.791005572269042,
+          "dd": 3.2420551819930643,
+          "weakness": 3.1800559323702617,
+          "y3": 0
+        }
+      ]
+    },
+    {
+      "period": "2023",
+      "n": 257,
+      "known_futures": 257,
+      "alerts": 3,
+      "flag_with_label": 3,
+      "flag_predict_next3_drop3": 0,
+      "false_or_nonmatching": 3,
+      "events": 4,
+      "dates": [
+        {
+          "date": "2023-02-02",
+          "score": 5.928657187548662,
+          "dd": 2.470934311671935,
+          "weakness": 2.4148057057279244,
+          "y3": 0
+        },
+        {
+          "date": "2023-02-03",
+          "score": 6.382384262006968,
+          "dd": 2.9843667341615143,
+          "weakness": 2.7891789343110838,
+          "y3": 0
+        },
+        {
+          "date": "2023-12-04",
+          "score": 13.869530183631595,
+          "dd": 5.8678527410106485,
+          "weakness": 5.423307851995437,
+          "y3": 0
+        }
+      ]
+    },
+    {
+      "period": "2024",
+      "n": 259,
+      "known_futures": 259,
+      "alerts": 10,
+      "flag_with_label": 10,
+      "flag_predict_next3_drop3": 1,
+      "false_or_nonmatching": 9,
+      "events": 17,
+      "dates": [
+        {
+          "date": "2024-04-12",
+          "score": 11.46923626138128,
+          "dd": 4.016326866331488,
+          "weakness": 3.592938733125625,
+          "y3": 0
+        },
+        {
+          "date": "2024-04-22",
+          "score": 7.281144625853968,
+          "dd": 2.6867958332373876,
+          "weakness": 2.5907267137035572,
+          "y3": 0
+        },
+        {
+          "date": "2024-06-07",
+          "score": 7.918011821232936,
+          "dd": 4.2281598123795945,
+          "weakness": 3.937725102604923,
+          "y3": 0
+        },
+        {
+          "date": "2024-08-05",
+          "score": 5.959173173507306,
+          "dd": 3.847647631771045,
+          "weakness": 1.9705926011781736,
+          "y3": 0
+        },
+        {
+          "date": "2024-10-31",
+          "score": 6.131779272248638,
+          "dd": 2.0980838050796313,
+          "weakness": 1.654561647787847,
+          "y3": 0
+        },
+        {
+          "date": "2024-11-06",
+          "score": 11.427372749760845,
+          "dd": 3.5361717989981,
+          "weakness": 3.291420051096038,
+          "y3": 0
+        },
+        {
+          "date": "2024-11-11",
+          "score": 8.67581822084613,
+          "dd": 2.8119229852879846,
+          "weakness": 2.472228840312085,
+          "y3": 1
+        },
+        {
+          "date": "2024-11-13",
+          "score": 6.034581544931322,
+          "dd": 1.7730760492497777,
+          "weakness": 1.7606662351870008,
+          "y3": 0
+        },
+        {
+          "date": "2024-11-25",
+          "score": 12.397159963662489,
+          "dd": 3.886206465742159,
+          "weakness": 3.5409822813090415,
+          "y3": 0
+        },
+        {
+          "date": "2024-12-18",
+          "score": 6.245341211680945,
+          "dd": 2.566370012821495,
+          "weakness": 2.5167810543781557,
+          "y3": 0
+        }
+      ]
+    },
+    {
+      "period": "2025",
+      "n": 305,
+      "known_futures": 302,
+      "alerts": 19,
+      "flag_with_label": 18,
+      "flag_predict_next3_drop3": 4,
+      "false_or_nonmatching": 14,
+      "events": 30,
+      "dates": [
+        {
+          "date": "2025-04-03",
+          "score": 6.607057491319915,
+          "dd": 3.5883117067604053,
+          "weakness": 1.6677268185814438,
+          "y3": 1
+        },
+        {
+          "date": "2025-04-04",
+          "score": 9.83345124452807,
+          "dd": 3.865317182021044,
+          "weakness": 3.142333439591967,
+          "y3": 0
+        },
+        {
+          "date": "2025-04-07",
+          "score": 7.150541491275596,
+          "dd": 3.2407710433302928,
+          "weakness": 2.362383819871716,
+          "y3": 0
+        },
+        {
+          "date": "2025-04-22",
+          "score": 8.724264040185506,
+          "dd": 3.8099142622871174,
+          "weakness": 3.4093668665594303,
+          "y3": 1
+        },
+        {
+          "date": "2025-04-23",
+          "score": 7.654838022071625,
+          "dd": 3.739119394347401,
+          "weakness": 2.8936210419397965,
+          "y3": 0
+        },
+        {
+          "date": "2025-05-08",
+          "score": 7.5769108145230835,
+          "dd": 3.69175716454776,
+          "weakness": 3.1885220818734155,
+          "y3": 0
+        },
+        {
+          "date": "2025-10-09",
+          "score": 6.4186966693174465,
+          "dd": 2.8003528779761866,
+          "weakness": 1.9955348122009162,
+          "y3": 0
+        },
+        {
+          "date": "2025-10-17",
+          "score": 9.620808908414395,
+          "dd": 4.423820042580617,
+          "weakness": 2.9127211082381423,
+          "y3": 1
+        },
+        {
+          "date": "2025-10-21",
+          "score": 17.704111175943176,
+          "dd": 6.736387186569049,
+          "weakness": 5.7303456810720625,
+          "y3": 0
+        },
+        {
+          "date": "2025-10-22",
+          "score": 5.842098227415399,
+          "dd": 3.610271395135356,
+          "weakness": 1.5105275552330064,
+          "y3": 1
+        },
+        {
+          "date": "2025-10-27",
+          "score": 8.993137589914973,
+          "dd": 3.352019205848389,
+          "weakness": 3.08554170981209,
+          "y3": 0
+        },
+        {
+          "date": "2025-10-29",
+          "score": 6.971783193403419,
+          "dd": 2.539261916902058,
+          "weakness": 2.4910025419912265,
+          "y3": 0
+        },
+        {
+          "date": "2025-11-14",
+          "score": 8.180385343879182,
+          "dd": 4.2529067247952135,
+          "weakness": 3.045813045919882,
+          "y3": 0
+        },
+        {
+          "date": "2025-12-29",
+          "score": 8.308575587004574,
+          "dd": 5.461338138824489,
+          "weakness": 4.79490588636038,
+          "y3": null
+        },
+        {
+          "date": "2025-10-27",
+          "score": 9.774030391668262,
+          "dd": 3.347370562902474,
+          "weakness": 3.1033213762942946,
+          "y3": 0
+        },
+        {
+          "date": "2025-10-28",
+          "score": 5.979058881794561,
+          "dd": 3.3140726052736658,
+          "weakness": 1.6783578664006193,
+          "y3": 0
+        },
+        {
+          "date": "2025-10-29",
+          "score": 7.530072704021148,
+          "dd": 2.5402268759824875,
+          "weakness": 2.519134829048944,
+          "y3": 0
+        },
+        {
+          "date": "2025-11-14",
+          "score": 8.84793704515821,
+          "dd": 4.252181481186845,
+          "weakness": 3.0632994658057666,
+          "y3": 0
+        },
+        {
+          "date": "2025-12-29",
+          "score": 8.305832431964268,
+          "dd": 5.464579370267664,
+          "weakness": 4.788057410176233,
+          "y3": 0
+        }
+      ]
+    },
+    {
+      "period": "2026-01",
+      "n": 21,
+      "known_futures": 18,
+      "alerts": 2,
+      "flag_with_label": 0,
+      "flag_predict_next3_drop3": 0,
+      "false_or_nonmatching": 0,
+      "events": 1,
+      "dates": [
+        {
+          "date": "2026-01-29",
+          "score": 10.655312224393256,
+          "dd": 8.898648425306932,
+          "weakness": 3.894900751410859,
+          "y3": null
+        },
+        {
+          "date": "2026-01-30",
+          "score": 22.270875406494245,
+          "dd": 14.14522235033926,
+          "weakness": 10.265569202008178,
+          "y3": null
+        }
+      ]
+    }
+  ],
+  "data_correction": "2025 EV-only cohort: prior unqualified date-year grouping mixed 2025 EV and HIST provider rows; price model backtests already correctly used EV-only, unaffected.",
+  "jan_intraday_first_exceedance": {
+    "date": "2026-01-29",
+    "threshold": 5.737212142079407,
+    "first_bar_start_utc": "2026-01-29T15:00:00Z",
+    "first_bar_completed_utc": "2026-01-29T15:15:00Z",
+    "first_bar_completed_turkey": "2026-01-29T18:15:00+03:00",
+    "first_score": 7.855322403950687,
+    "first_ordered_dd_pct": -4.132357657627894,
+    "first_quote_mid": 5383.415,
+    "first_dd5_bar_start_utc": "2026-01-29T15:15:00Z",
+    "first_dd5_bar_completed_turkey": "2026-01-29T18:30:00+03:00",
+    "first_dd5": -8.898648425306932,
+    "note": "Retrospective within-session diagnostic, NOT production intraday timing. PRE-FROZEN Stage D response is END-OF-SESSION, next eligible quote. Turkey bank spreads widen after 17 and these exact times may not be bank-executable."
+  }
 }
