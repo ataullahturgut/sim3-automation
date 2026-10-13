@@ -27,7 +27,9 @@ def load():
         for r in csv.DictReader(f):
             if r["cls"]=="TIE":
                 continue
-            x={k:float(r[k]) for k in ("p","r1","r5","r20","sd20","ret4","rv4","neg_rv4","pos_rv4","himax","lomin")}
+            x={k:(float(r[k]) if r[k] else (0.0 if k in ("neg_rv4","pos_rv4") else float("nan"))) for k in ("p","r1","r5","r20","sd20","ret4","rv4","neg_rv4","pos_rv4","himax","lomin")}
+            if not all(math.isfinite(z) for z in x.values()):
+                raise ValueError("missing core numeric except empty semivariance")
             x["sqrt_rv4"]=math.sqrt(max(x["rv4"],0))
             x["asym4"]=(x["neg_rv4"]-x["pos_rv4"])/(x["rv4"]+1e-10)
             x.update(d=date.fromisoformat(r["d"]),year=int(r["d"][:4]),cls=r["cls"],cls1=r["cls1"],
