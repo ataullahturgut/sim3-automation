@@ -1,4 +1,5 @@
 name: Gold R78 First Passage 3pct 5TD
+# retrigger 2026-10-13
 
 on:
   push:
@@ -34,7 +35,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add             gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_METRICS_20261013.csv             gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_SUMMARY_20261013.json             gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_RESULT_20261013.md
+          git add gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_METRICS_20261013.csv gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_SUMMARY_20261013.json gold_axis_2026/GOLD_R78_FIRSTPASSAGE_3PCT_5TD_RESULT_20261013.md
           if git diff --cached --quiet; then
             echo "No changes"
           else
