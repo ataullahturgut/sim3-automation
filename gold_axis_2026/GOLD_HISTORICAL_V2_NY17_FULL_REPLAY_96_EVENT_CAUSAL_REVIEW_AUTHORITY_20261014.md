@@ -81,11 +81,28 @@ Makro duyuru fiyat imzası (XAU M15 ilk15; ZN futures yaklaşık pre/post H1; Na
 
 **HENÜZ YAPILMAYAN / YAPILMIŞ GİBİ GÖSTERİLMEYECEK:**
 - 96 kaydın tamamında haberin **orijinal ilk yayın dakikası**, arz/dolar/UST2Y/10Y/TIPS ve diğer metal/hisse/petrol **tam aynı 15dk ilk fiyat kanal paneli**, ETF/CFTC as-of akım ve pozisyon doğrulaması.
-- Değişmiş **4 V2** ve **yeni 2024 Haziran** V2 fiyat-kümesi için tamamen yeni tarih aralığına göre **başından sonuna XAG/XPT/XPD/FRED/CL/NQ/ZN/GVZ tablo yeniden bağlama** henüz tamamlanmadı; dosyadaki crossmarket bazıları eski tarihli ve `REJOIN_NOT_DONE` işaretli. Fiyat dönüm noktaları yeniden hesaplandı ve zaman-linke işlendi.
+- Değişmiş **4 V2** ve **yeni 2024 Haziran** V2 için eski kaynaklara karışmayan **5-seans-before-first-flag → last-flag** karşılaştırması **6A bölümünde YENİ TAMAMLANDI**. Ancak 96 olayın tamamı için haberin asıl ilk dakikasına göre **eşsaatli metal/FX/faiz** karşılaştırması, aynı-olay onsets ve nedensel etki hâlâ EKSİK.
 - Haberle tetiklenmesine rağmen büyük altın hareketi olmayan **bütün açıklama günleri ve şoksuz benzer piyasa günlerinin** eşleştirilmiş karşıt-faktör nedensel testi ve orijinal web ilk yayınları. Dönem/evre/rollover/holiday ve 2026'da indirilmiş geriye dönük kaynak hatası ayrı.
 - Büyük hareketi **hangi yüzde katkıyla** belirli haberin yarattığını ekonometrik olarak ispatlamak. Uygun karşı olgusal/şok aracı ve belirsizlik yok.
 
 **KADEME:** Kısmi `FIRSTPRINT_ONLY_SELECTED_OFFICIAL_MACRO`; gözlenen `MULTI_ASSET_PRICE_ASSOCIATION`; bazı ünlü neden hikâyelerinde `CANDIDATE_WEAKENED_BY_TIMING`. **Hiçbir yeni sayı, 96 gerçek ekonomik nedeni ispatladığımız iddiası değildir.** Önceki sekiz gruptaki 72 aday/23 belirsiz sayı tarihi ilk atlasın hipotez sınıflamasıdır; düzeltilmiş 96 olay yeni bir bilimsel doğrulanmış “72/96” oranı değildir.
+
+## 6A. Beş YENİ veya tarih aralığı değişmiş V2 olayının çoklu piyasa eksik veri kapısı — SAYISAL TAMAMLANDI
+[5 olayın altın dışı metaller/hisse/petrol/tahvil vadeli/GVZ ile doğru tarihli yeni karşılaştırması](GOLD_HISTORICAL_V2_5_CHANGED_OR_NEW_CLUSTERS_CROSSMARKET_CONTEXT_20261014.csv) araştırma arşivine eklendi. İlk bayrağın **önceki beş uygun NY17 seans kapanışı** ile son bayrak günü arasındaki günlük farklı sağlayıcı fiyatları ölçüldü; **özgün olayın ilk dakika tepkisi veya V2 max-horizon yüzde getirisi değildir**. Ayrıca **önceki tek NY17 seans kapanışından ilk bayrak gününe getiri** ayrıca tutuldu; gümüş/platin/paladyum, S&P500/Nasdaq, WTI CL ve ZN vadeli fiyatları için kaynakta bulunmayan değerler boş.
+
+| Düzeltilmiş V2 küme | İlk/son bayrak | İlk bayrak günü tek-seans XAU | Önceki 5 seans kapanışı→son bayrak aralığında gümüş | S&P500 | WTI CL | GVZ (puan) |
+|---|---|---:|---:|---:|---:|---:|
+| `C_CORR_006` UP | 13–20 Eki 2023 | **+%3,424** | **+%9,946** | **−%1,958** | **+%7,499** | **+4,53** |
+| `C_CORR_018` DOWN **YENİ** | 13 Haz 2024 | **−%0,898** | **−%3,482** | **+%1,509** | **+%2,987** | **−1,14** |
+| `C_CORR_039` DOWN | 9–16 May 2025 | **+%0,551** | **−%0,711** | **+%4,778** | **+%7,040** | **+0,12** |
+| `C_CORR_044` DOWN | 29–30 Tem 2025 | **+%0,405** | **−%2,369** | **+%0,844** | **+%5,937** | **−2,60** |
+| `C_CORR_045` UP | 7 Ağu 2025 | **+%0,835** | **+%5,950** | **+%0,010** | **−%7,987** | **+0,91** |
+
+**Neden bu ek bulgu önemli?** `DOWN` label'ı bazen **o gün XAU düşmüş** demek değildir. Örneğin yeni May9 ve Jul29 bayraklarının **tek-seans altın getirileri pozitiftir**, fakat geçmiş **3/5 seans penceresinde** negatif yüzde-3 eşik aşılmıştır. 2024 Haz13 yeni kümesinde altın −%0,898 tek-seans, beş seans -%3,0197; buna dayanarak bütün düşüşü yalnız o günkü Fed/PPI haberine yazmak bilimsel değildir. `UP` C_CORR_006 ise tarihli İsrail/Hamas krizini araştırmaya uygun altın+gümüş yükseliş / hisse düşüşü örneğidir; ancak olayın gerçek ilk haber 7 Ekim, bayrak başlangıcı 13 Ekim olduğundan haberin ilk tepkisi ile devamı farklıdır.
+
+**Güncelleme:** Aşağıdaki 6. bölümde önce yazılmış `beş V2 düzeltilmiş yeni tarihli piyasa bağlamı yapılmadı` ifadesi, bu raporun daha erken sürümünü tanımlar ve artık **superseded** durumundadır. Günlük/takvim başlangıç-son dönemli **beş karşılaştırma tamamlandı**; buna karşılık **haber ilk baskı UTC'siyle beş olayın eşzamanlı XAG/XPT/XPD/DXY/2Y/10Y reaksiyonları ve nedensel ayrıştırması** hâlâ tamamlanmadı.
+
+---
 
 ## 7. Dosya otoritesi / diğer aşamaları düzeltme
 **Bu dosya önceki** [GOLD_HISTORICAL_CORRECTED_CLOCK_NEWS_CROSSMARKET_CAUSAL_EVIDENCE_RESULTS_20261014.md](GOLD_HISTORICAL_CORRECTED_CLOCK_NEWS_CROSSMARKET_CAUSAL_EVIDENCE_RESULTS_20261014.md) raporunda **“V2 still pending”** yazan durumu açıkça **GÜNCELLER**: çünkü sonradan 774 günlük V2 tüm ufuklar/tier ve signed-cluster yeniden üretimi **tamamlandı**. O dosyanın V1/95/85+8 sayısal kanıtı tarihli olarak doğrudur; V2 PENDING artık son statü değildir. Orijinal V1, V2, eski 95 atlas, 38 vaka, 2026 Astra raporu ve ana manifestteki Ocak 2026 özel dosyası değiştirilmez; ek sürüm ve çapraz kanıt olarak tutulur.
