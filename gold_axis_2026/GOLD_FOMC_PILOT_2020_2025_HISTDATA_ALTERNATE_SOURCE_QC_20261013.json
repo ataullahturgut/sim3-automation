@@ -1,0 +1,12 @@
+{
+  "total_regular_eligible": 46,
+  "paired": 42,
+  "missing_dates": [
+    "2023-03-22",
+    "2023-05-03",
+    "2023-06-14",
+    "2023-07-26"
+  ],
+  "alternative_slope_per_10bp": -0.11603656733283285,
+  "correlation": -0.5465972574238479
+}
