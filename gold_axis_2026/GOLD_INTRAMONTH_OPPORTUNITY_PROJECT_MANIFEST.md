@@ -1,5 +1,17 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- GOLD_EVENT_CHAIN_2023_2025_V4_CONTROLS_AND_MISSED_SHOCKS_20261013 -->
+## 2026-10-13 — GOLD EVENT CHAIN V4 / first-crossing and dated-news source audit (RESEARCH ONLY)
+
+**Authority:** `gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V4_FACT_CHECKED_CAUSAL_AUDIT_20261013.md`. Evidence CSVs: `GOLD_EVENT_CHAIN_2023_2025_V4_13_TENSION_ONSETS_MATCHED_CONTROLS_20261013.csv` and `GOLD_EVENT_CHAIN_2023_2025_V4_CASE_STUDIES_20261013.csv`. V2 and V3 still retained, Claude PR #118 remains open and unmerged.
+
+**Corrected reading of high-tension risk:** V3 prior20>=8% exposure had 21 future >=3% DOWN in 74 overlapping *days*; first crossing (exclude recurring consecutive exposure days) only 13 observed onset dates, including related episodes, 2 future DOWN and 4 future UP. Matched on calendar year and trailing 60-session gold volatility against 13 quiet-tension controls (prior20<5%, no replacement, outside ±5 sessions of high-tension exposure) shows 1 future DOWN vs 8 future UP among controls. Small, nonrandom, temporally dependent; no reliable early SELL probability can be claimed.
+
+**Previously missed channels with dated sources:** 5 August 2024 NY17 XAU intraday max/min range **4.002%** while previous close to current close only **-1.275%**, contemporaneous Reuters describes yen carry/forced liquidity unwind. Jan 2–28 2025 XAU mid close **+3.979%**; Jan17 Reuters/Kitco documents COMEX warehouse stocks 23.62m oz and London/NY gold EFP futures premium ~$40 due tariff *threat* and physical inventory rerouting (Jan29 BoE queue report after initial advance). April 2–8 2025 XAU **-4.788%** despite haven narratives; physical precious metals excluded from tariffs on Apr3 with EFP gold premium compression ~$43->$20. April 8–11 2025 XAU **+8.567%** in the same evolving tariff crisis and strong equities Apr9. WGC March12 2024 outlined gold options/OTC, futures, USD and Chinese demand; gold rose **+10.743%** NY17 March12–Apr19 (contrary to generic overstretched=>SELL). WGC Oct13 2025 tactical warning was followed by Oct13–20 XAU **+6.012%**, then Oct20–28 **-9.228%**; original report contained strong *position-not-saturated* counterargument. CFTC Sept30+ reports were published only Nov19 or later, but older Sept23 data were available. Source dates = not minute-verified original firstprint; causal claims remain hypotheses.
+
+**Scope/governance:** pre-event economic-news event ontology now requires at least scheduled announcements, non-scheduled surprise, investor/option positioning, forced deleveraging/funding, and physical EFP/vault logistics with source timing. Continue matching non-event controls and PIT data sourcing before ANY model/prediction. No bank P&L, alerts, model fitting, trades, or manipulation of existing V2/Claude PR files.
+<!-- END GOLD_EVENT_CHAIN_2023_2025_V4_CONTROLS_AND_MISSED_SHOCKS_20261013 -->
+
 <!-- GOLD_EVENT_CHAIN_2023_2025_V3_RESEARCH_20261013 -->
 ## 2026-10-13 — Independent referee correction: event-chain V3 (RESEARCH ONLY)
 
