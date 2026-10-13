@@ -1,0 +1,32 @@
+{
+  "test_horizon": "next NY17 completed session close, 2023-2025",
+  "source": "EV/Dukascopy bid-ask mid 15m",
+  "thres_dynamic": "intraday rolling high -> subsequent low observed by date close",
+  "results": [
+    {
+      "year": 2023,
+      "dd3": 1,
+      "dd4": 1,
+      "dd5": 1,
+      "dd3_next_down3": 0
+    },
+    {
+      "year": 2024,
+      "dd3": 5,
+      "dd4": 2,
+      "dd5": 0,
+      "dd3_next_down3": 0
+    },
+    {
+      "year": 2025,
+      "dd3": 15,
+      "dd4": 4,
+      "dd5": 2,
+      "dd3_next_down3": 0
+    }
+  ],
+  "total_dd3": 21,
+  "total_dd5": 3,
+  "next_close_down3_after_dd3": 0,
+  "conclusion": "The Jan29 2026 intraday -8.9% shock is timestamped before Jan30 crash, but 2023–25 comparison gives no simple reliable next-day ≥3% DOWN rule. Exploratory post-January threshold test; not a validated sell signal. Vendor/date differences matter."
+}
