@@ -56,3 +56,18 @@
 - Sonraki meşru bilimsel hedef, **2024 kaçırılmış olaylar** ve **2025 yanlış-çıkış maliyetleri** için başlangıç-bitiş zaman damgalı, origin-safe piyasa sinyali araştırmasıdır; önce test planı, sonra hiç görülmemiş dış dönem/ileri-kayıt.
 
 **Kanıt yolları:** `GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md`, `GOLD_JAN2026_V4_DUAL_FACTOR_31DAY_SCIENTIFIC_VERDICT_20261013.md`, `GOLD_JAN2026_V4_DUAL_FACTOR_FROZEN_PROTOCOL_20261013.md`, `GOLD_JAN2026_V4_DUAL_FACTOR_RETEST_RESULTS_20261013.json` ve ilgili PR#123/#125/#126/#127/#128.
+
+
+## 7. Kalıcı belge sırası — GENEL ARAŞTIRMA ÖNCE, OCAK ÖZEL VAKASI EN SON (2026-10-13)
+
+**Kullanıcı talimatı:** Genel tarihsel ve bilimsel araştırmalar **önce**; daha sonra veri/clock, model ve bankacılık uygulanabilirlik denetimleri; **Ocak 2026 B0/S4/V2/V3/V4 çalışması manifestin fiziksel son bölümünde** yer alacak. En son yapılan deney, en yüksek yetki veya en temsilî çalışma anlamına gelmez.
+
+- **Ana manifest `0`**: tek güncel durum ve kaynak/alan yetki sınırları (aylık ayrı, H3 ayrı, banka icrası ayrı).
+- **Ana manifest `0.1`**: tarihsel/genel araştırmanın okunabilir sentezi: tarihsel rejim, 42 ZigZag, 174 gün/53 küme, 24 normalize küme, 13 başlangıç/9 vaka, ETF/CFTC/opsiyon/likidite, makro sürpriz zamanları, H3 dönüş hata kök nedenleri, veri QA ve banka maliyetleri.
+- **Ana manifest `0.2`**: 291 kayıt/39 alanı içeren bağımsız `GOLD_HISTORICAL_EVENT_MASTER_CROSSWALK_V1_20261013.csv` ve `...AUTHORITY_20261013.md` giriş otoritesi. Kayıt adetleri ekonomik olay sayısı değildir; timestamp/firstprint/öncü özellik ve farklı hedef/clock eşleştirme kalite kapısı zorunludur.
+- **Sonraki genel arşiv**: olay atlası V2 → V3 → V4 sırayla, sonra R70→R serisi, eski K100, SESSION ve 2020–2025 veri/ücret/horizon araştırma evrimi. Eski sayısal çıktılar yazıldıkları tarih/sürüm bağlamında tutulur; negatif raporlar silinmez.
+- **Ana manifest son `# 12`**: Ocak 2026 kilitli günlük defter B0, Stage A/B/C, V2/V3/V4 ve bağımsız olmayan eski döneme ait tüm nedensellik/karşıolgusal bulgular. Ocak araştırması ayrı PR zincirindedir, 2024 kapsamı başarısız ve genel model seçimi otoritesi değildir.
+- **Değişiklik kontrolü:** Yeni genel olay veya yeni veri kalitesi araştırmasını `# 12` içine yazma. Yeni Ocak ayrıntısını yalnız `# 12` içine ve kanıt raporuna koy; herhangi bir yeni genel araştırma `# 12`'nin **öncesine** eklenmeli. Diğer dönemler `# 12` içindeki araştırma sonrası başka konu eklenecek şekilde yazılmaz. Fiziksel yerleşim ile veri kronolojisi farklıdır; 2026 Ocak asla geleceği görmeyen holdout sayılmaz.
+- **Kontrol listesi:** İlk 0.1 ve 0.2, 2023–25 tarihli olay V2/V3/V4'ten önce; bu bloklar Ocak son ekinden önce; `# 12` en son üst-seviye başlık; kapanış `END GOLD_JAN2026_EXPOST_FAILURE_AND_SCIENTIFIC_RESEARCH_GATE_20261013` işareti dosya sonu. Bu kontrol otomatik doğrulanmalı; ayırıcı yazılarının değiştirilmesi ayrıca bakım denetimi ister.
+
+**As-of durum:** Ana manifest bu yapıya taşındı; yalnız biçim, dizin ve anlatım/sıra değişti, önceki deneylerin model/sonuç/CSV/JSON kanıt değerleri değiştirilmedi. Kurumsal sıralama araştırma modelini veya geriye dönük Ocak skorlarını onaylamaz.
