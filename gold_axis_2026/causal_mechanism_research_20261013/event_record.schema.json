@@ -1,0 +1,565 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gold mechanism event dossier (research only)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "sampling_rule",
+    "event_family",
+    "timing",
+    "preconditions",
+    "trigger",
+    "transmission",
+    "response",
+    "counterevidence",
+    "comparators",
+    "identification_grade",
+    "provenance"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sampling_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timing": {
+      "type": "object",
+      "required": [
+        "first_published_at_utc",
+        "timestamp_confidence",
+        "information_cutoff_utc"
+      ],
+      "properties": {
+        "event_occurs_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "first_published_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "firstprint_earliest_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "firstprint_latest_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "updated_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effective_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "information_cutoff_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "first_observed_reaction_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "threshold_crossing_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retrospective_peak_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "timestamp_confidence": {
+          "enum": [
+            "VERIFIED_ORIGINAL",
+            "OFFICIAL_SCHEDULE_ONLY",
+            "DATE_ONLY",
+            "INTERVAL",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "evidence_status",
+          "source_ids"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "evidence_status": {
+            "enum": [
+              "OBSERVED",
+              "SOURCE_ATTRIBUTION",
+              "HYPOTHESIS",
+              "MISSING",
+              "CONTRADICTED"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "measured_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "available_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome_blinded": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "trigger": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "evidence_status",
+          "source_ids"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "evidence_status": {
+            "enum": [
+              "OBSERVED",
+              "SOURCE_ATTRIBUTION",
+              "HYPOTHESIS",
+              "MISSING",
+              "CONTRADICTED"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "measured_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "available_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome_blinded": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "transmission": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "evidence_status",
+          "source_ids"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "evidence_status": {
+            "enum": [
+              "OBSERVED",
+              "SOURCE_ATTRIBUTION",
+              "HYPOTHESIS",
+              "MISSING",
+              "CONTRADICTED"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "measured_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "available_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome_blinded": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "response": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "evidence_status",
+          "source_ids"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "evidence_status": {
+            "enum": [
+              "OBSERVED",
+              "SOURCE_ATTRIBUTION",
+              "HYPOTHESIS",
+              "MISSING",
+              "CONTRADICTED"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "measured_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "available_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome_blinded": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "counterevidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "evidence_status",
+          "source_ids"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "evidence_status": {
+            "enum": [
+              "OBSERVED",
+              "SOURCE_ATTRIBUTION",
+              "HYPOTHESIS",
+              "MISSING",
+              "CONTRADICTED"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "measured_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "available_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome_blinded": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "comparators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "evidence_status",
+          "source_ids"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "evidence_status": {
+            "enum": [
+              "OBSERVED",
+              "SOURCE_ATTRIBUTION",
+              "HYPOTHESIS",
+              "MISSING",
+              "CONTRADICTED"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "measured_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "available_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome_blinded": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "identification_grade": {
+      "enum": [
+        "DESCRIPTIVE_ONLY",
+        "TEMPORAL_ORDER_VERIFIED",
+        "CONDITIONAL_ASSOCIATION",
+        "QUASI_EXPERIMENT_ASSUMPTIONS_EXPLICIT",
+        "NOT_IDENTIFIED"
+      ]
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id",
+          "url",
+          "publisher",
+          "archive_hash",
+          "retrieved_at_utc",
+          "firstprint_verified"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "archive_hash": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retrieved_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "firstprint_verified": {
+            "type": "boolean"
+          },
+          "rights": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "revision_note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

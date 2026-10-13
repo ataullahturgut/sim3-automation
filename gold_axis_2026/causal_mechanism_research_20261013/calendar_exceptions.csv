@@ -1,0 +1,6 @@
+date,type,official_release_utc,missing_in_249,same_day_in_controls,within_1_day_controls,source,scope
+2016-01-08,NFP,2016-01-08T13:30:00+00:00,True,True,2016-01-07;2016-01-08,https://www.bls.gov/news.release/archives/empsit_01082016.htm,verified exception only; not exhaustive calendar repair
+2016-01-20,CPI,2016-01-20T13:30:00+00:00,True,True,2016-01-19;2016-01-20;2016-01-21,https://www.bls.gov/news.release/archives/cpi_01202016.htm,verified exception only; not exhaustive calendar repair
+2020-09-04,NFP,2020-09-04T12:30:00+00:00,True,True,2020-09-03;2020-09-04,https://www.bls.gov/news.release/archives/empsit_09042020.htm,verified exception only; not exhaustive calendar repair
+2026-09-11,CPI,2026-09-11T12:30:00+00:00,True,True,2026-09-10;2026-09-11,https://www.bls.gov/news.release/archives/cpi_09112026.htm,verified exception only; not exhaustive calendar repair
+2026-09-16,FOMC,2026-09-16T18:00:00+00:00,True,True,2026-09-15;2026-09-16;2026-09-17,https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm,verified exception only; not exhaustive calendar repair

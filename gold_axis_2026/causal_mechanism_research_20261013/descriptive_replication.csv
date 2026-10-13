@@ -1,0 +1,6 @@
+scope,n,up,down,none,any_rate,auc_conditional,interpretation
+2016-2019_LBMA_BACKFILLED,941,148,108,685,0.2720510095642933,0.5797672672672672,overlapping origins; descriptive; no causal or predictive validation
+2020-2022_EV_M15,705,144,145,416,0.4099290780141844,0.4728448275862069,overlapping origins; descriptive; no causal or predictive validation
+2020-2022_HIST_M15,703,151,141,411,0.41536273115220484,0.4739561316988399,overlapping origins; descriptive; no causal or predictive validation
+2023-2025_EV_M15,764,286,85,393,0.4856020942408377,0.6829699712052654,overlapping origins; descriptive; no causal or predictive validation
+2026_HIST_M15,182,77,79,26,0.8571428571428571,0.5173434160775933,overlapping origins; descriptive; no causal or predictive validation

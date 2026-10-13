@@ -1,0 +1,151 @@
+{
+  "status": "PILOT_0_DATA_AND_DESIGN_AUDIT_COMPLETED; MECHANISM_ESTIMATION_BLOCKED",
+  "v2": {
+    "n": 774,
+    "primary": 151,
+    "secondary": 23
+  },
+  "v3_annual": [
+    {
+      "year": "2023",
+      "n": 257,
+      "z5": 19,
+      "z_union": 24
+    },
+    {
+      "year": "2024",
+      "n": 259,
+      "z5": 21,
+      "z_union": 26
+    },
+    {
+      "year": "2025",
+      "n": 258,
+      "z5": 24,
+      "z_union": 30
+    }
+  ],
+  "v3_close_firstpass_mismatches": [],
+  "h03": [
+    {
+      "scope": "2016-2019_LBMA_BACKFILLED",
+      "n": 941,
+      "up": 148,
+      "down": 108,
+      "none": 685,
+      "any_rate": 0.2720510095642933,
+      "auc_conditional": 0.5797672672672672,
+      "interpretation": "overlapping origins; descriptive; no causal or predictive validation"
+    },
+    {
+      "scope": "2020-2022_EV_M15",
+      "n": 705,
+      "up": 144,
+      "down": 145,
+      "none": 416,
+      "any_rate": 0.4099290780141844,
+      "auc_conditional": 0.4728448275862069,
+      "interpretation": "overlapping origins; descriptive; no causal or predictive validation"
+    },
+    {
+      "scope": "2020-2022_HIST_M15",
+      "n": 703,
+      "up": 151,
+      "down": 141,
+      "none": 411,
+      "any_rate": 0.41536273115220484,
+      "auc_conditional": 0.4739561316988399,
+      "interpretation": "overlapping origins; descriptive; no causal or predictive validation"
+    },
+    {
+      "scope": "2023-2025_EV_M15",
+      "n": 764,
+      "up": 286,
+      "down": 85,
+      "none": 393,
+      "any_rate": 0.4856020942408377,
+      "auc_conditional": 0.6829699712052654,
+      "interpretation": "overlapping origins; descriptive; no causal or predictive validation"
+    },
+    {
+      "scope": "2026_HIST_M15",
+      "n": 182,
+      "up": 77,
+      "down": 79,
+      "none": 26,
+      "any_rate": 0.8571428571428571,
+      "auc_conditional": 0.5173434160775933,
+      "interpretation": "overlapping origins; descriptive; no causal or predictive validation"
+    }
+  ],
+  "calendar": {
+    "n": 249,
+    "by_year_type": {
+      "2016_CPI": 11,
+      "2016_FOMC": 8,
+      "2016_NFP": 11,
+      "2017_CPI": 12,
+      "2017_FOMC": 8,
+      "2017_NFP": 12,
+      "2018_CPI": 12,
+      "2018_FOMC": 8,
+      "2018_NFP": 12,
+      "2019_CPI": 12,
+      "2019_FOMC": 9,
+      "2019_NFP": 12,
+      "2020_CPI": 12,
+      "2020_FOMC": 13,
+      "2020_NFP": 11,
+      "2021_CPI": 12,
+      "2021_FOMC": 8,
+      "2021_NFP": 12,
+      "2022_CPI": 12,
+      "2022_FOMC": 8,
+      "2022_NFP": 12,
+      "2026_CPI": 8,
+      "2026_FOMC": 5,
+      "2026_NFP": 9
+    },
+    "controls": 1429,
+    "verified_missing": 5,
+    "omitted_release_days_in_controls": 5,
+    "contaminated_candidate_dates": [
+      "2016-01-07",
+      "2016-01-08",
+      "2016-01-19",
+      "2016-01-20",
+      "2016-01-21",
+      "2020-09-03",
+      "2020-09-04",
+      "2026-09-10",
+      "2026-09-11",
+      "2026-09-15",
+      "2026-09-16",
+      "2026-09-17"
+    ],
+    "filled_reversal_labels": 0
+  },
+  "control_future_selection_confirmed": true,
+  "overlapping_risk_pairs": 7,
+  "rollover_edge_tests": [
+    {
+      "bar_end": "2024-01-05T17:00:00-05:00",
+      "source_sql_session": "2024-01-06",
+      "close_inclusive_session": "2024-01-05",
+      "status": "boundary test only; actual affected vendor bars not counted"
+    },
+    {
+      "bar_end": "2024-07-05T17:00:00-04:00",
+      "source_sql_session": "2024-07-06",
+      "close_inclusive_session": "2024-07-05",
+      "status": "boundary test only; actual affected vendor bars not counted"
+    }
+  ],
+  "blockers": [
+    "No complete outcome-independent release universe",
+    "No blind firstprint narrative labels",
+    "No audited event-aligned intraday mediators in committed packet",
+    "No raw-bar boundary replication performed; aggregate counts do not prove correct timestamps"
+  ],
+  "scientific_claim": "No mechanism effect size, no causal p-value, no new forecasting success claim"
+}
