@@ -21,6 +21,12 @@
 
 ## 0.1. GENEL ARAŞTIRMALAR — AMAÇ, TARİHSEL BULGULAR VE BİLİMSEL GELİŞİM (ÖNCE OKUNACAK)
 
+**GÜNCEL ARAŞTIRMA KAPSAMI — 2026-10-14: SADECE GEÇMİŞ OLAYLARIN EKONOMİK NEDENİNİ ARAŞTIRMA.** Bu aşamada yatırım kararı, AL/SAT/TUT, komisyon-kârlılık testi, yeni tahmin modeli, sinyal ve strateji geliştirme yapılmaz. **2023–2025 altın fiyat hareketleri hangi ilk yayımlanmış haber, hangi olay öncesi durum ve hangi çoklu piyasa aktarım zinciriyle açıklanabilir?** Bu soruyu araştırıyoruz. Metodolojik otorite: [GOLD_HISTORICAL_EVENT_CAUSAL_ATTRIBUTION_SCOPE_PROTOCOL_20261014.md](GOLD_HISTORICAL_EVENT_CAUSAL_ATTRIBUTION_SCOPE_PROTOCOL_20261014.md). Eski proje başlıklarında geçen al-sat hedefleri yalnız tarihsel geniş proje bağlamıdır, bu çalışmanın görevi değildir.
+
+**Kanıt-kapısı:** 42 V1 +53 V2 =95 fiyat kaydı, 95 bağımsız ekonomik haber şoku değildir. Önce NY17/DST fiyat saatleri ve epizot örtüşmeleri; sonra ilk haberin yayımlanma UTC'si ve altın ilk fiyat tepkisi; ardından aynı UTC'de XAG/XPT/XPD, USD/nominal-reel faiz, WTI/Brent, hisse, VIX/GVZ, ETF/CFTC/COMEX ile uyum/çelişki; en son benzer haber olup büyük altın hareketi OLMAYAN kontrol günleri. GVZ sadece risk göstergesidir; kaynak bulunmadan hiçbir öncü neden ilan edilmez. 8 eski aday neden ailesi geçicidir: birden fazla rakip ekonomik mekanizma mümkünse tek kategoriye zorlanmaz. Astra 2026 raporundan yalnız **haber → beklenti → aktarım → fiyat tepkisi → karşıt kanıt** araştırma süreci alınır; 2026 karar sonuçları bu tarihsel açıklama işinin ölçütü değildir.
+
+
+
 **Okuma sırası / bağlayıcı belge hiyerarşisi:** Bu dosya önce **genel piyasa araştırmalarını**, sonra **veri/saat kalite kapılarını**, ardından **tahmin ve risk/işlem çalışmalarını** sunar. **Belirli Ocak 2026 B0→S4→V2→V3→V4 vaka zinciri belgenin en sonundaki `# 12` ekidir.** En son incelenen olay başta durduğu için önceki yılların kanıtlarını gölgeleyemez. Eski sayısal kaynak/CSV/JSON/PR raporları silinmez; bu bölüm bir **araştırma sıralama ve kanıt haritasıdır**, yeni veri üretimi veya model geliştirme sonucu değildir.
 
 ### A. Temel amaç: kısa vadeli büyük hareketi ve ekonomik mekanizmasını anlamak
