@@ -1,0 +1,45 @@
+{
+  "method": "550 moving block20 resamples from per-period scored origin days; descriptive approximate CI with overlapping outcomes",
+  "results": [
+    {
+      "period": "2016-2019_LBMA_BACKFILLED",
+      "n": 941,
+      "observed_auc": 0.5797672672672672,
+      "lo95": 0.44072192230337676,
+      "hi95": 0.7205681818181818,
+      "bootstrap_reps": 550
+    },
+    {
+      "period": "2020-2022_EV_M15",
+      "n": 705,
+      "observed_auc": 0.4728448275862069,
+      "lo95": 0.3471050668502898,
+      "hi95": 0.6330177640676524,
+      "bootstrap_reps": 550
+    },
+    {
+      "period": "2020-2022_HIST_M15",
+      "n": 703,
+      "observed_auc": 0.4739561316988399,
+      "lo95": 0.3438786822933164,
+      "hi95": 0.6212904676258992,
+      "bootstrap_reps": 550
+    },
+    {
+      "period": "2023-2025_EV_M15",
+      "n": 764,
+      "observed_auc": 0.6829699712052654,
+      "lo95": 0.5533910533910534,
+      "hi95": 0.814822376480196,
+      "bootstrap_reps": 550
+    },
+    {
+      "period": "2026_HIST_M15",
+      "n": 182,
+      "observed_auc": 0.5173434160775933,
+      "lo95": 0.41115029842647854,
+      "hi95": 0.7779349363507779,
+      "bootstrap_reps": 550
+    }
+  ]
+}

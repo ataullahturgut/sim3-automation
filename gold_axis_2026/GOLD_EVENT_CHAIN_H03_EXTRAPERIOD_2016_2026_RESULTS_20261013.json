@@ -1,0 +1,656 @@
+{
+  "protocol": "GOLD_EVENT_CHAIN_H15_EXTRAPERIOD_TEST_PROTOCOL_20261013.md",
+  "source_comparison": [
+    {
+      "sources": [
+        "EV",
+        "HIST"
+      ],
+      "years": "2020-2022",
+      "matched": 773,
+      "correlationDailyReturn": 0.9917115860578698,
+      "medianAbsClosePct": 0.017325589548100595,
+      "meanAbsDailyRetDifference": 0.06682629277307689,
+      "signAgreementPct": 96.89119170984456
+    },
+    {
+      "sources": [
+        "EV",
+        "HIST"
+      ],
+      "years": "2023-2025",
+      "matched": 663,
+      "correlationDailyReturn": 0.9457751573139664,
+      "medianAbsClosePct": 0.013964038869063167,
+      "meanAbsDailyRetDifference": 0.08260243666723463,
+      "signAgreementPct": 97.28506787330316
+    },
+    {
+      "sources": [
+        "EV",
+        "LBMA"
+      ],
+      "years": "2020-2022",
+      "matched": 756,
+      "correlationDailyReturn": 0.3339763379907446,
+      "medianAbsClosePct": 0.4512829207640845,
+      "meanAbsDailyRetDifference": 0.878731074413609,
+      "signAgreementPct": 58.675496688741724
+    },
+    {
+      "sources": [
+        "HIST",
+        "LBMA"
+      ],
+      "years": "2023-2025",
+      "matched": 651,
+      "correlationDailyReturn": 0.3208182458943655,
+      "medianAbsClosePct": 0.4032627016614443,
+      "meanAbsDailyRetDifference": 0.8658345145149431,
+      "signAgreementPct": 60.98310291858679
+    }
+  ],
+  "results": [
+    {
+      "period": "2016-2019_LBMA_BACKFILLED",
+      "classification": "LBMA_FIX_DIAGNOSTIC_NO_PIT",
+      "days": 941,
+      "down": 108,
+      "up": 148,
+      "none": 685,
+      "both": 0,
+      "auc_r20_given_move": 0.5797672672672672,
+      "any_move": 256,
+      "tense8_n": 18,
+      "tense8_any": 7,
+      "tense8_down": 2,
+      "tense8_up": 5,
+      "low5_n": 855,
+      "low5_any": 235,
+      "low5_down": 98,
+      "years": [
+        {
+          "year": "2016",
+          "n": 193,
+          "down": 48,
+          "up": 51,
+          "none": 94,
+          "auc": 0.5543300653594772,
+          "tension_n": 9,
+          "tension_down": 2
+        },
+        {
+          "year": "2017",
+          "n": 252,
+          "down": 30,
+          "up": 46,
+          "none": 176,
+          "auc": 0.7739130434782608,
+          "tension_n": 0,
+          "tension_down": 0
+        },
+        {
+          "year": "2018",
+          "n": 253,
+          "down": 14,
+          "up": 13,
+          "none": 226,
+          "auc": 0.5494505494505495,
+          "tension_n": 1,
+          "tension_down": 0
+        },
+        {
+          "year": "2019",
+          "n": 243,
+          "down": 16,
+          "up": 38,
+          "none": 189,
+          "auc": 0.4506578947368421,
+          "tension_n": 8,
+          "tension_down": 0
+        }
+      ],
+      "stride": [
+        {
+          "shift": 0,
+          "n": 95,
+          "down": 8,
+          "up": 17,
+          "auc": 0.5588235294117647
+        },
+        {
+          "shift": 1,
+          "n": 94,
+          "down": 12,
+          "up": 18,
+          "auc": 0.6157407407407407
+        },
+        {
+          "shift": 2,
+          "n": 94,
+          "down": 12,
+          "up": 14,
+          "auc": 0.5654761904761905
+        },
+        {
+          "shift": 3,
+          "n": 94,
+          "down": 13,
+          "up": 18,
+          "auc": 0.5982905982905983
+        },
+        {
+          "shift": 4,
+          "n": 94,
+          "down": 12,
+          "up": 15,
+          "auc": 0.65
+        },
+        {
+          "shift": 5,
+          "n": 94,
+          "down": 9,
+          "up": 13,
+          "auc": 0.5042735042735043
+        },
+        {
+          "shift": 6,
+          "n": 94,
+          "down": 10,
+          "up": 12,
+          "auc": 0.48333333333333334
+        },
+        {
+          "shift": 7,
+          "n": 94,
+          "down": 9,
+          "up": 12,
+          "auc": 0.5925925925925926
+        },
+        {
+          "shift": 8,
+          "n": 94,
+          "down": 10,
+          "up": 13,
+          "auc": 0.5153846153846153
+        },
+        {
+          "shift": 9,
+          "n": 94,
+          "down": 13,
+          "up": 16,
+          "auc": 0.6153846153846154
+        }
+      ]
+    },
+    {
+      "period": "2020-2022_EV_M15",
+      "classification": "PRIMARY_COMPARABLE_PROVIDER",
+      "days": 705,
+      "down": 145,
+      "up": 144,
+      "none": 416,
+      "both": 4,
+      "auc_r20_given_move": 0.4728448275862069,
+      "any_move": 289,
+      "tense8_n": 31,
+      "tense8_any": 17,
+      "tense8_down": 10,
+      "tense8_up": 7,
+      "low5_n": 613,
+      "low5_any": 244,
+      "low5_down": 127,
+      "years": [
+        {
+          "year": "2020",
+          "n": 199,
+          "down": 29,
+          "up": 55,
+          "none": 115,
+          "auc": 0.4683385579937304,
+          "tension_n": 22,
+          "tension_down": 6
+        },
+        {
+          "year": "2021",
+          "n": 258,
+          "down": 61,
+          "up": 31,
+          "none": 166,
+          "auc": 0.44420941300899,
+          "tension_n": 0,
+          "tension_down": 0
+        },
+        {
+          "year": "2022",
+          "n": 248,
+          "down": 55,
+          "up": 58,
+          "none": 135,
+          "auc": 0.5294670846394984,
+          "tension_n": 9,
+          "tension_down": 4
+        }
+      ],
+      "stride": [
+        {
+          "shift": 0,
+          "n": 71,
+          "down": 16,
+          "up": 17,
+          "auc": 0.4963235294117647
+        },
+        {
+          "shift": 1,
+          "n": 71,
+          "down": 15,
+          "up": 15,
+          "auc": 0.30666666666666664
+        },
+        {
+          "shift": 2,
+          "n": 71,
+          "down": 16,
+          "up": 14,
+          "auc": 0.5669642857142857
+        },
+        {
+          "shift": 3,
+          "n": 71,
+          "down": 20,
+          "up": 13,
+          "auc": 0.5461538461538461
+        },
+        {
+          "shift": 4,
+          "n": 71,
+          "down": 17,
+          "up": 14,
+          "auc": 0.5798319327731093
+        },
+        {
+          "shift": 5,
+          "n": 70,
+          "down": 16,
+          "up": 16,
+          "auc": 0.5390625
+        },
+        {
+          "shift": 6,
+          "n": 70,
+          "down": 12,
+          "up": 14,
+          "auc": 0.5654761904761905
+        },
+        {
+          "shift": 7,
+          "n": 70,
+          "down": 9,
+          "up": 14,
+          "auc": 0.3492063492063492
+        },
+        {
+          "shift": 8,
+          "n": 70,
+          "down": 11,
+          "up": 15,
+          "auc": 0.34545454545454546
+        },
+        {
+          "shift": 9,
+          "n": 70,
+          "down": 13,
+          "up": 12,
+          "auc": 0.391025641025641
+        }
+      ]
+    },
+    {
+      "period": "2020-2022_HIST_M15",
+      "classification": "PROVIDER_SENSITIVITY",
+      "days": 703,
+      "down": 141,
+      "up": 151,
+      "none": 411,
+      "both": 0,
+      "auc_r20_given_move": 0.4739561316988399,
+      "any_move": 292,
+      "tense8_n": 31,
+      "tense8_any": 19,
+      "tense8_down": 10,
+      "tense8_up": 9,
+      "low5_n": 612,
+      "low5_any": 243,
+      "low5_down": 123,
+      "years": [
+        {
+          "year": "2020",
+          "n": 198,
+          "down": 28,
+          "up": 60,
+          "none": 110,
+          "auc": 0.4654761904761905,
+          "tension_n": 22,
+          "tension_down": 6
+        },
+        {
+          "year": "2021",
+          "n": 257,
+          "down": 61,
+          "up": 32,
+          "none": 164,
+          "auc": 0.4661885245901639,
+          "tension_n": 0,
+          "tension_down": 0
+        },
+        {
+          "year": "2022",
+          "n": 248,
+          "down": 52,
+          "up": 59,
+          "none": 137,
+          "auc": 0.5410691003911343,
+          "tension_n": 9,
+          "tension_down": 4
+        }
+      ],
+      "stride": [
+        {
+          "shift": 0,
+          "n": 71,
+          "down": 17,
+          "up": 18,
+          "auc": 0.4673202614379085
+        },
+        {
+          "shift": 1,
+          "n": 71,
+          "down": 18,
+          "up": 15,
+          "auc": 0.5185185185185185
+        },
+        {
+          "shift": 2,
+          "n": 71,
+          "down": 17,
+          "up": 12,
+          "auc": 0.5147058823529411
+        },
+        {
+          "shift": 3,
+          "n": 70,
+          "down": 17,
+          "up": 16,
+          "auc": 0.5551470588235294
+        },
+        {
+          "shift": 4,
+          "n": 70,
+          "down": 12,
+          "up": 16,
+          "auc": 0.5833333333333334
+        },
+        {
+          "shift": 5,
+          "n": 70,
+          "down": 12,
+          "up": 16,
+          "auc": 0.4322916666666667
+        },
+        {
+          "shift": 6,
+          "n": 70,
+          "down": 10,
+          "up": 12,
+          "auc": 0.49166666666666664
+        },
+        {
+          "shift": 7,
+          "n": 70,
+          "down": 11,
+          "up": 14,
+          "auc": 0.37012987012987014
+        },
+        {
+          "shift": 8,
+          "n": 70,
+          "down": 14,
+          "up": 16,
+          "auc": 0.41964285714285715
+        },
+        {
+          "shift": 9,
+          "n": 70,
+          "down": 13,
+          "up": 16,
+          "auc": 0.3701923076923077
+        }
+      ]
+    },
+    {
+      "period": "2023-2025_EV_M15",
+      "classification": "LEGACY_REFERENCE",
+      "days": 764,
+      "down": 85,
+      "up": 286,
+      "none": 393,
+      "both": 8,
+      "auc_r20_given_move": 0.6829699712052654,
+      "any_move": 371,
+      "tense8_n": 74,
+      "tense8_any": 52,
+      "tense8_down": 19,
+      "tense8_up": 33,
+      "low5_n": 571,
+      "low5_any": 260,
+      "low5_down": 47,
+      "years": [
+        {
+          "year": "2023",
+          "n": 257,
+          "down": 28,
+          "up": 61,
+          "none": 168,
+          "auc": 0.7394613583138173,
+          "tension_n": 12,
+          "tension_down": 1
+        },
+        {
+          "year": "2024",
+          "n": 259,
+          "down": 27,
+          "up": 90,
+          "none": 142,
+          "auc": 0.7329218106995885,
+          "tension_n": 13,
+          "tension_down": 4
+        },
+        {
+          "year": "2025",
+          "n": 248,
+          "down": 30,
+          "up": 135,
+          "none": 83,
+          "auc": 0.7434567901234568,
+          "tension_n": 49,
+          "tension_down": 14
+        }
+      ],
+      "stride": [
+        {
+          "shift": 0,
+          "n": 77,
+          "down": 6,
+          "up": 30,
+          "auc": 0.6555555555555556
+        },
+        {
+          "shift": 1,
+          "n": 77,
+          "down": 8,
+          "up": 32,
+          "auc": 0.765625
+        },
+        {
+          "shift": 2,
+          "n": 77,
+          "down": 11,
+          "up": 33,
+          "auc": 0.7878787878787878
+        },
+        {
+          "shift": 3,
+          "n": 77,
+          "down": 11,
+          "up": 32,
+          "auc": 0.7840909090909091
+        },
+        {
+          "shift": 4,
+          "n": 76,
+          "down": 7,
+          "up": 28,
+          "auc": 0.7704081632653061
+        },
+        {
+          "shift": 5,
+          "n": 76,
+          "down": 8,
+          "up": 25,
+          "auc": 0.735
+        },
+        {
+          "shift": 6,
+          "n": 76,
+          "down": 8,
+          "up": 25,
+          "auc": 0.65
+        },
+        {
+          "shift": 7,
+          "n": 76,
+          "down": 8,
+          "up": 25,
+          "auc": 0.65
+        },
+        {
+          "shift": 8,
+          "n": 76,
+          "down": 8,
+          "up": 28,
+          "auc": 0.5758928571428571
+        },
+        {
+          "shift": 9,
+          "n": 76,
+          "down": 10,
+          "up": 28,
+          "auc": 0.4
+        }
+      ]
+    },
+    {
+      "period": "2026_HIST_M15",
+      "classification": "2026_DIFFERENT_PROVIDER_RESEARCH",
+      "days": 182,
+      "down": 79,
+      "up": 77,
+      "none": 26,
+      "both": 12,
+      "auc_r20_given_move": 0.5173434160775933,
+      "any_move": 156,
+      "tense8_n": 32,
+      "tense8_any": 31,
+      "tense8_down": 17,
+      "tense8_up": 14,
+      "low5_n": 125,
+      "low5_any": 100,
+      "low5_down": 56,
+      "years": [
+        {
+          "year": "2026",
+          "n": 182,
+          "down": 79,
+          "up": 77,
+          "none": 26,
+          "auc": 0.5173434160775933,
+          "tension_n": 32,
+          "tension_down": 17
+        }
+      ],
+      "stride": [
+        {
+          "shift": 0,
+          "n": 19,
+          "down": 12,
+          "up": 6,
+          "auc": 0.5555555555555556
+        },
+        {
+          "shift": 1,
+          "n": 19,
+          "down": 9,
+          "up": 8,
+          "auc": 0.2361111111111111
+        },
+        {
+          "shift": 2,
+          "n": 18,
+          "down": 5,
+          "up": 9,
+          "auc": 0.5555555555555556
+        },
+        {
+          "shift": 3,
+          "n": 18,
+          "down": 8,
+          "up": 8,
+          "auc": 0.421875
+        },
+        {
+          "shift": 4,
+          "n": 18,
+          "down": 7,
+          "up": 8,
+          "auc": 0.5178571428571429
+        },
+        {
+          "shift": 5,
+          "n": 18,
+          "down": 6,
+          "up": 10,
+          "auc": 0.65
+        },
+        {
+          "shift": 6,
+          "n": 18,
+          "down": 6,
+          "up": 8,
+          "auc": 0.6666666666666666
+        },
+        {
+          "shift": 7,
+          "n": 18,
+          "down": 7,
+          "up": 8,
+          "auc": 0.44642857142857145
+        },
+        {
+          "shift": 8,
+          "n": 18,
+          "down": 9,
+          "up": 6,
+          "auc": 0.6111111111111112
+        },
+        {
+          "shift": 9,
+          "n": 18,
+          "down": 10,
+          "up": 6,
+          "auc": 0.5
+        }
+      ]
+    }
+  ],
+  "notes": "2020-22 EV and HIST provide replication; 2016-19 LBMA historical fixing backfill; 2026 HIST nonuntouched price archive; 60 previous sessions sd, 10 future close sessions first pass 3pct, 10-phase subsampling."
+}
