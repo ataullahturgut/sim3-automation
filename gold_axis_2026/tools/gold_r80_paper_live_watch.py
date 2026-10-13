@@ -98,7 +98,8 @@ class ShadowEngine:
             return None
 
         # At first arrival of any current spot bar, process only previously matured labels.
-        self._mature(now, t, e["_mid"])
+        if (now-t).total_seconds() <= MAX_FEED_LAG_SECONDS:
+            self._mature(now, t, e["_mid"])
         if self.bars and t <= self.bars[-1][0]:
             raise ValueError("non-increasing spot quote event time")
         feed_delay = (now - t).total_seconds()
@@ -187,11 +188,18 @@ def run(events):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", required=True, help="local event JSONL with source/received timestamps")
+    parser.add_argument("--input", required=True, help="event JSONL path, or - for stdin")
     args = parser.parse_args()
-    with open(args.input, encoding="utf8") as f:
-        for output in run(json.loads(x) for x in f if x.strip()):
-            print(json.dumps(output, ensure_ascii=False, sort_keys=True))
+    def events():
+        if args.input == "-":
+            for line in sys.stdin:
+                if line.strip(): yield json.loads(line)
+        else:
+            with open(args.input, encoding="utf8") as f:
+                for line in f:
+                    if line.strip(): yield json.loads(line)
+    for output in run(events()):
+        print(json.dumps(output, ensure_ascii=False, sort_keys=True), flush=True)
 
 
 if __name__ == "__main__":
