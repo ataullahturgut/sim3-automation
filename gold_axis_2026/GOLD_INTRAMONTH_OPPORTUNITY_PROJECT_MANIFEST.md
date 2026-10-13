@@ -1,5 +1,15 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- GOLD_EVENT_CHAIN_2023_2025_V3_RESEARCH_20261013 -->
+## 2026-10-13 — Independent referee correction: event-chain V3 (RESEARCH ONLY)
+
+**Authority**: `gold_axis_2026/GOLD_EVENT_CHAIN_2023_2025_V3_RESEARCH_FINDINGS_20261013.md` and V3 exploratory contract. The independent Claude reviewer findings are in **open, UNMERGED PR #118**; original V2 and the referee branch were not overwritten.
+
+**Verified newly**: EVduka gold NY17 774 valid 2023–25 days. V2 five-session fixed >=3% observations 22/40/62 vs lagged-volatility |z5|>=2 observations **19/21/24**. Including |z1|>=2.5 -> 24/26/30 flagged days, 24 directional **retrospective** clusters (not count of independent economic news events); gap sensitivity 21–27. Prior 20-session >=8%: subsequent 10-session >=3% DOWN 21/74=28.4% vs prior rise <5% 47/571=8.2%, but still 33/74 next-UP and pooled effect confounded by 2025, overlapping outcomes. **NOT A SELL SIGNAL.** All 53 legacy cluster source timings corrected vs qualifying window baseline using *referee-derived* onsets: among 28 dated source leads, PRE 1, DURING 17, POST 10, no curated lead 25; date stamps not independently first-print verified.
+
+**New data governance**: full 2023–25 FOMC event-date set **24**, vs partial 16; vintage-delayed USMPD values cannot be used historical PIT. Gold next-day cross-futures coverage gated at 18 H1 bars on adjacent valid XAU sessions; valid GC 41/774, SI 12/774, ZN 625/774, NQ 744/774, CL 758/774; no unverified GC/SI forecasting conclusions. Official CFTC delayed publication 30 Sep 2025 data -> Nov 19 (Sep 23 older snapshot may have been visible); WGC Oct 13 risk warning also includes positioning-not-saturated counterargument. DXY/DFII10/ETF/CFTC/FedWatch direct 2023–25 as-of input remains incomplete. PR #118 remains pending review; no model trained.
+<!-- END GOLD_EVENT_CHAIN_2023_2025_V3_RESEARCH_20261013 -->
+
 <!-- GOLD_MAJOR_MOVE_MULTIHORIZON_EVENT_ATLAS_V2_20261013 -->
 ## 2026-10-13 — 2023–2025 MULTI-HORIZON GOLD EVENT ATLAS V2 (PRICE SCAN COMPLETE; CAUSE RESEARCH PARTIAL; NO MODEL)
 
