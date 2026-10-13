@@ -1,0 +1,88 @@
+{
+  "method": "M15 strict prior-bar high; 2022-23 fixed q99 recalibration, not a new model selection",
+  "oldInclusiveCutoff": 5.627132613712419,
+  "newStrictCutoff": 5.676818416513753,
+  "jan29ScoreStrict": 6.837290917276738,
+  "jan29FlagStrict": true,
+  "yearwise": [
+    {
+      "year": "2022",
+      "src": "EV",
+      "n": 198,
+      "alarmCount": 3,
+      "alarmDates": [
+        "2022-03-29",
+        "2022-06-13",
+        "2022-10-13"
+      ]
+    },
+    {
+      "year": "2023",
+      "src": "EV",
+      "n": 257,
+      "alarmCount": 2,
+      "alarmDates": [
+        "2023-03-20",
+        "2023-05-05"
+      ]
+    },
+    {
+      "year": "2024",
+      "src": "EV",
+      "n": 259,
+      "alarmCount": 5,
+      "alarmDates": [
+        "2024-04-10",
+        "2024-04-22",
+        "2024-06-07",
+        "2024-08-05",
+        "2024-11-06"
+      ]
+    },
+    {
+      "year": "2025",
+      "src": "EV",
+      "n": 258,
+      "alarmCount": 13,
+      "alarmDates": [
+        "2025-02-11",
+        "2025-04-03",
+        "2025-04-04",
+        "2025-04-22",
+        "2025-05-14",
+        "2025-05-16",
+        "2025-09-30",
+        "2025-10-17",
+        "2025-10-21",
+        "2025-10-22",
+        "2025-10-27",
+        "2025-11-14",
+        "2025-12-29"
+      ]
+    },
+    {
+      "year": "2026-01",
+      "src": "HIST",
+      "n": 21,
+      "alarmCount": 2,
+      "alarmDates": [
+        "2026-01-29",
+        "2026-01-30"
+      ],
+      "jan29": 6.837290917276738
+    }
+  ],
+  "barOrderDifferences": {
+    "EV": {
+      "days": 1032,
+      "nonzero": 97,
+      "maxAbs": 0.9604849385081771
+    },
+    "HIST": {
+      "days": 108,
+      "nonzero": 5,
+      "maxAbs": 0.05519683389968444
+    }
+  },
+  "caveat": "A true tick-ordered intrabar drawdown requires M1/tick; strict previous bar high excludes same bar high-to-low ambiguity. Study remains post-exposed January."
+}
