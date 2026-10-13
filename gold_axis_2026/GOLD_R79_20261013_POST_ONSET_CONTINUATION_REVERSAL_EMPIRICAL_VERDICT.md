@@ -24,7 +24,7 @@ No bank contemporaneous ASK/BID or actual first receipt: midprice signal is retr
 |2023|.27055|.25570|-.01486|.447|
 |2024|.24574|.25240|+.00665|.642|
 |2025|.23751|.25869|+.02118|.612|
-|2026|.2665 approximately|.2484 approximately|-.0181|.438|
+|2026|.27778|.25964|-.01814|.438|
 Reversal >=50bp AUC 2023 .384 /2024 .744 /2025 .636 /2026 **.403**; large-onset-continued >=50bp AUC 2023 .107 (1 event only) /2024 .629 /2025 .662 /2026 .617 (13 events). All three predeclared paired DEV 5day block CI include zero: CONT [-.03144,+.02322], REV50 [-.01419,+.01774], CONT50 [-.00511,+.00831]. **0/3 targets satisfy all-year gain + confidence CI gate.** Do not reverse signal or chase 2026 threshold changes.
 
 ## Next research direction
