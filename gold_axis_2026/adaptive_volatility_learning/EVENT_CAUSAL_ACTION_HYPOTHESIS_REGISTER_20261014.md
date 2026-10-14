@@ -210,6 +210,57 @@
 
 **Çıkarım manifesti DURUMU:** `7_CANDIDATE_ECONOMIC_FAMILIES / 5_MEASURED_LONG_LEG_MORPHOLOGIES / 1_SHORT_V1_INSUFFICIENT / 54_SHORT_HORIZON_PROFILES / 96_PRICE_RECORDS_AND_84_CHECKPOINTS / NO_VERIFIED_PRICE_INITIATION_CAUSALITY / NO_MODEL_PROMOTION`.
 
+## 8. OLAY ÖRGÜSÜ ÇIKARIM OPERASYON PROTOKOLÜ — 14 Ekim 2026
+
+**Statü: ONAY BEKLEMEYEN ARAŞTIRMA TASARIMI / HENÜZ SONUÇ ÜRETİLMEDİ.** Bu bölüm, 7 ekonomik aileyi ve 5 fiyat morfolojisini olaylar arasında bağ kurabilen, yanlışlanabilir ekonomik mekanizma örgülerine dönüştürmek için çalışma sözleşmesidir. Yeni bir üst manifest oluşturmaz; OLAY-02 ham kanıt otoritesi, ÖĞREN-03 sentez/hipotez otoritesi olarak kalır. Bu protokolün eklenmesi hiçbir tarihsel mekanizmanın doğrulandığı veya herhangi bir işlemin test edilip onaylandığı anlamına gelmez.
+
+### 8.1 Araştırma birimi ve olay grafiği
+- `EPISODE_ID` = geçmiş fiyat bacağı / V1 ebeveyn dalga; `EVENT_ID` = kendi ilk yayımlanma saati bulunan makro veya piyasa katalizörü; `CHECKPOINT_ID` = as-of gözlenebilir fiyat/veri kontrolü; `PHASE_ID` = fiyat ve olay sürecinin zamana bağlı safhası.
+- **Çoktan çoğa ilişki:** Bir `EPISODE_ID` içinde birçok `EVENT_ID` olabilir, bir `EVENT_ID` birçok fiyat safhasında etkili olabilir. Aynı tarihteki V1/V2 kayıtları bağımsız yeni şok varsayılmaz. 96 fiyat kaydı / 84 kontrol = istatistiksel olarak 84 bağımsız şok değildir.
+- Olay grafiği yalnız açıklama cümlelerinden oluşmaz: `EVENT_ID → TRANSMISSION_CHANNEL → OBSERVED_ASSET_RESPONSE → PHASE_CHANGE` kenarlarının her birinde zaman damgası, kaynak, rakip açıklama ve kanıt seviyesi tutulur. Doğrulanmamış kenar `HYPOTHESIS` olarak işaretlenir.
+
+### 8.2 Olay fişinde zorunlu kronoloji (P0–P5)
+1. **P0 / önkoşul:** İlk haberden hemen önceye kadar bilinen altın trend/oynaklık, metal eş hareketleri, faiz, USD, petrol, hisse ve finansal stres, beklenti-vintage, ABD/Türkiye zaman dönüşümü.
+2. **P1 / gerçek katalizör adayı:** Özgün BLS/Fed/ISM/resmî şirket veya ilk haber kaynağı, yayımlanma `available_at_utc`, verinin ait olduğu dönemden ayrı. Sonradan yazılmış haber ilk kaynak sayılamaz.
+3. **P2 / ilk tepki:** Tamamlanmış ve eşzamanlı fiyat barları ile mümkünse ilk yayımdan önce -60/-15dk ve sonra +15/+60dk altın, SI ve bağımsız aktarım verileri. **Önce kaynak saat doğrulanır, sonra fiyat penceresi hesaplanır.**
+4. **P3 / yayılma:** +4/+12s ve +1/+3/+5 uygun seans yollarında yeni haberler; altın hareketinin başlangıcı ile sonradan gelen ikinci/üçüncü katalizör ayrı `EVENT_ID` alır.
+5. **P4 / yorulma ve baskın mekanizma değişimi:** Faiz/USD/metal ayrışması, karşı haber, likidite, hız ve oynaklıkta değişim; ex-post ZigZag dönüm noktası canlı sönüş kanıtı değildir.
+6. **P5 / sonlanma / sonraki durum:** Devam, tersine dönüş, başka ekonomik aileye geçiş veya nedenin hâlâ belirsiz kalması; sonrasındaki 3 seans ex-post ölçüm, karar anında biliniyor kabul edilmez.
+Her safhanın `observed`, `source`, `time_available`, `alternative_explanation`, `missing_flag`, `confidence` alanları olmalıdır.
+
+### 8.3 Ekonomik neden, aktarım ve fiyat karakterini karıştırma
+- `G01–G07`: ekonomik haber/olay ailesinin **aday** sınıfı; `CHANNEL`: dolar, nominal/reel faiz, güvenli liman, fonlama, merkez bankası/ETF/fiziki talep, pozisyon çözülmesi vb. **birden çok kanala izin ver**; `M1–M5/S1–S4`: sonradan ölçülen fiyat morfolojisi.
+- Nedensel ara halkayı göstermeden “Fed haberi → XAU DOWN”, “jeopolitik → XAU UP” veya “ETF çıkışı → ani düşüş” **kanıtlanmış örgü** diye yazma.
+- Fiyatın kendisiyle tanımlanmış bacak üzerinden ekonomik birinci neden çıkarmak yasak. Aynı ekonomik başlık altında UP/DOWN/CHOP ve kısa/uzun sonuçları ayrı **karşıt vaka** olarak göster.
+- G06'nın uzun V1 örneği sıfır; G07'nin baskın nedenleri bilinmiyor. Bu gruplarda otomatik kural çıkarma.
+
+### 8.4 Olay örgüsünün karşılaştırmalı doğrulaması
+- Önce mükerrer kontrolleri ve aynı üst bacakları ayır; 14 günlük yakın-komşu embargo, aynı ebeveyn ve örtüşen ufukları bağımsız eşleştirme sayma.
+- Her mekanizma adayı için: **aynı/benzer katalizör ve benzer P0 önkoşullarda destekleyici olay + aynı başlığa rağmen ters sonuç + şoksuz kontrol**; yoksa `INSUFFICIENT_COMPARATORS` açıkça yaz.
+- Karşılaştırmada haber türü (varsa `firstprint`), gerçek zamanlı beklenti/sürpriz, trend/oynaklık, USD/faiz, SI ve diğer metaller, risk endeksi, likidite ve eşzamanlı rakip haber kullan. Mevcut 84 kontrolün yalnız 3'ündeki makro-takvim+fiyat benzerliği **doğrulanmış ekonomik neden eşleşmesi değildir**.
+- Safha veya ekonomik aile için yeni alt tip önerisinde destekleyici örnek, karşıt örnek, eksik veri ve açıkça yanlışlayacak test zorunludur. Önceden sabitlenmiş eşiklerle hassasiyet ve olay çıkarılıp bırakma (leave-one-episode-out) denetimi yap.
+- Neden çıkarımı: olay saatine yakın fiyat tepki penceresi **zamansal tutarlılık** sağlar; birden fazla eşzamanlı haber veya gizli ortak etken varsa tek başına nedensellik ispat etmez. Küçük örnek ve geriye dönük seçilim açıkça raporlanır.
+
+### 8.5 Öncelikli veri tamamlama / otorite
+- **Birinci öncelik:** 2023–24 arşivinde bulunan `SI.n.0` saatlik gümüşü 55 ilişkili kayda gerçek saat/piyasa kapanışıyla aktar; arşiv varlığı alanların doldurulduğu anlamına gelmez.
+- **İkinci:** DXY/FX, 2Y/10Y nominal ve uygun reel faiz/TIPS ile saatlik senkron; ZN vadeli fiyatı nakit tahvil getirisi yerine geçemez.
+- **Üçüncü:** Resmî ilk yayın, ilk veri sürümü ve beklenti-vintage; gecikmeli WGC/ETF/CFTC açıklamalarını geçmiş anın bilgisi sayma.
+- **Dördüncü:** Aynı kayıttaki 2023/2024/2025 tarihleri ve gündüz saati düzeni; haber saati ile Türkiye saati dönüşümünü gün bazında doğrula.
+- **Beşinci:** Yalnız büyük hareketten seçilmiş örneklem yanlılığını ölçmek için şoksuz günler ve önceden tanımlı ufukları kullan.
+
+### 8.6 İlk çalışma paketi ve teslim ölçütü
+- **Pilot üç karşıt G01 vakası:** 06 Ocak 2023 NFP/ISM, 03 Şubat 2023 NFP, 10 Mart 2023 NFP/bankacılık stresi. Bunlarda farklı yönlü ilk XAU tepkisi **önceki araştırmalardan bilinen gözlemdir**, doğrulanmış haber→faiz→altın nedenselliği değildir.
+- Pilotun her vakası için **gerçek olay saat sırası; özgün resmî yayın; altın ve mümkünse SI/USD/faiz aynı-UTC tepki tablosu; P0–P5 grafiği; rakip nedenler; eksiklik ve yanlışlayıcı kontrol; sonuç kanıt seviyesi** istenir.
+- Pilotun kapsama ve saat-kalite kontrolü tamamlanınca 7 ailenin tüm kayıtları aynı sözleşmeyle işlenir; nihai çıktılar **(i)** OLAY-02 olay bazlı kanıt fişleri, **(ii)** ÖĞREN-03 aile/alt-mekanizma grafikleri, **(iii)** karakter × aile karşılaştırması, **(iv)** eksik/çelişkili vaka sicilidir.
+- **Başarı = bütün kayıtlara zorla neden atamak değil;** hangi mekanizmaların hangi zamanda ve karşıt örneklerde desteklendiğinin ve hangilerinin hâlâ `UNKNOWN` olduğunun tekrar denetlenebilir olmasıdır.
+
+### 8.7 Kanıt yükseltme ve model güvenlik kapısı
+`UNVERIFIED_LABEL → SOURCE_AND_TIME_VERIFIED → OBSERVED_TRANSMISSION_CONSISTENT → RIVAL_AND_CONTROL_TESTED → INDEPENDENT_VALIDATION`. Her seviye **olay bazında** verilir; aileye tek kalemde atfedilmez. `OBSERVED_TRANSMISSION_CONSISTENT` nedensel kesinlik değildir.
+
+2023–2026 arşivinin tamamı mekanizma **keşfinde** kullanılabilir; fakat bu arşive bakıldıktan sonra aynı kayıtlar üzerinde tahmin tutturmak bağımsız, kör OOS başarı değildir. Sonraki karar modeli için daha sonra önceden sabitlenmiş kurallı, zaman bilgisi korunmuş ve gerçekten ayrılmış doğrulama gerekir. ÖĞREN-03'teki bu araştırma **AL/SAT yetkisi üretmez**.
+
+**Metodolojik dayanak / uygulama kıyası:** [San Francisco Fed U.S. Monetary Policy Event-Study Database](https://www.frbsf.org/research-and-insights/data-and-indicators/us-monetary-policy-event-study-database/) — dar açıklama pencereleri ve çoklu varlık reaksiyonu; [Fed: Monetary Policy Surprises and Uncertainty](https://www.federalreserve.gov/econres/notes/feds-notes/monetary-policy-surprises-and-monetary-policy-uncertainty-20180518.html) — sürpriz ve zaman penceresi; [WGC Gold Return Attribution Model](https://www.gold.org/goldhub/tools/gold-return-attribution-model) — altın için ayrı ekonomik sürücüler. Bu kaynaklar 96 vakamızın sonucunu doğrulamış değildir.
+
 ---
 
 ## TARİHSEL EK — İlk üç olay–karar hipotezi (ilk sürüm, aynen korunan kanıt zinciri)
