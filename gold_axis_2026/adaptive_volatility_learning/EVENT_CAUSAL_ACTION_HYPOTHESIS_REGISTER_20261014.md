@@ -1,4 +1,7 @@
 # OLAY → NEDENSEL MEKANİZMA → AKSİYON ADAYI — Merkezî Öğrenme Sicili (2026-10-14)
+
+> **Belge kodu: ÖĞREN-03 — Ortak Öğrenme ve Karar Mekanizmaları.** Bu sicil **OLAY-02** içindeki haber/fiyat/karar kanıtları üzerinden türeyen, şimdilik test edilmekte olan hipotezleri tutar. Önceden kullanılan **ÖĞREN-04** adı artık geçersizdir. Olayın sayısal verileri, haber ve testleri tek [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) kimliği altından açılır. [Belge haritası](../BELGE_HARITASI_V1.md).
+
 **Sicil ID:** `GPT_CAUSAL_ACTION_REGISTER_V1_20261014` · **Durum:** `RESEARCH_ONLY / HINDSIGHT_EXPOSED / NO_MODEL_PROMOTION`.
 **Kapsam:** 2023 Ocak UP, 2023 Şubat DOWN ve 5 Ocak kısa DOWN düzeltme karşıt vakalarının **olay-aksiyon mekanizma adayları**, **onaylı otomatik AL/SAT kuralları değildir**.
 **Olay araştırmasının değişmeden korunan tarihsel otoritesi:** [5.190 satırlık 0.1A–0.1G manifest arşivi](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md). Bu dosyaya append yapmayın; tarihsel snapshot donuktur. [Aktif amaç/karar manifesti](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) buraya yönlendirir.
