@@ -2,6 +2,18 @@
 
 ## Önce bunu oku — tek olay kütüphanesi, tek araştırma sırası
 
+## DNA ATAMASI — GÜNCEL KANIT DENETİMİ
+
+**Yeni [96 fiyat kaydı için DNA kanıt denetimi](OLAY_02_DNA_KANIT_DENETIM_96_KAYIT_20261014.csv)**, eski G01–G07 etiketlerini **yalnız `legacy_group_as_candidate_only`** olarak korur. **96/96 kayıtta** ilk gerçek katalizörün fiyat bacağını başlattığı ve aracı ekonomik kanalların eşzamanlı neden zinciri olarak doğrulandığı kanıt mevcut değildir. Bundan dolayı **96/96 kanıt-temelli birincil DNA `UNRESOLVED`, alt varyant `UNRESOLVED`, kontrol anındaki ekonomik evre `UNKNOWN`** işaretlendi. Bu **96 olayda ekonomik neden yok** anlamına değil, mevcut kanıtların o nedenin güvenilir biçimde atanması için yetersiz olduğuna gelir; önceki aile ipuçları kaybolmaz. Böylelikle eski fiyat etiketi yanlışlıkla canlı karar sinyali olamaz.
+
+**Tekil gözlem kalite kontrolü:** 96 fiyat kaydı → **84 kontrol**; aynı kontrolü paylaşan 12 grupta uzun/kısa ufuk fiyat yön etiketleri karşıt olabilir. **12/12 çakışmada** işaret karşıtlığı vardır, fakat bunlar **farklı sonuç ufuklarının sonradan belirlenmiş etiketleridir**, veri tutarsızlığı ya da eşzamanlı iki gerçek haberin kanıtı olarak ele alınmaz. Eski ailelerin aynı noktada farklılığı ayrıca kanıtlanmış çoklu DNA kabul edilmez.
+
+**Yeni [G01 karşıt haber–fiyat evre pilotu](OLAY_02_G01_KARSIT_MAKRO_EVRE_PILOT_20261014.csv)**: üç aynı tür makro açıklamasında `scheduled_utc`, beklenti/gerçekleşme/sürpriz, XAU pre60/post15/post60/post240 tepki, **P0/P1/P2/P3/P4/P5 için kanıt ve eksik durumu** ayrı hücrelerde tutulur. İlk `post15` fiyat tepkisi ölçülmüştür, fakat USD/2Y/10Y/SI same-UTC, bağımsız firstprint ve açıklamanın **uzun fiyat dalgasını başlatması** doğrulanmamıştır. Pilot `G01-A/B/C` ve rakip kanal hipotezleri **aday** düzeyindedir. P3'te yalnız fiyatın +240dk sonucunu görmüş olmak ekonomik yayılmanın teyidi değildir.
+
+**Bağlayıcı ilerleme sırası:** (1) gerçek ilk haber ve `available_at_utc`, (2) senkron XAU–gümüş–USD–faiz ve diğer risk kanalları, (3) aynı aile zıt sonuç ve şoksuz kontrol, (4) mekanizma/evre ve `candidate_DNA_ID` puanı, (5) yeterli kanıtta doğrulanan `evidence_based_primary_dna` ataması, (6) kalibre edilmiş kalan hareket + banka komisyon/makasına göre koşullu AL/SAT/TUT deneyi. Asla eksik veri uydurma veya `UNRESOLVED` statüsünü başarısız model sonucu diye yorumlama.
+
+
+
 **OLAY-02 ekonomik olayların birincil KANIT manifestidir.** **Tarihler, olay kimlikleri, ilk haber yayımları, fiyat hareketleri, bireysel vaka yorumları, ölçümler, destekleyici/ters örnekler ve olay–DNA eşleşmeleri BURADA kalır.** Zamandan bağımsız ekonomik mekanizma tanımları, alt varyantları ve birbirine geçiş yolları yalnız [**ÖĞREN-03 — Ekonomik Olay DNA Kütüphanesi**](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) içindedir. [96 gruplu tarihli karakter atlası](OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv) ve [42 uzun fiyat yaşam döngüsü ölçümü](OLAY_02_42_UZUN_HAREKET_YASAM_DONGUSU_V1_20261014.csv) **OLAY-02 sayısal kanıt ekleridir; ÖĞREN-03'e tarihli özet taşınmaz.**
 
 **OLAY-02 tek ve BİRİNCİL ekonomik araştırma manifestidir.** Eski VAKA-03 adlı müstakil manifest **yoktur**; eskiden oluşturulan rapor/CSV/JSON yalnız OLAY-02 içindeki `EVENT_ID` veya `EPISODE_ID` kaynak ekidir. Ayrı ikinci ana olay anlatısı oluşturulmaz.
