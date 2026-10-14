@@ -137,7 +137,7 @@
 
 **Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans ****veri yok****, bacak ortasında başlangıca göre ****veri yok****, son 3 seansta ****veri yok****; etiket sonunu izleyen 3 seansta ****veri yok** ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
 
-**Kayıt örnekleri:** [C_CORR_048](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_048) · [C_CORR_053](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_053). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
+**Kayıt örnekleri:** [C_CORR_008](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_008) · [C_CORR_013](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_013) · [C_CORR_022](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_022) · [C_CORR_049](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_049). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
 
 ### G07 — Karma / baskın ekonomik neden henüz ayrıştırılmadı
 
