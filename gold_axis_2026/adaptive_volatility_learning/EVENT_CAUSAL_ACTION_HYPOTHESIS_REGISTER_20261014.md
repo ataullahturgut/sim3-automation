@@ -523,3 +523,15 @@ Tek sürpriz işareti altın yönünü evrensel belirlemez; ilk tepkinin yönü,
 **Tarih ya da yıl DNA değildir.** Olay sırasında bilinen haber, çapraz piyasa aktarımı, beklenen kanal ve rakip açıklama gerekir. Geriye dönük M1–M5 biçimi canlı P4/P5 evresi değildir. OLAY-02'de doğrudan kanıt değişmedikçe bütün ORG'ler araştırma hipotezidir; bu bölüm AL/SAT sinyali üretmez.
 
 **Kanıt otoritesi:** [OLAY-02 olay ve karşıt vaka kütüphanesi](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md).
+
+## 12. Olay örgüsünden pozisyon kararına geçerken yeni yanlışlama dersleri
+
+**Ön araştırmadan çıkarılan koşullu HİPOTEZLER — bağımsız olarak doğrulanmadı.** Bu bölüm vaka, tarih, fiyat, işlem karı veya başarı oranı içermez. Tarihli araştırma/hesaplamalar OLAY-02'de saklanır.
+
+- **H-CONFIRM-ENTRY:** Yeni ve karar anında yayımlanmış ekonomik katalizörün aday ORG'si ile **kapanmış XAU fiyatının maliyet-sonrası anlamlı olay yönü** aynı tarafta olabilir. Haber tek başına alım yetkisi değildir; işlemin mümkün olduğu sonraki ASK fiyatına kadar yaşanan hareket önceden yakalanmış sayılmaz. Çapraz varlık ve beklenen kalan hareket yeterli değilse geçerli sonuç `RESEARCH_ONLY / WAIT`.
+- **H-RESIST-HYSTERESIS:** Tek bir diplomatik/politik rahatlama manşeti, mevcut trend ve piyasa tepkisi hâlâ eski tarafa destek veriyorsa pozisyon değişimini kendiliğinden haklı kılmaz. Aynı haber ailesi risk primini azaltırken farklı talep/faiz DNA'sı güçlenebilir. Önce **mevcut taşıyıcı kanalın gerçekten bozulup bozulmadığı** ve işlem maliyetinin fırsattan az olup olmadığı araştırılır.
+- **H-RISK-EXHAUST:** Çok hızlı yükseliş ardından tamamlanmış gözlem penceresinde **gözlenmiş tepe–kapanış gerilemesi ve önceki kapanış düzeyinin kaybı** beraber gerçekleşirse ORG09/10 doygunluk veya ORG12 likidite stresi için *risk alarmı* incelenebilir. Bu iki fiyat olgusu ekonomik doygunluk/teminat şoku **kanıtı değildir**; rakip USD, reel faiz, vadeli pozisyon ve fonlama göstergeleri olmadan `P4/P5_CONFIRMED` veya otomatik SAT olmaz.
+- **H-EXECUTION-LAG:** İşlem kararı ile sonraki uygulanabilir BID/ASK arasında fiyat boşluğu oluşabilir. Bu aradaki gerçekleşmiş hareketi gerçekleşebilir strateji karı sayma. Risk alarmının tetiklendiği fiyat, sonraki fill, ödenen çift yön ücret ve daha sonraki fiyat sonucu ayrı kayıtlanmalı.
+- **H-ANTI-CHURN:** Yeni haber etiketlerine hızlı tepki veren art arda sat-al kararlarının faydası, **alternatif aynı pozisyonda kalma ile gerçek toplam maliyet kıyası** olmadan kanıt değildir. Sadece işlem azaltma değil, kaçırılmış ekonomik UP ve önlenememiş DOWN da birlikte izlenir.
+
+**Kritik geçerlilik kapısı:** Araştırmacının zaten gördüğü bir fiyat ayında türetilen herhangi bir eşik/kural `RETROSPECTIVE_DISCOVERY`dır. Kuralın para kazandırdığı aynı ay üzerinde sayılması **out-of-sample öngörü** değildir. Kural, veri kapsamı, karar saati ve fill gecikmesi önceden dondurulduktan sonra henüz öğrenmede kullanılmamış veriyle değerlendirilmeden `VALIDATED_DECISION_RULE` yapılmaz.
