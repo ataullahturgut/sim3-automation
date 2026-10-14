@@ -1,6 +1,6 @@
 # GOLD — Aylık Olay Öğrenme ve Adaptif Volatilite Araştırması
 
-**Sürüm:** 2026-10-14 · **Durum:** RECORDING_FRAMEWORK_READY / RESEARCH_NOT_STARTED · **Güncel amaç:** [ana manifest](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md).
+**Sürüm:** 2026-10-14 · **Durum:** JAN_2023_QUANT_REPLAY_AND_GPT_REVIEW_RECORDED / NO_BLIND_VALIDATION · **Güncel amaç:** [ana manifest](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md).
 
 ## Tek saklama prensibi
 
@@ -27,4 +27,4 @@
 
 ## Bugünkü gerçek durum
 
-Bu dizin **boş sözleşme / kayıt altyapısıdır**. Ocak 2023 için henüz veri toplama, olay karşılaştırması, eğitim, çıkarım, AI değerlendirmesi veya başarılı model testi gerçekleştirilmiş değildir. Mevcut eski araştırmalar ana manifestten izlenebilir; ancak bu dizine onaysız/otomatik yeni test sonucu diye kopyalanmaz.
+Bu dizinde **Ocak 2023'ün gerçek 31 günlük hesaplanmış V0 sayısal simülasyonu ve GPT kanıt eleştirisi kayıtlıdır**: [tam aylık sonuç](months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md), [gün gün 31 UTC](months/2023-01/JAN_2023_31_UTC_CALENDAR_DAYS_ACTIONS_NAV.csv), [20 tam/1 kısmi NY17 seansı](months/2023-01/JAN_2023_21_NY17_SESSIONS_VOL_AND_DECISIONS.csv), [simülasyon sonuç JSON](months/2023-01/JAN_2023_100USD_RESULTS.json), [Şubat devir durumu](months/2023-01/STATE.json). 100 USD → **101,9695 USD**; aynı maliyetle altın pasif **103,7589 USD**; vol-filtresi 20/20 seansta fark yaratmadı, çalışma model üstünlüğü veya gelecek şok olasılığı doğrulaması değildir. Yalnız **GPT yorumlama** kullanılmış, başka AI API çağrılmamıştır; otomatik sürekli çalışan uygulama hâlâ geliştirilmemiştir.
