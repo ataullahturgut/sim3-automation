@@ -6,6 +6,8 @@
 
 
 
+**Yeni araştırma:** [38 vakanın 12 olay örgüsüne ayrılması](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) ve [vaka–örgü kanıt eşleştirmesi](OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv). Örgülerin tarihsiz P0–P5 karakterleri ÖĞREN-03 içindedir. 38 kayıt bağımsız 38 şok veya kesin nedensellik değildir.
+
 ## TARİH SIRASI DEĞİL, TÜM OLAYLARI BİRLİKTE KARŞILAŞTIRAN DNA ARAŞTIRMASI
 
 **Tarih ekonominin DNA kimliği değildir.** Mekanizma keşfinde tüm dönemlerin olayları birlikte sorgulanır. Olayın tarihi sadece ilk kaynak ve piyasa tepki sırasını doğrulamak için gerekir; takvim yılı veya büyük gerçekleşmiş fiyat yönü birincil DNA özelliği olamaz.
