@@ -1,0 +1,38 @@
+{
+ "register": "CLAUDE_DURUM_04",
+ "scope": "2023-01..2023-02",
+ "last_updated": "2026-10-14",
+ "foundation": [
+  "ANA-01",
+  "OLAY-02"
+ ],
+ "completed": [
+  "3 exam cases A/B/C costed (100 USD, 0.8%+0.8%, M1 proxy fills)",
+  "mechanical rule backtest v1/v2 (negative in dev)",
+  "analog-only discretionary replay",
+  "AES adaptive system v1.0/v1.1 (negative)",
+  "analyst decision journal (news+data+cases)",
+  "8 event records in OLAY-02 template",
+  "learning register C-H01..07, C-N01..07"
+ ],
+ "results_28feb_cont": {
+  "analyst_journal": 101.94,
+  "analog_only": 100.45,
+  "AES": 100.0,
+  "mechanical_VA": 102.35,
+  "passive_gold": 97.55,
+  "cash": 100.0
+ },
+ "missing": [
+  "intraday DXY / 2Y / 10Y levels",
+  "real bank BID/ASK",
+  "ISM/ADP/PCE/PPI/retail first-print+consensus archive",
+  "independent forward test (Mar 2023+) of C-H03",
+  "re-entry rule test (C-H06)",
+  "96 historical atlas events not migrated into Claude event records"
+ ],
+ "next": [
+  "freeze C-H01..C-H07 now; run day-by-day from 2023-03-01 without opening outcomes until each decision is recorded"
+ ],
+ "hindsight_exposed": true
+}

@@ -1,0 +1,129 @@
+{
+ "register": "CLAUDE_OGREN_03",
+ "date": "2026-10-14",
+ "status": "RESEARCH_ONLY/HINDSIGHT_EXPOSED/NO_PROMOTION",
+ "foundation": [
+  "ANA-01",
+  "OLAY-02"
+ ],
+ "hypotheses": [
+  {
+   "id": "C-H01",
+   "action": "HOLD_GOLD",
+   "condition": "UP regime; one-off/secondary hawkish data drop",
+   "events": [
+    "MACRO_2023_01_05_ADP"
+   ],
+   "kipB": "2020-22 UP-regime hawkish drops n=8: extra move -0.85% avg, 1/8 beyond 1.62% cost",
+   "counter": "same-hour ZN -0.52 confirmed rates channel, still reversed in 24h",
+   "level": "L2-L3",
+   "gpt_ref": "H-HOLD01"
+  },
+  {
+   "id": "C-H02",
+   "action": "BUY_IF_CASH/HOLD",
+   "condition": "UP regime; dovish surprise component; XAU 15m >= +0.4%; silver same sign",
+   "events": [
+    "MACRO_2023_01_06_NFP",
+    "US_CPI_2023_01_12"
+   ],
+   "kipB": "2022-11-10 CPI, 2022-12-13 CPI; class n=11 mean +0.33%/10s",
+   "counter": "3/11 reversed beyond cost",
+   "level": "L2",
+   "gpt_ref": "H-UP01"
+  },
+  {
+   "id": "C-H03",
+   "action": "SELL_IF_GOLD",
+   "condition": "stall (>=5 sessions flat after rally, mom10 collapses) + shock + daily regime flip + silver confirms + fall not explained by rates",
+   "events": [
+    "REGIME_FLIP_2023_02_02"
+   ],
+   "kipB": "unconditional REGFLIP_DOWN base rate ~0 (n=56)",
+   "counter": "flip margin -0.08%; single application",
+   "controls_no_trigger": [
+    "2023-01-05",
+    "2023-01-19",
+    "2023-01-27",
+    "2023-01-31"
+   ],
+   "level": "L1-L2",
+   "gpt_ref": null,
+   "status": "NEW_UNTESTED_CONDITIONAL"
+  },
+  {
+   "id": "C-H04",
+   "action": "SELL_IF_GOLD/HOLD_CASH",
+   "condition": "large surprise that contradicts prevailing Fed narrative + sharp gold drop",
+   "events": [
+    "MACRO_2023_02_03_NFP"
+   ],
+   "kipB": "2022-09-13 CPI, 2021-06-16 FOMC continued; DOWN-regime class n=7 flat at 10s",
+   "counter": "2024-06-07 NFP then +7.7% (Kip A)",
+   "level": "L2-L3",
+   "gpt_ref": "H-DN01"
+  },
+  {
+   "id": "C-H05",
+   "action": "HOLD",
+   "condition": "no-surprise data days; correction without regime flip",
+   "events": [
+    "EPISODE_2023_01_26_31_CORRECTION"
+   ],
+   "kipB": null,
+   "counter": null,
+   "level": "L2",
+   "evidence": "oracle sell-peak/rebuy-trough upper bound +0.74 USD"
+  },
+  {
+   "id": "C-H06",
+   "action": "STAY_CASH",
+   "condition": "DOWN regime + sequence of hawkish data; re-entry needs dovish catalyst AND regime repair",
+   "events": [
+    "EPISODE_2023_02_06_28_HAWKISH_SEQUENCE"
+   ],
+   "level": "L1-L2",
+   "status": "RE_ENTRY_RULE_UNTESTED"
+  },
+  {
+   "id": "C-H07",
+   "action": "WAIT",
+   "condition": "no costly position change right before major scheduled release",
+   "events": [
+    "2023-01-03..05",
+    "2023-01-31..02-01"
+   ],
+   "level": "L1"
+  }
+ ],
+ "negative_findings": [
+  {
+   "id": "C-N01",
+   "finding": "single data signals ~coin flip (AES module hit 45-57%)"
+  },
+  {
+   "id": "C-N02",
+   "finding": "mechanical regime/shock rules lose with 0.8%+0.8% (2020-22: 59-73 USD)"
+  },
+  {
+   "id": "C-N03",
+   "finding": "rates confirmation does not make a shock persistent (2023-01-05)"
+  },
+  {
+   "id": "C-N04",
+   "finding": "gold fell while ZN rose (2023-02-02): USD/positioning channel"
+  },
+  {
+   "id": "C-N05",
+   "finding": "strong NFP does not deterministically lower gold (2023-01-06, 2023-03-10)"
+  },
+  {
+   "id": "C-N06",
+   "finding": "1m anti-chase gate breaks slow daily signals"
+  },
+  {
+   "id": "C-N07",
+   "finding": "calibrated edge >=0.25 almost never reached; strongest 2023 BUY signal just before Feb-2 fall"
+  }
+ ]
+}
