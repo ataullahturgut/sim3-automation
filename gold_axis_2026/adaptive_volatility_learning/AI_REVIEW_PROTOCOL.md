@@ -1,11 +1,11 @@
 # GOLD — Test Aşaması Yapay Zekâ İkinci Görüş Protokolü
-**Sürüm:** `ai-review-v0.1` · **Durum:** PROTOCOL_ONLY / NO_COMPLETED_MONTHLY_AI_RUN
+**Sürüm:** `ai-review-v0.1` · **Durum:** JAN2023_GPT_QUALITATIVE_REVIEW_RECORDED / NO_EXTERNAL_AI
 
 ## Bugün nasıl kullanılacak?
 
 **Aşama 1, doğrudan bu sohbet:** Algoritmanın/analistin ürettiği kaynak kimlikli **sayısal kanıt paketi** ChatGPT tarafından ayrı ikinci değerlendirmeye alınır. Bu, otomatik çalışan başka bir model entegrasyonu ya da algoritmadan bağımsız kör araştırmacı değildir. ChatGPT'nin cevabı `months/YYYY-MM/STATE.json` içindeki `ai_reviews` alanına, **model/tarih/prompt sürümü, kullanılan kanıt kimlikleri ve düz metin/rapor yolu** ile kaydedilir. Sohbet hafızasına güvenerek aylar arası aktarım yapılmaz.
 
-**Aşama 2, isteğe bağlı bağımsız model:** Depoda daha önce kullanılan DeepSeek/Gemini GitHub Actions araştırma köprüleri mevcuttur; bunlar **bu aylık değerlendirme iş akışına henüz bağlı değildir**. DeepSeek önceki deneylerde tam yanıt üretebildi, Gemini deneyinde tam bilimsel yanıt alınamadı. Kullanıcı onayı ve kaynak güvenlik kontrolünden sonra **yalnız açık/sanitize edilmiş anonim toplu özet** ile sınırlı, bütçesi kontrollü manuel GitHub workflow deneyi olabilir. Mevcut API anahtarı veya servis çalışırlığı, bugün bu yeni protokole otomatik erişim sağlıyor demek değildir.
+**Bu projenin şu anki kesin kullanıcı kararı: YORUMLAMA GPT-ONLY.** DeepSeek, Gemini veya başka harici LLM **çağrılmayacak**, araştırma sonucu onlara gönderilmeyecek. Önceki başka projelerde bulunan bağlantılar burada kullanılmaz. Bu politika ancak kullanıcı açıkça değiştirirse güncellenebilir.
 
 ## Modelden istenen standart cevap
 
@@ -21,6 +21,8 @@ Girdi: `review_id, month_id, mode, algorithm_version_id, evidence_ids, numeric_f
 - `tests_that_could_falsify`: Sonraki aylar için sınanabilir somut iddialar ve eksik veriler
 - `uncertainty / claim_status`: `SUPPORTED_BY_SOURCES`, `PLAUSIBLE_NOT_IDENTIFIED`, `CONTRADICTED`, `UNKNOWN`
 - `model_id, prompt_version, reviewed_at, evidence_hash, original_algorithm_output_ref`: Daha sonra aynı paketi yeniden denetlemek için kayıt
+
+**İlk uygulama:** [Ocak 2023 GPT niteliksel olay raporu](months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md) ve [Ocak GPT review metadata](months/2023-01/STATE.json) kaydedildi. Sayısal politikayı GPT geriye dönük değiştirmedi; AI katmanının **NAV artış katkısı hesaplanmadı**.
 
 **Yanlışlık denetimi:** Kaynağı olmayan haber veya tarih uydurma; veri sonucunu modele gizlice yazdırma; modelin akıcı metnini olasılık sayma; bir haberden tek zorunlu neden çıkarma; tek modelle bağımsız ikinci deney yapılmış gibi sunma YASAK.
 
