@@ -80,3 +80,18 @@ Altın al-tut referansının ham işlem fiyatları: 2 Ocak `ASK=4.387,435`, 30 O
 **Geçerlilik sınırı:** Model özellikleri ve eğitim etiketleri 2026'dan önceki veriye kapalı olsa da araştırmacı daha önce bu ayın tüm sonuçlarını gördü. Dolayısıyla **tam bağımsız tarihsel körlük sağlanmadı**. Bu yeni dosya `INPUT_TIME_RESTRICTED_DIAGNOSTIC_COMPLETE / NOT_BLIND_OOS / NOT_TRADING_VALIDATED` statüsündedir. Gerçek zamanlı ekonomik DNA aktarımını tamamlayacak veri ve geleceği görünmemiş sınama dönemleri ayrıca gerekir.
 
 **Dosyalar:** [2026'yı ölçmeden önce commit edilmiş yöntem](OLAY_02_JAN2026_PRE2026_FROZEN_REPLAY_PROTOCOL_20261014.md) · [31 gün / her tarihte 21 kaynak analog ve ham score + source QA](OLAY_02_JAN2026_PRE2026_DONDURULMUS_DNA_31_GUN_REPLAY_20261014.csv). Eski tarihli hatalı raporun `INVALIDATED_CONSTRAINT_BREACH` işareti kaldırılmaz; bu çalışma onun *yerine* geçer ama onu silmez.
+
+## 6. Beş seanslık tahmin ile SONRADAN gerçekleşenin ayrıştırılmış denetimi
+
+[14 olgunlaşmış beş-seans tahmin/gözlem CSV](OLAY_02_JAN2026_PRE2026_DNA_5_SEANS_TAHMIN_GERCEKLESEN_DENETIMI_20261014.csv) yalnız **bütün günlük kararlar üretildikten sonra** etiketlendi. Bu gözlemlerin hedef pencereleri örtüşür: **14 bağımsız deney sayılmazlar**.
+
+| Ölçüt | Sonuç |
+|---|---:|
+| Ocak içinde +5 tamamlanmış fiyat gözlemi bulunan tahmin | **14** |
+| İleri beş-seans **yön işareti** tutanlar | **11/14 (%78,57)** |
+| Medyan fiyat tahmini ile gerçekleşen 5-seans getirisi arasındaki MAE | **5,46 yüzde puan** |
+| Örnek: 21 Ocak tahmini → 28 Ocak gerçekleşen | **−%1,06 → +%12,06** |
+| Örnek: 22 Ocak tahmini → 29 Ocak gerçekleşen | **−%1,86 → +%8,98** |
+
+**Yorum:** 11/14 işaret doğruluğu yüksek görünür; ancak 14 hedef örtüşen, aynı trendde ileri beş seanstan üretildiği ve araştırmacı Ocak'ı önceden bildiği için bağımsız yön-doğruluk istatistiği olarak terfi ettirilmez. Hareketlerin büyüklüğü özellikle yükseliş rejiminde ağır biçimde **az tahmin edildi**. Altının gerçekte daha fazla yükselmiş olması, modelin o gün maliyet şartını geçmeyen `BUY` sonucuna geriye dönük kâr yazma yetkisi vermez. Eski ANA-01'deki piyasa rejimi ve makro DNA değişkenlerinin eşsaatli aktarım eksikliği bundan dolayı esas araştırma darboğazıdır.
+
