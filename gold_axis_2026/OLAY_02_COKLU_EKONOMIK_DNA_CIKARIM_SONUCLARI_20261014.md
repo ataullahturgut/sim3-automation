@@ -125,3 +125,33 @@ Resmî duyuru başlangıcı `arm_week_lag=0` ile **4 eşsaat önceki hafta** kon
 **Başarılamayan / iddia edilmeyen:** 96 olayın ilk haberinin nedensel doğrulanması, gerçek zamanlı 2Y/DXY ve SI veri zinciri, tüm olaylara gerçek P0–P5 ekonomik safha ataması, güvenilir DNA olasılık kalibrasyonu, piyasa rejimleri üzerinde bağımsız OOS ve bankada %0,8/%0,8 + makasla geçerli otomatik AL/SAT. Bu yüzden hiçbir kayıt `CONFIRMED_CAUSE`, `LEARNED_TRADING_POLICY` veya `VALIDATED_PHASE` ilan edilmemiştir.
 
 **Bilgi ayrımı:** Bu dosyada tarihli kanıt ve örnekler bulunabilir (OLAY-02 yetkisi). [ÖĞREN-03](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) ise yalnız tarihsiz çoklu-DNA kurallarını, ayırt edici piyasa imzalarının ne anlama geldiğini ve yanlışlayıcıları tutar.
+
+## 10. Tüm dönemleri birlikte okuyan olay karakter sentezi — 12 örgü
+
+38 tarihli derin araştırma (18 V1 uzun fiyat bacağı + 20 eski V2 fiyat kümesi) yeniden karşılaştırılarak ekonomik **tetikleyici → aktarım → güçlendirici → yorulma/dönüşme** rollerine göre 12 ORG adayı çıkarıldı. Bu analiz yıl veya fiyat yönü etiketiyle yapılmadı; ayrıntılı eşleştirme [38 vaka örgü matrisi](OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv) içindedir. **38 kayıt bağımsız 38 şok değildir.** ORG sayısı keşifteki karakter taslağı sayısıdır, kanıtlanmış doğal küme sayısı değildir.
+
+| Örgü | Kısa karakter | Birincil aday kayıt |
+|---|---|---:|
+| ORG01 | Faiz/USD gevşemesi ve çok kanallı altın talebi | 6 |
+| ORG02 | Faiz/USD baskısı ve pozisyon azaltımı | 9 |
+| ORG03 | Bankacılık güvensizliği: sığınak + Fed beklentisi | 3 |
+| ORG04 | Jeopolitik risk priminin oluşumu | 1 |
+| ORG05 | Jeopolitik risk priminin sönmesi | 1 |
+| ORG06 | Ticaret/politika belirsizliği ve korunma talebi | 7 |
+| ORG07 | Ticaret rahatlaması ve koruma priminden çıkış | 1 |
+| ORG08 | Likidite satışı → güvenli liman geri dönüşü | 2 |
+| ORG09 | Fizikî/finansal alım birikimi ve ivmelenme | 3 |
+| ORG10 | Pozisyon doygunluğu ve düzeltme | 3 |
+| ORG11 | Rezerv bilgisi ile makro duyurunun yarışması | 1 |
+| ORG12 | Marjin artışı ve kaldıraç tasfiyesi | 1 |
+| **TOPLAM** | **12 hipotez örgüsü** | **38** |
+
+**Karşıt vaka dersi 1 — aynı düşüşün farklı karakteri:** SWING_V1_004 ve SWING_V1_036, metal düşerken hisselerin yükseldiği faiz/USD fırsat maliyeti adayıdır (ORG02); SWING_V1_034, risk priminin söndüğü ve diğer metallerin toparlandığı ORG05 adayıdır. MOVE_V2_C053, teminat artışı ve metal vadeli pozisyonlarını öne çıkaran ORG12 adayıdır. Aynı altın DOWN işareti bunları ayıramaz.
+
+**Karşıt vaka dersi 2 — bir kriz iki zıt evre içerebilir:** MOVE_V2_C033 (ilk likidite satışı anlatısı) ve MOVE_V2_C034 (sonraki korunma alımı anlatısı), ORG08'in iki örtüşen fiyat kümesidir; **iki bağımsız doğrulama değil**. Tek başına uzun bacağın net fiyatı ilk satışın ardından gelen toparlanmayı gizler; zorunlu marjin nedenselliği henüz doğrulanmış değil.
+
+**Karşıt vaka dersi 3 — aynı örgü farklı fiyat biçimleri üretir:** ORG01'e eşlenen 3 uzun V1 fiyat bacağının sonradan bilinen morfolojisi 2 M4 (dalgalı) ve 1 M3 (gecikmeli ivme); ORG02'nin 4 uzun V1 bacağında 2 M4 ve 2 M5 (çok dalgalı) var. ORG09'un 2 uzun eşleşmesi M3; sadece iki örnekle bundan ileri tahmin çıkarılamaz.
+
+**Karşıt vaka dersi 4 — tek tetikleyici zorlaması yanlış:** SWING_V1_016 ekonomik anlatısında rezerv alımı haberi ile şahin Fed/NFP farklı tarihlerde erişilen farklı bilgi şoklarıdır (ORG11). Fiyat dalgasının bitiş haberini ilk katalizör diye kullanmak yanlış olur.
+
+**Kanıtın sınırı:** Dated news/WGC raporları ilk yayımlanma UTC'sini ve fiyat başlatıcı nedenselliği 38/38 için doğrulamıyor. Kaynaklar bazen olay penceresi sonrasında yayımlanmış; uzun ve kısa pencereler örtüşebilir. Eski 20 MOVE_V2_C kaydı güncel 54 C_CORR ile sayı sırasına göre eşlenmedi. 12 ORG'nin P0–P5 anlatımları **hipotez olarak** [tarihsiz ÖĞREN-03'te](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md). Bu çalışma yeni ve kanıtlanmış AL/SAT kuralı üretmez.
