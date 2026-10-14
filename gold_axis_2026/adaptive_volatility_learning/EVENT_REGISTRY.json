@@ -1,8 +1,85 @@
 {
   "schema_version": "0.1",
   "purpose": "cross-year case ids, not unique independent shocks",
-  "status": "EMPTY_AWAITING_RESEARCH",
-  "case_records": [],
-  "counterexample_links": [],
+  "status": "JAN2023_FIRST_ORIGIN_EVIDENCE_REGISTERED_NOT_COMPLETE_UNIVERSE",
+  "case_records": [
+    {
+      "id": "MACRO_2023_01_06_NFP",
+      "date": "2023-01-06",
+      "published_at": "2023-01-06T13:30:00Z",
+      "kind": "US_NFP",
+      "source": "https://www.bls.gov/news.release/archives/empsit_01062023.htm",
+      "observation": "December payroll +223k; unemployment 3.5%",
+      "mechanism_status": "MULTI_CHANNEL_PLAUSIBLE_NOT_IDENTIFIED"
+    },
+    {
+      "id": "MACRO_2023_01_12_CPI",
+      "date": "2023-01-12",
+      "published_at": "2023-01-12T13:30:00Z",
+      "kind": "US_CPI",
+      "source": "https://www.bls.gov/news.release/archives/cpi_01122023.htm",
+      "observation": "Dec2022 CPI -0.1 pct month, 6.5 pct year",
+      "mechanism_status": "DISINFLATION_FED_PATH_PLAUSIBLE"
+    },
+    {
+      "id": "MACRO_2023_01_18_PPI",
+      "date": "2023-01-18",
+      "published_at": "2023-01-18T13:30:00Z",
+      "kind": "US_PPI",
+      "source": "https://www.bls.gov/news.release/archives/ppi_01182023.htm",
+      "observation": "Dec2022 PPI -0.5 pct month; gold fell same NY17 session",
+      "mechanism_status": "COUNTEREXAMPLE_NO_MONOTONIC_IMPACT"
+    },
+    {
+      "id": "MACRO_2023_01_26_GDP",
+      "date": "2023-01-26",
+      "published_at": "2023-01-26T13:30:00Z",
+      "kind": "US_GDP",
+      "source": "https://www.bea.gov/news/2023/gross-domestic-product-fourth-quarter-and-year-2022-advance-estimate",
+      "observation": "Q4 2022 GDP first estimate +2.9 pct annual",
+      "mechanism_status": "MULTI_CHANNEL_PLAUSIBLE"
+    },
+    {
+      "id": "MACRO_2023_01_27_PCE",
+      "date": "2023-01-27",
+      "published_at": "2023-01-27T13:30:00Z",
+      "kind": "US_PCE",
+      "source": "https://www.bea.gov/news/2023/personal-income-and-outlays-december-2022",
+      "observation": "Dec PCE price 0.1 pct MoM core 0.3; model SELL occurred Jan26 23:15Z before release",
+      "mechanism_status": "POST_SIGNAL_RELEASE_NOT_SIGNAL_CAUSE"
+    },
+    {
+      "id": "WGC_2023_02_09_JANETF_RETROSPECTIVE",
+      "date": "2023-01",
+      "published_at": "2023-02-09",
+      "kind": "GLOBAL_GOLD_ETF_MONTHLY",
+      "source": "https://www.gold.org/goldhub/research/gold-etfs-holdings-and-flows/2023/02",
+      "observation": "Jan2023 ETF -$1.6bn/-26ton, LBMA gold month +6.1 pct",
+      "mechanism_status": "ETF_INFLOWS_NOT_REQUIRED_FOR_GOLD_UP",
+      "mode": "FULL_HISTORY_DISCOVERY_ONLY"
+    },
+    {
+      "id": "WGC_2025_Q1_ETF_COMEX_FUTURES_DIVERGENCE",
+      "date": "2025-Q1",
+      "published_at": "2025-04-30",
+      "kind": "HISTORICAL_CROSSYEAR_ANALOGUE",
+      "source": "https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q1-2025/investment",
+      "observation": "ETF +226.5ton and futures MM net long contraction ~75ton",
+      "mechanism_status": "COUNTEREXAMPLE_DIFFERENT_INVESTOR_CHANNELS",
+      "mode": "FULL_HISTORY_DISCOVERY_ONLY"
+    }
+  ],
+  "counterexample_links": [
+    {
+      "a": "WGC_2023_02_09_JANETF_RETROSPECTIVE",
+      "b": "WGC_2025_Q1_ETF_COMEX_FUTURES_DIVERGENCE",
+      "type": "ETF_GOLD_FUTURES_RELATION_DIFFERS_ACROSS_YEARS"
+    },
+    {
+      "a": "MACRO_2023_01_12_CPI",
+      "b": "MACRO_2023_01_18_PPI",
+      "type": "DISINFLATION_RELEASE_DOES_NOT_FORCE_SAME_GOLD_SIGN"
+    }
+  ],
   "last_review_date": "2026-10-14"
 }
