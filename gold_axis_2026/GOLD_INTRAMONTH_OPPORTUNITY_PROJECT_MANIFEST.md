@@ -1,5 +1,7 @@
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
+> **BELGE HARİTASI V1 — ANA-01:** Projenin tek aktif ana manifesti bu dosyadır. **OLAY-02** bütünleşik haber+fiyat+15m/1m+karar+sonuç dizinidir: [Entegre Olay ve Vaka Kütüphanesi](OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md). Eski bağımsız **VAKA-03** sınıflandırması sonlandırıldı; vaka sayısal delilleri OLAY-02'nin alt kaynaklarıdır. **ÖĞREN-03** ortak karar hipotezleri [sicili](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md), **DURUM-04** ilgili ayın STATE.json kaydıdır. **Dünkü 5.190 satırlık tarihsel arşiv** değişmeden korunur, yeni analizler OLAY-02'ye kaynaklı eklenir. [Sabit Türkçe belge kodları](BELGE_HARITASI_V1.md).
+
 **Sürüm:** 2026-10-14 · **Kapsam düzeltmesi:** EVENT_DRIVEN_MEDIUM_LARGE_MOVE_OBJECTIVE_V2 · **Statü:** AMAÇ DÜZELTİLDİ / OCAK 2023 ASIL STRATEJİ HENÜZ TEKRAR ÇALIŞTIRILMADI / GERÇEK BANKA ONAYI YOK.
 
 > **Bağlayıcı amaç:** Altın XAU/USD'de **orta ve büyük şiddetteki yükseliş (UP) ve düşüş (DOWN) olaylarını**, hareket henüz başlamadan **veya başladıktan sonra**, olayın ekonomik/piyasa mekanizmasını ve fiyat yolundaki işaretlerini yorumlayarak tespit etmek; ancak **alışta %0,8 + satışta %0,8, BID/ASK makası ve icra gecikmesini aşması beklenen** pozisyon değiştirme fırsatlarını seçmek. Sistem küçük günlük fiyat dalgalanmaları için mekanik AL/SAT yapan bir günlük momentum botu **değildir**. Bilgi yetersizse **ALTIN TUT / NAKİT TUT / BEKLE** meşru ve önemli kararlardır.
