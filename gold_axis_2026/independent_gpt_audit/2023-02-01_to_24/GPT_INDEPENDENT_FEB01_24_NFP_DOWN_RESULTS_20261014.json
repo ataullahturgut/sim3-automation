@@ -1,0 +1,221 @@
+{
+  "case_id": "GPT_FEB2023_DOWN_01_24",
+  "status": "EX_POST_STRESS_HINDSIGHT_INDEPENDENT_OF_CLAUDE_NOT_OOS",
+  "scope_trt": [
+    "2023-02-01",
+    "2023-02-24"
+  ],
+  "control_slots": 2304,
+  "m15_observations": 1646,
+  "start_cash_usd": 100,
+  "start_GOLD_buy_at_trt": "2023-02-01T09:15:00+03:00",
+  "buy_ask_proxy": 1926.9,
+  "buy_fee_usd": 0.8,
+  "gold_units": 0.051481654470911825,
+  "decision_utc": "2023-02-03T13:45:00.000Z",
+  "decision_trt": "2023-02-03T16:45:00+03:00",
+  "sell_fill_price_time_utc": "2023-02-03T13:46:00.000Z",
+  "sell_fill_trt": "2023-02-03T16:46:00+03:00",
+  "nfp_asof_release": "2023-02-03T13:30:00Z",
+  "nfp_original_first_reported_jobs_k": 517,
+  "pre_nfp_m15_mid": 1913.81,
+  "after_nfp_first_m15_mid": 1888.1750000000002,
+  "shock_15m_pct": -1.3394746604939778,
+  "last3_m1_below_minus0p6pct": [
+    1888.050049,
+    1889.31995,
+    1887.95996
+  ],
+  "threshold_mid": 1902.3271399999999,
+  "proxy_last_known_m15_spread": 0.41000000000008185,
+  "next_minute_mid": 1887.51001,
+  "sell_bid_proxy": 1887.30501,
+  "cash_after_sale_fee": 96.38429173079246,
+  "ending_cash": 96.38429173079246,
+  "benchmark_untouched_gold_bid_mark_feb24": 93.2775504696663,
+  "benchmark_untouched_gold_net_if_sold_feb24": 92.53133006590896,
+  "saved_cash_relative_hold": 3.8529616648834946,
+  "after_sell_reentry_rule": "NONE (limited DOWN-exit module)",
+  "events_assessed": [
+    [
+      "FOMC_FEB01",
+      "2023-02-01T19:00:00Z",
+      "HAWKISH_RATE_REGIME"
+    ],
+    [
+      "NFP_517K_UNEMP_3_4",
+      "2023-02-03T13:30:00Z",
+      "NFP_HAWKISH_SHOCK_DOWN"
+    ],
+    [
+      "US_CPI_6_4_YOY",
+      "2023-02-14T13:30:00Z",
+      "STICKY_INFLATION_RISK"
+    ],
+    [
+      "US_PPI_0_7_MOM",
+      "2023-02-16T13:30:00Z",
+      "PRODUCER_PRICE_HIGH"
+    ],
+    [
+      "US_PCE_0_6_MOM",
+      "2023-02-24T13:30:00Z",
+      "STICKY_PCE_HIGH"
+    ]
+  ],
+  "day_summary": [
+    {
+      "date": "2023-02-01",
+      "nM15Starts": 92,
+      "position": "GOLD",
+      "net_if_sold_or_cash": 99.68927340702682
+    },
+    {
+      "date": "2023-02-02",
+      "nM15Starts": 92,
+      "position": "GOLD",
+      "net_if_sold_or_cash": 97.69040138668328
+    },
+    {
+      "date": "2023-02-03",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-04",
+      "nM15Starts": 4,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-05",
+      "nM15Starts": 0,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-06",
+      "nM15Starts": 88,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-07",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-08",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-09",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-10",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-11",
+      "nM15Starts": 4,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-12",
+      "nM15Starts": 0,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-13",
+      "nM15Starts": 88,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-14",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-15",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-16",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-17",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-18",
+      "nM15Starts": 4,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-19",
+      "nM15Starts": 0,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-20",
+      "nM15Starts": 82,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-21",
+      "nM15Starts": 88,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-22",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-23",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    },
+    {
+      "date": "2023-02-24",
+      "nM15Starts": 92,
+      "position": "CASH",
+      "net_if_sold_or_cash": 96.38429173079246
+    }
+  ],
+  "source_m1_count": 45,
+  "limitations": [
+    "No real Turkish bank quotes; 16:46 TRT sell proxy near 17h possible bank closure",
+    "No cross-asset 15m DXY/UST yields verified by first postnews minute",
+    "Historical price selection and thresholds known ahead in research mode, not heldout validation",
+    "Feb1 new GOLD benchmark start independent of Jan13 prior position: do not concatenate NAV chains",
+    "No reentry optimization, no claim globally optimal system",
+    "24 February close asof 23:45 TRT differs from NY17 swing price label"
+  ]
+}
