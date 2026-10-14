@@ -1,0 +1,126 @@
+{
+  "case_id": "GPT_JAN2023_UP_05_13",
+  "validation": "EX_POST_HINDSIGHT_EXPOSED_NOT_INDEPENDENT_OOS",
+  "is_independent_of_Claude": true,
+  "interval_trt": "2023-01-05..2023-01-13",
+  "M15_checks": 864,
+  "observed_M15_bars": 644,
+  "M1_selected_event_window_rows": 205,
+  "ZN_NQ_CL_H1_rows": 486,
+  "decision_time_utc": "2023-01-06T13:46:00.000Z",
+  "decision_time_trt": "2023-01-06T16:46:00+03:00",
+  "price_time_utc": "2023-01-06T13:47:00.000Z",
+  "price_time_trt": "2023-01-06T16:47:00+03:00",
+  "macroeconomic_catalyst": "Jan6 softer wages despite firm payroll, NFP release 13:30Z. ISM later 15Z not used to justify trade.",
+  "m15_first_NFP_15m_pct": 0.645980054140316,
+  "minutes_3_above_0_6pct": [
+    1847.41003,
+    1847.45996,
+    1848.68994
+  ],
+  "minutes_threshold": 1846.98582,
+  "known_spread_M15": 0.35999999999989996,
+  "after_decision_M1_mid": 1849.12,
+  "approx_ask_fill": 1849.2999999999997,
+  "bank_execution_confirmed": false,
+  "initial_cash_usd": 100,
+  "buy_commission_usd": 0.8,
+  "gold_units": 0.0536419185637809,
+  "last_13jan_2345TR_bid": 1920.37,
+  "bid_mark_value_usd": 103.01233115232792,
+  "net_if_sold_end_usd": 102.18823250310929,
+  "sell_decision": "NO",
+  "benchmark_first_5jan_09_15TR_ask": 1855.6,
+  "benchmark_5jan_bank_window_buyhold_net_usd": 101.84129034705755,
+  "benchmark_4jan_old_gpt_buyhold_net_usd": 102.07508277338427,
+  "benchmark_cash": 100,
+  "day_ledger": [
+    {
+      "day": "2023-01-05",
+      "market_bars_started": 92,
+      "held": false,
+      "portfolio_mark_usd": 100,
+      "net_if_sold_usd": 100,
+      "marked_bid_quote_age_hours": 0
+    },
+    {
+      "day": "2023-01-06",
+      "market_bars_started": 92,
+      "held": true,
+      "portfolio_mark_usd": 100.1843292056454,
+      "net_if_sold_usd": 99.38285457200023,
+      "marked_bid_quote_age_hours": 0
+    },
+    {
+      "day": "2023-01-07",
+      "market_bars_started": 4,
+      "held": true,
+      "portfolio_mark_usd": 100.07436327258965,
+      "net_if_sold_usd": 99.27376836640893,
+      "marked_bid_quote_age_hours": 22.75
+    },
+    {
+      "day": "2023-01-08",
+      "market_bars_started": 0,
+      "held": true,
+      "portfolio_mark_usd": 100.07436327258965,
+      "net_if_sold_usd": 99.27376836640893,
+      "marked_bid_quote_age_hours": 46.75
+    },
+    {
+      "day": "2023-01-09",
+      "market_bars_started": 88,
+      "held": true,
+      "portfolio_mark_usd": 100.33023522413887,
+      "net_if_sold_usd": 99.52759334234577,
+      "marked_bid_quote_age_hours": 0
+    },
+    {
+      "day": "2023-01-10",
+      "market_bars_started": 92,
+      "held": true,
+      "portfolio_mark_usd": 100.69446385118697,
+      "net_if_sold_usd": 99.88890814037747,
+      "marked_bid_quote_age_hours": 0
+    },
+    {
+      "day": "2023-01-11",
+      "market_bars_started": 92,
+      "held": true,
+      "portfolio_mark_usd": 100.69392743200132,
+      "net_if_sold_usd": 99.88837601254531,
+      "marked_bid_quote_age_hours": 0
+    },
+    {
+      "day": "2023-01-12",
+      "market_bars_started": 92,
+      "held": true,
+      "portfolio_mark_usd": 101.74852755096525,
+      "net_if_sold_usd": 100.93453933055753,
+      "marked_bid_quote_age_hours": 0
+    },
+    {
+      "day": "2023-01-13",
+      "market_bars_started": 92,
+      "held": true,
+      "portfolio_mark_usd": 103.01233115232792,
+      "net_if_sold_usd": 102.18823250310929,
+      "marked_bid_quote_age_hours": 0
+    }
+  ],
+  "uncertainty": [
+    "Historical event known in advance to investigator, parameter 0.6% 3 minutes not trained and out-of-sample validated",
+    "No original Turkish bank BID/ASK and bank hour/latency check",
+    "M1 mid source and historical M15 bidask vendor differ",
+    "No as-of 15m DXY/US 2Y; 13:46 UTC ZN post-NFP H1 not yet fully observed",
+    "CPI headline expectations vary across pre-release archives: shock surprise sign not securely identified",
+    "13 Jan end is chosen research endpoint, not actual timely sell signal"
+  ],
+  "sources": [
+    "https://www.bls.gov/news.release/archives/empsit_01062023.htm",
+    "https://www.investing.com/news/economic-indicators/us-service-sector-contracts-in-december-price-increases-slow--ism-survey-2974897",
+    "https://www.tbsnews.net/world/gold-hits-8-month-peak-bets-slower-rate-hikes-dent-dollar-565070",
+    "https://www.bls.gov/news.release/archives/cpi_01122023.htm",
+    "https://www.forexlive.com/news/umich-jan-us-prelim-consumer-sentiment-646-vs-605-expected-20230113/"
+  ]
+}
