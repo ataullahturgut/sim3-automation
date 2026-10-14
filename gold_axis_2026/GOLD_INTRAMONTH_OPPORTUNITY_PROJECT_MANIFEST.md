@@ -1,23 +1,13 @@
-**DÜZELTME / SINIR İHLALİ:** Ocak 2026 31 günlük `112,67 USD` yürüyüşü önceden kullanıcının çizdiği **Ocak sonuçlarını okumadan günü gününe karar** sınırını ihlal etti. Ocak fiyatları/Astra Ocak kayıtları önceden okundu, karar eşikleri daha sonra seçildi. Bu nedenle **2026 OCAK TAHMİN TESTİ GEÇERSİZDİR** (`INVALIDATED_CONSTRAINT_BREACH; AUDIT_ONLY`). Önceki sayısal rapor yalnız hata izi olarak korunur; başarı, OOS veya sınırların yerine getirilmesi sayılmaz. [İptal edilen araştırma raporu](OLAY_02_JAN2026_31_GUN_DNA_KARAR_SONUCLAR_20261014.md).
-
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
-
-**YENİ OCAK 2026 YENİDEN YÜRÜYÜŞ — ÖNCEKİ GEÇERSİZ SONUÇTAN AYRI:** [2023–2025 verisine göre önceden commit edilen karar protokolü](OLAY_02_JAN2026_PRE2026_FROZEN_REPLAY_PROTOCOL_20261014.md), [31 günün tüm günlük sayısal ve haber/kalite sicili](OLAY_02_JAN2026_PRE2026_DONDURULMUS_DNA_31_GUN_REPLAY_20261014.csv) ve [tam günlük sonuç raporu](OLAY_02_JAN2026_PRE2026_DONDURULMUS_DNA_GUNLUK_SONUC_RAPORU_20261014.md) kaydedildi. 2023–2025 kaynak fiyatlı 636 geçmiş kapanış → 485 olgunlaşmış fiyat analoğu → Ocak 2026'da **31 takvim günü (19 tam 21:45 M15 kapanışı, 12 eksik/tatil)** incelendi. **İleriye bakmadan üretilen fiyat-analog önerileri 0 AL / 0 SAT**, aynı şekilde tam ekonomik DNA kanıtını gerektiren karar 0 AL / 0 SAT: her ikisinde ay sonu nakit **100,00 USD**, 2 Ocak 09UTC alım-30 Ocak 21:45 satış eşlenik maliyetli al-tut **109,79 USD**. Yani **BAŞARISIZ / KAÇIRILMIŞ UP**, hiçbir şekilde 112,67 USD geçersiz testinin onarılması ya da gizlenmesi değildir. **Araştırmacı Ocak sonuçlarını önceki turda gördüğünden yeni çalışma tam bağımsız/kör OOS DEĞİLDİR**; yalnız kural girdilerinin tarihsel zaman kapısı kontrol edilmiş yeni bir araştırma denemesidir. Ekonomik ilk haber ve USD/faiz/gümüş eş-UTC teyidi yoksa DNA doğrulaması da yoktur. Yıl boyunca 21:45 UTC sabit kesit, DST dönemlerinde gerçek NY17 ile aynı olmak zorunda değildir. ÖĞREN-03'e yeni tarih/performans eklenmedi.
-
 
 
 ## TEK GÜNCEL DURUM — 14 Ekim 2026, belge otoritesi (eski ara notların önüne geçer)
-
-**OCAK 2026 AYLIK OLAY YÜRÜYÜŞÜ TAMAMLANDI — SADECE RETROSPEKTİF KEŞİF:** [31 gün, DNA adayları, kaynak, M15 22UTC karar ve sonraki 09UTC BID/ASK işlemleri](OLAY_02_JAN2026_31_GUN_DNA_KARAR_SONUCLAR_20261014.md) ve [tüm 31 günün CSV kaydı](OLAY_02_JAN2026_31_GUN_DNA_KARAR_MALIYET_DENETIMI_20261014.csv). Başlangıç CASH 100 USD; 05 Ocak AL kararı 06 Ocak 09UTC ASK 4.468,715; 29 Ocak SAT kararı 30 Ocak 09UTC BID 5.116,535; %0,8 alış + %0,8 satış ve provider BID/ASK dahil **112,67 USD**, aynı uygulama saatli 02 Ocak'tan GOLD AL-TUT **109,79**, nakit **100**. **BU BAĞIMSIZ OOS DEĞİLDİR**: olay/ayın fiyat sonucu ve Astra'nın kararları araştırma başlamadan biliniyordu; kapılar retrospektif seçilmiştir. 29 Ocak 22UTC'den 30 Ocak 09UTC'ye yaklaşık %4,88 düşüş korunmuş sayılmaz. Duka doğrudan fiyat serisi bazı tam günlerde eksik: HistData M15 + Duka BID/ASK sadece geçerli fill anlarında birleştirildi, ilk haber UTC ve gerçek banka ASK/BID hâlâ eksik. Yeni geçmiş performans ile canlı AL/SAT yetkisi doğmaz.
-
 
 
 **Ekonomik DNA karakter sentezi:** [38 tarihli derin vaka → 12 olay örgüsü analizi](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) ve [vaka–örgü eşleştirme sicili](OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv) hazır. Tarihsiz ORG01–ORG12 P0–P5 karakter ve yanlışlama tanımları ÖĞREN-03'te. Bu örgüler şimdilik keşif hipotezleri; bağımsız nedensellik ve işlem sinyali doğrulanmadı.
 
 
-
 **EKONOMİK DNA TOPLU ARAŞTIRMASININ GÜNCEL DURUMU:** [OLAY-02 sonuç raporu](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md), [96 alt DNA aday/rol kaydı](OLAY_02_96_KAYIT_DNA_ALT_TIP_ROL_TARAMA_20261014.csv), [42 çapraz piyasa imzası](OLAY_02_42_UZUN_FIYAT_CROSS_ASSET_DAVRANIS_IMZASI_20261014.csv) ve [85 açıklamalı makro/plasebo araştırması](OLAY_02_85_MAKRO_YENI_DNA_TEPKI_PLASEBO_20261014.csv) üretildi. **43 alt DNA araştırma adayı, 25 genel makro, 28 belirsiz**; **ilk haber–fiyat bacağı nedenselliği 0/96 doğrulanmış**, bağımsız as-of OOS ve banka AL/SAT yetkisi yok. Neon `SI.c.0` geçerliliği ayrıca [47 kontrol QA dosyasında](OLAY_02_47_KONTROL_SI_CALENDAR_ROLL_SAAT_KAPSAM_20261014.csv); `SI.n.0` ile karıştırma. ÖĞREN-03'te yalnız tarihsiz mekanizma ve yeniden kullanılabilir karakter kuralları bulunur. Bu sonuç eski aylık strateji defterinden ayrı, ekonomik DNA keşif araştırmasıdır.
-
 
 
 **Üç aktif manifest vardır:** **ANA-01** (bu dosya: hedef/araştırma protokolü), [**OLAY-02**](OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) (**haber/veri/fiyat/karar kanıtının tek asıl kaynağı**) ve [**ÖĞREN-03 — Ekonomik Olay DNA Kütüphanesi**](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) (**tarihsiz ekonomik DNA, alt mekanizma, başlangıç–gelişim–bitiş ve etkileşim grafikleri; tekil tarihli vaka/performans içermez**). **DURUM-04** [aylık STATE kaydı](adaptive_volatility_learning/months/2023-01/STATE.json) tek yardımcı ilerleme kaydıdır. [Belge haritası](BELGE_HARITASI_V1.md) yalnız dizindir. ÖĞREN-03 eski ortak öğrenme dosyasının **aynı fiziksel yolunda** genişletilmiştir; dördüncü yeni aktif manifest açılmadı.
@@ -48,7 +38,6 @@
 
 **2023 Ocak kritik düzeltmesi:** Rapordaki `$100 → $101,9695` sonuç, geçmişte çalıştırılmış **5-seans-momentum V0** hesabıdır; **orta/büyük olay temelli ana stratejinin sonucu DEĞİLDİR**. İlgili hesap ve ücretler tarihsel karşılaştırma olarak korunur, ancak V0'nun başarısızlığı yalnız küçük momentum değişimlerini izleyen yaklaşımı ilgilendirir. Ocak 2023 araştırma ayı **olay-stratejisi bakımından AÇIK** tutulur; Şubat'a doğrulanmış yöntem devri yoktur.
 
-**Yürürlük/ayrıntılı sözleşme:** [Orta/büyük olay odaklı yeniden başlangıç sözleşmesi](adaptive_volatility_learning/EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md). 2026 Ocak B0–S4–V4 deneyleri tarihsel ilham/kısıt niteliğindedir; V4 2024'te 12 ilgili DOWN vakasına karşı **0 alarm** ürettiği için teyit edilmiş strateji olarak alınmaz.
 
 ## 1. Tam olarak hangi problemi çözüyoruz?
 
@@ -205,7 +194,7 @@ Geçmişle kıyas için dört soru zorunludur:
 
 ### Belgeler ve sürüm yönetimi
 
-- **Bu dosya**, yeni amacın ve araştırma çıktısının **tek güncel yönlendirme manifestidir**. 14 Ekim 2026 tarihli eski **5.190 satırlık TAM** ana metin değişmeden [TARİHSEL MANİFEST ARŞİVİNE](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md) alındı. Önceki veri denetimleri, model sonuçları, başarısız testler, Ocak 2026 V1–V4 ve referans bağlantıları **kaybolmadı**. Arşivdeki eski "BINDING/NEXT/NO FORECAST" yalnız **kendi tarih/deney kapsamı** içindir.
+- **Bu dosya**, yeni amacın ve araştırma çıktısının **tek güncel yönlendirme manifestidir**. 14 Ekim 2026 tarihli eski **5.190 satırlık TAM** ana metin değişmeden [TARİHSEL MANİFEST ARŞİVİNE](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md) alındı. Önceki veri denetimleri ve tarihsel referanslar arşivde saklanır; kullanıcının kaldırılmasını istediği deneme çıktıları yeni çalışmalara taşınmaz. Arşivdeki eski "BINDING/NEXT/NO FORECAST" yalnız **kendi tarih/deney kapsamı** içindir.
 - **Kaynak hiyerarşisi:** ilgili veri/kapanış saati/PIT sözleşmesi → dondurulmuş deney protokolü ve sayısal CSV/JSON → bilimsel sonuç/yanlışlama → bu amaç manifesti → tarihsel arşiv notları. Bir amaç değişikliği eski deney skorlarını değiştirmez.
 - [Otorite/değişiklik ve eski modellerin ayrımı](GOLD_INTRAMONTH_MANIFEST_AUTHORITY_AND_CHANGE_CONTROL_20261013.md). Aylık H=1 [ayrı proje manifesti](GOLD_MONTHLY_PROJECT_MANIFEST.md) yetkisini korur. V1/V2 olay/38 kaynak, günlük/H3/SESSION ve banka saatleri ayrı hedef/otorite.
 - **Repo:** `ataullahturgut/sim3-automation`, araştırma dalı `research-gold-jan26-two-factor-confirmation-v4-20261013`, [PR #128](https://github.com/ataullahturgut/sim3-automation/pull/128) **AÇIK, MAIN'E BİRLEŞMEDİ**. Üretime geçiş veya gerçek işlem emirleri için ayrı yetki gerekir. Açık depoya erişim anahtarı, lisanslı ham özel veri veya hesap bilgisi girilmez.
