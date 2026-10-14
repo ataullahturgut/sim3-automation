@@ -10,6 +10,10 @@
 
 ## TARİH SIRASI DEĞİL, TÜM OLAYLARI BİRLİKTE KARŞILAŞTIRAN DNA ARAŞTIRMASI
 
+**OCAK 2026 — 31 GÜNLÜK OLAY-DNA ARAŞTIRMA YÜRÜYÜŞÜ:** [Günlük yorum/karar/sonuç raporu](OLAY_02_JAN2026_31_GUN_DNA_KARAR_SONUCLAR_20261014.md) + [31 gün sayısal karar ve fiyat QA CSV](OLAY_02_JAN2026_31_GUN_DNA_KARAR_MALIYET_DENETIMI_20261014.csv) kaydedildi. Başlangıç 100 USD nakit; 05 Ocak BUY karar→06 Ocak 09UTC ASK vekili 4.468,715; 29 Ocak risk SAT karar→30 Ocak 09UTC BID 5.116,535; iki taraf %0,8, spot kaynak makası dahil, **ay sonu 112,6722 USD**. Karşılaştırmalar: altın al-tut **109,7933**, nakit **100**, aynı AL sonrası risk çıkışı yok **107,7963**. **Kurallar Ocak ve Astra verileri görüldükten sonra belirlenmiştir; keşif sonucu, bağımsız OOS veya gerçek banka karı değildir.** Her günün haber ilk-yayım saati / ekonomik nedensellik onaylı değil. Ocak ayının tarihli kararları ÖĞREN-03'e yazılmaz.
+
+
+
 **Tarih ekonominin DNA kimliği değildir.** Mekanizma keşfinde tüm dönemlerin olayları birlikte sorgulanır. Olayın tarihi sadece ilk kaynak ve piyasa tepki sırasını doğrulamak için gerekir; takvim yılı veya büyük gerçekleşmiş fiyat yönü birincil DNA özelliği olamaz.
 
 **Kaynaklar arası fiilî karşılaştırma tamamlanan ilk geçiş:** [96 kayıt / çoklu DNA kanıt üçgenlemesi CSV](OLAY_02_96_KAYIT_COKLU_DNA_KANIT_TRIANGULASYON_20261014.csv). Eski 95 fiyat kaydı atlası, güncel 96 kayıtlı bilimsel kaynak sicili, 38 ayrıntılı vaka kaynakları ve 42 uzun fiyat morfolojisi yan yana getirildi. **42 ortak V1 uzun bacağın 26'sında eski 95 kaynak aile yorumu ile yeni 96 atlas aile yorumu farklıdır; 16'sı aynı kaba gruptadır.** Bu 26 farklılık, nedenlerin yanlış/kanıtlanmış olduğunun değil, **tek etiketli retrospektif anlatının belirsizliğinin** kanıtıdır. Eski 95 atlasının fiyat sürümü farklı olduğundan getiriler birbirinin yerine kullanılmadı. **Eski 20 V2 dosyası** güncel 54 `C_CORR` V2 ile yalnız numaradan **eşlenmedi**; 54'ü güncel kimliğiyle ve kendi haber bağlamıyla ayrı okundu. Güncel 96 olay kanıt sicilinde 95 satırda en az bir tarihlenmiş kaynak bağlantısı var; bu kaynakların ilk yayımlanma anını veya fiyat başlatıcı nedenini kanıtlamaz.
