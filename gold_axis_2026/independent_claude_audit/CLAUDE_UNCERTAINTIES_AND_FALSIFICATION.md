@@ -4,6 +4,8 @@
 
 ## 0. Dosya dizini
 
+> **2026-10-14 ikinci güncelleme:** Kullanıcının istediği veri + vaka birleşik öğrenen sistem: [CLAUDE_ADAPTIVE_EVIDENCE_SYSTEM_RESULTS.md](CLAUDE_ADAPTIVE_EVIDENCE_SYSTEM_RESULTS.md) — sonuç NEGATİF (geliştirmede üstünlük yok, 2023'te işlem yok).
+
 > **2026-10-14 düzeltme:** Kullanıcının istediği yöntem (haber/veri → olay örgüsü eşleştirmesi → kal/çık kararı) **[CLAUDE_ANALOG_DECISION_REPLAY_JAN_FEB_2023.md](CLAUDE_ANALOG_DECISION_REPLAY_JAN_FEB_2023.md)** dosyasındadır ve **birincil rapordur**. Aşağıdaki mekanik kural backtest'i (V-A/V-B/V-C, L50_H2) yalnız yan bulgudur.
 
 | Dosya | İçerik |
