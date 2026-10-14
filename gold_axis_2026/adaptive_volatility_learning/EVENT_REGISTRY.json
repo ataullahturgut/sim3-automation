@@ -1,0 +1,8 @@
+{
+  "schema_version": "0.1",
+  "purpose": "cross-year case ids, not unique independent shocks",
+  "status": "EMPTY_AWAITING_RESEARCH",
+  "case_records": [],
+  "counterexample_links": [],
+  "last_review_date": "2026-10-14"
+}
