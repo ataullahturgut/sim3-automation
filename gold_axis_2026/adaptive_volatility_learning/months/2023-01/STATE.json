@@ -435,5 +435,13 @@
       "MECH_SHORT_DOWN_WHIPSAW_HOLD_V1"
     ],
     "supersedes_nothing": true
+  },
+  "document_registry_v1": {
+    "ANA-01": "gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md",
+    "OLAY-02": "gold_axis_2026/OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md",
+    "ÖĞREN-03": "gold_axis_2026/adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md",
+    "DURUM-04": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/STATE.json",
+    "VAKA-03": "RETIRED_COMPONENT_OF_OLAY-02",
+    "frozen_research_history": "gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md"
   }
 }
