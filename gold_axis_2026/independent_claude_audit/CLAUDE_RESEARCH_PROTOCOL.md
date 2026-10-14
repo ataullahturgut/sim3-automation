@@ -69,6 +69,21 @@ Her varyant 2020-01-02 → 2022-12-30 sürekli 100$ ile çalıştırılır (icra
 **v2 ailesi (yalnız dev'de seçilecek; 2023 hiçbir v1/v2 koşusu henüz görülmedi):** Histerezisli yavaş rejim. `UP` durumu C_S > SMA_L·(1+h), `DOWN` durumu C_S < SMA_L·(1−h); bant içinde önceki durum korunur. AL = durum DOWN/yok → UP geçişi; SAT = UP → DOWN geçişi. Izgara: L ∈ {20, 50} seans, h ∈ {%1, %2, %3} → 6 yapılandırma. Makro ve 15dk şok sinyalleri v2'de **işlem tetiklemez**; 15dk/1dk katman yalnız icra kalitesi ve olay evresi kaydı içindir.
 Seçim kuralı: dev'de nakdi geçen yapılandırmalar arasında net/|maxDD| en yüksek olan. Hiçbiri nakdi geçemezse `V2_NO_PASS` ve 2023'te yalnız tanısal raporlanır.
 
+### v2 dev sonucu (2023 koşusundan ÖNCE)
+
+| Yapılandırma | AL/SAT | Ücret $ | Net (satılsa) $ | maxDD | 2020 / 2021 / 2022 |
+|---|---|---:|---:|---:|---|
+| L20_H1 | 19/18 | 26,86 | 78,24 | −%36,7 | −5,7 / −9,1 / −7,9 |
+| L20_H2 | 13/12 | 18,91 | 82,93 | −%32,2 | +3,0 / −15,2 / −4,3 |
+| L20_H3 | 7/6 | 9,70 | 87,76 | −%28,4 | +2,9 / −13,8 / −0,3 |
+| L50_H1 | 10/9 | 14,87 | 96,19 | −%23,4 | +2,6 / −9,8 / +4,8 |
+| **L50_H2** | 6/5 | 8,67 | **103,05** | −%21,9 | +6,5 / −10,9 / +9,4 |
+| L50_H3 | 5/4 | 7,25 | 97,12 | −%25,7 | +9,6 / −13,7 / +3,6 |
+
+Nakit 100$, maliyetli pasif altın 118,02$. **Seçilen: L50_H2** (nakdi geçen tek yapılandırma). Uyarı: pasif altının 15 $ gerisinde ve komşu yapılandırmalar 96–97$ → seçim **kırılgan**; 2023 testinde başarılı çıksa bile genelleştirilebilir üstünlük iddiası yapılmaz.
+
+**Hesap başlangıcı yorumu (2023'ten önce sabitlendi):** Birincil = protokol metnindeki gibi yalnız **durum geçişinde** işlem (A1 nakitle başlarken mevcut UP durumu AL üretmez). İkincil/tanısal = hesabın ilk pencere fırsatında mevcut duruma uyması (“state-follow”). Birincil sonuç değiştirilmeyecek.
+
 ## 7. Yasaklar
 
 Geleceği görerek dip/tepe seçimi; açıklama öncesi sürpriz kullanımı; BIST/Türkiye hisse verisi; ham Neon fiyatlarının depoya yüklenmesi (yalnız türetilmiş karar/özet); ChatGPT kararlarının kopyalanması.
