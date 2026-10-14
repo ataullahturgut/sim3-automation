@@ -1,0 +1,120 @@
+{
+  "registry_id": "GPT_CAUSAL_ACTION_REGISTER_V1_20261014",
+  "revision_at": "2026-10-14",
+  "source_historical_manifest": "gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md",
+  "active_governing_manifest": "gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md",
+  "evidence_level": "E2_TIMED_NEWS_AND_PRICE_RESPONSE_IN_SELECTED_CASES_NOT_CAUSAL_VALIDATION",
+  "status": "RESEARCH_ONLY_NOT_FROZEN_NOT_PRODUCTION_NOT_BLIND",
+  "version": "1.0",
+  "research_modes": [
+    "FULL_HISTORY_DISCOVERY",
+    "AS_OF_REPLAY_WITH_ALREADY_SEEN_HISTORICAL_CASES"
+  ],
+  "holding_and_fees": "GOLD/CASH; 0.8% buy and 0.8% sell plus bank bid/ask spread and latency",
+  "current_research_separation": "Do not modify frozen 5190-line historical snapshot. Current active manifest links this latest hypothesis register; detailed experimental result in report files.",
+  "hypotheses": [
+    {
+      "hypothesis_id": "MECH_FED_DOVISH_REPRICING_UP_V1",
+      "label": "UP: beklentiden yumuşak ücret/enflasyon, Fed yeniden fiyatlama ve altın teyidi",
+      "case_ids": [
+        "2023-01-06_NFP_AHE",
+        "2023-01-06_ISM_SERVICES_49P6"
+      ],
+      "mode": "RESEARCH_ONLY_HINDSIGHT_EXPOSED",
+      "initial_position": "CASH",
+      "ex_ante_candidate": "Makro ilk açıklama varsa ve wage/inflation/growth bileşimi nominal/faiz beklentisinin yumuşayabileceğine işaret ediyorsa: XAU M15 UP ilk tepki; sonra tamamlanan M1'lerle kırılma sürekliliği; UST/DXY varsa AS-OF çapraz teyit. Kalan fiyat fırsatı muhtemel banka maliyetini aşabiliyorsa alım adayı",
+      "action_if_confirmed": "CASH_TO_GOLD_BUY_CANDIDATE / IF_GOLD_HOLD",
+      "counterevidence": "Güçlü istihdam sayısı şahin kanaldır; USD/UST 15m eksik, 6 Jan ISM 15:00Z açıklaması 13:46Z kararına giremez; 10 Mar 2023 güçlü sürpriz NFP'ye rağmen ilk 15m XAU +0.54% karşı örneği",
+      "actual_candidate_case": {
+        "firstprint_utc": "2023-01-06T13:30:00Z",
+        "first_actionable_utc": "2023-01-06T13:46:00Z",
+        "simulated_next_m1_time_utc": "2023-01-06T13:47:00Z",
+        "vendor_proxy_ask_usd_oz": 1849.3,
+        "initial_usd": 100,
+        "comparison_net_if_forced_sold_2023_01_13_usd": 102.19
+      },
+      "gate_illustration": "NFP UP first fully completed M15 then 3 M1 closes >= +0.6% versus pre-NFP M15 MID; illustrative hindsight-selected threshold, NOT frozen transferable rule",
+      "status": "MECHANISM_HYPOTHESIS_REPLAYED_ONE_CASE_NOT_GENERALIZED",
+      "evidence_paths": [
+        "independent_gpt_audit/2023-01-05_to_13/GPT_INDEPENDENT_JAN05_13_MACRO_EVENT_COSTED_REPLAY_20261014.md"
+      ],
+      "required_falsification": [
+        "Same event type in non-UP cases; 10 Mar 2023 NFP positive surprise and gold UP despite hawkish simple theory",
+        "PIT USD, US 2Y/10Y and other metal simultaneous quote test",
+        "Slippage/real bank availability near 16:47TRT",
+        "Fixed rule on untouched NFP cohorts"
+      ]
+    },
+    {
+      "hypothesis_id": "MECH_FED_HAWKISH_REPRICING_DOWN_V1",
+      "label": "DOWN: büyük istihdam/ücret şahin sürprizi + altın kırılması",
+      "case_ids": [
+        "2023-02-03_NFP_517K"
+      ],
+      "mode": "RESEARCH_ONLY_HINDSIGHT_EXPOSED",
+      "initial_position": "GOLD",
+      "ex_ante_candidate": "Güçlü sürpriz ve Fed sıkılığı kanalı; ilk M15 altın DOWN; M1 teyit sonrası düşüşün devam potansiyeli ve satışın kaçınılan zarar faydası, makas/komisyon ve gelecekte gerekebilecek geri alışa üstünse nakde geç aday",
+      "action_if_confirmed": "GOLD_TO_CASH_SELL_CANDIDATE / IF_CASH_HOLD",
+      "counterevidence": "Güçlü iş istihdamı doğrudan altın DOWN demek değildir, Mart 2023 bankacılık SVB stresinde NFP+ ve XAU+ karşı örneği vardır; Şubat real-time USD/UST 15m eksik",
+      "actual_candidate_case": {
+        "firstprint_utc": "2023-02-03T13:30:00Z",
+        "first_actionable_utc": "2023-02-03T13:45:00Z",
+        "simulated_next_m1_time_utc": "2023-02-03T13:46:00Z",
+        "proxy_bid_usd_oz": 1887.30501,
+        "example_start_usd": 100,
+        "conditional_cash_after_sale_usd": 96.38429,
+        "passive_gold_sale_net_feb24_usd": 92.53133
+      },
+      "gate_illustration": "NFP bearish macro + first M15 fall + 3 M1 closes <= -0.6% vs pre-NFP M15 MID; symmetric Jan UP gate, hindsight-exposed, NOT optimized or validated",
+      "status": "DOWN_EXIT_REPLAYED_ONE_CASE_NO_REENTRY_MODEL",
+      "evidence_paths": [
+        "independent_gpt_audit/2023-02-01_to_24/GPT_INDEPENDENT_FEB01_24_NFP_DOWN_EVENT_CASE_20261014.md"
+      ],
+      "required_falsification": [
+        "False SAT and missed rebound on same-strength jobs releases",
+        "Costed reentry policy and 2024/25 shock/false DOWN examples",
+        "Synchronized DXY/UST and publication-time series",
+        "Real bank quotes 16:46 TRT and execution-hour check"
+      ]
+    },
+    {
+      "hypothesis_id": "MECH_SHORT_DOWN_WHIPSAW_HOLD_V1",
+      "label": "DOWN fiyat hareketi teyit, kalan fırsat işlem maliyetinden küçük olabilir",
+      "case_ids": [
+        "2023-01-05_ADP_235K_CLAIMS_204K",
+        "2023-01-06_NFP_ISM_REVERSAL"
+      ],
+      "mode": "RESEARCH_ONLY_HINDSIGHT_EXPOSED",
+      "initial_position": "GOLD",
+      "ex_ante_candidate": "Şahin haber sonrası DOWN var ancak ilk hareket zaten görülmüş; durum ABSTAIN/HOLD GOLD olabilir. SAT sonra geri AL turunda fiyat avantajı alış ve satış maliyetleriyle gerçek ASK/BID farkını aşmalı; yoksa SAT zorunlu değil",
+      "action_if_confirmed": "HOLD_GOLD_AVOID_COSTLY_WHIPSaw",
+      "counterevidence": "HOLD her düşüşte doğru değildir; 3 Feb büyük DOWN'da satmama büyük kayıp oluşturdu. NFP daha sonra ISM yükselişi 5 Jan 16:58Z'de bilinmez; bu sonucun karara önden dahil edilmesi YASAK",
+      "actual_candidate_case": {
+        "jan5_micro_down_confirmation_utc": "2023-01-05T13:58:00Z",
+        "jan6_micro_up_confirmation_nfp_utc": "2023-01-06T13:48:00Z",
+        "jan6_micro_up_confirmation_ism_utc": "2023-01-06T15:07:00Z",
+        "gold_bid_mark_jan6_if_held_usd": 100.0734,
+        "if_sell_jan5_rebuy_jan6_nfp_bid_mark_usd": 97.67,
+        "if_sell_jan5_rebuy_jan6_ism_bid_mark_usd": 97.23
+      },
+      "gate_illustration": "5 Jan observed DOWN after ADP and claims, no validated residual downside to offset sell+rebuy; not general trend-following veto",
+      "status": "COUNTERFACTUAL_VS_WHIPSaw_REPLAYED_NOT_GENERALIZED",
+      "evidence_paths": [
+        "adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_TOP_VOLATILITY_DIRECTIONAL_STRESS_AUDIT_20261014.md"
+      ],
+      "required_falsification": [
+        "Multi-session large genuine DOWN where hold loses >> sell cost",
+        "Remaining-return distribution conditional on event stage",
+        "Full 1m after signal with actual bank execution",
+        "No-event days with false SELL alerts"
+      ]
+    }
+  ],
+  "rules_for_promotion": [
+    "Predefine available-asof clocks and source-vintages",
+    "Set explicit M15/H1/M1 gate and bank spread/slippage",
+    "Train case selection separate from validation, use negative controls",
+    "Report missed events, false alarms, and net bank utility vs gold hold and cash",
+    "Do not claim L3/L4 causality/production without controls"
+  ]
+}
