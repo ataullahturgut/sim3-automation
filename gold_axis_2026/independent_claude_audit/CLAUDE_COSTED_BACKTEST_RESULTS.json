@@ -1,0 +1,759 @@
+{
+ "study_id": "CLAUDE_INDEPENDENT_R71_XAU_EVENT_DECISION_V1_V2",
+ "date": "2026-10-14",
+ "author": "Claude (independent)",
+ "branch": "research-gold-claude-independent-audit-20261014",
+ "status": "RESEARCH_ONLY / NO_LIVE_TRADING / NO_PROMOTION / 2023_CASES_HINDSIGHT_EXPOSED",
+ "data_sources": {
+  "xau_m15": "Neon gold_research_evduka_xau15m_bidask_candidate (EV/Dukascopy-derived BID/ASK, non-PIT), bar_start labelled, usable at start+15m",
+  "xau_m1": "Neon xau_intraday_research_cache_1m (MID close only), observation_ts = bar start (verified: M1@start+14 vs M15 close MAE 0.047 USD), usable at start+1m",
+  "macro": "Neon observations MACRO_{NFP,AHE,UNEMP,CPI}_*_FIRST_PRINT/CONSENSUS_PIT; MACRO_FOMC_GSS_PATH_FROZEN2015 (assumed known release+30m)",
+  "cross_market": "repo GOLD_DATABENTO_GLBX_OHLCV1H_N_RAW_2022_2024.csv.gz (.n.0 OI-ranked roll), diagnostic only",
+  "missing": [
+   "DXY/USD index intraday+daily",
+   "US 2Y/10Y yields and TIPS (FRED blocked by proxy policy; WebFetch HTTP 429)",
+   "VIX/GVZ 2023",
+   "ETF/COT intraday",
+   "real Turkish bank BID/ASK"
+  ]
+ },
+ "neon_research_objects": [
+  "gold_research_r71_claude_indep_xau15m_features_v1",
+  "gold_research_r71_claude_indep_xau_sessions_v1",
+  "gold_research_r71_claude_indep_xau_zevents_v1",
+  "gold_research_r71_claude_indep_macro_signals_v1",
+  "gold_research_r71_claude_indep_signals_v1",
+  "gold_research_r71_claude_indep_variant_signals_v1 (view)",
+  "gold_research_r71_claude_indep_signals_v2",
+  "gold_research_r71_claude_indep_15m_check_log_v1",
+  "gold_research_r71_claude_indep_sim_v1() / _sim_v2() (plpgsql)"
+ ],
+ "cost_model": {
+  "commission_buy": 0.008,
+  "commission_sell": 0.008,
+  "breakeven_roundtrip_no_spread": 0.016194,
+  "bank_window_utc": "Mon-Fri 06:00-14:00 (09:00-17:00 TRT)",
+  "dev_fill": "next in-window M15 bar open BID/ASK",
+  "test_2023_fill": "1m-gated, next M1 MID +/- half last M15 spread (PROXY_FILL)"
+ },
+ "dev_2020_2022": {
+  "cash": 100.0,
+  "passive_gold_net": 118.015,
+  "v1": {
+   "V-A_FULL": {
+    "buys": 39,
+    "sells": 38,
+    "fees": 49.98,
+    "net_if_sold": 59.268,
+    "maxdd_pct": -50.6
+   },
+   "V-B_MACRO_REGIME": {
+    "buys": 36,
+    "sells": 35,
+    "fees": 49.69,
+    "net_if_sold": 65.398,
+    "maxdd_pct": -49.99
+   },
+   "V-C_REGIME_ONLY": {
+    "buys": 27,
+    "sells": 26,
+    "fees": 37.13,
+    "net_if_sold": 72.838,
+    "maxdd_pct": -44.81
+   },
+   "verdict": "NO_VARIANT_PASSES_DEV"
+  },
+  "v2": {
+   "L20_H1": [
+    19,
+    18,
+    26.86,
+    78.24,
+    -36.72
+   ],
+   "L20_H2": [
+    13,
+    12,
+    18.91,
+    82.93,
+    -32.23
+   ],
+   "L20_H3": [
+    7,
+    6,
+    9.7,
+    87.76,
+    -28.38
+   ],
+   "L50_H1": [
+    10,
+    9,
+    14.87,
+    96.19,
+    -23.38
+   ],
+   "L50_H2": [
+    6,
+    5,
+    8.67,
+    103.05,
+    -21.88
+   ],
+   "L50_H3": [
+    5,
+    4,
+    7.25,
+    97.12,
+    -25.74
+   ],
+   "columns": [
+    "buys",
+    "sells",
+    "fees",
+    "net_if_sold",
+    "maxdd_pct"
+   ],
+   "selected": "L50_H2",
+   "note": "only config > cash; trails passive by ~15 USD; neighbours 96-97 => fragile"
+  }
+ },
+ "dev_signal_base_rates_signed_fwd_pct": {
+  "columns": [
+   "n",
+   "mean5",
+   "med5",
+   "mean10",
+   "med10",
+   "mean20",
+   "pct10_gt_1.62",
+   "pct20_gt_1.62"
+  ],
+  "MACRO_UP": [
+   16,
+   1.66,
+   0.8,
+   0.92,
+   0.67,
+   2.54,
+   43.8,
+   56.3
+  ],
+  "MACRO_DOWN": [
+   19,
+   0.53,
+   -0.14,
+   0.33,
+   -0.01,
+   -1.38,
+   26.3,
+   26.3
+  ],
+  "ONSET_UP_regime_ok": [
+   69,
+   0.0,
+   -0.02,
+   -0.01,
+   0.27,
+   0.07,
+   37.7,
+   40.6
+  ],
+  "ONSET_DOWN_regime_ok": [
+   58,
+   -0.12,
+   -0.26,
+   -0.95,
+   -0.89,
+   -2.08,
+   20.7,
+   17.2
+  ],
+  "REGFLIP_UP": [
+   59,
+   0.12,
+   0.19,
+   0.39,
+   0.31,
+   0.8,
+   33.9,
+   44.1
+  ],
+  "REGFLIP_DOWN": [
+   56,
+   -0.04,
+   -0.26,
+   0.15,
+   0.01,
+   0.46,
+   32.1,
+   39.3
+  ],
+  "sign_convention": "positive = price moved in signal direction from exec MID to the k-th NY17 close after execution"
+ },
+ "test_2023_realized_signed_fwd_pct": {
+  "V-A_BUY_2023-01-03": {
+   "f5": 1.65,
+   "f10": 3.95,
+   "f20": 4.44
+  },
+  "V-B_BUY_2023-01-06": {
+   "f5": 2.62,
+   "f10": 4.51,
+   "f20": 3.45
+  },
+  "SELL_2023-02-03": {
+   "f5": 2.8,
+   "f10": 4.15,
+   "f20": 4.14
+  },
+  "reading": "all three far above dev base rates => 2023 Jan-Feb was an unusually persistent trend regime; profits are not evidence of ex-ante edge"
+ },
+ "portfolios_2023": {
+  "A1": {
+   "V-A_FULL": {
+    "start": "100 USD cash 2023-01-03",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "ONSET_UP z12=2.38 REG=UP",
+      "signal_utc": "2023-01-03 04:15",
+      "exec_utc": "2023-01-03 06:01",
+      "exec_trt": "2023-01-03 09:01",
+      "price": 1841.37,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar (avail 06:01) + half of last M15 spread 0.42",
+      "one_minute_gate": "last M1 05:59=1840.46 vs trigger 1841.92: within [-0.15%,+0.30%] PASS",
+      "units_after": 0.05387293,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     }
+    ],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05387293,
+    "end_cash": 0,
+    "nav_bid_mark": 103.3202,
+    "net_if_sold_now": 102.4936,
+    "fees_paid": 0.8
+   },
+   "PASSIVE_GOLD": {
+    "start": "100 USD cash",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "benchmark: first bank-window minute",
+      "signal_utc": "2023-01-03 06:00",
+      "exec_utc": "2023-01-03 06:01",
+      "exec_trt": "2023-01-03 09:01",
+      "price": 1841.37,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar (avail 06:01) + half of last M15 spread 0.42",
+      "one_minute_gate": "last M1 05:59=1840.46 vs trigger 1841.92: within [-0.15%,+0.30%] PASS",
+      "units_after": 0.05387293,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     }
+    ],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05387293,
+    "end_cash": 0,
+    "nav_bid_mark": 103.3202,
+    "net_if_sold_now": 102.4936,
+    "fees_paid": 0.8
+   },
+   "V-B_MACRO_REGIME": {
+    "start": "100 USD cash",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "MACRO_NFP_UP (AHE -0.1 dovish, XAU +0.646% in 15m)",
+      "signal_utc": "2023-01-06 13:45",
+      "exec_utc": "2023-01-06 13:46",
+      "exec_trt": "2023-01-06 16:46",
+      "price": 1848.87,
+      "price_source": "PROXY_FILL: M1 MID 13:45 bar + half M15 spread 0.36",
+      "one_minute_gate": "last M1 13:44=1847.46 vs trigger 1847.83 PASS",
+      "units_after": 0.05365439,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     }
+    ],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05365439,
+    "end_cash": 0,
+    "nav_bid_mark": 102.9011,
+    "net_if_sold_now": 102.0779,
+    "fees_paid": 0.8
+   },
+   "V-C_REGIME_ONLY": {
+    "start": "100 USD cash (REG already UP since 2022-12-29: no new flip)",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0,
+    "end_cash": 100,
+    "nav_bid_mark": 100.0,
+    "net_if_sold_now": 100.0,
+    "fees_paid": 0
+   },
+   "v2_L50_H2_SELECTED_transition_only": {
+    "start": "100 USD cash (band state UP since 2022-11-08: no transition)",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0,
+    "end_cash": 100,
+    "nav_bid_mark": 100.0,
+    "net_if_sold_now": 100.0,
+    "fees_paid": 0
+   },
+   "v2_L50_H2_state_follow_SECONDARY": {
+    "start": "100 USD cash",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "state-follow: band state UP",
+      "signal_utc": "2023-01-03 00:00",
+      "exec_utc": "2023-01-03 06:01",
+      "exec_trt": "2023-01-03 09:01",
+      "price": 1841.37,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar (avail 06:01) + half of last M15 spread 0.42",
+      "one_minute_gate": "last M1 05:59=1840.46 vs trigger 1841.92: within [-0.15%,+0.30%] PASS",
+      "units_after": 0.05387293,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     }
+    ],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05387293,
+    "end_cash": 0,
+    "nav_bid_mark": 103.3202,
+    "net_if_sold_now": 102.4936,
+    "fees_paid": 0.8
+   },
+   "CASH": {
+    "start": "100 USD cash",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0,
+    "end_cash": 100,
+    "nav_bid_mark": 100.0,
+    "net_if_sold_now": 100.0,
+    "fees_paid": 0
+   }
+  },
+  "A2": {
+   "V-A_FULL": {
+    "start": "inherited 0.05358252 oz (ChatGPT 2023-01-04 07:21 UTC buy @1851.35 ASK proxy, 0.80 USD fee already paid)",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05358252,
+    "end_cash": 0,
+    "nav_bid_mark": 102.7632,
+    "net_if_sold_now": 101.9411,
+    "fees_paid": 0
+   },
+   "V-B_MACRO_REGIME": {
+    "start": "inherited 0.05358252 oz (ChatGPT 2023-01-04 07:21 UTC buy @1851.35 ASK proxy, 0.80 USD fee already paid)",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05358252,
+    "end_cash": 0,
+    "nav_bid_mark": 102.7632,
+    "net_if_sold_now": 101.9411,
+    "fees_paid": 0
+   },
+   "V-C_REGIME_ONLY": {
+    "start": "inherited 0.05358252 oz (ChatGPT 2023-01-04 07:21 UTC buy @1851.35 ASK proxy, 0.80 USD fee already paid)",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05358252,
+    "end_cash": 0,
+    "nav_bid_mark": 102.7632,
+    "net_if_sold_now": 101.9411,
+    "fees_paid": 0
+   },
+   "v2_L50_H2_SELECTED_transition_only": {
+    "start": "inherited 0.05358252 oz (ChatGPT 2023-01-04 07:21 UTC buy @1851.35 ASK proxy, 0.80 USD fee already paid)",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05358252,
+    "end_cash": 0,
+    "nav_bid_mark": 102.7632,
+    "net_if_sold_now": 101.9411,
+    "fees_paid": 0
+   },
+   "PASSIVE_GOLD": {
+    "start": "inherited 0.05358252 oz (ChatGPT 2023-01-04 07:21 UTC buy @1851.35 ASK proxy, 0.80 USD fee already paid)",
+    "trades": [],
+    "end_mark": "2023-01-16 23:45 bar, as of 2023-01-17 00:00 UTC",
+    "end_bid": 1917.85,
+    "end_units": 0.05358252,
+    "end_cash": 0,
+    "nav_bid_mark": 102.7632,
+    "net_if_sold_now": 101.9411,
+    "fees_paid": 0
+   }
+  },
+  "C_gold": {
+   "V-A_FULL": {
+    "start": "setup: 100 USD into gold 2023-01-26 06:00 UTC @ASK 1947.71 (M15 open), fee 0.80",
+    "trades": [],
+    "end_mark": "2023-01-31 23:45 bar",
+    "end_bid": 1927.2,
+    "end_units": 0.05093161,
+    "end_cash": 0,
+    "nav_bid_mark": 98.1554,
+    "net_if_sold_now": 97.3701,
+    "fees_paid": 0
+   },
+   "V-B_MACRO_REGIME": {
+    "start": "setup: 100 USD into gold 2023-01-26 06:00 UTC @ASK 1947.71 (M15 open), fee 0.80",
+    "trades": [],
+    "end_mark": "2023-01-31 23:45 bar",
+    "end_bid": 1927.2,
+    "end_units": 0.05093161,
+    "end_cash": 0,
+    "nav_bid_mark": 98.1554,
+    "net_if_sold_now": 97.3701,
+    "fees_paid": 0
+   },
+   "V-C_REGIME_ONLY": {
+    "start": "setup: 100 USD into gold 2023-01-26 06:00 UTC @ASK 1947.71 (M15 open), fee 0.80",
+    "trades": [],
+    "end_mark": "2023-01-31 23:45 bar",
+    "end_bid": 1927.2,
+    "end_units": 0.05093161,
+    "end_cash": 0,
+    "nav_bid_mark": 98.1554,
+    "net_if_sold_now": 97.3701,
+    "fees_paid": 0
+   },
+   "v2_L50_H2_SELECTED_transition_only": {
+    "start": "setup: 100 USD into gold 2023-01-26 06:00 UTC @ASK 1947.71 (M15 open), fee 0.80",
+    "trades": [],
+    "end_mark": "2023-01-31 23:45 bar",
+    "end_bid": 1927.2,
+    "end_units": 0.05093161,
+    "end_cash": 0,
+    "nav_bid_mark": 98.1554,
+    "net_if_sold_now": 97.3701,
+    "fees_paid": 0
+   },
+   "PASSIVE_GOLD": {
+    "start": "setup: 100 USD into gold 2023-01-26 06:00 UTC @ASK 1947.71 (M15 open), fee 0.80",
+    "trades": [],
+    "end_mark": "2023-01-31 23:45 bar",
+    "end_bid": 1927.2,
+    "end_units": 0.05093161,
+    "end_cash": 0,
+    "nav_bid_mark": 98.1554,
+    "net_if_sold_now": 97.3701,
+    "fees_paid": 0
+   },
+   "ORACLE_SELL_PEAK_REBUY_TROUGH_upper_bound": {
+    "note": "ex-post impossible benchmark: sell at 2023-01-26 06:00 bar mid peak, rebuy at 2023-01-31 12:15 bar mid trough, +/-0.16 half spread",
+    "nav_bid_mark": 98.8988,
+    "net_if_sold_now": 98.1076
+   }
+  },
+  "B_gold": {
+   "V-A_FULL": {
+    "start": "setup: 100 USD into gold 2023-01-30 06:00 UTC @ASK 1931.64, fee 0.80",
+    "trades": [
+     {
+      "action": "SELL",
+      "signal_class": "REG_FLIP_DOWN at 2023-02-02 NY17 close (trend20 -0.08%, mom10 -1.02%)",
+      "signal_utc": "2023-02-02 22:00",
+      "exec_utc": "2023-02-03 06:01",
+      "exec_trt": "2023-02-03 09:01",
+      "price": 1915.22,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar - half M15 spread 0.30",
+      "one_minute_gate": "last M1 05:59=1915.04 vs trigger 1912.46: <= +0.15% (1915.33) PASS",
+      "units_after": 0,
+      "cash_after": 97.5699,
+      "fee_usd": 0.7869
+     }
+    ],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 97.5699,
+    "nav_bid_mark": 97.5699,
+    "net_if_sold_now": 97.5699,
+    "fees_paid": 0.7869
+   },
+   "V-B_MACRO_REGIME": {
+    "start": "setup: 100 USD into gold 2023-01-30 06:00 UTC @ASK 1931.64, fee 0.80",
+    "trades": [
+     {
+      "action": "SELL",
+      "signal_class": "REG_FLIP_DOWN at 2023-02-02 NY17 close (trend20 -0.08%, mom10 -1.02%)",
+      "signal_utc": "2023-02-02 22:00",
+      "exec_utc": "2023-02-03 06:01",
+      "exec_trt": "2023-02-03 09:01",
+      "price": 1915.22,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar - half M15 spread 0.30",
+      "one_minute_gate": "last M1 05:59=1915.04 vs trigger 1912.46: <= +0.15% (1915.33) PASS",
+      "units_after": 0,
+      "cash_after": 97.5699,
+      "fee_usd": 0.7869
+     }
+    ],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 97.5699,
+    "nav_bid_mark": 97.5699,
+    "net_if_sold_now": 97.5699,
+    "fees_paid": 0.7869
+   },
+   "V-C_REGIME_ONLY": {
+    "start": "setup: 100 USD into gold 2023-01-30 06:00 UTC @ASK 1931.64, fee 0.80",
+    "trades": [
+     {
+      "action": "SELL",
+      "signal_class": "REG_FLIP_DOWN at 2023-02-02 NY17 close (trend20 -0.08%, mom10 -1.02%)",
+      "signal_utc": "2023-02-02 22:00",
+      "exec_utc": "2023-02-03 06:01",
+      "exec_trt": "2023-02-03 09:01",
+      "price": 1915.22,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar - half M15 spread 0.30",
+      "one_minute_gate": "last M1 05:59=1915.04 vs trigger 1912.46: <= +0.15% (1915.33) PASS",
+      "units_after": 0,
+      "cash_after": 97.5699,
+      "fee_usd": 0.7869
+     }
+    ],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 97.5699,
+    "nav_bid_mark": 97.5699,
+    "net_if_sold_now": 97.5699,
+    "fees_paid": 0.7869
+   },
+   "v2_L50_H2_SELECTED_transition_only": {
+    "start": "setup gold; band flip DOWN signal 2023-02-22 22:00 UTC EXPIRED: 1m gate failed 4 checks 02-23 06:00-07:14 (M1 1828.94-1833.65 > trigger*1.0015=1827.88)",
+    "trades": [],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0.05135533,
+    "end_cash": 0,
+    "nav_bid_mark": 93.7435,
+    "net_if_sold_now": 92.9935,
+    "fees_paid": 0
+   },
+   "PASSIVE_GOLD": {
+    "start": "setup gold, hold",
+    "trades": [],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0.05135533,
+    "end_cash": 0,
+    "nav_bid_mark": 93.7435,
+    "net_if_sold_now": 92.9935,
+    "fees_paid": 0
+   },
+   "COUNTERFACTUAL_sell_on_MACRO_NFP_DOWN_only": {
+    "note": "if the only exit were MACRO_NFP_DOWN (2023-02-03 13:45 UTC); M15 MID 1888.175 - half spread; M1 gate not re-run",
+    "nav_bid_mark": 96.1867,
+    "net_if_sold_now": 96.1867
+   },
+   "SENSITIVITY_v2_L50_H2_15m_exec_no_1m_gate": {
+    "note": "SQL sim_v2: SELL 2023-02-23 06:00Z at M15 open BID 1828.75 (no 1m gate)",
+    "nav_bid_mark": 93.165,
+    "net_if_sold_now": 93.165
+   }
+  },
+  "CONT": {
+   "V-A_FULL": {
+    "start": "100 USD cash 2023-01-03",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "ONSET_UP",
+      "signal_utc": "2023-01-03 04:15",
+      "exec_utc": "2023-01-03 06:01",
+      "exec_trt": "2023-01-03 09:01",
+      "price": 1841.37,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar (avail 06:01) + half of last M15 spread 0.42",
+      "one_minute_gate": "last M1 05:59=1840.46 vs trigger 1841.92: within [-0.15%,+0.30%] PASS",
+      "units_after": 0.05387293,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     },
+     {
+      "action": "SELL",
+      "signal_class": "REG_FLIP_DOWN",
+      "signal_utc": "2023-02-02 22:00",
+      "exec_utc": "2023-02-03 06:01",
+      "exec_trt": "2023-02-03 09:01",
+      "price": 1915.22,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar - half M15 spread 0.30",
+      "one_minute_gate": "last M1 05:59=1915.04 vs trigger 1912.46: <= +0.15% (1915.33) PASS",
+      "units_after": 0,
+      "cash_after": 102.3531,
+      "fee_usd": 0.8254
+     }
+    ],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 102.3531,
+    "nav_bid_mark": 102.3531,
+    "net_if_sold_now": 102.3531,
+    "fees_paid": 1.6254
+   },
+   "V-B_MACRO_REGIME": {
+    "start": "100 USD cash",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "MACRO_NFP_UP",
+      "signal_utc": "2023-01-06 13:45",
+      "exec_utc": "2023-01-06 13:46",
+      "exec_trt": "2023-01-06 16:46",
+      "price": 1848.87,
+      "price_source": "PROXY_FILL: M1 MID 13:45 bar + half M15 spread 0.36",
+      "one_minute_gate": "last M1 13:44=1847.46 vs trigger 1847.83 PASS",
+      "units_after": 0.05365439,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     },
+     {
+      "action": "SELL",
+      "signal_class": "REG_FLIP_DOWN",
+      "signal_utc": "2023-02-02 22:00",
+      "exec_utc": "2023-02-03 06:01",
+      "exec_trt": "2023-02-03 09:01",
+      "price": 1915.22,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar - half M15 spread 0.30",
+      "one_minute_gate": "last M1 05:59=1915.04 vs trigger 1912.46: <= +0.15% (1915.33) PASS",
+      "units_after": 0,
+      "cash_after": 101.9379,
+      "fee_usd": 0.8221
+     }
+    ],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 101.9379,
+    "nav_bid_mark": 101.9379,
+    "net_if_sold_now": 101.9379,
+    "fees_paid": 1.6221
+   },
+   "V-C_REGIME_ONLY": {
+    "start": "100 USD cash",
+    "trades": [],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 100,
+    "nav_bid_mark": 100.0,
+    "net_if_sold_now": 100.0,
+    "fees_paid": 0
+   },
+   "v2_L50_H2_SELECTED_transition_only": {
+    "start": "100 USD cash",
+    "trades": [],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 100,
+    "nav_bid_mark": 100.0,
+    "net_if_sold_now": 100.0,
+    "fees_paid": 0
+   },
+   "v2_L50_H2_state_follow_SECONDARY": {
+    "start": "100 USD cash; Feb-23 SELL expired at 1m gate",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "state-follow",
+      "signal_utc": "2023-01-03 00:00",
+      "exec_utc": "2023-01-03 06:01",
+      "exec_trt": "2023-01-03 09:01",
+      "price": 1841.37,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar (avail 06:01) + half of last M15 spread 0.42",
+      "one_minute_gate": "last M1 05:59=1840.46 vs trigger 1841.92: within [-0.15%,+0.30%] PASS",
+      "units_after": 0.05387293,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     }
+    ],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0.05387293,
+    "end_cash": 0,
+    "nav_bid_mark": 98.3391,
+    "net_if_sold_now": 97.5524,
+    "fees_paid": 0.8
+   },
+   "PASSIVE_GOLD": {
+    "start": "100 USD cash",
+    "trades": [
+     {
+      "action": "BUY",
+      "signal_class": "benchmark",
+      "signal_utc": "2023-01-03 06:00",
+      "exec_utc": "2023-01-03 06:01",
+      "exec_trt": "2023-01-03 09:01",
+      "price": 1841.37,
+      "price_source": "PROXY_FILL: M1 MID 06:00 bar (avail 06:01) + half of last M15 spread 0.42",
+      "one_minute_gate": "last M1 05:59=1840.46 vs trigger 1841.92: within [-0.15%,+0.30%] PASS",
+      "units_after": 0.05387293,
+      "cash_after": 0,
+      "fee_usd": 0.8
+     }
+    ],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0.05387293,
+    "end_cash": 0,
+    "nav_bid_mark": 98.3391,
+    "net_if_sold_now": 97.5524,
+    "fees_paid": 0.8
+   },
+   "CASH": {
+    "start": "100 USD cash",
+    "trades": [],
+    "end_mark": "2023-02-28 23:45 bar",
+    "end_bid": 1825.39,
+    "end_units": 0,
+    "end_cash": 100,
+    "nav_bid_mark": 100.0,
+    "net_if_sold_now": 100.0,
+    "fees_paid": 0
+   }
+  },
+  "SQL_15m_exec_sensitivity": {
+   "note": "dev-style execution (next in-window M15 open, no 1m gate) from gold_research_r71_claude_indep_sim_v1/v2",
+   "A1": {
+    "VA": [
+     103.356,
+     102.529
+    ],
+    "VB": [
+     102.947,
+     102.124
+    ]
+   },
+   "B_gold": {
+    "VA_VB_VC": 97.553,
+    "L50_H2": 93.165
+   },
+   "CONT": {
+    "VA": 102.371,
+    "VB": 101.966
+   },
+   "columns": "[nav_bid, net_if_sold] or nav"
+  }
+ }
+}
