@@ -13,6 +13,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_001
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_001). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-01-03 → 2023-02-01 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+6.042%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_001` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -34,6 +36,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_002
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_002). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-02-01 → 2023-02-24 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-7.147%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_002` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -55,6 +59,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_003
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_003). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-02-24 → 2023-05-04 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+13.200%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_003` / ilişki `;ÇOKLU_TETİKLEYİCİ; YALNIZ_MART_BÖLÜMÜ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -79,6 +85,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_004
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_004). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-05-04 → 2023-06-28 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-6.960%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_004` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -102,6 +110,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_005
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_005). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-06-28 → 2023-07-18 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+3.752%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_005` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -121,6 +131,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_006
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_006). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-07-18 → 2023-10-05 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-8.021%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_006` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -144,6 +156,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_007
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_007). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-10-05 → 2023-10-27 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+10.227%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_007` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -165,6 +179,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_008
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_008). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-10-27 → 2023-11-10 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-3.388%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_008` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -184,6 +200,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_009
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_009). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-11-10 → 2023-12-01 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+6.889%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_009` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -203,6 +221,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_010
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_010). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-12-01 → 2023-12-12 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.463%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_010` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -223,6 +243,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_011
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_011). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-12-12 → 2023-12-27 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+4.965%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_011` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -243,6 +265,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_012
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_012). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-12-27 → 2024-02-14 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.113%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_012` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -266,6 +290,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_013
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_013). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-02-14 → 2024-04-19 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+19.984%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_013` / ilişki `;BİRİKİMLİ_ÇOK_MEKA`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -290,6 +316,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_014
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_014). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-04-19 → 2024-04-30 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.379%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_014` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -309,6 +337,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_015
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_015). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-04-30 → 2024-05-20 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+6.141%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_015` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -329,6 +359,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_016
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_016). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-05-20 → 2024-06-07 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-5.459%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_016` / ilişki `;GEÇ_ALT_OLAY_AYRI`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -349,6 +381,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_017
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_017). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-06-07 → 2024-07-16 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+7.633%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_017` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -372,6 +406,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_018
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_018). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-07-16 → 2024-07-25 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.222%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_018` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -390,6 +426,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_019
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_019). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-07-25 → 2024-10-30 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+17.886%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_019` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -417,6 +455,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_020
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_020). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-10-30 → 2024-11-15 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-8.048%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_020` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -437,6 +477,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_021
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_021). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-11-15 → 2024-11-22 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+5.974%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_021` / ilişki `;BİRİNCİL_ADAY_JEOPOLİTİK`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -455,6 +497,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_022
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_022). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-11-22 → 2024-11-25 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-3.360%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_022` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -473,6 +517,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_023
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_023). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-11-25 → 2024-12-11 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+3.548%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_023` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -493,6 +539,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_024
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_024). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-12-11 → 2024-12-18 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.898%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_024` / ilişki `;BÖLÜMSEL_FED_ETKİ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -512,6 +560,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_025
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_025). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-12-18 → 2025-02-24 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+14.243%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_025` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -535,6 +585,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_026
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_026). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-02-24 → 2025-02-28 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-3.239%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_026` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -554,6 +606,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_027
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_027). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-02-28 → 2025-04-02 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+9.640%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_027` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -574,6 +628,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_028
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_028). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-04-02 → 2025-04-07 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.777%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_028` / ilişki `;BİRİNCİL_ADAY_LİKİDİTE`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -593,6 +649,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_029
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_029). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-04-07 → 2025-04-21 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+14.779%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_029` / ilişki `;ÇOKLU_AŞAMA`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -612,6 +670,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_030
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_030). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-04-21 → 2025-05-01 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-5.411%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_030` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -631,6 +691,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_031
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_031). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-01 → 2025-05-06 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+5.948%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_031` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -649,6 +711,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_032
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_032). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-06 → 2025-05-14 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-7.411%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_032` / ilişki `;12_MAYIS_BAŞLATAMAZ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -667,6 +731,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_033
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_033). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-14 → 2025-06-13 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+8.030%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_033` / ilişki `;SON_GÜN_ALT_TETİKLEYİCİ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -688,6 +754,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_034
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_034). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-06-13 → 2025-06-27 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.611%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_034` / ilişki `;GEÇ_ATEŞKES_AYRI`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -706,6 +774,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_035
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_035). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-06-27 → 2025-07-22 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+4.795%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_035` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -726,6 +796,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_036
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_036). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-07-22 → 2025-07-30 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.545%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_036` / ilişki `;GEÇ_FED_ALT_OLAY`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -745,6 +817,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_037
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_037). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-07-30 → 2025-10-20 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+32.998%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_037` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -770,6 +844,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_038
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_038). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-10-20 → 2025-10-29 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-9.785%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_038` / ilişki `;METAL_ODAKLI_DÜZELTME_ADAYI`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -790,6 +866,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_039
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_039). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-10-29 → 2025-11-12 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+6.755%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_039` / ilişki `;BAŞLANGIÇ_FED_TERS_İŞARET`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -809,6 +887,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_040
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_040). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-11-12 → 2025-11-17 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-3.582%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_040` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -827,6 +907,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_041
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_041). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-11-17 → 2025-12-26 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **+12.077%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_041` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -848,6 +930,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### SWING_V1_042
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_042). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-12-26 → 2025-12-31 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **-4.730%** · V1: NY17 kapanışlı uzun fiyat bacağı, İŞARETLİ getiri. **Örtüşme:** `SWING_V1_042` / ilişki `V1_SELF_OR_NOT_SPECIFIED`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -868,6 +952,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_001
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_001). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-01-12 → 2023-01-12 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.504%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_001` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -886,6 +972,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_002
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_002). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-02-03 → 2023-02-08 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|4.257%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_002` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -904,6 +992,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_003
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_003). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-03-13 → 2023-03-23 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|6.496%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_003` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -924,6 +1014,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_004
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_004). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-05-04 → 2023-05-04 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.430%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_004` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -943,6 +1035,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_005
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_005). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-09-29 → 2023-10-03 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|4.585%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_006` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -961,6 +1055,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_006
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_006). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-10-13 → 2023-10-20 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|5.641%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_007` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;İLK_HABER_ÖNCEDEN`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -980,6 +1076,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_007
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_007). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-12-01 → 2023-12-01 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.567%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_010` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -998,6 +1096,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_008
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_008). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-12-04 → 2023-12-04 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.054%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_010` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1016,6 +1116,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_009
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_009). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-12-08 → 2023-12-08 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.253%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_010` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1034,6 +1136,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_010
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_010). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2023-12-19 → 2023-12-19 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.071%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_011` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1052,6 +1156,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_011
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_011). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-03-04 → 2024-03-11 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|5.669%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_013` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1071,6 +1177,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_012
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_012). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-04-01 → 2024-04-11 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|5.557%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_013` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1090,6 +1198,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_013
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_013). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-04-12 → 2024-04-12 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.620%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_013` / ilişki `COUNTER_TREND_AT_FIRST_FLAG;TETİKLEYİCİ_VE_TERSİ_AYRI`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1108,6 +1218,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_014
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_014). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-04-24 → 2024-04-24 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.120%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_014` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1126,6 +1238,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_015
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_015). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-05-15 → 2024-05-20 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.828%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_015` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1144,6 +1258,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_016
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_016). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-05-23 → 2024-05-27 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|4.011%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_016` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1163,6 +1279,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_017
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_017). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-06-07 → 2024-06-07 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.592%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_017` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;İKİ_AYRI_HABER`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1181,6 +1299,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_018
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_018). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-06-13 → 2024-06-13 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.020%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_017` / ilişki `COUNTER_TREND_AT_FIRST_FLAG;YENİ_BEŞ_SEANS_BİRİKİM`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1199,6 +1319,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_019
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_019). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-07-16 → 2024-07-17 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|4.430%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_018` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1218,6 +1340,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_020
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_020). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-07-25 → 2024-07-25 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.293%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_019` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1236,6 +1360,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_021
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_021). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-08-01 → 2024-08-01 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.463%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_019` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1254,6 +1380,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_022
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_022). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-08-12 → 2024-08-16 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.765%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_019` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1272,6 +1400,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_023
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_023). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-09-13 → 2024-09-16 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.227%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_019` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1290,6 +1420,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_024
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_024). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-09-24 → 2024-09-26 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.831%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_019` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1308,6 +1440,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_025
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_025). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-10-22 → 2024-10-22 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.240%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_019` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1327,6 +1461,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_026
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_026). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-11-06 → 2024-11-15 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|5.321%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_020` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1346,6 +1482,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_027
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_027). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-11-20 → 2024-11-22 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|5.974%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_021` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;JEOPOLİTİK_ADAY`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1364,6 +1502,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_028
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_028). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-11-25 → 2024-11-25 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.360%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_023` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1382,6 +1522,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_029
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_029). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-12-11 → 2024-12-11 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.220%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_024` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1401,6 +1543,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_030
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_030). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2024-12-18 → 2024-12-19 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|4.898%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_025` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;MAKRO_SAAT_UYUMLU`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1419,6 +1563,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_031
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_031). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-02-05 → 2025-02-10 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.888%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_025` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1437,6 +1583,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_032
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_032). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-03-13 → 2025-03-19 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|4.058%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_027` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1456,6 +1604,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_033
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_033). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-03-31 → 2025-04-02 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.760%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_027` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1474,6 +1624,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_034
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_034). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-04-04 → 2025-04-08 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|4.777%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_028` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;ÖNCE_LİKİDİTE_SATISI`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1493,6 +1645,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_035
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_035). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-04-09 → 2025-04-22 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|8.515%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_029` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1512,6 +1666,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_036
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_036). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-04-23 → 2025-04-23 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.035%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_030` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1530,6 +1686,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_037
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_037). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-01 → 2025-05-01 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.295%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_031` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1548,6 +1706,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_038
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_038). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-06 → 2025-05-07 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|5.948%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_032` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1566,6 +1726,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_039
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_039). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-09 → 2025-05-16 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|5.564%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_032` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;12_MAYIS_BAŞLATAMAZ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1584,6 +1746,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_040
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_040). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-15 → 2025-05-15 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.143%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_033` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1602,6 +1766,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_041
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_041). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-05-21 → 2025-05-26 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|4.825%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_033` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1621,6 +1787,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_042
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_042). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-06-13 → 2025-06-13 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.682%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_034` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1639,6 +1807,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_043
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_043). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-07-22 → 2025-07-22 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.226%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_036` / ilişki `PIVOT_DATE_AMBIGUOUS_COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1657,6 +1827,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_044
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_044). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-07-29 → 2025-07-30 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.304%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_036` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;30_TEMMUZ_BAŞLATAMAZ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1675,6 +1847,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_045
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_045). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-08-07 → 2025-08-07 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.252%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_037` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;İLK_ESKİ_BAYRAK_DÜŞTÜ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1693,6 +1867,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_046
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_046). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-09-01 → 2025-09-08 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|4.757%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_037` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1712,6 +1888,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_047
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_047). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-09-23 → 2025-09-23 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.287%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_037` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1730,6 +1908,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_048
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_048). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-10-01 → 2025-10-20 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|8.827%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_037` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1749,6 +1929,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_049
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_049). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-10-17 → 2025-10-29 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|8.580%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_037` / ilişki `COUNTER_TREND_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;KÜME_FİYAT_IŞARETİ_ÇOK_GÜNLÜ`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1768,6 +1950,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_050
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_050). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-11-10 → 2025-11-13 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|5.408%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_039` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP;DÖNÜŞ_SONRASI_ALTIN_AYRIŞMASI`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1786,6 +1970,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_051
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_051). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-11-14 → 2025-11-17 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|3.582%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_040` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1804,6 +1990,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_052
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_052). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-11-28 → 2025-11-28 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|3.797%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_041` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1822,6 +2010,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_053
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_053). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-12-22 → 2025-12-26 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **UP** · **|4.674%| (mutlak, yön UP)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_041` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG;MULTI_LEG_OVERLAP`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
@@ -1841,6 +2031,8 @@ Kaynak otoriteleri: [96 NY17 düzeltmeli bilimsel CSV](GOLD_96_EVENT_SCIENTIFIC_
 
 
 ### C_CORR_054
+
+> **Bu olayın karar öğrenme değerlendirmesi (6 alan):** [karar öncesi XAU, haber, tahmin/eksik, kalan hareket, maliyetli alternatifler, benzer/ters olaylar](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#c_corr_054). İlgili altın fiyatı, haber kaynakları ve tarihsel neden hipotezleri aşağıda korunmuştur.
 **Fiyat kimliği ve zaman:** 2025-12-29 → 2025-12-31 (NY17 düzeltilmiş çalışma etiketi, ilk haber UTC'si değildir). **DOWN** · **|4.730%| (mutlak, yön DOWN)** · V2: 1/4/12 saat ve 1/3/5 seans tarama MAX MUTLAK genlik, pencere net getirisi DEĞİL. **Örtüşme:** `SWING_V1_042` / ilişki `SAME_DIRECTION_AT_FIRST_FLAG`; 42+54 bağımsız sayılmaz.
 
 **Makro haber saatli pencereler (yalnız CPI/NFP/FOMC altkümesi):**
