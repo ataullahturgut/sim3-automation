@@ -62,6 +62,13 @@ Her varyant 2020-01-02 → 2022-12-30 sürekli 100$ ile çalıştırılır (icra
 * Her işlem: TRT/UTC saat, sinyal sınıfı, son erişilebilir veri zamanı, fill kaynağı, ons, komisyon; açık pozisyonda BID işaretli değer ve “şimdi satılsa” net değer ayrı.
 * Kanıt seviyesi L0–L4; 2023 için en fazla **L2–L3** (L4 ancak dokunulmamış ileri dönemde).
 
+## 6A. v1 geliştirme sonucu ve v2 ön kaydı (2023 koşusundan ÖNCE yazıldı)
+
+**v1 dev 2020-01-02→2022-12-31 (100$, banka penceresi, %0,8+%0,8):** V-A net 59,27$ (39 AL/38 SAT, ücret 49,98$, maxDD −%50,6); V-B 65,40$ (36/35, 49,69$, −%50,0); V-C 72,84$ (27/26, 37,13$, −%44,8). Nakit 100$, maliyetli pasif altın 118,02$. **Hüküm: `NO_VARIANT_PASSES_DEV`.** Teşhis: işlem devir hızı (yılda ~9 tam tur × ~%1,62) maliyeti yapısal olarak karşılayamıyor; 15dk/z-şok ve 20 seanslık rejim dönüşleri bu maliyet yapısında aşırı sık.
+
+**v2 ailesi (yalnız dev'de seçilecek; 2023 hiçbir v1/v2 koşusu henüz görülmedi):** Histerezisli yavaş rejim. `UP` durumu C_S > SMA_L·(1+h), `DOWN` durumu C_S < SMA_L·(1−h); bant içinde önceki durum korunur. AL = durum DOWN/yok → UP geçişi; SAT = UP → DOWN geçişi. Izgara: L ∈ {20, 50} seans, h ∈ {%1, %2, %3} → 6 yapılandırma. Makro ve 15dk şok sinyalleri v2'de **işlem tetiklemez**; 15dk/1dk katman yalnız icra kalitesi ve olay evresi kaydı içindir.
+Seçim kuralı: dev'de nakdi geçen yapılandırmalar arasında net/|maxDD| en yüksek olan. Hiçbiri nakdi geçemezse `V2_NO_PASS` ve 2023'te yalnız tanısal raporlanır.
+
 ## 7. Yasaklar
 
 Geleceği görerek dip/tepe seçimi; açıklama öncesi sürpriz kullanımı; BIST/Türkiye hisse verisi; ham Neon fiyatlarının depoya yüklenmesi (yalnız türetilmiş karar/özet); ChatGPT kararlarının kopyalanması.
