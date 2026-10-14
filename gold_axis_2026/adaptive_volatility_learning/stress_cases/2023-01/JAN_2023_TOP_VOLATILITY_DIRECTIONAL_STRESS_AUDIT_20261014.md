@@ -1,4 +1,6 @@
 # Ocak 2023 — En yüksek oynaklık günleri: 5 Ocak DOWN, 6 Ocak UP, 15dk×2 gün stres testi
+> **DÜZELTME / 2026-10-14:** Bu rapor **tek-gün içi ASK-BID range stresidir, projenin asıl %3+ çok günlü yönlü olay atlası değildir.** Ana hedefe uygun [yeni çok-günlü yönlü olay atlasına](JAN_2023_MULTIDAY_DIRECTIONAL_EVENT_ATLAS_CORRECTION_20261014.md) bakın. 6 Ocak +%1.834 *tek gün*, 5→13 Ocak +%5.190 *çok gün*. Bu iki tanım birbirine ikame edilmez. Aşağıdaki 5–6 Ocak işlem muhasebesi eski dondurulmuş deney çıktısı olarak korunur.
+
 **Çalıştırıldı 2026-10-14** · **İki ayırt edici tarih**: 2023-01-05 en kuvvetli DOWN, 2023-01-06 en yüksek volatilite ve en büyük UP. **Ana rejim:** `STRESS_DAYS_CHOSEN_USING_EX_POST_PRICE_RANGE`; gün içi replay `AS_OF_RECORDED_PRICE_AND_SCHEDULED_RELEASE` ama GPT politikası/kontratlar 2026'da bilinen sonuçlardan etkilenmiş olabilir; OOS veya canlı gerçek işlem değil.
 
 ## 1. Ayın zor günlerini seçmenin SAYISAL KURALI

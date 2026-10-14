@@ -146,11 +146,13 @@
       "Jan 2 2023, TRT-day 96x15m check: zero vendor XAU BIDASK bars and zero histdata M15 bars, despite BIST Turkey business day. US observed New Year / SGE holiday; never use Jan2 23Z (Jan3 02TRT) as Jan2 TRT decision price.",
       "Jan3 2023 TRT 96xM15 asof done: 88 bar starts/87 bar closes by 23:45 TRT; cannot act on incomplete bar; global macro only, BIST excluded. Cash remains $100. 2023-Jan3 one-day costed close-out of Jan3 first BUY would return 98.8801 USD, not a whole-month strategy comparison.",
       "Jan4 GPT causal, 96x15m with triggered M1: 10:15 TRT 1850 break/ZN supportive, 10:20 5 M1 holds, 10:21 simulated ask 1851.34994; 1 BUY, no SELL even after mixed JOLTS/ISM and hawkish FOMC; bank quotes missing => proxy only.",
-      "Jan5 (biggest down) and Jan6 (biggest range/up) ex-post stress replay, 192x15m: ADP downside confirmed Jan5 13:58Z, NFP and ISM UP confirmed Jan6 13:48Z/15:07Z. Trading extra twice would cost; HOLD GOLD from Jan4 M1 entry gives Jan6 23:45 bid mark $100.0734."
+      "Jan5 (biggest down) and Jan6 (biggest range/up) ex-post stress replay, 192x15m: ADP downside confirmed Jan5 13:58Z, NFP and ISM UP confirmed Jan6 13:48Z/15:07Z. Trading extra twice would cost; HOLD GOLD from Jan4 M1 entry gives Jan6 23:45 bid mark $100.0734.",
+      "Correction: Jan2023 day range ranking 6 Jan 2.187%, 5 Jan 1.842% is NOT target major directional event universe. MID-close sequential peak/trough Jan5-Jan26 +6.667%; Jan5-Jan13 +5.190%; Jan11-Jan16 +3.131%; biggest Jan26-Jan31 DOWN -2.350%. Child events overlap; no -3% DOWN in January."
     ],
     "rejected_learnings": [
       "Risk ratio <=2 threshold was active alarm or useful extra decision: 0/20",
-      "Post-hoc GPT event interpretation is a live forecast or automatic trading skill"
+      "Post-hoc GPT event interpretation is a live forecast or automatic trading skill",
+      "Jan2023 maximum single calendar day price range is a complete proxy for study's major multi-day directional UP/DOWN event cases."
     ],
     "uncertain_learnings": [
       "Rates/USD dominant in WGC regression but daily cross-market synchronous attribution not established",
@@ -166,6 +168,7 @@
       "months/2023-01/JAN_2023_100USD_RESULTS.json"
     ],
     "open_questions": [
+      "Test cost-aware asof early/continuation decisions for the historical Jan5->Jan13 >5% UP episode and Jan26->Jan31 -2.35% near-large DOWN control; obtain >=3% negative cases in other periods.",
       "Next stress probes Jan19 UP +1.59% and Jan26 DOWN -0.81% (same-day range 1.61%); do not insert unreviewed intervening trading decisions or claim Jan2023 monthly NAV from stress-selected days.",
       "Jan5 continues with GOLD 0.053582523 oz. Do not assume 4Jan M1 bank fill is validated; test bank spread + collateral/commission and use actual 15m/wide-spread sensitivity.",
       "At Jan4 TRT replay validate firstprint event/price source and note Jan3 CASH position; do not import legacy Jan4 automatic +3% BUY as a predestined action.",
@@ -329,6 +332,94 @@
       "unreviewed_other_days": true,
       "not_blind": true,
       "excluded_BIST": true
+    },
+    "primary_case_selection_corrected": {
+      "source_doc": "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_MULTIDAY_DIRECTIONAL_EVENT_ATLAS_CORRECTION_20261014.md",
+      "primary_unit": "MULTI_HOUR_OR_MULTIDAY_DIRECTIONAL_EPISODE",
+      "not_primary": "ONE_CALENDAR_DAY_HIGHASK_LOWBID_RANGE",
+      "primary_thresholds_for_discovery": [
+        ">=3 pct directionally cumulative",
+        "~>=2 pct rapid"
+      ],
+      "not_auto_order_triggers": true,
+      "jan2023_best_up_pct": 6.667,
+      "jan2023_max_down_pct": -2.35,
+      "valid_large_down_at_minus3": "NO_JAN2023_VIA_15M_CLOSE",
+      "episodes": [
+        {
+          "id": "JAN23_U_MID_FULL",
+          "kind": "UP",
+          "scope": "all_Jan23",
+          "start": "2023-01-05T16:00:00Z",
+          "end": "2023-01-26T06:15:00Z",
+          "from_mid": 1826.9,
+          "to_mid": 1948.705,
+          "move_pct": 6.667,
+          "duration_hours": 494.25,
+          "nested_in": null
+        },
+        {
+          "id": "JAN23_U_240H",
+          "kind": "UP",
+          "scope": "rolling_240h",
+          "start": "2023-01-05T16:00:00Z",
+          "end": "2023-01-13T18:45:00Z",
+          "from_mid": 1826.9,
+          "to_mid": 1921.715,
+          "move_pct": 5.19,
+          "duration_hours": 194.75,
+          "nested_in": "JAN23_U_MID_FULL"
+        },
+        {
+          "id": "JAN23_U_120H",
+          "kind": "UP",
+          "scope": "rolling_120h",
+          "start": "2023-01-11T16:30:00Z",
+          "end": "2023-01-16T03:00:00Z",
+          "from_mid": 1869.88,
+          "to_mid": 1928.43,
+          "move_pct": 3.131,
+          "duration_hours": 106.5,
+          "nested_in": "JAN23_U_MID_FULL"
+        },
+        {
+          "id": "JAN23_D_MID_FULL",
+          "kind": "DOWN",
+          "scope": "all_Jan23",
+          "start": "2023-01-26T06:15:00Z",
+          "end": "2023-01-31T12:30:00Z",
+          "from_mid": 1948.705,
+          "to_mid": 1902.92,
+          "move_pct": -2.35,
+          "duration_hours": 126.25,
+          "nested_in": null
+        },
+        {
+          "id": "JAN23_D_72H",
+          "kind": "DOWN",
+          "scope": "rolling_72h",
+          "start": "2023-01-04T08:30:00Z",
+          "end": "2023-01-05T16:00:00Z",
+          "from_mid": 1863.885,
+          "to_mid": 1826.9,
+          "move_pct": -1.984,
+          "duration_hours": 31.5,
+          "nested_in": null
+        },
+        {
+          "id": "JAN23_U_72H",
+          "kind": "UP",
+          "scope": "rolling_72h",
+          "start": "2023-01-11T16:30:00Z",
+          "end": "2023-01-13T18:45:00Z",
+          "from_mid": 1869.88,
+          "to_mid": 1921.715,
+          "move_pct": 2.772,
+          "duration_hours": 50.25,
+          "nested_in": "JAN23_U_120H"
+        }
+      ],
+      "overlap_warning": "nested UP examples overlap and cannot be scored as independent"
     }
   }
 }
