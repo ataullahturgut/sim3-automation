@@ -2,7 +2,7 @@
 
 ## Önce bunu oku — tek olay kütüphanesi, tek araştırma sırası
 
-**OLAY-02 ekonomik olayların birincil KANIT manifestidir.** Ekonomik olay aileleri, 5 fiyat yaşam döngüsü ve 96 olayın gruplanmış çıkarımları ayrı bir kanıt dosyası olarak değil, mevcut [**ÖĞREN-03 Çıkarım ve Olay Karakteri Manifesti**](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) içinde tutulur. [96 gruplu karakter atlası](OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv) ve [42 V1 başlangıç/gelişim/bitiş fiyat yolu](OLAY_02_42_UZUN_HAREKET_YASAM_DONGUSU_V1_20261014.csv) kaynakları bu kütüphanenin altındaki sayısal kanıtlardır.
+**OLAY-02 ekonomik olayların birincil KANIT manifestidir.** **Tarihler, olay kimlikleri, ilk haber yayımları, fiyat hareketleri, bireysel vaka yorumları, ölçümler, destekleyici/ters örnekler ve olay–DNA eşleşmeleri BURADA kalır.** Zamandan bağımsız ekonomik mekanizma tanımları, alt varyantları ve birbirine geçiş yolları yalnız [**ÖĞREN-03 — Ekonomik Olay DNA Kütüphanesi**](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) içindedir. [96 gruplu tarihli karakter atlası](OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv) ve [42 uzun fiyat yaşam döngüsü ölçümü](OLAY_02_42_UZUN_HAREKET_YASAM_DONGUSU_V1_20261014.csv) **OLAY-02 sayısal kanıt ekleridir; ÖĞREN-03'e tarihli özet taşınmaz.**
 
 **OLAY-02 tek ve BİRİNCİL ekonomik araştırma manifestidir.** Eski VAKA-03 adlı müstakil manifest **yoktur**; eskiden oluşturulan rapor/CSV/JSON yalnız OLAY-02 içindeki `EVENT_ID` veya `EPISODE_ID` kaynak ekidir. Ayrı ikinci ana olay anlatısı oluşturulmaz.
 
