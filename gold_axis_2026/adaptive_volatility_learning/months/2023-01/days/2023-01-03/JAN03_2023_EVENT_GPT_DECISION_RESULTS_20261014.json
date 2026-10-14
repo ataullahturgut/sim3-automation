@@ -1,0 +1,140 @@
+{
+  "study": "JAN03_2023_TRT_EVENT_CAUSAL_15M_V1",
+  "date_trt": "2023-01-03",
+  "status": "COMPLETED_96_CHECKS_RETROSPECTIVE_GPT_DISCRETIONARY_NO_BLIND_OUT_OF_SAMPLE",
+  "initial_position": "CASH",
+  "initial_usd": 100,
+  "slot_count": 96,
+  "spot_vendor_bars_started_in_day": 88,
+  "completed_asof_within_day": 87,
+  "no_completed_bar_slots": 9,
+  "first_spot_start_trt": "2023-01-03T02:00:00+03:00",
+  "first_spot_complete_trt": "2023-01-03T02:15:00+03:00",
+  "last_completed_bar_start_utc": "2023-01-03T20:30:00.000Z",
+  "latest_asof_mid_at_trt_2345": 1837.0149999999999,
+  "last_completed_bid_at_trt_2345": 1836.84,
+  "last_completed_ask_at_trt_2345": 1837.19,
+  "prior_month_last_bid": 1823.46,
+  "prior_month_last_ask": 1824.25,
+  "prior_month_last_mid": 1823.855,
+  "intraday_ask_high": 1850.18,
+  "intraday_ask_high_bar_start_utc": "2023-01-03T07:30:00.000Z",
+  "max_up_from_dec30_mid_to_jan3_intraday_high_pct": 1.4433713206367882,
+  "observed_mid_return_dec30_to_last_asof_pct": 0.7215485880182282,
+  "cost_zero_spread_round_trip_break_even_pct": 1.6194068678460072,
+  "fee_rate_per_buy": 0.008,
+  "fee_rate_per_sell": 0.008,
+  "news_event_data": [
+    {
+      "id": "PRE_FOMC_HAWKISH_DEC14",
+      "first_available_utc": "2022-12-14T19:00:00Z",
+      "confidence": "PUBLISHED_BEFORE_DAY",
+      "summary": "Fed December interest rate target 4.25-4.50%; rate headwind, no automatic fresh Jan3 shock",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20221214a.htm"
+    },
+    {
+      "id": "NOV10_2022_CPI_YIELD_DOLLAR_ANALOGUE",
+      "first_available_utc": "2022-11-10T21:30:00Z",
+      "confidence": "PREVIOUS_CASE_RETROSPECTIVE_ASOF",
+      "summary": "Softer 2022 CPI plus collapsing USD/yields produced risk rally; analogy needs actual same-day inflation surprise, absent Jan3",
+      "url": "https://www.marketscreener.com/news/latest/Wall-St-ends-sharply-higher-as-cooling-inflation-fuels-hope-of-easing-Fed-42276308/"
+    },
+    {
+      "id": "CHINA_REOPENING_DEC2022",
+      "first_available_utc": "2022-12-26T15:00:00Z",
+      "confidence": "PREVIOUS_POLICY_CONTEXT",
+      "summary": "China reopening policy may improve demand but immediate COVID supply disruptions present; not a Jan3 price direction guarantee",
+      "url": "https://www.reuters.com/markets/asia/china-dec-factory-activity-extends-declines-covid-infections-caixin-pmi-2023-01-03/"
+    },
+    {
+      "id": "CHINA_CAIXIN_DEC_MANUFACTURING_49_0",
+      "first_available_utc": "2023-01-03T04:19:00Z",
+      "confidence": "REUTERS_ARTICLE_PUBLICATION_CONSERVATIVE",
+      "summary": "Caixin 49.0 vs prior 49.4 and consensus 48.8; contracting, BUT better than consensus; mixed reopening-demand evidence",
+      "url": "https://www.reuters.com/markets/asia/china-dec-factory-activity-extends-declines-covid-infections-caixin-pmi-2023-01-03/"
+    },
+    {
+      "id": "REUTERS_GOLD_HIGHEST_6M_AND_FALLING_YIELDS",
+      "first_available_utc": "2023-01-03T12:05:00Z",
+      "confidence": "CONSERVATIVE_LATEST_DATAPOINT_IN_UPDATED_ARTICLE",
+      "summary": "Report gold had hit six-month high, lower UST yield supportive, notes 1850 resistance; article display time conflicts with 12:05Z body, do not use before 12:05Z",
+      "url": "https://www.marketscreener.com/news/latest/Gold-touches-six-month-high-in-positive-start-to-2023-42648130/"
+    },
+    {
+      "id": "GERMANY_DEC_CPI_PRELIM_8_6",
+      "first_available_utc": "2023-01-03T14:26:36Z",
+      "confidence": "AP_PUBLISHED_TIMESTAMP",
+      "summary": "German Dec inflation 8.6% annual, decelerating; affects EUR/USD/ECB channels ambiguously; not direct USD price observation",
+      "url": "https://apnews.com/article/2ba565a72a327c22671d73da785b12f2"
+    },
+    {
+      "id": "US_DEC_SP_GLOBAL_MFG_FINAL_46_2",
+      "first_available_utc": "2023-01-03T14:45:00Z",
+      "confidence": "ECONOMIC_CALENDAR_09_45_EST_APPROX",
+      "summary": "US manufacturing final PMI 46.2 contraction; not ISM manufacturing, which was Jan4; actual no future leak",
+      "url": "https://forex.tradingcharts.com/economic_calendar/2023-01-03.html?code=USD"
+    },
+    {
+      "id": "US_NOV_CONSTRUCTION_SPENDING_PLUS_0_2",
+      "first_available_utc": "2023-01-03T15:00:00Z",
+      "confidence": "US_CENSUS_CALENDAR_AND_ARCHIVE",
+      "summary": "November construction spending +0.2%, not dominant gold signal; US 10:00 EST release",
+      "url": "https://www.census.gov/economic-indicators/calendar-listview-2023.html"
+    },
+    {
+      "id": "REUTERS_LATE_GOLD_DXY_UP1PCT_AND_MIXED_METALS",
+      "first_available_utc": "2023-01-03T18:42:00Z",
+      "confidence": "CONSERVATIVE_QUOTED_1842Z_IN_UPDATED_ARTICLE",
+      "summary": "Gold up ~0.8% but DXY up ~1%, silver slight gain, palladium down materially; conflicting drivers; data not available before quoted 18:42Z",
+      "url": "https://www.marketscreener.com/news/latest/Gold-rises-to-near-six-month-highs-while-investors-await-Fed-minutes-42651251/"
+    }
+  ],
+  "past_case_analogue": "Nov10 2022 softer CPI caused falling USD/yields risk-on; Jan3 had NO new US CPI release and USD cross-confirmation was unavailable intraday, so the analogy is causal possibility, not signal",
+  "futures_coverage": {
+    "CL.c.0": {
+      "hourly_bars": 22,
+      "volume_quality": "regular"
+    },
+    "GC.c.0": {
+      "hourly_bars": 2,
+      "volume_quality": "very thin"
+    },
+    "NQ.c.0": {
+      "hourly_bars": 22,
+      "volume_quality": "regular"
+    },
+    "SI.c.0": {
+      "hourly_bars": 8,
+      "volume_quality": "very thin"
+    },
+    "ZN.c.0": {
+      "hourly_bars": 22,
+      "volume_quality": "regular"
+    }
+  },
+  "excluded_inputs": [
+    "BIST 100",
+    "Turkish stock indexes",
+    "Turkish domestic risk appetite"
+  ],
+  "missing_critical_synced": [
+    "DXY/US dollar intraday firstprint market data",
+    "US 2-year cash yield exact 15m",
+    "Real bank XAU ASK/BID quotes",
+    "GPR realtime triggers",
+    "Gold ETF flow firstprint day"
+  ],
+  "event_class": "UP_MOVE_OBSERVED_BUT_NET_REMAINING_LARGE_EVENT_UNCONFIRMED",
+  "forecast_next_large_event": "UNKNOWN_NOT_QUANTIFIED_ASOF",
+  "decision": "HOLD_CASH",
+  "capital_end_usd": 100,
+  "buys": 0,
+  "sells": 0,
+  "commissions_usd": 0,
+  "hypothetical_same_day_buy_first_0215_and_sell_2345_after_two_0p8pct_fees_usd": 98.88011847443163,
+  "hypothetical_buy_ask_first_0215": 1828.04,
+  "hypothetical_sell_bid_last_2345": 1836.84,
+  "next_replay_day": "2023-01-04",
+  "policy_origin": "GDP/GLOBAL_CASE_ANALYSIS_NOT_PRICE_THRESHOLD",
+  "selection_bias_note": "Reconstructed discretionary GPT judgment after all 2023-2026 observed; cannot claim foresight or live validation. Bank vendor proxy not confirmed."
+}
