@@ -96,3 +96,12 @@
 **Astra önceki Ocak–Eylül yürüyüşünün Ocak net sonucu ayrı fiyat kaynağı ve farklı hedef işlem sırasıyla +%5,07 idi** (bk. [Astra özgün rapor](https://github.com/ataullahturgut/sim3-automation/blob/research-gold-daily-replay-20261013/gold_axis_2026/daily_replay_20261013/REPORT_JAN_SEP_TR.md)). Bu tutarı **bu simülasyonun fiyat bazına doğrudan üstünlük testi** olarak kullanma: evren, çıkış tarihi ve işlem etkisi farklı. Astra'nın 29 Ocak TUT, 30 Ocak SAT kararı 02 Şubat'a taşındı; bu sonuç Jan29 fiyat-risk çıkış fikrinin niçin ayrıca araştırılabileceğini gösterir, fakat geçmiş sonuç görülerek oluşturulan yeni kuralın öngörü geçerliliğini sağlamaz.
 
 **Bilimsel nihai statü:** 31/31 takvim günü ve 2/2 hipotetik fiyat fill kaydı tamamlandı; tarihli 21:45 as-of fiyatı, sinyal sonrası 09:00 ASK/BID, %0,8 iki yön maliyet hesabı yapıldı. **Giriş/çıkış kuralları sonradan belirlendi, gerçek banka fiyatı / birebir ilk haber saati / bağımsız OOS yok.** Bu yüzden `EXPLORATORY_REPLAY_COMPLETE`, fakat `LIVE_TRADING_READY=NO` ve `COSTED_OOS_VALIDATED=NO`.
+
+## 8. Kritik duyarlılık — bu başarı hangi varsayıma bağlı?
+
+- Aynı alış yapılıp **29 Ocak'taki risk çıkışı tamamen kaldırılırsa**, 30 Ocak ay sonundaki komisyonlu likidasyon vekili **107,80 USD**. Bu yüzden sonuçtaki yaklaşık **4,88 USD fark**, risk kapısının geçerli olduğu varsayımına bağlıdır.
+- 29 Ocak sinyalinde 21:45 fiyatının gün içi zirveye göre geri çekilmesi **%3,869**. Bu örnekte **%3** eşiği SAT adayı üretir; aynı koşulun **%4** yapılması o günü atlar. Dolayısıyla bu tek ayda sonuç eşik seçimine duyarlıdır; eşik çoktan görülmüş fiyatlardan türetildiği için bağımsız başarı sayılmaz.
+- 05 Ocak'ta önceki geçerli kapanıştan yükseliş **%2,696**. %2 fiyat koşulu geçilirken %3 geçilmez. Bu da giriş kararının eşik hassasiyetini gösterir; 05 Ocak dışında daha sonraki olayların bu farklı kuralla ne olacağı bu testin konusu değildir.
+- 29 Ocak kararındaki XAU 5.378,815'ten 30 Ocak 09UTC'deki BID 5.116,535'e **−%4,876** hareket önceden kurtarılmamıştır. 30 Ocak 09UTC BID 5.116,535'ten 21:45 BID 4.895,118'e **−%4,327** sonraki hareketten kaçınılmıştır; yüzde hesabı karara *sonradan* bağlanmaz.
+
+**Hüküm:** Yeni DNA riski uyarısı *araştırmaya değer*; ama %2 giriş ve %3 çıkış sayıları, farklı rejimlerde freeze/paper test öncesi kullanılırsa **hindsight optimisation** taşır. Bu nedenle bu ayda pozitif sonuç bulunmuş olması ekonomik DNA'nın karar gücünü doğrulamaz.
