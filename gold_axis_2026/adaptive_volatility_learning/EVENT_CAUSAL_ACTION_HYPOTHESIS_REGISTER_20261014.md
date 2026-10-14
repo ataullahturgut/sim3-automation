@@ -160,7 +160,26 @@ Her aile ve alt varyant bu gramer üzerinden tanımlanır. **P0→P1→P2→P3�
 
 **Bağ türü zorunlu:** `CO_OCCURRENCE` (yalnız birlikte gözlem), `TEMPORALLY_ORDERED`, `TRANSMISSION_CONSISTENT`, `RIVAL_TESTED`, `INDEPENDENTLY_VALIDATED`. Birlikte hareket `CAUSES` bağlantısı değildir. Her aday grafiğin test edilebilir ayırıcı değişkenleri vardır; **grafiğin olay bazlı kenarları ve kaynakları OLAY-02'dedir**, burada yalnız jenerik mekanizma vardır.
 
-## 6. Yeni DNA keşfetme, güncelleme ve yanlışlama sözleşmesi
+## 6. Çapraz vaka araştırmasından çıkan tarihsiz yapı dersi — rol ayrıştırması
+
+**Farklı araştırmacılar aynı fiyat örgüsünü bazen haber başlığıyla, bazen faiz/likidite aktarımıyla, bazen de pozisyon çözülmesiyle adlandırabilir.** Bu yüzden `G01–G06`'yı tek bir `primary_family` olarak zorlamak yerine şu **dört farklı rol** açıkça araştırılmalıdır:
+
+- `TRIGGER_DNA`: Yeni ekonomik bilgi/şok hangi tür? (Makro sürpriz, tarife, güvenlik, rezerv politikası, kredi şoku; gerçekten ilk açıklanan mı?)
+- `TRANSMISSION_DNA`: Fiyat etkisi hangi aracılarla taşındı? (Faiz/USD, güvenli liman, enflasyon, fonlama/teminat, fiziki talep)
+- `AMPLIFIER_DNA`: Önceden birikmiş hangi yapı etkiyi büyüttü veya tersine çevirdi? (Kaldıraç, ETF/CTA/COMEX pozisyonu, likidite ve emir akışı)
+- `RESPONSE_MORPHOLOGY`: Fiyat yolunun şekli nedir? (M/S sınıfları; sadece fiyat sonucudur, ekonomik kökenin kimliği değildir)
+
+**Örnek tarihsiz koşullu örgüler; şu anda hipotez:**
+
+1. `G05 kredi/fonlama şoku → güvenli liman talebi ↔ G01 faiz indirim beklentisi`: güvenli liman alımı ve faiz kanalını ayrıştır; biri diğerinin yerine tek aile seçilmez.
+2. `G02 tarife/politika katalizörü → G05 fonlama baskısı → G06 pozisyon tasfiyesi`: aynı fiyat düşüşünü üç ayrı tarihli neden gibi sayma; biri tetik, biri aktarım, biri kuvvetlendirici olabilir.
+3. `G04 rezerv/ETF/fizikî bilgi + G01 makro açıklama`: önce/sonra gelen ayrı bilgi şoklarının etkilerini karşılaştır; geç yayınlanan talep raporu ilk katalizör değildir.
+4. `G01 reel faiz/USD kanalı + G04 fon akışı`: aynı yönlü veya ters etkiler olabilir; zaman ve yayın/vintage ayrılmadan ortak yön kuralı çıkarma.
+5. `G06 pozisyon sönümlenmesi ↔ G05 kredi/fonlama şoku`: geri çekilme tek başına genel fonlama krizi değildir; bağımsız fonlama göstergesi olmadan G05 doğrulama.
+
+**Yöntemsel sonuç:** DNA sınıflandırması `tek etiket` değil, `rol × mekanizma × evre` olarak çalışır. Her mekanizma bağlantısının `SOURCE`, `RIVAL`, `TIMING`, `INDEPENDENT_ASSET_EVIDENCE`, `STATUS` kayıtları tarihli kanıt manifestinde tutulur. Bu bölümde örnek tarih, fiyat seviyesi ve olay kimliği kullanılmaz. **Tarihsel birden fazla yorumun bulunması yeni kanıt oluşturmaz; yalnız sınanacak rakip hipotezleri gösterir.**
+
+## 7. Yeni DNA keşfetme, güncelleme ve yanlışlama sözleşmesi
 
 1. **Aday oluştur:** Mevcut G ailesinin içine sığmayan tekrar edilebilir yeni aktarım yolu varsa `Gxx-ALTn` taslağı oluştur; yalnız farklı fiyat grafiğine bakıp yeni DNA yaratma.
 2. **Önkoşul + tetik + aracı + sonuç:** Adayın haber/şokun ilk erişim anında bilinen önkoşullarını, beklenen ara piyasa tepkisini, farklı gelişim dallarını ve yanlışlayıcılarını önceden tarif et.
@@ -173,7 +192,7 @@ Her aile ve alt varyant bu gramer üzerinden tanımlanır. **P0→P1→P2→P3�
 
 **Başlangıçtaki bilgi sınırı:** Bu katalog, ekonomik mekanizmaların **test edilecek koşullu tanımlarıdır**. G01–G06 tanımlanmış, G07 bilinmezlik yönlendiricisidir. Bunların hiçbirine kanıtlanmış fiyat başlatıcısı, iyi kalibre edilmiş sonraki yön tahmini veya otomatik banka al/sat izni atanmamıştır.
 
-## 7. DNA ile koşullu karar bilgisinin bağlantısı
+## 8. DNA ile koşullu karar bilgisinin bağlantısı
 
 **Bu kütüphanede tarih veya vaka getirisi değil, yalnızca koşullu karar mekanizması bulunur.** Karar hipotezleri ekonomik DNA, gözlenmiş evre, portföydeki başlangıç varlığı (`GOLD/CASH`), beklenen **kalan** getiri dağılımı ve toplam işlem maliyetiyle birlikte tanımlanır. Aşağıdaki ilk üç kod önceki öğrenme sicilinden **genel ilke düzeyinde korunmuştur**; hiçbiri kalibre edilmiş, bağımsız doğrulanmış veya otomatik AL/SAT izni değildir.
 
@@ -187,7 +206,7 @@ Her aile ve alt varyant bu gramer üzerinden tanımlanır. **P0→P1→P2→P3�
 
 **Açık bilgi açığı:** Şu anda olayların çoğunda ilk haberin ekonomik yayılma zinciri ve P0–P5 evresi doğrulanmamıştır; bunlara yukarıdaki karar hipotezlerini atanmış ve çalışırmış gibi göstermeyin. Ayrıntılı zamanlı olay ve karar kanıtı yalnız [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) içindedir.
 
-## 8. Öğrenmenin saklandığı yer — DNA ile anıyı ayır
+## 9. Öğrenmenin saklandığı yer — DNA ile anıyı ayır
 
 - **ÖĞREN-03:** Yalnız aile ve alt varyant şemaları, ayırıcı DNA izleri, olası geçiş grafikleri, yanlışlama koşulları, kanıt düzeyinin tanımı ve jenerik mekanizma sürümleri.
 - **OLAY-02:** Tek tek tarihli olaylar, ilk kaynaklar, vaka ID'leri, haber/veri saatleri, XAU–metaller/faiz/USD tepkileri, aşama etiketlerinin gözlemsel gerekçeleri, rakip mekanizma ve sonuç.
