@@ -33,3 +33,7 @@ Bu dizinde **Ocak 2023'ün gerçek 31 günlük hesaplanmış V0 sayısal simüla
 ## 14 Ekim amaç düzeltmesi — korunmuş V0, henüz yapılmamış asıl deney
 
 Eski V0 (`$101,9695`) **günlük momentumla pozisyon değiştirme deneyidir; ekonomik olarak anlamlı orta/büyük UP/DOWN olaylarının giriş/çıkışını araştıran strateji değildir**. `$103,7589` pasif altın karşılığıyla aynı satırda tutulur fakat bu farkı asıl sistemin başarısızlığı olarak yorumlamayız. `months/2023-01/STATE.json` içindeki `objective_alignment_audit` ve yeni deney sözleşmesi bağlayıcıdır. Şubat'a doğrulanmış strateji devri **beklemede**.
+
+## Ocak 2023 ikinci deney — orta/büyük olay tarama V1
+
+[31 gün eylem, kaynak/karşı kanıt ve sonuç raporu](months/2023-01/JAN_2023_EVENT3_FULL_31DAY_RESEARCH_REPLAY_20261014.md) · [Günlük NAV/olay CSV](months/2023-01/JAN_2023_EVENT3_31DAY_ACTIONS_NAV_20261014.csv) · [Maliyetli sonuç JSON](months/2023-01/JAN_2023_EVENT3_EXPLORATORY_RESULTS_20261014.json). +3/-3 beş seanslık fiyat olayı: 4 Ocak UP tespiti, 1 AL, 31 Ocak yalnız dönemsonu muhasebesi için SAT; 100 → **101,9914 USD**; aynı kaynaktan pasif altın **103,7589 USD**. **Sayılar tam çalıştırılmış tek-ay fiyat-only exploratory baseline'ıdır; GPT ekonomik olay yorumunun emirleri değiştirdiği veya maliyet-sonrası faydayı artırdığı kanıtlanmadı.** Aynı ayın önceki V0 kaydı korunur. Aylar arası strateji aktarımı yalnız sınırı doğru etiketlenmiş bilgiye dayanır.
