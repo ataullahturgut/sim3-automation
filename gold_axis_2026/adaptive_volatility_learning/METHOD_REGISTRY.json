@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.1",
+  "status": "NO_NEW_ADAPTIVE_EVENT_ALGORITHM_YET",
+  "methods": [],
+  "features": [],
+  "experiments": [],
+  "last_review_date": "2026-10-14",
+  "notes": "Algorithm and feature definitions require code_version, data input vintage, parameters, tested scope and evidence before they may be promoted; existing archived Ridge etc remain separate baselines."
+}
