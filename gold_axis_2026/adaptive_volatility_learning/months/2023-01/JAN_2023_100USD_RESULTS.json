@@ -1,0 +1,52 @@
+{
+  "status": "ACTUALLY_COMPUTED_EX_POST_WITH_CLOSED_BAR_SIGNAL; NO_BLIND_OOS",
+  "month": "2023-01",
+  "type": "RISK_AWARE_MOMENTUM_EXPLORATORY",
+  "initial_usd": 100,
+  "per_leg_fee_rate": 0.008,
+  "pricing": "HISTORICAL_VENDOR_BID_ASK_NOT_BANK",
+  "basis": "NY17 first 15m bar executable proxy next session; last Jan31 NY17 final sell",
+  "jan_full_session_count": 20,
+  "jan_partial_session_count": 1,
+  "calendar_days": 31,
+  "vol_gate_trigger_count": 0,
+  "model_rule": "prev5 mid return >0 and prev5 abs log return mean / prev20 mean abs <= 2",
+  "comparison": [
+    {
+      "name": "CASH",
+      "final_usd": 100,
+      "net_percent": 0,
+      "fees_usd": 0,
+      "buys": 0,
+      "sells": 0
+    },
+    {
+      "name": "GOLD",
+      "final_usd": 103.75888,
+      "net_percent": 3.75888,
+      "fees_usd": 1.636765,
+      "buys": 1,
+      "sells": 1
+    },
+    {
+      "name": "TREND5",
+      "final_usd": 101.969501,
+      "net_percent": 1.969501,
+      "fees_usd": 3.291013,
+      "buys": 2,
+      "sells": 2
+    },
+    {
+      "name": "RISK_TREND5",
+      "final_usd": 101.969501,
+      "net_percent": 1.969501,
+      "fees_usd": 3.291013,
+      "buys": 2,
+      "sells": 2
+    }
+  ],
+  "passive_advantage_dollars": 1.78938,
+  "first_trade_actual_utc": "2023-01-02T23:15:00.000Z",
+  "last_account_value_utc": "2023-01-31T22:00:00.000Z",
+  "warning": "Not actual bank fills; 2026 hindsight; calendar UTC differs from NY17 session labels; Jan16 missing NY17 close; no GPT override to orders"
+}
