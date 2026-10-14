@@ -46,7 +46,7 @@ Her değerlendirmede aşağıdaki alanlar çalışma kipine göre kaydedilir:
 | **Hedef** | Hangi başlangıç-bitiş fiyatı, ileri mutlak log-getiri, realized-vol, kuyruk olasılığı ve şok eşiği |
 | **Olay havuzu** | **Kip A:** 2023–2026 ve erişilebilir bütün tarihsel dönemlerden benzer, ters, sonradan açıklanmış olaylar; **Kip B:** deneyde izin verilen karar anı öncesi eğitim/kanıt havuzu |
 | **Karşı kanıt** | Rakip nedenler, uyumsuz veriler, benzer haber olup şok olmayan günler |
-| **Çıktı** | Kanıtlı ekonomi yorumu + şartlı volatilite/risk + belirsizlik/ABSTAIN + veri kalitesi |
+| **Çıktı** | Kanıtlı olay yönü (UP/DOWN), şiddet/evre, kalma/çıkma/girme fırsatı ve net maliyet kapısı + destekleyici volatilite/risk + belirsizlik/ABSTAIN + veri kalitesi |
 | **Deney izi** | Sürüm, kaynak/vintage, önceden belirlenmiş kıyas, test dönemi ve sonradan gerçekleşen sonuç |
 
 **Kaynak-vintage / as-of ayrımı:** **Kip A'da** gelecek yılın olayları ve geç yayımlanan veriler mekanizmayı araştırmak için **serbesttir**; ancak her bilginin **gerçekte ne zaman yayımlandığı** saklanır ki geçmiş olayın başlatıcısıyla sonradan gelen açıklama karıştırılmasın. **Kip B'de** `available_at <= origin_utc` zorunludur: yayımlanmamış CPI/NFP, kapanmamış GVZ/VIX, geç açıklanan ETF/COT veya sonradan revize seri tahmin girdisi olmaz. Her iki kipte de eksik veri `MISSING/UNKNOWN`; hiçbir kayıt uydurulmaz.
@@ -91,13 +91,17 @@ Geçmişle kıyas için dört soru zorunludur:
 - [2025 Ocak–Nisan beş ekonomik olay ve ETF/COT/metaller/COMEX](GOLD_2025_JAN_APR_FIVE_EPISODES_COT_ETF_METALS_MICROSTRUCTURE_CAUSAL_AUDIT_20261014.md).
 - [Tarihsel neden–haber kontrol protokolü](GOLD_HISTORICAL_EVENT_CAUSAL_ATTRIBUTION_SCOPE_PROTOCOL_20261014.md). Bu önceki tarihsel alt projenin "NO FORECAST" kuralı **o çalışmanın** kapsamıdır; yeni risk-araştırma hedefinin ileride sınanmasını yasaklamaz.
 
-## 5. 2 Ocak örneği: sistemden fiilen ne bekliyoruz?
+## 5. Ocak 2023 çalışma örneği — olay başladıktan sonra da karar verebilmek
 
-**Örnek tarih:** `2026-01-02` (konuşmadaki "2 Ocak" örneği 2026 Ocak araştırma bağlamında yorumlanmıştır). **Kesin saat ve ufuk henüz seçilmediği için hiçbir risk sayısı, tahmin veya gerçekleşmiş karar burada üretilmiş değildir.** Ocak 2026 daha önce defalarca incelendiğinden yeni sonuç **kör dış örnek test** diye sunulamaz.
+**Araştırma başlangıcı:** Ocak 2023'teki **bütün takvim günleri**, sakin günler dahil gözlem evrenidir. **5 günlük trend işareti değiştiği için otomatik pozisyon değiştirilmez.** Başta altın/nakit durumumuz, gerçek fiyat yolu, maliyet ve aylık yön bilgisi belirlenir; ardından erken veya başlamış orta/büyük olay kanıtı araştırılır.
 
-**Kip A çalışma örneği:** `EVENT_2026_01_02` seçilir → o günün fiyat/metaller/makro/ETF/COT/fiziki veri ve haberlerinin **sonradan derlenmiş tam kanıtları** okunur → 2023, 2024, 2025 ve **2 Ocak sonrasındaki 2026 olayları** dahil benzer/ters olaylar bulunur → geçmiş benzerlik ve farklı mekanizmalar tartışılır → sayısal özelliklerden hareket büyüklüğü, oynaklık ve şok riskine ilişkin geriye dönük **araştırma hükmü** oluşturulur → yapay zekâ bu hükmü bağımsız kanıt/karşı kanıt üzerinden eleştirir. **Kip B** daha sonra ayrıca seçilirse 2 Ocak günündeki belirli saatin bilinebilir kaynaklarıyla sıfırdan bir deney açılır ve bu Kip A incelemesi **blind sonuç** sayılmaz.
+**Kaynaklı ilk örnekler:** 6 Ocak NFP ve 12 Ocak CPI sonrasında altındaki UP reaksiyonu, 18 Ocak PPI sonrasındaki ters fiyat reaksiyonu, 26 Ocak GDP ve 27 Ocak PCE bağlamları **aday olay incelemeleridir**. O günlerin NY17 getirilerini bilmek **o haberde maliyet-sonrası giriş fırsatı vardı** demek değildir. Olay başlangıcı, önceki hareket, açıklama saati, faiz/USD/metaller tepkisi, kalan gerçekleşebilir hareket ve fiyat/ücret ayrı hesaplanmalıdır. 26 Ocak V0 SAT işlemi `ret5` işaret değişimiyle üretilmişti; **orta/büyük DOWN olayının erken yakalandığının kanıtı değildir**.
 
-**Örnek çalışmanın henüz üretilmemiş çıktısı:** `mode=FULL_HISTORY_DISCOVERY; case_id=EVENT_2026_01_02; event_time=TO_BE_DEFINED; compared_event_ids=NOT_EVALUATED; quant_features=NOT_COMPUTED; economic_hypotheses=NOT_EVALUATED; ai_second_assessment=NOT_RUN; historical_risk_verdict=NOT_ESTIMATED; evidence_confidence=UNKNOWN; validation_status=NO_BLIND_TEST`. Bu bir sonuç değil, kayıt örneğidir.
+**Şok öncesi veya sonrası aynı süreç:** (1) haber ve fiyatla kanıtlanmış `PRE_ONSET/ONSET/CONTINUATION` durumunu ayır; (2) **GOLD** veya **CASH** mevcut pozisyonuna göre, ters veya aynı yönde kalan hareketin maliyeti aşıp aşmadığını sorgula; (3) gerçek kararda bulunabilecek ilk geçerli BID/ASK/fill anını kayıtla; (4) ücret ve kaçırılan yükselişi dahil ederek `BUY/SELL/HOLD_GOLD/HOLD_CASH/WAIT` kararını karşılaştır; (5) hareket artık kalmadıysa geçmişte %3 oynamış olmasına bakarak geriye dönük işlem icat etme.
+
+**Kip A:** 2024–2026 sonraki olaylarını, 2023 vakasının mekanizma yorumuna karşı örnek/analojiler olarak katabilir; sonraki yıllardaki doğru cevabı 2023 işlem saatine taşımak yasaktır. **Kip B:** 2023 işlem anında erişilebilir giriş verileriyle ayrı çalışır; önce görülmüş dönem nedeniyle bu çalışma bağımsız/kör test olarak tanıtılmaz.
+
+**İlk esas deney statüsü:** `JAN2023_EVENT_DRIVEN_MEDIUM_LARGE_RESEARCH_NOT_YET_RUN`. 2023 Ocak V0 sayıları yalnız referanstır; burada hiçbir yeni kar/zarar, alarm doğruluğu veya AI başarısı varsayılmamıştır.
 
 ## 6. Bilimsel doğrulama — zorlama ilişki yerine ölçülebilir katkı
 
@@ -115,7 +119,7 @@ Geçmişle kıyas için dört soru zorunludur:
 
 **Algoritma + yapay zekâ destekli ikinci değerlendirme, zorunlu tek bir mimari değil, denenebilecek çalışma biçimidir.** Önce sayısal inceleme XAU/metaller/FX/faiz/pozisyon/haber zamanlarından özellik, kaynak güveni, aday bağlantı, geçmiş analog ve karşıt vaka çıkarabilir. Daha sonra yapay zekâ bu **kaynağı ve sayılarını görebildiği kanıt paketini** değerlendirebilir: birbirine karışan nedenleri ayırır, alternatif mekanizmalar önerir, eksik ve çelişkili veriyi sorar, en savunulabilir olay/risk hükmünü **gerekçesiyle** verir veya `ABSTAIN` der. Yapay zekânın yeni önerisi **test edilmemiş hipotez** olarak kalır; uydurma haber, kaynağı olmayan olasılık veya geriye dönük “kesin tahmin” kabul edilmez. Üretilen her yorum `evidence_ids`, `competing_hypotheses`, `counterexamples`, `what_would_falsify`, `uncertainty` ile kayda geçer.
 
-**İkinci katmanın gerçekten faydalı olup olmadığını ayrıca ölç:** (a) sadece sayısal algoritma, (b) sadece yapay zekânın kanıt yorumu, (c) algoritma + yapay zekâ karşılaştırılır; sabit aynı vaka setinde olaysız/ters örnek, kaynak doğruluğu, risk kalibrasyonu ve bariz yanlış neden atfı puanlanır. Tek bir dil modelinin özgüveni veya akıcı anlatımı bilimsel doğrulama değildir. LLM değerlendirmesi sayısal olasılığı keyfine göre değiştiremez; değişiklik varsa kanıt ve yeniden hesap gerekir.
+**İkinci katmanın gerçekten faydalı olup olmadığını ayrıca ölç:** (a) sadece sayısal algoritma, (b) sadece yapay zekânın kanıt yorumu, (c) algoritma + yapay zekâ karşılaştırılır; sabit aynı vaka setinde olaysız/ters örnek, **orta/büyük UP/DOWN yön-şiddet-evre sınıflaması, doğru/tarihinde uygulanabilir maliyetli BUY/SELL/HOLD/WAIT kararı ve portföy bazlarına karşı net katkı**, kaynak doğruluğu, risk kalibrasyonu ve bariz yanlış neden atfı puanlanır. Tek bir dil modelinin özgüveni veya akıcı anlatımı bilimsel doğrulama değildir. LLM değerlendirmesi sayısal olasılığı keyfine göre değiştiremez; değişiklik varsa kanıt ve yeniden hesap gerekir.
 
 **Her çalışmanın nihai yanıtı** kipine göre doğal dille, sayılar ve kaynaklarıyla aşağıdaki soruları cevaplar:
 
