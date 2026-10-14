@@ -2,6 +2,10 @@
 
 ## Önce bunu oku — tek olay kütüphanesi, tek araştırma sırası
 
+**EN GÜNCEL TOPLU ÇIKARIM SONUCU:** [OLAY-02 Çoklu Ekonomik DNA Çıkarım Raporu](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) — **96 olayda 43 spesifik alt DNA adayı + 25 genel makro + 28 belirsiz; 18 derin vaka ayrı gözden geçirme; 42 çapraz-varlık imzası; 85 makro açıklama ve dört haftalık kontrol; Neon gümüş kapsama QA**. Bunlar retrospektif araştırma gruplarıdır; ekonomik ilk haberin fiyat hareketini başlatması hâlâ **0/96 doğrulanmış**. [96 alt DNA/rol CSV](OLAY_02_96_KAYIT_DNA_ALT_TIP_ROL_TARAMA_20261014.csv) · [42 çapraz-varlık imzası](OLAY_02_42_UZUN_FIYAT_CROSS_ASSET_DAVRANIS_IMZASI_20261014.csv) · [85 makro/plasebo CSV](OLAY_02_85_MAKRO_YENI_DNA_TEPKI_PLASEBO_20261014.csv) · [47 gümüş kalite kontrolü](OLAY_02_47_KONTROL_SI_CALENDAR_ROLL_SAAT_KAPSAM_20261014.csv). **Tarihli verinin tek adresi OLAY-02, tarihsiz DNA kurallarının adresi ÖĞREN-03'tür.**
+
+
+
 ## TARİH SIRASI DEĞİL, TÜM OLAYLARI BİRLİKTE KARŞILAŞTIRAN DNA ARAŞTIRMASI
 
 **Tarih ekonominin DNA kimliği değildir.** Mekanizma keşfinde tüm dönemlerin olayları birlikte sorgulanır. Olayın tarihi sadece ilk kaynak ve piyasa tepki sırasını doğrulamak için gerekir; takvim yılı veya büyük gerçekleşmiş fiyat yönü birincil DNA özelliği olamaz.
