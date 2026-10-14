@@ -215,3 +215,58 @@ Her aile ve alt varyant bu gramer üzerinden tanımlanır. **P0→P1→P2→P3�
 
 **Yalnız DNA'yı bilmek olayın fiilen gerçekleştiğini ispatlamaz.** Bir vakayı incelemek için OLAY-02'daki kanıt zinciri açılır; bu dosyaya sadece farklı olaylarda tekrar kullanılabilecek, koşullu ve yanlışlanabilir öz aktarılır.
 
+## 10. Kanıta dayalı DNA çözümleme — sistematik sınıflandırma ilkeleri
+
+**Öğrenme bulgusu:** Bir önceki fiyat hareketine G ailesi yapıştırılması ile ekonomik DNA **keşfedilmiş olmaz**. Ekonomik DNA'nın kimliğine ilişkin kanıt, **(i) şok/bilgi içeriği, (ii) aracılık kanalı, (iii) pozisyon ve likidite kuvvetlendiricileri, (iv) fiyatın ayrı ex-post davranışı** olarak dörde ayrılmalıdır. Bütün bu roller aynı aileden olmayabilir.
+
+### 10.1 Birincil DNA'nın yanında türev alt yollar
+
+| Ana DNA | Tarihsiz alt-yol adayları |
+|---|---|
+| **G01** | `G01-A` gevşeme/fırsat maliyeti azalışı; `G01-B` sıkılaşma/fırsat maliyeti artışı; `G01-C` baskın karşı mekanizma; `G01-X` makro var ama alt yön ayrışmamış |
+| **G02** | `G02-A` ticaret belirsizliği; `G02-B` politika/ticaret geriliminde rahatlama; `G02-C` tarife kaynaklı likidite/teminat baskısı |
+| **G03** | `G03-A` risk tırmanışı ve güvenli liman; `G03-B` tırmanışın çözülmesi; `G03-C` enerji-enflasyon-faiz baskısına dönüş |
+| **G04** | `G04-A` rezerv/merkez bankası; `G04-B` ETF/CTA/COMEX finansal akış; `G04-C` EFP/teslimat ve fizikî-vadeli sürtünme |
+| **G05** | `G05-A` teminat/likidite amaçlı satış; `G05-B` finansal stres altında güvenli liman; `G05-C` fonlamanın toparlanması |
+| **G06** | `G06-A` momentum/sıkışma; `G06-B` kâr alma/pozisyon çözülmesi; `G06-C` stop/emir akışı zinciri |
+| **G07** | Nedensel belirsizlik **yönlendiricisidir**, ekonomik şok DNA'sı değildir |
+
+**Sınıf ile rol ayrı olmalı:** `TRIGGER_DNA` yeni haber şokunun kaynağı, `TRANSMISSION_DNA` ekonomik aktarım, `AMPLIFIER_DNA` kaldıraç/pozisyon/likidite şiddetlendirici, `RESPONSE_MORPHOLOGY` yalnız gerçekleşmiş fiyat yolu. Farklı retroaktif hikâyelerin aynı fiyat dalgasını farklı G koduyla açıklaması bu roller karıştırıldığında beklenebilir; bir nedeni bağımsız doğrulamaz.
+
+### 10.2 Fiyatın ekonomik nedene tanık olduğu durumlar — ayrı morfoloji kontrolü
+
+Fiyat hareketi altının başka piyasalara göre davranışıyla da **tarif** edilmelidir. Ekonomik mekanizmalarla otomatik eşleştirilmeyecek beş **gözlemsel** kategori:
+
+1. `BROAD_COSELL`: Altın, gümüş, hisse ve petrol birlikte geriler. Fonlama/tasfiye **adayı** olabilir; gerçek marjin-kredi teyidi olmadan G05 kanıtı değildir.
+2. `METAL_EQUITY_CODIRECTIONAL`: Altın, beyaz metaller ve hisse birlikte ilerler. Makro/risk-on/daha geniş likidite kanalının ayırt edici incelemesini gerektirir.
+3. `METAL_COHERENT_EQUITY_DIVERGENT`: En az iki beyaz metal altınla aynı, hisseler ters yönde; altın fiyatı yalnız riskli hisse talebinin karşıtı olarak açıklanamaz.
+4. `GOLD_WHITE_METAL_DECOUPLING`: Altın diğer beyaz metallerden en az ikisine karşıt hareket eder; altına özgü güvenli liman/fizikî/rezerv veya göreli emtia talebi ayrı araştırılır.
+5. `HAVEN_LIKE_DIVERGENCE`: Altın yükselir, hisse düşer ve en az bir beyaz metal ters gider; güvenli liman **benzerliği**, nedensel ispatı değildir.
+6. `DATA_INSUFFICIENT`: İmza güvenilir çıkarılamaz.
+
+Bu kategoriler geçmiş günlük veya çok-günlü fiyat serileriyle **ex-post** oluşur. İntraday kaynakların eşzamanlılığı doğrulanmadan canlı karakter ve P0–P5 evre tanıması yapılamaz.
+
+### 10.3 Makro şokun birbirinden ayrı üç hedefi
+
+- `SURPRISE_CONTENT`: İlk duyurunun gerçek zamanlı beklentiden sapması ve alt bileşenler.
+- `IMMEDIATE_RESPONSE`: İlk tamamlanmış XAU barı ve aynı anda faiz/dolar/metal tepkisi.
+- `PERSISTENCE_AND_STAGE`: Ayrı ufuktaki devam, tersleme ve ekonomik baskınlık değişimi.
+
+Tek sürpriz işareti altın yönünü evrensel belirlemez; ilk tepkinin yönü, sonra ölçülen uzun fiyat epizodu yönüyle aynı olmak zorunda değildir. **Makro takvimini ve açıklama öncesi bilinen beklentiyi, sonraki fiyat sonucuyla karıştırma.** Bir makro açıklama başka bir ilk haberin yarattığı şokun ortasına düşebilir.
+
+### 10.4 Belge anlatısından DNA çıkarmanın kanıt katmanları
+
+- `D0`: Olay penceresinde zamanlı kaynak açıklaması yok; genel tema/sonradan rapor yalnız araştırma ipucudur.
+- `D1`: Olay penceresinde tarihli haber bağlamı var fakat `firstprint UTC`, ilk fiyat başlangıcı ve aracılık henüz doğrulanmadı.
+- `D2`: Ayrıntılı vaka araştırması, rakip mekanizmalar ve ek çapraz varlık bağlamı var; **bunlar yine nedensel doğrulama değildir**.
+- `D3` (*henüz atanmadı*): İlk kaynak ve piyasa eşzamanlılığı doğrulanmış, rakip/negatif kontrolleri sınanmış ekonomi aktarımı.
+- `D4` (*henüz atanmadı*): Önceden dondurulmuş sınıflama bağımsız yeni olaylarda tekrar doğrulanmış.
+
+**Güncel araştırma modelinde yalnız D0–D2 belgelerden öneri çıkarılmıştır.** Belgede yazan mekanizma alt tipi `CANDIDATE` kalır; geçmiş bacağın yönü veya geri dönük yüksek getirisi kanıt düzeyini yükseltmez. Makine-veri sınıflandırmasındaki sayımlar, olay kimlikleri, tarihler, haber bağlantıları ve nicel bulgular yalnız OLAY-02'dedir.
+
+### 10.5 Gümüş ve sürekli vadeli kontrat ayrımı
+
+`SI.c.0` (takvim-roll) ile `SI.n.0` (önceki gün açık pozisyonuna dayalı open-interest-roll) farklı kaynak serileridir. Mevcut bir gümüş saatlik arşivinin **varlığı**, her kontrol anında tamamlanmış ve taze gümüş verisi bulunduğu anlamına gelmez. Barın başlangıç/bitiş etiketi, kontrat değiştirme sırası, olay anında erişilebilirlik ve piyasa saati kontrolünden geçmeyen gümüş teyidi `MISSING_OR_STALE`dır, sıfır getiri değildir.
+
+**Araştırma otoritesi:** Tarihli çoklu-DNA öneri tablosu, makro kontroller, çapraz-varlık fenotipleri, gerçek veri kullanılabilirliği ve bunların dayanağı [OLAY-02'de](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md). Bu ÖĞREN-03 yalnız tarihsiz **öğrenilmiş ayrım ilkelerini** saklar. Nedensel olarak kesinleşmiş DNA veya otomatik AL/SAT iddia edilmez.
+
