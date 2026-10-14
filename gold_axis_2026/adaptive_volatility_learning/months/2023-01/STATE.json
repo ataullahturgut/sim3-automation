@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "month_id": "2023-01",
   "mode": "FULL_HISTORY_DISCOVERY",
-  "status": "JAN2023_LEGACY_V0_RECORDED_PRIMARY_EVENT_STRATEGY_OPEN",
+  "status": "JAN2023_EVENT3_EXPLORATORY_PRICE_REPLAY_DONE_PRIMARY_GPT_COST_DECISION_MODEL_UNVALIDATED",
   "event_ids": [
     "MACRO_2023_01_06_NFP",
     "MACRO_2023_01_12_CPI",
@@ -33,10 +33,12 @@
     "https://www.gold.org/goldhub/research/gold-market-commentary-january-2023"
   ],
   "numeric_feature_run_ids": [
-    "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0"
+    "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0",
+    "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014"
   ],
   "algorithm_version_ids": [
-    "V0_COSTED_TREND5_VOLRATIO20_20261014"
+    "V0_COSTED_TREND5_VOLRATIO20_20261014",
+    "V1_EXPLORATORY_EVENT_3PCT_ROLL5_ASOF15M_20261014"
   ],
   "ai_reviews": [
     {
@@ -93,6 +95,19 @@
       "partial_sessions": 1,
       "exact_ledger": "months/2023-01/JAN_2023_31_UTC_CALENDAR_DAYS_ACTIONS_NAV.csv",
       "status": "REPLAYED_DO_NOT_PROMOTE"
+    },
+    {
+      "run_id": "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014",
+      "status": "EXPLORATORY_PRICE_ONLY_EVENT_STRATEGY_UNVALIDATED",
+      "initial_usd": 100,
+      "end_usd": 101.99136633901878,
+      "buyhold_usd": 103.75888044462923,
+      "cash_usd": 100,
+      "buy_count": 1,
+      "sell_count": 1,
+      "exit_is_month_end_accounting": true,
+      "source": "months/2023-01/JAN_2023_EVENT3_EXPLORATORY_RESULTS_20261014.json",
+      "gpt_intervention_tested": false
     }
   ],
   "numeric_metrics": {
@@ -109,7 +124,8 @@
       "Preserve as-of data and full-history knowledge as separate research modes",
       "Monthly WGC ETF outflow does NOT imply monthly gold decline (Jan23 WGC -1.6bn vs gold +6.1%)",
       "Record calendar UTC transaction timestamps separate from NY17 session labels",
-      "Real BID/ASK + 0.8 pct each leg are needed; V0 4 orders cost USD 3.291 and underperformed passive USD 1.789"
+      "Real BID/ASK + 0.8 pct each leg are needed; V0 4 orders cost USD 3.291 and underperformed passive USD 1.789",
+      "Event3 Jan price-only: 1 UP3 Jan4 08:00Z -> 08:15Z buy; no DOWN3; net 101.9914 vs costed buyhold 103.7589; early UP left on table."
     ],
     "rejected_learnings": [
       "Risk ratio <=2 threshold was active alarm or useful extra decision: 0/20",
@@ -117,7 +133,8 @@
     ],
     "uncertain_learnings": [
       "Rates/USD dominant in WGC regression but daily cross-market synchronous attribution not established",
-      "Does a turnover penalty generalize outside Jan23? Not tested"
+      "Does a turnover penalty generalize outside Jan23? Not tested",
+      "A five-session 3% confirmed move is not necessarily a profitable remaining-move forecast; monthly close forced sale not an event alarm; future event policy remains unvalidated"
     ],
     "code_or_config_references": [
       "gold_axis_2026/tools/gold_adaptive_monthly_v0_replay_20261014.py",
@@ -125,13 +142,14 @@
       "months/2023-01/JAN_2023_100USD_RESULTS.json"
     ],
     "open_questions": [
+      "Jan31 trailing five-session -2% downward signal would cause premature exit before 13:30Z ECI rebound; compare stage/remaining expected value and actual bank quotes on new locked samples",
       "Audit whether January 2023 contains economically tradable medium/large DOWN events during monthly UP context, including post-onset entry/exit; avoid hindsight trading at event extrema",
       "Re-run January 2023 under medium/large directional event discovery/confirmation, realized price-path, cost-aware trade/hold/cash decisions, with economic event/market evidence, rather than daily trend-sign turnover",
       "Can early February 2023 cost-aware hold rules lower turnovers without missed shock? Hindsight prior exposure not OOS",
       "Need firstprint contemporaneous USD/2y/10y prices and futures contracts for fuller event causal evaluation",
       "Will GPT qualitative reasoning add value to calibrated next-horizon volatility rather than plausible narratives?"
     ],
-    "status": "BLOCKED_PENDING_JAN2023_PRIMARY_EVENT_RESEARCH"
+    "status": "JAN_EVENT_BASELINE_ARCHIVED_NO_VALIDATED_AI_COST_ADJUSTED_EVENT_POLICY"
   },
   "quality_note": "ACTUAL Jan2023 daily price replay and GPT-only evidence review performed; no independent live or untouched OOS, no alternate LLM, no claims of actual bank execution; exact source M15 data stay private. CORRECTION 2026-10-14: this is not a tested primary event-driven trading strategy; original objectives explicitly prohibit frequent small-change trades.",
   "last_updated": "2026-10-14",
@@ -143,9 +161,11 @@
     "legacy_numeric_usd": 101.96950051925911,
     "legacy_buyhold_usd": 103.75888044462923,
     "primary_event_driven_result_usd": null,
-    "primary_event_driven_status": "NOT_YET_RUN",
-    "february_primary_strategy_handoff": "BLOCKED_UNTIL_JAN_PRIMARY_RESEARCH_RUN",
+    "primary_event_driven_status": "EVENT3_PRICE_ONLY_EXPLORATORY_CANDIDATE_REPLAYED_AI_QUANT_TRADE_EFFECT_NOT_TESTED",
+    "february_primary_strategy_handoff": "NO_PRIMARY_VALIDATED_STRATEGY; RESULTS_AND_UNCERTAINTIES_TRANSFERABLE",
     "restart_contract": "../../EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md",
-    "legacy_preservation": "All V0 ledger, methods, fees, source dates and GPT critique retained unchanged; new event strategy requires a separate experiment/version."
+    "legacy_preservation": "All V0 ledger, methods, fees, source dates and GPT critique retained unchanged; new event strategy requires a separate experiment/version.",
+    "exploratory_event3_baseline_final_usd": 101.99136633901878,
+    "exploratory_event3_result_ref": "months/2023-01/JAN_2023_EVENT3_FULL_31DAY_RESEARCH_REPLAY_20261014.md"
   }
 }

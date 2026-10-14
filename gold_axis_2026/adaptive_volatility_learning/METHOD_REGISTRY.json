@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "status": "JAN2023_MISALIGNED_V0_ARCHIVED_PRIMARY_EVENT_DRIVEN_STRATEGY_NOT_RUN",
+  "status": "JAN2023_EVENT3_PRICE_ONLY_EXPLORATORY_REPLAYED_NO_VALIDATED_AI_MACRO_EVENT_TRADING_STRATEGY",
   "methods": [
     {
       "id": "V0_COSTED_TREND5_VOLRATIO20_20261014",
@@ -17,6 +17,16 @@
       "status": "ARCHIVED_EXECUTED_NONPROMOTABLE_WRONG_OBJECTIVE",
       "qa_note": "Quant result from Neon SQL+JS internal tool, Python reference source written but not independently executed against Neon data in this session; direct bank BID/ASK unavailable. This V0 switches on 5-session trend sign, NOT on confirmed medium/large UP/DOWN event value and thus must never be reported as primary strategy result.",
       "objective_alignment": "BASELINE_ONLY_MISALIGNED_WITH_PRIMARY_MID_LARGE_EVENT_OPPORTUNITY"
+    },
+    {
+      "id": "V1_EXPLORATORY_EVENT_3PCT_ROLL5_ASOF15M_20261014",
+      "objective_alignment": "MEDIUM_LARGE_DIRECTIONAL_PRICE_EVENT_DETECTOR_ONLY",
+      "method": "Once an M15 bar closes, compare its MID with completed close 4 full NY17 sessions earlier; BUY on +3% if CASH, SELL on -3% if GOLD; execute at next completed M15 ASK/BID; month-end equal-cost liquidation",
+      "status": "ACTUALLY_REPLAYED_JAN23_NOT_VALIDATED_NOT_AI_TRADING_STRATEGY",
+      "experiment": "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014",
+      "threshold_tuned_on_jan": false,
+      "selection_hindsight_exposure": true,
+      "bank_ask_bid_validated": false
     }
   ],
   "features": [
@@ -51,6 +61,19 @@
       "artifact": "months/2023-01/JAN_2023_100USD_RESULTS.json",
       "objective_alignment": "LEGACY_BASELINE_ONLY",
       "main_project_event_strategy_result": false
+    },
+    {
+      "id": "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014",
+      "month": "2023-01",
+      "mode": "AS_OF_PRICE_RULE_HINDSIGHT_EXPOSED",
+      "initial_usd": 100,
+      "final_usd": 101.99136633901878,
+      "benchmark_gold_usd": 103.75888044462923,
+      "buys": 1,
+      "sells": 1,
+      "passes_buyhold": false,
+      "ai_trade_effect_tested": false,
+      "artifact": "months/2023-01/JAN_2023_EVENT3_EXPLORATORY_RESULTS_20261014.json"
     }
   ],
   "last_review_date": "2026-10-14",
