@@ -1,5 +1,12 @@
 # OLAY-02 — OCAK 2026: ANA-01 + ÖĞREN-03 ile 31 gün olay/DNA karar ve maliyetli yürüyüş
 
+**ARAŞTIRMA SINIRI İHLALİ — GEÇERSİZ OCAK 2026 TAHMİN TESTİ (14.10.2026)**
+
+Bu sonuç kullanıcı tarafından önceden belirlenmiş **Ocak 2026 sonuçlarını açmadan, 2023–2025 OLAY/ÖĞREN geçmişinden o günkü bilgilerle günlük karar yürüyüşü** kısıtına UYMADI. Çalışma başlamadan Ocak 2026 fiyat yolu ve Astra'nın Ocak günlük karar/sonuç anlatımı okundu; ardından Ocak'a uyabilen %2 giriş / %3 zirveden geri çekilme çıkış eşikleri seçildi. Bu **araştırmacı bilgi sızıntısı ve örnekleme uyarlaması** nedeniyle 112,67 USD sonuç, al-tut farkı, 29 Ocak risk alarmı ve tüm günlük AL/SAT kararları **GEÇERLİ PROSPEKTİF/AS-OF MODEL TESTİ, OOS, LEARNED EDGE, BAŞARI veya kullanıcı sınırının yerine getirilmesi** olarak kullanılamaz.
+
+**Statü:** `INVALIDATED_CONSTRAINT_BREACH / AUDIT_ONLY / DO_NOT_PROMOTE / DO_NOT_REPLAY_AS_BLIND`. CSV ve ilk rapor **yalnız hata denetimi** için korunur; bunları düzeltip Ocak'ı yeniden test etmek temiz test sağlamaz, çünkü 2026 sonuçlarına maruz kalınmıştır. Olayların 2023–2025 tarihli analizi ayrı tutulur. Geçerli test ancak **gerçekten önceden dondurulmuş ve tarihi izlenebilen yürütülebilir model** ile veya **henüz inceleme/ayar için kullanılmamış başka veri** üzerinde, yeni sonuçlar görülmeden kaydedilmiş kurallarla yapılabilir.
+
+
 **Sonuç statüsü:** `RETROSPECTIVE_EXPLORATORY_SCENARIO_NOT_INDEPENDENT_OOS`; 31/31 takvim günü incelendi; **bu bir canlı uygulama ya da dondurulmuş kör model testi değildir**. Ocak ve Astra'nın önceki araştırma sonuçları araştırmacı tarafından zaten görülmüştür. Karar eşikleri bu çalışmada geriye dönük denendi. Başarı diye ilan edilmez; karar–icra anı ayrımı uygulanmıştır.
 
 ## 1. ANA-01 sözleşmesi ve kaynakların önceliği
