@@ -1,9 +1,55 @@
 {
   "schema_version": "0.1",
-  "status": "NO_NEW_ADAPTIVE_EVENT_ALGORITHM_YET",
-  "methods": [],
-  "features": [],
-  "experiments": [],
+  "status": "JAN2023_QUANT_REFERENCE_CREATED_FIRST_REPLAY_EXECUTED_NO_VALIDATED_VOLATILITY_MODEL",
+  "methods": [
+    {
+      "id": "V0_COSTED_TREND5_VOLRATIO20_20261014",
+      "language": "Python reference + actually computed JS session replay",
+      "source_code": "gold_axis_2026/tools/gold_adaptive_monthly_v0_replay_20261014.py",
+      "contract": "months/2023-01/FROZEN_RESEARCH_CONTRACT.md",
+      "parameters": {
+        "trend5_min": 0,
+        "vol_gate_relative20_max": 2,
+        "commission_per_leg": 0.008,
+        "full_ny17_only": true,
+        "first_available_15m_next_session_execution": true
+      },
+      "status": "ACTUAL_JAN2023_REPLAYED_NO_PROMOTION",
+      "qa_note": "Quant result from Neon SQL+JS internal tool, Python reference source written but not independently executed against Neon data in this session; direct bank BID/ASK unavailable."
+    }
+  ],
+  "features": [
+    {
+      "id": "PREV5_FULL_NY17_MID_RETURN",
+      "definition": "CloseMID(last complete session) / CloseMID(5 previous complete sessions) -1",
+      "provenance": "vendor historical M15, non-economic predictor",
+      "source_release": "valid completed NY17 close"
+    },
+    {
+      "id": "ABS_LOG_RET5_REL_ABS_LOG_RET20",
+      "definition": "mean(abs(last five completed session log returns)) / mean(abs(last twenty completed session log returns))",
+      "provenance": "vendor historical completed session returns",
+      "status": "NO_INCREMENTAL_OCT2026_REPLAY_JAN2023"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0",
+      "month": "2023-01",
+      "mode": "FULL_HISTORY_DISCOVERY",
+      "cohorts": "2023 January hindsight, 2022 Nov-Dec lookback",
+      "initial_usd": 100,
+      "final_usd": 101.96950051925911,
+      "benchmark_gold_usd": 103.75888044462923,
+      "benchmark_cash_usd": 100,
+      "vol_trigger_count": 0,
+      "buy_count": 2,
+      "sell_count": 2,
+      "fees_total_usd": 3.2910128700054315,
+      "passes_baseline": false,
+      "artifact": "months/2023-01/JAN_2023_100USD_RESULTS.json"
+    }
+  ],
   "last_review_date": "2026-10-14",
   "notes": "Algorithm and feature definitions require code_version, data input vintage, parameters, tested scope and evidence before they may be promoted; existing archived Ridge etc remain separate baselines."
 }
