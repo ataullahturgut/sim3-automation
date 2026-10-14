@@ -2,14 +2,14 @@
 
 **Statü:** FIRST_4_CASES_REVIEWED / 2976_SLOT_TIME_SPINE_BUILT / NOT_FULL_DECISION_REPLAY / NO_PNL. Araştırmacı Ocak sonuçlarını daha önce gördüğü için bağımsız kör test değildir. Bu belge tarihli vaka kanıtıdır, yeni ana manifest değildir.
 
-**Saat sözleşmesi:** Haber anı t'deki XAU fiyatı, t-15 → t arasında TAMAMLANAN M15 barının kapanışıdır. +15dk ilk tam haber-sonrası bar, +60dk sonraki ilk saat gözlemidir. ZN/NQ/SI/CL futures H1 barları başlangıçta değil **tamamlanınca** görünür. Haber-sonrası t+60/t+240 sonucu t anındaki karar için kullanılamaz.
+**Saat sözleşmesi:** Haber anı t'deki XAU fiyatı, t-15 → t arasında TAMAMLANAN M15 barının kapanışıdır. +15dk ilk tam haber-sonrası bar, +60dk sonraki ilk saat gözlemidir. ZN/NQ/SI/CL futures H1 barları başlangıçta değil **tamamlanınca** görünür. **Yeni bir H1 barı gelmediyse önceki fiyatın tekrar görünmesi yüzde sıfır piyasa tepkisi değildir; tabloda — ile gösterilir.** Haber-sonrası t+60/t+240 sonucu t anındaki karar için kullanılamaz.
 
 | Haber / ilk yayın | Türkiye saati | XAU +15dk | XAU +60dk | ZN future +60dk | SI future +60dk | Sınıflandırma |
 |---|---|---:|---:|---:|---:|---|
-| Venezuela olayını anlatan Reuters **ilk piyasa raporu** (ilk siyasi haber değil) | 5 Ocak 07:00 | +%0,004 | +%0,097 | +%0,028 | %0 | ORG04 ADAY |
+| Venezuela olayını anlatan Reuters **ilk piyasa raporu** (ilk siyasi haber değil) | 5 Ocak 07:00 | +%0,004 | +%0,097 | +%0,028 | — | ORG04 ADAY |
 | BLS Aralık NFP / işsizlik | 9 Ocak 16:30 | +%0,320 | +%0,486 | +%0,056 | +%0,206 | G01-A ve G01-B rekabeti; desteklenen tepki |
 | BLS Aralık CPI | 13 Ocak 16:30 | +%0,380 | +%0,390 | +%0,084 | +%2,033 | G01-A desteklenen tepki |
-| Fed FOMC statement | 28 Ocak 22:00 | +%0,336 | +%0,869 | +%0,056 | %0 | G01-X / ORG09 ADAY; sürpriz belirsiz |
+| Fed FOMC statement | 28 Ocak 22:00 | +%0,336 | +%0,869 | +%0,056 | — | G01-X / ORG09 ADAY; sürpriz belirsiz |
 
 [Aynı olayların -60, 0, +15, +30, +60, +120, +240 dakika karşılaştırma CSV'si](OLAY_02_2026_OCAK_DORT_ILK_HABER_M15_KARSIT_AKTARIM_DENETIMI_20261014.csv).
 
@@ -35,7 +35,7 @@ Kaynaklar: https://www.bls.gov/news.release/archives/cpi_01132026.htm ve https:/
 
 ## OLAY D — Fed: ilan saatinde altın yükseldi ama Fed şoku ölçülmedi
 
-FOMC **28 Ocak 19:00 UTC** faiz aralığını %3,50–%3,75'te tuttu. Gerçek patika sürprizi ölçülmedi. Açıklamadan önceki XAU 5.279,248 → 19:15 5.296,988 (+%0,336), 20:00 5.325,105 (+%0,869), ZN futures +%0,056, NQ -%0,041, SI H1 %0. Daha geniş altın talep/pozisyon trendi ayrı rakip ORG09'dur. Bu dalganın tamamını Fed'in beklenmeyen parasal sıkılaştırması/gevşemesi diye tanımlamak hatalı. Canlı kararın gerekçesi için politika yolunun **beklentiden farkı**, önceki evre ve gerçek USD/faiz kanalının zaman sırası gerekir.
+FOMC **28 Ocak 19:00 UTC** faiz aralığını %3,50–%3,75'te tuttu. Gerçek patika sürprizi ölçülmedi. Açıklamadan önceki XAU 5.279,248 → 19:15 5.296,988 (+%0,336), 20:00 5.325,105 (+%0,869), ZN futures +%0,056, NQ -%0,041; **SI için +60dk öncesinde yeni H1 barı tamamlanmadığından yön ölçülemedi**. Daha geniş altın talep/pozisyon trendi ayrı rakip ORG09'dur. Bu dalganın tamamını Fed'in beklenmeyen parasal sıkılaştırması/gevşemesi diye tanımlamak hatalı. Canlı kararın gerekçesi için politika yolunun **beklentiden farkı**, önceki evre ve gerçek USD/faiz kanalının zaman sırası gerekir.
 
 Kaynak: https://www.federalreserve.gov/newsevents/pressreleases/monetary20260128a.htm
 
