@@ -1,7 +1,7 @@
 # OLAY → NEDENSEL MEKANİZMA → AKSİYON ADAYI — Merkezî Öğrenme Sicili (2026-10-14)
 **Sicil ID:** `GPT_CAUSAL_ACTION_REGISTER_V1_20261014` · **Durum:** `RESEARCH_ONLY / HINDSIGHT_EXPOSED / NO_MODEL_PROMOTION`.
 **Kapsam:** 2023 Ocak UP, 2023 Şubat DOWN ve 5 Ocak kısa DOWN düzeltme karşıt vakalarının **olay-aksiyon mekanizma adayları**, **onaylı otomatik AL/SAT kuralları değildir**.
-**Olay araştırmasının değişmeden korunan tarihsel otoritesi:** [5.190 satırlık 0.1A–0.1G manifest arşivi](../../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md). Bu dosyaya append yapmayın; tarihsel snapshot donuktur. [Aktif amaç/karar manifesti](../../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) buraya yönlendirir.
+**Olay araştırmasının değişmeden korunan tarihsel otoritesi:** [5.190 satırlık 0.1A–0.1G manifest arşivi](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md). Bu dosyaya append yapmayın; tarihsel snapshot donuktur. [Aktif amaç/karar manifesti](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) buraya yönlendirir.
 **Kanıt otoritesi:** Sayısal as-of ve ücret hesaplarında orijinal rapor/CSV/JSON özet cümleden üstündür. Hiçbir hesap gerçek banka emri değildir; USD/DXY ve faiz tam M15 kaynağı, banka icra fiyatı, dağılımsal kalan yön avantajı ve ayrı OOS kontrolü eksiktir.
 
 ## 1. Bilgiden aksiyona: üç hipotez
