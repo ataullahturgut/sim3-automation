@@ -16,7 +16,7 @@
 
 **OLAY-02 bizim ekonomik olayları anlamak için ilk okuyacağımız kaynaktır.** Her olayda haber akışı, verinin o anda bilinebilirliği, altın ve çapraz varlık tepkisi, mümkün mekanizmalar, karşıt kanıtlar, karar ve maliyetli sonuç **aynı olay kimliği altında bir arada** değerlendirilir. Geçmişte bilinmeyen haberler ve sonradan oluşmuş fiyat tepeleri as-of işlem kararı diye gösterilmez.
 
-[ANA-01 — Projenin hedef ve protokolü](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) · [ÖĞREN-03 — Ortak mekanizma/karar hipotezleri](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) · [Belge haritası](BELGE_HARITASI_V1.md) · [Eski 5.190 satırlık tarihsel kayıt (korunmuştur)](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md)
+[ANA-01 — Projenin hedef ve protokolü](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) · [ÖĞREN-03 — Tarihsiz Ekonomik DNA](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) · [Belge haritası](BELGE_HARITASI_V1.md) · [Eski 5.190 satırlık tarihsel kayıt (korunmuştur)](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md)
 
 ## 0. Her olay için ALTI ZORUNLU KARAR ALANI — 96/96 UYGULANDI (14 Ekim 2026)
 
@@ -104,7 +104,21 @@ Her çok-günlü **EPISODE_ID** altında bir veya daha fazla farklı **EVENT_ID*
 | **Pozisyon çözülmesi** | Aşırı momentum, marjin artışı → kısa/günlük DOWN dönüşü | Genel makro şok ile metal-özel düzeltme ayrı | Kâr alma veya SAT için **kalan downside** kanıtı |
 | **Karışık/çözümsüz** | Farklı haberler birbiriyle yarışır, fiyat tersine dönebilir | Nedeni son fiyata bakarak seçmek doğrulama değildir | **TUT/BEKLE/ABSTAIN**, gereksiz %0,8+%0,8 turdan kaçın |
 
-**ÖĞREN-03** içinde ilk üç makro karar hipotezi [ayrı sicilde](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md). Bunlar hala **hindsight-exposed**, bütün olaylarda test edilmiş kural değil.
+**Üç tarihli makro karar hipotezi** [ayrı tarihli JSON sicilinde](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.json) ve aşağıdaki OLAY-02 vaka/rapor bağlantılarında saklanır; bunlar hâlâ **hindsight-exposed** ve bağımsız OOS ile doğrulanmış kural değildir. **ÖĞREN-03 yalnızca tarihsiz DNA tanımlarını tutar.**
+
+### G01 DNA ayrıştırması — üç karşıt tarihli vaka karşılaştırması (OLAY-02 KANIT ALANI)
+
+**Bu tablo DNA değildir; tarihe bağlı, yeniden denetlenebilir örnek karşılaştırmasıdır.** Ekonomik mekanizmanın soyut G01 alt yolları [ÖĞREN-03 DNA sözlüğünde](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) tanımlanır. Burada yalnız fiyat gözlemi, olay zamanı ve ayırmak için **eksik** kanıt belirtilir.
+
+| Tarihli kayıt | Kayıtlı ilk makro açıklama / XAU kısa tepki | DNA varyantı hipotezi ve rakibi | Açık eksik / çıkarım sınırı |
+|---|---|---|---|
+| **06 Ocak 2023 — NFP** | NFP **13:30 UTC**; ilk tamamlanan M15 XAU **+%0,644** (ayrı makro-reaksiyon serisi). Daha sonra **15:00 UTC** ISM açıklaması vardır; önceki kararın girdisi olamaz. | `G01-A` güvercin repricing adayı; altın-özel talep ve sonradan gelen ISM bağımsız rakip/kuvvetlendirici. | Aynı-UTC USD/nominal/reel 2Y/10Y ve SI ile kaynağın ilk yayım dakikası–fiyat başlangıcı ilişkisi doğrulanmadı. NFP tüm uzun UP bacağının nedeni değildir. |
+| **03 Şubat 2023 — NFP** | NFP **13:30 UTC**; kaydedilmiş ilk M15 XAU yaklaşık **−%1,34**. | `G01-B` şahin yeniden fiyatlama adayı; önceki FOMC ve sonraki enflasyon verileri ayrı tetikleyiciler. | USD/faiz aynı-UTC aracılık zinciri, rakip haber kontrolü ve bütün uzun DOWN bacağına katkı ölçülmedi. |
+| **10 Mart 2023 — NFP / bankacılık stresi** | NFP yayımlandığı pencerede kayıtlı ilk M15 XAU **+%0,540**; güçlü istihdam sürpriziyle basit şahin-yön kuralına ters. | `G01-C` makro etkisi baskılanmış olabilir; `G05-B` bankacılık riski/güvenli liman **rakip hipotez**. | İlk SVB haberinin zaman damgası, XAU–faiz–USD–kredi ortak ilk tepki kronolojisi ve kaynak firstprint doğrulaması eksik; güvenli liman mekanizması **kanıtlanmış değildir**. |
+
+**İlk DNA çıkarımı (hipotez, doğrulama değil):** `NFP → kesin XAU yönü` kuralı bu üç farklı fiyat tepkisini açıklamıyor. G01'i tek yönlü bir etiket yerine **faiz/yeniden fiyatlama ve rakip finansal stres etkileri için koşullu, dallanan mekanizma** olarak modellemek daha uygun. Karşılaştırma yalnız seçilmiş üç örneğe dayanır; rakip açıklamaları ayrıştıracak eşzamanlı bağımsız kanıt ve şoksuz kontroller henüz eksiktir. Bu nedenle ÖĞREN-03'te `G01-A/G01-B/G01-C` **DNA_CANDIDATE**, OLAY-02'deki olay–mekanizma kenarları **UNVERIFIED_CAUSAL_ATTRIBUTION** olarak kalır.
+
+**Bağlı kontrol kaynakları:** [96 kronolojik olay fişi](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md) · [NFP/CPI/FOMC kısa pencere ölçümleri](GOLD_2023_2025_CPI_NFP_FOMC_M15_RELEASE_WEEKMATCH_EVENTSTUDY_20261014.csv) · [makro mekanizma yanlışlama raporu](GOLD_HISTORICAL_SHOCK_CAUSAL_FALSIFICATION_MACRO_EVENTSTUDY_AUTHORITY_20261014.md). **As-of standart:** `available_at_utc`, tamamlanmış M15 ve sadece ondan sonraki piyasa verileri; daha sonraki haberler önceden bilinir sayılmaz.
 
 ## 5. Dokuz öğretici olay — haber, veri, karşıt kanıt ve aksiyon
 
