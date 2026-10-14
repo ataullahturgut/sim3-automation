@@ -1,9 +1,4 @@
-**DÜZELTME / SINIR İHLALİ:** Ocak 2026 31 günlük `112,67 USD` yürüyüşü önceden kullanıcının çizdiği **Ocak sonuçlarını okumadan günü gününe karar** sınırını ihlal etti. Ocak fiyatları/Astra Ocak kayıtları önceden okundu, karar eşikleri daha sonra seçildi. Bu nedenle **2026 OCAK TAHMİN TESTİ GEÇERSİZDİR** (`INVALIDATED_CONSTRAINT_BREACH; AUDIT_ONLY`). Önceki sayısal rapor yalnız hata izi olarak korunur; başarı, OOS veya sınırların yerine getirilmesi sayılmaz. [İptal edilen araştırma raporu](OLAY_02_JAN2026_31_GUN_DNA_KARAR_SONUCLAR_20261014.md).
-
 # OLAY-02 — Altın Olay, Haber, Veri ve Karar Kütüphanesi
-
-**YENİ OCAK 2026 YENİDEN YÜRÜYÜŞ — ÖNCEKİ GEÇERSİZ SONUÇTAN AYRI:** [2023–2025 verisine göre önceden commit edilen karar protokolü](OLAY_02_JAN2026_PRE2026_FROZEN_REPLAY_PROTOCOL_20261014.md), [31 günün tüm günlük sayısal ve haber/kalite sicili](OLAY_02_JAN2026_PRE2026_DONDURULMUS_DNA_31_GUN_REPLAY_20261014.csv) ve [tam günlük sonuç raporu](OLAY_02_JAN2026_PRE2026_DONDURULMUS_DNA_GUNLUK_SONUC_RAPORU_20261014.md) kaydedildi. 2023–2025 kaynak fiyatlı 636 geçmiş kapanış → 485 olgunlaşmış fiyat analoğu → Ocak 2026'da **31 takvim günü (19 tam 21:45 M15 kapanışı, 12 eksik/tatil)** incelendi. **İleriye bakmadan üretilen fiyat-analog önerileri 0 AL / 0 SAT**, aynı şekilde tam ekonomik DNA kanıtını gerektiren karar 0 AL / 0 SAT: her ikisinde ay sonu nakit **100,00 USD**, 2 Ocak 09UTC alım-30 Ocak 21:45 satış eşlenik maliyetli al-tut **109,79 USD**. Yani **BAŞARISIZ / KAÇIRILMIŞ UP**, hiçbir şekilde 112,67 USD geçersiz testinin onarılması ya da gizlenmesi değildir. **Araştırmacı Ocak sonuçlarını önceki turda gördüğünden yeni çalışma tam bağımsız/kör OOS DEĞİLDİR**; yalnız kural girdilerinin tarihsel zaman kapısı kontrol edilmiş yeni bir araştırma denemesidir. Ekonomik ilk haber ve USD/faiz/gümüş eş-UTC teyidi yoksa DNA doğrulaması da yoktur. Yıl boyunca 21:45 UTC sabit kesit, DST dönemlerinde gerçek NY17 ile aynı olmak zorunda değildir. ÖĞREN-03'e yeni tarih/performans eklenmedi.
-
 
 
 ## Önce bunu oku — tek olay kütüphanesi, tek araştırma sırası
@@ -11,13 +6,9 @@
 **EN GÜNCEL TOPLU ÇIKARIM SONUCU:** [OLAY-02 Çoklu Ekonomik DNA Çıkarım Raporu](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) — **96 olayda 43 spesifik alt DNA adayı + 25 genel makro + 28 belirsiz; 18 derin vaka ayrı gözden geçirme; 42 çapraz-varlık imzası; 85 makro açıklama ve dört haftalık kontrol; Neon gümüş kapsama QA**. Bunlar retrospektif araştırma gruplarıdır; ekonomik ilk haberin fiyat hareketini başlatması hâlâ **0/96 doğrulanmış**. [96 alt DNA/rol CSV](OLAY_02_96_KAYIT_DNA_ALT_TIP_ROL_TARAMA_20261014.csv) · [42 çapraz-varlık imzası](OLAY_02_42_UZUN_FIYAT_CROSS_ASSET_DAVRANIS_IMZASI_20261014.csv) · [85 makro/plasebo CSV](OLAY_02_85_MAKRO_YENI_DNA_TEPKI_PLASEBO_20261014.csv) · [47 gümüş kalite kontrolü](OLAY_02_47_KONTROL_SI_CALENDAR_ROLL_SAAT_KAPSAM_20261014.csv). **Tarihli verinin tek adresi OLAY-02, tarihsiz DNA kurallarının adresi ÖĞREN-03'tür.**
 
 
-
 **Yeni araştırma:** [38 vakanın 12 olay örgüsüne ayrılması](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) ve [vaka–örgü kanıt eşleştirmesi](OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv). Örgülerin tarihsiz P0–P5 karakterleri ÖĞREN-03 içindedir. 38 kayıt bağımsız 38 şok veya kesin nedensellik değildir.
 
 ## TARİH SIRASI DEĞİL, TÜM OLAYLARI BİRLİKTE KARŞILAŞTIRAN DNA ARAŞTIRMASI
-
-**OCAK 2026 — 31 GÜNLÜK OLAY-DNA ARAŞTIRMA YÜRÜYÜŞÜ:** [Günlük yorum/karar/sonuç raporu](OLAY_02_JAN2026_31_GUN_DNA_KARAR_SONUCLAR_20261014.md) + [31 gün sayısal karar ve fiyat QA CSV](OLAY_02_JAN2026_31_GUN_DNA_KARAR_MALIYET_DENETIMI_20261014.csv) kaydedildi. Başlangıç 100 USD nakit; 05 Ocak BUY karar→06 Ocak 09UTC ASK vekili 4.468,715; 29 Ocak risk SAT karar→30 Ocak 09UTC BID 5.116,535; iki taraf %0,8, spot kaynak makası dahil, **ay sonu 112,6722 USD**. Karşılaştırmalar: altın al-tut **109,7933**, nakit **100**, aynı AL sonrası risk çıkışı yok **107,7963**. **Kurallar Ocak ve Astra verileri görüldükten sonra belirlenmiştir; keşif sonucu, bağımsız OOS veya gerçek banka karı değildir.** Her günün haber ilk-yayım saati / ekonomik nedensellik onaylı değil. Ocak ayının tarihli kararları ÖĞREN-03'e yazılmaz.
-
 
 
 **Tarih ekonominin DNA kimliği değildir.** Mekanizma keşfinde tüm dönemlerin olayları birlikte sorgulanır. Olayın tarihi sadece ilk kaynak ve piyasa tepki sırasını doğrulamak için gerekir; takvim yılı veya büyük gerçekleşmiş fiyat yönü birincil DNA özelliği olamaz.
@@ -48,7 +39,6 @@
 **Yeni [G01 karşıt haber–fiyat evre pilotu](OLAY_02_G01_KARSIT_MAKRO_EVRE_PILOT_20261014.csv)**: üç aynı tür makro açıklamasında `scheduled_utc`, beklenti/gerçekleşme/sürpriz, XAU pre60/post15/post60/post240 tepki, **P0/P1/P2/P3/P4/P5 için kanıt ve eksik durumu** ayrı hücrelerde tutulur. İlk `post15` fiyat tepkisi ölçülmüştür, fakat USD/2Y/10Y/SI same-UTC, bağımsız firstprint ve açıklamanın **uzun fiyat dalgasını başlatması** doğrulanmamıştır. Pilot `G01-A/B/C` ve rakip kanal hipotezleri **aday** düzeyindedir. P3'te yalnız fiyatın +240dk sonucunu görmüş olmak ekonomik yayılmanın teyidi değildir.
 
 **Bağlayıcı ilerleme sırası:** (1) gerçek ilk haber ve `available_at_utc`, (2) senkron XAU–gümüş–USD–faiz ve diğer risk kanalları, (3) aynı aile zıt sonuç ve şoksuz kontrol, (4) mekanizma/evre ve `candidate_DNA_ID` puanı, (5) yeterli kanıtta doğrulanan `evidence_based_primary_dna` ataması, (6) kalibre edilmiş kalan hareket + banka komisyon/makasına göre koşullu AL/SAT/TUT deneyi. Asla eksik veri uydurma veya `UNRESOLVED` statüsünü başarısız model sonucu diye yorumlama.
-
 
 
 **OLAY-02 ekonomik olayların birincil KANIT manifestidir.** **Tarihler, olay kimlikleri, ilk haber yayımları, fiyat hareketleri, bireysel vaka yorumları, ölçümler, destekleyici/ters örnekler ve olay–DNA eşleşmeleri BURADA kalır.** Zamandan bağımsız ekonomik mekanizma tanımları, alt varyantları ve birbirine geçiş yolları yalnız [**ÖĞREN-03 — Ekonomik Olay DNA Kütüphanesi**](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) içindedir. [96 gruplu tarihli karakter atlası](OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv) ve [42 uzun fiyat yaşam döngüsü ölçümü](OLAY_02_42_UZUN_HAREKET_YASAM_DONGUSU_V1_20261014.csv) **OLAY-02 sayısal kanıt ekleridir; ÖĞREN-03'e tarihli özet taşınmaz.**
@@ -108,7 +98,6 @@
 | 38 ayrıntılı önceki kaynak araştırması | **18 V1 + 20 eski V2** | Yalnız 18 V1 düzeltilmiş kimlikle birebir; V2 eski yeni ID sıra eşlemesi yok |
 | 85 tarihli ABD NFP/CPI/FOMC duyurusu, M15 fiyat penceresi | **85×5=425** satır | İlk M15 haber tepkisi ve placebo; bacağın tamamının nedeni değil |
 | Gerçek zaman/süreç maliyeti hesaplanmış üst olay örnekleri | **3** | 5 Ocak ADP, 6 Ocak NFP, 3 Şubat NFP; ex-post, OOS değil |
-| Astra 2026 Ocak–Eylül | **273 takvim günü** ayrı araştırma | 2023–25 fiyat kataloğuyla aynı saat/fiyat evreni değildir |
 
 **Nasıl kullanılır?** İlk önce aşağıdaki 96 kaydın tarih ve büyüklüğüne bak → kimliğine basıp haber–veri fişini aç → varsa 38 derin vaka kaynağını kontrol et → açıklama saatli makro tepki ve karşıt piyasa mekanizmalarını ayır → ÖĞREN-03'teki hipotezi sınama adayı olarak kullan → gerçek banka maliyeti sonrası işlem avantajı ölçülmediyse AL/SAT başarısı iddia etme.
 
