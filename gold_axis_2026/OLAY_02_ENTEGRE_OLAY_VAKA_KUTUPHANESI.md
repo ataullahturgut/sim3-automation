@@ -2,6 +2,27 @@
 
 ## Önce bunu oku — tek olay kütüphanesi, tek araştırma sırası
 
+## TARİH SIRASI DEĞİL, TÜM OLAYLARI BİRLİKTE KARŞILAŞTIRAN DNA ARAŞTIRMASI
+
+**Tarih ekonominin DNA kimliği değildir.** Mekanizma keşfinde tüm dönemlerin olayları birlikte sorgulanır. Olayın tarihi sadece ilk kaynak ve piyasa tepki sırasını doğrulamak için gerekir; takvim yılı veya büyük gerçekleşmiş fiyat yönü birincil DNA özelliği olamaz.
+
+**Kaynaklar arası fiilî karşılaştırma tamamlanan ilk geçiş:** [96 kayıt / çoklu DNA kanıt üçgenlemesi CSV](OLAY_02_96_KAYIT_COKLU_DNA_KANIT_TRIANGULASYON_20261014.csv). Eski 95 fiyat kaydı atlası, güncel 96 kayıtlı bilimsel kaynak sicili, 38 ayrıntılı vaka kaynakları ve 42 uzun fiyat morfolojisi yan yana getirildi. **42 ortak V1 uzun bacağın 26'sında eski 95 kaynak aile yorumu ile yeni 96 atlas aile yorumu farklıdır; 16'sı aynı kaba gruptadır.** Bu 26 farklılık, nedenlerin yanlış/kanıtlanmış olduğunun değil, **tek etiketli retrospektif anlatının belirsizliğinin** kanıtıdır. Eski 95 atlasının fiyat sürümü farklı olduğundan getiriler birbirinin yerine kullanılmadı. **Eski 20 V2 dosyası** güncel 54 `C_CORR` V2 ile yalnız numaradan **eşlenmedi**; 54'ü güncel kimliğiyle ve kendi haber bağlamıyla ayrı okundu. Güncel 96 olay kanıt sicilinde 95 satırda en az bir tarihlenmiş kaynak bağlantısı var; bu kaynakların ilk yayımlanma anını veya fiyat başlatıcı nedenini kanıtlamaz.
+
+**Bu üçgenleme `CONFIRMED_DNA` üretmedi:** G01–G07 `legacy_96` ve eski araştırmadaki sınıflandırma **iki ayrı ekonomik açıklama görüşü** olarak korunur. Farklıysa `candidate_family_set` içinde iki mekanizma adayı da tutulur; varsa 38 doğrudan V1 derin vaka yorumu/karşıtı eklenir. Aynıysa bu uzlaşma **bağımsız nedensel teyit değil**, iki retrospektif görüşün uyumudur. V2'nin ebeveyn V1'den farklı fiyat işareti veya ekonomik adayları ayrı ufuk/yeniden katalizör sebebiyle mümkün olabilir. `event_DNA_status=RESEARCH_CANDIDATE_NOT_ATRIBUTED` sabittir. Eski 96'lık `UNRESOLVED` kanıt sicili silinmedi; **kanıt-temelli nihai atama belirsiz kalırken, birden çok ARAŞTIRILACAK aday gösterilebilir.**
+
+### Ekonomik olay örgüsünü aile etiketinden ayıran kanıtlı çelişki örnekleri
+
+| OLAY-02 fiyat ID | Görüşlerin ayrışması | Ortak araştırılması gereken olay örgüsü | Kanıt sınırı |
+|---|---|---|---|
+| `SWING_V1_003` | Güncel **G01 makro**, eski **G05 finansal stres** | Bankacılık stresi → güvenli liman talebi; faiz/Fed beklentisi paralel veya aracı olabilir; sonradan yayımlanmış ETF talep raporu yalnız tarihsel bağlam. | Haberin bütün uzun fiyat bacağını ilk başlattığı gösterilmedi. |
+| `SWING_V1_004` | Güncel **G03 jeopolitik**, eski **G01 faiz/USD** | Reel faiz ve dolar güçlenmesi → fırsat maliyeti artışı; vadeli pozisyon çözülmesi kuvvetlendirebilir. | G03 haber kanıtı ve faiz/USD'nin ilk dakikalardaki aracılığı doğrulanmalı. |
+| `SWING_V1_006` | Güncel **G07 bilinmez**, eski **G01 faiz/USD** | Faiz/USD baskısı ile ETF/COMEX pozisyon çıkışı üst üste gelebilir; bu hem G01 hem G04/G06 kanalı olabilir. | Fon verilerinin gerçek erişim saatleri eksik; raporlar ex-post. |
+| `SWING_V1_016` | Güncel **G04 rezerv/fizikî**, eski **G01 makro** | Merkez bankası alım bilgisinin değişimi ve ABD istihdam açıklaması ayrı şoklar olabilir. Tek fiyat bacağına otomatik tek tetik bağlanmaz. | Hangi haberin ne zaman erişilebilir olduğu ve aynı-UTC varlık tepkisi ayrıştırılmalı. |
+| `SWING_V1_028` | Güncel **G02 tarife**, eski **G05 likidite** | Tarife/politika haberi `tetikleyici`, likidite zorlanması `aktarım mekanizması` olabilir; aynı olayın rekabet eden iki farklı rolünü ayır. | Zorunlu fonlama/tasfiye teyidi olmadan G05'i kesinleştirme. |
+| `SWING_V1_042` | Güncel **G05 fonlama**, eski **G06 pozisyon** | Pozisyon çözülmesi/fiyat geri çekilmesi ile kredi-fonlama baskısı ayrı açıklamalar; farklı göstergelerle sınanmalı. | Fonlama/kredi spreadleri ve pozisyon kanıtları gerekli. |
+
+**Ara çıkarım:** Ekonomik bir olayda `TRIGGER_FAMILY`, `TRANSMISSION_FAMILY`, `AMPLIFIER_FAMILY` ve `PRICE_MORPHOLOGY` ayrı alanlardır. Eski veri her birinin hepsini “tek aile” olarak yazmış olabilir. ÖĞREN-03'te tarihsiz **koşullu mekanizma** tutulur; burada olayın çoklu rol/eşleşme ve kaynak kanıtı bulunur. Araştırma tarihten bağımsız bir defada tüm örneklerde karşılaştırılır; **hiçbir gerçek nedensellik mevcut kaynak boşlukları kapatılmadan onaylanmaz.**
+
 ## DNA ATAMASI — GÜNCEL KANIT DENETİMİ
 
 **Yeni [96 fiyat kaydı için DNA kanıt denetimi](OLAY_02_DNA_KANIT_DENETIM_96_KAYIT_20261014.csv)**, eski G01–G07 etiketlerini **yalnız `legacy_group_as_candidate_only`** olarak korur. **96/96 kayıtta** ilk gerçek katalizörün fiyat bacağını başlattığı ve aracı ekonomik kanalların eşzamanlı neden zinciri olarak doğrulandığı kanıt mevcut değildir. Bundan dolayı **96/96 kanıt-temelli birincil DNA `UNRESOLVED`, alt varyant `UNRESOLVED`, kontrol anındaki ekonomik evre `UNKNOWN`** işaretlendi. Bu **96 olayda ekonomik neden yok** anlamına değil, mevcut kanıtların o nedenin güvenilir biçimde atanması için yetersiz olduğuna gelir; önceki aile ipuçları kaybolmaz. Böylelikle eski fiyat etiketi yanlışlıkla canlı karar sinyali olamaz.
