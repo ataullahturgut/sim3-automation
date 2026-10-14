@@ -2,8 +2,15 @@
   "schema_version": "0.1",
   "month_id": "2023-01",
   "mode": "FULL_HISTORY_DISCOVERY",
-  "status": "NOT_STARTED",
-  "event_ids": [],
+  "status": "RESEARCH_MONTH_FINISHED_NO_BLIND_VALIDATION",
+  "event_ids": [
+    "MACRO_2023_01_06_NFP",
+    "MACRO_2023_01_12_CPI",
+    "MACRO_2023_01_18_PPI",
+    "MACRO_2023_01_26_GDP",
+    "MACRO_2023_01_27_PCE",
+    "WGC_2023_02_09_JANETF_RETROSPECTIVE"
+  ],
   "cross_year_comparison_scope": {
     "allowed_years": [
       2023,
@@ -11,28 +18,119 @@
       2025,
       2026
     ],
-    "actual_case_ids_used": [],
+    "actual_case_ids_used": [
+      "WGC_2025_Q1_ETF_COMEX_FUTURES_DIVERGENCE"
+    ],
     "warning": "All-years exploration not blind 2023-time prediction"
   },
-  "source_evidence_refs": [],
-  "numeric_feature_run_ids": [],
-  "algorithm_version_ids": [],
-  "ai_reviews": [],
-  "candidate_mechanisms": [],
-  "counterexample_ids": [],
-  "hypotheses_supported": [],
-  "hypotheses_rejected": [],
-  "hypotheses_untested": [],
-  "risk_decisions": [],
-  "numeric_metrics": null,
-  "handoff_to_next_month": {
-    "accepted_learnings": [],
-    "rejected_learnings": [],
-    "uncertain_learnings": [],
-    "code_or_config_references": [],
-    "open_questions": [],
-    "status": "PENDING_FIRST_JANUARY_ANALYSIS"
+  "source_evidence_refs": [
+    "gold_research_evduka_xau15m_bidask_candidate private Neon table: 2022-11 through 2023-01 (M15 NY17 aligned 20 completed Jan sessions)",
+    "months/2023-01/JAN_2023_31_UTC_CALENDAR_DAYS_ACTIONS_NAV.csv",
+    "months/2023-01/JAN_2023_21_NY17_SESSIONS_VOL_AND_DECISIONS.csv",
+    "months/2023-01/JAN_2023_100USD_RESULTS.json",
+    "months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md",
+    "https://www.gold.org/goldhub/research/gold-etfs-holdings-and-flows/2023/02",
+    "https://www.gold.org/goldhub/research/gold-market-commentary-january-2023"
+  ],
+  "numeric_feature_run_ids": [
+    "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0"
+  ],
+  "algorithm_version_ids": [
+    "V0_COSTED_TREND5_VOLRATIO20_20261014"
+  ],
+  "ai_reviews": [
+    {
+      "review_id": "GPT_JAN2023_V1",
+      "model_family": "GPT-6",
+      "provider": "ChatGPT first party",
+      "external_model_calls": 0,
+      "scope": "RETROSPECTIVE_CAUSAL_CRITIQUE_ONLY_NO_TRADE_OVERRIDE",
+      "status": "COMPLETED_QUALITATIVE_ONLY",
+      "report_ref": "months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md",
+      "tested_delta_nav_usd": null,
+      "quality": "Evidence and counterexamples documented; independent predictions not validated"
+    }
+  ],
+  "candidate_mechanisms": [
+    "USD weakening and declining yields allow higher gold prices as in WGC retrospective Jan report; independent same-hour rates not loaded",
+    "COMEX futures long expansion can coexist with globally negative ETF flows",
+    "Gold-specific repricing vs weaker silver/platinum/palladium observed in mismatched-close retrospective daily metal sources"
+  ],
+  "counterexample_ids": [
+    "MACRO_2023_01_18_PPI",
+    "WGC_2023_02_09_JANETF_RETROSPECTIVE",
+    "WGC_2025_Q1_ETF_COMEX_FUTURES_DIVERGENCE"
+  ],
+  "hypotheses_supported": [
+    "JAN2023: passive GOLD after identical commission/spread beats mechanical frequent switching by USD 1.78938",
+    "JAN2023: global ETF holdings outflow while gold month rose (published 2023-02-09), refutes ETF inflow as necessary cause",
+    "JAN2023: firstprint source dates demonstrate PCE Jan27 cannot cause V0 sale executed Jan26 23:15 UTC"
+  ],
+  "hypotheses_rejected": [
+    "JAN2023: volatility ratio gate contributes extra actions or improvement: zero interventions in 20 complete sessions",
+    "JAN2023: V0 strategy outperforms buyhold after fees: 101.9695005 < 103.7588804",
+    "Jan CPI/PPI direction mechanically determines gold same session"
+  ],
+  "hypotheses_untested": [
+    "Cost-adaptive hysteresis avoids low-magnitude trend sign whipsaw",
+    "Calibrated volatility condition (different threshold/horizon) improves shock discrimination",
+    "GPT causal review improves probabilistic scoring beyond non-AI quant baseline"
+  ],
+  "risk_decisions": [
+    {
+      "run_id": "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0",
+      "mode": "FULL_HISTORY_DISCOVERY",
+      "initial_usd": 100,
+      "end_usd": 101.96950051925911,
+      "buyhold_usd": 103.75888044462923,
+      "cash_usd": 100,
+      "trendonly_usd": 101.96950051925911,
+      "transactions": 4,
+      "fees_usd": 3.2910128700054315,
+      "vol_gate_trigger_count": 0,
+      "calendar_days": 31,
+      "full_sessions": 20,
+      "partial_sessions": 1,
+      "exact_ledger": "months/2023-01/JAN_2023_31_UTC_CALENDAR_DAYS_ACTIONS_NAV.csv",
+      "status": "REPLAYED_DO_NOT_PROMOTE"
+    }
+  ],
+  "numeric_metrics": {
+    "absolute_volatility_forecast_mae": null,
+    "shock_probability_calibration": null,
+    "initial_100_usd_final": 101.96950051925911,
+    "net_usd_gain": 1.96950051925911,
+    "alternative_buyhold_usd": 103.75888044462923,
+    "main_rule_volatility_gate_incremental_benefit_usd": 0,
+    "maximum_session_data_missing_count": 1
   },
-  "quality_note": "Skeleton only; no January 2023 inference run, AI review, or forecast has occurred.",
+  "handoff_to_next_month": {
+    "accepted_learnings": [
+      "Preserve as-of data and full-history knowledge as separate research modes",
+      "Monthly WGC ETF outflow does NOT imply monthly gold decline (Jan23 WGC -1.6bn vs gold +6.1%)",
+      "Record calendar UTC transaction timestamps separate from NY17 session labels",
+      "Real BID/ASK + 0.8 pct each leg are needed; V0 4 orders cost USD 3.291 and underperformed passive USD 1.789"
+    ],
+    "rejected_learnings": [
+      "Risk ratio <=2 threshold was active alarm or useful extra decision: 0/20",
+      "Post-hoc GPT event interpretation is a live forecast or automatic trading skill"
+    ],
+    "uncertain_learnings": [
+      "Rates/USD dominant in WGC regression but daily cross-market synchronous attribution not established",
+      "Does a turnover penalty generalize outside Jan23? Not tested"
+    ],
+    "code_or_config_references": [
+      "gold_axis_2026/tools/gold_adaptive_monthly_v0_replay_20261014.py",
+      "months/2023-01/FROZEN_RESEARCH_CONTRACT.md",
+      "months/2023-01/JAN_2023_100USD_RESULTS.json"
+    ],
+    "open_questions": [
+      "Can early February 2023 cost-aware hold rules lower turnovers without missed shock? Hindsight prior exposure not OOS",
+      "Need firstprint contemporaneous USD/2y/10y prices and futures contracts for fuller event causal evaluation",
+      "Will GPT qualitative reasoning add value to calibrated next-horizon volatility rather than plausible narratives?"
+    ],
+    "status": "READY_FOR_FEB2023_UNPROMOTED"
+  },
+  "quality_note": "ACTUAL Jan2023 daily price replay and GPT-only evidence review performed; no independent live or untouched OOS, no alternate LLM, no claims of actual bank execution; exact source M15 data stay private.",
   "last_updated": "2026-10-14"
 }
