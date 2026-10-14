@@ -2,6 +2,10 @@
 
 ## TEK GÜNCEL DURUM — 14 Ekim 2026, belge otoritesi (eski ara notların önüne geçer)
 
+**Ekonomik DNA karakter sentezi:** [38 tarihli derin vaka → 12 olay örgüsü analizi](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) ve [vaka–örgü eşleştirme sicili](OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv) hazır. Tarihsiz ORG01–ORG12 P0–P5 karakter ve yanlışlama tanımları ÖĞREN-03'te. Bu örgüler şimdilik keşif hipotezleri; bağımsız nedensellik ve işlem sinyali doğrulanmadı.
+
+
+
 **EKONOMİK DNA TOPLU ARAŞTIRMASININ GÜNCEL DURUMU:** [OLAY-02 sonuç raporu](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md), [96 alt DNA aday/rol kaydı](OLAY_02_96_KAYIT_DNA_ALT_TIP_ROL_TARAMA_20261014.csv), [42 çapraz piyasa imzası](OLAY_02_42_UZUN_FIYAT_CROSS_ASSET_DAVRANIS_IMZASI_20261014.csv) ve [85 açıklamalı makro/plasebo araştırması](OLAY_02_85_MAKRO_YENI_DNA_TEPKI_PLASEBO_20261014.csv) üretildi. **43 alt DNA araştırma adayı, 25 genel makro, 28 belirsiz**; **ilk haber–fiyat bacağı nedenselliği 0/96 doğrulanmış**, bağımsız as-of OOS ve banka AL/SAT yetkisi yok. Neon `SI.c.0` geçerliliği ayrıca [47 kontrol QA dosyasında](OLAY_02_47_KONTROL_SI_CALENDAR_ROLL_SAAT_KAPSAM_20261014.csv); `SI.n.0` ile karıştırma. ÖĞREN-03'te yalnız tarihsiz mekanizma ve yeniden kullanılabilir karakter kuralları bulunur. Bu sonuç eski aylık strateji defterinden ayrı, ekonomik DNA keşif araştırmasıdır.
 
 
