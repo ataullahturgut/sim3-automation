@@ -16,6 +16,20 @@
 
 [ANA-01 — Projenin hedef ve protokolü](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) · [ÖĞREN-03 — Ortak mekanizma/karar hipotezleri](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) · [Belge haritası](BELGE_HARITASI_V1.md) · [Eski 5.190 satırlık tarihsel kayıt (korunmuştur)](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md)
 
+## 0. Her olay için ALTI ZORUNLU KARAR ALANI — 96/96 UYGULANDI (14 Ekim 2026)
+
+**Yeni merkezî erişim:** [96 olayın altı alanı doldurulmuş karar değerlendirme fişleri](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md) · [96 olayın 4s/12s/1/3/5 uygun seans sayısal ve maliyetli sonuç JSON'u](OLAY_02_96_KARAR_ONCESI_VE_SONRASI_GERCEK_OLCUM_20261014.json). Her fiş, [tarihsel kaynak/haber fişi](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md) ile aynı `SWING_V1_...` veya `C_CORR_...` kimliğini kullanır. Bunlar **OLAY-02 alt kanıtlarıdır, yeni manifest değildir**.
+
+**Her olayın altı alanı:** (1) **Karar öncesi** 1/4/12 saat ve 1/3/5 uygun seans XAU M15 geçmişi; USD/faiz/diğer metaller gibi bulunmayan varlıklar **EKSİK**. (2) İlk haber/haber zamanı ve aynı-UTC ilk fiyat teyidi, doğrulanmamışsa **BELİRSİZ**. (3) O anda olasılıklar/beklenen kalan hareket ve AL/SAT/TUT karar durumu — **kalibre edilmiş model yoksa karar ÜRETİLMEZ**. (4) **Sonradan** gerçekleşen 4/12 saat ve 1/3/5 seans getirileri. (5) **Aynı $100 başlangıçta**, bir al ve bir sat için %0,8'er komisyon + vendor BID/ASK ile NAKİT/ALTIN karşıt senaryoları. (6) **Karardan önce tamamlanmış geçmiş olaylara** dayalı yakın ve farklı sonuçlu desenler; ayrıca geriye dönük gelecek-yıllı analojiler karar için yasak.
+
+**Kontrol saati ayrımı:** Bu ilk tarama fiyat olayının geriye dönük etiket başlangıç tarihindeki ilk uygun **09:15 TRT** kapalı M15 kontrolüdür. Olayın haberinin ilk saniyesi veya bilimsel olarak kanıtlanmış ilk fiyat reaksiyonu **değildir**; aynı tarihte daha sonraki NFP/CPI/FOMC actual bu kontrol noktasına giremez. Sonuç tarafında vendorun takip eden 15 dakika barının **OPEN BID/ASK fiyatı** yalnız **geriye dönük icra vekili**, gerçek banka kotasyonu değildir.
+
+**Ölçülen ilk sonuç:** 96/96 olayda 09:15 öncesi 1 saat XAU verisi; 96/96 +4h, +12h, sonraki 1 seans; **95/96** sonraki 3 seans ve **94/96** sonraki 5 seans için al/sat maliyeti karşılaştırma olanağı. 3 seanslık 95 koşullu başlangıçta 100 dolar CASH için ex-post **17 AL+SAT / 78 CASH TUT**, başlangıçta 100 dolar GOLD için **42 GOLD TUT / 53 SAT ve NAKİT KAL** daha yüksek sonuç verdi. Bu **seçilmiş 96 fiyat olayına** aittir; şoksuz kontrol günleri, olaydan önce nedensel haber ilk yayımları, same-UTC faiz/DXY paneli ve `P(kalan hareket)` yok. **Geçmiş en iyi aksiyon = o gün öngörülebilen karar değildir.**
+
+### Mevcut olaydan altı-alan fişine doğrudan git
+[2023 Ocak uzun UP](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_001) · [2023 Şubat uzun DOWN](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_002) · [Mart 2023 SVB UP](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_003) · [96/96 diğer olay](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md)
+
+
 ## 1. Kütüphane kapsamı ve çalışma sırası
 
 | Araştırma birimi | Mevcut, doğrulanmış envanter | Bilimsel anlamı |
