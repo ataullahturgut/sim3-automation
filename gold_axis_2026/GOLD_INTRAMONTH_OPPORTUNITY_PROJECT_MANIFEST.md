@@ -2,6 +2,10 @@
 
 ## TEK GÜNCEL DURUM — 14 Ekim 2026, belge otoritesi (eski ara notların önüne geçer)
 
+**OCAK 2026 AYLIK OLAY YÜRÜYÜŞÜ TAMAMLANDI — SADECE RETROSPEKTİF KEŞİF:** [31 gün, DNA adayları, kaynak, M15 22UTC karar ve sonraki 09UTC BID/ASK işlemleri](OLAY_02_JAN2026_31_GUN_DNA_KARAR_SONUCLAR_20261014.md) ve [tüm 31 günün CSV kaydı](OLAY_02_JAN2026_31_GUN_DNA_KARAR_MALIYET_DENETIMI_20261014.csv). Başlangıç CASH 100 USD; 05 Ocak AL kararı 06 Ocak 09UTC ASK 4.468,715; 29 Ocak SAT kararı 30 Ocak 09UTC BID 5.116,535; %0,8 alış + %0,8 satış ve provider BID/ASK dahil **112,67 USD**, aynı uygulama saatli 02 Ocak'tan GOLD AL-TUT **109,79**, nakit **100**. **BU BAĞIMSIZ OOS DEĞİLDİR**: olay/ayın fiyat sonucu ve Astra'nın kararları araştırma başlamadan biliniyordu; kapılar retrospektif seçilmiştir. 29 Ocak 22UTC'den 30 Ocak 09UTC'ye yaklaşık %4,88 düşüş korunmuş sayılmaz. Duka doğrudan fiyat serisi bazı tam günlerde eksik: HistData M15 + Duka BID/ASK sadece geçerli fill anlarında birleştirildi, ilk haber UTC ve gerçek banka ASK/BID hâlâ eksik. Yeni geçmiş performans ile canlı AL/SAT yetkisi doğmaz.
+
+
+
 **Ekonomik DNA karakter sentezi:** [38 tarihli derin vaka → 12 olay örgüsü analizi](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) ve [vaka–örgü eşleştirme sicili](OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv) hazır. Tarihsiz ORG01–ORG12 P0–P5 karakter ve yanlışlama tanımları ÖĞREN-03'te. Bu örgüler şimdilik keşif hipotezleri; bağımsız nedensellik ve işlem sinyali doğrulanmadı.
 
 
