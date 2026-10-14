@@ -1,0 +1,437 @@
+{
+  "experiment_id": "JAN2023_JAN05_DOWN_JAN06_UP_STRESS_CASE_20261014",
+  "research_mode": "FULL_HISTORY_EX_POST_DAY_SELECTION_ASOF_PRICES_AND_TIMESTAMPS_EXECUTION_PROXY_NOT_OOS",
+  "day_criteria": "TRT date, 15m XAU bidask absolute full intraday range = (max ASK_HIGH-min BID_LOW)/first complete mid; direction = last MID/first MID -1",
+  "ranking": [
+    {
+      "rank": 1,
+      "date_trt": "2023-01-06",
+      "bars": 92,
+      "intraday_range_pct": 2.1868087810545624,
+      "first_last_mid_change_pct": 1.8336137983324896,
+      "high_ask": 1870.12,
+      "low_bid": 1830.03
+    },
+    {
+      "rank": 2,
+      "date_trt": "2023-01-05",
+      "bars": 92,
+      "intraday_range_pct": 1.8423001818059415,
+      "first_last_mid_change_pct": -1.2570197293111596,
+      "high_ask": 1859.19,
+      "low_bid": 1824.99
+    },
+    {
+      "rank": 3,
+      "date_trt": "2023-01-19",
+      "bars": 92,
+      "intraday_range_pct": 1.8136157782471292,
+      "first_last_mid_change_pct": 1.5853376624741289,
+      "high_ask": 1935.38,
+      "low_bid": 1900.86
+    },
+    {
+      "rank": 4,
+      "date_trt": "2023-01-31",
+      "bars": 92,
+      "intraday_range_pct": 1.5938015938015866,
+      "first_last_mid_change_pct": 0.28444028444027936,
+      "high_ask": 1931.31,
+      "low_bid": 1900.66
+    },
+    {
+      "rank": 5,
+      "date_trt": "2023-01-04",
+      "bars": 92,
+      "intraday_range_pct": 1.593642833638371,
+      "first_last_mid_change_pct": 0.9145769367791434,
+      "high_ask": 1865.35,
+      "low_bid": 1836.05
+    },
+    {
+      "rank": 6,
+      "date_trt": "2023-01-26",
+      "bars": 92,
+      "intraday_range_pct": 1.5867427055839205,
+      "first_last_mid_change_pct": -0.8118756409037364,
+      "high_ask": 1949.5,
+      "low_bid": 1918.63
+    },
+    {
+      "rank": 7,
+      "date_trt": "2023-01-13",
+      "bars": 92,
+      "intraday_range_pct": 1.5691230287233737,
+      "first_last_mid_change_pct": 1.1357712660927,
+      "high_ask": 1922,
+      "low_bid": 1892.2
+    },
+    {
+      "rank": 8,
+      "date_trt": "2023-01-18",
+      "bars": 92,
+      "intraday_range_pct": 1.5541855852693012,
+      "first_last_mid_change_pct": -0.25440225949030504,
+      "high_ask": 1926.15,
+      "low_bid": 1896.49
+    },
+    {
+      "rank": 9,
+      "date_trt": "2023-01-12",
+      "bars": 92,
+      "intraday_range_pct": 1.5506437036405443,
+      "first_last_mid_change_pct": 1.1624499104783137,
+      "high_ask": 1901.86,
+      "low_bid": 1872.76
+    },
+    {
+      "rank": 10,
+      "date_trt": "2023-01-25",
+      "bars": 92,
+      "intraday_range_pct": 1.4741786460887267,
+      "first_last_mid_change_pct": 0.4893282060546733,
+      "high_ask": 1948.26,
+      "low_bid": 1919.7
+    },
+    {
+      "rank": 11,
+      "date_trt": "2023-01-03",
+      "bars": 88,
+      "intraday_range_pct": 1.4717069940288923,
+      "first_last_mid_change_pct": 0.6094257113615109,
+      "high_ask": 1850.18,
+      "low_bid": 1823.29
+    },
+    {
+      "rank": 12,
+      "date_trt": "2023-01-24",
+      "bars": 92,
+      "intraday_range_pct": 1.3249422052857969,
+      "first_last_mid_change_pct": 0.3388724788431219,
+      "high_ask": 1942.66,
+      "low_bid": 1917.07
+    },
+    {
+      "rank": 13,
+      "date_trt": "2023-01-23",
+      "bars": 88,
+      "intraday_range_pct": 1.2749835758225698,
+      "first_last_mid_change_pct": 0.29654404146424174,
+      "high_ask": 1935.8,
+      "low_bid": 1911.25
+    },
+    {
+      "rank": 14,
+      "date_trt": "2023-01-11",
+      "bars": 92,
+      "intraday_range_pct": 1.0569889666121435,
+      "first_last_mid_change_pct": -0.02344128756598396,
+      "high_ask": 1886.86,
+      "low_bid": 1867.02
+    },
+    {
+      "rank": 15,
+      "date_trt": "2023-01-27",
+      "bars": 92,
+      "intraday_range_pct": 0.9729623255717506,
+      "first_last_mid_change_pct": -0.12881254017291788,
+      "high_ask": 1935.3,
+      "low_bid": 1916.53
+    },
+    {
+      "rank": 16,
+      "date_trt": "2023-01-16",
+      "bars": 76,
+      "intraday_range_pct": 0.9670393797609467,
+      "first_last_mid_change_pct": -0.2800558548607279,
+      "high_ask": 1929.22,
+      "low_bid": 1910.66
+    },
+    {
+      "rank": 17,
+      "date_trt": "2023-01-09",
+      "bars": 88,
+      "intraday_range_pct": 0.9281065342125503,
+      "first_last_mid_change_pct": 0.15575490280037574,
+      "high_ask": 1881.82,
+      "low_bid": 1864.48
+    },
+    {
+      "rank": 18,
+      "date_trt": "2023-01-20",
+      "bars": 92,
+      "intraday_range_pct": 0.8914851013850883,
+      "first_last_mid_change_pct": -0.2858650716861644,
+      "high_ask": 1937.74,
+      "low_bid": 1920.51
+    },
+    {
+      "rank": 19,
+      "date_trt": "2023-01-17",
+      "bars": 88,
+      "intraday_range_pct": 0.8124311885915217,
+      "first_last_mid_change_pct": -0.3764734120544455,
+      "high_ask": 1919.24,
+      "low_bid": 1903.67
+    },
+    {
+      "rank": 20,
+      "date_trt": "2023-01-30",
+      "bars": 88,
+      "intraday_range_pct": 0.7367705582334134,
+      "first_last_mid_change_pct": -0.27213813929113373,
+      "high_ask": 1934.79,
+      "low_bid": 1920.59
+    },
+    {
+      "rank": 21,
+      "date_trt": "2023-01-10",
+      "bars": 92,
+      "intraday_range_pct": 0.7070933812211401,
+      "first_last_mid_change_pct": 0.3802697964768287,
+      "high_ask": 1880.97,
+      "low_bid": 1867.74
+    }
+  ],
+  "selected_dates": [
+    "2023-01-05",
+    "2023-01-06"
+  ],
+  "prior_state": {
+    "asof_trt": "2023-01-04T23:45:00+03:00",
+    "gold_units": 0.05358252259969825,
+    "initial_capital_usd": 100,
+    "prior_costed_buy_proxy_ask": 1851.34994,
+    "buy_fee_usd": 0.8,
+    "open_mark_bid_nav_usd": 99.23054525283318
+  },
+  "daysummaries": [
+    {
+      "day_trt": "2023-01-05",
+      "observations_m15_started": 92,
+      "m15_completed_by_23_45": 91,
+      "m1_bars": 1380,
+      "missing_m1_total": 60,
+      "last_bid_2345": 1833.87,
+      "bid_mark_nav_usd": 98.26338071990862,
+      "buy_count": 0,
+      "sell_count": 0
+    },
+    {
+      "day_trt": "2023-01-06",
+      "observations_m15_started": 92,
+      "m15_completed_by_23_45": 91,
+      "m1_bars": 1319,
+      "missing_m1_total": 121,
+      "last_bid_2345": 1867.65,
+      "bid_mark_nav_usd": 100.07339833332644,
+      "buy_count": 0,
+      "sell_count": 0
+    }
+  ],
+  "event_sources": [
+    {
+      "id": "FED_MINUTES_PREV",
+      "first": "2023-01-04T19:00:00Z",
+      "effect": "Dec14 FOMC minutes persistence of tight policy, Jan5 opening risk; NOT new Jan5 or Jan6 release",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20221214.htm"
+    },
+    {
+      "id": "ADP_JAN05_STRONG_235K",
+      "first": "2023-01-05T13:15:00Z",
+      "effect": "Dec private payroll +235k vs +150k Reuters consensus, USD/Fed hawkish channel. ADP is NOT Jan6 government NFP",
+      "url": "https://mediacenter.adp.com/2023-01-05-ADP-National-Employment-Report-Private-Sector-Employment-Increased-by-235%2C000-Jobs-in-December-Annual-Pay-was-Up-7-3"
+    },
+    {
+      "id": "CLAIMS_JAN05_204K",
+      "first": "2023-01-05T13:30:00Z",
+      "effect": "Weekly new unemployment claims 204k, drop 19k, signals labor resilience; hawkish Fed risk",
+      "url": "https://www.dol.gov/newsroom/releases?agency=All&page=9&state=All&topic=132&year=all"
+    },
+    {
+      "id": "JAN05_US_FINAL_SERVICES_PMI_44_7",
+      "first": "2023-01-05T14:45:00Z",
+      "effect": "S&P Global final services PMI 44.7 contraction counterevidence to persistent labor strength",
+      "url": "https://forex.tradingcharts.com/economic_calendar/2023-01-05.html?code=USD"
+    },
+    {
+      "id": "NFP_JAN06_223K_WAGE_0_3",
+      "first": "2023-01-06T13:30:00Z",
+      "effect": "December payroll 223k, unemployment 3.5, hourly earnings +0.3% (below forecast +0.4): employment level strong but wages soften hawkish tail, bullish gold/USD downside",
+      "url": "https://www.bls.gov/news.release/archives/empsit_01062023.htm"
+    },
+    {
+      "id": "ISM_SERVICES_JAN06_49_6",
+      "first": "2023-01-06T15:00:00Z",
+      "effect": "December ISM services 49.6 vs prior 56.5 contraction, supports less hawkish Fed. Released AFTER NFP and INTRADAY 15Z shock",
+      "url": "https://www.prnewswire.com/news-releases/services-pmi-at-49-6-december-2022-services-ism-report-on-business-301715010.html"
+    }
+  ],
+  "detected_shock_minutes": [
+    {
+      "name": "ADP",
+      "utc": "2023-01-05T13:15:00Z",
+      "day": "2023-01-05",
+      "dir": "DOWN",
+      "first": "2023-01-05T13:58:00Z",
+      "mid_at_pre": 1846.069946,
+      "threshold_mult": 0.996,
+      "five": [
+        1836.66003,
+        1835.46997,
+        1834.79004,
+        1834.69995,
+        1833.53003
+      ],
+      "last_known_bar": "2023-01-05T13:30:00.000Z",
+      "last_known_spread": 0.37000000000011823,
+      "fill_utc": "2023-01-05T13:59:00.000Z",
+      "fill_m1_mid": 1834.56995,
+      "fill_bid_proxy": 1834.3849500000001,
+      "fill_ask_proxy": 1834.75495,
+      "last_five_minute_returns_pct": [
+        -0.5097269483417488,
+        -0.5741914613239696,
+        -0.6110226768189841,
+        -0.6159027735994638,
+        -0.6792763203350538
+      ],
+      "price_ret2h_expost": -0.7017581337083301
+    },
+    {
+      "name": "CLAIMS",
+      "utc": "2023-01-05T13:30:00Z",
+      "day": "2023-01-05",
+      "dir": "DOWN",
+      "first": "2023-01-05T13:58:00Z",
+      "mid_at_pre": 1844.46997,
+      "threshold_mult": 0.996,
+      "five": [
+        1836.66003,
+        1835.46997,
+        1834.79004,
+        1834.69995,
+        1833.53003
+      ],
+      "last_known_bar": "2023-01-05T13:30:00.000Z",
+      "last_known_spread": 0.37000000000011823,
+      "fill_utc": "2023-01-05T13:59:00.000Z",
+      "fill_m1_mid": 1834.56995,
+      "fill_bid_proxy": 1834.3849500000001,
+      "fill_ask_proxy": 1834.75495,
+      "last_five_minute_returns_pct": [
+        -0.4234246220880533,
+        -0.4879450544808761,
+        -0.5248082190245751,
+        -0.5296925490199333,
+        -0.5931210688130739
+      ],
+      "price_ret2h_expost": -0.8327579331638524
+    },
+    {
+      "name": "NFP",
+      "utc": "2023-01-06T13:30:00Z",
+      "day": "2023-01-06",
+      "dir": "UP",
+      "first": "2023-01-06T13:48:00Z",
+      "mid_at_pre": 1835.96997,
+      "threshold_mult": 1.004,
+      "five": [
+        1847.41003,
+        1847.45996,
+        1848.68994,
+        1849.12,
+        1848.29004
+      ],
+      "last_known_bar": "2023-01-06T13:30:00.000Z",
+      "last_known_spread": 0.35999999999989996,
+      "fill_utc": "2023-01-06T13:49:00.000Z",
+      "fill_m1_mid": 1849.30005,
+      "fill_bid_proxy": 1849.12005,
+      "fill_ask_proxy": 1849.4800500000001,
+      "last_five_minute_returns_pct": [
+        0.6231071415617961,
+        0.6258266849538785,
+        0.6928201554407654,
+        0.7162442858474227,
+        0.6710387534279771
+      ],
+      "price_ret2h_expost": 1.184933869043614
+    },
+    {
+      "name": "ISM_SERVICES",
+      "utc": "2023-01-06T15:00:00Z",
+      "day": "2023-01-06",
+      "dir": "UP",
+      "first": "2023-01-06T15:07:00Z",
+      "mid_at_pre": 1843.73999,
+      "threshold_mult": 1.004,
+      "five": [
+        1852.66003,
+        1853.73999,
+        1852.29004,
+        1855.88,
+        1856.41003
+      ],
+      "last_known_bar": "2023-01-06T14:45:00.000Z",
+      "last_known_spread": 0.6299999999998818,
+      "fill_utc": "2023-01-06T15:08:00.000Z",
+      "fill_m1_mid": 1857.68994,
+      "fill_bid_proxy": 1857.3749400000002,
+      "fill_ask_proxy": 1858.0049399999998,
+      "last_five_minute_returns_pct": [
+        0.4838014062926499,
+        0.5423758259970324,
+        0.4637340431066006,
+        0.6584447951362149,
+        0.6871923410415315
+      ],
+      "price_ret2h_expost": 1.070921610806952
+    }
+  ],
+  "reference_cost": {
+    "fee_per_side_pct": 0.8,
+    "round_trip_break_even_without_spread_pct": 1.6194068678460072,
+    "bidask_vendor_private": true,
+    "bank_quotes_not_available": true
+  },
+  "policy": {
+    "decision": "HOLD_GOLD",
+    "rationale": "Jan5 ADP/claims price fall after M1 confirms does not establish remaining drop large enough to pay sell+reentry cost; Jan6 NFP wages lower and ISM services 49.6 provide UP evidence, already long",
+    "no_new_actions": true,
+    "not_predicted_as_profitable_automatic_rule": true
+  },
+  "ending_2023_01_05_bid_mark_usd": 98.26338071990862,
+  "ending_2023_01_06_bid_mark_usd": 100.07339833332644,
+  "ending_2023_01_06_net_if_sold_usd": 99.27281114665982,
+  "counterfactual_after_confirmed_sell_jan05_and_rebuy_jan06": [
+    {
+      "policy": "SELL_JAN5_ADP_FIRST_DOWN_GATE__REBUY_JAN6_NFP_UP_GATE",
+      "sell_price_proxy": 1834.3849500000001,
+      "buy_price_proxy": 1849.4800500000001,
+      "sell_cash_net": 97.50464525560199,
+      "rebought_oz": 0.05229827058343082,
+      "end_gold_bid_mark_usd": 97.67486505514458,
+      "delta_vs_hold_usd": -2.3985332781818585,
+      "net_if_liquidated_end_usd": 96.89346613470342
+    },
+    {
+      "policy": "SELL_JAN5_ADP_FIRST_DOWN_GATE__REBUY_JAN6_ISM_SERVICES_UP_GATE",
+      "sell_price_proxy": 1834.3849500000001,
+      "buy_price_proxy": 1858.0049399999998,
+      "sell_cash_net": 97.50464525560199,
+      "rebought_oz": 0.05205831589099929,
+      "end_gold_bid_mark_usd": 97.22671367382483,
+      "delta_vs_hold_usd": -2.846684659501605,
+      "net_if_liquidated_end_usd": 96.44889996443423
+    }
+  ],
+  "cross_year_analogue_ref": "2022 Nov softer CPI/lower yields mechanism analogous to easing 2023 wage/services release, not an identical causal shock",
+  "availability_flags": {
+    "m1_6jan_missing_minutes": 121,
+    "m1_5jan_missing_minutes": 60,
+    "m1_6jan_mid_session_missing_beyond_hour": 60,
+    "source_H1_GC_SI_thin": true,
+    "DXY_M15_missing": true
+  }
+}

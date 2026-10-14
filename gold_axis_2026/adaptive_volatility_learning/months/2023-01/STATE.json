@@ -39,14 +39,19 @@
     "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_TRT_96X15M_EVENT_AND_MINUTE_LEDGER_20261014.csv",
     "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_MINUTE_EVENT_SCAN_20261014.csv",
     "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_GPT_BUY_REPLAY_20261014.md",
-    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_BUY_RESULT_20261014.json"
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_BUY_RESULT_20261014.json",
+    "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_TOP_VOLATILITY_DIRECTIONAL_STRESS_AUDIT_20261014.md",
+    "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN05_JAN06_2023_192X15M_ASOF_EVENT_DECISION_LEDGER_20261014.csv",
+    "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN05_JAN06_2023_STRESS_RESULTS_AND_COUNTERFACTUAL_20261014.json",
+    "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_VOLATILITY_RANKING_20261014.csv"
   ],
   "numeric_feature_run_ids": [
     "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0",
     "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014",
     "JAN02_2023_TRT_96X15M_ASOF_EVENT_CHECKS_V1_20261014",
     "JAN03_2023_TRT_EVENT_CAUSAL_15M_V1",
-    "JAN04_2023_GLOBAL_EVENT_15M_WITH_EVENT_TRIGGERED_1M_BUY_V1_20261014"
+    "JAN04_2023_GLOBAL_EVENT_15M_WITH_EVENT_TRIGGERED_1M_BUY_V1_20261014",
+    "JAN2023_JAN05_DOWN_JAN06_UP_STRESS_CASE_20261014"
   ],
   "algorithm_version_ids": [
     "V0_COSTED_TREND5_VOLRATIO20_20261014",
@@ -140,7 +145,8 @@
       "Event3 Jan price-only: 1 UP3 Jan4 08:00Z -> 08:15Z buy; no DOWN3; net 101.9914 vs costed buyhold 103.7589; early UP left on table.",
       "Jan 2 2023, TRT-day 96x15m check: zero vendor XAU BIDASK bars and zero histdata M15 bars, despite BIST Turkey business day. US observed New Year / SGE holiday; never use Jan2 23Z (Jan3 02TRT) as Jan2 TRT decision price.",
       "Jan3 2023 TRT 96xM15 asof done: 88 bar starts/87 bar closes by 23:45 TRT; cannot act on incomplete bar; global macro only, BIST excluded. Cash remains $100. 2023-Jan3 one-day costed close-out of Jan3 first BUY would return 98.8801 USD, not a whole-month strategy comparison.",
-      "Jan4 GPT causal, 96x15m with triggered M1: 10:15 TRT 1850 break/ZN supportive, 10:20 5 M1 holds, 10:21 simulated ask 1851.34994; 1 BUY, no SELL even after mixed JOLTS/ISM and hawkish FOMC; bank quotes missing => proxy only."
+      "Jan4 GPT causal, 96x15m with triggered M1: 10:15 TRT 1850 break/ZN supportive, 10:20 5 M1 holds, 10:21 simulated ask 1851.34994; 1 BUY, no SELL even after mixed JOLTS/ISM and hawkish FOMC; bank quotes missing => proxy only.",
+      "Jan5 (biggest down) and Jan6 (biggest range/up) ex-post stress replay, 192x15m: ADP downside confirmed Jan5 13:58Z, NFP and ISM UP confirmed Jan6 13:48Z/15:07Z. Trading extra twice would cost; HOLD GOLD from Jan4 M1 entry gives Jan6 23:45 bid mark $100.0734."
     ],
     "rejected_learnings": [
       "Risk ratio <=2 threshold was active alarm or useful extra decision: 0/20",
@@ -151,7 +157,8 @@
       "Does a turnover penalty generalize outside Jan23? Not tested",
       "A five-session 3% confirmed move is not necessarily a profitable remaining-move forecast; monthly close forced sale not an event alarm; future event policy remains unvalidated",
       "Jan3 observed UP and bond-price support but contemporaneous intraday DXY missing; very thin GC/SI H1; Reuters archived revised texts have conflicting publication/body quote times; GPT ex-post discretionary WAIT unvalidated.",
-      "Jan4 minute-timing improvement vs next M15 ask is a hindsight-exposed single event and neither OOS nor guaranteed real bank ASK; M1 mid and M15 Bid/Ask different providers."
+      "Jan4 minute-timing improvement vs next M15 ask is a hindsight-exposed single event and neither OOS nor guaranteed real bank ASK; M1 mid and M15 Bid/Ask different providers.",
+      "Costed avoided whipsaw observed only on Jan5-6 hindsight-chosen; not proof avoid exiting on materially larger DOWN. USD/DXY firstprint 15m missing; bank quote proxy."
     ],
     "code_or_config_references": [
       "gold_axis_2026/tools/gold_adaptive_monthly_v0_replay_20261014.py",
@@ -159,6 +166,7 @@
       "months/2023-01/JAN_2023_100USD_RESULTS.json"
     ],
     "open_questions": [
+      "Next stress probes Jan19 UP +1.59% and Jan26 DOWN -0.81% (same-day range 1.61%); do not insert unreviewed intervening trading decisions or claim Jan2023 monthly NAV from stress-selected days.",
       "Jan5 continues with GOLD 0.053582523 oz. Do not assume 4Jan M1 bank fill is validated; test bank spread + collateral/commission and use actual 15m/wide-spread sensitivity.",
       "At Jan4 TRT replay validate firstprint event/price source and note Jan3 CASH position; do not import legacy Jan4 automatic +3% BUY as a predestined action.",
       "Jan3 2023 TRT intraday: first vendor XAU bar starts 02:00 TRT; check bank-quote validity, macro firstprints and cross-asset as-of before entry; DO NOT invent a trade from the January2 no-quote holiday.",
@@ -190,7 +198,7 @@
   },
   "intraday_research_daily_replay": {
     "scope": "TRT calendar date, 96x15 minute as-of quote/event evidence checks, no forced trades; separate price availability vs event absence",
-    "last_completed_trt_day": "2023-01-04",
+    "last_completed_trt_day": "2023-01-06",
     "records": [
       {
         "day_trt": "2023-01-02",
@@ -257,9 +265,35 @@
         "csv": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_TRT_96X15M_EVENT_AND_MINUTE_LEDGER_20261014.csv",
         "micro_csv": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_MINUTE_EVENT_SCAN_20261014.csv",
         "evidence_json": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_BUY_RESULT_20261014.json"
+      },
+      {
+        "day_trt": "2023-01-05",
+        "run_id": "JAN2023_JAN05_DOWN_JAN06_UP_STRESS_CASE_20261014",
+        "checks": 96,
+        "market_m15_bars": 92,
+        "minute_m1_bars": 1380,
+        "position_before": "GOLD",
+        "position_after": "GOLD",
+        "trade_count": 0,
+        "end_mark_usd": 98.26338071990862,
+        "source_report": "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_TOP_VOLATILITY_DIRECTIONAL_STRESS_AUDIT_20261014.md",
+        "selected_ex_post": true
+      },
+      {
+        "day_trt": "2023-01-06",
+        "run_id": "JAN2023_JAN05_DOWN_JAN06_UP_STRESS_CASE_20261014",
+        "checks": 96,
+        "market_m15_bars": 92,
+        "minute_m1_bars": 1319,
+        "position_before": "GOLD",
+        "position_after": "GOLD",
+        "trade_count": 0,
+        "end_mark_usd": 100.07339833332644,
+        "source_report": "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_TOP_VOLATILITY_DIRECTIONAL_STRESS_AUDIT_20261014.md",
+        "selected_ex_post": true
       }
     ],
-    "next_unworked_day": "2023-01-05",
+    "next_unworked_day": "2023-01-07",
     "preceding_holiday": "2023-01-01 Sunday New Year holiday",
     "preloaded_cross_year_analogues_are_not_asof_quote_signals": true,
     "current_position": "GOLD",
@@ -270,8 +304,31 @@
     ],
     "current_gold_units": 0.05358252259969825,
     "current_cash_usd": 0,
-    "current_nav_bid_mark_usd": 99.23054525283318,
-    "current_nav_liquidated_net_usd": 98.43670089081051,
-    "execution_refinement_policy": "M15 event candidate -> event-triggered M1 asof gate -> execute only next minute or later with real bank quote (or explicitly proxy-mid plus last KNOWN spread); no ex post extrema; if M1 unavailable fallback M15 with missing flag; retain 0.8% fees both legs."
+    "current_nav_bid_mark_usd": 100.07339833332644,
+    "current_nav_liquidated_net_usd": 99.27281114665982,
+    "execution_refinement_policy": "M15 event candidate -> event-triggered M1 asof gate -> execute only next minute or later with real bank quote (or explicitly proxy-mid plus last KNOWN spread); no ex post extrema; if M1 unavailable fallback M15 with missing flag; retain 0.8% fees both legs.",
+    "stress_day_jump_mode": "SELECTED_HINDSIGHT_CHALLENGE_DATES_SEPARATE_FROM_COMPLETE_MONTH_REPLAY",
+    "stress_day_last_completed_trt_day": "2023-01-06",
+    "stress_day_ref": "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_TOP_VOLATILITY_DIRECTIONAL_STRESS_AUDIT_20261014.md"
+  },
+  "volatility_stress_replay": {
+    "latest": {
+      "experiment_id": "JAN2023_JAN05_DOWN_JAN06_UP_STRESS_CASE_20261014",
+      "status": "TWO_SELECTED_EXPOST_STRESS_DAYS_REPLAYED_NO_VALIDATED_STRATEGY",
+      "stress_dates": [
+        "2023-01-05",
+        "2023-01-06"
+      ],
+      "metric": "TRT day (max ASK_HIGH-min BID_LOW)/first MID",
+      "checks": 192,
+      "results_ref": "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN05_JAN06_2023_STRESS_RESULTS_AND_COUNTERFACTUAL_20261014.json",
+      "ledger_ref": "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN05_JAN06_2023_192X15M_ASOF_EVENT_DECISION_LEDGER_20261014.csv",
+      "ranking_ref": "gold_axis_2026/adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_VOLATILITY_RANKING_20261014.csv",
+      "net_6jan_gold_bid_mark_usd": 100.07339833332644,
+      "if_sell_6jan_net_usd": 99.27281114665982,
+      "unreviewed_other_days": true,
+      "not_blind": true,
+      "excluded_BIST": true
+    }
   }
 }
