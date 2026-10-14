@@ -1,0 +1,9 @@
+cohort,feature,target,hi_n,hi_evt,lo_n,lo_evt
+DEV_2023_24,HIGH_FUT_MM,next5_v2_down_flag,28,6,75,7
+DEV_2023_24,HIGH_FUT_MM,next5_v2_either_flag,28,10,75,17
+DEV_2023_24,POS_OPTION_MM_DELTA,next5_v2_down_flag,46,7,57,6
+DEV_2023_24,POS_OPTION_MM_DELTA,next5_v2_either_flag,46,15,57,12
+TEST_2025,HIGH_FUT_MM,next5_v2_down_flag,21,2,30,6
+TEST_2025,HIGH_FUT_MM,next5_v2_either_flag,21,7,30,16
+TEST_2025,POS_OPTION_MM_DELTA,next5_v2_down_flag,15,5,36,3
+TEST_2025,POS_OPTION_MM_DELTA,next5_v2_either_flag,15,12,36,11
