@@ -131,6 +131,23 @@ Geçmişle kıyas için dört soru zorunludur:
 
 **Bir sonraki araştırma işi:** 2023'te bir olay ID'sinden başlayıp **2024, 2025 ve 2026'da bugüne kadar kaydedilmiş olayları kullanabilen Kip A** ile çoklu-etkenli benzerlik/karşıtlık incelemesi yürütmek; sayısal faktör çıktısına **kanıt temelli yapay zekâ ikinci görüşünü** ekleyip nerede gerçek katkı, nerede anlatı yanılgısı olduğunu ölçmek. Ardından gereken noktada Kip B protokolünü **ayrı** oluşturmak. **Tek bir güzel hikâye veya sonradan bilinen doğru fiyat sonucu erken öngörü ispatı değildir.**
 
+### 8.1 Aylık kalıcı öğrenme: hafıza, algoritma ve yapay zekâ kanıtı
+
+**Çalışma dilimi aylıktır:** Önce **Ocak 2023**, sonra **Şubat 2023**, ilerleyen aylar. Bu sıra yalnız vaka inceleme düzenidir: `FULL_HISTORY_DISCOVERY` içinde Ocak 2023 araştırılırken **2024/2025/şimdiye kadarki 2026 olayları kullanılabilir**. Her ayın sonunda **sonraki aya aktarılabilecek öğrenme** yalnız sözle değil, dosya/kod/deney kimliğiyle kaydedilir.
+
+**Tek düzenli kayıt kökü:** [Aylık öğrenme ve kalıcı kayıt rehberi](adaptive_volatility_learning/README.md). **Ana manifest** yalnız araştırma amacı, bilimsel sınırlar ve bu dosyalara bağlantıları tutar; her ayın binlerce veri satırı ve öğrenme dökümü ana manifeste eklenmez.
+
+| Kalıcı bileşen | Gerçek dosya / rol |
+|---|---|
+| [Olay kimlikleri ve benzer/karşıt örnekler](adaptive_volatility_learning/EVENT_REGISTRY.json) | Yıllar arası olay kütüphanesi; eski 42+54 fiyat kaydı doğrudan benzersiz olay varsayılmaz |
+| [Özellik ve yöntem/algoritma sürümleri](adaptive_volatility_learning/METHOD_REGISTRY.json) | Kod yolu/commit, parametre, veri-vintage, test, kabul/ret; gerçek algoritma yazılana dek boş |
+| [Ocak 2023 aylık durum / Şubat'a devir](adaptive_volatility_learning/months/2023-01/STATE.json) | Analiz, AI görüşü, eksik, ret, onaylı dersler ve `handoff_to_next_month`; `NOT_STARTED` |
+| [AI ikinci inceleme ve kalite protokolü](adaptive_volatility_learning/AI_REVIEW_PROTOCOL.md) | ChatGPT ile kayıtlı **test görüşü**; daha sonra güvenli DeepSeek/Gemini API deneyi mümkün ama bu projeye henüz bağlanmadı |
+
+**Test aşamasındaki AI entegrasyonu:** Sayısal analiz kaynak kimlikli özellik ve vaka karşılaştırmasını üretir; ChatGPT ikinci incelemede kanıtları, alternatif nedenleri ve çelişkileri eleştirir. **Aynı vaka kümesinde algoritma tek, AI tek, birlikte** sonuçları kıyaslanır. AI özgün kaynak olmadığı gibi metin yazınca modelin parametreleri otomatik değişmez. Önerilen yeni algoritmik kuralın gerçek kaynak/kod/deney doğrulaması olmadan `validated` statüsü alamaz. Dış servise ham özel piyasa verisi, banka bilgisi, API anahtarı gönderilmez.
+
+**Ocak→Şubat devamlılığı:** `STATE.json` içindeki `handoff_to_next_month` ve ortak yöntem/olay sicilleri **Şubat'ın başlangıç girdisidir**; her iyileştirmede yeni sürüm, önceki sürümün metrikleri, başarısızlıkları ve geriye dönük seçim yanlılığı korunur. **Yalnız dosya sözleşmeleri yaratıldı; Ocak 2023 gerçek çalışma / AI test sonucu henüz yoktur.**
+
 ### Belgeler ve sürüm yönetimi
 
 - **Bu dosya**, yeni amacın ve araştırma çıktısının **tek güncel yönlendirme manifestidir**. 14 Ekim 2026 tarihli eski **5.190 satırlık TAM** ana metin değişmeden [TARİHSEL MANİFEST ARŞİVİNE](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md) alındı. Önceki veri denetimleri, model sonuçları, başarısız testler, Ocak 2026 V1–V4 ve referans bağlantıları **kaybolmadı**. Arşivdeki eski "BINDING/NEXT/NO FORECAST" yalnız **kendi tarih/deney kapsamı** içindir.
