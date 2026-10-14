@@ -17,6 +17,9 @@ Birincil hedef **ufak günlük oynaklığı kovalamak değil**; **orta ve büyü
 
 **Kayıtlı hedefler:** olayın gerçek ilk eşiğe erişmesi, sinyale kadar geçen süre, sinyalden sonraki `MFE/MAE` ve beklenen kalan yönlü hareket, alarm öncesi/sonrası kaçan kısım, `UP` ve `DOWN` için ayrı recall/false positive, uygulanabilir BID/ASK'den 100 USD net portföy. Aynı barın tepe-dibini veya sonradan bilinen dönüm noktasını geçmişte işlem saati olarak kullanma.
 
+## 2A. Kullanıcı kararı: M15 -> tetiklenen 1 dakika emir kapısı (2026-10-14)
+AL/SAT kararı vermek üzereyken 15m genel gözlemi biricik işlem saati sayma: **o anda 1m veri bulunuyorsa** son tamamlanmış dakikalara inip destek/direnç sürekliliği, dakika momentum/sönüm, anlık şok ve haber sonrası ilk tepki/geri alma göstergelerini gözet. Bu pencereyi yalnız *15m+makro olay adayından sonra* aç, as-of karar-icra sırasını ayır. Sonradan bilinen ideal yerel ekstremumu seçmek YASAK. **Gerçek banka ASK/BID mevcut değilse M1 MID ile son bilinen M15 spreadinden üretilen proxy sadece hassasiyet simülasyonu olabilir; canlı emir başarısı değildir.** M1 eksikse olay kontrolü 15m kalır / ABSTAIN. Ücret, uygulanabilir saat/likidite ve ayrıca banka makası zorunludur. Örnek [4 Ocak 2023 günü](months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_GPT_BUY_REPLAY_20261014.md) tek olay örneğidir, öğrenilip sonra bağımsız test edilmeden optimize edildiği iddia edilmez.
+
 ## 3. Olay araştırma iş akışı — TÜM GÜNLER
 **Ay ay, 2023 Ocak'tan başla; tüm takvim günlerini gözden geçir** (işlem yapılamayan hafta sonu/tatil için `NO_TRADE`, gerçek risk/gelişme bilgisi ayrı). Her olayda olay **olmayan** benzer günleri de kontrol olarak tut.
 

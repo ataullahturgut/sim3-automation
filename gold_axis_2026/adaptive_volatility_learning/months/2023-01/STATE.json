@@ -35,13 +35,18 @@
     "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-02/JAN02_2023_SINGLE_DAY_15M_EVENT_EVIDENCE_AUDIT_20261014.md",
     "2023-01-02 BIST local risk-on after 18:49 TRT; no same-day XAU source quote",
     "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-03/JAN03_2023_SINGLE_DAY_CAUSAL_MARKET_REPLAY_20261014.md",
-    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-03/JAN03_2023_TRT_96X15M_CAUSAL_DECISION_LEDGER_20261014.csv"
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-03/JAN03_2023_TRT_96X15M_CAUSAL_DECISION_LEDGER_20261014.csv",
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_TRT_96X15M_EVENT_AND_MINUTE_LEDGER_20261014.csv",
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_MINUTE_EVENT_SCAN_20261014.csv",
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_GPT_BUY_REPLAY_20261014.md",
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_BUY_RESULT_20261014.json"
   ],
   "numeric_feature_run_ids": [
     "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0",
     "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014",
     "JAN02_2023_TRT_96X15M_ASOF_EVENT_CHECKS_V1_20261014",
-    "JAN03_2023_TRT_EVENT_CAUSAL_15M_V1"
+    "JAN03_2023_TRT_EVENT_CAUSAL_15M_V1",
+    "JAN04_2023_GLOBAL_EVENT_15M_WITH_EVENT_TRIGGERED_1M_BUY_V1_20261014"
   ],
   "algorithm_version_ids": [
     "V0_COSTED_TREND5_VOLRATIO20_20261014",
@@ -134,7 +139,8 @@
       "Real BID/ASK + 0.8 pct each leg are needed; V0 4 orders cost USD 3.291 and underperformed passive USD 1.789",
       "Event3 Jan price-only: 1 UP3 Jan4 08:00Z -> 08:15Z buy; no DOWN3; net 101.9914 vs costed buyhold 103.7589; early UP left on table.",
       "Jan 2 2023, TRT-day 96x15m check: zero vendor XAU BIDASK bars and zero histdata M15 bars, despite BIST Turkey business day. US observed New Year / SGE holiday; never use Jan2 23Z (Jan3 02TRT) as Jan2 TRT decision price.",
-      "Jan3 2023 TRT 96xM15 asof done: 88 bar starts/87 bar closes by 23:45 TRT; cannot act on incomplete bar; global macro only, BIST excluded. Cash remains $100. 2023-Jan3 one-day costed close-out of Jan3 first BUY would return 98.8801 USD, not a whole-month strategy comparison."
+      "Jan3 2023 TRT 96xM15 asof done: 88 bar starts/87 bar closes by 23:45 TRT; cannot act on incomplete bar; global macro only, BIST excluded. Cash remains $100. 2023-Jan3 one-day costed close-out of Jan3 first BUY would return 98.8801 USD, not a whole-month strategy comparison.",
+      "Jan4 GPT causal, 96x15m with triggered M1: 10:15 TRT 1850 break/ZN supportive, 10:20 5 M1 holds, 10:21 simulated ask 1851.34994; 1 BUY, no SELL even after mixed JOLTS/ISM and hawkish FOMC; bank quotes missing => proxy only."
     ],
     "rejected_learnings": [
       "Risk ratio <=2 threshold was active alarm or useful extra decision: 0/20",
@@ -144,7 +150,8 @@
       "Rates/USD dominant in WGC regression but daily cross-market synchronous attribution not established",
       "Does a turnover penalty generalize outside Jan23? Not tested",
       "A five-session 3% confirmed move is not necessarily a profitable remaining-move forecast; monthly close forced sale not an event alarm; future event policy remains unvalidated",
-      "Jan3 observed UP and bond-price support but contemporaneous intraday DXY missing; very thin GC/SI H1; Reuters archived revised texts have conflicting publication/body quote times; GPT ex-post discretionary WAIT unvalidated."
+      "Jan3 observed UP and bond-price support but contemporaneous intraday DXY missing; very thin GC/SI H1; Reuters archived revised texts have conflicting publication/body quote times; GPT ex-post discretionary WAIT unvalidated.",
+      "Jan4 minute-timing improvement vs next M15 ask is a hindsight-exposed single event and neither OOS nor guaranteed real bank ASK; M1 mid and M15 Bid/Ask different providers."
     ],
     "code_or_config_references": [
       "gold_axis_2026/tools/gold_adaptive_monthly_v0_replay_20261014.py",
@@ -152,6 +159,7 @@
       "months/2023-01/JAN_2023_100USD_RESULTS.json"
     ],
     "open_questions": [
+      "Jan5 continues with GOLD 0.053582523 oz. Do not assume 4Jan M1 bank fill is validated; test bank spread + collateral/commission and use actual 15m/wide-spread sensitivity.",
       "At Jan4 TRT replay validate firstprint event/price source and note Jan3 CASH position; do not import legacy Jan4 automatic +3% BUY as a predestined action.",
       "Jan3 2023 TRT intraday: first vendor XAU bar starts 02:00 TRT; check bank-quote validity, macro firstprints and cross-asset as-of before entry; DO NOT invent a trade from the January2 no-quote holiday.",
       "Jan31 trailing five-session -2% downward signal would cause premature exit before 13:30Z ECI rebound; compare stage/remaining expected value and actual bank quotes on new locked samples",
@@ -182,7 +190,7 @@
   },
   "intraday_research_daily_replay": {
     "scope": "TRT calendar date, 96x15 minute as-of quote/event evidence checks, no forced trades; separate price availability vs event absence",
-    "last_completed_trt_day": "2023-01-03",
+    "last_completed_trt_day": "2023-01-04",
     "records": [
       {
         "day_trt": "2023-01-02",
@@ -225,16 +233,45 @@
         "report": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-03/JAN03_2023_SINGLE_DAY_CAUSAL_MARKET_REPLAY_20261014.md",
         "decision_ledger": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-03/JAN03_2023_TRT_96X15M_CAUSAL_DECISION_LEDGER_20261014.csv",
         "decision_metadata": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-03/JAN03_2023_EVENT_GPT_DECISION_RESULTS_20261014.json"
+      },
+      {
+        "day_trt": "2023-01-04",
+        "run_id": "JAN04_2023_GLOBAL_EVENT_15M_WITH_EVENT_TRIGGERED_1M_BUY_V1_20261014",
+        "status": "COMPLETE_RESEARCH_EX_POST_GPT_DISCRETIONARY_UNVALIDATED_BANK_PROXY",
+        "checks": 96,
+        "xau_m15_bars": 92,
+        "mid_m1_rows": 1379,
+        "position_before": "CASH",
+        "position_after": "GOLD",
+        "simulated_buy_count": 1,
+        "simulated_sell_count": 0,
+        "starting_capital_usd": 100,
+        "ending_cash_usd": 0,
+        "ending_gold_oz": 0.05358252259969825,
+        "ending_bid_mark_nav_usd": 99.23054525283318,
+        "hypothetical_if_now_sold_net_usd": 98.43670089081051,
+        "actual_bank_execution": false,
+        "decision_utc": "2023-01-04T07:20:00Z",
+        "buy_quote_model": 1851.34994,
+        "report": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_GPT_BUY_REPLAY_20261014.md",
+        "csv": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_TRT_96X15M_EVENT_AND_MINUTE_LEDGER_20261014.csv",
+        "micro_csv": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_MINUTE_EVENT_SCAN_20261014.csv",
+        "evidence_json": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-04/JAN04_2023_CAUSAL_BUY_RESULT_20261014.json"
       }
     ],
-    "next_unworked_day": "2023-01-04",
+    "next_unworked_day": "2023-01-05",
     "preceding_holiday": "2023-01-01 Sunday New Year holiday",
     "preloaded_cross_year_analogues_are_not_asof_quote_signals": true,
-    "current_position": "CASH",
+    "current_position": "GOLD",
     "current_nav_usd": 100,
     "excluded_predictors": [
       "BIST100",
       "Turkish stocks or local equity-only news"
-    ]
+    ],
+    "current_gold_units": 0.05358252259969825,
+    "current_cash_usd": 0,
+    "current_nav_bid_mark_usd": 99.23054525283318,
+    "current_nav_liquidated_net_usd": 98.43670089081051,
+    "execution_refinement_policy": "M15 event candidate -> event-triggered M1 asof gate -> execute only next minute or later with real bank quote (or explicitly proxy-mid plus last KNOWN spread); no ex post extrema; if M1 unavailable fallback M15 with missing flag; retain 0.8% fees both legs."
   }
 }
