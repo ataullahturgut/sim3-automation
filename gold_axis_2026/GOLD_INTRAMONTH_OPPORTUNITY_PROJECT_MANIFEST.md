@@ -1,3 +1,5 @@
+**DÜZELTME / SINIR İHLALİ:** Ocak 2026 31 günlük `112,67 USD` yürüyüşü önceden kullanıcının çizdiği **Ocak sonuçlarını okumadan günü gününe karar** sınırını ihlal etti. Ocak fiyatları/Astra Ocak kayıtları önceden okundu, karar eşikleri daha sonra seçildi. Bu nedenle **2026 OCAK TAHMİN TESTİ GEÇERSİZDİR** (`INVALIDATED_CONSTRAINT_BREACH; AUDIT_ONLY`). Önceki sayısal rapor yalnız hata izi olarak korunur; başarı, OOS veya sınırların yerine getirilmesi sayılmaz. [İptal edilen araştırma raporu](OLAY_02_JAN2026_31_GUN_DNA_KARAR_SONUCLAR_20261014.md).
+
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
 ## TEK GÜNCEL DURUM — 14 Ekim 2026, belge otoritesi (eski ara notların önüne geçer)
