@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1",
+  "month_id": "2023-01",
+  "mode": "FULL_HISTORY_DISCOVERY",
+  "status": "NOT_STARTED",
+  "event_ids": [],
+  "cross_year_comparison_scope": {
+    "allowed_years": [
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "actual_case_ids_used": [],
+    "warning": "All-years exploration not blind 2023-time prediction"
+  },
+  "source_evidence_refs": [],
+  "numeric_feature_run_ids": [],
+  "algorithm_version_ids": [],
+  "ai_reviews": [],
+  "candidate_mechanisms": [],
+  "counterexample_ids": [],
+  "hypotheses_supported": [],
+  "hypotheses_rejected": [],
+  "hypotheses_untested": [],
+  "risk_decisions": [],
+  "numeric_metrics": null,
+  "handoff_to_next_month": {
+    "accepted_learnings": [],
+    "rejected_learnings": [],
+    "uncertain_learnings": [],
+    "code_or_config_references": [],
+    "open_questions": [],
+    "status": "PENDING_FIRST_JANUARY_ANALYSIS"
+  },
+  "quality_note": "Skeleton only; no January 2023 inference run, AI review, or forecast has occurred.",
+  "last_updated": "2026-10-14"
+}
