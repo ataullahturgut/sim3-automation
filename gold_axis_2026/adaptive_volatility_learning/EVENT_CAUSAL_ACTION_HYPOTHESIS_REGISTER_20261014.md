@@ -1,302 +1,184 @@
-# ÖĞREN-03 — ÇIKARIM VE OLAY KARAKTERİ MANİFESTİ
-**ALTIN XAU/USD • Sürüm 2 • 14 Ekim 2026 • ARAŞTIRMA / EX-POST KARAKTER ANALİZİ**
+# ÖĞREN-03 — EKONOMİK OLAY DNA KÜTÜPHANESİ
 
-**KİM NEYİ YÖNETİR:** [ANA-01](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) proje yöntem/strateji sözleşmesidir; [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) olay–haber–piyasa veri ve kararların **tek kanıt otoritesidir**. **ÖĞREN-03 (bu dosya) artık ÇIKARIM MANİFESTİDİR:** olayları karakter ailelerine ayırır, her ailenin **önkoşul–başlangıç–gelişim–bitiş–ters vaka** profilini tutar ve neden/karar hipotezlerini burada araştırır. [DURUM-04](months/2023-01/STATE.json) aylık çalışma durumudur. **Mevcut üç hipotez bu dosyada aşağıda korunmuştur; yeni müstakil bir çıkarım dosyası oluşturulmadı.**
+**KİMLİK: ÖĞREN-03 | KAPSAM: Zamandan bağımsız ekonomik mekanizmalar, davranış yolları ve karakter ayrıştırması | DURUM: ARAŞTIRMA HİPOTEZLERİ**
 
-## 0. Çıkarım sonucu: kaç tür olayımız var?
+> **Temel ilke: Burada tarih yok, ekonomik DNA var.** Bir olayın hangi gün gerçekleştiği, haberin yayın saati, fiyatı, yüzdesi, hangi tarihte alınıp satıldığı ve vaka bazlı sonuçları **ÖĞREN-03'e yazılmaz**. Burada yalnızca **tekrar kullanılabilir mekanizma**, bunun **önkoşulu → tetikleyicisi → aktarımı → gelişimi → yorulması → sonlanması/dönüşümü**, ayırıcı özellikleri, karşıt mekanizmaları ve yanlışlama ölçütleri bulunur.
+>
+> **Otorite ayrımı:** [ANA-01](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) araştırma yöntemi ve karar protokolü; [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) **tarihli olay, haber, fiyat, çoklu varlık ve karşıt vaka kanıtının tek otoritesi**; **ÖĞREN-03** tarihsiz ekonomik DNA/örgü kütüphanesi; **DURUM-04** aylık ilerleme kaydı. Eski olay sonuçları ve karar hipotezleri OLAY-02 kanıtları, bağlı raporlar ve mevcut makine-okunur hipotez sicilinde saklanır. Git geçmişindeki önceki ÖĞREN-03 içerikleri geri alınabilir; bu sürüm silme değil **sorumluluk ayrıştırmasıdır**.
 
-- **7 aday ekonomik aile:** **6 ana mekanizma ailesi + 1 KARMA/BELİRSİZ**. Bunlar eski araştırmacıların haber bağlamına dayalı retrospektif sınıflandırmasıdır; öğrenilmiş, ilk yayımları doğrulanmış veya ekonometrik nedenselliği ispatlanmış cluster değildir.
-- **5 ölçülmüş uzun fiyat yaşam-döngüsü tipi:** 42 NY17 V1 uzun fiyat bacağının **41'i** 06:00 UTC günlük XAU M15 örnekli ve en az 4 gün gözlemlenmiş; **1'i çok kısa**. Bunlar ekonomik neden gruplarıyla kesişir ama aynı şey değildir.
-- **5 kısa-ufuk kontrol sonucu tipi:** 54 V2 kümesinin 09:15 TRT kontrol noktasından 4 saat / 12 saat / 3 seans **gerçekleşen** hareket karakteri; **bu V2 fiyat şokunun gerçek başlangıç dakikası olduğu iddiası yoktur.**
-- **96 kayıt ≠ 96 bağımsız ekonomik şok:** 42 uzun V1 + 54 örtüşebilen kısa/orta V2; kontrol düzeyinde **84 farklı 09:15 TRT gözlem**, 12'si iki kayıt tarafından etiketlenmiş. [84 tekil kontrol ve overlap sicili](../OLAY_02_BENZERLIK_DUPLIKE_TEMIZ_84_KONTROL_20261014.csv). **84 de istatistiksel olarak tamamen bağımsız olay sayısı değildir**; komşu günler ve aynı üst dalga örtüşebilir.
+## 1. DNA'nın tanımı: OLAY ≠ FİYAT ≠ MEKANİZMA
 
-**Bağlayıcı 96 olayın tamamı:** [G01–G07 ekonomik sınıfı, ikinci aktarım kanalı ve fiyat yaşam döngüsü bağlantıları CSV](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv) · [42 V1 fiyat başlangıç–orta–son ve sonrasındaki ters hareket sayısal CSV](../OLAY_02_42_UZUN_HAREKET_YASAM_DONGUSU_V1_20261014.csv) · [96 özgün tarihli haber/vaka fişi](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md).
+**Ekonomik DNA**, belli tarihteki bir fiyat dalgası veya haber başlığı değil, benzer koşullarda tekrar oluşabilecek **koşullu neden–aktarim–tepki örgüsü hipotezidir**. Altın yönü tek başına DNA değildir; aynı DNA farklı koşullarda farklı fiyat yönleri ve hareket karakterleri gösterebilir.
 
-### G01–G07: sınıf ve gözlenen fiyat yolunun özeti
+Bir DNA, ayrı ve zorunlu alanlardan oluşur:
 
-| Ekonomik aile | Etiket /96 | Ölçülen uzun V1 /42 | V1 ortanca uzunluk | İlk 3 seans / orta / son 3 seans: yön-işaretli ortancalar |
-|---|---:|---:|---:|---|
-| **G01** ABD makro – faiz/dolar/Fed beklentisi | 30 | 12 | 26 gün | +0.38% / +2.78% / +1.96% |
-| **G02** Tarife, ticaret ve ekonomi politikası | 20 | 11 | 9 gün | +1.91% / +1.26% / +2.50% |
-| **G03** Jeopolitik risk ve güvenli liman | 13 | 7 | 14 gün | +0.78% / +2.17% / +0.80% |
-| **G04** Merkez bankası / rezerv / fiziki altın ve fon akışı | 11 | 6 | 16.5 gün | +1.48% / +2.85% / +1.32% |
-| **G05** Finansal stres / fonlama / zorunlu tasfiye | 4 | 3 | 9 gün | +0.83% / +0.54% / +1.90% |
-| **G06** İçsel pozisyon dönüşü / kâr alma / momentum | 4 | 0 | — | **veri yok** / **veri yok** / **veri yok** |
-| **G07** Karma / baskın ekonomik neden henüz ayrıştırılmadı | 14 | 3 | 30 gün | -0.20% / +2.29% / +0.91% |
+| Alan | DNA'daki anlamı |
+|---|---|
+| `DNA_ID` / `variant_id` | Kararlı aile ve alt mekanizma kimliği; tarih içermez |
+| `preconditions` | Haber/şok öncesi ekonomik ortam, trend, pozisyon, likidite, belirsizlik |
+| `catalyst_class` | Tekil tarih değil: hangi tür bilgi veya şok tetikleyebilir? |
+| `transmission_graph` | Fed/faiz, dolar, reel getiri, riskten kaçış, fonlama, fizikî talep, pozisyon gibi olası ara kanallar |
+| `observable_fingerprint` | Hangi eşzamanlı piyasa verileri kanalı destekler, hangileri ayırır? |
+| `branches` | Aynı tetikleyicinin ayrı koşullardaki birbirine zıt gelişim yolları |
+| `phase_path` | P0–P5 başlangıç, yayılma, yorulma ve dönüş koşulları |
+| `interaction_rules` | Başka DNA'nın baskınlaşması, birlikte etkisi veya çelişmesi |
+| `falsifiers` | Bu mekanizmanın açıklama gücünü zayıflatan/rakibini güçlendiren gözlemler |
+| `observable_limits` | Gecikmeli veri, eşzamanlı haber, eksik kaynak, ex-post seçilim sınırları |
+| `evidence_status` | Hipotez / zamansal teyit / rakip-kontrol testli / bağımsız doğrulama; gerekçesi OLAY-02'dedir |
 
-*Tablodaki +% değerler **o olayın sonradan bilinen ana V1 yönüne göre işaretlidir**; hem UP hem DOWN bacaklarında + rakam yönünde hareket anlamına gelir. İlk 3/orta/son 3 ölçümü 06:00 UTC'deki günlük M15 fiyat örneklerinden üretilmiştir; resmî NY17 fiyat getirisiyle aynı zaman sözleşmesi değildir. Farklı gruplardaki ‘ortalama karakter’ bir yatırım sinyali veya açıklamanın nedensel kanıtı değildir.*
+**Kanıt birimi OLAY-02'deki olaydır; kavram birimi ÖĞREN-03'teki DNA'dır.** OLAY-02 bir ekonomik olayı birden fazla `DNA_ID` adayıyla ilişkilendirebilir. ÖĞREN-03'e tekil `EVENT_ID`, vaka tarihleri, performans, fiyat başlangıç–bitiş değerleri veya geriye dönük işlem getirisi kopyalanmaz. DNA ile olayı birbirine bağlayan örnek tablosu OLAY-02'de tutulur.
 
-## 1. Olay karakteri için BİRLEŞİK ONTOLOJİ (başlangıç–gelişim–bitiş)
+**Mevcut kanıt seviyesi:** Aşağıdaki aileler kanıtlanmış nedensel kümeler değil, **test edilecek açıklama sınıflarıdır**. Bazı alt varyantların örneklem desteği daha da sınırlıdır. `UNKNOWN`, gerektiğinde geçerli nihai araştırma çıktısıdır.
 
-**Bir ekonomik olay bir fiyat dalgası değildir:** bir uzun fiyat dalgası farklı NFP/CPI/jeopolitik/rezerv haberlerini kapsayabilir. Bir makro ilk fiyat şoku (EVENT_ID) sonradan V1/V2 dalgalara katkıda bulunabilir. `EPISODE_ID` (fiyat dalgası) → `EVENT_ID` (gerçek ilk haber) → `CHECKPOINT_ID` (karar kontrolü) → `RESPONSE_PHASE` (o andan sonra fiyat durumu) ayrı kayıtlar olmalıdır.
+## 2. Ekonomik DNA aileleri — altı mekanizma ve bir belirsizlik yönlendiricisi
 
-| Safha | Ekonomik olay için araştırılacak kanıt | Şimdi elimizdeki güvenilir durum |
+| DNA | Aile | Ekonomik çekirdek | Kısa ayrıştırıcı soru |
+|---|---|---|---|
+| **G01** | Makro / Fed / faiz / dolar | Beklenti yeniden fiyatlaması | Altına etki faiz ve dolar üzerinden mi, başka kanal mı baskın? |
+| **G02** | Ticaret / tarife / ekonomi politikası | Ticaret politikası şoku ve belirsizlik | Güvenli liman mı, maliyet/enflasyon mu, nakit ihtiyacı mı? |
+| **G03** | Jeopolitik / güvenlik | Güvenlik risk primi | Güvenli liman akışı mı, enerji/faiz kanalı mı? |
+| **G04** | Rezerv / fizikî altın / fon akışı | Talep-arz ve portföy tahsisi | Gerçek zamanlı ölçülebilen akış mı, gecikmeli rapor mu? |
+| **G05** | Finansal stres / fonlama | Güvenli liman ile zorunlu satışın rekabeti | Altın sığınılan varlık mı, nakde çevrilen teminat mı? |
+| **G06** | Pozisyon / içsel fiyat dönüşü | Pozisyon, kaldıraç, stop ve momentum çözülmesi | Dış haber olmadan fiyat/emir akışı mekanizması destekleniyor mu? |
+| **G07** | **Ayrıştırılamamış / karma** | **Yeni bir neden DNA'sı değildir** | Birden fazla olası mekanizma arasında kanıtla tercih yapılabiliyor mu? |
+
+### G01 — Makro, Fed, faiz ve dolar yeniden fiyatlaması
+
+**Çekirdek:** Beklenti–gerçekleşme farkı ve açıklamanın alt bileşenleri → beklenen para politikası patikası → nominal/reel faiz ve doların fiyatlanması → altının fırsat maliyeti, yatırım talebi ve pozisyonlar. Makro veri tek yönde etki etmek zorunda değildir.
+
+- **P0 / önkoşul:** Faiz beklentisinin mevcut düzeyi; enflasyon ve büyüme beklentileri; USD trendi; reel getiri; altın risk primi ve önceden alınmış pozisyonlar.
+- **P1 / tetikleyici:** Enflasyon, ücret, istihdam, faaliyet verisi; merkez bankası kararı, tutanak veya söylem. Sürprizin **bileşenleri ve piyasanın beklediği** etki önemlidir.
+- **P2–P3 / aktarım ve yayılma:** Beklenen Fed patikasının değişimi faiz ve USD üzerinden altına aktarılabilir; ardışık veriler aynı yönü güçlendirebilir veya rakip haberlerle mekanizma yön değiştirir.
+- **P4–P5 / yorulma-bitiş:** Faiz/USD hareketinin sönmesi, beklenene dönmesi, yeni ters sürpriz veya güvenli liman/likidite mekanizmasının baskınlaşması.
+- **Alt yollar:** `G01-A` gevşek para politikası beklentisi / fırsat maliyeti düşüşü; `G01-B` sıkılaşma beklentisi / fırsat maliyeti artışı; `G01-C` makro verinin etkisinin finansal stres veya güvenli limanla bastırılması.
+- **Ayırıcı iz:** Gerçek zamanlı beklenti-vintage + açıklama sonrası faiz/reel getiri ve USD + aynı-UTC XAU ve mümkünse diğer metaller.
+- **Yanlışlayıcı:** Makro açıklamanın saatinde baskın hareket yok; faiz/dolar farklı yöne tepki veriyor; daha erken eşzamanlı başka katalizör hareketi açıklıyor. Tek başına fiyat UP/DOWN etiketi G01'i doğrulamaz.
+
+### G02 — Ticaret, tarife ve ekonomi politikası
+
+**Çekirdek:** Ticaret veya politika rejimi değişimi → büyüme, enflasyon, belirsizlik ve sınır ötesi sermaye beklentileri → altın üzerinde birbirine rakip kanallar.
+
+- **P0:** Tarife müzakeresi ve olası uygulama beklentisi, dış ticaret maruziyeti, büyüme kırılganlığı, enflasyon beklentisi, piyasa kaldıraç/likidite durumu.
+- **P1:** Vergi/tarife oranı veya kapsam değişikliği; yaptırım, erteleme, anlaşma, yargı veya uygulama kararı.
+- **P2–P3:** `G02-A` belirsizlik → güvenli liman talebi; `G02-B` maliyet/enflasyon → faiz/USD baskısı; `G02-C` ani risk ve nakit ihtiyacı → altının diğer varlıklarla beraber satılması. Açıklamaların sıralaması birden fazla dalga doğurabilir.
+- **P4–P5:** Müzakere/erteleme/anlaşma; tarifenin fiyatlara yerleşmesi; likidite ihtiyacının bitmesi; başka mekanizmaya geçiş.
+- **Ayırıcı iz:** Politika ilk kaynağı ve yürürlük bilgisi; reel/nominal faiz, USD, hisse, altın ve gümüşün ortak ya da ayrışan tepki işaretleri.
+- **Yanlışlayıcı:** Fiyat yolu tarife haberinden önce başlıyor; ekonomik aktarım değişkenleri uyumsuz; aynı anda daha kuvvetli faiz/likidite haberi bulunuyor.
+
+### G03 — Jeopolitik ve güvenlik riski
+
+**Çekirdek:** Çatışma/gerilim/ateşkes/arz riski → güvenlik primi, enerji, büyüme ve fonlama kanallarının rekabeti.
+
+- **P0:** Önceden fiyatlanmış risk primi, enerji arzı kırılganlığı, faiz/enflasyon duyarlılığı, risk iştahı ve kaldıraç.
+- **P1:** Kaynağı doğrulanmış yeni güvenlik/çatışma/diplomasi gelişmesi; söylenti ile teyit edilmiş ilk bilgiyi ayır.
+- **P2–P3:** `G03-A` güvenli limana geçiş; `G03-B` enerji fiyatı → enflasyon/faiz yeniden fiyatlama; `G03-C` riskli pozisyon ve fonlama baskısı → likidite amaçlı satış.
+- **P4–P5:** Diplomasi/ateşkes, korku priminin sönmesi, olayın uzamasıyla fiyatlanmış riskin normalleşmesi veya faiz/likidite kanalının baskınlaşması.
+- **Ayırıcı iz:** İlk güvenlik haberi, enerji ve risk varlığı hareketi, USD/faiz ile altın/gümüş tepkisinin senkron sırası.
+- **Yanlışlayıcı:** Ekonomik bağlantı yok, haber fiyat değişiminden sonra yayımlanmış veya piyasa tepkisini farklı makro açıklama açıklıyor.
+
+### G04 — Merkez bankası, rezerv, fizikî altın ve fon akışı
+
+**Çekirdek:** Portföy/rezerv tercihi veya fizikî-finansal altın talebi → arz-talep ve pozisyon dengesinin değişmesi. **Ait olunan dönem ile bilginin yayımlanma zamanı ayrıdır.**
+
+- **P0:** Rezerv tercihi, ETF/OTC/fizikî talep eğilimi, vade piyasası stokları ve pozisyon yoğunlaşması; metal bazlı talep/arz ayrışması.
+- **P1:** Yeni erişilebilir akış verisi, politika açıklaması veya gerçek piyasa emir/likidite değişimi. Sonradan yayımlanan aylık rapor ilk tetik sayılmaz.
+- **P2–P3:** `G04-A` kalıcı alım/arz darlığı; `G04-B` ETF/CTA/pozisyon kaynaklı momentum; `G04-C` birbiriyle ayrışan fizikî ve finansal piyasa kanalları.
+- **P4–P5:** Alımların yavaşlaması, akışın tersine dönmesi, aşırı pozisyon veya faiz/USD baskısının yeniden üstün gelmesi.
+- **Ayırıcı iz:** Veri yayım gecikmesi, ETF/CFTC vintage, fizikî prim ve vadeli yapı; XAU–XAG–Pt–Pd birlikte/ayrışık tepki.
+- **Yanlışlayıcı:** “Talep vardı” kanıtı ancak fiyat hareketi bittikten sonra erişilebilir; gözlenen akış yetersiz ve eşzamanlı makro haber daha güçlü.
+
+### G05 — Finansal stres, fonlama ve zorunlu tasfiye
+
+**Çekirdek:** Kredi/teminat/fonlama şoku altını **iki zıt yoldan** etkileyebilir: kaçış talebi veya nakit sağlamak için altın satışı.
+
+- **P0:** Kaldıraç, teminat baskısı, kredi spreadleri, kısa vadeli finansman ve piyasa derinliği.
+- **P1:** Kredi olayı, marjin gereği, piyasa derinliği daralması veya fonlama erişiminin şoklanması.
+- **P2–P3:** `G05-A` zorunlu satış: altın ve başka likit varlıklarda birlikte düşüş; `G05-B` güvenli liman: altına talep artışı; `G05-C` ilk satış sonrası fonlama rahatlayınca ters hareket.
+- **P4–P5:** Nakit ve teminat ihtiyacının karşılanması, kredi riskinin çözülmesi veya korkunun yeni kanala geçmesi.
+- **Ayırıcı iz:** Kredi/fonlama göstergeleri, hisse/emtia/metal eş hareketi, hacim ve makas, USD/faiz tepkisi.
+- **Yanlışlayıcı:** Altına özel düşüşe rağmen genel risk varlıkları güçlü; zorunlu teminat olgusuna dair gösterge yok; gözlem yalnız fiyat düşüşünden çıkarılmış.
+
+### G06 — Pozisyon, momentum, stop zinciri ve içsel dönüş
+
+**Çekirdek:** Önceki fiyat hareketi ve piyasa mikro-yapısı → pozisyon yoğunlaşması, emir/stop zinciri, kaldıraç çözülmesi veya kısa pozisyon sıkışması → haberden bağımsız ya da haberle güçlenmiş fiyat sapması.
+
+- **P0:** Tek yönlü uzun trend, aşırı pozisyonlanma, oynaklık, finansman/marjin, dar piyasa derinliği.
+- **P1:** Destek/direnç kırılması, emir dengesizliği, zorunlu risk azaltma veya küçük bir katalizörün stopları tetiklemesi; yalnız teknik kırılım **neden kanıtı değildir**.
+- **P2–P3:** `G06-A` trend yönünde sıkışma/stop devamı; `G06-B` kâr alma veya aşırı uzama sonrası tersine dönüş; `G06-C` ardışık likidite boşluklarıyla çalkantı.
+- **P4–P5:** Emir baskısının tükenmesi, derinliğin toparlanması, pozisyonların dengelenmesi veya dış makro/jeopolitik DNA'nın devralması.
+- **Ayırıcı iz:** Gerçek hacim/emir akışı veya bunun sınırlı vekilleri, vade ve opsiyon pozisyonu, metal ayrışması, aynı-UTC genel risk doğrulaması.
+- **Yanlışlayıcı:** Ayrışmayı güçlü ve önceden yayımlanmış dış haber açıklıyor; emir/pozisyon verisi bulunmuyor. Bu durumda G06 yalnız olasılıktır.
+- **Sınır:** Bu ailenin uzun fiyat-bacağı karakteri için bağımsız yeterli uzun örnek desteği henüz yoktur; sırf dönüş yaşandı diye otomatik G06 ataması yapılamaz.
+
+### G07 — Belirsiz, çoklu nedenli veya henüz ayrıştırılamamış
+
+**G07 başlı başına ekonomik DNA değildir; sınıflandırma ve kanıt yönlendiricisidir.** Şu durumlardan biri varsa seçilir: birden fazla rakip mekanizma aynı anda geçerli; ilk haber bilinmiyor; veri erişim gecikmesi var; fiyat ve haber zamansal sırası ters; hiçbir adayın ayırıcı izi yeterli değil.
+
+**Çözüm yolu:** Aday alt kanalları ayrı `candidate_DNA_ID` olarak kaydet, hangisinin neyi açıklayamadığını yaz, farklı zaman/varlık penceresi ve şoksuz/ters kontrol iste. Kanıt yeterli olana kadar `UNRESOLVED` bırak. G07'yi zorla yeni bir nedene dönüştürme.
+
+## 3. DNA'nın görünümü: fiyat karakteri ayrı bir eksendir
+
+Ekonomik DNA'nın kimliği (**G ailesi**) ile gerçekleşen fiyat yolunun **M/S morfolojisi** birbirine karıştırılmaz. Aynı G01 farklı bağlamlarda M1, M3 veya M4 üretebilir; M4 ise farklı G ailelerinden gelebilir.
+
+| Morfoloji | Tarafsız karakter tarifi | Genellenebilir yorum sınırı |
 |---|---|---|
-| **P0 Önkoşul (haber öncesi)** | As-of altın trendi ve volatilitesi, gümüş/platin/paladyum, dolar, 2Y/10Y nominal/reel, petrol, risk endeksleri, pozisyon, saat ve yayın lag'i | XAU M15 ve kısmen ZN/NQ/CL var; 2023–24 gümüş **SI.n.0 arşivde var fakat 55 olayın H1 değeri henüz çıkarılmadı**; DXY/gerçek faiz eksik |
-| **P1 İlk katalizör** | Orijinal haber firstprint UTC, açıklama öncesi consensus-vintage, actual sürprizi, aynı andaki rakip haber | 96 fiyat kaydında hareketi *başlatan* tek ilk haberin nedensel doğrulaması **0/96**; belli NFP/CPI saatleri ayrıca doğrulanmış |
-| **P2 İlk tepki / ONSET** | Firstprint öncesi ve sonrası M1/M15 altın, XAG/ZN/FX/faiz, bid-ask ve olay öncesi 1/4/12h | 85 zamanlı ABD makro release alt çalışması var; tamamını V1 başlangıcına bağlama |
-| **P3 Yayılma ve devam** | 1/4/12s + 1/3/5 uygun seans yönü, güçlü/ters metal-akış ve faiz, ikinci haberler | 42 uzun ve 54 kısa kaydın gözlemlenmiş fiyat yolu ayrıştırıldı; fiyat rejiminin gerçek nedeni henüz çoğu olayda belirsiz |
-| **P4 Yorulma / baskınlık değişimi** | Kalan beklenen hareket düşer, çapraz varlık ayrışır, haber akışı tersine döner, likidite/pozisyon zorlanır | Fiyat dönüm noktası **geriye dönük etiketli**; aynı noktayı canlı haber sonu olarak sunma |
-| **P5 Bitiş / sonrası** | Gerçek trendin kırılması, maliyet sonrası yeniden AL/SAT/TUT karşı-olguları, takip eden 3 seans | 42 V1 için sonraki üç seansın ters işaretli değişimi ayrıca hesaplandı. **ZigZag döngü sınırı sonradan seçildiğinden dönüş sıklığı yapısal olarak yükselebilir; erken çıkış başarısı olarak kullanma.** |
-
-**Karakter vektörü:** `group_primary`, `secondary_transmission`, `known_news_firstprint`, `precondition`, `stage`, `gold_price_1/4/12h`, `silver_spot/futures_PIT`, `USD/2Y/10Y`, `oil`, `market_risk`, `morphology`, `rival_evidence`, `end_phase_flag`, `expected_remaining`, `costed_decision`, `evidence_level`. **EKSİK** alan modele sıfır olarak kodlanmaz; ayrı eksiklik bayrağı taşınır.
-
-## 2. Yedi ekonomik olay ailesinin karakter analizi
-
-### G01 — ABD makro – faiz/dolar/Fed beklentisi
-
-**Kapsam:** 96 fiyat kaydında **30 etiket**, ölçülebilir uzun V1 bacağında **12 örnek** (9 UP / 3 DOWN). **Yaygın fiyat süresi:** V1 etiketli bacaklarda ortanca **26 takvim günü**. Bu sınıf **ekonomik neden ispatı değil, ilk sürüm aday mekanizma**.
-
-**Başlangıç karakteri / önkoşul → tetikleyici:** Önkoşul: ücret/enflasyon/istihdam beklentileri, DXY ve nominal/reel faiz patikası. Katalizör adayı: zaman damgalı CPI, NFP, AHE, Fed/FOMC veya ISM açıklaması; sürprizin işareti tek başına altın yönünü belirlemez.
-
-**Gelişim karakteri / aktarım → güçlendirici:** Makro bilginin Fed beklentisine, dolara ve faize aktarılması; zaman içinde gelen yeni verilerle güçlenme veya işaret değiştirme. 12 uzun V1'de **5 geç hızlanan** tip var; fiyatın ilk seanslarda yavaş gitmesi zayıf haber anlamına gelmez.
-
-**Bitiş karakteri / tükenme → karşı-haber → dönüş:** Karşı veri, yeni Fed konuşması, faiz/dolar hareketinin sönmesi veya uzun pozisyonların çözülmesiyle dönüş adayı. Haber değişimi ve 15m trend dönüşü gözlenmedikçe kesin ‘bitti’ sinyali yok.
-
-**Yanlışlayan veya ayırıcı vaka:** 10 Mart 2023: güçlü NFP sürprizi olsa da altın +%0,540 ilk 15m UP; SVB güvenli liman kanalı rakip. 6 Ocak NFP ve 3 Şubat NFP ters örnekleri.
-
-**Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans **+0.38%**, bacak ortasında başlangıca göre **+2.78%**, son 3 seansta **+1.96%**; etiket sonunu izleyen 3 seansta **+1.31% ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
-
-**Kayıt örnekleri:** [SWING_V1_001](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_001) · [SWING_V1_002](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_002) · [SWING_V1_003](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_003). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
-
-### G02 — Tarife, ticaret ve ekonomi politikası
-
-**Kapsam:** 96 fiyat kaydında **20 etiket**, ölçülebilir uzun V1 bacağında **11 örnek** (5 UP / 6 DOWN). **Yaygın fiyat süresi:** V1 etiketli bacaklarda ortanca **9 takvim günü**. Bu sınıf **ekonomik neden ispatı değil, ilk sürüm aday mekanizma**.
-
-**Başlangıç karakteri / önkoşul → tetikleyici:** Önkoşul: tarife müzakeresi, uygulama takvimi, küresel ticaret kırılganlığı. Katalizör adayı: oran, yürürlük tarihi, mahkeme/erteleme veya müzakere açıklaması; ilk kaynak saatini ayır.
-
-**Gelişim karakteri / aktarım → güçlendirici:** İki rakip kanal: riskten kaçış/altına talep **veya** nakde sıkışıp teminat satışı. Tarife açıklaması daha sonraki karşı-haberlerle birkaç ayrı fiyat dalgasına dönüşebilir.
-
-**Bitiş karakteri / tükenme → karşı-haber → dönüş:** Erteleme/anlaşma, pozisyonların yeniden kurulması ya da satışın likidite ihtiyacının bitmesi. Son 3 seansta işaretli medyan +%2,50: bu örneklemde hareketler bazı bacaklarda **geç bölümde de devam etmiş**.
-
-**Yanlışlayan veya ayırıcı vaka:** 2025 Nisan’da tarife/likidite stresi altında altın da düştü; ‘tarife = altın kesin yükselir’ yanlıştır.
-
-**Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans **+1.91%**, bacak ortasında başlangıca göre **+1.26%**, son 3 seansta **+2.50%**; etiket sonunu izleyen 3 seansta **+1.49% ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
-
-**Kayıt örnekleri:** [SWING_V1_025](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_025) · [SWING_V1_027](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_027) · [SWING_V1_028](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_028). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
-
-### G03 — Jeopolitik risk ve güvenli liman
-
-**Kapsam:** 96 fiyat kaydında **13 etiket**, ölçülebilir uzun V1 bacağında **7 örnek** (3 UP / 4 DOWN). **Yaygın fiyat süresi:** V1 etiketli bacaklarda ortanca **14 takvim günü**. Bu sınıf **ekonomik neden ispatı değil, ilk sürüm aday mekanizma**.
-
-**Başlangıç karakteri / önkoşul → tetikleyici:** Önkoşul: çatışma/enerji arzı/diplomatik gerilim, piyasadaki mevcut korku primi. Katalizör adayı: doğrulanmış ilk çatışma veya ateşkes haberi.
-
-**Gelişim karakteri / aktarım → güçlendirici:** Güvenli liman talebi XAU UP doğurabilir; fakat enerji fiyatı/enflasyon/faiz veya likidite kanalı ters yönde olabilir. Haber akışı art arda değiştikçe çoklu dalga ve yön dönüşü görülebilir.
-
-**Bitiş karakteri / tükenme → karşı-haber → dönüş:** Risk priminin sönmesi, ateşkes ve diplomasi veya enflasyon-faiz kanalının baskın hâle gelmesi. Fiyatın zirvesini geçmişten bilerek bitiş saati tahmin edildiği iddia edilemez.
-
-**Yanlışlayan veya ayırıcı vaka:** Aynı jeopolitik aile içinde 3 UP ve 4 DOWN uzun bacak: haber başlığı yön için yeterli değil.
-
-**Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans **+0.78%**, bacak ortasında başlangıca göre **+2.17%**, son 3 seansta **+0.80%**; etiket sonunu izleyen 3 seansta **+0.53% ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
-
-**Kayıt örnekleri:** [SWING_V1_007](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_007) · [SWING_V1_008](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_008) · [SWING_V1_021](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_021). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
-
-### G04 — Merkez bankası / rezerv / fiziki altın ve fon akışı
-
-**Kapsam:** 96 fiyat kaydında **11 etiket**, ölçülebilir uzun V1 bacağında **6 örnek** (3 UP / 3 DOWN). **Yaygın fiyat süresi:** V1 etiketli bacaklarda ortanca **16.5 takvim günü**. Bu sınıf **ekonomik neden ispatı değil, ilk sürüm aday mekanizma**.
-
-**Başlangıç karakteri / önkoşul → tetikleyici:** Önkoşul: merkez bankası alım eğilimi, fiziki/ETF/OTC ve vadeli piyasa stok/akış dengesi. Katalizör adayı: PBoC altın alım raporu, WGC/ETF/CFTC ilk açıklaması; **verinin ait olduğu ay ile yayımlandığı gün ayrılır**.
-
-**Gelişim karakteri / aktarım → güçlendirici:** Talep ve arz/pozisyon kanalı metaller arasında ayrışma doğurabilir; bankacılık/rezerv bilgisi bazen fiyat hareketini izler ve gecikmeli yayımlanır. Başka makro haberler rakip olabilir.
-
-**Bitiş karakteri / tükenme → karşı-haber → dönüş:** Alımın durması, ETF/COMEX çözülmesi, aşırı momentum veya ABD faiz baskısı. Bu altı V1'de bitiş sonrası 3 seans medyan yön terslemesi **−%0,05**; ‘hemen hep geri döner’ kanıtı yok.
-
-**Yanlışlayan veya ayırıcı vaka:** Ocak 2023 altında UP varken ETF ay sonu eksi; 7 Haziran 2024 PBoC haberi ve NFP ayrı tetikler.
-
-**Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans **+1.48%**, bacak ortasında başlangıca göre **+2.85%**, son 3 seansta **+1.32%**; etiket sonunu izleyen 3 seansta **-0.05% ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
-
-**Kayıt örnekleri:** [SWING_V1_011](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_011) · [SWING_V1_013](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_013) · [SWING_V1_016](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_016). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
-
-### G05 — Finansal stres / fonlama / zorunlu tasfiye
-
-**Kapsam:** 96 fiyat kaydında **4 etiket**, ölçülebilir uzun V1 bacağında **3 örnek** (0 UP / 3 DOWN). **Yaygın fiyat süresi:** V1 etiketli bacaklarda ortanca **9 takvim günü**. Bu sınıf **ekonomik neden ispatı değil, ilk sürüm aday mekanizma**.
-
-**Başlangıç karakteri / önkoşul → tetikleyici:** Önkoşul: marjin, kredi, fonlama veya nakit teminat ihtiyacı. Katalizör adayı: banka/kredi haberi, teminat gereksinimi veya piyasa likidite boşluğu.
-
-**Gelişim karakteri / aktarım → güçlendirici:** Teminatlı pozisyonlar çözüldüğünde altın ve hisseler/beyaz metaller birlikte satılabilir. Fiyatın ilk düşüşünden sonra başka emir dalgaları gelebilir; 3 uzun bacağın tamamı DOWN ama **örnek çok küçüktür**.
-
-**Bitiş karakteri / tükenme → karşı-haber → dönüş:** Marjin/nakit ihtiyacının bitmesi, piyasanın likiditesinin toparlanması veya yeni risk/varlık haberinin baskınlaşması. Medyan son 3 seans +%1,90 yönlü, çıkışın son anı ex-post saptanmıştır.
-
-**Yanlışlayan veya ayırıcı vaka:** SVB Mart 2023 bankacılık stresi altına güvenli liman UP yaratabildi; bankacılık riski = her zaman altın DOWN değil.
-
-**Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans **+0.83%**, bacak ortasında başlangıca göre **+0.54%**, son 3 seansta **+1.90%**; etiket sonunu izleyen 3 seansta **+1.45% ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
-
-**Kayıt örnekleri:** [SWING_V1_010](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_010) · [SWING_V1_018](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_018) · [SWING_V1_042](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_042). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
-
-### G06 — İçsel pozisyon dönüşü / kâr alma / momentum
-
-**Kapsam:** 96 fiyat kaydında **4 etiket**, ölçülebilir uzun V1 bacağında **0 örnek** (uzun V1 örneği yok). **Yaygın fiyat süresi:** hesaplanamaz. Bu sınıf **ekonomik neden ispatı değil, ilk sürüm aday mekanizma**.
-
-**Başlangıç karakteri / önkoşul → tetikleyici:** Önkoşul: birikmiş trend, yoğun long/short pozisyonu, fiyatın önceki volatilitesi ve marjin. Bu sınıftaki dört kayıt **V2 kısa-ufuk**, 42 V1 uzun bacak sınıflarında ayrı birincil etiket yok.
-
-**Gelişim karakteri / aktarım → güçlendirici:** Tetikleyici net makro haber olmayabilir; likidite, stop zinciri, teknik kırılma veya pozisyon tasfiyesi birlikte gelir. Bugün için yalnız 4/12h ve 1/3/5seans kontrol akışındaki fiyat morfolojisi incelenebilir.
-
-**Bitiş karakteri / tükenme → karşı-haber → dönüş:** Satıcı/alıcı baskısı tükenmesi, ters fiyat teyidi veya yeni haberin yönü değiştirmesi. **Uzun bacak başlangıç–orta–son sayısal medyanı hesaplanmadı**; başka ailenin dönüşünü yanlış biçimde bunun uzun örneği sayma.
-
-**Yanlışlayan veya ayırıcı vaka:** Ekim 2025 altında/metallerde düşüşe karşın hisse/petrol yükselişi; genel likidite paniği diye otomatik sınıflandırma yanlış olabilir.
-
-**Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans ****veri yok****, bacak ortasında başlangıca göre ****veri yok****, son 3 seansta ****veri yok****; etiket sonunu izleyen 3 seansta ****veri yok** ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
-
-**Kayıt örnekleri:** [C_CORR_008](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_008) · [C_CORR_013](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_013) · [C_CORR_022](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_022) · [C_CORR_049](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_049). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
-
-### G07 — Karma / baskın ekonomik neden henüz ayrıştırılmadı
-
-**Kapsam:** 96 fiyat kaydında **14 etiket**, ölçülebilir uzun V1 bacağında **3 örnek** (1 UP / 2 DOWN). **Yaygın fiyat süresi:** V1 etiketli bacaklarda ortanca **30 takvim günü**. Bu sınıf **ekonomik neden ispatı değil, ilk sürüm aday mekanizma**.
-
-**Başlangıç karakteri / önkoşul → tetikleyici:** Önkoşul ve ilk kaynak çelişkili, gecikmeli ya da belirsiz. Tek haberle açıklanamayan üst üste NFP, CPI, Fed, tarife ve jeopolitik bilginin rekabet ettiği vakalar.
-
-**Gelişim karakteri / aktarım → güçlendirici:** Birden fazla nedenin üst üste binmesi, başlangıçta ters yönde hareket sonra yeni bilgilerle asıl trendin oluşması mümkün. Üç uzun kayıtla genel tip tanımlanamaz.
-
-**Bitiş karakteri / tükenme → karşı-haber → dönüş:** Baskın mekanizma çözümlenene kadar `UNKNOWN`; fiyatın son bulması nedensel mekanizmanın bittiğini göstermez.
-
-**Yanlışlayan veya ayırıcı vaka:** Haber bulunamadı ≠ haber gerçekleşmedi. Bu sınıf model başarısızlığı değil, gerekçeli ‘bilmiyoruz’ kaydıdır.
-
-**Gerçek gözlemsel üç evre (42 uzun V1 örnekleme esaslı):** İlk 3 uygun seans **-0.20%**, bacak ortasında başlangıca göre **+2.29%**, son 3 seansta **+0.91%**; etiket sonunu izleyen 3 seansta **+1.11% ters yönlü** hareketin grup ortancası. *İşaret, her bacağın sonradan etiketlenmiş UP/DOWN yönüne çevrilmiştir; bunlar gerçek haber başlangıcı/saatli banka getirisi veya karar anında bilinebilir bitiş tahmini değildir.*
-
-**Kayıt örnekleri:** [SWING_V1_006](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_006) · [SWING_V1_014](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_014) · [SWING_V1_033](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_033). Tüm kayıtlar [96'lık karakter atlasında](../OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv).
-
-
-## 3. Ekonomik nedenden bağımsız 5 ana uzun-fiyat karakteri (42 V1)
-
-**Yöntem:** V1 NY17 düzeltilmiş fiyat bacağının tarih başlangıcı/bitişi alınarak her uygun işlem günü 06:00 UTC M15 kapanış fiyatı örneklendi. İlgili güne ait M15 kapanışı ancak **06:15 UTC** sonrasında bilinebilir. İlk 3 uygun seans, bacak orta günü, son 3 uygun seans ve etiket bitiminden sonraki ilk 3 uygun seans karşılaştırıldı. Ölçümde kullanılan **`path_efficiency = |net toplam yönlü getiri| / toplam mutlak günlük yüzde hareketleri`**; etiketli bacak ve örneklenmiş 06:00 fiyat ölçümü ayrı sözleşmedir. Kıstaslar bilimsel doğrulanmış doğal cluster değil, **test edilmek üzere tasarlanmış sayısal profil eşikleridir**.
-
-| Fiyat hareketi karakteri | Uzun V1 olay sayısı | Ölçüm tanımı | Karar araştırmasında neyi değiştirir? |
-|---|---:|---|---|
-| **M1 Erken impuls** | **8** | İlk 3 uygun seansta bacak yönünde ölçülen net hareketin ≥%50'si; çıkış veya ilk açıklama saati değildir. | Erken ivmenin 12s/3seansta sönmesi, karşıt haber ve kalıcılık işaretleri |
-| **M2 Düzenli devam** | **4** | İşaretli toplam hareket / mutlak günlük dalgalanma toplamı ≥0,70; erken impuls şartını karşılamamış. | Şiddetli yavaşlama, etrafında yeniden fiyatlama, risk ve spread yükselişi |
-| **M3 Gecikmeli hızlanma** | **7** | İlk 3 uygun seansta toplamın <%15'i, bacak orta noktasında <%40'ı ortaya çıkar. | Sonraki haberle mi tetiklendi? İlk makroyu hareketin tümüne atfetme |
-| **M4 Dalgalı / sık ters hareket** | **16** | Net yönlü ilerleme / mutlak günlük fiyat yolu <0,40; pek çok karşı dalga var. | Her küçük geri çekilmede SAT/AL değişimi çift %0,8 maliyete takılır |
-| **M5 Çok dalgalı / geçiş** | **6** | Yukarıdaki katı beşli kuralların diğer dört tipine girmeyen, birden çok evreli fiyat yolu. | Farklı haberler ve aşamalar ayrı alt-olaya bölünmeli |
-| **M0 Çok kısa** | **1** | 4'ten az 06:00 UTC günlük M15 örneği; uzun-fiyat profilinde güvenilir oran yok. | Günlük yerine gerçek M15/M1 pencereyle ayrı profil gerek |
-
-**Yorum:** **16/42** uzun V1 kaydı dalgalı karakter aldı; burada sürekli AL/SAT değiştirmenin toplam komisyonu ciddi engeldir. **7 geç hızlanan** vaka vardır; olayın başındaki yavaşlık, geriye kalan hareketin küçük olduğunu kanıtlamaz. **8 erken impuls**, **4 düzenli devam**, **6 çok dalgalı geçiş** görüldü. **1 kısa vaka** uzun-fiyat morfolojisine zorlanmadı. Sadece geçmiş fiyat yolundan ekonomik neden çıkmaz.
-
-## 4. Kısa/orta ufuk V2 kontrol karakterleri (54 kısa fiyat kaydı)
-
-| 09:15 TRT kontrol noktasına göre SONRADAN gerçekleşen tip | Kayıt | Ölçüm ve sınırı |
-|---|---:|---|
-| S1 İlk impuls üç seansa taşındı | **12** | 09:15 kontrol sonrası 4s MID ≥%0,35 ve 3 seans MID ≥%0,50, işaret aynı |
-| S2 İlk impuls üç seansta tersine döndü | **6** | İlk 4s |getiri| ≥%0,35, 3 seans |getiri| ≥%0,50 ama işaret ters |
-| S3 Gecikmeli büyük hareket | **10** | İlk 4s |getiri| <%0,35, sonraki 3 seans |getiri| ≥%1,62 |
-| S4 3 seans hareketi ücret eşiğinden küçük | **25** | 3 seans |MID getiri| <%1,62; tam bir işlemin maliyetini tek başına karşılamayabilir (spread hariç) |
-| S0 Ölçülemeyen | **1** | 3 seans sonucu yok veya uygun ileri M15 veri eksik |
-
-**Önemli:** 4 saat/12 saat sonuçları ve 3/5 seans ölçümleri, önceden bilinmeyen hedeflerdir. V2 olayının ‘gerçek ilk haber saati’ bu 09:15 kontrolünden önce/sonra olabilir. Sınıflandırma **in-sample ex-post** gözlemdir; otomatik erken uyarı değildir.
-
-## 5. Gruplar arası ayrım — aynı sonuç nasıl zıt ekonomi üretebilir?
-
-| Birbirine benzeyen XAU sonucu | Rekabet eden karakterler | Karşıt durum, sınanacak fark |
+| **M1 — Erken impuls** | Toplam gözlenen bacak hareketinin büyük bölümü başlarda gerçekleşir | Gerçek ilk haber saati veya önceden görülebilen bitiş değildir |
+| **M2 — Düzenli sürme** | Fiyat yolu az karşı dalga ile net yönde ilerler | Sürmenin ekonomik nedeni ayrıca doğrulanır |
+| **M3 — Gecikmeli hızlanma** | İlk bölüm görece küçük; sonra hareket ivmelenir | Geç gelen haber/aktarımı ayrıca araştır |
+| **M4 — Dalgalı / sık dönüş** | Yol boyunca tekrarlı ters hareketler ve düşük net yol etkinliği vardır | Ücret ve makas, geriye dönük her dönüşte işlem yapılmasını cazip göstermez |
+| **M5 — Çok dalgalı / geçiş** | Birden fazla evre veya rekabet eden gelişim yolu vardır | Alt olaylar ayrıştırılır; bir habere tüm dalga atfedilmez |
+| **M0 — Ölçüm yetersiz** | Uzun bacak için yeterli örnekleme yok | Uzun morfoloji zorlanmaz |
+| **S1–S4 / S0** | Kısa pencerede ilk impulsun sürmesi, ters dönmesi, gecikmeli büyüme, ücret-altı net hareket veya veri yetersizliği | Gelecek ufuk gerçekleşmeleri **ex-post etiket**; olay tetik saati veya canlı öngörü değildir |
+
+**Sınıflandırma eşikleri, örnek adedi, performans oranları, gözlenen tarihli yollar ve fiyat ölçüm sözleşmeleri burada değil OLAY-02 sayısal kanıtlarında yaşar.** Buradaki M/S adları bilimsel olarak keşfedilip bağımsız doğrulanmış doğal kümeler değildir.
+
+## 4. Olay örgüsünün evre grameri
+
+| Evre | Ekonomik DNA'da aranacak değişim | Aynı-UTC ayırıcı kanıt |
 |---|---|---|
-| **UP** | G01 güvercin Fed / G03 kredi-jeopolitik haven / G04 fiziki/rezerv talep | Gerçek USD/faiz etkisi, gümüş-altın ayrışması, haber yayın/vintage, kredi ve petrol |
-| **DOWN** | G01 şahin Fed / G02 tarife-likidite / G05 zorunlu fonlama / G06 pozisyon sönümlenmesi | Hisse+petrol+gümüş birlikte mi düştü, yoksa yalnız kıymetli metal mi? Same-UTC teyit gerekir |
-| **İlk yükseliş sonra satış** | NFP+ISM aynı gün, ilk haber yanlış yorum / G06 aşırı pozisyon | İlk 15dk/60dk, sonraki 4/12h, 3 seans; negatif kontrol |
-| **Büyük uzun trend** | M2 düzgün devam / M3 geç ivme / M4 dalgalı çok haber | İlk haberin katkısını uzun dalganın tamamıyla eşitleme; ara haberleri EVENT_ID olarak böl |
-| **Düşüş sonunda hızlı toparlanma** | G05 likidite zorunluluğu bitti / G02 tarife karşı-haber / G01 Fed beklentisi değişimi | Sonradan seçilmiş ZigZag diplerini sinyal saymadan likidite/yeniden fiyatlama ilk gözlemi |
+| **P0 / latent önkoşul** | Kırılganlık, beklenti, varlık ilişkileri ve pozisyon birikimi | Haber öncesi as-of veri, mevcut piyasa rejimi |
+| **P1 / katalizör** | Beklenen yapıya yeni bilgi/şok girer | Özgün kaynak ve erişilebilirlik; aynı anda rakip bilgi |
+| **P2 / ilk fiyat aktarımı** | Bir veya daha fazla ekonomik kanal işlemeye başlar | XAU ve aktarım değişkenlerinde gerçek zaman sırası |
+| **P3 / yayılma** | Mekanizma güçlenir, sönümlenir veya yeni dalga yaratır | Ardışık bilgi ve çoklu varlıkta teyit/ayrışma |
+| **P4 / doygunluk/çatallanma** | Beklenti kalabalıklaşır, kanal değişir, karşıt haber baskınlaşır | Alternatif kanal, yeni fiyat/likidite koşulları |
+| **P5 / çözülme/geçiş** | Aynı mekanizma azalır, başka DNA devralır veya neden belirsizleşir | Yapısal değişimin kanıtı; sonradan seçilmiş tepe/dip tek başına değil |
 
-**Benzerlik/öğrenme sırası:** `same unique checkpoint` mükerrerliği kaldır → aynı üst fiyat bacağı ve 14 günlük embargo ile yakın komşuları ayır → as-of haber ailesi *ilk yayımla*, altın geçmiş trend/oynaklık, gümüş, faiz/dolar, petrol, rejim ve evreyle karşılaştır → **aynı koşullarda ters sonuç veren kontrolleri** zorunlu bul → gelecekteki sonucu yalnız değerlendirmede aç. Şu anda 84 kontrolün yalnız 3'ünde sınırlı NFP/CPI/FOMC takvim türü+altın fiyat rejimi eşleşmesi vardır, **bu gerçek haber neden eşleşmesi değildir**. 2023–24 SI.n.0 saatlik gümüş kaynak arşivi henüz tüm 55 olaya sayısal aktarılmadı. **‘En yakın fiyat’ eşlemesi ile AL/SAT izni yok.**
+Her aile ve alt varyant bu gramer üzerinden tanımlanır. **P0→P1→P2→P3→P4→P5 zorunlu doğrusal sıra değildir**: bazı gözlemler P2'de kesilir; P3 yeniden tetiklenebilir; P4 ile P3 iç içe geçebilir; ayrı mekanizmalar aynı anda etkindir. Her faz ataması ayrıca `KNOWN_AS_OF`, `RETROSPECTIVE_ONLY` veya `UNKNOWN` taşır. Geriye dönük fiyat dönüşü bir ekonomik şokun sona erdiğinin kanıtı değildir.
 
-## 6. Bir çıkarım hangi şartta kalıcı öğrenmeye dönüşecek?
+## 5. DNA–DNA etkileşimleri ve dönüşüm kuralları
 
-1. **Aile hipotezi:** Haber ilk yayımlanma saati, ön koşul ve rakip nedenleriyle birlikte kaydedilmeden `G01–G07` etiketi yalnızca `CANDIDATE` kalır.
-2. **Karakter testi:** En az bir aynı-grup ters sonuç ve bir şoksuz kontrol eşleştir; fiyat deseninin farklı makro rejimde bozulup bozulmadığını ölç.
-3. **Safha tahmini:** Gerçek alarm anında `P(ONSET/CONTINUE/EXHAUST/REVERSE)` kalibre edilecek; sonradan seçilmiş V1/V2 bitişini doğru tahmin sayma.
-4. **Fırsat–maliyet testi:** %0,8 alış + %0,8 satış + bankanın BID/ASK makası ile **karar sonrasında kalan beklenen hareketi** karşılaştır. `GOLD/CASH` başlangıç hâli ve geri-giriş ihtiyacı ayrı ele alınmalı.
-5. **Bilimsel geçiş:** `DESCRIPTION_ONLY → TIMED_SOURCE_QA → CONTRADICTION_TESTED → FROZEN_ASOF_OOS → COSTED_VALIDATED`. Bugün G01–G07 ve M1–M5 **DESCRIPTION_ONLY**; ilk üç mevcut `MECH_...` karar hipotezi de `RESEARCH_ONLY`.
-6. **Bilgi arşivi:** OLAY-02 araştırmasının `EVENT_ID`si ve özgün dosya bağlantısı kaybolmadan, aile karakteri veya yanlışlanan kuralın yeni sürümü bu ÖĞREN-03'e eklenir. Aile değiştirildiğinde eski etiket tarihçesi `superseded_by` ile saklanır.
+**Amaç yalnız tekil olay ailesi değil, birbirini etkileyen mekanizma ağını tanımlamaktır.** Aşağıdakiler **olasılık yollarıdır, tarihsel olarak doğrulanmış zincirler değildir**.
 
-## 7. Geliştirilmesi gereken eksik kanıtlar — açık öncelik
+| Olası etkileşim | Bileşen grafiği | Gerçekten ayırt etmek için |
+|---|---|---|
+| Makro sürpriz + risk stresi | `G01 ↔ G05` | Faiz/USD ilk tepkisi, kredi stresi ve güvenli liman eşzamanlılığı |
+| Tarife ve güvenlik endişesi | `G02 ↔ G03` | Fiyat hareketine önce hangi doğrulanmış bilgi ve enerji/risk kanalı girdi? |
+| Jeopolitik risk → maliyet/faiz baskısı | `G03 → G01` adayı | Enerji/enflasyon beklentisi ile faiz patikasının ara bağlantısı |
+| Politik şok → fonlama zorlanması | `G02 → G05` adayı | Kredi/marjin/liquidation teyidi ve haber sırası |
+| Talep artışı → aşırı pozisyon → düzeltme | `G04 → G06` adayı | Gecikmesiz akış ile gerçek pozisyon/likidite birikimi |
+| Fonlama şoku → nakit satışı → güvenli liman | `G05-A → G05-B` adayı | Fonlama rahatlaması ve risk varlıkları/altın işaret değişimi |
 
-**P1:** 2023–24 55 olay için SI.n.0 / SI 15m/1h gümüş verisini doğru kapanış saatinde gerçekten hesaplamak (arşiv mevcut, çıkarım henüz değil). **P2:** DXY / gerçek 2Y–10Y nominal/reel faiz, Brent ve haber/vintage; günlük ETF/CFTC yayım gecikmesi. **P3:** 84 tekil kontrolün şoksuz normal günlerle genişletilmesi; 96 olayın yalnız büyük gerçekleşmiş dalgalardan seçilme yanlılığı. **P4:** Ekonomik ilk haberin mevcut fiyat bacağını başlatıp başlatmadığının ilk UTC M1/M15 testi; retrospektif WGC haberleri canlı özellik olamaz. **P5:** 2026 Ocak–Eylül günlük Astra araştırma mekanizmalarının farklı saat/etiket ve maliyet varsayımları korunarak ayrı doğrulanması.
+**Bağ türü zorunlu:** `CO_OCCURRENCE` (yalnız birlikte gözlem), `TEMPORALLY_ORDERED`, `TRANSMISSION_CONSISTENT`, `RIVAL_TESTED`, `INDEPENDENTLY_VALIDATED`. Birlikte hareket `CAUSES` bağlantısı değildir. Her aday grafiğin test edilebilir ayırıcı değişkenleri vardır; **grafiğin olay bazlı kenarları ve kaynakları OLAY-02'dedir**, burada yalnız jenerik mekanizma vardır.
 
-**Çıkarım manifesti DURUMU:** `7_CANDIDATE_ECONOMIC_FAMILIES / 5_MEASURED_LONG_LEG_MORPHOLOGIES / 1_SHORT_V1_INSUFFICIENT / 54_SHORT_HORIZON_PROFILES / 96_PRICE_RECORDS_AND_84_CHECKPOINTS / NO_VERIFIED_PRICE_INITIATION_CAUSALITY / NO_MODEL_PROMOTION`.
+## 6. Yeni DNA keşfetme, güncelleme ve yanlışlama sözleşmesi
 
-## 8. OLAY ÖRGÜSÜ ÇIKARIM OPERASYON PROTOKOLÜ — 14 Ekim 2026
+1. **Aday oluştur:** Mevcut G ailesinin içine sığmayan tekrar edilebilir yeni aktarım yolu varsa `Gxx-ALTn` taslağı oluştur; yalnız farklı fiyat grafiğine bakıp yeni DNA yaratma.
+2. **Önkoşul + tetik + aracı + sonuç:** Adayın haber/şokun ilk erişim anında bilinen önkoşullarını, beklenen ara piyasa tepkisini, farklı gelişim dallarını ve yanlışlayıcılarını önceden tarif et.
+3. **Karşıt örgüleri zorunlu ara:** Aynı haber ailesinde ters yön, farklı morfoloji, benzer piyasa koşullarında olaysız kontrol; kayıtlarda bu yoksa `INSUFFICIENT_COMPARATORS`.
+4. **Eksik değer bilinmezdir:** USD/faiz veya SI gibi kaynağı bulunmayan kanalları sıfır veya geriye dönük uydurulmuş fiyat olarak kullanma. Gecikmeli fon/rezerv raporu olay anına taşınmaz.
+5. **Gerçek nedensellik iddiasını kısıtla:** İlk haber kaynağı, piyasa zaman sırası, bağımsız aktarım doğrulaması ve rakip mekanizma kontrolü olmadan `CAUSAL` yazma. Fiyat bacağına geriden seçilmiş bitiş ekonomik evre bitişi sayılmaz.
+6. **Genellemenin sınırını koru:** Tüm tarihsel arşiv keşif için kullanılabilir; bununla oluşan DNA aynı arşivde “kör tahmin başarısı” olarak puanlanamaz. Ayrı donmuş zaman-as-of sınavı ve maliyetli karar çalışması ANA-01 yöntem sözleşmesindedir.
+7. **Kanıt yükseltme:** `DNA_CANDIDATE → SOURCES_TIMED → TRANSMISSION_CONSISTENT → RIVAL_CONTROL_TESTED → INDEPENDENTLY_VALIDATED`. DNA bazında kanıt bağlantıları, gerekçeler ve eksikler OLAY-02 altında değerlendirilir; kanıt düzeyi kayıtsız yükseltilmez.
+8. **Sürüm yönetimi:** Ekonomik çekirdeği değişmeyen DNA'nın varyantını güncelle; çekirdek değişiyorsa yeni alt varyant aç ve eskisine `superseded_by` kaydı bırak. Tarihli değişiklik günlüğü ve eski tanımın tam sürümü Git geçmişindedir; DNA metnine olay tarihi eklenmez.
 
-**Statü: ONAY BEKLEMEYEN ARAŞTIRMA TASARIMI / HENÜZ SONUÇ ÜRETİLMEDİ.** Bu bölüm, 7 ekonomik aileyi ve 5 fiyat morfolojisini olaylar arasında bağ kurabilen, yanlışlanabilir ekonomik mekanizma örgülerine dönüştürmek için çalışma sözleşmesidir. Yeni bir üst manifest oluşturmaz; OLAY-02 ham kanıt otoritesi, ÖĞREN-03 sentez/hipotez otoritesi olarak kalır. Bu protokolün eklenmesi hiçbir tarihsel mekanizmanın doğrulandığı veya herhangi bir işlemin test edilip onaylandığı anlamına gelmez.
+**Başlangıçtaki bilgi sınırı:** Bu katalog, ekonomik mekanizmaların **test edilecek koşullu tanımlarıdır**. G01–G06 tanımlanmış, G07 bilinmezlik yönlendiricisidir. Bunların hiçbirine kanıtlanmış fiyat başlatıcısı, iyi kalibre edilmiş sonraki yön tahmini veya otomatik banka al/sat izni atanmamıştır.
 
-### 8.1 Araştırma birimi ve olay grafiği
-- `EPISODE_ID` = geçmiş fiyat bacağı / V1 ebeveyn dalga; `EVENT_ID` = kendi ilk yayımlanma saati bulunan makro veya piyasa katalizörü; `CHECKPOINT_ID` = as-of gözlenebilir fiyat/veri kontrolü; `PHASE_ID` = fiyat ve olay sürecinin zamana bağlı safhası.
-- **Çoktan çoğa ilişki:** Bir `EPISODE_ID` içinde birçok `EVENT_ID` olabilir, bir `EVENT_ID` birçok fiyat safhasında etkili olabilir. Aynı tarihteki V1/V2 kayıtları bağımsız yeni şok varsayılmaz. 96 fiyat kaydı / 84 kontrol = istatistiksel olarak 84 bağımsız şok değildir.
-- Olay grafiği yalnız açıklama cümlelerinden oluşmaz: `EVENT_ID → TRANSMISSION_CHANNEL → OBSERVED_ASSET_RESPONSE → PHASE_CHANGE` kenarlarının her birinde zaman damgası, kaynak, rakip açıklama ve kanıt seviyesi tutulur. Doğrulanmamış kenar `HYPOTHESIS` olarak işaretlenir.
+## 7. Öğrenmenin saklandığı yer — DNA ile anıyı ayır
 
-### 8.2 Olay fişinde zorunlu kronoloji (P0–P5)
-1. **P0 / önkoşul:** İlk haberden hemen önceye kadar bilinen altın trend/oynaklık, metal eş hareketleri, faiz, USD, petrol, hisse ve finansal stres, beklenti-vintage, ABD/Türkiye zaman dönüşümü.
-2. **P1 / gerçek katalizör adayı:** Özgün BLS/Fed/ISM/resmî şirket veya ilk haber kaynağı, yayımlanma `available_at_utc`, verinin ait olduğu dönemden ayrı. Sonradan yazılmış haber ilk kaynak sayılamaz.
-3. **P2 / ilk tepki:** Tamamlanmış ve eşzamanlı fiyat barları ile mümkünse ilk yayımdan önce -60/-15dk ve sonra +15/+60dk altın, SI ve bağımsız aktarım verileri. **Önce kaynak saat doğrulanır, sonra fiyat penceresi hesaplanır.**
-4. **P3 / yayılma:** +4/+12s ve +1/+3/+5 uygun seans yollarında yeni haberler; altın hareketinin başlangıcı ile sonradan gelen ikinci/üçüncü katalizör ayrı `EVENT_ID` alır.
-5. **P4 / yorulma ve baskın mekanizma değişimi:** Faiz/USD/metal ayrışması, karşı haber, likidite, hız ve oynaklıkta değişim; ex-post ZigZag dönüm noktası canlı sönüş kanıtı değildir.
-6. **P5 / sonlanma / sonraki durum:** Devam, tersine dönüş, başka ekonomik aileye geçiş veya nedenin hâlâ belirsiz kalması; sonrasındaki 3 seans ex-post ölçüm, karar anında biliniyor kabul edilmez.
-Her safhanın `observed`, `source`, `time_available`, `alternative_explanation`, `missing_flag`, `confidence` alanları olmalıdır.
+- **ÖĞREN-03:** Yalnız aile ve alt varyant şemaları, ayırıcı DNA izleri, olası geçiş grafikleri, yanlışlama koşulları, kanıt düzeyinin tanımı ve jenerik mekanizma sürümleri.
+- **OLAY-02:** Tek tek tarihli olaylar, ilk kaynaklar, vaka ID'leri, haber/veri saatleri, XAU–metaller/faiz/USD tepkileri, aşama etiketlerinin gözlemsel gerekçeleri, rakip mekanizma ve sonuç.
+- **ANA-01:** Hangi deneyin nasıl yürütüleceği, saat güvenliği, keşif/denetim ayrımı, maliyet ve karar protokolü; eski tarihli araştırma günlüğü.
+- **DURUM-04:** Aylık inceleme, eksik veri, yeniden test, araştırma durumu.
 
-### 8.3 Ekonomik neden, aktarım ve fiyat karakterini karıştırma
-- `G01–G07`: ekonomik haber/olay ailesinin **aday** sınıfı; `CHANNEL`: dolar, nominal/reel faiz, güvenli liman, fonlama, merkez bankası/ETF/fiziki talep, pozisyon çözülmesi vb. **birden çok kanala izin ver**; `M1–M5/S1–S4`: sonradan ölçülen fiyat morfolojisi.
-- Nedensel ara halkayı göstermeden “Fed haberi → XAU DOWN”, “jeopolitik → XAU UP” veya “ETF çıkışı → ani düşüş” **kanıtlanmış örgü** diye yazma.
-- Fiyatın kendisiyle tanımlanmış bacak üzerinden ekonomik birinci neden çıkarmak yasak. Aynı ekonomik başlık altında UP/DOWN/CHOP ve kısa/uzun sonuçları ayrı **karşıt vaka** olarak göster.
-- G06'nın uzun V1 örneği sıfır; G07'nin baskın nedenleri bilinmiyor. Bu gruplarda otomatik kural çıkarma.
+**Yalnız DNA'yı bilmek olayın fiilen gerçekleştiğini ispatlamaz.** Bir vakayı incelemek için OLAY-02'daki kanıt zinciri açılır; bu dosyaya sadece farklı olaylarda tekrar kullanılabilecek, koşullu ve yanlışlanabilir öz aktarılır.
 
-### 8.4 Olay örgüsünün karşılaştırmalı doğrulaması
-- Önce mükerrer kontrolleri ve aynı üst bacakları ayır; 14 günlük yakın-komşu embargo, aynı ebeveyn ve örtüşen ufukları bağımsız eşleştirme sayma.
-- Her mekanizma adayı için: **aynı/benzer katalizör ve benzer P0 önkoşullarda destekleyici olay + aynı başlığa rağmen ters sonuç + şoksuz kontrol**; yoksa `INSUFFICIENT_COMPARATORS` açıkça yaz.
-- Karşılaştırmada haber türü (varsa `firstprint`), gerçek zamanlı beklenti/sürpriz, trend/oynaklık, USD/faiz, SI ve diğer metaller, risk endeksi, likidite ve eşzamanlı rakip haber kullan. Mevcut 84 kontrolün yalnız 3'ündeki makro-takvim+fiyat benzerliği **doğrulanmış ekonomik neden eşleşmesi değildir**.
-- Safha veya ekonomik aile için yeni alt tip önerisinde destekleyici örnek, karşıt örnek, eksik veri ve açıkça yanlışlayacak test zorunludur. Önceden sabitlenmiş eşiklerle hassasiyet ve olay çıkarılıp bırakma (leave-one-episode-out) denetimi yap.
-- Neden çıkarımı: olay saatine yakın fiyat tepki penceresi **zamansal tutarlılık** sağlar; birden fazla eşzamanlı haber veya gizli ortak etken varsa tek başına nedensellik ispat etmez. Küçük örnek ve geriye dönük seçilim açıkça raporlanır.
-
-### 8.5 Öncelikli veri tamamlama / otorite
-- **Birinci öncelik:** 2023–24 arşivinde bulunan `SI.n.0` saatlik gümüşü 55 ilişkili kayda gerçek saat/piyasa kapanışıyla aktar; arşiv varlığı alanların doldurulduğu anlamına gelmez.
-- **İkinci:** DXY/FX, 2Y/10Y nominal ve uygun reel faiz/TIPS ile saatlik senkron; ZN vadeli fiyatı nakit tahvil getirisi yerine geçemez.
-- **Üçüncü:** Resmî ilk yayın, ilk veri sürümü ve beklenti-vintage; gecikmeli WGC/ETF/CFTC açıklamalarını geçmiş anın bilgisi sayma.
-- **Dördüncü:** Aynı kayıttaki 2023/2024/2025 tarihleri ve gündüz saati düzeni; haber saati ile Türkiye saati dönüşümünü gün bazında doğrula.
-- **Beşinci:** Yalnız büyük hareketten seçilmiş örneklem yanlılığını ölçmek için şoksuz günler ve önceden tanımlı ufukları kullan.
-
-### 8.6 İlk çalışma paketi ve teslim ölçütü
-- **Pilot üç karşıt G01 vakası:** 06 Ocak 2023 NFP/ISM, 03 Şubat 2023 NFP, 10 Mart 2023 NFP/bankacılık stresi. Bunlarda farklı yönlü ilk XAU tepkisi **önceki araştırmalardan bilinen gözlemdir**, doğrulanmış haber→faiz→altın nedenselliği değildir.
-- Pilotun her vakası için **gerçek olay saat sırası; özgün resmî yayın; altın ve mümkünse SI/USD/faiz aynı-UTC tepki tablosu; P0–P5 grafiği; rakip nedenler; eksiklik ve yanlışlayıcı kontrol; sonuç kanıt seviyesi** istenir.
-- Pilotun kapsama ve saat-kalite kontrolü tamamlanınca 7 ailenin tüm kayıtları aynı sözleşmeyle işlenir; nihai çıktılar **(i)** OLAY-02 olay bazlı kanıt fişleri, **(ii)** ÖĞREN-03 aile/alt-mekanizma grafikleri, **(iii)** karakter × aile karşılaştırması, **(iv)** eksik/çelişkili vaka sicilidir.
-- **Başarı = bütün kayıtlara zorla neden atamak değil;** hangi mekanizmaların hangi zamanda ve karşıt örneklerde desteklendiğinin ve hangilerinin hâlâ `UNKNOWN` olduğunun tekrar denetlenebilir olmasıdır.
-
-### 8.7 Kanıt yükseltme ve model güvenlik kapısı
-`UNVERIFIED_LABEL → SOURCE_AND_TIME_VERIFIED → OBSERVED_TRANSMISSION_CONSISTENT → RIVAL_AND_CONTROL_TESTED → INDEPENDENT_VALIDATION`. Her seviye **olay bazında** verilir; aileye tek kalemde atfedilmez. `OBSERVED_TRANSMISSION_CONSISTENT` nedensel kesinlik değildir.
-
-2023–2026 arşivinin tamamı mekanizma **keşfinde** kullanılabilir; fakat bu arşive bakıldıktan sonra aynı kayıtlar üzerinde tahmin tutturmak bağımsız, kör OOS başarı değildir. Sonraki karar modeli için daha sonra önceden sabitlenmiş kurallı, zaman bilgisi korunmuş ve gerçekten ayrılmış doğrulama gerekir. ÖĞREN-03'teki bu araştırma **AL/SAT yetkisi üretmez**.
-
-**Metodolojik dayanak / uygulama kıyası:** [San Francisco Fed U.S. Monetary Policy Event-Study Database](https://www.frbsf.org/research-and-insights/data-and-indicators/us-monetary-policy-event-study-database/) — dar açıklama pencereleri ve çoklu varlık reaksiyonu; [Fed: Monetary Policy Surprises and Uncertainty](https://www.federalreserve.gov/econres/notes/feds-notes/monetary-policy-surprises-and-monetary-policy-uncertainty-20180518.html) — sürpriz ve zaman penceresi; [WGC Gold Return Attribution Model](https://www.gold.org/goldhub/tools/gold-return-attribution-model) — altın için ayrı ekonomik sürücüler. Bu kaynaklar 96 vakamızın sonucunu doğrulamış değildir.
-
----
-
-## TARİHSEL EK — İlk üç olay–karar hipotezi (ilk sürüm, aynen korunan kanıt zinciri)
-
-**SABİT KOD: ÖĞREN-03 · TEK merkezi hipotez sicili.** Kaynaklar [OLAY-02'deki 96 haber/veri fişi](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md) ve [OLAY-02 ana sayfasında](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) birlikte okunur. Buradaki **üç mekanizma henüz doğrulanmamış hipotezdir**. Yeni vaka kanıtı ve negatif kontrol önce OLAY-02'de, genel sonuç burada hipotez-ID ile; kopya vaka manifesti yoktur.
-
-> **Belge kodu: ÖĞREN-03 — Ortak Öğrenme ve Karar Mekanizmaları.** Bu sicil **OLAY-02** içindeki haber/fiyat/karar kanıtları üzerinden türeyen, şimdilik test edilmekte olan hipotezleri tutar. Önceden kullanılan **ÖĞREN-04** adı artık geçersizdir. Olayın sayısal verileri, haber ve testleri tek [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) kimliği altından açılır. [Belge haritası](../BELGE_HARITASI_V1.md).
-
-**Sicil ID:** `GPT_CAUSAL_ACTION_REGISTER_V1_20261014` · **Durum:** `RESEARCH_ONLY / HINDSIGHT_EXPOSED / NO_MODEL_PROMOTION`.
-**Kapsam:** 2023 Ocak UP, 2023 Şubat DOWN ve 5 Ocak kısa DOWN düzeltme karşıt vakalarının **olay-aksiyon mekanizma adayları**, **onaylı otomatik AL/SAT kuralları değildir**.
-**Olay araştırmasının değişmeden korunan tarihsel otoritesi:** [5.190 satırlık 0.1A–0.1G manifest arşivi](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md). Bu dosyaya append yapmayın; tarihsel snapshot donuktur. [Aktif amaç/karar manifesti](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) buraya yönlendirir.
-**Kanıt otoritesi:** Sayısal as-of ve ücret hesaplarında orijinal rapor/CSV/JSON özet cümleden üstündür. Hiçbir hesap gerçek banka emri değildir; USD/DXY ve faiz tam M15 kaynağı, banka icra fiyatı, dağılımsal kalan yön avantajı ve ayrı OOS kontrolü eksiktir.
-
-## 1. Bilgiden aksiyona: üç hipotez
-| ID | Gözlemlenen olay zinciri (karar sırasına dikkat) | Aksiyon adayı | Örnek olay sonucu ve karşıt örnek | Durum |
-|---|---|---|---|---|
-| **H-UP01 / MECH_FED_DOVISH_REPRICING_UP_V1** | NFP: ücret artışı beklentiden yumuşak *ama* istihdam güçlü → Fed'in gelecekte daha yumuşak davranması olasılığı → fiyat M15 UP → adayda M1 devamlılık → **banka maliyeti sonrası KALAN UP potansiyeli için ek kanıt** | Nakitken AL *adayı*, altında TUT; şüphe veya yetersiz kalan hareket varsa BEKLE | 6 Ocak NFP 13:30Z; 13:46Z hipotez AL, 13:47Z tahmini ASK 1849.30; 13 Ocak **yalnız teorik kapatılmış** $100 → ~$102.19. İlk AL'dan **SONRA 15:00Z** ISM geldi: sabah kararında kullanılamaz. **10 Mart 2023 güçlü NFP sürprizi + XAU ilk 15dk +%0.54 karşı-vaka**, güçlü NFP daima altını düşürmez. | Tek vaka, KANITLANMADI |
-| **H-DN01 / MECH_FED_HAWKISH_REPRICING_DOWN_V1** | NFP çok güçlü/sürpriz → daha sıkı Fed ihtimali → ilk tamamlanmış M15 altın DOWN → M1 devamlılık → altından çıkıp nakitte kalmanın beklenen maliyet sonrası faydası > altında kalmanın riski | Altındayken SAT *adayı*, nakitteyken TUT | 3 Şubat 517K NFP, M15 -%1.34, 13:45Z SAT kararı, 13:46Z BID vekili 1887.305; koşullu $100 altınla başlarsak $96.384 nakit, 24 Şubat pasif altın net $92.531. **3 Şubat öncesinde USD/UST saatlik veri ve 517K as-of bilinmiyor**. Satıştan sonra yeniden giriş programı test edilmedi. | Tek vaka, KANITLANMADI |
-| **H-HOLD01 / MECH_SHORT_DOWN_WHIPSAW_HOLD_V1** | Güçlü ADP/claims → DOWN M1 teyit *ama* hareketin çoğu oldu → kalan DOWN'un **SAT + tekrar AL** ve makası karşılayacağı belirsiz → emir vermeden pozisyonu koru | Altındayken TUT; şüpheli DOWN'da otomatik SAT değil | 5 Ocak DOWN ilk M1 teyidi 13:58Z, 6 Ocak NFP/ISM sonrası UP 13:48/15:07Z (5 Ocak'ta bu **bilinmiyordu**). 6 Ocak tutulan altın BID-mark $100.073; SAT→geri AL alternatifleri yaklaşık $97.67 veya $97.23. **3 Şubat gerçek büyük DOWN'da ise kör TUT yanlış olabilir.** | Tek vaka, KANITLANMADI |
-
-**Not:** 5 Ocak vakasında gelecekteki 6 Ocak olumlu olayının bilinmediği şartta ilk gün TUT nedeninin kanıtlanmış yön avantajı değil **yüksek çift-taraf komisyonu ve kalan düşüş belirsizliği** olduğu açıkça saklanır. UP ve DOWN kararı **önce haber sürprizi, sonra fiyat/doğrulama, sonra kalan hareket/maliyet** koşuluyla değerlendirilmeli; haber olmadan sabit %0.6 ya da %3 fiyat kırılması emir değildir.
-
-## 2. İlk aday işlem örnekleri — model kanıtı değil
-- [5–13 Ocak GPT bağımsız ilk UP çalışma raporu](../independent_gpt_audit/2023-01-05_to_13/GPT_INDEPENDENT_JAN05_13_MACRO_EVENT_COSTED_REPLAY_20261014.md). İlk AL 6 Ocak 16:46 TRT, bir sonraki dakika ASK vekili; banka %0.8/%0.8 sonrası 13 Ocak *varsayımsal* $102.19, pasif/NAKİT kıyasları.
-- [1–24 Şubat büyük DOWN GPT bağımsız raporu](../independent_gpt_audit/2023-02-01_to_24/GPT_INDEPENDENT_FEB01_24_NFP_DOWN_EVENT_CASE_20261014.md). 3 Şubat 16:45 TRT SAT, sonraki dakika BID vekili; 24 Şubat şartlı kıyası $96.384 nakit vs $92.531 pasif altın tasfiye. Şubat başındaki ALTIN koşulu bağımsız başlangıçtır, aradaki Ocak14–31 otomatik doldurulmadı.
-- [5–6 Ocak küçük DOWN/UP günleri stres ve whipsaw kıyası](../adaptive_volatility_learning/stress_cases/2023-01/JAN_2023_TOP_VOLATILITY_DIRECTIONAL_STRESS_AUDIT_20261014.md). Bu tek-gün aralığı stresidir, asıl %3+ çok gün yönlü atlası değil.
-
-## 3. Sıkı karar araştırma sözleşmesi (otomatik ticaret değildir)
-1. **As-of**: Haber `event_time_utc` ve `available_at_utc` ayrı; yalnız **tamamlanmış** M15/H1/M1 bar, emirde en erken takip eden 1m/m15 fiyat. Reuters yayın revizyonları da kontrol edilir.
-2. **Neden**: `event_surprise_vector` (NFP/ücret, CPI çekirdek, ISM gibi alt bileşenler); `candidate_transmission` (USD, Treasury yield/real yield, safe-haven, likidite) ve **karşı hipotezler**. ZN H1 tahvil vadeli fiyatı, doğrudan nakit tahvil faizi değildir.
-3. **Evre ve kalıcılık**: `PRE_ONSET/ONSET/CONTINUATION/EXHAUSTION/REVERSAL/UNCERTAIN` puanlaması; trendin toplam eski hareketi ile **sinyalden sonraki** olası hareket ayrılır.
-4. **Banka faydası**: `E[V(ALTIN)|available]` ile `E[V(NAKİT)|available]` farkı **0.8% her emir yönü + gerçek BID/ASK + tekrar giriş/çıkış olasılığı** düşüldükten sonra anlamlı olmalı. Sadece gerçekleşmiş altın yüzde getiri veya haber geçmiş analoğu bu beklentinin sayısal ölçüsü değildir.
-5. **Eşiklerin statüsü**: +/−%0.6 ve 3×M1 kapanışlar **bugünkü örneklerde geçmişe bakılarak seçilmiş taktik teşhis**; kalibrasyon ve başka yıla transfer doğrulanmadan üretime alınamaz. `≥%3` ve hızlı `≥%2` **olay seçim kategorileri**, otomatik al/sat yüzdesi değil.
-6. **Yanlışlama**: 10 Mart 2023 NFP karşıt örneği, 2024/25 değişen rejimler, büyük DOWN'da HOLD maliyeti, geç SAT sonrası geri alım ve aynı sürprizde şoksuz günler birlikte test edilecek.
-7. **İki mod**: Tüm yıllardan analog topla `FULL_HISTORY_DISCOVERY` fakat o tarihte gerçekten bilinebilecek bilgiden sinyal üret `AS_OF_REPLAY`; araştırmacı geçmiş sonuçları gördüğünden bu raporda karar skorları **ne kör ne bağımsız OOS**.
-8. **Yönetim**: Gerekli veri ve model/karar doğrulama eksikse `ABSTAIN`. Yeni hipotez/test sonucu bilimsel sicile eklenebilir ama ana manifestte tek paragraf ve kanıt linki dışında binlerce satırlık döküm tutulmaz.
-
-## 4. Eksik ve net geliştirme kapısı
-**Bugünkü en büyük boşluk:** `P(remaining_4h/12h/1d/3eligible/5eligible returns | precondition, surprise, markets, stage)` dağılımı ve işlem maliyeti sonrası aksiyon faydası **kalibre edilmiş değil**. Güçlü büyük olayların başarısını ölçmek için geçmiş kazançları anlatmak değil aynı kuralı daha önce model geliştirmede kullanılmayan pozitif, ters ve şoksuz olaylarda körlemesine denemek gerekiyor. Örneklerin birinde $102.19, diğerinde $96.38 çıkması **genel strateji getirisi değildir**.
