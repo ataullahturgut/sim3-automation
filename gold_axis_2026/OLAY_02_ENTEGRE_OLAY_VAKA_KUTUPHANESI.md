@@ -26,6 +26,9 @@
 
 **Ölçülen ilk sonuç:** 96/96 olayda 09:15 öncesi 1 saat XAU verisi; 96/96 +4h, +12h, sonraki 1 seans; **95/96** sonraki 3 seans ve **94/96** sonraki 5 seans için al/sat maliyeti karşılaştırma olanağı. 3 seanslık 95 koşullu başlangıçta 100 dolar CASH için ex-post **17 AL+SAT / 78 CASH TUT**, başlangıçta 100 dolar GOLD için **42 GOLD TUT / 53 SAT ve NAKİT KAL** daha yüksek sonuç verdi. Bu **seçilmiş 96 fiyat olayına** aittir; şoksuz kontrol günleri, olaydan önce nedensel haber ilk yayımları, same-UTC faiz/DXY paneli ve `P(kalan hareket)` yok. **Geçmiş en iyi aksiyon = o gün öngörülebilen karar değildir.**
 
+
+**Filtrelenebilir karar kataloğu:** [96 kayıtlık ön-rejim, 5 ufuk ve alternatif kararlar CSV](OLAY_02_96_VAKA_FILITRELENEBILIR_KARAR_KATALOGU_20261014.csv). **Aynı UTC'ye göre saatlik diğer piyasa kontrolü:** [ZN/NQ/CL/SI/GC H1 fiyat verileri CSV](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv); veri kapsamı sırasıyla **80/95/93/4/16 olay**. Bunlar **CME vadeli fiyat değişimleri** olup gerçek DXY, ABD 2Y/10Y tahvil getirisi veya spot XAG serisi değildir. Eksik seri MISSING kalır. Fiyat rejimi filtresi as-of fiyat yönüdür, Fed rejiminin ölçülmüş sınıfı değildir.
+
 ### Mevcut olaydan altı-alan fişine doğrudan git
 [2023 Ocak uzun UP](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_001) · [2023 Şubat uzun DOWN](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_002) · [Mart 2023 SVB UP](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md#swing_v1_003) · [96/96 diğer olay](OLAY_02_96_VAKA_ALTI_KARAR_ALANI_20261014.md)
 
