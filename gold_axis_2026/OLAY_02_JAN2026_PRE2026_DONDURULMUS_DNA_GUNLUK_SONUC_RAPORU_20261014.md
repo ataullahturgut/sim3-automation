@@ -95,3 +95,9 @@ Altın al-tut referansının ham işlem fiyatları: 2 Ocak `ASK=4.387,435`, 30 O
 
 **Yorum:** 11/14 işaret doğruluğu yüksek görünür; ancak 14 hedef örtüşen, aynı trendde ileri beş seanstan üretildiği ve araştırmacı Ocak'ı önceden bildiği için bağımsız yön-doğruluk istatistiği olarak terfi ettirilmez. Hareketlerin büyüklüğü özellikle yükseliş rejiminde ağır biçimde **az tahmin edildi**. Altının gerçekte daha fazla yükselmiş olması, modelin o gün maliyet şartını geçmeyen `BUY` sonucuna geriye dönük kâr yazma yetkisi vermez. Eski ANA-01'deki piyasa rejimi ve makro DNA değişkenlerinin eşsaatli aktarım eksikliği bundan dolayı esas araştırma darboğazıdır.
 
+## 7. Önemli sabit-kural kontrolü: 2025 döneminde de işlem çıkmadı
+
+**Sabit kural, Ocak sonuçlarıyla değiştirilmeden** 2023–2024 veri tabanından eğitilmiş fiyat analoğu ile 2025 yılındaki tamamlanmış 21:45 M15 günlük fiyatlara kontrol olarak uygulandı (2025 hedefleri eğitimde yok). 2023–2024 döneminde 290 adet beş-seans etiketi olgunlaşmış ve tarih / tam bar koşullarını geçmiş analog bulundu; 2025'te 226 tam kapanış günü ve geçmişe göre özellik kurulabilen **206 gün** elde edildi. **AL sinyali 0, SAT sinyali 0**. Aynı 21 yakın komşu, %65 işaret ve çift yön %0,8 başabaş medyan büyüklük kapıları kullanıldı.
+
+**Bilimsel hüküm:** Ocak 2026 için 0 işlem oluşması modelin büyük şoktan önce kusursuz korunduğunu **göstermez**; kural farklı bir dönemde de neredeyse hiç pozisyon değiştiremez. Bu metodolojik zayıflık açıkça tespit edilmiştir. `PRICE_ANALOG_INERT_GATING` ve `NO_PREDICTIVE_TRADING_VALUE_PROVEN` etiketleri geçerlidir. Ocak'ı kurtarmak için 21 sayısı, %65 ve %1,6194 şartı bu çalışmada geriye dönük esnetilmez; bir sonraki farklı model araştırması ancak **ayrı, önceden kaydedilmiş protokol** olarak ele alınabilir.
+
