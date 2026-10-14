@@ -1,6 +1,6 @@
-# GOLD — Aylık Olay Öğrenme ve Adaptif Volatilite Araştırması
+# GOLD — Orta/Büyük UP–DOWN Olayları ve Aylık Kalıcı Öğrenme
 
-**Sürüm:** 2026-10-14 · **Durum:** JAN_2023_QUANT_REPLAY_AND_GPT_REVIEW_RECORDED / NO_BLIND_VALIDATION · **Güncel amaç:** [ana manifest](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md).
+**Sürüm:** 2026-10-14 · **Durum:** JAN_2023_V0_MISALIGNED_BASELINE_ARCHIVED / EVENT_STRATEGY_NOT_RUN · **Güncel amaç:** [ana manifest](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) ve [olay odaklı yeniden başlangıç protokolü](EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md).
 
 ## Tek saklama prensibi
 
@@ -17,10 +17,10 @@
 
 ## Aylık geçiş
 
-1. **Ocak 2023** `2023-01/STATE.json` başlangıç kaydı ile açılır. FULL_HISTORY_DISCOVERY kipinde 2024/2025/mevcut 2026 olayları da benzer veya karşıt vaka olarak incelenebilir.
+1. **Ocak 2023** V0 referansı arşiv olarak saklanır; olay temelli **orta/büyük UP/DOWN, başlamış hareket ve maliyet-sonrası BUY/SELL/HOLD/WAIT** yeniden çalışılmadan ay TAMAMLANDI sayılmaz. FULL_HISTORY_DISCOVERY kipinde 2024/2025/mevcut 2026 olayları açıklama ve karşı-vaka için kullanılabilir, tarihsel emir simülasyonunun önbilgisi sayılamaz.
 2. Sayısal algoritmanın giriş/vintage, üretilmiş özellikler, yöntem sürümü ve test sonucu, **bulgu seviyesine uygun** şekilde kaydedilir. Kod varsa repoda gerçek dosya ve git commit hash'i gösterilir. Sadece sözel bulgu algoritma sürümü değildir.
 3. Yapay zekâ ikinci incelemeyi **algoritmanın önceki kararını, kaynakları ve karşıt vakaları** görerek yapar; orijinal veriyi sessizce değiştiremez. Kaydedilen yorum `AI_REVIEW_PROTOCOL.md` sözleşmesine uyar.
-4. Ay sonu `handoff_to_next_month`: desteklenen, reddedilen, henüz teyitsiz kurallar; kullanılan yöntem sürümleri; başarısızlıklar, eksik veri, araştırılacak soru ve yeni deneyler aktarılır. **Şubat aynı snapshotı okuyarak** başlar; sonuçlara göre sürüm artırılır, eski kayıt korunur.
+4. Ay sonu `handoff_to_next_month`: desteklenen, reddedilen, henüz teyitsiz kurallar; kullanılan yöntem sürümleri; başarısızlıklar, eksik veri, araştırılacak soru ve yeni deneyler aktarılır. **Ocak olay-stratejisi tamamlandıktan sonra Şubat aynı snapshotı okuyarak** başlar; eski V0 ve yeni strateji ayrı deney olarak korunur.
 5. **Kip A keşif:** Geçmişin tüm yılları kullanılabilir, sonuçlar `EX_POST_DISCOVERY` etiketlidir. **Kip B as-of:** Görülmüş yıllardaki mekanizmalardan kör performans iddia edilmez; ayrı donmuş yöntem ve görünmemiş dönem gerekir.
 
 **Kalite kararı:** Tek aylık iyi oran yöntemi 'kanıtlanmış' yapmaz. Negatif ve olaysız kontrol, posthoc optimizasyon kaydı, kaynak ilk yayını, yıl/volatilite rejimi değişimi ve çoklu hipotezler saklanır. Sadece yazılmış kayıtlar otomatik eğitim verisi sayılmaz. Aylık yorum ya da yapay zekâ görüşü, doğrulanmış nicel modelin ağırlıklarını kendiliğinden güncellemez.
@@ -28,3 +28,8 @@
 ## Bugünkü gerçek durum
 
 Bu dizinde **Ocak 2023'ün gerçek 31 günlük hesaplanmış V0 sayısal simülasyonu ve GPT kanıt eleştirisi kayıtlıdır**: [tam aylık sonuç](months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md), [gün gün 31 UTC](months/2023-01/JAN_2023_31_UTC_CALENDAR_DAYS_ACTIONS_NAV.csv), [20 tam/1 kısmi NY17 seansı](months/2023-01/JAN_2023_21_NY17_SESSIONS_VOL_AND_DECISIONS.csv), [simülasyon sonuç JSON](months/2023-01/JAN_2023_100USD_RESULTS.json), [Şubat devir durumu](months/2023-01/STATE.json). 100 USD → **101,9695 USD**; aynı maliyetle altın pasif **103,7589 USD**; vol-filtresi 20/20 seansta fark yaratmadı, çalışma model üstünlüğü veya gelecek şok olasılığı doğrulaması değildir. Yalnız **GPT yorumlama** kullanılmış, başka AI API çağrılmamıştır; otomatik sürekli çalışan uygulama hâlâ geliştirilmemiştir.
+
+
+## 14 Ekim amaç düzeltmesi — korunmuş V0, henüz yapılmamış asıl deney
+
+Eski V0 (`$101,9695`) **günlük momentumla pozisyon değiştirme deneyidir; ekonomik olarak anlamlı orta/büyük UP/DOWN olaylarının giriş/çıkışını araştıran strateji değildir**. `$103,7589` pasif altın karşılığıyla aynı satırda tutulur fakat bu farkı asıl sistemin başarısızlığı olarak yorumlamayız. `months/2023-01/STATE.json` içindeki `objective_alignment_audit` ve yeni deney sözleşmesi bağlayıcıdır. Şubat'a doğrulanmış strateji devri **beklemede**.

@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "status": "JAN2023_QUANT_REFERENCE_CREATED_FIRST_REPLAY_EXECUTED_NO_VALIDATED_VOLATILITY_MODEL",
+  "status": "JAN2023_MISALIGNED_V0_ARCHIVED_PRIMARY_EVENT_DRIVEN_STRATEGY_NOT_RUN",
   "methods": [
     {
       "id": "V0_COSTED_TREND5_VOLRATIO20_20261014",
@@ -14,8 +14,9 @@
         "full_ny17_only": true,
         "first_available_15m_next_session_execution": true
       },
-      "status": "ACTUAL_JAN2023_REPLAYED_NO_PROMOTION",
-      "qa_note": "Quant result from Neon SQL+JS internal tool, Python reference source written but not independently executed against Neon data in this session; direct bank BID/ASK unavailable."
+      "status": "ARCHIVED_EXECUTED_NONPROMOTABLE_WRONG_OBJECTIVE",
+      "qa_note": "Quant result from Neon SQL+JS internal tool, Python reference source written but not independently executed against Neon data in this session; direct bank BID/ASK unavailable. This V0 switches on 5-session trend sign, NOT on confirmed medium/large UP/DOWN event value and thus must never be reported as primary strategy result.",
+      "objective_alignment": "BASELINE_ONLY_MISALIGNED_WITH_PRIMARY_MID_LARGE_EVENT_OPPORTUNITY"
     }
   ],
   "features": [
@@ -47,9 +48,14 @@
       "sell_count": 2,
       "fees_total_usd": 3.2910128700054315,
       "passes_baseline": false,
-      "artifact": "months/2023-01/JAN_2023_100USD_RESULTS.json"
+      "artifact": "months/2023-01/JAN_2023_100USD_RESULTS.json",
+      "objective_alignment": "LEGACY_BASELINE_ONLY",
+      "main_project_event_strategy_result": false
     }
   ],
   "last_review_date": "2026-10-14",
-  "notes": "Algorithm and feature definitions require code_version, data input vintage, parameters, tested scope and evidence before they may be promoted; existing archived Ridge etc remain separate baselines."
+  "notes": "Algorithm and feature definitions require code_version, data input vintage, parameters, tested scope and evidence before they may be promoted; existing archived Ridge etc remain separate baselines.",
+  "primary_project_contract": "EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md",
+  "primary_project_model_status": "NOT_IMPLEMENTED_NOT_EVALUATED",
+  "research_scope_note": "Short/medium or large UP/DOWN event opportunities only when cost-adjusted; dynamic event onset/continuation or pre-onset; no fixed decision clock; failed Jan2026 V4 2024 0/12 coverage not promoted."
 }

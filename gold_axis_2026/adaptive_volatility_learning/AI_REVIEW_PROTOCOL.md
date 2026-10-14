@@ -1,3 +1,5 @@
+> **Amaç düzeltmesi (2026-10-14):** Yalnız GPT ile yapılan olay incelemesi **orta/büyük yönlü UP/DOWN olayları**, olayın başlaması/devam etmesi/tersine dönmesi, beklenen **kalan hareket**, maliyetli olası `BUY/SELL/HOLD_GOLD/HOLD_CASH/WAIT` kararına ilişkin **kaynaklı, karşı-kanıtlı nitel eleştiri** sunmalıdır. GPT otomatik banka emri vermez; sadece vol riski/tekil haber açıklamasıyla görev tamamlandı sayılamaz. Bu proje küçük günlük momentum dalgalanmalarında al-sat yapan sistem değildir. [Yeni protokol](EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md).
+
 # GOLD — Test Aşaması Yapay Zekâ İkinci Görüş Protokolü
 **Sürüm:** `ai-review-v0.1` · **Durum:** JAN2023_GPT_QUALITATIVE_REVIEW_RECORDED / NO_EXTERNAL_AI
 

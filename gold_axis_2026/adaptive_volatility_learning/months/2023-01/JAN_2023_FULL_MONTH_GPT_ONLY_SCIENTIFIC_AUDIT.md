@@ -1,4 +1,6 @@
-# Ocak 2023 — 31 gün tek tek çalıştırılmış altın/nakit ve GPT bilimsel gözden geçirmesi
+# Ocak 2023 — ARŞİV: 31 günlük V0 altın/nakit mekanik deney ve GPT bilimsel gözden geçirmesi
+
+> **14 Ekim 2026 AMAÇ UYUMSUZLUĞU DÜZELTMESİ:** Bu rapordaki `$101,9695` ve tüm günlük işlemler **5-seans momentum V0** deneyidir. Kullanıcının hedeflediği **orta/büyük şiddetli UP/DOWN olaylarını, başlamadan önce veya başladıktan sonra tespit edip yalnız maliyet-sonrası değer taşıyan hareketlerde işlem yapma stratejisi** bu raporda uygulanmamıştır. Bu sonuç **asıl stratejinin performansı** veya Ocak 2023 çalışmasının tamamlanması değildir. Sayılar değiştirilmeden tarihsel baz olarak korunur. [Yeni hedef ve Ocak yeniden çalışma sözleşmesi](../../EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md).
 **Durum (2026-10-14): COMPLETED_NUMERIC_REPLAY / COMPLETED_GPT_SOURCE_CRITIQUE / EX_POST_DISCOVERY / NO_BLIND_TEST / NOT_REAL_BANK.**
 
 ## I. Gerçek 100 USD sonucu
@@ -73,7 +75,7 @@ Kaynaklar: [6 Ocak BLS NFP](https://www.bls.gov/news.release/archives/empsit_010
 
 **İzin verilen sonraki yıl analojisi:** 2025 ilk çeyrekte güçlü ETF girişi + azalan futures managed-money net long görülmesi ile 2023 Ocak'taki ETF çıkışı + genişleyen futures net long örüntüsü **farklıdır**. Sonraki yılları 2023'ü anlamak için kullanabiliyoruz; fakat bu örnekler 2023'teki işlemleri önceden haber veren bilgi değildi. 2025/26 krizlerini 2023'in normal yükseliş rejimine zorla eşitleme.
 
-## IV. Gerçek öğrenim ve Şubat devri
+## IV. V0'dan alınan sınırlı dersler — olay stratejisine otomatik devredilemez
 
 1. **Volatilite katmanı bu ay başarısız katkı:** `a5/a20 >2` uyarısı **0/20**; trend5 ve vol-gated strateji **tam eşit**. Riski o ay ölçen diagnostik oran bir **kalibre edilmiş gelecekteki volatilite tahmini değildir**.
 2. **Sadece kâr etmek yeterli değil:** V0 +%1,97, aynı ücretle BUY/HOLD +%3,76. Ocak 25 NAV **$105,58** iken 31 Ocak $101,97; 27/30/31 NY17 kararlarında **işlem sürtünmesi** önemli.
@@ -81,4 +83,4 @@ Kaynaklar: [6 Ocak BLS NFP](https://www.bls.gov/news.release/archives/empsit_010
 4. **Ücret duyarlı hysteresis, minimum bekleme, daha iyi vol risk eşiği** ayrı **POST_JAN_UNTESTED_IDEAS**. Bu öneriler Jan sonuçlarına baktıktan sonra ortaya çıktı; Ocak'taki işlem geri dönük **değiştirilmez**. Şubat testine önce kayıt edilmeli; 2023 Şubat'ın bilinmiş olduğu da gizlenmez.
 5. **AI rolü burada niteliksel ve GPT-only:** GPT belge temelli karşıt kanıtları ortaya koydu, otomatik emir/gold direction düzeltmesi **yapmadı**. Algoritma tek başına vs algoritma+GPT **sayısal üstünlük testi yapılmadı**, aksi iddia edilmez.
 
-**Hüküm:** `JAN2023_ALL_31_DAYS_REVIEWED; NY17_FULL_20_PARTIAL_1; MECHANICAL_V0_COSTED; GPT_CAUSAL_AUDIT_COMPLETED_BUT_NONEXHAUSTIVE; VOL_GATE_NO_INCREMENTAL_VALUE; BUYHOLD_STRONGER; NO_PREDICTIVE_PROMOTION`.
+**Hüküm:** `JAN2023_V0_ONLY_ARCHIVED; 31_UTC_DAYS_CHECKED; NY17_FULL_20_PARTIAL_1; MECHANICAL_V0_COSTED; GPT_CAUSAL_AUDIT_COMPLETED_BUT_NONEXHAUSTIVE; PRIMARY_EVENT_DRIVEN_MEDIUM_LARGE_UP_DOWN_NOT_RUN; FEB_HANDOFF_PENDING; NO_PREDICTIVE_PROMOTION`. **Önemli:** 'küçük hareketlerde işlem yapmayalım' bu projenin yeni icadı değildir; kullanıcı tarafından en baştan belirtilen temel iş kuralıdır. Bu V0 kullanıcı amacına göre yanlış seçilmiş testtir.

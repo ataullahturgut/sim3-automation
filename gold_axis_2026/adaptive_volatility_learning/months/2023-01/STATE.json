@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "month_id": "2023-01",
   "mode": "FULL_HISTORY_DISCOVERY",
-  "status": "RESEARCH_MONTH_FINISHED_NO_BLIND_VALIDATION",
+  "status": "JAN2023_LEGACY_V0_RECORDED_PRIMARY_EVENT_STRATEGY_OPEN",
   "event_ids": [
     "MACRO_2023_01_06_NFP",
     "MACRO_2023_01_12_CPI",
@@ -125,12 +125,27 @@
       "months/2023-01/JAN_2023_100USD_RESULTS.json"
     ],
     "open_questions": [
+      "Audit whether January 2023 contains economically tradable medium/large DOWN events during monthly UP context, including post-onset entry/exit; avoid hindsight trading at event extrema",
+      "Re-run January 2023 under medium/large directional event discovery/confirmation, realized price-path, cost-aware trade/hold/cash decisions, with economic event/market evidence, rather than daily trend-sign turnover",
       "Can early February 2023 cost-aware hold rules lower turnovers without missed shock? Hindsight prior exposure not OOS",
       "Need firstprint contemporaneous USD/2y/10y prices and futures contracts for fuller event causal evaluation",
       "Will GPT qualitative reasoning add value to calibrated next-horizon volatility rather than plausible narratives?"
     ],
-    "status": "READY_FOR_FEB2023_UNPROMOTED"
+    "status": "BLOCKED_PENDING_JAN2023_PRIMARY_EVENT_RESEARCH"
   },
-  "quality_note": "ACTUAL Jan2023 daily price replay and GPT-only evidence review performed; no independent live or untouched OOS, no alternate LLM, no claims of actual bank execution; exact source M15 data stay private.",
-  "last_updated": "2026-10-14"
+  "quality_note": "ACTUAL Jan2023 daily price replay and GPT-only evidence review performed; no independent live or untouched OOS, no alternate LLM, no claims of actual bank execution; exact source M15 data stay private. CORRECTION 2026-10-14: this is not a tested primary event-driven trading strategy; original objectives explicitly prohibit frequent small-change trades.",
+  "last_updated": "2026-10-14",
+  "objective_alignment_audit": {
+    "reviewed_on": "2026-10-14",
+    "intended_primary_objective": "Detect and act only on economically meaningful medium/large UP and DOWN moves, including moves already underway; select gold/cash entries/exits with 0.8% each-leg commissions plus spread and executable prices; no forced daily trading and no fixed decision clock.",
+    "actual_legacy_test": "5-session momentum sign with 5/20 abs-vol ratio gate; 2 BUY + 2 SELL",
+    "verdict": "MISALIGNED_BASELINE_ONLY_NOT_PRIMARY_STRATEGY_RESULT",
+    "legacy_numeric_usd": 101.96950051925911,
+    "legacy_buyhold_usd": 103.75888044462923,
+    "primary_event_driven_result_usd": null,
+    "primary_event_driven_status": "NOT_YET_RUN",
+    "february_primary_strategy_handoff": "BLOCKED_UNTIL_JAN_PRIMARY_RESEARCH_RUN",
+    "restart_contract": "../../EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md",
+    "legacy_preservation": "All V0 ledger, methods, fees, source dates and GPT critique retained unchanged; new event strategy requires a separate experiment/version."
+  }
 }

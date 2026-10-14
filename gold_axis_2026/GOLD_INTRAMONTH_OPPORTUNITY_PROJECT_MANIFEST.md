@@ -1,20 +1,30 @@
-# GOLD INTRAMONTH — AMAÇ ODAKLI ANA PROJE MANİFESTİ
+# GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
-**Sürüm:** 2026-10-14 · **Alan:** Ekonomik olay örgüsüyle adaptif XAU/USD volatilite/büyük-hareket araştırması · **Statü:** AMAÇ VE BİLİMSEL KURALLAR TANIMLANDI; BU YENİ UYGULAMA HENÜZ ÇALIŞTIRILMADI/DOĞRULANMADI.
+**Sürüm:** 2026-10-14 · **Kapsam düzeltmesi:** EVENT_DRIVEN_MEDIUM_LARGE_MOVE_OBJECTIVE_V2 · **Statü:** AMAÇ DÜZELTİLDİ / OCAK 2023 ASIL STRATEJİ HENÜZ TEKRAR ÇALIŞTIRILMADI / GERÇEK BANKA ONAYI YOK.
 
-> **Projenin asıl amacı:** Altınla ilgili **2023, 2024, 2025 ve 2026 dahil bütün mevcut olay kayıtlarından** ekonomik neden–sonuç adaylarını, benzerlikleri ve karşıt örnekleri araştırmak; tarihleri ilk etapta birer **olay kimliği / inceleme sırası** olarak ele almak; bu ortak öğrenimden **adaptif volatilite ve büyük hareket riski** hakkında gerekçeli değerlendirmeler üretebilen bir sistem geliştirmek. **Algoritmik sayısal inceleme ile yapay zekâ destekli kanıt muhakemesi birlikte** değerlendirilebilir. Geçmiş olaylarda **sonradan öğrenilmiş bilgiler serbestçe analiz edilebilir**, ancak bu çıktı tarihsel anda yapılmış kör tahmin sanılamaz. Kanıt yetersizse **BELİRSİZ** denir.
+> **Bağlayıcı amaç:** Altın XAU/USD'de **orta ve büyük şiddetteki yükseliş (UP) ve düşüş (DOWN) olaylarını**, hareket henüz başlamadan **veya başladıktan sonra**, olayın ekonomik/piyasa mekanizmasını ve fiyat yolundaki işaretlerini yorumlayarak tespit etmek; ancak **alışta %0,8 + satışta %0,8, BID/ASK makası ve icra gecikmesini aşması beklenen** pozisyon değiştirme fırsatlarını seçmek. Sistem küçük günlük fiyat dalgalanmaları için mekanik AL/SAT yapan bir günlük momentum botu **değildir**. Bilgi yetersizse **ALTIN TUT / NAKİT TUT / BEKLE** meşru ve önemli kararlardır.
 
-**Kapsam notu:** ANFIS şeması **yalnız fikir örneğidir**; model veya katman sayısı önceden seçilmemiştir. **Algoritma verilerden ölçülebilir özellikleri ve benzerlikleri çıkarabilir; yapay zekâ ikinci bir değerlendirmede olayları, ekonomik aktarımı, karşıt kanıtları ve uygun risk sonucunu tartışabilir.** Bu olası iş bölümü bugün için bir **araştırma seçeneğidir**, zorunlu teknik mimari veya doğrulanmış performans değildir. İlk karar **adaptif volatilite/risk değerlendirmesidir**; otomatik banka AL/SAT/TUT emri değildir.
+**Yatırım kararının iki yönü:** (i) Altın taşınırken anlamlı bir DOWN şoku/düzeltmesi başlamadan veya başladıktan sonra **altından nakde geçme ve uygun koşullarda yeniden girme**; (ii) nakitteyken, aylık görünüm DOWN olsa bile, anlamlı UP toparlanma/trend fırsatında **altına girme ve gerektiğinde çıkma**. Aylık altın tahmini durum değişkenidir, **otomatik veto veya günlük işlem zorunluluğu değildir**.
 
-## 1. Tam olarak hangi soruyu çözmek istiyoruz?
+**Araştırma biçimi:** Önce ay ay **Ocak 2023, Şubat 2023, ...** ilerleyeceğiz. **Kip A/FULL_HISTORY_DISCOVERY** içinde 2024–2026 gibi sonraki olaylar, neden–sonuç hipotezlerini ve olay sınıflarını anlamada **kullanılabilir**; fakat o bilgiler 2023'te biliniyormuş gibi tarihsel emir oluşturulamaz ve geri-bakış sonucu kör başarı olarak sunulamaz. **Kip B/AS_OF_DECISION_EVALUATION**, sayısal yatırım kararlarını ileri bilgi kullanmadan sınama içindir. Yalnız **GPT** nitel değerlendirme desteği verebilir; ne tek başına kaynak ne de doğrulanmış sayısal tahmin sayılır.
 
-**"Bugün, bu saatte altın piyasasında ne oluyor? Hangi yeni olaylar ve ön koşullar bu durumu açıklıyor? Geçmişte benzer koşullarda sonrasında altın hangi büyüklükte ve türde hareket etmişti? Bugünün eldeki kanıtlarına bakarak sonraki belirtilen zaman aralığı için ne söyleyebiliriz?"**
+**2023 Ocak kritik düzeltmesi:** Rapordaki `$100 → $101,9695` sonuç, geçmişte çalıştırılmış **5-seans-momentum V0** hesabıdır; **orta/büyük olay temelli ana stratejinin sonucu DEĞİLDİR**. İlgili hesap ve ücretler tarihsel karşılaştırma olarak korunur, ancak V0'nun başarısızlığı yalnız küçük momentum değişimlerini izleyen yaklaşımı ilgilendirir. Ocak 2023 araştırma ayı **olay-stratejisi bakımından AÇIK** tutulur; Şubat'a doğrulanmış yöntem devri yoktur.
 
-- **Öncelikli çıktı:** Ufka göre beklenen **mutlak fiyat hareketi / realized volatility**, şok/sert hareket olasılığı, muhtemel büyüklük aralığı ve güven seviyesi. Bir fiyat hareketinin **başlaması, devamı, tersine dönüşü ve stabil kalması** birbirinden farklı sonuçlardır. **Kip A** bunların geriye dönük mekanizmasını; **Kip B** ancak ayrıca test edildiğinde ileri riskini açıklar.
-- **Yön (UP/DOWN)** ancak aynı vakalar üzerinde ayrıca bilimsel olarak doğrulanırsa ikincil çıktı olur. Volatilite = yön değildir; "yüksek risk" otomatik SAT değildir.
-- **Ufuk başlangıçta tanımlanır:** 30 dakika, 2 saat, seans sonu, ertesi uygun seans, 1/3/5 işlem günü gibi pencereler **saat ve gerçek fiyat hedefiyle** ayrıdır. Bir tane keyfî ufuk bütün durumlara zorlanmaz; ufuk değiştirmek ayrı deney gerektirir.
-- **Karar** bir olay-örgüsü + risk değerlendirmesi olabilir: "normal dalgalanma", "büyük hareket riski", "olası likidite şoku", "reversal olasılığı incelenmeli", "belirsiz". Etiketler **önceden tanımlı olasılık ve hata ölçümleriyle** anlam kazanır; olay adından sonuç uydurulmaz.
-- **Başarı iki ayrı düzeyde ölçülür:** (i) **tam arşivli keşif** sırasında anlamlı, kaynakla destekli ve karşıt örneklerle yanlışlanabilir mekanizmalar bulmak; (ii) bunların **yeni/kör değerlendirmede** basit volatilite kıyaslarını geçip kalibrasyon ve yanlış-alarm/kaçan-şok hatasını iyileştirmesi. Keşif başarısı, kendiliğinden ileri tahmin başarısı değildir.
+**Yürürlük/ayrıntılı sözleşme:** [Orta/büyük olay odaklı yeniden başlangıç sözleşmesi](adaptive_volatility_learning/EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md). 2026 Ocak B0–S4–V4 deneyleri tarihsel ilham/kısıt niteliğindedir; V4 2024'te 12 ilgili DOWN vakasına karşı **0 alarm** ürettiği için teyit edilmiş strateji olarak alınmaz.
+
+## 1. Tam olarak hangi problemi çözüyoruz?
+
+**İş sorusu:** "Altının mevcut hareketi, ufak gürültü mü yoksa **alım-satım maliyeti sonrası ekonomik değeri olabilecek** orta/büyük UP veya DOWN olayının başlangıcı/devamı/tersine dönüşü mü? Şu an altın mı nakit mi tutmak daha avantajlı; karar vermek için hangi kanıt yeterli?"
+
+- **Birincil olay çıktısı:** `UP_MEDIUM/UP_LARGE/DOWN_MEDIUM/DOWN_LARGE/NONE/UNCERTAIN` olasılığı/güven aralığı ve **olay evresi** (`PRE_ONSET/CONFIRMED_ONSET/CONTINUATION/EXHAUSTION/REVERSAL`). Büyüklük ve yön **birlikte** değerlendirilir; yalnız oynaklık artışı SAT anlamına gelmez. Doğrulanmamış olasılık üretilmez.
+- **İkinci ve kritik çıktı:** Pozisyon `GOLD/CASH` ve olası eylem `BUY/SELL/HOLD_GOLD/HOLD_CASH/WAIT`, fakat **yalnız maliyet+uygulanabilirlik+güven kapısı** geçildiyse. Bu araştırmada otomatik gerçek banka emri yoktur.
+- **Hareket başladıktan sonra karar SERBEST:** Şoku önceden öngörmek tek yol değil; başlangıcı teyit edip kalan hareketin beklenen büyüklüğü, maliyet ve geri dönüş riskiyle değerlendirmek de hedeftir. Giriş ve çıkış zorunlu sabit gün veya sabit saat ile sınırlandırılmaz.
+- **Saat hedef değil, izdir:** Piyasa haberinin `first_published_at`, verinin `available_at`, sinyal, karar ve teorik uygulanabilir BID/ASK zamanları kesin saklanır. NY17/günlük kapanış her olayda zorunlu karar saati değildir; gerçek banka zamanları işlemin mümkün olup olmadığını belirler.
+- **Maliyet eşiği:** %0,8 AL + %0,8 SAT için teorik aynı fiyatlı tam döngü kâr başabaşı `1/(0.992^2)-1 ≈ %1,6194` **ve buna ek BID/ASK spread, gecikme, slippage, varsa kur/vergi maliyetleri** gerekir. Bu **fiyat hareketi hedefi değildir**; bir işlem fırsatının beklenen kalan kazancı ve riski için asgari ekonomik kontrolüdür. Örn. ≥%3 hareketler tarihsel atlas için aday **orta/büyük olay inceleme ailesidir**, bütün rejimlere dayatılmış otomatik AL/SAT eşiği değil.
+- **Aylık stratejiyle ilişki:** Aylık UP'da normal koşul altın taşımak, anlamlı geçici DOWN'da korunmak; aylık DOWN'da normal koşul nakitte olmak, anlamlı geçici UP'da fırsatı değerlendirmek. Aylık yön güveni düşükse rejim de `UNCERTAIN` olabilir.
+- **Başarı:** İlk ölçüt **net 100 USD portföy** ve eşdeğer masraflı **BUY/HOLD**, **CASH**, aylık durum-temelli pasif bazlara karşı fark; ayrıca yakalanan/kaçan orta-büyük hareket sayısı, yanlış alarm, geç tepki, drawdown, işlem devir hızı, pozisyon dışı kaçırılmış UP, maliyetler. Sadece toplam para kazanılması **üstünlük değildir**.
+- **Bilimsel sınır:** Tüm yılları kullanarak olay mekanizmasını yorumlama (`FULL_HISTORY_DISCOVERY`) ile geçmişte gerçekte uygulanabilir karar kazanımı veya kör gelecek tahmini **ayrı iddialardır**. Kip A'da tanımlanan iyi olayı geriye dönük uygun dip/tepeden alıp satmak geçerli performans değildir.
+
 
 ## 2. İKİ ÇALIŞMA KİPİ — araştırmayı tarih sırası sınırlamasına hapsetme
 
@@ -91,9 +101,9 @@ Geçmişle kıyas için dört soru zorunludur:
 
 ## 6. Bilimsel doğrulama — zorlama ilişki yerine ölçülebilir katkı
 
-- **Önce ufuk/hedef/metrik dondurulur.** Adaptif volatilite için ileri mutlak log-getiri, realized volatility, önceden seçilmiş quantile/aralık veya ilk şok bariyerine varış riski ayrı ölçülür. Tahmin ufku veri çözünürlüğüyle uyumlu olmalı.
+- **Önce olay/yön/evre/ufuk ve işlem hedefi tanımlanır.** `UP/DOWN` orta/büyük olay başlangıcı/devamı, ilk bariyere varış, kalan hareketin MFE/MAE'si ve gerçekleşebilir giriş/çıkış fiyatları ayrı ölçülür. Volatilite yalnız **destekleyici risk özelliğidir**, tek nihai amaç değildir. Ufuk olayın koşuluna göre aday olabilir, seçimde ileri bilgi kullanılamaz.
 - **En az üç baz çizgisi:** tarihsel koşulsuz medyan/ampirik oran; önceki pencerenin EWMA/rolling realized-vol modeli; mevcut ayrı risk çalışmasında ölçülen dondurulmuş Ridge veya adaptif ölçek yaklaşımı. Gerekmedikçe karmaşık yöntem seçme.
-- **Skorlar:** MAE/RMSE (hareket), quantile pinball loss ve kapsama, Brier/reliability (olasılık), risk alarmında recall/false alarm/missed-tail, rejim/tarih/uç olay altgrupları ve tahmin yok/ABSTAIN kapsaması. Aynı vaka veya örtüşen fiyat penceresi yüzlerce bağımsız örnek gibi sayılamaz.
+- **Skorlar:** Yön ve şiddete göre ayrı olay precision/recall, kaçan sert DOWN ve UP, erken/geç teyit, false alarm, Brier/reliability, beklenen kalan MFE/MAE ve koşullu net fırsat; **100 USD net NAV, masraflı BUY/HOLD/CASH/aylık politika karşılaştırması, net fazla getiri, drawdown, işlem sayısı ve işlem dışı kalmanın fırsat maliyeti** zorunludur. Aynı veya örtüşen vaka bağımsız tekrar sayılamaz.
 - **Karşıt deney:** ekonomik olay bağlantısını çıkarınca başarı ne oluyor? Gerçek ilk yayın saati yerine hatalı gecikme kullanınca? Olaysız eşleşmiş günlerde? Önceki gerçekleşmiş altın hareketine kontrol ekleyince? Seçim/çoklu test ve rejim değişimi altında üstünlük devam ediyor mu? Başarısız ve olumsuz bulgular korunur.
 - **İki farklı değerlendirme:** **Kip A** kaynak doğrulama, olay benzerliği, tüm-yıl çapraz delil, olaysız kontroller ve mekanizma yanlışlama için retrospektif keşif yapar. **Kip B**, ileride deney yapılacaksa kaynak-vintage/DST QA, önceden sabitlenmiş protokol, kronolojik prequential öğrenme ve olgunlaşmış tahmin hatalarıyla adaptasyonu kullanır. Çoktan incelenmiş 2023–2026 üzerinde bulunan ilişkiyi 'bağımsız OOS' sayma. Ay-blok bağımlılığı, çoklu deneme ve farklı dönem aktarımını ayrıca sorgula.
 - **İstatistiksel ilişki ≠ nedensellik ≠ işlem başarısı.** Haberler, dolar ve faiz birbiriyle etkileşebilir; haber sonrası faiz hareketini kör kontrol ederek toplam nedensel etki ölçmeye çalışma. Her olayın **en az iki rakip açıklaması** ve uygun sessiz kontrol grubu tutulur.
@@ -109,14 +119,14 @@ Geçmişle kıyas için dört soru zorunludur:
 
 **Her çalışmanın nihai yanıtı** kipine göre doğal dille, sayılar ve kaynaklarıyla aşağıdaki soruları cevaplar:
 
-1. **Kip / olay kimliği / kanıt ufku:** Tarih olay ID'si mi yoksa gerçek as-of karar anı mı? Hangi yılların olayları karşılaştırıldı, hangi kanıtlar sonradan bulundu?
+1. **Kip / olay kimliği / kanıt ufku:** Tarih olay ID'si mi yoksa gerçek as-of karar anı mı? Hangi yılların olayları karşılaştırıldı, hangi kanıtlar sonradan bulundu? Altın mı nakit mi tutuluyordu?
 2. **Olay örgüsü:** Ne olmuştu, hangi yeni bilgi ne zaman gelmişti, aktarım ve piyasa tepkisi hangi kanıtla uyumluydu?
 3. **Benzer ve karşıt geçmiş:** Hangi geçmiş olayların hangi koşulları benziyor, farklar ve benzer haber–şoksuz kontroller neler?
-4. **Adaptif volatilite sonucu:** Tanımlı ufukta beklenen hareket/riske ilişkin olasılık veya aralık, referans baseline, kalibrasyon ve belirsizlik.
-5. **Karar ve gerekçe:** Risk değerlendirmesi; güven yetersizse **ABSTAIN**, risk yokmuş gibi kesin hüküm değil.
+4. **Orta/büyük UP/DOWN ve evre değerlendirmesi:** Hareket başlamış mı, ne kadarı kalmış olabilir, teyit/tersine dönüş işareti var mı; destekleyici volatilite ve güven/belirsizlik sonucu.
+5. **Karar ve gerekçe:** `BUY/SELL/HOLD_GOLD/HOLD_CASH/WAIT` adayının beklenen kalan kazancı, kayıp riski ve **komisyon+spread+uygulama** kapısı; kanıt yetmezse **WAIT/ABSTAIN**. Kip A'da bu karar *retrospektif inceleme* olarak etiketlenir.
 6. **Doğrulama statüsü:** Kip A'da gerçekleşen olaylar kullanılabilir, sonuç `EX_POST_DISCOVERY` olarak raporlanır. Kip B'de tahmin kilitlenir, gerçekleşen fiyat/şok ancak hedef olgunlaşınca açılır; başarısız nedenler ve yeni deney sürümü ayrıca belgelenir.
 
-**Ayrı banka/işlem kapısı:** Türkiye saatli gerçek banka ASK/BID olmadan; alışta **%0,8**, satışta **%0,8** komisyon, banka makası ve gecikme ayrıca ölçülmeden volatilite/risk kararı otomatik AL/SAT/TUT olmaz. Daha önceki K100/H3/SESSION/aylık yön modelleri farklı hedeflerdir; kendiliğinden bu yeni sisteme taşınmaz.
+**Banka/işlem kapısı:** Olay temelli **araştırma AL/SAT/TUT/BEKLE kararları üretmek hedefin parçasıdır**; fakat Türkiye saatli uygulanabilir banka ASK/BID ve işlem pencere/gerçekleşme kaydı olmadan bu kararlar **teorik** kalır. Alışta **%0,8**, satışta **%0,8**, makas/gecikme/slippage maliyetleri her simülasyonda ortak koşulda gösterilir. Sabit karar saatine ihtiyaç yoktur; banka emir alınan zaman aralığı araştırma yürütme kısıtıdır. K100/H3/SESSION/aylık yön modelleri kanıt ve karşılaştırma kaynağı olarak değerlendirilebilir, doğrudan taşınıp kanıtlanmış sayılamaz.
 
 ## 8. Bugünkü durum, açık işler ve otorite
 
@@ -126,10 +136,10 @@ Geçmişle kıyas için dört soru zorunludur:
 | COT/ETF kaynak zamanı | **KISMEN DOĞRULANDI:** CFTC cuma yayını ve 2023/25 istisnaları; 2025 bazı ham long/short örnekleri. Tüm tatil haftaları ve bütün ETF günlük firstprint tam değil |
 | USD/faiz/metallerin haberle eşsaatli aktarımı | **EKSİK:** DXY/2Y/10Y reel getiriler ve metal/COMEX-Londra veri-vintage tüm olaylarda aynı UTC ile doğrulanmadı |
 | Geçmiş volatilite tahminleri | **AYRI EMPİRİK ÇALIŞMA VAR:** dinamik büyüklük ölçeği bazı yıllarda iyileşti; önceki yıllarda taşınabilirliği ve yön güvenilirliği yok |
-| **Ay ay olay-ID analizi + GPT ikinci yorum + adaptif volatilite V0** | **OCAK 2023 GÜN GÜN İLK TEST GERÇEKLEŞTİ:** 31 takvim gün, 20 NY17 tam/1 kısmi seans; mekanik $100 → **$101,9695**, buyhold **$103,7589**, 0/20 vol-gate, GPT niteliksel inceleme. **Yeni otomatik çok-aylı uygulama / ileri-kör test HENÜZ YOK** |
+| **Ocak 2023 araştırma statüsü** | **YALNIZ HATALI HEDEFE AİT V0 BAZ DENEME TAMAMLANDI:** 31 takvim günü, 20 tam/1 kısmi NY17 seansı; mekanik $100 → **$101,9695**, buyhold **$103,7589**, 0/20 vol-gate. **Asıl orta/büyük UP/DOWN olay stratejisi Ocak 2023'te henüz çalıştırılmadı.** |
 | Al/sat ve gerçek banka yürütmesi | **BU AŞAMANIN SONUCU DEĞİL; ÜRETİM ONAYI YOK** |
 
-**İlk aylık deney tamamlandı:** [Ocak 2023 31-gün fiyat/nakit hesaplaması, makro ve WGC karşıt kanıtları](adaptive_volatility_learning/months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md) — geriye dönük V0 **$101,9695**, maliyetli buyhold **$103,7589**, adaptif vol-gate **hiç ek katkı sağlamadı**, GPT sadece tarihli kanıt yorumu üretti ve işlemleri değiştirmedi. [Şubat'a kalıcı öğrenme devri](adaptive_volatility_learning/months/2023-01/STATE.json) gerçek kayıtta. **Sonraki iş:** Şubat 2023'e aynı arşiv/sicil ve başarısızlık bilgisiyle geçmek, önceden tanımlı maliyetli karşılaştırma çalıştırmak; Kip B kör tahmin iddiası daha sonra ayrı değerlendirilecektir. 2024/25/26 vaka analojileri **FULL_HISTORY_DISCOVERY** kipinde kullanılabilir.
+**Düzeltilmiş iş sırası:** [Ocak 2023 V0 sayısal arşivi](adaptive_volatility_learning/months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md) korunur. **Önce Ocak 2023'ü asıl orta/büyük UP/DOWN olay stratejisiyle yeniden incele:** bütün günlerde sakin/olay-adayı gözlem evreni, fiyat yolu, aynı-saat makro/metaller/FX/faiz/risk, GPT karşıt olay incelemesi, olası BUY/SELL/HOLD/WAIT kararı, gerçekleşebilir fiyat ve tam ücret; ay sonunda $100 NAV ile pasif kıyas. Yeni sonuç üretilince [STATE.json](adaptive_volatility_learning/months/2023-01/STATE.json) güncellenerek Şubat'a geçilir. Geriye dönük tam-yıl bilgisi açıklama için kullanılabilir, **as-of emir simülasyonuna gizlice taşınamaz**. [Yeniden başlangıç protokolü](adaptive_volatility_learning/EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md).
 
 ### 8.1 Aylık kalıcı öğrenme: hafıza, algoritma ve yapay zekâ kanıtı
 
@@ -140,13 +150,13 @@ Geçmişle kıyas için dört soru zorunludur:
 | Kalıcı bileşen | Gerçek dosya / rol |
 |---|---|
 | [Olay kimlikleri ve benzer/karşıt örnekler](adaptive_volatility_learning/EVENT_REGISTRY.json) | Yıllar arası olay kütüphanesi; eski 42+54 fiyat kaydı doğrudan benzersiz olay varsayılmaz |
-| [Özellik ve yöntem/algoritma sürümleri](adaptive_volatility_learning/METHOD_REGISTRY.json) | Kod yolu/commit, parametre, veri-vintage, test, kabul/ret; gerçek algoritma yazılana dek boş |
-| [Ocak 2023 aylık durum / Şubat'a devir](adaptive_volatility_learning/months/2023-01/STATE.json) | Analiz, AI görüşü, eksik, ret, onaylı dersler ve `handoff_to_next_month`; `NOT_STARTED` |
-| [AI ikinci inceleme ve kalite protokolü](adaptive_volatility_learning/AI_REVIEW_PROTOCOL.md) | ChatGPT ile kayıtlı **test görüşü**; daha sonra güvenli DeepSeek/Gemini API deneyi mümkün ama bu projeye henüz bağlanmadı |
+| [Özellik ve yöntem/algoritma sürümleri](adaptive_volatility_learning/METHOD_REGISTRY.json) | Eski V0 sonucu **karşılaştırma yöntemi** olarak durur; olay temelli asıl yöntem **henüz oluşturulup test edilmedi** |
+| [Ocak 2023 aylık durum / Şubat'a devir](adaptive_volatility_learning/months/2023-01/STATE.json) | V0 ve GPT incelemesi **ARŞİVLENDİ**; **orta/büyük UP/DOWN strateji değerlendirmesi AÇIK**, Şubat'a geçiş beklemede |
+| [AI ikinci inceleme ve kalite protokolü](adaptive_volatility_learning/AI_REVIEW_PROTOCOL.md) | **Yalnız GPT**; olayın evresi, yönü, net işlem fırsatı, yanlışlama ve kanıt denetimi; harici AI kullanılmıyor |
 
 **GPT-ONLY kullanıcı sınırı:** Bugün bu projede **yalnız GPT** yorumlar; DeepSeek/Gemini/harici AI çalıştırılmaz. **Test aşamasındaki AI entegrasyonu:** Sayısal analiz kaynak kimlikli özellik ve vaka karşılaştırmasını üretir; ChatGPT ikinci incelemede kanıtları, alternatif nedenleri ve çelişkileri eleştirir. **Aynı vaka kümesinde algoritma tek, AI tek, birlikte** sonuçları kıyaslanır. AI özgün kaynak olmadığı gibi metin yazınca modelin parametreleri otomatik değişmez. Önerilen yeni algoritmik kuralın gerçek kaynak/kod/deney doğrulaması olmadan `validated` statüsü alamaz. Dış servise ham özel piyasa verisi, banka bilgisi, API anahtarı gönderilmez.
 
-**Ocak→Şubat devamlılığı:** `STATE.json` içindeki `handoff_to_next_month` ve ortak yöntem/olay sicilleri **Şubat'ın başlangıç girdisidir**; her iyileştirmede yeni sürüm, önceki sürümün metrikleri, başarısızlıkları ve geriye dönük seçim yanlılığı korunur. **Yalnız dosya sözleşmeleri yaratıldı; Ocak 2023 gerçek çalışma / AI test sonucu henüz yoktur.**
+**Ocak→Şubat devamlılığı:** `STATE.json` içindeki `handoff_to_next_month` ve ortak yöntem/olay sicilleri daha sonra Şubat'ın başlangıç girdisi olacaktır; her iyileştirmede yeni sürüm, eski metrikler, başarısızlıklar ve geriye dönük seçim yanlılığı korunur. **V0 fiyat/NAV hesabı ve GPT nitel incelemesi GERÇEKTEN kaydedildi; fakat yanlış hedefli V0 asıl olay stratejisi tamamlandı anlamına gelmez. Ocak 2023 yeniden çalışma yapılmadan Şubat'a doğrulanmış strateji aktarılmaz.**
 
 ### Belgeler ve sürüm yönetimi
 
