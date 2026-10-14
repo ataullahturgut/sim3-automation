@@ -1,21 +1,15 @@
-# ALTIN PROJESİ — SABİT BELGE İSİMLERİ
-**Tek araştırma bütünlüğü: olay = haber akışı + veri akışı + ekonomi bağlantısı + karar + maliyetli sonuç.**
+# ALTIN OLAY ARAŞTIRMASI — TEK VE SABİT BELGE HARİTASI
+**2026-10-14 • Bu dosya yol tabelasıdır, ek bir manifest değildir. İsimler ve görevler sabittir.**
 
-| Kod | Adı | GitHub asıl dosyası | İşlev |
+| Kod | Tam adı | Mevcut gerçek dosyası | Tek rol |
 |---|---|---|---|
-| **ANA-01** | **Proje Ana Manifesti** | [Aktif ana manifest](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) | Araştırma hedefleri, protokol, kaynak ve belge yetkisi. |
-| **OLAY-02** | **Entegre Olay ve Vaka Kütüphanesi** | [Tek olay dizini](OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) | Her olayın **haber + fiyat + piyasa + 15m/1m analiz + AL/SAT/TUT + sonuç** bütünlüğü. Daha önce 'VAKA-03' dediğimiz dosyalar bu kaydın ALT bileşenleridir. |
-| **ÖĞREN-03** | **Ortak Öğrenme ve Karar Mekanizmaları** | [Tek mekanizma sicili](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) | Birden çok olaydan çıkarılan doğrulanmış/hipotez mekanizma kayıtları ve yanlışlamalar. |
-| **DURUM-04** | **Aylık Çalışma Durumu** | [Ocak 2023](adaptive_volatility_learning/months/2023-01/STATE.json) | Ay ilerlemesi ve en son durum. Diğer aylar kendi STATE.json dosyasında. |
+| **ANA-01** | **Proje Ana Manifesti** | [ANA-01](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) | Proje hedefi, as-of/saat/maliyet protokolü, araştırma ve onay yönetimi |
+| **OLAY-02** | **Olay, Haber, Veri ve Vaka Araştırma Manifesti** | [OLAY-02 — ASIL ARAŞTIRMA KAYNAĞI](OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) | **96 fiyat kaydı, 96 kaynaklı haber/veri fişi, 9 karşıt vaka, 3 sayısal karar denemesi** tek olay kimlik zincirinde |
+| **ÖĞREN-03** | **Ortak Öğrenme ve Karar Mekanizmaları Sicili** | [ÖĞREN-03](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) | OLAY-02'den türetilen, yanlışlanacak veya doğrulanacak ortak mekanizmalar |
+| **DURUM-04** | **Aylık Çalışma Durumu** | [Ocak 2023 STATE.json](adaptive_volatility_learning/months/2023-01/STATE.json) | Her ayın ilerlemesi, eksikleri, son test ve sonraki aya devir |
 
-### Arşiv ayrı, araştırma olayı tek
-Dünkü 5.190 satırlık [olay araştırması dondurulmuş arşivi](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md), **OLAY-02'nin geçmiş kaynak kanıtıdır**; ayrı, rakip bir olay-katalog otoritesi değildir. Dondurulmuş arşivi değiştirmiyoruz. Yeni incelemeler OLAY-02 dizininde aynı `EVENT_ID` ile birleştirilir ve orijinal tarihsel kanıta bağlanır.
+**NET SAYIM:** **2 aktif manifest + 2 yardımcı kayıt.** Başka bir aktif olay manifesti yok. Eski [5.190 satırlık tarihsel araştırma arşivi](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md) **salt okunur**, bu dörde rakip değil. [96 ayrıntılı fiş](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md), [96 CSV](OLAY_02_96_KAYIT_DENETIMLI_KATALOG_20261014.csv), diğer sonuç raporları **OLAY-02 alt kanıtıdır, manifest değildir**. Geçmişte kullanılan **VAKA-03**, **ÖĞREN-04** ve **DURUM-05** isimleri **kullanımdan kaldırıldı**; asıl eski dosya adları ve deliller kırılmasın diye fiziksel olarak korundu.
 
-**VAKA-03 kodu artık KULLANILMAYACAK.** Vaka raporları fiziksel olarak eskiden kalan dosya adlarında olabilir ama içerik ve kimlik olarak OLAY-02 altında bulunur; eski linkler kırılmaz.
+**Kapsamın gerçek sınırı:** 96 olay fişi var ama 96 fiyat dalgasının ilk haberiyle nedensel eşleşme **henüz doğrulanmadı**; 3 işlem senaryosu geriye dönük banka fiyat vekili, gerçek AL/SAT veya doğrulanmış OOS değil.
 
-### Asgari güncelleme fişi
-- **Okunan:** ANA-01 / OLAY-02 / ÖĞREN-03 kaynakları.
-- **Değiştirilen:** kod + tam dosya yolu; OLAY-02 olay-ID ve iç kanıt yolu.
-- **Çıkarım:** ÖĞREN-03 hipotez-ID ve kanıt/doğrulama durumu.
-- **Değiştirilmeyen:** tarihsel arşiv ve ayrı araştırma dallarındaki diğer modeller.
-- **GitHub:** doğrulanmış commit ve araştırma dalı.
+**Her işlemden sonra rapor fişi:** `ÇALIŞILAN EVENT_ID → OKUNAN OLAY-02 KAYNAĞI → GÜNCELLENEN TAM DOSYA YOLU VE BELGE KODU → ÖĞREN-03 hipotez ID → testin sayısal sonucu ve sınırı → değişmeyen dünkü arşiv → git dalı + doğrulanmış commit`. Başka araştırma dalındaki Claude sonuçlarını GPT kanıtlarının üstüne yazma; önce bağımsız analizi sonra çapraz denetimi kaydet.

@@ -1,5 +1,7 @@
 # OLAY → NEDENSEL MEKANİZMA → AKSİYON ADAYI — Merkezî Öğrenme Sicili (2026-10-14)
 
+**SABİT KOD: ÖĞREN-03 · TEK merkezi hipotez sicili.** Kaynaklar [OLAY-02'deki 96 haber/veri fişi](../OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md) ve [OLAY-02 ana sayfasında](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) birlikte okunur. Buradaki **üç mekanizma henüz doğrulanmamış hipotezdir**. Yeni vaka kanıtı ve negatif kontrol önce OLAY-02'de, genel sonuç burada hipotez-ID ile; kopya vaka manifesti yoktur.
+
 > **Belge kodu: ÖĞREN-03 — Ortak Öğrenme ve Karar Mekanizmaları.** Bu sicil **OLAY-02** içindeki haber/fiyat/karar kanıtları üzerinden türeyen, şimdilik test edilmekte olan hipotezleri tutar. Önceden kullanılan **ÖĞREN-04** adı artık geçersizdir. Olayın sayısal verileri, haber ve testleri tek [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) kimliği altından açılır. [Belge haritası](../BELGE_HARITASI_V1.md).
 
 **Sicil ID:** `GPT_CAUSAL_ACTION_REGISTER_V1_20261014` · **Durum:** `RESEARCH_ONLY / HINDSIGHT_EXPOSED / NO_MODEL_PROMOTION`.

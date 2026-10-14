@@ -1,5 +1,7 @@
 # GOLD — Orta/Büyük UP–DOWN Olayları ve Aylık Kalıcı Öğrenme
 
+> **14 Ekim 2026 SON GÜNCEL BELGE HİYERARŞİSİ:** [ANA-01](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) tek yönetim manifesti; [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) **ana haber+veri+vaka araştırması manifesti**, [ÖĞREN-03](EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) sonuç hipotez sicili, `months/YYYY-MM/STATE.json` **DURUM-04**. Bu README **teknik saklama rehberidir, beşinci manifest değildir**. Aşağıdaki 14 Ekim eski V0 notları kendi test tarihlerinde kalır; Ocak 5–13 UP/Şubat 1–24 DOWN vakalarının bağımsız araştırma dosyaları OLAY-02'de bağlıdır. Kullanıcının son talebindeki Claude **bağımsız çapraz denetimi** 14 Ekim'deki eski 'yalnız GPT' ara kaydının yerine geçer; izin/veri gizliliği ayrı kontrol edilir.
+
 **Sürüm:** 2026-10-14 · **Durum:** JAN_2023_V0_MISALIGNED_BASELINE_ARCHIVED / EVENT_STRATEGY_NOT_RUN · **Güncel amaç:** [ana manifest](../GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) ve [olay odaklı yeniden başlangıç protokolü](EVENT_DRIVEN_MEDIUM_LARGE_MOVE_RESTART_CONTRACT_20261014.md).
 
 ## Tek saklama prensibi

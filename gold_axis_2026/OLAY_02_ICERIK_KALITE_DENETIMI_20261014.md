@@ -1,4 +1,6 @@
 # OLAY-02 — Olay/Haber/Veri Bütünlüğü ve Kaynak Kalitesi Denetimi
+
+> **KAPSAM UYARISI — ESKİ V1 3-VAKA DENETİMİ:** Aşağıdaki 'indeks yalnızca üç olay' ifadesi denetimin yapıldığı **eski OLAY-02 sürümüne** aittir. **OLAY-02 V2 ana manifestinde artık 96/96 kronolojik fiyat kaydı fişe bağlıdır**; bu birinci haberin/ekonomik nedenin doğrulandığı anlamına gelmez. Güncel [OLAY-02](OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) ve [96-kayıt QA CSV](OLAY_02_96_KAYIT_DENETIMLI_KATALOG_20261014.csv) kapsamda üstündür. Eski 13/13 link testi aynı V1 sürümünün anlık denetimiydi; tarihi QA notunu silmeyin.
 **Denetim tarihi:** 2026-10-14 · **Yetki:** `RESEARCH_QA` (ekonomik ilk yayımlar, fiyat kayıtları, linkler, bilimsel eksikler). **Bu rapor tek başına canlı işlem onayı değildir.**
 
 **Denetlenen birincil indeks:** [OLAY-02 Entegre Kütüphane](OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md). **Eski tarihsel kaynak:** [0.1A–0.1G tarihsel arşivi](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md). **İlk 96 bilimsel kayıt:** [96 olay kanıt CSV](GOLD_96_EVENT_SCIENTIFIC_CAUSE_EVIDENCE_REGISTER_20261014.csv).

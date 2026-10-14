@@ -443,5 +443,21 @@
     "DURUM-04": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/STATE.json",
     "VAKA-03": "RETIRED_COMPONENT_OF_OLAY-02",
     "frozen_research_history": "gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md"
+  },
+  "document_authority_current_20261014": {
+    "governance_active_manifest": "ANA-01: gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md",
+    "research_active_manifest": "OLAY-02: gold_axis_2026/OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md",
+    "central_learning_register": "ÖĞREN-03: gold_axis_2026/adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md",
+    "month_progress": "DURUM-04: gold_axis_2026/adaptive_volatility_learning/months/2023-01/STATE.json",
+    "history_snapshot": "READ_ONLY: gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md",
+    "research_index_frozen_clocks": "2023-2025 96 corrected records: 42 V1, 54 V2; 96 cards; firstprint causality 0/96 verified",
+    "cross_ai_research": "Claude independent audit permitted by user's later instruction; no shared private raw data by default",
+    "superseded_document_codes": [
+      "VAKA-03",
+      "ÖĞREN-04",
+      "DURUM-05"
+    ],
+    "naming_is_stable": true,
+    "authoritative_status": "EVENT_RESEARCH_INTEGRATED_NOT_CAUSAL_VALIDATED_NOT_OOS_NO_BANK_EXECUTION"
   }
 }

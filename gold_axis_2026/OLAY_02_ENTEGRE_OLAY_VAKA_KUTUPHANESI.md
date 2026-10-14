@@ -1,5 +1,15 @@
 # OLAY-02 — Altın Olay, Haber, Veri ve Karar Kütüphanesi
 
+## Önce bunu oku — tek olay kütüphanesi, tek araştırma sırası
+
+**OLAY-02 tek ve BİRİNCİL ekonomik araştırma manifestidir.** Eski VAKA-03 adlı müstakil manifest **yoktur**; eskiden oluşturulan rapor/CSV/JSON yalnız OLAY-02 içindeki `EVENT_ID` veya `EPISODE_ID` kaynak ekidir. Ayrı ikinci ana olay anlatısı oluşturulmaz.
+
+**Hızlı erişim:** [Kapsam / 96 kaydın durumu](#1-kütüphane-kapsamı-ve-çalışma-sırası) → [Veri otoriteleri](#2-hangi-kaynak-hangi-konuda-yetkilidir) → [Haber/altın/çapraz piyasa/karar kayıt şablonu](#3-tek-olayda-haber-ve-verilerin-doğal-sıralaması) → [Mekanizma/karşıt neden aileleri](#4-araştıracağımız-altın-yön-mekanizmaları) → [9 öğretici tam olay](#5-dokuz-öğretici-olay--haber-veri-karşıt-kanıt-ve-aksiyon) → [96 kronolojik fiş](#6-bütün-96-düzeltilmiş-fiyat-kaydı--kronolojik-indeks) → [Yanlışlama](#7-haber-zamanı-negatif-kontrol-ve-yapısal-karşı-vakalar) → [2026 bağımsız araştırma](#8-ayrı-2026-astra-araştırmasından-aktarılacak-dersler) → [Maliyetli karar kuralı](#9-15-dakikalık-karar-denemesine-veri-aktarımı) → [Eksikler](#10-bilimsel-kalite-kontrol-ve-güncelleme-disiplini).
+
+**Kimlikler birbirine karıştırılmaz:** `SWING_V1_...` ve `C_CORR_...` = **fiyat kaydı kimliği** (96 kayıt, örtüşme olabilir). `MACRO_2023_...` = **haber/olay kimliği** (bir fiyat dalgasında birden fazla olabilir). `EPISODE_ID` = dalganın üst kimliği. **Kaynak kanıtı:** doğrudan orijinal yayımlayıcı haber linki + `available_at_utc` + tamamlanmış piyasa barı + rakip haber + açıklama/saat mantığı; kaynak yoksa `MISSING` yaz. [96 tekil kanıt fişi](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md) fiyat olayından habere ulaşır; nedensel ilk haber kanıtının bulunmadığı satırı tamamlandı diye göstermez.
+
+**Yeni olay ekleme standardı:** tek olay kimliğiyle bu indeksin ilgili yıl/epizot satırını güncelle → ilk kaynak haber akışı ve yayın saatini bağla → XAU M15/M1 ve USD/faiz/metallerin gerçekten bilinebilen verilerini ekle → ekonomik aktarım ve karşıt vakayı yaz → kararı/maliyeti/kalan fırsatı ayrı ölç → yalnız doğrulanabilen genel dersi [ÖĞREN-03](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) içine hipotez ID ile aktar → [DURUM-04](adaptive_volatility_learning/months/2023-01/STATE.json) ayını ilerlet. Yeni bir manifest açma; orijinal 5.190 satırlık arşivi değiştirme.
+
 **Ana araştırma kaynağı · Sürüm 2 · 14 Ekim 2026 · XAU/USD · RESEARCH ONLY**
 
 **OLAY-02 bizim ekonomik olayları anlamak için ilk okuyacağımız kaynaktır.** Her olayda haber akışı, verinin o anda bilinebilirliği, altın ve çapraz varlık tepkisi, mümkün mekanizmalar, karşıt kanıtlar, karar ve maliyetli sonuç **aynı olay kimliği altında bir arada** değerlendirilir. Geçmişte bilinmeyen haberler ve sonradan oluşmuş fiyat tepeleri as-of işlem kararı diye gösterilmez.
