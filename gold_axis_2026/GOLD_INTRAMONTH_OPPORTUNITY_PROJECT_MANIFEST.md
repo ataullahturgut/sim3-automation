@@ -3,6 +3,10 @@
 
 ## TEK GÜNCEL DURUM — 14 Ekim 2026, belge otoritesi (eski ara notların önüne geçer)
 
+**15M OLAY DNA YÜRÜYÜŞÜ — İLK UYGULANAN AŞAMA, HENÜZ TAM KARAR TESTİ DEĞİL:** [31 günlük 96 kontrol / 2.976 UTC-TRT as-of zaman omurgası](OLAY_02_2026_OCAK_2976_M15_ASOF_ZAMAN_OMURGASI_20261014.csv), [31 gün kompakt kaynağa göre kapsama kalite CSV](OLAY_02_2026_OCAK_31_GUN_15M_KAPSAM_VE_SOURCE_KALITE_OZETI_20261014.csv), [veri/ilk yayın/saat QA](OLAY_02_15M_KAYNAK_SAAT_VE_PUBLISH_QA_20261014.md), [4 kaynaklı makro-jeopolitik karşıt olayın M15 DNA raporu](OLAY_02_2026_OCAK_EKONOMIK_DNA_M15_ILK_4_KARSIT_VAKA_RAPORU_20261014.md) ve [28 saatli karşıt fiyat-piyasa ölçümü](OLAY_02_2026_OCAK_DORT_ILK_HABER_M15_KARSIT_AKTARIM_DENETIMI_20261014.csv) oluşturuldu. **2.976 kontrol = 2.976 karar/işlem değil:** bu kontrol omurgası **1.923 tamamlanmış M15** ve dört kısmi kapanışın gözlenebilirliğini, saatli NQ/ZN/CL/SI ve fiyat vekilini kaydeder. **Kritik düzeltme:** aynı saatli 1.642/1.642 HistData OHLC barı Duka BID OHLC ile tüm değerlerde özdeştir, **bağımsız fiyat doğrulaması YOK**; bir arşivin iki tablo kimliğinden bağımsız kanıt çıkarma. BLS **sadece takvim** kayıtları `firstprint` diye tescil edilmedi, piyasaların kapalı 1 Ocak tatilindeki 83 Duka quote otomatik icraya girmedi. İlk dört vaka haber öncesi+15/30/60/120/240 dakika mekanizma/karşıt neden araştırmasıdır, **fırsatın kalanı kalibre edilmeden AL/SAT/100 USD net ay sonucu hesaplanmadı**. 2023–25 vaka karşıt kontrolünden kalibre ekonomik fırsat ve işlem kapısı doğrulanmadan bütün ay için ekonomik karar başarı iddiası yok. ANA-01'in 96×15m ve DESTEKLENEN (tek haber değil, kaynak + spot + bağımsız piyasa + karşıt açıklama) karar kuralı korunur.
+
+
+
 
 **Ekonomik DNA karakter sentezi:** [38 tarihli derin vaka → 12 olay örgüsü analizi](OLAY_02_COKLU_EKONOMIK_DNA_CIKARIM_SONUCLARI_20261014.md) ve [vaka–örgü eşleştirme sicili](OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv) hazır. Tarihsiz ORG01–ORG12 P0–P5 karakter ve yanlışlama tanımları ÖĞREN-03'te. Bu örgüler şimdilik keşif hipotezleri; bağımsız nedensellik ve işlem sinyali doğrulanmadı.
 
