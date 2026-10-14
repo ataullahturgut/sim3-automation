@@ -2,6 +2,8 @@
 
 ## Önce bunu oku — tek olay kütüphanesi, tek araştırma sırası
 
+**OLAY-02 ekonomik olayların birincil KANIT manifestidir.** Ekonomik olay aileleri, 5 fiyat yaşam döngüsü ve 96 olayın gruplanmış çıkarımları ayrı bir kanıt dosyası olarak değil, mevcut [**ÖĞREN-03 Çıkarım ve Olay Karakteri Manifesti**](adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md) içinde tutulur. [96 gruplu karakter atlası](OGREN_03_96_OLAY_AILE_KARAKTER_ATLASI_20261014.csv) ve [42 V1 başlangıç/gelişim/bitiş fiyat yolu](OLAY_02_42_UZUN_HAREKET_YASAM_DONGUSU_V1_20261014.csv) kaynakları bu kütüphanenin altındaki sayısal kanıtlardır.
+
 **OLAY-02 tek ve BİRİNCİL ekonomik araştırma manifestidir.** Eski VAKA-03 adlı müstakil manifest **yoktur**; eskiden oluşturulan rapor/CSV/JSON yalnız OLAY-02 içindeki `EVENT_ID` veya `EPISODE_ID` kaynak ekidir. Ayrı ikinci ana olay anlatısı oluşturulmaz.
 
 **Hızlı erişim:** [Kapsam / 96 kaydın durumu](#1-kütüphane-kapsamı-ve-çalışma-sırası) → [Veri otoriteleri](#2-hangi-kaynak-hangi-konuda-yetkilidir) → [Haber/altın/çapraz piyasa/karar kayıt şablonu](#3-tek-olayda-haber-ve-verilerin-doğal-sıralaması) → [Mekanizma/karşıt neden aileleri](#4-araştıracağımız-altın-yön-mekanizmaları) → [9 öğretici tam olay](#5-dokuz-öğretici-olay--haber-veri-karşıt-kanıt-ve-aksiyon) → [96 kronolojik fiş](#6-bütün-96-düzeltilmiş-fiyat-kaydı--kronolojik-indeks) → [Yanlışlama](#7-haber-zamanı-negatif-kontrol-ve-yapısal-karşı-vakalar) → [2026 bağımsız araştırma](#8-ayrı-2026-astra-araştırmasından-aktarılacak-dersler) → [Maliyetli karar kuralı](#9-15-dakikalık-karar-denemesine-veri-aktarımı) → [Eksikler](#10-bilimsel-kalite-kontrol-ve-güncelleme-disiplini).
