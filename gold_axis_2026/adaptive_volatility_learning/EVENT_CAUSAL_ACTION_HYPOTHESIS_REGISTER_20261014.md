@@ -173,7 +173,21 @@ Her aile ve alt varyant bu gramer üzerinden tanımlanır. **P0→P1→P2→P3�
 
 **Başlangıçtaki bilgi sınırı:** Bu katalog, ekonomik mekanizmaların **test edilecek koşullu tanımlarıdır**. G01–G06 tanımlanmış, G07 bilinmezlik yönlendiricisidir. Bunların hiçbirine kanıtlanmış fiyat başlatıcısı, iyi kalibre edilmiş sonraki yön tahmini veya otomatik banka al/sat izni atanmamıştır.
 
-## 7. Öğrenmenin saklandığı yer — DNA ile anıyı ayır
+## 7. DNA ile koşullu karar bilgisinin bağlantısı
+
+**Bu kütüphanede tarih veya vaka getirisi değil, yalnızca koşullu karar mekanizması bulunur.** Karar hipotezleri ekonomik DNA, gözlenmiş evre, portföydeki başlangıç varlığı (`GOLD/CASH`), beklenen **kalan** getiri dağılımı ve toplam işlem maliyetiyle birlikte tanımlanır. Aşağıdaki ilk üç kod önceki öğrenme sicilinden **genel ilke düzeyinde korunmuştur**; hiçbiri kalibre edilmiş, bağımsız doğrulanmış veya otomatik AL/SAT izni değildir.
+
+| Hipotez ID | DNA + gözlemlenmesi gereken evre ve koşul | Araştırılacak karar ve yanlışlama |
+|---|---|---|
+| `H-UP01` | `G01-A` adayı, P1 sonrası P2/P3; önceden bilinen ücret/enflasyon/faiz beklentileri ve XAU tepkisi tutarlı; rakip güvenli liman/likidite kanalı dışlanmış olmalı | `CASH → GOLD` alım adayı / zaten GOLD ise koruma adayı **yalnız beklenen kalan UP getirisi alım + olası çıkış maliyeti ve makası aşıyorsa**. Aksi durumda nakitte beklemek de geçerli. Güçlü başlık tek başına AL değildir. |
+| `H-DN01` | `G01-B` adayı, P1 sonrası P2/P3; faiz/USD kanalı ve düşüşün kalıcılığı as-of destekleniyor; tek M15 düşüşü yeterli değil | `GOLD → CASH` çıkış adayı **yalnız beklenen kalan korunabilir DOWN hareketi satış ve muhtemel yeniden giriş maliyetini aşıyorsa**. Düşüş zaten tamamlandıysa geç SAT yanlışlanır. |
+| `H-HOLD01` | İlk güçlü görünen fakat kısa/terslenebilir tepki; `G01/G05/G06` olasılıkları ayrıştırılmamış veya `P2 → P4` ihtimali yüksek; kalan hareket maliyete kıyasla belirsiz | `GOLD TUT` / `CASH BEKLE` adayı: sırf tek fiyat şoku yüzünden ücret ödeyerek gidip gelmeme. Büyük ve devam eden gerçek DOWN olasılığı kontrol edilmezse kör TUT de yanlış olabilir. |
+
+**İşlem kuralı geçiş kapısı:** `DNA_GROUNDED` + `PHASE_ASOF_OBSERVABLE` + `EXPECTED_REMAINING_RETURN_CALIBRATED` + `ALTERNATIVE_STATE_COMPARED` + `COSTED_OOS_VALIDATED`. Bu beş koşul tamamlanmazsa öneri `RESEARCH_ONLY / NO_AUTOMATED_ACTION` olarak kalır. Bunlar araştırmanın hedef fonksiyonudur; geçmişte ex-post elde edilen kazançları bağımsız model kanıtı yapmaz.
+
+**Açık bilgi açığı:** Şu anda olayların çoğunda ilk haberin ekonomik yayılma zinciri ve P0–P5 evresi doğrulanmamıştır; bunlara yukarıdaki karar hipotezlerini atanmış ve çalışırmış gibi göstermeyin. Ayrıntılı zamanlı olay ve karar kanıtı yalnız [OLAY-02](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md) içindedir.
+
+## 8. Öğrenmenin saklandığı yer — DNA ile anıyı ayır
 
 - **ÖĞREN-03:** Yalnız aile ve alt varyant şemaları, ayırıcı DNA izleri, olası geçiş grafikleri, yanlışlama koşulları, kanıt düzeyinin tanımı ve jenerik mekanizma sürümleri.
 - **OLAY-02:** Tek tek tarihli olaylar, ilk kaynaklar, vaka ID'leri, haber/veri saatleri, XAU–metaller/faiz/USD tepkileri, aşama etiketlerinin gözlemsel gerekçeleri, rakip mekanizma ve sonuç.
