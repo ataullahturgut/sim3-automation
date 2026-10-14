@@ -1,6 +1,8 @@
 # ALTIN — COT resmî rapor yayımlanma saati denetimi ve 154 haftalık analizin tekrar eşleştirilmesi
 **Tarih: 14 Ekim 2026 | Kapsam: 2023–2025 | Araştırma otoritesi; tahmin stratejisi veya nedensel ispat değildir.**
 
+> **2026-10-14 SCIENTIFIC ERRATA — COT FEATURE SEMANTICS:** `d_opt_mm_net` exactly means a reconstructed normalized options-equivalent residual delta (combined-minus-futures MM net / combined OI), NOT a raw futures-and-options-combined MM position change. See [full CFTC deep report](GOLD_COT_REPORTS_DEEP_CROSSCHANNEL_AUDIT_OPTION_RESIDUAL_ETF_EVENT_CONTROL_20261014.md) for reconstructed formula, 2025 real-price-barrier controls, and Q1 exclusion. Previous 2025 80% is V2 onset clustering, not 80% five-day realized ≥3% move and not an established causal relationship.
+
 ## 1. CFTC gerçek rapor sözleşmesi
 - **`report_date` = pozisyonun ölçüm günü** (normalde ilgili haftanın SALI günü kapanışı). Ölçüm günü kamuya yayımlanma anı DEĞİLDİR.
 - **`published_at` = CFTC'nin kamuya duyurduğu tarih ve 15:30 ABD Eastern yayın saati** (normalde CUMA). ABD yaz saati sırasında **19:30 UTC = Türkiye 22:30**, kış saati sırasında **20:30 UTC = Türkiye 23:30**. Saat Amerika/New_York DST ile hesaplanmalıdır.
