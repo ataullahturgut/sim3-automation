@@ -421,5 +421,19 @@
       ],
       "overlap_warning": "nested UP examples overlap and cannot be scored as independent"
     }
+  },
+  "causal_action_mechanism_registry": {
+    "study_id": "GPT_CAUSAL_ACTION_REGISTER_V1_20261014",
+    "registry_path": "gold_axis_2026/adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md",
+    "json_path": "gold_axis_2026/adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.json",
+    "original_historical_evidence_manifest": "gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md",
+    "governing_current_manifest": "gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md",
+    "status": "HYPOTHESES_ONLY_3_CASES_NO_VALIDATION",
+    "hypothesis_ids": [
+      "MECH_FED_DOVISH_REPRICING_UP_V1",
+      "MECH_FED_HAWKISH_REPRICING_DOWN_V1",
+      "MECH_SHORT_DOWN_WHIPSAW_HOLD_V1"
+    ],
+    "supersedes_nothing": true
   }
 }
