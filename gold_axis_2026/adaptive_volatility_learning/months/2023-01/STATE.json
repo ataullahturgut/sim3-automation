@@ -30,11 +30,15 @@
     "months/2023-01/JAN_2023_100USD_RESULTS.json",
     "months/2023-01/JAN_2023_FULL_MONTH_GPT_ONLY_SCIENTIFIC_AUDIT.md",
     "https://www.gold.org/goldhub/research/gold-etfs-holdings-and-flows/2023/02",
-    "https://www.gold.org/goldhub/research/gold-market-commentary-january-2023"
+    "https://www.gold.org/goldhub/research/gold-market-commentary-january-2023",
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-02/JAN02_2023_TRT_96X15M_ASOF_CHECKS_20261014.csv",
+    "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-02/JAN02_2023_SINGLE_DAY_15M_EVENT_EVIDENCE_AUDIT_20261014.md",
+    "2023-01-02 BIST local risk-on after 18:49 TRT; no same-day XAU source quote"
   ],
   "numeric_feature_run_ids": [
     "JAN2023_TREND5_RISK_RATIO_NY17_REPLAY_V0",
-    "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014"
+    "JAN2023_EVENT3_PRICE_PATH_ASOF15M_20261014",
+    "JAN02_2023_TRT_96X15M_ASOF_EVENT_CHECKS_V1_20261014"
   ],
   "algorithm_version_ids": [
     "V0_COSTED_TREND5_VOLRATIO20_20261014",
@@ -125,7 +129,8 @@
       "Monthly WGC ETF outflow does NOT imply monthly gold decline (Jan23 WGC -1.6bn vs gold +6.1%)",
       "Record calendar UTC transaction timestamps separate from NY17 session labels",
       "Real BID/ASK + 0.8 pct each leg are needed; V0 4 orders cost USD 3.291 and underperformed passive USD 1.789",
-      "Event3 Jan price-only: 1 UP3 Jan4 08:00Z -> 08:15Z buy; no DOWN3; net 101.9914 vs costed buyhold 103.7589; early UP left on table."
+      "Event3 Jan price-only: 1 UP3 Jan4 08:00Z -> 08:15Z buy; no DOWN3; net 101.9914 vs costed buyhold 103.7589; early UP left on table.",
+      "Jan 2 2023, TRT-day 96x15m check: zero vendor XAU BIDASK bars and zero histdata M15 bars, despite BIST Turkey business day. US observed New Year / SGE holiday; never use Jan2 23Z (Jan3 02TRT) as Jan2 TRT decision price."
     ],
     "rejected_learnings": [
       "Risk ratio <=2 threshold was active alarm or useful extra decision: 0/20",
@@ -142,6 +147,7 @@
       "months/2023-01/JAN_2023_100USD_RESULTS.json"
     ],
     "open_questions": [
+      "Jan3 2023 TRT intraday: first vendor XAU bar starts 02:00 TRT; check bank-quote validity, macro firstprints and cross-asset as-of before entry; DO NOT invent a trade from the January2 no-quote holiday.",
       "Jan31 trailing five-session -2% downward signal would cause premature exit before 13:30Z ECI rebound; compare stage/remaining expected value and actual bank quotes on new locked samples",
       "Audit whether January 2023 contains economically tradable medium/large DOWN events during monthly UP context, including post-onset entry/exit; avoid hindsight trading at event extrema",
       "Re-run January 2023 under medium/large directional event discovery/confirmation, realized price-path, cost-aware trade/hold/cash decisions, with economic event/market evidence, rather than daily trend-sign turnover",
@@ -167,5 +173,30 @@
     "legacy_preservation": "All V0 ledger, methods, fees, source dates and GPT critique retained unchanged; new event strategy requires a separate experiment/version.",
     "exploratory_event3_baseline_final_usd": 101.99136633901878,
     "exploratory_event3_result_ref": "months/2023-01/JAN_2023_EVENT3_FULL_31DAY_RESEARCH_REPLAY_20261014.md"
+  },
+  "intraday_research_daily_replay": {
+    "scope": "TRT calendar date, 96x15 minute as-of quote/event evidence checks, no forced trades; separate price availability vs event absence",
+    "last_completed_trt_day": "2023-01-02",
+    "records": [
+      {
+        "day_trt": "2023-01-02",
+        "run_id": "JAN02_2023_TRT_96X15M_ASOF_EVENT_CHECKS_V1_20261014",
+        "status": "COMPLETE_SINGLE_DAY_NO_REALTIME_PRICE_TICKS_IN_TRT_DAY_NOT_VALIDATED_AI_TRADING_PERFORMANCE",
+        "checks": 96,
+        "fresh_xau_m15_bars": 0,
+        "first_price_next_trt": "2023-01-03T02:00:00+03:00",
+        "actions": "HOLD_CASH",
+        "nav_start_usd": 100,
+        "nav_end_usd": 100,
+        "trade_count": 0,
+        "csv": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-02/JAN02_2023_TRT_96X15M_ASOF_CHECKS_20261014.csv",
+        "report": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-02/JAN02_2023_SINGLE_DAY_15M_EVENT_EVIDENCE_AUDIT_20261014.md",
+        "evidence": "gold_axis_2026/adaptive_volatility_learning/months/2023-01/days/2023-01-02/JAN02_2023_TRT_EVENT_ASOF_RESULT_20261014.json",
+        "trade_system_performance_tested": false
+      }
+    ],
+    "next_unworked_day": "2023-01-03",
+    "preceding_holiday": "2023-01-01 Sunday New Year holiday",
+    "preloaded_cross_year_analogues_are_not_asof_quote_signals": true
   }
 }

@@ -1,0 +1,92 @@
+{
+  "research_id": "JAN02_2023_TRT_96X15M_ASOF_EVENT_CHECKS_V1_20261014",
+  "status": "COMPLETE_SINGLE_DAY_NO_REALTIME_PRICE_TICKS_IN_TRT_DAY_NOT_VALIDATED_AI_TRADING_PERFORMANCE",
+  "day_trt": "2023-01-02",
+  "day_weekday": "Monday",
+  "selected_day_reason": "Jan 1 2023 was Sunday and Turkish public New Year holiday; Jan 2 2023 is Turkish exchange/business day, but US observed New Year's holiday",
+  "scan_clock": "Europe/Istanbul UTC+03 year-round 2023",
+  "interval_start_inclusive": "2023-01-02T00:00:00+03:00",
+  "interval_end_exclusive": "2023-01-03T00:00:00+03:00",
+  "n_slots_expected": 96,
+  "cadence_minutes": 15,
+  "quotes_inside_trt_day_evtradinglabs_dukascopy_derived": 0,
+  "quotes_inside_trt_day_histdata_m15": 0,
+  "quote_interval_checked_utc": "2023-01-01T21:00:00Z inclusive to 2023-01-02T21:00:00Z exclusive",
+  "last_premarket_bar_start_utc": "2022-12-30T21:45:00Z",
+  "last_premarket_bar_end_trt": "2022-12-31T01:00:00+03:00",
+  "last_premarket_bid": 1823.46,
+  "last_premarket_ask": 1824.25,
+  "last_premarket_mid": 1823.855,
+  "last_premarket_spread": 0.79,
+  "stale_age_hours_first_slot": 47,
+  "stale_age_hours_last_slot": 70.75,
+  "first_subsequent_bar_start_utc": "2023-01-02T23:00:00Z",
+  "first_subsequent_bar_start_trt": "2023-01-03T02:00:00+03:00",
+  "no_next_day_prices_used_in_jan2_decisions": true,
+  "asof_event_evidence": [
+    {
+      "id": "FED_2022_12_14_FOMC",
+      "available_by_start": true,
+      "impact": "Known restrictive US funds 4.25-4.50 percent; gold headwind hypothesis; not fresh 2023-01-02 market evidence",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20221214a.htm"
+    },
+    {
+      "id": "CHINA_2022_12_26_REOPENING_ANNOUNCEMENT",
+      "available_by_start": true,
+      "impact": "Earlier China inbound quarantine change effective Jan8 and uncertain demand/risk pathway; does not prove same-day XAU direction",
+      "url": "https://finance.yahoo.com/news/1-china-scrap-covid-quarantine-161240216.html"
+    },
+    {
+      "id": "SGE_PREANNOUNCED_2023_01_02_CLOSURE",
+      "available_by_start": true,
+      "impact": "Shanghai gold exchange closed Jan2; opens Jan3",
+      "url": "https://en.sge.com.cn/eng_news_Announcement/10001252"
+    },
+    {
+      "id": "FED_BLS_2023_01_02_US_OBSERVED_NEWYEAR",
+      "available_by_start": true,
+      "impact": "US observed holiday, no BLS release, Fed publishes no daily scheduled items",
+      "url": "https://www.bls.gov/schedule/2023/01_sched_list.htm"
+    },
+    {
+      "id": "BIST_2023_01_02_POSTCLOSE_RISK_APPETITE",
+      "first_verified_publication_trt": "2023-01-02T18:49:00+03:00",
+      "active_in_15min_ledger_from": "2023-01-02T19:00:00+03:00",
+      "ret_bist100_pct": 2.76,
+      "impact": "Local equity risk-on postclose news, not XAUUSD quotation; cannot imply gold trade by itself",
+      "url": "https://www.bloomberght.com/borsa-yeni-yila-rekorlarla-girdi-2322406"
+    }
+  ],
+  "previous_event_analogues": [
+    {
+      "id": "CALENDAR_2022_01_03_MONDAY_OPEN_COMPARISON",
+      "m15_bars_in_trt_day": 88,
+      "interpretation": "Prior-year Monday opened globally; Jan2 2023 US observed holiday differs. Calendar controls required before treating 0 quote bars as no event"
+    },
+    {
+      "id": "FED_2022_12_14_POLICY_REGIME",
+      "interpretation": "Contemporaneously preknown rate tightening; risk hypothesis only, neither 2 Jan incoming surprise nor bank-executable direction signal"
+    },
+    {
+      "id": "CHINA_2022_12_26_POLICY_REOPENING",
+      "interpretation": "Contemporaneously known exogenous policy regime; no synchronized Jan2 metals/USD response available"
+    }
+  ],
+  "price_event_direction": "UNOBSERVABLE",
+  "shock_status": "NOT_ASSESSABLE_DUE_TO_MISSING_FRESH_XAU_QUOTES",
+  "position_start": "CASH",
+  "position_end": "CASH",
+  "action": "WAIT_HOLD_CASH",
+  "buy_fills": 0,
+  "sell_fills": 0,
+  "trading_cost_usd": 0,
+  "capital_start_usd": 100,
+  "capital_end_usd": 100,
+  "no_real_bank_quote_attestation": true,
+  "caveats": [
+    "Aggregated stored vendor coverage evaluated over all 96 time slots; this is not proof that every Turkish bank was unable to quote during the day.",
+    "Historical firstprint contexts do not quantitatively establish XAU direction or remaining move.",
+    "One day with zero executable-price observations cannot be used to assess signal accuracy.",
+    "NY17 trade-date convention must not turn Mon Jan2 23:00Z (Tue Jan3 02:00 TRT) into a quote known Mon Jan2 TRT."
+  ]
+}
