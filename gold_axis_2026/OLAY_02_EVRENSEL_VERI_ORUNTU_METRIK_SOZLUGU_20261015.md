@@ -19,7 +19,7 @@
 |---|---|---|---|
 | **Q01** | `BAR_VALID` = tam M15 var mı? `STALE_AGE` = t−bar_end; `MARKET_STATE` = OPEN/CLOSED/MISSING | 15m, zorunlu | Veri hatasını mekanizma sanma |
 | **P01** | `r15` = 100 ln(P_t/P_{t-15m}) | XAU M15, tam ardışık | İlk tepki |
-| **P02** | `r1h,r4h,r12h,r1d` = 100 ln(P_t/P_{t-h}); uç barlar tamam | 1h/4h/12h/1 seans | İvme ve trend devamı |
+| **P02** | `r1h,r4h,r12h,r1d` = 100(P_t/P_{t-h}−1) (basit yüzde; log getiri ayrıca adlandırılır); uç barlar tamam | 1h/4h/12h/1 seans | İvme ve trend devamı |
 | **P03** | `RV_h` = 100 sqrt(Σ r_i²); log getiriler *ondalık*, toplam sadece ardışık barlar | M15, 1/4/12h | Gerçekleşen toplam oynaklık |
 | **P04** | `DOWN_RV_SHARE` = Σ(r_i<0) r_i² / Σ r_i²; tersine `UP_RV_SHARE` | M15, 4/12h | Aşağı baskının oynaklık payı |
 | **P05** | `EFF_h` = |ln(P_t/P_{t-h})| / Σ |ln(P_i/P_{i-1})| (0–1) | M15, tam h | Yönlü ilerleme mi çalkantı mı? |
