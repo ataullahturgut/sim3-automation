@@ -270,3 +270,256 @@ Tek sürpriz işareti altın yönünü evrensel belirlemez; ilk tepkinin yönü,
 
 **Araştırma otoritesi:** Tarihli çoklu-DNA öneri tablosu, makro kontroller, çapraz-varlık fenotipleri, gerçek veri kullanılabilirliği ve bunların dayanağı [OLAY-02'de](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md). Bu ÖĞREN-03 yalnız tarihsiz **öğrenilmiş ayrım ilkelerini** saklar. Nedensel olarak kesinleşmiş DNA veya otomatik AL/SAT iddia edilmez.
 
+## 11. EKONOMİK OLAY ÖRGÜLERİ — ÇAPRAZ VAKA KARAKTER SENTEZİ
+
+**Bu bölüm, geriye dönük vakaların ortak olay hikâyelerini çıkarır.** G01–G06 haber/ekonomik ailelerdir; ORG kodları ise olayın önkoşul, tetik, aktarım, yayılma, yorulma ve dönüşme karakteridir. Bir vaka birden fazla ORG taşıyabilir. Bazı örgüler bir ekonomik şoktan çok iki mekanizmanın rekabet ettiği birleşik süreçlerdir.
+
+**Sınır:** P0–P5 cümleleri tarihli olaylardan türetilmiş *koşullu araştırma modelleridir*; bütün evrelerin tek tek zaman sırasıyla gözlendiği veya nedensel olarak doğrulandığı anlamına gelmez. Tek olaya dayanan tipler geçici örnektir. Tarihli vakalar, adedi, rakip kanıtları ve fiyat sonuçları OLAY-02 altında kalır.
+
+### ORG01 — Fırsat maliyeti gevşemesi ve çokkanallı altın talebi
+
+**P0 / Önkoşul:** Yüksek faiz beklentisi veya güçlü dolar altın pozisyonları için fırsat maliyeti yaratır.
+
+**P1 / Tetik:** Beklenenden yumuşak ücret, enflasyon, faaliyet veya Fed iletişimi.
+
+**P2 / İlk aktarım:** USD ve/veya nominal-reel getiriler gevşer; altın talebi artabilir.
+
+**P3 / Gelişim:** Fon/futures alımı eşlik edebilir; fakat ETF çıkışı ve beyaz metal ayrışması da görülebilir.
+
+**P4 / Yorulma:** USD/getiri gevşemesi durur veya yeni şahin bilgi gelir.
+
+**P5 / Sonlanma veya değişim:** ORG02 faiz baskısına, ORG10 kâr almaya geçiş veya yatay sindirme.
+
+**Ayırt edici iz:** Altın ile getiriler/USD zamanlı ters yönde; beklenti sürprizinin bileşimi ölçülür.
+
+**Karşıt kanıt / yanlışlama:** Altın yükselirken faiz ve dolar gevşemiyorsa bağımsız risk/fizikî talep rakibini test et.
+
+**Sentez gücü:** Birden çok retrospektif örnekte aday; fiyat yolu choppy veya gecikmeli hızlanma olabilir.
+
+### ORG02 — Faiz/dolar baskısı ve pozisyon azaltımı
+
+**P0 / Önkoşul:** Yüksek reel faiz hassasiyeti, yüklü metal/portföy pozisyonu.
+
+**P1 / Tetik:** Güçlü makro alt bileşenleri veya daha şahin faiz patikası sürprizi.
+
+**P2 / İlk aktarım:** USD/getiri yükselirken altın fırsat maliyeti artabilir.
+
+**P3 / Gelişim:** ETF/futures çıkışı ve teknik kırılım ikinci dalgayı kuvvetlendirebilir; hisseler bazen yükselirken metaller düşer.
+
+**P4 / Yorulma:** Faiz/USD baskısı doyuma ulaşır veya karşı veri gelir.
+
+**P5 / Sonlanma veya değişim:** ORG01 ters yeniden fiyatlaması veya ORG10 pozisyon reseti.
+
+**Ayırt edici iz:** Makro sürpriz, reel/nominal faiz, USD, altın ve metal ayrışmasının aynı anlı sırası.
+
+**Karşıt kanıt / yanlışlama:** Genel hisse/metal satışı tek başına zorunlu likidite değildir; kredi fonlama kanıtını ayrıca ara.
+
+**Sentez gücü:** Birden çok anlatı adayı; uzun fiyat yolları özellikle dalgalı veya çok dalgalı görünebilir.
+
+### ORG03 — Bankacılık güvensizliğinde sığınak ile faiz gevşemesi yarışı
+
+**P0 / Önkoşul:** Banka/kredi kırılganlığı ve likidite hassasiyeti.
+
+**P1 / Tetik:** Yeni banka iflası, mevduat/fonlama güveni bilgisi.
+
+**P2 / İlk aktarım:** Güvenli liman talebi altını destekleyebilir; aynı anda faiz indirim beklentisi güçlenebilir.
+
+**P3 / Gelişim:** Stresin yayılması ve fon/OTC talebi takip eden dalgaları yaratabilir.
+
+**P4 / Yorulma:** Garanti, acil likidite ve finansman normalleşmesi.
+
+**P5 / Sonlanma veya değişim:** Risk primi kaybı, ORG08 nakit satışı veya G01 faiz rejimine dönüş.
+
+**Ayırt edici iz:** Banka spreadi ve kısa faiz, altın, USD, hisse tepkilerinin kaynak-zaman sırası.
+
+**Karşıt kanıt / yanlışlama:** Banka haberi uzun bacağın her bölümünün ilk nedeni değildir; diğer makro haberleri ayrı tut.
+
+**Sentez gücü:** Birden çok ama kısmen örtüşen fiyat evreni; bağımsız çoğaltma sınırlı.
+
+### ORG04 — Jeopolitik risk priminin ani oluşumu
+
+**P0 / Önkoşul:** Önceden fiyatlanan tehdit ve enerji/güvenlik kırılganlığı.
+
+**P1 / Tetik:** Yeni çatışma, saldırı veya güvenlik tehdidi.
+
+**P2 / İlk aktarım:** Altının göreli koruma primi ve olası USD/petrol tepkisi.
+
+**P3 / Gelişim:** Ardışık haberler ve kısa pozisyon kapamaları hareketi büyütebilir.
+
+**P4 / Yorulma:** Haber şoku fiyatlanır, diplomasi veya karşıt haber gelir.
+
+**P5 / Sonlanma veya değişim:** ORG05 çözülme ya da enerji-enflasyon-faiz G01 kanalına kayma.
+
+**Ayırt edici iz:** Özgün güvenlik haberi, altın-hisse-metaller-petrol hareketinin zaman sırası.
+
+**Karşıt kanıt / yanlışlama:** Fiyat kayması haberin öncesindeyse ilk tetik bu haber olamaz.
+
+**Sentez gücü:** Sınırlı doğrudan derin kısa-vaka; aday örgü.
+
+### ORG05 — Jeopolitik korunma priminin çözülmesi
+
+**P0 / Önkoşul:** Altına yüklenmiş güvenlik primi ve korunma pozisyonları.
+
+**P1 / Tetik:** Ateşkes, gerilimi azaltma veya diplomatik uzlaşma haberi.
+
+**P2 / İlk aktarım:** Altın korunma primi azalabilir, hisse ve endüstriyel metaller yükselebilir.
+
+**P3 / Gelişim:** Pozisyon çözülmesi baskıyı artırabilir; geniş emtia satışı şart değil.
+
+**P4 / Yorulma:** Rahatlama fiyatlanır veya anlaşmanın kırılganlığı ortaya çıkar.
+
+**P5 / Sonlanma veya değişim:** ORG04'e yeniden tırmanma, ORG01/02 makro kanala geçiş.
+
+**Ayırt edici iz:** Altın düşüşü ile hisse/metal yükselişi ve teyit edilmiş de-eskalasyon haber sırası.
+
+**Karşıt kanıt / yanlışlama:** Altın düşüyor diye jeopolitik rahatlama varsayma; USD/getiri rakibini dışla.
+
+**Sentez gücü:** Tek güçlü doğrudan uzun vaka; genelleme kısıtlı.
+
+### ORG06 — Ticaret/politika belirsizliği ve korunma talebinin birikmesi
+
+**P0 / Önkoşul:** Tarife, kamu finansmanı ve para politikası belirsizliği.
+
+**P1 / Tetik:** Yeni tarife, yaptırım, müzakere kopuşu veya politika güvenilirliği kırılması.
+
+**P2 / İlk aktarım:** Altına korunma/çeşitlendirme talebi ile USD/faiz kanalı birlikte etki edebilir.
+
+**P3 / Gelişim:** Ardışık haber, fon ve pozisyon kanalı büyütebilir; hisse ve altın birlikte yükselebilir.
+
+**P4 / Yorulma:** Riskin fiyatlanması, anlaşma olasılığının değişimi veya talebin doyumu.
+
+**P5 / Sonlanma veya değişim:** ORG07 risk rahatlaması, ORG08 likidite satışı veya yeni belirsizlik dalgası.
+
+**Ayırt edici iz:** Politika ilk duyurusu, USD, altın, hisseler, vadesel/fizikî prim verileri.
+
+**Karşıt kanıt / yanlışlama:** Her tarife haberinden altın UP kuralı çıkmaz; geniş piyasa pozitifliği korunma anlatısını sınar.
+
+**Sentez gücü:** Tekrarlayan ancak belirli politika döneminde yoğunlaşan aday.
+
+### ORG07 — Ticaret rahatlamasında korunma talebinin geri alınması
+
+**P0 / Önkoşul:** Politik ihtilaf kaynaklı birikmiş korunma primi.
+
+**P1 / Tetik:** Tarife indirimi, anlaşma, erteleme veya uzlaşma.
+
+**P2 / İlk aktarım:** Risk-on hisse davranışı ve altın korunma primi çözülmesi.
+
+**P3 / Gelişim:** Koruma pozisyonlarının azaltılması altın düzeltmesini büyütebilir.
+
+**P4 / Yorulma:** Anlaşma fiyatlanır, uygulama/yeniden çatışma riski gündeme gelir.
+
+**P5 / Sonlanma veya değişim:** ORG06'ya geri dönüş ya da USD/faiz faktörünün baskınlaşması.
+
+**Ayırt edici iz:** Altın ile hisse/industrial metal ayrışması; anlaşma haberi ve dolar tepkisi.
+
+**Karşıt kanıt / yanlışlama:** Genel zorunlu satışta hisseler de düşebilir; bunu anlaşma rahatlaması diye etiketleme.
+
+**Sentez gücü:** Tek derin uzun-vaka; aynı ailenin karşıt dalı, bağımsız DNA ilan edilmedi.
+
+### ORG08 — Politik şokta önce nakit satışı, sonra koruma talebinin geri dönüşü
+
+**P0 / Önkoşul:** Yüksek kaldıraç, teminat kırılganlığı, büyük belirsizlik.
+
+**P1 / Tetik:** Tarife/finansal sistem şoku önce nakit ihtiyacı yaratır.
+
+**P2 / İlk aktarım:** İlk faz: altın, hisse ve metal birlikte satılabilir; likidite kanalı baskınlaşır.
+
+**P3 / Gelişim:** Sonraki faz: fonlama rahatlar, USD zayıflar veya koruma talebi öne geçer; altın toparlanabilir.
+
+**P4 / Yorulma:** İki farklı dönem tek uçtan uca getiriye sıkışmış olabilir.
+
+**P5 / Sonlanma veya değişim:** ORG06 korunma, ORG07 rahatlama veya yeniden fonlama baskısı.
+
+**Ayırt edici iz:** İlk ve ikinci fazda ayrı saatli kredi/marjin, USD, hisse, XAU ve metal reaksiyonu.
+
+**Karşıt kanıt / yanlışlama:** Geniş eşzamanlı satış marjin zorunluluğunu tek başına kanıtlamaz.
+
+**Sentez gücü:** Aynı kriz bağlamındaki iki eski kısa fiyat kümesi; bağımsız tekrar kanıtı yok.
+
+### ORG09 — Fizikî-finansal birikimle fiyatın gecikmeli hızlanması
+
+**P0 / Önkoşul:** OTC/fizikî, merkez bankası, ETF, futures, opsiyon pozisyon birikimi.
+
+**P1 / Tetik:** İlk erişilebilir akış/rezerv/teslimat veya gerçek emir şoku.
+
+**P2 / İlk aktarım:** Altın talep kanalından güçlenir; hisseler ve beyaz metaller aynı yönde olmak zorunda değil.
+
+**P3 / Gelişim:** Futures/opsiyon/trend talebi fiyatı geç hızlandırabilir.
+
+**P4 / Yorulma:** Fizikî prim ve fon akışı normalleşir, aşırı pozisyon oluşur.
+
+**P5 / Sonlanma veya değişim:** ORG10 kâr alma, ORG12 marjin zinciri ya da yüksek seviyede sindirme.
+
+**Ayırt edici iz:** İlk akış-vintage, pozisyon/OI, fizikî prim, USD/getiri ve XAU zaman sırası.
+
+**Karşıt kanıt / yanlışlama:** Ay sonu ETF raporu geçmiş dakikadaki ilk katalizör sayılamaz.
+
+**Sentez gücü:** Az sayıda uzun örnekte gecikmeli ivmelenmeyle eşleşti; önceden bilinen tahmin değil.
+
+### ORG10 — Fiyat doygunluğu ve pozisyon düzeltmesi
+
+**P0 / Önkoşul:** Uzun trend ve kalabalık pozisyonlar, düşük derinlik veya yüksek oynaklık.
+
+**P1 / Tetik:** Küçük karşı haber, kâr alma, teknik kırılma veya faiz/USD tersliği.
+
+**P2 / İlk aktarım:** Stop/pozisyon azaltımı altını düşürebilir.
+
+**P3 / Gelişim:** Hisse bazen düşer bazen güçlenir; bu ayrım genel kriz olup olmadığını sorgulatır.
+
+**P4 / Yorulma:** Satış zinciri ve kâr alma baskısı tükenir.
+
+**P5 / Sonlanma veya değişim:** Altta kalan talep varsa toparlanma, ORG02 yeni faiz baskısı ya da ORG12 marjin şoku.
+
+**Ayırt edici iz:** CFTC/OI/hacim/opsiyon, altın ve hisse eşzamanlılığı; yalnız RSI yeterli değil.
+
+**Karşıt kanıt / yanlışlama:** Gerçek dış şok varsa düzeltmeyi yalnız teknik sayma.
+
+**Sentez gücü:** Birden çok zıt çapraz piyasa imzasına rağmen tekrarlayan pozisyon-reset adayı.
+
+### ORG11 — Rezerv bilgisi ile makro açıklamanın birbiriyle rekabeti
+
+**P0 / Önkoşul:** Altına özgü rezerv/talep ve makro faiz beklentisi birlikte hassas.
+
+**P1 / Tetik:** Merkez bankası alım bilgisi ve makro şok ayrı duyurulardır.
+
+**P2 / İlk aktarım:** Fizikî/rezerv talebi ile USD/getiri fırsat maliyeti farklı yönde çekebilir.
+
+**P3 / Gelişim:** İkinci haber ilkini güçlendirebilir veya yönünü ters çevirebilir.
+
+**P4 / Yorulma:** Biri sindirilir, diğeri baskınlaşır.
+
+**P5 / Sonlanma veya değişim:** G04-A veya G01'in baskın hale gelmesi; ayrılamıyorsa G07.
+
+**Ayırt edici iz:** Her iki duyurunun ayrı ilk zaman damgası ile tam saatli altın/FX/getiri tepkisi.
+
+**Karşıt kanıt / yanlışlama:** Fiyat bacağının bitişindeki haber bacağın başlatıcısı sayılmaz.
+
+**Sentez gücü:** Tek derin birleşik vaka; yeni temel ekonomik aile değil, çoklu şok kompozisyonu.
+
+### ORG12 — Marjin değişimi ve ince piyasada zorunlu pozisyon boşaltma
+
+**P0 / Önkoşul:** Yoğun kaldıraçlı metal rallisi ve ince piyasa derinliği.
+
+**P1 / Tetik:** Borsanın teminat gereksinimi artışı veya marjin baskısı.
+
+**P2 / İlk aktarım:** Vadeli metal pozisyonları tasfiye edilir, metal fiyat/makas oynaklığı sıçrar.
+
+**P3 / Gelişim:** Likidite azlığı ve zincirleme stoplar hareketi güçlendirebilir.
+
+**P4 / Yorulma:** Teminat sağlanır, hacim ve derinlik toparlanır.
+
+**P5 / Sonlanma veya değişim:** Keskin geri tepme veya yeni denge; uzun pencere neti kısa çöküşü gizleyebilir.
+
+**Ayırt edici iz:** Birincil borsa marjin yayımı, açık pozisyon, hacim ve tam saatli GC/SI fiyatları.
+
+**Karşıt kanıt / yanlışlama:** İlk fiyat düşüşü marjin haberinden önceyse marjin açıklaması ilk neden değildir.
+
+**Sentez gücü:** Tek derin kısa-vaka; genelleme yapılmamış aday.
+
+### ORG'leri fiyat yönünden ayıran temel sonuç
+
+**Benzer altın düşüşü farklı örgülerden gelebilir:** ORG02 fırsat maliyeti, ORG05/07 koruma primi çözülmesi, ORG10 pozisyon reseti, ORG12 teminat zorunluluğu. Benzer yükseliş ORG01 getiri/dolar gevşemesi, ORG03 güvenli liman, ORG06 politika belirsizliği, ORG09 fiziki-finansal talep olabilir. Bunları yalnız UP/DOWN veya morfolojiden ayırmak mümkün değildir.
+
+**Tarih ya da yıl DNA değildir.** Olay sırasında bilinen haber, çapraz piyasa aktarımı, beklenen kanal ve rakip açıklama gerekir. Geriye dönük M1–M5 biçimi canlı P4/P5 evresi değildir. OLAY-02'de doğrudan kanıt değişmedikçe bütün ORG'ler araştırma hipotezidir; bu bölüm AL/SAT sinyali üretmez.
+
+**Kanıt otoritesi:** [OLAY-02 olay ve karşıt vaka kütüphanesi](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md).
