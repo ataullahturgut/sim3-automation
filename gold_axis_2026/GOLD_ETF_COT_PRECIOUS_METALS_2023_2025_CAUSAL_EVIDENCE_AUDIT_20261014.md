@@ -1,6 +1,8 @@
 # ALTIN — ETF, COT ve değerli metaller: 2023–2025 olayları için bağımsız kanıt ve mekanizma denetimi
 **14 Ekim 2026 | Tarihsel neden–sonuç araştırması | NO AL/SAT, NO MODEL PROMOTION, NO PROVEN CAUSAL SHARE**
 
+> **COT TAKVİMİ REVİZYONU — 14 EKİM 2026:** Bu dosyadaki 154 haftalık COT koşullu oranları, **normal CFTC cuma 15:30 ET yayını yerine sonraki salı kullanıldığı için tarihsel olarak eskiye geciktirilmiş COT raporuyla hesaplanmış** ve analitik COT yorumu için **SUPERSEDED** statüsündedir. Resmî CFTC 2023 ION/2025 hükümet kapanması istisnalarıyla yeniden eşleşen güncel otorite: [COT yayın saati denetimi ve corrected 154 haftalık tekrar testi](GOLD_COT_PUBLICATION_CLOCK_OFFICIAL_AUDIT_AND_RETROSPECTIVE_154_ORIGIN_RETEST_20261014.md). Metallerin tarihsel endpoint ve ETF kaynakları bu eski COT sınıflama değişikliğinden kendiliğinden etkilenmez; eski istatistikleri güncel sonuç olarak aktarmayın.
+
 ## Bilimsel hüküm
 1. **Altın–gümüş birlikte hareketi belirgin:** Düzeltilmiş 42 V1 ZigZag bacağından gümüş uç fiyatları uygun 38'inde 37 aynı yön; platin 30, paladyum 32 bacakta aynı yön. Bu, **olay başı-sonu geriye dönük eş-hareketi**, nedensel katsayı veya ileri tahmin performansı değildir. Aynı gün farklı sağlayıcıların kapanış saatleri eşit değil, günlük metal serisi 2026'da geriye dönük arşivlenmiştir.
 2. **COT tek başına güvenilir DOWN nedeni değil:** 2023–24 haftalık kökenlerinden geliştirilen yüksek vadeli managed-money net pozisyonu eşiğinde izleyen beş uygun seansta V2 DOWN ilk-bayrağı 4/27 (%14,8), diğerlerinde 9/76 (%11,8); değiştirilmemiş eşikte 2025'te sırasıyla 1/22 (%4,5) ve 7/29 (%24,1). 2025 karşılaştırması iki taraflı Fisher p=0,1165; keşifsel, yıl/rejim etkisi ve küçük n.
