@@ -52,7 +52,7 @@
 
 **Kaynak ve ücret:** Neon `gold_research_evduka_xau15m_bidask_candidate`, tarihsel EVTradingLabs/Dukascopy M15 BID/ASK; kapanış gerçek bar, NY17 DST doğru. Yeni NY17 seansının **ilk kapanmış M15 fiyatı** ve **önceki tamamlanmış beş seans** kullanılmakta; 20 seanslık referans abs log getirisi ile karşılaştırılan `a5/a20 <= 2` risk filtresi. Her AL'da **%0,8**, her SAT'ta **%0,8**; ayrıca vendor BID/ASK alış-satış farkı. Faiz, banka spread'i, vergi ve slippage yok. **Gerçek bankada uygulanmış işlem değildir**; kullanıcıya bankada tahsil edilmiş getiri olarak sunulamaz.
 
-**Sayısal delil:** [31 UTC takvim günü ve NAV](JAN_2023_31_UTC_CALENDAR_DAYS_ACTIONS_NAV.csv), [21 NY17 seans, momentum, vol oranı ve kararlar](JAN_2023_21_NY17_SESSIONS_VOL_AND_DECISIONS.csv), [4 senaryo sonuç JSON](JAN_2023_100USD_RESULTS.json), [işlem/masraf ve durum dondurma](FROZEN_RESEARCH_CONTRACT.md), [tekrar oynatma için girişleri özel tutan Python referans kodu](../../tools/gold_adaptive_monthly_v0_replay_20261014.py).
+**Sayısal delil:** [31 UTC takvim günü ve NAV](JAN_2023_31_UTC_CALENDAR_DAYS_ACTIONS_NAV.csv), [21 NY17 seans, momentum, vol oranı ve kararlar](JAN_2023_21_NY17_SESSIONS_VOL_AND_DECISIONS.csv), [4 senaryo sonuç JSON](JAN_2023_100USD_RESULTS.json), [işlem/masraf ve durum dondurma](FROZEN_RESEARCH_CONTRACT.md), [tekrar oynatma için girişleri özel tutan Python referans kodu](../../../tools/gold_adaptive_monthly_v0_replay_20261014.py).
 
 ## III. GPT-only kanıt/olay örgüsü
 
