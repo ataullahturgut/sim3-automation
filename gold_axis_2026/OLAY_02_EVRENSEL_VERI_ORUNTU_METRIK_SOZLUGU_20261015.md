@@ -107,4 +107,4 @@
 - Evans (2011), *Intraday jumps and US macroeconomic news announcements*: jump, bipower, makro açıklama ve co-jump ayrımı. https://orca.cardiff.ac.uk/id/eprint/19013/
 - Gençyürek & Ekinci (2023), *Safe-haven and hedging roles of precious metals for BRICS and Turkey*: zamanla değişen bağımlılık (DCC/coupla), 'altın güvenli limandır' her rejim için sabit değil. https://doi.org/10.1016/j.bir.2022.10.013
 
-**Bu 30 metrik ve 9 indeks** metodoloji sözlüğüdür. 84 as-of noktasında gerçekten hesaplanan altın/çapraz veri çekirdeği ayrı CSV'de, geri kalanı **MISSING/NOT_IMPLEMENTED** statüsündedir. Bu metnin hiçbir formülü 2026 Ocak'ta yürütülmüş işlem veya doğrulanmış sinyal değildir.
+**Bu 33 metrik ve 9 indeks** metodoloji sözlüğüdür. 84 as-of noktasında gerçekten hesaplanan altın/çapraz veri çekirdeği ayrı CSV'de, geri kalanı **MISSING/NOT_IMPLEMENTED** statüsündedir. Bu metnin hiçbir formülü 2026 Ocak'ta yürütülmüş işlem veya doğrulanmış sinyal değildir.
