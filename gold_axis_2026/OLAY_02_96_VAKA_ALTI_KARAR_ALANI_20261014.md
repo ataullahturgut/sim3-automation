@@ -13,6 +13,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.055%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.259%**, CL **+0.663%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_001); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -30,6 +32,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-01-12 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.032%, 4s +0.163%, 12s +0.354%; 1/3/5 uygun seans +0.045% / +0.222% / +1.532%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.082%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.044%**, CL **-0.013%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_001); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -49,6 +53,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.021%**, CL **-0.076%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **-0.010%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_002); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -66,6 +72,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-02-03 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.013%, 4s -0.073%, 12s +0.095%; 1/3/5 uygun seans -1.875% / +0.098% / -0.502%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.027%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.047%**, CL **-0.079%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_002); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -85,6 +93,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.004%**, CL **-0.171%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_003); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -102,6 +112,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-03-13 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.030%, 4s +0.328%, 12s EKSİK; 1/3/5 uygun seans +2.732% / +3.797% / +1.478%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.162%**, CL **+0.013%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_003); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -121,6 +133,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.013%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.000%**, CL **+0.377%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_004); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -138,6 +152,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-05-04 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.209%, 4s -0.172%, 12s +0.744%; 1/3/5 uygun seans +1.290% / +2.970% / +2.095%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.013%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.000%**, CL **+0.377%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_004); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -157,6 +173,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.101%**, CL **+0.368%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_005); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -174,6 +192,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-07-18 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.079%, 4s +0.084%, 12s +0.182%; 1/3/5 uygun seans +0.245% / +0.050% / +1.487%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.046%**, CL **-0.107%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_006); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -193,6 +213,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.116%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.103%**, CL **-0.087%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_005); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -210,6 +232,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-10-05 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.191%, 4s -0.171%, 12s +0.309%; 1/3/5 uygun seans +0.245% / -0.909% / -2.771%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.092%**, CL **-0.142%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_007); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -229,6 +253,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.002%**, CL **+0.036%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_006); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -246,6 +272,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-10-27 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.022%, 4s +0.003%, 12s +0.133%; 1/3/5 uygun seans +0.142% / +0.538% / +0.473%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.015%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.037%**, CL **+0.106%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_008); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -265,6 +293,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.010%**, CL **-0.079%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_009); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -282,6 +312,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-12-01 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.079%, 4s -0.008%, 12s +0.183%; 1/3/5 uygun seans -0.064% / +1.276% / +2.427%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.003%**, CL **+0.066%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.010%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_007); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -301,6 +333,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.003%**, CL **+0.066%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.010%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_010); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -318,6 +352,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-12-04 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.040%, 4s +0.100%, 12s EKSİK; 1/3/5 uygun seans +2.196% / +2.068% / +3.720%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.106%**, CL **-0.150%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_008); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -337,6 +373,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.058%**, CL **+0.355%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_009); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -354,6 +392,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-12-12 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.101%, 4s +0.294%, 12s +0.529%; 1/3/5 uygun seans -0.467% / -1.902% / -2.222%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.054%**, CL **+0.028%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_011); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -373,6 +413,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.016%**, CL **+0.207%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_010); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -390,6 +432,8 @@
 **1. Karar öncesi piyasa durumu:** **2023-12-27 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.034%, 4s -0.018%, 12s +0.325%; 1/3/5 uygun seans +0.109% / +1.474% / +2.017%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.045%**, CL **-0.027%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_012); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -409,6 +453,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.008%**, CL **-0.064%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_013); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -426,6 +472,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-03-04 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.083%, 4s +0.052%, 12s EKSİK; 1/3/5 uygun seans +1.760% / +2.502% / +2.480%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.007%**, CL **-0.075%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_011); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -445,6 +493,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.042%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.089%**, CL **+0.060%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.226%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_012); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -462,6 +512,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-04-12 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.024%, 4s -0.343%, 12s +1.037%; 1/3/5 uygun seans +2.076% / +1.707% / +4.622%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.072%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.009%**, CL **+0.245%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_013); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -481,6 +533,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.101%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.020%**, CL **+0.226%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_014); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -498,6 +552,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-04-24 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.105%, 4s +0.352%, 12s -0.013%; 1/3/5 uygun seans +0.992% / -2.341% / -1.988%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.072%**, CL **+0.096%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_014); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -517,6 +573,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.078%**, CL **-0.097%** (WTI vadeli, Brent değil), SI **-0.372%** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_015); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -534,6 +592,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-05-15 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.068%, 4s +0.063%, 12s -0.014%; 1/3/5 uygun seans +0.668% / -0.066% / +1.772%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.057%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.016%**, CL **+0.102%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_015); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -553,6 +613,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.031%**, CL **+0.325%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_016); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -570,6 +632,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-05-23 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.461%, 4s -0.449%, 12s -1.039%; 1/3/5 uygun seans -2.248% / -3.582% / -1.133%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.070%**, CL **-0.156%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_016); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -589,6 +653,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.018%**, CL **-0.145%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_017); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -606,6 +672,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-06-07 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.208%, 4s +0.238%, 12s +0.298%; 1/3/5 uygun seans +0.490% / +1.145% / +1.467%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.018%**, CL **-0.145%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_017); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -625,6 +693,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.056%**, CL **-0.115%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_018); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -642,6 +712,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-07-16 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.006%, 4s +0.136%, 12s +0.311%; 1/3/5 uygun seans +0.985% / +2.046% / +2.765%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.005%**, CL **-0.147%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_019); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -661,6 +733,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.005%**, CL **-0.147%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_018); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -678,6 +752,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-07-25 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.062%, 4s +0.022%, 12s -1.317%; 1/3/5 uygun seans -1.760% / -1.030% / -3.647%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.099%**, CL **+0.065%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_020); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -697,6 +773,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.099%**, CL **+0.065%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_019); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -714,6 +792,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-08-01 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.076%, 4s -0.115%, 12s +0.977%; 1/3/5 uygun seans +1.139% / +2.153% / +2.931%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.108%**, CL **-0.025%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_021); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -733,6 +813,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.007%**, CL **+0.052%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_022); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -750,6 +832,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-09-13 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.144%, 4s +0.028%, 12s +0.383%; 1/3/5 uygun seans +1.722% / +2.313% / +1.782%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.019%**, CL **-0.043%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_023); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -769,6 +853,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.027%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.154%**, CL **+0.000%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **-0.027%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_024); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -786,6 +872,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-10-22 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.073%, 4s +0.107%, 12s +0.474%; 1/3/5 uygun seans +0.302% / +1.890% / +3.336%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.042%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.010%**, CL ****EKSİK**** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_025); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -805,6 +893,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.056%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.037%**, CL **+0.074%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.198%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_020); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -822,6 +912,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-11-06 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.235%, 4s -0.407%, 12s -0.339%; 1/3/5 uygun seans -0.054% / -0.875% / -1.901%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.086%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.066%**, CL **-0.478%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_026); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -841,6 +933,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.092%**, CL **-0.206%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_021); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -858,6 +952,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-11-20 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.187%, 4s -0.392%, 12s +0.076%; 1/3/5 uygun seans +0.329% / +2.865% / +1.015%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.043%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.028%**, CL ****EKSİK**** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_027); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -877,6 +973,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.209%**, CL **-0.199%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_022); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -894,6 +992,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-11-25 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.223%, 4s -1.284%, 12s EKSİK; 1/3/5 uygun seans -0.778% / +1.384% / +3.173%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.026%**, CL **-0.254%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_028); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -913,6 +1013,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.026%**, CL **-0.254%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_023); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -930,6 +1032,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-12-11 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.476%, 4s -0.290%, 12s -0.083%; 1/3/5 uygun seans +0.921% / +2.053% / +1.662%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.004%**, CL **+0.116%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_029); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -949,6 +1053,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.004%**, CL **+0.116%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_024); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -966,6 +1072,8 @@
 **1. Karar öncesi piyasa durumu:** **2024-12-18 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.008%, 4s -0.156%, 12s -0.010%; 1/3/5 uygun seans -0.201% / -1.534% / -1.727%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.028%**, CL **-0.029%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_030); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -985,6 +1093,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.028%**, CL **-0.029%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**SI.n.0 gümüş H1 kaynağı GitHub arşivinde VAR (2022–24); bu vakaya ait tam kapanmış 05:00–06:00 UTC bar henüz ham `.gz` üzerinden hesaplanmadı. `SI.c.0` boşluğu gümüş veri yokluğu değildir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_025); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1002,6 +1112,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-02-05 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.153%, 4s +0.210%, 12s +0.498%; 1/3/5 uygun seans +1.563% / +2.271% / +3.537%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.102%**, CL **+0.304%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_031); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1021,6 +1133,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.084%**, CL **+0.114%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_026); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1038,6 +1152,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-02-28 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.026%, 4s -0.396%, 12s -0.790%; 1/3/5 uygun seans -1.079% / -2.502% / -2.244%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.042%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.032%**, CL **-0.071%** (WTI vadeli, Brent değil), SI **-0.270%** (gümüş vadeli, spot XAG değil), GC **+0.133%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_027); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1057,6 +1173,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.087%**, CL **-0.222%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_032); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1074,6 +1192,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-03-31 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.486%, 4s +0.837%, 12s EKSİK; 1/3/5 uygun seans +1.439% / +3.307% / +3.521%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.047%**, CL **+0.319%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.144%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_033); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1093,6 +1213,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.112%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.166%**, CL **-0.182%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_028); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1110,6 +1232,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-04-04 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.177%, 4s -0.169%, 12s +0.006%; 1/3/5 uygun seans -0.753% / -0.743% / +0.877%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.097%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.862%**, CL **+0.333%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **-0.045%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_034); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1129,6 +1253,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.124%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.158%**, CL **-0.265%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **-0.135%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_029); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1146,6 +1272,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-04-09 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.166%, 4s +0.436%, 12s +1.341%; 1/3/5 uygun seans +0.530% / -2.797% / -3.046%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.057%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.421%**, CL **+0.877%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_035); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1165,6 +1293,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.136%**, CL **+0.393%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.119%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_030); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1182,6 +1312,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-04-23 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.895%, 4s -1.646%, 12s -2.383%; 1/3/5 uygun seans -5.170% / -0.427% / +2.805%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.085%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.084%**, CL **+0.187%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_036); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1201,6 +1333,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.100%**, CL **+0.086%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.379%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_037); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1218,6 +1352,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-05-01 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.273%, 4s -0.072%, 12s -2.079%; 1/3/5 uygun seans -2.120% / -1.646% / -2.566%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.100%**, CL **+0.086%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.379%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_031); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1237,6 +1373,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.252%**, CL **-0.241%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_038); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1254,6 +1392,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-05-06 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.106%, 4s -0.600%, 12s +1.384%; 1/3/5 uygun seans +3.141% / +3.831% / +1.488%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.252%**, CL **-0.241%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_032); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1273,6 +1413,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.045%**, CL **-0.033%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_039); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1290,6 +1432,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-05-14 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.261%, 4s -0.169%, 12s -0.403%; 1/3/5 uygun seans -0.550% / -2.603% / -4.705%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.045%**, CL **+0.079%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_033); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1309,6 +1453,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.029%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.248%**, CL **-0.519%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **-0.258%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_040); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1326,6 +1472,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-05-21 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.441%, 4s +0.513%, 12s +0.862%; 1/3/5 uygun seans +3.037% / +2.662% / +2.511%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.043%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.124%**, CL **-0.158%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_041); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1345,6 +1493,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.124%**, CL **-0.367%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_042); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1362,6 +1512,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-06-13 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.084%, 4s -0.221%, 12s +1.125%; 1/3/5 uygun seans +1.509% / +3.034% / +1.765%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.124%**, CL **-0.367%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_034); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1381,6 +1533,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.089%**, CL **+0.061%** (WTI vadeli, Brent değil), SI **+0.302%** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_035); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1398,6 +1552,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-07-22 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.071%, 4s -0.098%, 12s -0.242%; 1/3/5 uygun seans +0.566% / +1.581% / +0.685%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.056%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.035%**, CL **+0.135%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_043); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1417,6 +1573,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.056%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.035%**, CL **+0.135%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_036); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1434,6 +1592,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-07-29 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.145%, 4s +0.058%, 12s +0.259%; 1/3/5 uygun seans -0.667% / -1.645% / -1.948%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.042%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.019%**, CL **+0.150%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_044); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1453,6 +1613,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.001%**, CL **-0.202%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **-0.069%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_037); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1470,6 +1632,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-08-07 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.011%, 4s -0.098%, 12s +0.248%; 1/3/5 uygun seans +0.093% / +0.580% / +2.305%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.042%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.078%**, CL **-0.139%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_045); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1489,6 +1653,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.006%**, CL **+0.110%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_046); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1506,6 +1672,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-09-23 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.219%, 4s +0.291%, 12s +0.233%; 1/3/5 uygun seans +1.457% / +3.228% / +1.947%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.037%**, CL **-0.048%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_047); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1525,6 +1693,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.050%**, CL **-0.272%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC **+0.127%**. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_048); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1542,6 +1712,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-10-17 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.205%, 4s +0.720%, 12s +1.730%; 1/3/5 uygun seans +3.243% / +6.024% / +9.762%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.187%**, CL **-0.035%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_049); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1561,6 +1733,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.005%**, CL **-0.279%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_038); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1578,6 +1752,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-10-29 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.322%, 4s +0.049%, 12s +0.228%; 1/3/5 uygun seans +0.330% / -2.812% / -4.085%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.055%**, CL **+0.183%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_039); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1597,6 +1773,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.000%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.071%**, CL **+0.166%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_050); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1614,6 +1792,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-11-12 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.042%, 4s -0.673%, 12s -0.084%; 1/3/5 uygun seans -0.675% / +2.777% / +3.569%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.108%**, CL **-0.049%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_040); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1633,6 +1813,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **+0.261%**, CL **+0.101%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_051); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1650,6 +1832,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-11-17 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.339%, 4s -0.753%, 12s EKSİK; 1/3/5 uygun seans -3.130% / -1.158% / -0.229%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.115%**, CL **+0.067%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_041); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1669,6 +1853,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN ****EKSİK**** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ ****EKSİK****, CL ****EKSİK**** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_052); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1686,6 +1872,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-12-22 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s +0.058%, 4s +0.527%, 12s EKSİK; 1/3/5 uygun seans +1.770% / +1.546% / +1.398%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.014%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.026%**, CL **+0.246%** (WTI vadeli, Brent değil), SI **-0.240%** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_053); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
@@ -1705,6 +1893,8 @@
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **-0.056%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.010%**, CL **+0.017%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
 
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
+
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#swing_v1_042); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
 **3. Karar anı değerlendirme:** `P(UP/DOWN/DEVAM/DÖNÜŞ)` ve **beklenen kalan hareket kalibre edilmedi**. Geçerli otomatik `AL/SAT/TUT` sinyali **ÜRETİLMEDİ**. Pozisyon ve gerçek banka makası bilinmiyorsa **ABSTAIN**; geçmiş doğru aksiyonun gerçekleşmiş olması öngörü demek değildir.
@@ -1722,6 +1912,8 @@
 **1. Karar öncesi piyasa durumu:** **2025-12-29 06:15:00 UTC / 09:15 TRT**, başlangıç fiyat etiketi sonrasındaki ilk uygun fiyat günü. Geçmiş XAU MID: 1s -0.190%, 4s -0.022%, 12s EKSİK; 1/3/5 uygun seans -0.148% / +0.774% / +4.136%. **Gerçek DXY/2Y/10Y, spot gümüş/platin/paladyum/Brent, 12s gerçekleşen volatilite ve kalibre trend olasılığı: EKSİK.** Bunlar ileride veri eklendikçe güncellenecek.
 
 **Karar öncesi eşzamanlı vadeli H1 kontrolü:** Son tamamlanmış 05:00–06:00 UTC CME barının önceki H1 kapanışa değişimi: ZN **+0.028%** (10 yıllık tahvil vadeli *fiyatı*, tahvil getirisi değil), NQ **-0.138%**, CL **+0.122%** (WTI vadeli, Brent değil), SI ****EKSİK**** (gümüş vadeli, spot XAG değil), GC ****EKSİK****. Kaynak-vintage ve 2023 gerçek-time erişim teyidi olmadığı için tarihsel H1 fiyat vekilidir; boş kontrat/bar değeri üretilmez. [96 fiyat olayının H1 karşılaştırma CSV'si](OLAY_02_96_KARAR_ONCESI_CME_H1_ZN_NQ_CL_SI_20261014.csv).
+
+**2025 için yakın-kontrat SI.n.0 ham H1 arşivinin aynı kapsamı teyit edilmedi; mevcut SI.c.0 satır sayısı düşük olabilir.**
 
 **2. Haber ve ilk tepki:** [Haber ve veri kaynağı](OLAY_02_96_KAYIT_TEK_TEK_DOSYALAR_20261014.md#c_corr_054); açıklama ve yayın tarihleri kaynak fişinde. Fiyat bacağını başlatan haberin tam UTC ilk yayımlanması ve bütün ilgili piyasaların ilk 15dk tepkisi **doğrulanmamış**; 09:15 TRT sonrasındaki duyuru sonuçları bu sabahın girdisi değildir.
 
