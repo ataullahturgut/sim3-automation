@@ -1,4 +1,6 @@
 # GOLD INTRAMONTH — Kurumsal Manifest Denetimi ve Otorite Yönetimi
+
+> **14 EKİM 2026 DEĞİŞİKLİK NOTU / ÜSTÜN GELEN BELGE DÜZENİ:** Bu dosyadaki 13 Ekim yönetim denetimi, **o tarihteki 5.190 satırlık ana manifeste** uygulanmıştır. O belge içerik kaybı olmadan [TAM TARİHSEL SNAPSHOT](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST_FULL_HISTORY_SNAPSHOT_20261014.md) dosyasına aynen taşındı. Bugünkü [129 satırlık AMAÇ ODAKLI ANA MANİFEST](GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md) belirli bir karar anında **mevcut veri + tarihli haber + geçmiş olay/karşı-vaka + adaptif volatilite değerlendirmesi** için güncel hedef otoritesidir. Aşağıdaki eski **#1–#12, 5E.8, R43–R70** gibi bölüm ve 'manifest hâlen 4.9k satır' referansları yeni dosyada değil **tarihsel snapshotta** aranmalıdır. Bilimsel kaynak/PIT, model retleri, banka işlem yasağı ve test protokolü kısıtları değişmedi. Bu değişiklik **uygulamanın geliştirildiği, test edildiği veya üretime geçtiği** anlamına gelmez.
 **Denetim tarihi:** 2026-10-13 · **Durum:** Araştırma dalı / değişiklik incelemesinde · **Kapsam:** Gold intramonth ana manifest, yaklaşık 4.9 bin satır. **Otorite:** Bu belge mevcut bilimsel sonuçları değiştirmez; proje belgelerinin okunma ve onay iş akışını yönetir. **Üretim/lisans:** Hiçbir otomatik banka emri veya canlı model geçişi yapılmadı.
 
 ## 1. Yönetici karar özeti
