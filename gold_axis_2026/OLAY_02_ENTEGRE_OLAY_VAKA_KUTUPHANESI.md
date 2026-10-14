@@ -111,7 +111,6 @@
 | [38 olay derin haber–mekanizma raporu](GOLD_HISTORICAL_38_CASES_DEEP_CAUSAL_RESEARCH_VERDICT_20261014.md) · [38 tarihli haber/metal/hisse matrisi](GOLD_HISTORICAL_38_EVENT_CAUSAL_SOURCES_QUANT_V2_20261014.csv) | Reuters/WGC/metal/hisse bağlamı; farklı günlük kapanışların anlık fiyat tepkisi olmadığı unutulmaz |
 | [95 eski neden aileleri](GOLD_HISTORICAL_95_TRIGGER_CAUSE_REGIME_TAXONOMY_AUTHORITY_20261014.md) · [eski fiyat/diğer piyasa atlası](GOLD_HISTORICAL_95_PRICE_RECORDS_TRIGGER_REGIME_CROSSMARKET_ATLAS_V1_20261014.csv) | **42+53 eski fiyat sözleşmesi; yeni 42+54'le otomatik birleştirme yasak** |
 | [85 makro release M15 olayı](GOLD_HISTORICAL_SHOCK_CAUSAL_FALSIFICATION_MACRO_EVENTSTUDY_AUTHORITY_20261014.md) · [425 ölçüm CSV](GOLD_2023_2025_CPI_NFP_FOMC_M15_RELEASE_WEEKMATCH_EVENTSTUDY_20261014.csv) | NFP ilk 15dk medyan mutlak %0,3344 vs eşsaat normal %0,0802; CPI %0,2927 vs %0,0972. Bu **oynaklık** kanıtı, yön stratejisi değil |
-| [2026 Astra günlük kaynak denetimi](GOLD_ASTRA_2026_JAN_SEP_DAILY_REPLAY_EVENT_MECHANISM_TRANSFER_AUDIT_20261014.md) | 273 günlük haber–karar metodolojisi ve başarısız maliyetli sonuç; ayrı dönem/clock |
 | [OLAY-02 kaynak kalite denetimi](OLAY_02_ICERIK_KALITE_DENETIMI_20261014.md) | Hangi ilk yayımlar doğrulanmış ve hangi as-of / neden belgeleri eksik |
 
 **Saat zorunluluğu:** UTC+3 Türkiye; NY17 New York yaz/kış ve 17:00 sınırına duyarlı. M15 fiyatı bar başladıktan **15 dakika**, M1 **1 dakika** sonra gözlenebilir; H1 futures için tamamlanmamış barı kullanma. ZN 10 yıllık ABD tahvil **vadeli fiyatıdır**, getiri (%) değildir. GVZ endeksi **puan**, yüzde değil; gün sonu değerinin erken sinyalde D-1 lag gereği var. DXY, gerçek 2Y/10Y, gümüş/platin/paladyum ve ETF/CFTC'nin eşsaatli as-of paneli eksik olabilir. BIST ons altın yönü için birincil veri değil.
@@ -397,7 +396,6 @@ Bu tablo yalnız giriş kapısı. **Her kimliğe tıklandığında haberlerin ya
 
 ## 8. Ayrı 2026 Astra araştırmasından aktarılacak dersler
 
-[Astra'nın 273 günlük haber–karar metodolojisi ve kayıp denetimi](GOLD_ASTRA_2026_JAN_SEP_DAILY_REPLAY_EVENT_MECHANISM_TRANSFER_AUDIT_20261014.md) şunu gösteriyor: sadece çok hareketli günleri seçmek yerine **bütün günlerde haber → beklenti → dolar/faiz/petrol → XAU → karşıt neden → karar** zinciri gerekir. Ancak 2026 HistData saat sözleşmesi ve gerçek banka verisinin yokluğu 2023–25 NY17 çalışmasıyla karışmamalı.
 
 2026 raporunun 19 tamamlanmış GOLD/NAKİT turunda her işlem tarafında %0,8 komisyon varsayımıyla **strateji yaklaşık −%31,68**, pasif altın yaklaşık **−%6,81**. Bu, mekanizma yorumunu otomatik para kazanma yöntemi sanmamak için güçlü karşı örnek. Enerji arzı → petrol → enflasyon/faiz baskısı; ateşkes → enerji rahatlaması; Fed/CPI; altın rezerv/kurumsal güven ve likidite aktarımı **aday** kalır. Hangi ara değişkenin ne zaman gözlendiği doğrulanmadan kesin sınıf olmaz.
 
