@@ -13,3 +13,17 @@
 .v2gaps p:last-child{border-bottom:0}
 .v2bullet{color:#c8ac7c;margin-right:12px}
 @media(max-width:720px){.v2questionGrid{grid-template-columns:1fr}}
+
+
+.monthpanel{background:linear-gradient(135deg,#1a2938,#121c29);border:1px solid #6e5b3e;border-radius:12px;padding:20px 22px;margin-bottom:30px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;justify-content:space-between}
+.monthintro{display:grid;gap:6px;max-width:480px}
+.monthintro strong{color:#f0e3c6;font-size:17px}
+.monthintro span{color:#aabbd0;line-height:1.5;font-size:12px}
+.monthcontrols{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.monthcontrols label{font-size:12px;color:#b8c9da}
+.monthcontrols select{border:1px solid #3b4d60;border-radius:8px;background:#101b28;color:#f0f5fc;padding:12px;font:inherit;min-width:190px}
+.monthcontrols button{background:#d0ad79;color:#182331;border:0;border-radius:8px;padding:13px 17px;font:inherit;font-weight:700;cursor:pointer}
+.monthcontrols button:disabled{opacity:.5;cursor:wait}
+.monthcontrols button:hover:not(:disabled){background:#e1c292}
+.monthstatus{flex-basis:100%;margin:0;color:#e0c698;font-size:12px;line-height:1.6}
+@media(max-width:700px){.monthpanel{padding:15px}.monthcontrols{width:100%}.monthcontrols select{flex:1;min-width:155px}}
