@@ -41,3 +41,14 @@ test("future label price does not alter state until its maturity",()=>{
  A.deepEqual(p1,p2);
  A.deepEqual(V.action(s1,p1,"CASH"),V.action(s2,p2,"CASH"));
 });
+
+test("short-term learned downturn can exit despite bullish long-term head",()=>{
+ const s=V.create();
+ for(const h of V.HORIZONS){s.heads[h].n=20;s.heads[h].mse=1;s.heads[h].w[0]=5;}
+ s.heads[7].w[0]=-3;
+ const p=V.forecast(s,V.observe(s,features));
+ A.ok(p.mu>0&&p.shortMu< -2);
+ A.equal(V.action(s,p,"GOLD").target,"CASH");
+ s.config.disableShortExit=true;
+ A.equal(V.action(s,p,"GOLD").target,"GOLD");
+});
