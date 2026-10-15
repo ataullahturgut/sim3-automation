@@ -24,6 +24,7 @@
     <a href="#macroV6">◈ &nbsp; V6 piyasa aktarım denetimi</a>
     <a href="#v6portfolio">◉ &nbsp; V6 ekonomik AL/SAT deneyi</a>
     <a href="#adaptiveV7">↻ &nbsp; V7 adaptif öğrenme (araştırma)</a>
+    <a href="#v8Regret">↻ &nbsp; V8 hata öğrenmesi denetimi</a>
    </nav>
    <div class="sidebottom">
     <div class="statusrow"><span class="statusdot"></span> Tarihsel araştırma</div>
@@ -288,6 +289,29 @@
       <p class="notice" id="intramonthOracleV7Warning">En avantajlı zamanlar ay sonunda tespit edilebilir; bu geçmiş fiyat optimizasyonu canlı AL/SAT başarısı değildir. Gerçek banka alış-satış makası yok.</p>
       <p class="notice" id="monthlyBenchmarkV7Warning">Bu referans her ay için yalnız NAKİT ve ay boyu ALTIN seçeneklerini kapsar. Komisyonlar var, gerçek banka fiyatı yok. Aylık kazanan önceden bilinemez.</p>
       <p class="notice" id="adaptiveV7Warning">V7 geçmişi görerek oluşturulmuş bir deneydir. Ekonomik haber katkısı doğrulanmadı. Gerçek banka ASK/BID ve kayma yok; otomatik alım-satım yok.</p>
+    </div>
+   </section>
+   <section id="v8Regret" class="section">
+    <div class="sectionhead">
+      <h2>V8 · Geçmiş hatalardan öğrenme ve strateji kabul denetimi</h2>
+      <p>2023–2025 tamamlanmış geçmiş verileriyle, 96 saat ve 14 gün sonra ortaya çıkan hataları öğrenen bağımsız gölge model. 2026 sonuçları V7 ve nakitle karşılaştırılır; başarısız sürüm otomatik kabul edilmez.</p>
+    </div>
+    <div class="panel">
+      <button class="researchbtn" id="runV8Regret" type="button">V8 hata öğrenmesini ve karşı testleri çalıştır</button>
+      <p class="monthstatus" role="status" id="v8RegretStatus">V8 henüz ekrana yüklenmedi. V7 çalışmaya devam eder; otomatik model değişimi yoktur.</p>
+      <div class="kpis">
+        <article class="kpi"><span>V8 Şubat–Eylül sonu</span><strong id="v8EndUSD">—</strong><small>119,75 $ başlangıç, %0,8 / %0,8 maliyet</small></article>
+        <article class="kpi"><span>Mevcut V7 referansı</span><strong id="v8V7USD">—</strong><small>Aynı kaynak dönemi; gölge karşılaştırma</small></article>
+        <article class="kpi"><span>V8 öğrenme tamamen dondurulmuş</span><strong id="v8FrozenUSD">—</strong><small>Online güncelleme devre dışı</small></article>
+        <article class="kpi"><span>V8 hata düzeltme kapalı</span><strong id="v8NoRegretUSD">—</strong><small>Öğrenmenin ek işlem katkısı</small></article>
+      </div>
+      <h3>2024, 2025 ve 2026 karşı sınamaları</h3>
+      <div id="v8YearTable" class="tablewrap">Deney çalıştırılmadı.</div>
+      <h3>Gerçek zaman sıralı V8 AL / SAT kararları</h3>
+      <div id="v8TradesTable" class="tablewrap">Deney çalıştırılmadı.</div>
+      <h3>Ay ay geç olgunlaşmış hata kayıtları</h3>
+      <div id="v8ErrorsTable" class="tablewrap">Deney çalıştırılmadı.</div>
+      <p class="notice" id="v8GateWarning">Bu araştırma sürümü otomatik canlı AL/SAT yapmaz, V7'nin yerine geçmez. Yeterli ekonomik firstprint bulunmadığından haber kaynaklı öğrenme henüz doğrulanmamıştır.</p>
     </div>
    </section>
    <footer>GOLD / GUARD · Yerel, salt okunur araştırma paneli · <span id="footerVersion"></span></footer>
