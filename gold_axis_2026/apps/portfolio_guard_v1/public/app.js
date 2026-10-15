@@ -846,3 +846,63 @@ async function runV11Ann(){
 }
 $("runV11Ann").addEventListener("click",runV11Ann);
 
+async function runV12Rehber(){
+ const b=$("runV12Rehber"),state=$("v12Status");
+ b.disabled=true;
+ state.textContent="REHBER yeni hafızayla ve öğrenmesi dondurularak 2024–2026 boyunca tekrar oynatılıyor…";
+ try{
+  const res=await fetch("/api/algorithm/v12/rehber",{cache:"no-store"});
+  if(!res.ok)throw Error("HTTP_"+res.status);
+  const x=await res.json();
+  if(x.version!=="V12_REHBER_ORIGINAL_CAUSAL_MEMORY_RESEARCH"||
+    x.status!=="NO_AUTOMATIC_PROMOTION"||
+    x.design.ANNArchitecture!==false||
+    x.scientificGate.promote!==false||
+    x.scientificGate.independentBlindPeriod!==false||
+    x.scientificGate.liveTradingAuthorized!==false||
+    x.scientificGate.bankAskBidMeasured!==false)throw Error("REHBER_SCIENTIFIC_GATE_INVALID");
+  const find=(year,variant)=>x.results.find(v=>v.year===year&&v.variant===variant);
+  const core=find("2026_FEB_SEP","REHBER_CORE"),
+    frozen=find("2026_FEB_SEP","REHBER_FROZEN_MEMORY"),
+    noReliability=find("2026_FEB_SEP","REHBER_NO_RELIABILITY"),
+    fixedMargin=find("2026_FEB_SEP","REHBER_FIXED_MARGIN"),
+    prev=find("2025","REHBER_CORE");
+  $("v12Online").textContent=money(core.final);
+  $("v12Frozen").textContent=money(frozen.final);
+  $("v12Year2025").textContent=money(prev.final);
+  $("v12Gate").textContent="ONAY YOK";
+  $("v12Results").innerHTML=table(
+   ["Dönem","Algoritma varyantı","Komisyon sonrası net","İşlem","Tamamlanmış hafıza bloğu","Güncellenmiş karar hatası"],
+   x.results.map(z=>"<tr>"+cell(escapeText(z.year))+
+    cell(escapeText(z.variant))+
+    cell(money(z.final))+cell(z.tradeCount)+cell(z.analogBlocks)+
+    cell(z.learning.updates)+"</tr>")
+  );
+  const when=t=>new Intl.DateTimeFormat("tr-TR",{
+    timeZone:"Europe/Istanbul",day:"2-digit",month:"2-digit",hour:"2-digit",
+    minute:"2-digit",hour12:false}).format(new Date(t));
+  $("v12Trades").innerHTML=table(
+   ["Sinyal (TR)","İcra (TR)","AL/SAT","Piyasa fiyat vekili","Gerekçe"],
+   core.trades.map(z=>"<tr>"+cell(escapeText(when(z.signalAt)))+
+     cell(escapeText(when(z.at)))+cell(z.side==="BUY"?"AL":"SAT")+
+     cell(format.format(z.price))+cell(escapeText(z.reason))+"</tr>")
+  );
+  state.textContent="REHBER sonuçlandı: 2026 online "+
+    money(core.final)+", yıl başı dondurulmuş hafıza "+money(frozen.final)+
+    ", 2025 "+money(prev.final)+". Model bilimsel terfi almadı.";
+  $("v12Warning").textContent=
+    "DİKKAT: Hafıza güncellemeleri 2026'da "+money(core.final-frozen.final)+
+    " fark yarattı; ancak karar marjı ve uzman güven güncellemelerini kapatmak "+
+    "bu dönem işlemlerini değiştirmedi (marj: "+money(fixedMargin.final)+
+    ", uzman: "+money(noReliability.final)+"). "+
+    "2024 ve 2025'te model hiç altın almayıp yükselişleri kaçırdı. "+
+    "2026 önceden incelendi; kör test ve gerçek banka BID/ASK yok. "+
+    "Yalnızca olgunlaşmış etiketler kullanılıyor, üç ayırt edici piyasa merceği "+
+    "her 14 günlük bloktan en çok bir geçmiş vaka seçiyor. "+
+    "OTOMATİK AL/SAT VE V7 DEĞİŞİKLİĞİ YOK.";
+ }catch(err){
+  state.textContent="REHBER denetimi yüklenemedi: "+err.message+". Eski sürümler korundu.";
+ }finally{b.disabled=false;}
+}
+$("runV12Rehber").addEventListener("click",runV12Rehber);
+
