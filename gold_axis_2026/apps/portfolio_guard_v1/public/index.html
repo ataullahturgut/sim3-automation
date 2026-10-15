@@ -29,6 +29,7 @@
     <a href="#v10Evidence">↻ &nbsp; V10 işlem zamanı ve koruma denetimi</a>
     <a href="#v11Ann">↻ &nbsp; V11 gerçek ANN ve hata öğrenmesi</a>
     <a href="#v12Rehber">↻ &nbsp; V12 REHBER özgün karar hafızası</a>
+    <a href="#v13Sentez">↻ &nbsp; V13 SENTEZ hibrit öğrenen model</a>
    </nav>
    <div class="sidebottom">
     <div class="statusrow"><span class="statusdot"></span> Tarihsel araştırma</div>
@@ -409,6 +410,28 @@
       <h3>REHBER 2026 gerçekleşen banka-kesiti işlemleri</h3>
       <div class="tablewrap" id="v12Trades">Deney çalıştırılmadı.</div>
       <p class="notice" id="v12Warning">REHBER gerçek işlem sistemi değildir. 2026 önceden incelenmiştir. Komisyonlar düşülmüştür ancak gerçek banka alış/satış fiyatları, ekonomik olayların doğrulanmış ilk yayın zamanları ve bağımsız gelecek testleri bulunmuyor.</p>
+    </div>
+   </section>
+
+   <section id="v13Sentez" class="section">
+    <div class="sectionhead">
+      <h2>V13 · SENTEZ — Özgün ANN + bulanık kural + kapılı rejim hafızası</h2>
+      <p>ANN'nin doğrusal olmayan öğrenmesi, ANFIS'in uyarlanan Sugeno kuralları ve LSTM'den esinlenen geçmiş durum hafızası; vadesi dolan 14/56 gün sonuçlarıyla öğrenen 09:00 Türkiye saati sinyal sistemi.</p>
+    </div>
+    <div class="panel">
+      <button type="button" class="researchbtn" id="runV13Sentez">SENTEZ'i 2023–2026 çalıştır, tüm katmanları karşı test et</button>
+      <p class="monthstatus" role="status" id="v13SentezStatus">Yeni hibrit deney başlatılmadı. Önceki modeller korunuyor.</p>
+      <div class="kpis">
+        <article class="kpi"><span>2023–2026 kesintisiz SENTEZ</span><strong id="v13Full">—</strong><small>100 $ başlangıç, işlem komisyonları dahil</small></article>
+        <article class="kpi"><span>Aynı dönemde pasif altın</span><strong id="v13Hold">—</strong><small>Her iki yönde %0,8 maliyet</small></article>
+        <article class="kpi"><span>2025 SENTEZ</span><strong id="v13Year2025">—</strong><small>100 $ ayrı başlangıç, yükseliş rejimi</small></article>
+        <article class="kpi"><span>2026 Şubat–Eylül SENTEZ</span><strong id="v13Year2026">—</strong><small>119,75 $ ayrı nakit başlangıç</small></article>
+      </div>
+      <h3>Karşılaştırmalı bağımsız katman deneyi</h3>
+      <div class="tablewrap" id="v13Ablations">Model çalıştırılmadı.</div>
+      <h3>Kesintisiz koşunun gerçek işlem defteri</h3>
+      <div class="tablewrap" id="v13Trades">Model çalıştırılmadı.</div>
+      <p class="notice" id="v13SentezWarning">Bu özgün araştırma hibriti bir eğitimli gerçek ANN, uyarlanan bulanık Sugeno sonuç katmanı ve sabit kapı mantıklı LSTM-esinli durum hafızası içerir. Tam bir eğitilmiş LSTM değildir. Geçmiş dönemler zaten incelendi, bağımsız kör test değildir. Gerçek banka BID/ASK fiyatı ve doğrulanmış makro ilk yayın saatleri yoktur.</p>
     </div>
    </section>
    <footer>GOLD / GUARD · Yerel, salt okunur araştırma paneli · <span id="footerVersion"></span></footer>
