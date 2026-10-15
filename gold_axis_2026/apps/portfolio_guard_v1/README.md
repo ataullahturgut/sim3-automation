@@ -107,3 +107,12 @@ Her iki model **Şubat sonunda gerçek SAT yapmadı**: sonuçlar açık GOLD poz
 - Yalnız izin verilen API: `GET /api/months`, `GET /api/months/2026-02/run`. Üçüncü ay kapalı.
 
 **Not:** Bu uygulama geçmiş veri araştırmasıdır; canlı banka işlemi, otomatik öğrenmeyle strateji değiştirme veya Mart 2026'yı çalıştırma henüz desteklenmiyor.
+
+## 15 Ekim — Çalışan toparlanma algoritması V3 (gölge araştırma)
+Sol menüde **Yeni V3 toparlanma modeli** bölümünü aç ve **V3 sonuçlarını hesapla ve karşılaştır** düğmesine bas. Bu bölüm **2020–2025 tarihsel XAU 3 saatlik tamamlanmış durumları** (10.850 kontrol kesiti), **65 olgunlaşmış şok başlangıcını**, 2023→2024→2025 kronolojik karşılaştırmasını ve V3 Ocak–Şubat işlemlerini gösterir.
+
+Şubat 2026 için Ocak V1 sonu **119,753917 USD NAKİT** başlangıcıyla V3 **120,442260 USD** net varsayımsal tasfiye değeri üretmiştir. Eski 15 dakikalık V1 **114,274468 USD** iken hiç işlem yapmadan nakit **119,753917 USD**, ay başı AL/TUT **132,906170 USD**. V3 yalnız bu ayda V1'den daha iyi; nakdi ancak 0,69 dolar aşmıştır. Ayrıca Jan V3 100 dolar başlangıçta **110,981208 USD** ile eski Ocak V1 **119,753917 USD**'nin gerisindedir. 2024 V3 **119,389706 USD** vs buy-hold **124,430292 USD**, 2025 V3 **141,894040 USD** vs buy-hold **161,151041 USD**. **V3 doğrulanmış yatırım üstünlüğü göstermez.**
+
+İşlemler sadece Türkiye saati **09:00, 12:00, 15:00** tamamlanmış üç saatlik kesitlerde araştırma fiyatı üzerinden yapılır. Ekonomik olayın G05-C veya G06-B olması **kanıtlanmamış hipotez**: neden UNRESOLVED. Olay benzerliğinde ileri 96h etiketler yalnız kaynak tarihinde olgunlaşmışsa alınır, geleceğin bilgisi kullanılmaz. %0,8 alış ve %0,8 satış var, gerçek banka alış-satış makası ayrıca mevcut değil. Ocak/Şubat V1 dondurulmuş sonuçları değiştirilmedi.
+
+Teknik dosyalar: `recovery_v3.js`, `recovery_v3.test.js`, `data/RECOVERY_HIST_3H_2020_2022_V1.csv`, `data/RECOVERY_HIST_3H_2023_2025_V1.csv`, `RECOVERY_V3_EXECUTION_REPORT_20261015.md`. Windows ve Linux test: `npm test`, `npm run verify-v3`. Arayüzde çalıştırma, yatırım sinyallerinin canlı onayı değil, retrospektif karşılaştırmadır.
