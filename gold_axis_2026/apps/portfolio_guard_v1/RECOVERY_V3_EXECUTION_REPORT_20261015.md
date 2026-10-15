@@ -16,7 +16,7 @@
 | Yıl | Eğitim yalnız önceki yıl(lar) | V3 yıl sonu | Aynı kaynakta AL ve TUT | İşlemler | Yorum |
 |---|---|---:|---:|---:|---|
 | 2023 | 2020–2022 / 38 vaka | **110,57 $** | 110,32 $ | 1 | Kapsam eksik (1299 üç saatlik gözlem); adil tam-yıl zaferi değil |
-| 2024 | 2020–2023 / 40 vaka | **119,48 $** | **124,43 $** | 6 | Pasif altının gerisinde |
+| 2024 | 2020–2023 / 40 vaka | **119,39 $** | **124,43 $** | 6 | Pasif altının gerisinde |
 | 2025 | 2020–2024 / 53 vaka | **141,89 $** | **161,15 $** | 8 | Pasif altının belirgin gerisinde |
 
 **2025 kritik sonuç:** V3 +%41,89 yaparken koşu içi sürekli altın +%61,15 oldu. Artan varlıkta aşırı temkinli kalma ve pozisyon devri maliyeti ciddi darboğazdır. Bu sayılar retrospektif ve parametreleri ileride değiştirmek için kullanıldığından bağımsız kör OOS diye sunulmaz.
@@ -43,3 +43,6 @@
 - Kaynak dosyalarının Git blob SHA denetimi aktiftir: 2020–22 `e19d69fbbf4a825420a07d7e5f678899d1e0f805`, 2023–25 `a588b6745f893fcafc935fa486328a6349caa658`.
 
 **SONUÇ:** Çalışan V3 algoritması kuruldu, veriler ve gerçek simülasyon sonuçları üretildi; ancak maliyetli AL/SAT stratejisinin bağımsız ve kalıcı biçimde pasif altın veya nakitten üstün olduğu gösterilemedi. İlerleme “çalışan araştırma motoru” düzeyindedir, “uygulanabilir sürekli öğrenen yatırım sistemi” düzeyinde değil.
+
+## Veri kapanışı düzeltmesi
+Model ikinci doğrulamada piyasa kapalıyken geçen süreyi iki bağımsız toparlanma teyidi saymamayı garanti etti: son uygun 3h kesit ile yeni kesit arasında 12 saatten fazla boşluk olduğunda evre teyit sayacı sıfırlanır. Şubat 1'de veri yokken nakit ilk durum $119,753917 olarak korunur. Bu düzeltmeden sonra Şubat sonucu aynı $120,442260 kalmış, 2024 yıllık sonuç $119,389706 olarak düzelmiştir. İzinsiz ticaret saati veya hayalî piyasa verisi üretilmez.
