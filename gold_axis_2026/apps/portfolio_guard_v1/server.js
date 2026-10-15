@@ -48,6 +48,18 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v4"){
+  const model=require("./recovery_v4").runResearch();
+  return respond(res,200,JSON.stringify({
+   version:model.version,status:model.status,
+   training:model.training,candidatePolicy:model.candidatePolicy,
+   annual:model.annual,january:model.january,february:model.february,
+   baseline:model.baseline,chronology:model.chronology,
+   economicCauseVerified:model.economicCauseVerified,
+   bankBidAskSpreadIncluded:model.bankBidAskSpreadIncluded,
+   warning:model.warning
+  }));
+ }
  if(route==="/api/algorithm/v3"){
   const v3=require("./recovery_v3").runJanuaryFebruary();
   return respond(res,200,JSON.stringify({
