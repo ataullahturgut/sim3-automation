@@ -174,7 +174,7 @@ function choose(s,snap,position){
  // whichever raw cumulative return has the longest horizon.
  // This is an explicit time-normalization heuristic, not Bellman optimality.
  const selected=ready.sort((a,b)=>b.netScore/b.h-a.netScore/a.h)[0]||null;
- let score=selected?.netScore/selected.h??null;
+ let score=selected===null?null:selected.netScore/selected.h;
  let goldDownside28=null,riskAdjustmentPerDay=0;
  if(selected&&s.config.maxHypotheticalDownsidePct!==null){
    // Lambda penalizes CASH->GOLD and encourages GOLD->CASH when the same
