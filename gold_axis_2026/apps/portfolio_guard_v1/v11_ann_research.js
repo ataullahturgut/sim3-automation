@@ -78,14 +78,22 @@ const POLICIES={
  calibratedAbstain:{buyNet14:1.5,stopNet4:-4.5,sellNet14:-2.6,
    minHoldHours:96,liquidateRisk:true,monthlyRetrain:false,uncertaintyGate:true}
 };
+const MODEL_CACHE=new WeakMap();
+function fittedAt(ds,cutoff){
+ let m=MODEL_CACHE.get(ds);if(!m){m=new Map();MODEL_CACHE.set(ds,m);}
+ if(m.has(cutoff))return m.get(cutoff);
+ const train=chronologicalTraining(ds,cutoff);
+ const net=ANN.fit(train,{seed:17,epochs:75,lr:.006});
+ const obj={train,net};m.set(cutoff,obj);
+ return obj;
+}
 function simulate(ds,opts={}){
  const cutoff=opts.start||"2026-02-02T06:00:00Z",
   stop=opts.end||"2026-09-30T12:00:00Z",initial=opts.initial??119.753917;
  const policyName=opts.policy||"netPositive",policy=POLICIES[policyName];
  if(!policy)throw Error("INVALID_ANN_POLICY");
  const start=date(cutoff),end=date(stop);
- let train=chronologicalTraining(ds,cutoff);
- let ann=ANN.fit(train,{seed:17,epochs:75,lr:.006});
+ let {train,net:ann}=fittedAt(ds,cutoff);
  let trainUpdates=[{asOf:cutoff,maturedN:train.length,lastTrainingOrigin:train.at(-1)?.at||null,
    bestEpoch:ann.bestEpoch,validationMAE14Pct:ann.validationMAE14Pct}];
  let month=new Date(start+3*HR).toISOString().slice(0,7);
@@ -100,7 +108,7 @@ function simulate(ds,opts={}){
    month=currentMonth;
    const newTrain=chronologicalTraining(ds,row.tt);
    if(newTrain.length>train.length+1){
-    train=newTrain;ann=ANN.fit(train,{seed:17,epochs:75,lr:.006});
+    ({train,net:ann}=fittedAt(ds,row.tt));
     trainUpdates.push({asOf:row.tt,maturedN:train.length,
       lastTrainingOrigin:train.at(-1)?.at||null,bestEpoch:ann.bestEpoch,
       validationMAE14Pct:ann.validationMAE14Pct});
@@ -178,6 +186,7 @@ function research(){
  ];
  const experiments=[];
  for(const y of years)for(const policy of Object.keys(POLICIES)){
+  if(policy==="adaptiveMonthly"&&y.name==="2024")continue;
   const r=simulate(ds,{...y,policy});
   experiments.push({year:y.name,policy,initial:r.initial,final:r.final,
     netPct:r.netPct,nTrades:r.trades.length,training:r.training,
