@@ -54,3 +54,6 @@ jobs:
       - name: V6 lag-safe NQ ZN CL macro predictive audit
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run verify-macro-v6
+      - name: V6 OLAY02 official publication-time causal gate
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run audit-event-evidence-v6
