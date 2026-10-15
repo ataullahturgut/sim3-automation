@@ -50,3 +50,38 @@ test("February economic overlay is research-only and never uses future February 
   assert.ok(m.actions.every(x=>x.utc.startsWith("2026-02")));
  }
 });
+
+
+test("run-month HTTP API genuinely computes Feb and retains original Jan summary",()=>{
+ const {requestHandler}=require("./server");
+ function request(route,method="GET"){
+  let code,body;
+  const res={writeHead(c){code=c;},end(s){body=s;}};
+  requestHandler({method,url:route},res);
+  return {code,json:JSON.parse(body)};
+ }
+ const months=request("/api/months");
+ assert.equal(months.code,200);
+ assert.deepEqual(months.json.months.map(x=>x.id),["2026-01","2026-02"]);
+ const jan=request("/api/summary");
+ assert.equal(jan.code,200);
+ assert.ok(Math.abs(jan.json.comparison[2].finalUSD-119.7539172)<1e-5);
+ const r=request("/api/months/2026-02/run");
+ assert.equal(r.code,200);
+ assert.equal(r.json.month,"2026-02");
+ assert.equal(r.json.comparison.length,3);
+ assert.equal(r.json.portfolioCarryForward.autoRetrain,false);
+ assert.ok(Math.abs(r.json.comparison[1].finalUSD-114.27446809487914)<1e-5);
+ assert.equal(request("/api/months/2026-02/run","POST").code,405);
+});
+test("Turkish dashboard exposes usable month run control",()=>{
+ const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
+ const html=fs.readFileSync(path.join(__dirname,"public/index.html"),"utf8");
+ const script=fs.readFileSync(path.join(__dirname,"public/app.js"),"utf8");
+ assert.match(html,/id="monthSelect"/);
+ assert.match(html,/value="2026-02"/);
+ assert.match(html,/id="runMonth"/);
+ assert.match(script,/executeSelectedMonth/);
+ assert.match(script,/api\/months\/2026-02\/run/);
+ assert.doesNotThrow(()=>new vm.Script(script,{filename:"public/app.js"}));
+});
