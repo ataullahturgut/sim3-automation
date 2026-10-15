@@ -186,7 +186,7 @@ function research(){
  ];
  const experiments=[];
  for(const y of years)for(const policy of Object.keys(POLICIES)){
-  if(policy==="adaptiveMonthly"&&y.name==="2024")continue;
+  if(policy==="adaptiveMonthly"&&y.name!=="2026_FEB_SEP")continue;
   const r=simulate(ds,{...y,policy});
   experiments.push({year:y.name,policy,initial:r.initial,final:r.final,
     netPct:r.netPct,nTrades:r.trades.length,training:r.training,
