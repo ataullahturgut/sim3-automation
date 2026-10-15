@@ -322,7 +322,7 @@ function updateRisk(s,ep,worstLoss){
 function settle(s,ep,price,at){
  if(!(at>=ep.dueAt&&at>ep.entryAt))throw Error("EARLY_OUTCOME");
  const fee=2*100*Math.log(1-s.config.feePerSide);
- const gross=100*Math.log(price/ep.entryPrice);
+ const gross=100*(Math.log(price)-Math.log(ep.entryPrice));
  const entry=gross+fee,exit=-gross+fee;
  const label={h:ep.h,origin:ep.origin,signalAt:ep.signalAt,
    entryAt:ep.entryAt,knownAt:at,gross,entry,exit,
@@ -350,7 +350,7 @@ function receiveQuote(s,quote){
    (at-prev)>s.config.maxQuoteGapHours*HOUR;
  for(const ep of s.queue){
    if(gapTooLong)ep.coverageReliable=false;
-   const change=100*Math.log(quote.price/ep.entryPrice);
+   const change=100*(Math.log(quote.price)-Math.log(ep.entryPrice));
    ep.minRel=Math.min(ep.minRel,change);ep.maxRel=Math.max(ep.maxRel,change);
    if(at>=ep.dueAt){
      if(at-ep.dueAt>78*HOUR){
