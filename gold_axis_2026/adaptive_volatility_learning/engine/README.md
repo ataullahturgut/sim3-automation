@@ -126,3 +126,78 @@ Haberli adaptif birleşim henüz bağımsız şekilde doğrulanmadı.
 makro bileşenleri, DXY/yield ve diğer metaller, negatif kontrol günleri,
 epi-zot düzeyinde geçmiş-vaka ayrıştırma, kalibrasyon ve 2026 sonrası
 bağımsız test. Bunlar bitmeden `AL / SAT` üretilmez.
+
+
+## 5. Birleşik v2: gerçek aynı-UTC dört saatlik hedef (15 Ekim 2026)
+
+**Yeni yürütülebilir dosya:** `integrated_olay.py`. Önceki v1'in
+`adaptive_olay.py` / M15 kronolojik olay yürüyüşünü kaynak alır.
+Farkı: tek bir **4 saatlik ileri XAU** hedefi için ekonomik açıklama
+adayını, karar anına kadar kapanmış **önceki dört saatlik** fiyat yönüyle
+birleştirir. İleri dört saatin kapanışını, etiket ancak bittikten sonra
+öğrenir. Bütün 12 ORG adı zaman damgalı haberlerle tutulur, fakat
+**ORG03–ORG12 için doğrulanmış olasılık modeli yoktur**.
+
+```sh
+python gold_axis_2026/adaptive_volatility_learning/engine/integrated_olay.py \
+ --cases gold_axis_2026/adaptive_volatility_learning/engine/HISTORICAL_MACRO_M15_SNAPSHOTS_2023_2025.csv \
+ audit --year 2025 --mode frozen
+
+python gold_axis_2026/adaptive_volatility_learning/engine/integrated_olay.py \
+ --cases gold_axis_2026/adaptive_volatility_learning/engine/HISTORICAL_MACRO_M15_SNAPSHOTS_2023_2025.csv \
+ audit --year 2025 --mode prequential
+```
+
+**Veri:** 55 CPI/NFP araştırma kaydının 47'sinde aynı Neon XAU M15
+kaynağında eksiksiz 17 geçmiş + 16 ileri 15 dakikalık bar.
+2023: 10, 2024: 19, 2025: 18. Eksik sekiz olay için süreyi ileri
+doldurmadık veya fiyatı başka kaynaktan kopyalamadık.
+Kaynak: `HISTORICAL_MACRO_M15_SNAPSHOTS_2023_2025.csv`.
+
+**2025'te, 18 olayın sonraki dört saatlik yönü:**
+
+| Uzman | 2023–24 ile dondurulmuş | 2025 içinde yalnız olgunlaşmış etiketlerle güncel |
+|---|---:|---:|
+| Sabit genel oran | 8/18, Brier 0,251913 | 5/18, Brier 0,256270 |
+| Makro sürpriz adayı | **11/18, 0,240634** | 10/18, 0,249998 |
+| Önceki dört saatin fiyat işareti | 7/18, 0,301845 | 7/18, 0,292914 |
+| Makro × fiyat koşullaması | 10/18, 0,262436 | 9/18, 0,259649 |
+| Tarihsel performansa ağırlık veren uzman karışımı + bozulma kapısı | 7/18, 0,271741 | **11/18, 0,246152** |
+
+`frozen` ve `prequential` iki farklı çalışmadır; tek bir en iyi sonucu
+seçip sonradan model başarısı olarak sunmak yanlıştır. Prequential
+sürümde, önceki en az 12 olgunlaşmış skorun fiyat-uzmanı Brier kaybı
+makro uzmandan **0,015'ten fazla kötü** olduğunda fiyat bileşimi
+`MACRO_FALLBACK` ile askıya alınır. 2025'te 8 olayda bu kapı
+açılmıştır. Eşik bilimsel olarak kalibre edilmiş kâr kuralı değildir;
+önceden tanımlanan muhafazakâr araştırma emniyetidir.
+
+**Ocak 2026'dan bir gösterim:** BLS 9 Ocak 08.30 ET = 16.30
+İstanbul saati Aralık istihdam (+50 bin) duyurusunu yayımladı.
+Reuters'ta o gün beklenen +60 bin vardı, ancak beklentinin arşivden
+**as-of/vintage kanıtı eksik**. Bu retrospektif şok vekiline göre
+ORG01 adayı, önceki dört saatlik XAU −%0,033; sonradan
+görülen dört saatlik XAU +%0,700. 2023–2025'teki 47 karşılaştırma
+üzerinde makro uzmanı yaklaşık **%60,2 UP** ön tahmini ve
+fiyat uzmanı **%45,4 UP** üretiyor. 2025'in son 12 kontrolünde
+fiyat-uzmanı Brier bozulması +0,046 olduğundan mekanizma
+`MACRO_FALLBACK` olmalı. Bu örnek **canlı işlem veya kör test değildir**.
+
+13 Ocak CPI için manşet sürprizi sıfırsa ORG01/ORG02 zorunlu
+atanmaz; alt bileşen doğrulanmadan `UNKNOWN`. 28 Ocak FOMC
+kararı ayrı sürpriz kodlaması olmadan belirsiz; 19.00 UTC
+başlangıçlı +4s XAU M15 penceresinde 16 yerine **12** tam bar
+bulunduğundan etiketi de `MISSING` tutarız.
+
+**Testler:** `.github/workflows/gold-adaptive-tests.yml` işi
+`python -m unittest discover -s .../engine -p 'test_*.py' -v`
+komutuyla 11 standard library testini GitHub Actions üzerinde
+çalıştırır. Tüm sonuçların kaydı:
+`INTEGRATED_2025_4H_AUDIT_20261015.json` (18 olayın bireysel
+öngörü ve gerçekleri; frozen+prequential).
+
+**Ayrı tutulacak sınırlar:** makro konsensüs/PIT, faiz/DXY çapraz
+kanıt, 12 örgü için ilk haber ve nedensel doğrulama, sessiz günler,
+2025 araştırmasından gerçekten bağımsız yeni holdout, banka
+ASK/BID ve gerçek spread/maliyet yoktur. Yalnızca
+`RESEARCH_ONLY`/belirsizliğe yönelik çalışma; işlem kapalıdır.
