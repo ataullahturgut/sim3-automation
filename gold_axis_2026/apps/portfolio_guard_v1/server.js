@@ -11,6 +11,7 @@ if(!Number.isSafeInteger(PORT)||PORT<1024||PORT>65535)throw new Error("PORT must
 const snapshots=engine.runAll(); // load + verify Git blob SHA + regression tests; fail closed
 const scientificV2=require("./event_audit_v2").runAudit(); // read-only, independent shadow diagnostics
 const learnedStateV2=require("./monthly_learning_v2").createJanuaryLearningRecord(); // forward-only feedback gate
+const febRunner=require("./monthly_runner"); // real February 2026 replay computed on demand
 function small(v) {
  const x=snapshots.scenarios[v];
  return {
@@ -47,6 +48,22 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/months")return respond(res,200,JSON.stringify({months:[
+  {id:"2026-01",label:"Ocak 2026",status:"FROZEN_REFERENCE"},
+  {id:"2026-02",label:"Şubat 2026",status:"RUNNABLE_FROM_JAN_CASH"}
+ ],requiredOrder:["2026-01","2026-02"],unavailableBeyondFebruary:true}));
+ if(route==="/api/months/2026-02/run"){
+  const result=febRunner.runFebruary();
+  return respond(res,200,JSON.stringify({
+   month:result.month,version:result.version,status:result.status,
+   guarantee:"frozen January CASH + frozen 15m February as-of panel and unchanged V1 rules",
+   dataHashes:result.dataHashes,bankSpreadIncluded:false,commissionPerSide:0.008,
+   independentOutOfSample:false,economicCausalityProven:false,
+   comparison:result.comparison,incrementalDNABenefitUSD:result.incrementalDNABenefitUSD,
+   portfolioCarryForward:{from:"2026-01",initialCashUSD:result.scenarios.event15m.startUSD,
+    autoRetrain:false,labelMaturityGuard:"96 hours"}
+  }));
+ }
  if(route==="/api/summary")return respond(res,200,JSON.stringify(summary()));
  if(route==="/api/replay"){
   const mode=url.searchParams.get("mode");
