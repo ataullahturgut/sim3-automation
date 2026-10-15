@@ -105,3 +105,24 @@ test("dashboard JavaScript parses and the local landing page is served",()=>{
  assert.match(content,/Altın portföy koruma/);
  assert.match(content,/data-mode="event15m"/);
 });
+
+
+test("Windows CRLF checkout of a pinned CSV still passes strict Git blob check",()=>{
+ const {gitBlobHash,decodePinnedSource}=require("./engine");
+ const input=Buffer.from("time,value\n2026-01-01,100\n2026-01-02,101\n","utf8");
+ const spec={path:"test-source.csv",blob:gitBlobHash(input)};
+ const win=Buffer.from(input.toString("utf8").replace(/\n/g,"\r\n"),"utf8");
+ assert.notEqual(gitBlobHash(win),spec.blob);
+ const decoded=decodePinnedSource(spec,win);
+ assert.equal(decoded.gitBlob,spec.blob);
+ assert.equal(decoded.windowsLineEndingsNormalized,true);
+ assert.equal(decoded.rows.length,2);
+ assert.deepEqual(decoded.rows,decodePinnedSource(spec,input).rows);
+});
+test("Windows CRLF repair must never silently accept modified prices",()=>{
+ const {gitBlobHash,decodePinnedSource}=require("./engine");
+ const clean=Buffer.from("price\n100\n101\n","utf8");
+ const spec={path:"fake.csv",blob:gitBlobHash(clean)};
+ const bad=Buffer.from("price\r\n100\r\n999\r\n","utf8");
+ assert.throws(()=>decodePinnedSource(spec,bad),/DATA_VERSION_MISMATCH/);
+});
