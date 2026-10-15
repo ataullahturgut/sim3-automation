@@ -320,6 +320,9 @@ function receiveQuote(s,quote){
    readySignals:s.pending.length,decisionMade:false};
 }
 function signal(s,ob){
+ if(s.pending.length>0)throw Error("PENDING_SIGNAL_AWAITING_BANK_CHECKPOINT");
+ if(!ob||!["CASH","GOLD"].includes(ob.position))
+   throw Error("INVALID_POSITION");
  const snap=modelInput(s,ob);
  snap.predictions={ENTRY:{},EXIT:{}};
  for(const act of ["ENTRY","EXIT"])
