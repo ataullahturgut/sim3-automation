@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "verify": "node server.js --verify",
-    "test": "node --test test.js v2.test.js monthly_learning_v2.test.js monthly_runner.test.js recovery_v3.test.js recovery_v4.test.js v4_forward_review.test.js recovery_v5.test.js macro_v6.test.js event_evidence_gate_v6.test.js macro_v6_portfolio.test.js crossmarket_v6.test.js adaptive_v7.test.js monthly_regime_benchmark_v7.test.js intramonth_oracle_v7.test.js v8_regret_engine.test.js v9_scientific_gate.test.js v10_execution_audit.test.js",
+    "test": "node --test test.js v2.test.js monthly_learning_v2.test.js monthly_runner.test.js recovery_v3.test.js recovery_v4.test.js v4_forward_review.test.js recovery_v5.test.js macro_v6.test.js event_evidence_gate_v6.test.js macro_v6_portfolio.test.js crossmarket_v6.test.js adaptive_v7.test.js monthly_regime_benchmark_v7.test.js intramonth_oracle_v7.test.js v8_regret_engine.test.js v9_scientific_gate.test.js v10_execution_audit.test.js v11_ann_research.test.js",
     "audit": "node -e \"const a=require('./event_audit_v2').runAudit(); console.log(JSON.stringify({archive:a.archive,controls:a.timeSampledControls,temporal:a.chronologicalTest,events:a.critical.map(z=>({utc:z.utc,risk:z.analog,control:z.control,phase:z.phase}))},null,2))\"",
     "verify-months": "node -e \"const f=require('./monthly_runner').runFebruary(); console.log(JSON.stringify({month:f.month,start:f.scenarios.event15m.startUSD,models:Object.values(f.scenarios).map(x=>({mode:x.model,finalUSD:x.finalUSD,actions:x.actions.map(a=>({time:a.utc,act:a.action,price:a.price})),terminalAsset:x.terminalAsset}))},null,2))\"",
     "verify-v3": "node -e \"const x=require('./recovery_v3').runJanuaryFebruary(); console.log(JSON.stringify({version:x.version,history:x.history,annual:x.annual,january:{final:x.january.finalUSD,trades:x.january.actions},february:{final:x.february.finalUSD,position:x.february.terminalAsset,trades:x.february.actions}},null,2));\"",
@@ -22,7 +22,8 @@
     "verify-intramonth-oracle-v7": "node --test intramonth_oracle_v7.test.js",
     "verify-v8-regret": "node --test v8_regret_engine.test.js",
     "verify-v9-scientific": "node --test v9_scientific_gate.test.js",
-    "verify-v10-evidence": "node --test v10_execution_audit.test.js"
+    "verify-v10-evidence": "node --test v10_execution_audit.test.js",
+    "verify-v11-real-ann": "node --test v11_ann_research.test.js"
   },
   "engines": {
     "node": ">=18.0.0"
