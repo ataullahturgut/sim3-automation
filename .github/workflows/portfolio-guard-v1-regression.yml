@@ -42,3 +42,6 @@ jobs:
       - name: V3 historical phase learning and month comparison
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run verify-v3
+      - name: V4 adaptive hold and shock protection audit
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify-v4
