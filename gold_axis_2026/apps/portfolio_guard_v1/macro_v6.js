@@ -4,6 +4,7 @@
  */
 const fs=require("node:fs"),path=require("node:path");
 const core=require("./engine"),v3=require("./recovery_v3"),feb=require("./monthly_runner"),more=require("./v4_forward_review");
+const eventEvidence=require("./event_evidence_gate_v6");
 const ROOT=path.resolve(__dirname,"../../..");
 const VERSION="V6_CME_CROSS_ASSET_DOWNSIDE_DIAGNOSTIC_20261015";
 const PINS=[
@@ -127,6 +128,7 @@ function annualTest(samples){
 }
 function runAudit(){
  const m=macroRows(),r=priceRows(),prepared=labeledDays(r,m);
+ const causal=eventEvidence.runEvidenceAudit();
  const annual=annualTest(prepared.rows);
  const tested=annual.filter(x=>x.year===2024||x.year===2025);
  const evidence=tested.every(x=>x.test?.enoughIndependentDays&&
@@ -139,12 +141,13 @@ function runAudit(){
    r71_r72_macroSurprise:"EXCLUDED_NO_VINTAGE_VERIFICATION",
    SI_futures:"EXCLUDED_SPARSE_3H_COVERAGE"},
   predictionTarget:"XAU_ANY_3H_CLOSE_DOWN_2PCT_WITHIN_NEXT_24H",
+  archiveEvidence:causal,
   coverage:{all09TRPriceDays:prepared.eligibleDays,completePairs:prepared.rows.length,
    exclusions:prepared.missing,perYear:prepared.rows.reduce((a,x)=>(a[x.year]=(a[x.year]||0)+1,a),{})},
   annual,acceptance:{incrementalEvidenceOn2024And2025:evidence,tradeAuthorized:false,
     verdict:evidence?"DIAGNOSTIC_ONLY_NEEDS_PROSPECTIVE_CONFIRMATION":
     "REJECT_UNPROVEN_CROSS_ASSET_IMPROVEMENT",
-    economicMechanismVerified:false,prospectiveBlind:false,
+    economicMechanismVerified:causal.archiveReadyForCausalTrading,prospectiveBlind:false,
     bidAskBankValidated:false},
   existingV1ToV5Frozen:true};
 }
