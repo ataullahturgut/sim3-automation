@@ -147,3 +147,14 @@ V5, yükselişi kaçırma ve aşırı koruyucu satış sorununu çözmedi: 2024'
 Teknik: `v4_forward_review.js`, `recovery_v5.js`, `scientific_promotion_gate.js`, veri `data/RECOVERY_HOLDOUT_2026_MAR_SEP_3H_ASOF_V1.csv` (Git blob SHA 860917258c84a86a210d8c7f44655d46d878470e). Tam ayrıntılar `SCIENTIFIC_V4_V5_CONTINUOUS_REVIEW_20261015.md`; V4 ve V5 hipotez kayıtları da aynı klasörde. Yalnız veri kaynağı bitişinde 2026 Sep30 21UTC satırı Türkiye 1 Ekim olduğu için Eylül sonu hesaplanmaz.
 
 Bu deneyler geçmiş dönemler görülerek geliştirildiğinden **kör ileri validasyon değildir**. Gerçek banka alış/satış makası, slippage, doğrulanmış ilk haber ve ekonomik G05-C/G06-B nedenselliği yoktur. V5 bir önerilen canlı işlem algoritması değildir.
+
+
+## V6 — Ekonomik olay/diğer piyasa kanıtlarının araştırma sonucu
+
+**Kullanım:** GitHub Desktop'tan Fetch origin / Pull origin, önceki siyah Node konsolunu kapat ve `BASLAT.bat` aç. Sol menü **V6 piyasa aktarım denetimi**, **V6 ekonomik aktarım testini çalıştır**. Bu menü yalnız bilgi ve karşılaştırma sunar; mevcut V1/V3/V4/V5 modelini otomatik değiştirmez, banka emri vermez.
+
+2023–2026 için gerçek NQ, ZN ve CL saatlik kapanmış vadeli verilerinin son 1h ve 6h fiyat değişimleriyle altın 09:00 Türkiye karar noktasını eşleştirip 24 saat içinde XAU'nun en az %2 düşüp düşmediğini test ettik. 506 tam-veri gün elde edildi (2024:148, 2025:155, 2026:114; 2023:89). XAU fiyat modeline ek piyasa verisi 2024 Brier hatasını **0,033162→0,031546** düşürdü ama 2025 **0,047953→0,050139**, 2026 **0,112185→0,112769** yükseltti (kötü). 2024–25 negatif olay sayıları sadece 5 ve 8; güçlü genelleme iddiası yok.
+
+Ekonomik OLAY-02: 96 vaka, 84 farklı kontrol noktası; kaynakta **ilk haber UTC doğrulaması 0/96, nedensellik kanıtı 0/96, as-of işlem onayı 0/96**. 1 Şubat 2023 06:15 UTC SWING_V1_002'ye, o gün 19:00 UTC yayımlanan Fed kararını açıklayıcı sebep olarak atamak **tarih sırasını ihlal eder**; kod bunu engelliyor.
+
+**Karar: V6 bilimsel üstünlük ve ekonomik nedensel öğrenme eşiğini GEÇMEDİ.** V6 ekonomik olayları kullanarak otomatik alım/satım işlemine yükseltilmedi. Araştırma sonucu: `V6_CROSS_MARKET_EVIDENCE_FINAL_AUDIT_20261015.md`. Kod `macro_v6.js`, `event_evidence_gate_v6.js`, testler aynı adlarda `.test.js`. `npm run verify-macro-v6` ve `npm run audit-event-evidence-v6`, ayrıca `npm test`. API `GET /api/algorithm/v6`. Tam banka ask/bid ve slippage ile bağımsız ileri test olmadan geçmiş fiyat kârları gerçek al-sat avantajı olarak sunulmaz.
