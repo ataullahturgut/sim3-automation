@@ -4,7 +4,7 @@
 **Yeni dal:** `research-gold-v16-sequential-decision-20261016`  
 **Taban:** `research-gold-v15-formal-audit-20261016` — V13/V14/V15 orijinalleri korunur  
 **Statü:** Bağımsız algoritma araştırması. Gerçek altın portföy simülasyonu yapılmadı. Canlı emir yok. Gerçek banka bid/ask yok.  
-**Sentetik teknik doğrulama:** 48 test / 48 PASS / 0 FAIL (V15: 28, V16: 20).
+**Sentetik teknik doğrulama:** 53 test / 53 PASS / 0 FAIL (V15: 28, V16 Q: 20, uzman köprüsü: 5).
 
 ## 1. Neden gerekliydi?
 
@@ -106,9 +106,9 @@ denetimindeki gibi: girişe karşı temkin, koruyucu çıkışa destek.
 
 ## 4. Gerçek veri kullanılmadan yapılan kabul testleri
 
-**GitHub Actions: 48/48 başarı.**
+**GitHub Actions: 53/53 başarı.**
 - Önceki V15'in 28 kabul/stres/denetim testi aynen.
-- V16'nın 20 testi: tek bacak komisyon hesabı; hiçbir fill'den
+- V16'nın 20 temel testi: tek bacak komisyon hesabı; hiçbir fill'den
   önce olgunlaşmamış sonuçla öğrenmeme; gelecekteki fiyatı
   değiştirince daha önceki sinyalin değişmemesi; döviz/altın
   pozisyonu arasında 4 ayrı karşı-olgusal başlık güncellenmesi;
@@ -124,6 +124,32 @@ denetimindeki gibi: girişe karşı temkin, koruyucu çıkışa destek.
   gerçek XAU sonucu ya da kazanç verisi değildir.
 - Yatay fiyat stresinde %0,8 bacak maliyeti
   nedeniyle olgunlaşmadan sonra gereksiz al/sat üretilmedi.
+
+
+## 4A. V15–V16 uzman bağlantısı (ek denetim)
+
+**Yeni kaynak:** `v16_kavis_v15_uzman_koprusu.js`  
+**Yeni sentetik test:** `v16_kavis_v15_uzman_koprusu.test.js` (5 test)
+
+1. V15 kendi **gölge öğrenme portföyü** ile olgunlaşmış işlem
+   fırsatlarını öğrenmeye devam eder; bu gölge portföy V16'nın
+   tercih ettiği GOLD/CASH konumu olarak **sunulmaz**.
+2. V16'nın gerçek araştırma karar pozisyonuna göre V15 uzman
+   görüşü, mevcut V15 bilgi durumunun **bağımsız kopyasından**
+   ve yalnız günün `asof` özellikleriyle üretilir.
+3. V15 uzman çıktısı sadece öğrenen V16 Q başlığı için
+   koşullu bir açıklayıcı değişkendir. V16 dışındaki
+   hiçbir modül al/sat eylemini devralmaz.
+4. Girdi, olay/yayın veya banka checkpoint hatasında iki modelin
+   durumu atomik olarak önceki checkpoint'e geri alınır.
+5. Sentetik çok günlük işleyiş, V15 gölge ve V16 karar portföyü
+   farklılaştığında bile hatasız; koşullu V15 uzman girdisinin
+   yalnız olgunlaştıktan sonra aktifleşmesi ve kaydedilip
+   yeniden başlamanın deterministik olması ayrı ayrı test edildi.
+6. **Henüz gerçek altın fiyat adaptörüne bağlanmadı.**
+   5 başarılı test ekonomik katkı kanıtı değildir. Uzman görüşü
+   kullanılan ve kullanılmayan sürümler ileride ablasyonla
+   karşılaştırılmalıdır.
 
 ## 5. Tamamlanmamış teknik ve bilimsel riskler
 
@@ -150,11 +176,11 @@ denetimindeki gibi: girişe karşı temkin, koruyucu çıkışa destek.
    olması, fiyat serisinin bağımsız olmaması, model
    değişmesi, sert rejim kırılmaları, alış/satış kotasyonları
    ve makro kaynakların ilk yayın güveni çözümlenmedi.
-6. V15 uzman desteği asof veri sözleşmesi düzeyindedir;
-   **V15-inference-only adaptörü**, V15'in sanal pozisyonunu
-   V16'nın gerçek seçimine bağlamadan kullanabilmek için
-   ayrı tasarlanmalıdır. Sessizce iki bağımsız portföy
-   durumunu aynı sanmak hatadır.
+6. V15 uzman görüşü için asof ve farklı gölge pozisyonları
+   güvenli şekilde ayıran **inference-only bağlantı eklendi**.
+   Ancak açıklayıcı değişken olarak katkısı, gerçek kaynakların
+   güveni, makro yayın kontrolü ve bankanın BID/ASK ölçümü
+   henüz tarihsel dış örneklemde gösterilmedi.
 7. Bu sürüm işlem sonucunu doğrudan gerçek yıllık altın
    fiyatında denemedi. Teknik testlerden yatırım
    üstünlüğü çıkarılamaz.
