@@ -48,6 +48,21 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v3"){
+  const v3=require("./recovery_v3").runJanuaryFebruary();
+  return respond(res,200,JSON.stringify({
+   version:v3.version,status:v3.status,history:v3.history,annual:v3.annual,
+   policy:v3.policy,sourcePriceHistory2023Incomplete:v3.sourcePriceHistory2023Incomplete,
+   january:{finalUSD:v3.january.finalUSD,actions:v3.january.actions,period:v3.january.period},
+   february:{finalUSD:v3.february.finalUSD,actions:v3.february.actions,
+    period:v3.february.period,terminalAsset:v3.february.terminalAsset,
+    startUSD:v3.february.startUSD,maxDrawdownPct:v3.february.maxDrawdownPct,
+    days:v3.february.days},
+   frozenOriginalJanuaryCashUSD:v3.frozenOriginalJanuaryCashUSD,
+   hardStop:v3.hardStop,scientificLearning:v3.scientificLearning,
+   bankSpreadIncluded:false
+  }));
+ }
  if(route==="/api/months")return respond(res,200,JSON.stringify({months:[
   {id:"2026-01",label:"Ocak 2026",status:"FROZEN_REFERENCE"},
   {id:"2026-02",label:"Şubat 2026",status:"RUNNABLE_FROM_JAN_CASH"}
