@@ -379,6 +379,12 @@ async function runV6EconomicEvidence(){
      x.predictionTarget!=="XAU_ANY_3H_CLOSE_DOWN_2PCT_WITHIN_NEXT_24H")
    throw Error("V6_BILIMSEL_SOZLESME");
   const y25=x.annual.find(r=>r.year===2025);
+  $("v6Archive").textContent="OLAY-02: "+x.archiveEvidence.totalEvents+" olaydan "+
+   x.archiveEvidence.firstprintVerified+" ilk haber zamanı, "+
+   x.archiveEvidence.mechanismProven+" doğrulanmış ekonomik neden, "+
+   x.archiveEvidence.asofActionValidated+" geçerli işlem kararı. "+
+   "Örnek: 1 Şubat 2023 06.15 UTC olayından sonra Fed açıklaması 19.00 UTC. "+
+   "Olayı bu sonraki Fed kararının sonucuymuş gibi sınıflandırmak engellendi.";
   $("v6Pairs").textContent=new Intl.NumberFormat("tr-TR").format(x.coverage.completePairs);
   $("v6Cases").textContent=String(y25.test.positive);
   $("v6Gold").textContent=y25.xauOnly.brier.toFixed(5);
