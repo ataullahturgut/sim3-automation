@@ -16,7 +16,7 @@ t("XAU price and CME match only exact 09:00 TRT times, with mature forward label
  assert.ok(r.rows.every(x=>x.labelKnownAt===x.time+86400000));
  assert.ok(r.rows.every(x=>x.economicMechanism==="UNRESOLVED"));
  assert.ok(r.rows.every(x=>m.ALL.every(k=>Number.isFinite(x.features[k]))));
- assert.ok(r.coverage.macro>0);
+ assert.ok(r.missing.macro>0);
 });
 t("2024,2025,2026 chronological tests forbid contemporaneous labels for fitting",()=>{
  const a=m.runAudit();
