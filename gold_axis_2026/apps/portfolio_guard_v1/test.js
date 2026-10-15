@@ -61,3 +61,30 @@ test("invalid mode rejected and source is not mutated by replay",()=>{
  simulate(dataset,"event15m");
  assert.equal(JSON.stringify(dataset.rows[0]),before);
 });
+
+
+test("read-only local API exposes pinned health, three models and full ledger",()=>{
+ const {requestHandler,summary}=require("./server");
+ assert.equal(summary().comparison.length,3);
+ function request(url,method="GET"){
+  let code,headers,payload;
+  const req={url,method};
+  const res={writeHead(c,h){code=c;headers=h;},end(x){payload=x;}};
+  requestHandler(req,res);
+  return {code,headers,body:JSON.parse(payload)};
+ }
+ const h=request("/api/health");
+ assert.equal(h.code,200);
+ assert.equal(h.body.readOnly,true);
+ const s=request("/api/summary");
+ assert.equal(s.code,200);
+ assert.equal(s.body.comparison.length,3);
+ assert.equal(s.body.incrementalDNABenefitUSD,0);
+ const d=request("/api/replay?mode=event15m");
+ assert.equal(d.code,200);
+ assert.equal(d.body.ledger.length,2976);
+ assert.equal(d.body.actions.length,2);
+ assert.equal(request("/api/replay?mode=other").code,400);
+ assert.equal(request("/api/unknown").code,404);
+ assert.equal(request("/api/summary","POST").code,405);
+});
