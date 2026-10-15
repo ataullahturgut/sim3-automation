@@ -31,7 +31,7 @@ class IntegratedEngineTests(unittest.TestCase):
         self.assertEqual(result['test']['macro']['correct'],10)
         first=result['records'][0]
         second=result['records'][1]
-        self.assertLess(first['due'],instant(second['at_utc']))
+        self.assertLess(instant(first['due']),instant(second['at_utc']))
         self.assertGreaterEqual(second['n_history'],first['n_history'])
 
     def test_unknown_events_never_force_group(self):
