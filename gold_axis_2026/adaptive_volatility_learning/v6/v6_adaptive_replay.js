@@ -117,7 +117,7 @@ if(require.main===module){
  const rows=parseCSV(fs.readFileSync(input,"utf8"));
  const eventsPath=arg("--events",null),events=eventsPath?parseCSV(fs.readFileSync(eventsPath,"utf8")):[];
  const result=replayV6(rows,{events,include_decisions:Boolean(arg("--decisions",null)),freeze_learning_at:arg("--freeze-at",null),disable_stress:Boolean(arg("--no-stress",null)),price_only:Boolean(arg("--price-only",null))});
- const dest=arg("--out",null);if(dest)fs.writeFileSync(dest,JSON.stringify(result,null,2)+"\\n");
+ const dest=arg("--out",null);if(dest)fs.writeFileSync(dest,JSON.stringify(result,null,2)+"\n");
  console.log(JSON.stringify({...result,decisionLog:undefined},null,2));
 }
 module.exports={parseCSV,replayV6};
