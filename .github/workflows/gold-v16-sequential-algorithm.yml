@@ -1,0 +1,34 @@
+name: Gold V16 Sequential Algorithm-Only Verification
+on:
+  push:
+    branches:
+      - 'research-gold-v16-*'
+  pull_request:
+    branches:
+      - 'research-gold-v15-formal-audit-20261016'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sequential-science:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse sequential decision model and tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v16_kavis_siralama.js
+          node --check v16_kavis_siralama.test.js
+      - name: Validate causal Bellman update and multi-trade synthetic episodes
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node --test v15_kavis_cekirdek.test.js v15_kavis_formal_audit.test.js v15_kavis_stress.test.js v16_kavis_siralama.test.js
+      - name: Prohibit historical portfolio backtests in this phase
+        run: |
+          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|2026_FEB_SEP|loadFullRows' gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_siralama.js gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_siralama.test.js; then
+            echo "Unexpected historical portfolio dependency"
+            exit 1
+          fi
