@@ -92,7 +92,14 @@ def predict(history,group,pre4h,prior_scored=(),min_total=20,min_group=8):
     p=experts(history,group,pre4h)
     w=weights(prior_scored)
     mix=sum(w[k]*p[k] for k in EXPERTS)
-    p['ensemble']=mix
+    # Predeclared safety gate: if the latest 12 already matured, genuinely
+    # out-of-sample price-state forecasts are >0.015 Brier worse than macro,
+    # do not let the extra price feature degrade this release's forecast.
+    last=list(prior_scored)[-12:]
+    deterioration=(len(last)==12 and
+        sum((r['price']-r['y'])**2-(r['macro']-r['y'])**2 for r in last)/12 > 0.015)
+    p['ensemble']=p['macro'] if deterioration else mix
+    p['selected_expert']='MACRO_FALLBACK' if deterioration else 'ENSEMBLE'
     p['weights']=w
     p['evidence_gate']='RESEARCH_ELIGIBLE' if (
         p['n_history']>=min_total and p['n_macro']>=min_group) else 'ABSTAIN_FEW_CASES'
