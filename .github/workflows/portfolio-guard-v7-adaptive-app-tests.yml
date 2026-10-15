@@ -1,0 +1,23 @@
+name: Gold Portfolio V7 Adaptive App Tests
+on:
+  push:
+    branches:
+      - research-gold-portfolio-v7-adaptive-app-20261015
+    paths:
+      - "gold_axis_2026/apps/portfolio_guard_v1/**"
+      - ".github/workflows/portfolio-guard-v7-adaptive-app-tests.yml"
+  workflow_dispatch:
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run legacy + adaptive model regression
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Verify local dashboard source integrity
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
