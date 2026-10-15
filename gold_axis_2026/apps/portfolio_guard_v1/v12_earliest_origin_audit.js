@@ -63,8 +63,8 @@ function diag(){
     fixed14DayBankFeeNetTarget:true,
     fixedProfitProbabilityThreshold:.58,
     regimeDurationLearnerAbsent:true,
-    2024Failure:"ZERO_DAYS_PASSED_POSITIVE_NET_GAIN_GATE",
-    2025Failure:"ZERO_DAYS_PASSED_58_PERCENT_PROFIT_PROBABILITY",
+    failure2024:"ZERO_DAYS_PASSED_POSITIVE_NET_GAIN_GATE",
+    failure2025:"ZERO_DAYS_PASSED_58_PERCENT_PROFIT_PROBABILITY",
     specialistReliabilityAblationNoTradeChange:true,
     decisionMarginAblationNoTradeChange:true,
     maturedNewMemoryCanChangeActions:true
