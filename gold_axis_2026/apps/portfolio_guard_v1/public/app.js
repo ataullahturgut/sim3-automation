@@ -522,3 +522,47 @@ async function runAdaptiveV7(){
 }
 $("runAdaptiveV7").addEventListener("click",runAdaptiveV7);
 
+async function runMonthlyRegimeBenchmarkV7(){
+ const button=$("runMonthlyBenchmarkV7"),status=$("monthlyBenchmarkV7Status");
+ button.disabled=true;
+ status.textContent="Ay bazında NAKİT/ALTIN, geçmiş aydan seçim ve V7 farkları hesaplanıyor…";
+ try{
+  const res=await fetch("/api/algorithm/v7/monthly-regimes",{cache:"no-store"});
+  if(!res.ok)throw Error("HTTP "+res.status);
+  const d=await res.json();
+  if(d.status!=="RETROSPECTIVE_BENCHMARK_HINDSIGHT_NOT_ASOF"||
+     d.hindsightChoiceIsNotModelPrediction!==true||
+     d.acceptedForLiveTrading!==false||d.bankBidAskIncluded!==false||
+     d.months.length!==8||d.months[0].month!=="2026-02"||
+     d.months.at(-1).month!=="2026-09")throw Error("MONTHLY_BENCHMARK_CONTRACT_INVALID");
+  $("monthlyOracleUSD").textContent=money(d.endUSD.hindsightMonthlyOracle);
+  $("monthlyLaggedUSD").textContent=money(d.endUSD.previousMonthWinner);
+  $("monthlyV7USD").textContent=money(d.endUSD.v7);
+  $("monthlyRegretUSD").textContent=money(d.v7VsMonthlyOracleGapUSD);
+  $("monthlyBenchmarkV7Table").innerHTML=table(
+   ["Ay","Altın: net aylık","Ay bitince kazanan","Geçen ayı takip","Ay sonu ideal nakit","Ay sonu V7"],
+   d.months.map(function(m){
+     return "<tr>"+cell(escapeText(m.month))+
+       cell(pct(m.goldNetPct))+
+       cell(m.hindsightWinner==="GOLD"?"ALTIN":"NAKİT")+
+       cell((m.laggedSelected==="GOLD"?"ALTIN":"NAKİT")+(m.lagChoiceCorrect?" ✓":" ✕"))+
+       cell(money(m.oracleTerminalUSD))+
+       cell(money(m.v7TerminalUSD))+
+       "</tr>";
+   })
+  );
+  status.textContent="Aylık karşılaştırma tamamlandı. Geçen ayın kazananı "+
+   d.lagCorrectMonths+"/"+d.lagTotalMonths+" ayda doğru, ancak sonuç "+
+   money(d.endUSD.previousMonthWinner)+". V7 sonucu "+money(d.endUSD.v7)+".";
+  $("monthlyBenchmarkV7Warning").textContent=
+   "ÖNEMLİ: "+money(d.endUSD.hindsightMonthlyOracle)+
+   " rakamı, aylar bittikten sonra bilinen aylık NAKİT/ALTIN seçimlerinin teorik karşılığıdır; as-of gerçek bir tahmin veya tüm intraday stratejilerin üst kâr sınırı değildir. "+
+   "Gerçek zamanlı basit geçen-ay politikasının "+money(d.endUSD.previousMonthWinner)+
+   " sonucu, nakitte kalmanın altındadır. Fiyatlar araştırma MID vekili, gerçek banka ASK/BID hariçtir. "+
+   "V4/V5 ile doğrudan aynı emir sözleşmesi kurulmuş değildir. Ekonomik haber öğrenmesi ayrıca doğrulanacaktır.";
+ }catch(e){
+  status.textContent="Aylık strateji karşılaştırması çalıştırılamadı: "+e.message;
+ }finally{button.disabled=false;}
+}
+$("runMonthlyBenchmarkV7").addEventListener("click",runMonthlyRegimeBenchmarkV7);
+
