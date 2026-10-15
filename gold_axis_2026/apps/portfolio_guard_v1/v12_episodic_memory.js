@@ -88,7 +88,8 @@ function forecast(model,features,time){
    experts:estimates,nEffective:0};
  // Exponentially discount specialists that predicted earlier completed episodes
  // poorly; predicted labels only enter after their full 14d exit.
- const scores=valid.map(e=>Math.exp(-Math.min(30,model.loss[e.name].emaSquared/24)));
+ const scores=valid.map(e=>model.freezeSpecialistLoss?1:
+  Math.exp(-Math.min(30,model.loss[e.name].emaSquared/24)));
  const sum=scores.reduce((a,b)=>a+b,0);
  const weight=Object.fromEntries(valid.map((e,i)=>[e.name,scores[i]/sum]));
  const wavg=k=>valid.reduce((s,e)=>s+weight[e.name]*e[k],0);
