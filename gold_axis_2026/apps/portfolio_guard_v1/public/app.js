@@ -945,3 +945,60 @@ async function runV12Earliest(){
 }
 $("runV12Earliest").addEventListener("click",runV12Earliest);
 
+async function runV13Sentez(){
+ const b=$("runV13Sentez"),status=$("v13SentezStatus");
+ b.disabled=true;
+ status.textContent="SENTEZ: 2023 başlangıcı, 14/56 gün olgunlaşmış tahminler ve ANN/bulanık/hafıza karşı testleri çalışıyor…";
+ try{
+  const response=await fetch("/api/algorithm/v13/sentez",{cache:"no-store"});
+  if(!response.ok)throw Error("HTTP_"+response.status);
+  const r=await response.json();
+  if(r.version!=="V13_SENTEZ_RESEARCH_AUDIT_20261016"||
+   r.status!=="SHADOW_EXPERIMENT_NO_AUTOMATIC_PROMOTION"||
+   r.scientificGate.promote!==false||
+   r.scientificGate.liveTrading!==false||
+   r.scientificGate.blind2026!==false||
+   r.scientificGate.bankBidAskVerified!==false||
+   r.experiments.length!==20)throw Error("SENTEZ_CONTRACT_REJECTED");
+  const get=(period,variant="SENTEZ_HYBRID")=>
+     r.experiments.find(x=>x.period===period&&x.variant===variant);
+  const full=get("2023_TO_2026"),a2025=get("2025"),a2026=get("2026_FEB_SEP");
+  $("v13Full").textContent=money(full.finalUSD);
+  $("v13Hold").textContent=money(full.buyHoldUSD);
+  $("v13Year2025").textContent=money(a2025.finalUSD);
+  $("v13Year2026").textContent=money(a2026.finalUSD);
+  $("v13Ablations").innerHTML=table(
+   ["Dönem","Model bileşenleri","Komisyonlu final","Pasif ALTIN","İşlem"],
+   r.experiments.map(x=>"<tr>"+cell(escapeText(x.period))+
+    cell(escapeText(x.variant))+cell(money(x.finalUSD))+
+    cell(money(x.buyHoldUSD))+cell(x.trades)+"</tr>")
+  );
+  const tr=function(s){return new Intl.DateTimeFormat("tr-TR",{
+   timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",
+   hour:"2-digit",minute:"2-digit",hour12:false
+  }).format(new Date(s));};
+  $("v13Trades").innerHTML=table(
+   ["Sinyal (TR)","İşlem (TR)","AL/SAT","Fiyat vekili","Gerekçe"],
+   full.ledger.map(x=>"<tr>"+cell(escapeText(tr(x.asOf)))+
+    cell(escapeText(tr(x.at)))+cell(x.side==="BUY"?"AL":"SAT")+
+    cell(format.format(x.price))+cell(escapeText(x.why))+"</tr>")
+  );
+  status.textContent="SENTEZ deneyleri tamamlandı: 2023–2026 "+
+   money(full.finalUSD)+"; pasif altın "+money(full.buyHoldUSD)+
+   "; 2026 Şubat–Eylül "+money(a2026.finalUSD)+
+   ". Otomatik model terfisi yok.";
+  $("v13SentezWarning").textContent=
+   "ARAŞTIRMA, YATIRIM SİNYALİ DEĞİL. ANN ağı yıllık yalnız geçmişte tamamlanan etiketlerle "+
+   "geri yayılımla öğreniyor. Bulanık Sugeno sonuç kuralları 14 ve 56 günlük net getiriler "+
+   "oluştukça güncelleniyor; kapılı geçmiş hafızası LSTM'den esinli ama kapıları eğitilmiş "+
+   "gerçek LSTM değil. 2023–2026 daha önce görülmüş dönem, ileri kör test yok. "+
+   "2026'da SENTEZ bankadaki nakitten daha kötü; gerçek banka ASK/BID ve "+
+   "zaman damgalı ekonomik firstprint kanıtları doğrulanmadı. "+
+   "Eski sürümler korunuyor, canlı emir yok.";
+ }catch(err){
+  status.textContent="SENTEZ araştırması yüklenemedi: "+err.message+
+    ". Eski modellere dokunulmadı.";
+ }finally{b.disabled=false;}
+}
+$("runV13Sentez").addEventListener("click",runV13Sentez);
+
