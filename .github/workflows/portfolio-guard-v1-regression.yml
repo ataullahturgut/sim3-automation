@@ -48,3 +48,6 @@ jobs:
       - name: Preregistered Feb-Sep continuous V4 comparison
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run review-v4-holdout
+      - name: V5 slow-trend protection scientific experiment
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify-v5
