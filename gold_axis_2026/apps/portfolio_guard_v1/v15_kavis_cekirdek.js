@@ -22,7 +22,12 @@ function finite(x){return typeof x==="number"&&Number.isFinite(x);}
 function bounded(x,scale=1){return finite(x)?minmax(x/scale,-3,3):0;}
 function sigmoid(x){return 1/(1+Math.exp(-minmax(x,-20,20)));}
 function dot(w,x){return w.reduce((s,v,i)=>s+v*x[i],0);}
-function time(t){const z=Date.parse(t);if(!Number.isFinite(z))throw Error("INVALID_ASOF_TIMESTAMP");return z;}
+function time(t){
+ if(typeof t!=="string"||!/(?:Z|[+-]\\d{2}:\\d{2})$/.test(t))
+   throw Error("TIMESTAMP_WITH_TIMEZONE_REQUIRED");
+ const z=Date.parse(t);if(!Number.isFinite(z))throw Error("INVALID_ASOF_TIMESTAMP");
+ return z;
+}
 function softmax(v){
  const mx=Math.max(...v),u=v.map(z=>Math.exp(z-mx)),s=u.reduce((a,b)=>a+b,0);
  return u.map(z=>z/s);
@@ -50,11 +55,15 @@ function configOf(o={}){
  if(!finite(z)||z<0||z>3)throw Error("INVALID_CONFIDENCE");
  const minLabels=o.minMaturedLabels===undefined?6:o.minMaturedLabels;
  if(!Number.isInteger(minLabels)||minLabels<2||minLabels>100)throw Error("INVALID_MIN_LABELS");
+ const hours=o.checkpointHoursUTC===undefined?[6,9,12]:o.checkpointHoursUTC;
+ if(!Array.isArray(hours)||hours.length<1||hours.length>12||
+   hours.some(h=>!Number.isInteger(h)||h<0||h>23)||
+   new Set(hours).size!==hours.length)throw Error("INVALID_BANK_CHECKPOINT_HOURS");
  const riskBudget=o.maxHypotheticalDownsidePct??null;
  if(riskBudget!==null&&(!finite(riskBudget)||riskBudget<=0||riskBudget>=100))
    throw Error("INVALID_RISK_BUDGET");
  return {feePerSide:fee,confidenceZ:z,minMaturedLabels:minLabels,
-   maxHypotheticalDownsidePct:riskBudget,
+   maxHypotheticalDownsidePct:riskBudget,checkpointHoursUTC:hours.slice().sort((a,b)=>a-b),
    skipLegacy:!!o.skipLegacy,skipFuzzy:!!o.skipFuzzy,
    skipMLP:!!o.skipMLP,skipAdaptiveMemory:!!o.skipAdaptiveMemory,
    researchOnly:true,liveTrade:false};
@@ -70,6 +79,7 @@ function make(o={}){
   market:{lastQuoteAt:null,lastSignalAt:null,lastPrice:null,
     moments:{n:0,mean:0,m2:0},surpriseEma:0},
   queue:[],pending:[],seq:0,lastOriginByH:{},
+  virtualPortfolio:{position:null,lastFillAt:null},
   learning:{matured:0,missing:0,byH:{},gateUpdates:0,centerUpdates:0},
   risk:{lambda:0,observations:0,model:newLinear(),modelObservations:0}};
 }
@@ -217,7 +227,8 @@ function updateMLP(m,x,y,lr=.035){
  m.b2=minmax(m.b2-lr*gradB2/Math.sqrt(m.ab2),-30,30);
 }
 function updateHead(s,act,h,snapshot,target){
- const head=s.heads[act][h],x=snapshot.x,phi=snapshot.memberships;
+ const head=s.heads[act][h],x=snapshot.x,
+   phi=weightedCenters(s.centers,snapshot.fuzzyInput);
  const p=snapshot.predictions[act][h],err=minmax(p.mean-target,-40,40);
  // Use the pre-update memory coefficients when computing the local
  // derivative. Using post-SGD linear weights is temporally inconsistent.
@@ -323,6 +334,11 @@ function receiveQuote(s,quote){
  if(!finite(quote?.price)||quote.price<=0)throw Error("BAD_BANK_PROXY_PRICE");
  const at=time(quote.at),prev=s.market.lastQuoteAt;
  if(prev!==null&&at<=prev)throw Error("NONMONOTONE_QUOTE");
+ if(quote.isBankCheckpoint===true){
+   const utcHour=new Date(at).getUTCHours();
+   if(!s.config.checkpointHoursUTC.includes(utcHour))
+     throw Error("INVALID_BANK_CHECKPOINT_TIME");
+ }
  s.market.lastQuoteAt=at;s.market.lastPrice=quote.price;
  const matured=[],remaining=[];
  for(const ep of s.queue){
@@ -341,6 +357,8 @@ function receiveQuote(s,quote){
    if(at-p.at>96*HOUR){s.learning.missing++;continue;}
    if(quote.isBankCheckpoint!==true){keep.push(p);continue;}
    const eligible=startEpisodes(s,p,at,quote.price);
+   s.virtualPortfolio.position=p.decision.target;
+   s.virtualPortfolio.lastFillAt=at;
    fills.push({id:p.id,signalAt:new Date(p.at).toISOString(),
      fillAt:new Date(at).toISOString(),price:quote.price,
      intendedAction:p.decision.action,intendedPosition:p.decision.target,
@@ -354,6 +372,8 @@ function signal(s,ob){
  if(s.pending.length>0)throw Error("PENDING_SIGNAL_AWAITING_BANK_CHECKPOINT");
  if(!ob||!["CASH","GOLD"].includes(ob.position))
    throw Error("INVALID_POSITION");
+ if(s.virtualPortfolio.position!==null&&ob.position!==s.virtualPortfolio.position)
+   throw Error("POSITION_MISMATCH_VIRTUAL_EXECUTION");
  const snap=modelInput(s,ob);
  snap.predictions={ENTRY:{},EXIT:{}};
  for(const act of ["ENTRY","EXIT"])
@@ -361,6 +381,7 @@ function signal(s,ob){
  const d=choose(s,snap,ob.position);
  s.seq++;s.market.lastSignalAt=snap.at;
  const id="V15-"+s.seq;
+ if(s.virtualPortfolio.position===null)s.virtualPortfolio.position=ob.position;
  s.pending.push({id,at:snap.at,decision:{action:d.action,target:d.target},
    snapshot:JSON.parse(JSON.stringify(snap))});
  return {id,asof:ob.asof,decision:d,
@@ -372,10 +393,34 @@ function signal(s,ob){
 function checkpoint(s){return JSON.parse(JSON.stringify(s));}
 function restore(payload){
  const v=typeof payload==="string"?JSON.parse(payload):payload;
- if(!v||v.version!==VERSION||!v.heads||!v.memory||!v.market)
+ if(!v||v.version!==VERSION||!v.heads||!v.memory||!v.market||
+   !v.virtualPortfolio||!v.risk||!Array.isArray(v.queue)||
+   !Array.isArray(v.pending)||v.pending.length>1||v.queue.length>20000)
    throw Error("INCOMPATIBLE_MODEL_CHECKPOINT");
- const obj=JSON.parse(JSON.stringify(v));
- configOf(obj.config);return obj;
+ const obj=JSON.parse(JSON.stringify(v)), cfg=configOf(obj.config);
+ if(!Array.isArray(obj.centers)||obj.centers.length!==R||
+   obj.centers.some(c=>!Array.isArray(c)||c.length!==4||
+     c.some(z=>!finite(z))))throw Error("CORRUPT_FUZZY_CENTERS");
+ if(!["CASH","GOLD",null].includes(obj.virtualPortfolio.position))
+   throw Error("CORRUPT_POSITION");
+ for(const act of ["ENTRY","EXIT"])for(const h of HORIZONS){
+   const head=obj.heads[act]?.[h],lin=head?.linear;
+   if(!head||!lin||!Array.isArray(lin.w)||lin.w.length!==D||
+     !Array.isArray(head.expertLoss)||head.expertLoss.length!==3||
+     !Array.isArray(head.mlp?.w1)||head.mlp.w1.length!==HIDDEN||
+     head.mlp.w1.some(row=>!Array.isArray(row)||row.length!==D)||
+     !Number.isInteger(head.n)||head.n<0)
+     throw Error("CORRUPT_MODEL_HEAD");
+ }
+ function numericCheck(z){
+   if(typeof z==="number"&&!finite(z))throw Error("NONFINITE_CHECKPOINT");
+   if(typeof z==="object"&&z!==null){
+     for(const val of Object.values(z))numericCheck(val);
+   }
+ }
+ numericCheck(obj);
+ obj.config=cfg;
+ return obj;
 }
 module.exports={VERSION,HOUR,DAY,HORIZONS,FEATURE_NAMES,make,signal,receiveQuote,
- modelInput,modelPredict,choose,settle,checkpoint,restore};
+ checkpoint,restore};
