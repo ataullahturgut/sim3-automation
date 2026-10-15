@@ -11,6 +11,8 @@ function replayV6(rows,opts={}) {
  const begin=Date.parse(opts.start ?? "2026-02-02T06:00:00Z");
  const finish=Date.parse(opts.stop ?? "2026-09-30T12:00:00Z");
  const freezeAt=opts.freeze_learning_at?Date.parse(opts.freeze_learning_at):Infinity;
+ const protocol=opts.reentry_protocol||"none";
+ if(!["none","matured_recovery"].includes(protocol))throw Error("UNRECOGNIZED_REENTRY_PROTOCOL");
  const horizon={short:96,long:336},clamp=(n,l,h)=>Math.max(l,Math.min(h,n));
  const a=[...rows].map(x=>({...x,ts:Date.parse(x.tt)})).sort((x,y)=>x.ts-y.ts);
  if(a.some(x=>!Number.isFinite(x.ts)))throw Error("Invalid checkpoint timestamp");
@@ -54,7 +56,7 @@ function replayV6(rows,opts={}) {
       economic_active:eligible,verified_case_ids:x.newsIds};
  }
  let pending=[],scored=[],skipped=0,updatesFrozen=0,activeVerified=0;
- let pendingOrder=null,signalLog=[],cash=initial,goldOz=0,firstEntryPrice=null,lastMark=null,lastSale=-Infinity,tradeLog=[],decisionLog=[],opportunity={missedUp:0,missedDown:0,missedUpCount:0,missedDownCount:0};
+ let pendingOrder=null,signalLog=[],gateAudit=[],cash=initial,goldOz=0,firstEntryPrice=null,lastMark=null,lastSale=-Infinity,tradeLog=[],decisionLog=[],opportunity={missedUp:0,missedDown:0,missedUpCount:0,missedDownCount:0};
  function mature(now){
    let retain=[];
    for(const q of pending){
@@ -103,8 +105,20 @@ function replayV6(rows,opts={}) {
      pendingOrder=null;
    }
    let proposal=null;
-   if(learned&&!goldOz&&t-lastSale>=72*3600000&&l.mu>entryGate){
-     proposal={side:"BUY",reason:"ADAPTIVE_LONG_OPPORTUNITY"};
+   const regularCandidate=learned&&!goldOz&&t-lastSale>=72*3600000&&l.mu>entryGate;
+   // A post-crash rebound is a new episode, not continuation of the old bull phase.
+   // 336h horizon follows the model's PRE-EXISTING long label contract (not tuned
+   // to the March 2026 outcome); all r* features are current as-of bar only.
+   const regimeRevalidated=t-lastSale>=336*3600000&&r.r1!==null&&r.r1>0&&
+       r.r3!==null&&r.r3>0&&r.r4!==null&&r.r4>-.5&&!stress;
+   const canReenter=protocol==="none"||lastSale===-Infinity||regimeRevalidated;
+   if(regularCandidate&&!canReenter)gateAudit.push({at:r.tt,decision:"BLOCK_BUY",
+       reason:"336H_POST_SALE_MATURITY_AND_POSITIVE_REGIME_REQUIRED",
+       long:l.mu,entryGate,reentryAgeHours:(t-lastSale)/3600000,
+       r4:r.r4,r1:r.r1,r3:r.r3});
+   if(regularCandidate&&canReenter){
+     proposal={side:"BUY",reason:lastSale===-Infinity?"ADAPTIVE_LONG_OPPORTUNITY":
+       "MATURED_RECOVERY_CONFIRMED"};
    }else if(goldOz&&(s.mu<exitGate||(!opts.disable_stress&&stress))){
      proposal={side:"SELL",reason:stress&&!opts.disable_stress?"XAU_NQ_STRESS":"ADAPTIVE_SHORT_RISK"};
    }
@@ -126,7 +140,7 @@ function replayV6(rows,opts={}) {
    for(const k of ["prior","price","cross","ensemble"]){let e=arr.map(q=>q.return_pct-(k==="ensemble"?q.ensemble:q.p[k]));score[k]={mae:e.length?e.reduce((s,d)=>s+Math.abs(d),0)/e.length:null,direction_correct:e.filter((v,i)=>(v<=arr[i].return_pct)===(arr[i].return_pct>=0)).length}}
    metrics[year+"_"+h]=score;
  }
- return {configuration:{start:new Date(begin).toISOString(),stop:new Date(finish).toISOString(),initial,fee_each_leg:F,entry_model:"14d forward",exit_model:"96h forward",training:"daily UTC 06, labels mature at origin+horizon",model:"ONLINE_EW_RIDGE_META_EXPLORATORY",macro:"Verified only, at least 8 mature macro cases"},final_usd:final,net_return_pct:100*(final/initial-1),hold_gold_usd:holdGold,cash_usd:initial,trades:tradeLog,per_month:perMonth,metrics,training_counts:{short:M.short.prior.n,long:M.long.prior.n,skippedMissingMatured:skipped,frozen_updates:updatesFrozen,verifiedEconomicCheckpoints:activeVerified},opportunity_regret_diagnostic:opportunity,queuedSignals:signalLog,unfilledPendingOrder:pendingOrder?{at:pendingOrder.at,side:pendingOrder.side}:null,executionContract:"NEXT_BANK_CHECKPOINT",decisionLog:opts.include_decisions?decisionLog:undefined};
+ return {configuration:{start:new Date(begin).toISOString(),stop:new Date(finish).toISOString(),initial,fee_each_leg:F,entry_model:"14d forward",exit_model:"96h forward",training:"daily UTC 06, labels mature at origin+horizon",model:"ONLINE_EW_RIDGE_META_EXPLORATORY",macro:"Verified only, at least 8 mature macro cases"},final_usd:final,net_return_pct:100*(final/initial-1),hold_gold_usd:holdGold,cash_usd:initial,trades:tradeLog,per_month:perMonth,metrics,training_counts:{short:M.short.prior.n,long:M.long.prior.n,skippedMissingMatured:skipped,frozen_updates:updatesFrozen,verifiedEconomicCheckpoints:activeVerified},opportunity_regret_diagnostic:opportunity,reentryProtocol:protocol,gateAudit,queuedSignals:signalLog,unfilledPendingOrder:pendingOrder?{at:pendingOrder.at,side:pendingOrder.side}:null,executionContract:"NEXT_BANK_CHECKPOINT",decisionLog:opts.include_decisions?decisionLog:undefined};
 }
 if(require.main===module){
  const arg=(k,def)=>{let i=process.argv.indexOf(k);return i>=0?process.argv[i+1]:def};
