@@ -107,6 +107,13 @@ function features(s,o){
  return {x,nextMemory:{trend:t,stress:st},
    at:stamp(o.asof),v15Included:flag===1};
 }
+function maskExpert(x,queryPosition,observedPosition){
+ // V15 advice is conditional on actual CASH/GOLD. Reuse its value ONLY
+ // in the position that produced it. Otherwise it is not a valid
+ // counterfactual state feature and must be masked, not extrapolated.
+ if(queryPosition===observedPosition||x[9]===0)return x;
+ const a=x.slice();a[8]=0;a[9]=0;return a;
+}
 function qValue(s,x,p,a){return dot(s.q[key(p,a)].w,x);}
 function riskValue(s,x){return Math.max(0,dot(s.risk.head.w,x));}
 function rank(s,x,p){
@@ -168,13 +175,13 @@ function ada(w,acc,gradient,lr){
   w[j]=clamp(w[j]-lr*g/Math.sqrt(acc[j]),-100,100);
  }
 }
-function backup(s,old,newExecutionAt,price,nextX){
+function backup(s,old,newExecutionAt,price,nextX,nextObservedPosition){
  const timeGap=newExecutionAt-old.at;
  if(!(timeGap>0))throw Error("V16_INVALID_EXECUTION_INTERVAL");
  if(timeGap>s.config.maxIntervalHours*HR){
   s.skipped++;return {accepted:false,reason:"GAP_TOO_LONG"};
  }
- const x=old.x,logMove=100*(Math.log(price)-Math.log(old.price));
+ const logMove=100*(Math.log(price)-Math.log(old.price));
  const fee=100*Math.log(1-s.config.feePerSide);
  const gamma=Math.pow(s.config.gammaPerDay,timeGap/DAY);
  const originals={};
@@ -183,21 +190,24 @@ function backup(s,old,newExecutionAt,price,nextX){
   originals[k]={w:h.w.slice(),n:h.n,mse:h.mse};
  }
  const nextValues={};
- for(const p of STATES)
-  nextValues[p]=Math.max(dot(originals[key(p,"KEEP")].w,nextX),
-   dot(originals[key(p,"SWITCH")].w,nextX));
+ for(const p of STATES){
+  const xn=maskExpert(nextX,p,nextObservedPosition);
+  nextValues[p]=Math.max(dot(originals[key(p,"KEEP")].w,xn),
+   dot(originals[key(p,"SWITCH")].w,xn));
+ }
  const upd=[];
  for(const p of STATES)for(const a of ACTS){
-  const k=key(p,a),to=target(p,a),head=s.q[k];
+  const k=key(p,a),to=target(p,a),head=s.q[k],
+    x=maskExpert(old.x,p,old.startingPosition);
   // Exactly ONE executed side when switching at entry of interval.
   const reward=(a==="SWITCH"?fee:0)+(to==="GOLD"?logMove:0);
   const future=gamma*nextValues[to],y=reward+future;
   const prior=dot(originals[k].w,x),error=clamp(prior-y,-100,100);
-  upd.push({k,head,error,prior,y,reward,to});
+  upd.push({k,head,error,prior,y,reward,to,x});
  }
- const den=1+x.reduce((v,z)=>v+z*z,0);
  for(const u of upd){
-  ada(u.head.w,u.head.acc,x.map(v=>u.error*v/den),
+  const den=1+u.x.reduce((v,z)=>v+z*z,0);
+  ada(u.head.w,u.head.acc,u.x.map(v=>u.error*v/den),
    s.config.learningRate);
   u.head.mse=u.head.n===0?u.error*u.error:
    .96*u.head.mse+.04*u.error*u.error;
@@ -205,7 +215,9 @@ function backup(s,old,newExecutionAt,price,nextX){
  }
  if(s.config.goldDownsideBudgetPct!==null){
   const h=s.risk.head,downside=Math.max(0,-logMove),
-   err=clamp(dot(h.w,x)-downside,-50,50);
+   x=maskExpert(old.x,"GOLD",old.startingPosition),
+   err=clamp(dot(h.w,x)-downside,-50,50),
+   den=1+x.reduce((v,z)=>v+z*z,0);
   ada(h.w,h.acc,x.map(v=>err*v/den),s.config.learningRate/2);
   h.mse=h.n===0?err*err:.96*h.mse+.04*err*err;
   h.n++;h.lastTD=err;
@@ -243,7 +255,7 @@ function quote(s,o){
   return {at:o.at,fill:null,update:null,expired:true,ordersSent:0};
  }
  const p=s.pending,update=s.lastExecution?
-   backup(s,s.lastExecution,at,o.price,p.x):null;
+   backup(s,s.lastExecution,at,o.price,p.x,p.position):null;
  const endPosition=target(p.position,p.choice);
  s.lastExecution={at,price:o.price,x:p.x,
    startingPosition:p.position,chosenAction:p.choice,endPosition};
