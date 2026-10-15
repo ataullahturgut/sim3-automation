@@ -48,6 +48,10 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v9/scientific"){
+  const study=require("./v9_research_audit").report();
+  return respond(res,200,JSON.stringify(study));
+ }
  if(route==="/api/algorithm/v8/regret"){
   const audit=require("./v8_regret_audit").assess();
   return respond(res,200,JSON.stringify(audit));
