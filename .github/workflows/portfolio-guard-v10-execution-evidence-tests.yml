@@ -1,0 +1,26 @@
+name: Gold Portfolio V10 Execution and Evidence Gate
+on:
+  push:
+    branches:
+      - research-gold-v10-execution-evidence-20261015
+    paths:
+      - "gold_axis_2026/apps/portfolio_guard_v1/**"
+      - ".github/workflows/portfolio-guard-v10-execution-evidence-tests.yml"
+  workflow_dispatch:
+jobs:
+  full-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Execute V1 to V10 full portfolio tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Verify untouched V1 source integrity
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
+      - name: Verify no V10 automatic promotion
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node -e "const x=require('./v10_execution_audit').audit(); console.log(JSON.stringify({version:x.version,status:x.status,delayed:x.base2026.v7DelayedBankUSD,guarded:x.base2026.v10BankRecoveryUSD,negativeControl:x.negativeControl2025,gate:x.scientificGate},null,2)); if(x.scientificGate.automaticPromotion||x.scientificGate.liveTradingAuthorized)process.exit(1)"
