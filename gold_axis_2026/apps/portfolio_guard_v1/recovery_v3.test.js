@@ -88,3 +88,12 @@ test("V3 screen has its own non-authoritative button and valid javascript",()=>{
  assert.match(javascript,/api\/algorithm\/v3/);
  assert.doesNotThrow(()=>new vm.Script(javascript));
 });
+
+
+test("market closure cannot certify consecutive phase confirmation, or backfill February 1 prices",()=>{
+ const x=v3.runJanuaryFebruary();
+ assert.equal(x.february.days[0].date,"2026-02-01");
+ assert.equal(x.february.days[0].completeBars,0);
+ assert.equal(x.february.days[0].netValue,119.7539);
+ assert.equal(x.february.days[0].actions.length,0);
+});
