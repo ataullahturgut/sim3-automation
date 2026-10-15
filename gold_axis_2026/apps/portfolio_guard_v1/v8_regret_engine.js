@@ -184,7 +184,8 @@ function replay(rows,opts={}){
    const stress=(r.r4!=null&&r.r4<=-1&&r.nq6!=null&&r.nq6<=-1);
    const slowBreak=(r.r1!=null&&r.r3!=null&&r.r1< -4&&r.r3< -3);
    let act="HOLD",reason="NO_CONFIDENT_EDGE";
-   if(bothReady&&!ounces&&t-lastSale>=72*HOURLY&&
+   // An exit-level shock cannot simultaneously authorize an entry at the same checkpoint.
+   if(bothReady&&!ounces&&t-lastSale>=72*HOURLY&&!(stress||slowBreak)&&
        (expectedLong>buyGate||(mode!=="no_regret"&&
            regime==="UP"&&pl.mu>0&&r.r1>3&&r.r3>1&&mom.missedUp>1))){
       ounces=cash*(1-COST)/r.p;cash=0;act="BUY";reason="ONLINE_OPPORTUNITY_REGRET";
