@@ -274,6 +274,18 @@
         <article class="kpi"><span>V7'nin aylık hedefe farkı</span><strong id="monthlyRegretUSD">—</strong><small>Benchmark farkı, azami kâr sınırı değil</small></article>
       </div>
       <div id="monthlyBenchmarkV7Table" class="tablewrap">Düğmeye basınca ay bazında görünür.</div>
+      <h3>Ay içinde en avantajlı AL / SAT aralıkları (geriye dönük ideal)</h3>
+      <p>Bir ayın sonunu bildiğimizi varsayarak, sadece 09:00 / 12:00 / 15:00 Türkiye fiyat noktalarından, %0,8 alış ve %0,8 satış maliyeti sonrasında en iyi zamanlamayı buluyoruz. Bu ekranın işlemleri gerçek zamanlı sinyal değildir.</p>
+      <button class="researchbtn" id="runIntramonthOracleV7" type="button">Ay içindeki en avantajlı işlem aralıklarını incele</button>
+      <p class="monthstatus" id="intramonthOracleV7Status" role="status">Her ay bir veya iki tamamlanmış AL/SAT turunun teorik performansları karşılaştırılacak.</p>
+      <div class="kpis">
+        <article class="kpi"><span>Aylık nakit/altın ideal seçimi</span><strong id="intramonthBasicUSD">—</strong><small>Tek aya yayılmış iki seçenek</small></article>
+        <article class="kpi"><span>Ay başına en iyi bir işlem turu</span><strong id="intramonthOneUSD">—</strong><small>Ayın geleceği görüldüğü varsayımı</small></article>
+        <article class="kpi"><span>Ay başına en iyi iki işlem turu</span><strong id="intramonthTwoUSD">—</strong><small>Geleceği bilen, gerçek zamanlı değil</small></article>
+        <article class="kpi"><span>15 tura kadar teorik seçim</span><strong id="intramonthAllUSD">—</strong><small>Yalnız 3s zaman noktalarında matematiksel ideal</small></article>
+      </div>
+      <div class="tablewrap" id="intramonthOracleV7Table">Düğmeye basınca ay ay net getiri görünür.</div>
+      <p class="notice" id="intramonthOracleV7Warning">En avantajlı zamanlar ay sonunda tespit edilebilir; bu geçmiş fiyat optimizasyonu canlı AL/SAT başarısı değildir. Gerçek banka alış-satış makası yok.</p>
       <p class="notice" id="monthlyBenchmarkV7Warning">Bu referans her ay için yalnız NAKİT ve ay boyu ALTIN seçeneklerini kapsar. Komisyonlar var, gerçek banka fiyatı yok. Aylık kazanan önceden bilinemez.</p>
       <p class="notice" id="adaptiveV7Warning">V7 geçmişi görerek oluşturulmuş bir deneydir. Ekonomik haber katkısı doğrulanmadı. Gerçek banka ASK/BID ve kayma yok; otomatik alım-satım yok.</p>
     </div>
