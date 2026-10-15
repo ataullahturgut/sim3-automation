@@ -1,0 +1,31 @@
+name: Portfolio Guard V1 Frozen Replay
+on:
+  push:
+    branches:
+      - gold-portfolio-guard-app-v1-20261015
+    paths:
+      - 'gold_axis_2026/apps/portfolio_guard_v1/**'
+      - 'gold_axis_2026/OLAY_02_96_TUM_VAKA_EVRENSEL_ORUNTU_MATRIKS_20261015.csv'
+      - 'gold_axis_2026/adaptive_volatility_learning/portfolio_protection/historical_96h_case_outcomes_v0.csv'
+      - 'gold_axis_2026/adaptive_volatility_learning/months/2026-01-new-learning/JAN_2026_NEW_EVENT_MONTH_WALK_V1_15M_ASOF_PANEL.csv'
+      - '.github/workflows/portfolio-guard-v1-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Deterministic snapshot and input regressions
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Model output attestation
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
