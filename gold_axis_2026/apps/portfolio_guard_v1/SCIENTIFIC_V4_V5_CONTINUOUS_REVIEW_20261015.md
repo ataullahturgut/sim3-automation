@@ -19,7 +19,7 @@
 | Hiç altın almadan nakit | 119,753917 | %0 | 0 (faiz/kur farkı hariç) |
 | Şubat 2 TR 09:00 ilk bankacılık fiyatında al ve Eylül sonuna kadar tut | 107,741250 | -%10,03 | Bu raporda bağımsız risk dizisi hesaplanmadı |
 
-V5, V4'e karşı yaklaşık **11,13 USD** kaybı azaltmıştır. Fakat nakitte kalmanın **11,92 USD altında** ve pasif altının yalnız **0,09 USD üzerinde** kalmıştır. Şubat'ın tek aylık 122,87 USD kârı dokuz aylık strateji başarısı değildir.
+V5, V4'e karşı yaklaşık **11,13 USD** kaybı azaltmıştır. Fakat nakitte kalmanın **11,92 USD altında** ve pasif altının yalnız **0,09 USD üzerinde** kalmıştır. Şubat'ın tek aylık 122,87 USD kârı sekiz aylık strateji başarısı değildir.
 
 ## Zaman içinde net değerin ilerlemesi (her ay sonu, aynı portföy)
 
