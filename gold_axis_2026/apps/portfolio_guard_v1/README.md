@@ -158,3 +158,16 @@ Bu deneyler geçmiş dönemler görülerek geliştirildiğinden **kör ileri val
 Ekonomik OLAY-02: 96 vaka, 84 farklı kontrol noktası; kaynakta **ilk haber UTC doğrulaması 0/96, nedensellik kanıtı 0/96, as-of işlem onayı 0/96**. 1 Şubat 2023 06:15 UTC SWING_V1_002'ye, o gün 19:00 UTC yayımlanan Fed kararını açıklayıcı sebep olarak atamak **tarih sırasını ihlal eder**; kod bunu engelliyor.
 
 **Karar: V6 bilimsel üstünlük ve ekonomik nedensel öğrenme eşiğini GEÇMEDİ.** V6 ekonomik olayları kullanarak otomatik alım/satım işlemine yükseltilmedi. Araştırma sonucu: `V6_CROSS_MARKET_EVIDENCE_FINAL_AUDIT_20261015.md`. Kod `macro_v6.js`, `event_evidence_gate_v6.js`, testler aynı adlarda `.test.js`. `npm run verify-macro-v6` ve `npm run audit-event-evidence-v6`, ayrıca `npm test`. API `GET /api/algorithm/v6`. Tam banka ask/bid ve slippage ile bağımsız ileri test olmadan geçmiş fiyat kârları gerçek al-sat avantajı olarak sunulmaz.
+
+
+## V6 – Ekonomik as-of AL/SAT araştırması ve nihai sınama
+
+GitHub Desktop'ta **Fetch origin → Pull origin** yap, eski sunucuyu kapatıp `BASLAT.bat` ile aç. Sol menüde **V6 ekonomik AL/SAT deneyi** bölümünde **Ekonomik V6 AL/SAT testini çalıştır** düğmesine bas. Bu ekran V6 fiyat/ekonomik gözlem tutarlılığı, Şubat–Eylül kesintisiz portföy devri ve eski yıl testlerini ayrı görüntüler. Ayrıca **V6 piyasa aktarım denetimi** bölümünde risk tahmin Brier testleri yer alır.
+
+2023–2026 CME NQ/ZN/SI fiyat serisi, yalnız tamamlanmış H1 kesitlerinden türetilmiş 7.682 3h gözlem. 96 OLAY-02 vakasının hiçbiri kanıtlanmış ilk haber yayımlanma ve ekonomik neden taşımıyor; V6 bunları doğrudan işlem sinyali saymıyor. Olaylar ve fiyat verisi dondurulmuş SHA kaynaklarıyla okunuyor.
+
+2024 bağımsız 100 USD başlangıcı: V6=111,227607 USD, V5=111,227607 USD. 2025: V6=135,040312 USD, V5=135,040312 USD. 2026 Şubat başı 119,753917 USD nakit ile kesintisiz Eylül: V6 **107,740399 USD**, V5 **107,832861 USD**, hep nakitte **119,753917 USD**.
+
+**Yatırım algoritması olarak KABUL EDİLMEDİ**. Ekonomik değişkenlerin uzun dönemde gerçek ek karar getirisi yok; 2026 sonuçları geliştirme öncesi görülmüştü (kör doğrulama değil). Gerçek banka alış-satış kotasyonu/spreadi bulunmuyor. Yalnız alış %0,8 ve satış %0,8 komisyon proxy olarak kullanıldı.
+
+Kaynak: `macro_v6_portfolio.js`, `macro_v6_portfolio.test.js`, `V6_CROSS_ASSET_EVIDENCE_PROTOCOL_20261015.md`, `V6_ECONOMIC_MACRO_PORTFOLIO_FINAL_AUDIT_20261015.md`, `data/CME_3H_ASOF_2023_2024_V6.csv`, `data/CME_3H_ASOF_2025_2026_V6.csv`. Komut isteyen denetçiler için: `npm test`, `npm run verify-macro-v6-portfolio`; sunucuda salt okunur `GET /api/algorithm/v6/portfolio`.
