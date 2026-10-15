@@ -13,6 +13,7 @@ const VARIANTS=Object.freeze({
  REHBER_CORE:{adapt:true,stressExit:true,reliabilityAdaptive:true,margin:.6,prob:.58},
  REHBER_FIXED_MARGIN:{adapt:false,stressExit:true,reliabilityAdaptive:true,margin:.6,prob:.58},
  REHBER_NO_RELIABILITY:{adapt:true,stressExit:true,reliabilityAdaptive:false,margin:.6,prob:.58},
+ REHBER_FROZEN_MEMORY:{adapt:false,onlineMemory:false,stressExit:true,reliabilityAdaptive:false,margin:.6,prob:.58},
  REHBER_NO_STRESS:{adapt:true,stressExit:false,margin:.6,prob:.58},
  REHBER_SAFETY:{adapt:true,stressExit:true,margin:1.2,prob:.64}
 });
@@ -73,15 +74,17 @@ function memoryTimeline(ds,opts={}){
   // Strict < : a sample at this timestamp cannot use its own outcome.
   while(pointer<all.length&&all[pointer].exit14Ts<t){
    const ep=all[pointer++];
-   E.appendMatured(memory,ep,t);
+   if(t<start||settings.onlineMemory!==false)E.appendMatured(memory,ep,t);
   }
   for(let i=active.length-1;i>=0;i--){
    const item=active[i];
    if(item.ep.exit14Ts>=t)continue;
    active.splice(i,1);
    const actual=item.ep.y;
-   E.feedback(memory,item.ep,item.pred,actual,t);
-   retrainMargin(state,item.ep,item.pred,actual,t,settings);
+   if(t<start||settings.onlineMemory!==false){
+     E.feedback(memory,item.ep,item.pred,actual,t);
+     retrainMargin(state,item.ep,item.pred,actual,t,settings);
+   }
   }
   const hr=new Date(row.tt).getUTCHours();
   if(![6,9,12].includes(hr))continue;
