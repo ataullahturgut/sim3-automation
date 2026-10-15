@@ -59,3 +59,32 @@ test("no phase transition can access price history after its as-of timestamp",()
  const future=v3.pastOnlyEpisodeBank(rows.filter(x=>x.time<origin),Date.parse("2022-06-01T00:00:00Z"));
  assert.ok(future.every(x=>x.knownAt<=Date.parse("2022-06-01T00:00:00Z")));
 });
+
+
+test("V3 research API is read-only and original January/February results remain unchanged",()=>{
+ const {requestHandler}=require("./server");
+ function req(url,method="GET"){
+  let status,body;requestHandler({method,url},{writeHead(s){status=s;},end(b){body=b;}});
+  return {status,json:JSON.parse(body)};
+ }
+ const r=req("/api/algorithm/v3");
+ assert.equal(r.status,200);
+ assert.equal(r.json.version,v3.VERSION);
+ assert.equal(r.json.history.totalRows,10850);
+ assert.equal(r.json.february.startUSD,119.75391720039644);
+ assert.equal(r.json.february.period,"Şubat 2026");
+ assert.equal(r.json.annual.length,3);
+ assert.equal(r.json.bankSpreadIncluded,false);
+ assert.equal(req("/api/algorithm/v3","POST").status,405);
+ const frozen=req("/api/summary");
+ assert.ok(Math.abs(frozen.json.comparison[2].finalUSD-119.75391720039644)<1e-8);
+});
+test("V3 screen has its own non-authoritative button and valid javascript",()=>{
+ const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
+ const html=fs.readFileSync(path.join(__dirname,"public/index.html"),"utf8");
+ const javascript=fs.readFileSync(path.join(__dirname,"public/app.js"),"utf8");
+ assert.match(html,/id="runV3"/);
+ assert.match(html,/id="v3FebFinal"/);
+ assert.match(javascript,/api\/algorithm\/v3/);
+ assert.doesNotThrow(()=>new vm.Script(javascript));
+});
