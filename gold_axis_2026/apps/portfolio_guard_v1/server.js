@@ -9,6 +9,7 @@ const portValue=process.env.PORT||"8787";
 const PORT=Number(portValue);
 if(!Number.isSafeInteger(PORT)||PORT<1024||PORT>65535)throw new Error("PORT must be 1024..65535");
 const snapshots=engine.runAll(); // load + verify Git blob SHA + regression tests; fail closed
+const scientificV2=require("./event_audit_v2").runAudit(); // read-only, independent shadow diagnostics
 function small(v) {
  const x=snapshots.scenarios[v];
  return {
@@ -52,6 +53,7 @@ function requestHandler(req,res) {
    return respond(res,400,JSON.stringify({error:"UNKNOWN_FROZEN_MODEL",allowed:["event15m","price15m","legacy3h"]}));
   return respond(res,200,JSON.stringify(snapshots.scenarios[mode]));
  }
+ if(route==="/api/algorithm/v2")return respond(res,200,JSON.stringify(scientificV2));
  if(route==="/api/health"){
   return respond(res,200,JSON.stringify({ok:true,version:snapshots.version,verifiedAtStartup:true,readOnly:true}));
  }
