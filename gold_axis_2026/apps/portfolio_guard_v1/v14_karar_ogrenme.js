@@ -5,17 +5,17 @@
  * next-checkpoint outcomes. Not a trained LSTM or a proven novel theorem.
  */
 const FEE=.008,HR=3600000,DAY=24*HR;
-const K=10, MEM=5, HORIZONS=[7,28];
+const K=10, MEM=5, HORIZONS=[7,28,56];
 const clip=(x,a,b)=>Math.max(a,Math.min(b,Number.isFinite(x)?x:0));
 const sig=x=>1/(1+Math.exp(-clip(x,-20,20)));
 const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
 function makeHead(){return {n:0,w:Array(K).fill(0),acc:Array(K).fill(.001),
  riskW:Array(K).fill(0),riskAcc:Array(K).fill(.001),mse:64,downMse:25};}
 function create(opts={}){
- return {heads:{7:makeHead(),28:makeHead()},gateW:[0,0,0],gateAcc:[.001,.001,.001],
+ return {heads:{7:makeHead(),28:makeHead(),56:makeHead()},legacy:{n:0,mse:64},gateW:[0,0,0],gateAcc:[.001,.001,.001],
    memory:0,drift:{n:0,mean:0,m2:0,last:0},observations:0,
    config:{riskAversion:opts.riskAversion??.20,disableGate:!!opts.disableGate,
-     disableRisk:!!opts.disableRisk,disable7:!!opts.disable7,disable28:!!opts.disable28}};
+     disableRisk:!!opts.disableRisk,disable7:!!opts.disable7,disable28:!!opts.disable28,disable56:!!opts.disable56}};
 }
 function observe(s,f,oldForecast={}){
  const ret=clip(f[0]/3,-3,3),trend=clip((f[1]/6+f[2]/10)/2,-2,2);
@@ -34,12 +34,14 @@ function observe(s,f,oldForecast={}){
  const x=[1,ret,clip(f[1]/6,-3,3),clip(f[2]/10,-3,3),vol,memory,
    clip((oldForecast.net14??0)/10,-3,3),clip((oldForecast.net56??0)/15,-3,3),
    clip(oldForecast.regime?.stress??0,-2,2),innovation];
- return {x,gderiv,gate,regimeShock:innovation,atObservation:s.observations};
+ const legacyNet=oldForecast.net56;
+ const legacyGross=legacyNet==null?null:100*Math.log(Math.max(.01,1+legacyNet/100))-200*Math.log(1-FEE);
+ return {x,gderiv,gate,legacyGross,regimeShock:innovation,atObservation:s.observations};
 }
 function forecast(s,snapshot){
  const estimates={};let norm=0,total=0,down=0,varMix=0;
  for(const h of HORIZONS){
-   if((h===7&&s.config.disable7)||(h===28&&s.config.disable28))continue;
+   if((h===7&&s.config.disable7)||(h===28&&s.config.disable28)||(h===56&&s.config.disable56))continue;
    const v=s.heads[h],mu=clip(dot(v.w,snapshot.x),-30,30);
    const downside=clip(dot(v.riskW,snapshot.x),0,25);
    const sigma=Math.sqrt(v.mse);
@@ -48,11 +50,28 @@ function forecast(s,snapshot){
    estimates[h]={mu,downside,sigma,weight,n:v.n};
    if(v.n>0){norm+=weight;total+=weight*mu;down+=weight*downside;varMix+=weight*sigma;}
  }
- const ready=Object.values(estimates).some(v=>v.n>=8) &&
-   Object.values(estimates).every(v=>v.n>=3);
- return {estimates,ready,mu:norm?total/norm:0,
-   downside:norm?down/norm:0,uncertainty:norm?varMix/norm:8,
-   x:snapshot.x,gderiv:snapshot.gderiv};
+ const q56=estimates[56],legacy=snapshot.legacyGross;
+ // A 7d / 28d blended return cannot rationally be compared against
+ // a 56d round-trip bank fee. The main wealth head is 56d, with an
+ // as-of V13 long-trend prior, reliability adjusted from matured 56d labels.
+ let longMu=q56&&q56.n>=4?q56.mu:null;
+ if(legacy!=null){
+   if(longMu==null)longMu=legacy;
+   else {
+     const a=1/Math.sqrt(Math.max(1,s.legacy.mse)),
+       b=1/Math.sqrt(Math.max(1,q56.sigma*q56.sigma));
+     longMu=(a*legacy+b*longMu)/(a+b);
+   }
+ }
+ const short=[7,28].filter(h=>estimates[h]&&estimates[h].n>0);
+ const shortW=short.reduce((a,h)=>a+estimates[h].weight,0);
+ const shortDown=shortW?short.reduce((a,h)=>a+
+   estimates[h].weight*estimates[h].downside,0)/shortW:0;
+ const ready=s.heads[7].n>=8&&s.heads[28].n>=3&&longMu!=null;
+ return {estimates,ready,mu:longMu??0,
+   downside:shortDown,uncertainty:norm?varMix/norm:8,
+   x:snapshot.x,gderiv:snapshot.gderiv,legacyGross:legacy,
+   longLearnedCount:s.heads[56].n,legacyLoss:s.legacy.mse};
 }
 function action(s,pred,position){
  if(position!=="CASH"&&position!=="GOLD")throw Error("INVALID_POSITION");
@@ -102,6 +121,11 @@ function learn(s,queued,now){
  q.mse=q.n===0?loss*loss:.92*q.mse+.08*loss*loss;
  q.downMse=q.n===0?riskErr*riskErr:.92*q.downMse+.08*riskErr*riskErr;
  q.n++;
+ if(h===56&&queued.pred.legacyGross!=null){
+   const err=clip(queued.pred.legacyGross-y,-30,30);
+   s.legacy.mse=s.legacy.n===0?err*err:.92*s.legacy.mse+.08*err*err;
+   s.legacy.n++;
+ }
  return {h,origin:queued.origin,knownAt:now,actual:y,
    pred:prior,worstLossPct:downside,learned:q.n};
 }
