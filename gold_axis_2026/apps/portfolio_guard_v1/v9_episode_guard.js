@@ -17,7 +17,7 @@ function replay(rows,opts={}){
  const start=Date.parse(opts.start||"2026-02-02T06:00:00Z");
  const end=Date.parse(opts.end||"2026-09-30T12:00:00Z"),initial=opts.initial??119.753917;
  if(start>=end||!Number.isFinite(start)||!Number.isFinite(end))throw Error("BAD_PERIOD");
- const portfolio=init(initial),months=[];
+ const portfolio=init(initial),months=[],curve=[];
  let entryStreak=0,exitStreak=0,lastShock=-Infinity,anchorLast=-Infinity;
  const pending=[],learned=[],errors={opportunityUp:0,avoidedDown:0,lateExit:0},
    stats={UP:{n:0,win:0,mean:0},DOWN:{n:0,win:0,mean:0},
@@ -62,6 +62,7 @@ function replay(rows,opts={}){
    if(t<start)continue;
    if(portfolio.ounces)portfolio.peakPrice=Math.max(row.c,portfolio.peakPrice);
    const nav=portfolio.cash+portfolio.ounces*row.c*(1-FEE);
+   if(opts.includeCurve)curve.push({utc:row.tt,netUSD:nav,position:portfolio.ounces?"GOLD":"CASH"});
    const month=new Date(t+3*HR).toISOString().slice(0,7);
    if(!months.length||months.at(-1).month!==month){
       months.push({month,initialUSD:months.length?months.at(-1).terminalUSD:initial,terminalUSD:nav,position:portfolio.ounces?"GOLD":"CASH"});
@@ -102,7 +103,7 @@ function replay(rows,opts={}){
  if(!Number.isFinite(final))throw Error("NO_MONTHS");
  return{initial,final,netPct:100*(final/initial-1),trades:portfolio.transactions,monthly:months,
   config:cfg,trained336:learned.length,regimeStats:stats,learnedLabels:opts.includeLabels?learned:undefined,
-  decisions:opts.includeDecisions?decisions:undefined,
+  decisions:opts.includeDecisions?decisions:undefined,curve:opts.includeCurve?curve:undefined,
   status:"RESEARCH_NOT_BLIND",feePerSide:FEE,
   executionLagged:true,bankBidAskIncluded:false,macroEventsValidated:0,
   automaticPromotion:false};
