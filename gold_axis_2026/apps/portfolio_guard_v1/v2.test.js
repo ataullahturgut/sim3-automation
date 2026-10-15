@@ -61,3 +61,42 @@ test("V2 monthly diagnostic is deterministic and does not rewrite January V1 tra
   assert.equal(d.analog.probabilityCalibrated,false);
  }
 });
+
+
+test("calendar controls are independently chosen by clock before future outcomes",()=>{
+ const controls=v2.buildCalendarControls();
+ assert.equal(controls.length,163);
+ assert.equal(new Set(controls.map(r=>r.utc)).size,163);
+ assert.equal(controls.filter(r=>r.low96<=-3).length,14);
+ assert.ok(controls.every(r=>r.ms+96*3600000<=Date.parse("2025-12-31T21:00:00Z")));
+ assert.ok(controls.every(r=>r.observedBars>=40));
+ assert.ok(controls.every(r=>new Date(r.utc).getUTCHours()===15));
+});
+test("calendar controls provide comparative base, not causal probability",()=>{
+ const controls=v2.buildCalendarControls();
+ const x=loadFrozen().rows[0];
+ const score=v2.controlBaseline(x,controls);
+ assert.equal(score.neighbors,21);
+ assert.ok(score.rawBaseRate>0 && score.rawBaseRate<0.15);
+ assert.equal(score.hasReliableConditionalProbability,false);
+ assert.ok(score.effectiveN>0 && score.effectiveN<=21+1e-9);
+ const test=v2.temporalControlReview(controls);
+ assert.equal(test.trainN,100);
+ assert.equal(test.testN,63);
+ assert.equal(test.trainDown3,6);
+ assert.equal(test.testDown3,8);
+ assert.ok(Number.isFinite(test.brierUnconditionalBaseline));
+ assert.ok(Number.isFinite(test.brierLocalControlNeighbors));
+ assert.equal(test.clinicalOrFinancialForecastValidated,false);
+});
+test("critical January checks show separated event and calendar samples",()=>{
+ const audit=v2.runAudit();
+ assert.equal(audit.timeSampledControls.count,163);
+ assert.equal(audit.timeSampledControls.down3,14);
+ assert.equal(audit.critical.length,2);
+ for(const d of audit.critical){
+  assert.ok(d.control.rawBaseRate>0);
+  assert.equal(d.control.hasReliableConditionalProbability,false);
+  assert.equal(d.control.positiveCasesAreNotVerifiedEventFree,true);
+ }
+});
