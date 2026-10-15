@@ -27,6 +27,7 @@
     <a href="#v8Regret">↻ &nbsp; V8 hata öğrenmesi denetimi</a>
     <a href="#v9Scientific">↻ &nbsp; V9 bilimsel rejim ve hata testi</a>
     <a href="#v10Evidence">↻ &nbsp; V10 işlem zamanı ve koruma denetimi</a>
+    <a href="#v11Ann">↻ &nbsp; V11 gerçek ANN ve hata öğrenmesi</a>
    </nav>
    <div class="sidebottom">
     <div class="statusrow"><span class="statusdot"></span> Tarihsel araştırma</div>
@@ -359,6 +360,28 @@
       <h3>2025 negatif kontrolü ve 2024 tarihsel çalışma</h3>
       <div id="v10Historical" class="tablewrap">Deney çalıştırılmadı.</div>
       <p class="notice" id="v10Warning">2026'daki kâr, bağımsız doğrulama değildir. 2025 döneminde bu koruma hiçbir işlem kararını değiştirmedi. Gerçek banka alış-satış kotasyonları ve olayların ilk yayımlanma zamanları doğrulanmadı.</p>
+    </div>
+   </section>
+
+   <section id="v11Ann" class="section">
+    <div class="sectionhead">
+      <h2>V11 · Gerçek yapay sinir ağı, hatadan öğrenme ve komisyon sonrası karar</h2>
+      <p>14 giriş → 12/8 nöronlu iki gizli katman → 4 ve 14 gün sonra komisyon sonrası iki getiri tahmini. Gerçek backpropagation + Adam; en erken 2023 eğitim, zaman sıralı 2024, 2025 ve 2026 araştırma karşı testleri.</p>
+    </div>
+    <div class="panel">
+      <button class="researchbtn" type="button" id="runV11Ann">ANN eğitimi, tarihsel tahmin ve hata karşılaştırmasını çalıştır</button>
+      <p class="monthstatus" role="status" id="v11AnnStatus">ANN araştırması henüz çalıştırılmadı; mevcut V7 korunur.</p>
+      <div class="kpis">
+        <article class="kpi"><span>2026 ANN temel AL/SAT</span><strong id="v11BaseUSD">—</strong><small>119,75 $ başlangıç; her AL/SAT %0,8</small></article>
+        <article class="kpi"><span>2026 aylık yeniden öğrenme</span><strong id="v11MonthlyUSD">—</strong><small>Yalnız olgunlaşmış 14 günlük sonuçlar</small></article>
+        <article class="kpi"><span>2026 geçmiş hata kalibrasyonu</span><strong id="v11AbstainUSD">—</strong><small>Belirsizlik yüksekse nakitte kal</small></article>
+        <article class="kpi"><span>Bilimsel kabul</span><strong id="v11Promotion">—</strong><small>Yeni dönem olmadan model değişimi yok</small></article>
+      </div>
+      <h3>Yıllara göre ANN ve işlem politikaları</h3>
+      <div class="tablewrap" id="v11AnnResults">Eğitim ve deney başlatılmadı.</div>
+      <h3>2026 ANN kararı: sinyal ve sonraki banka kontrol noktasındaki işlem</h3>
+      <div class="tablewrap" id="v11AnnTrades">Eğitim ve deney başlatılmadı.</div>
+      <p class="notice" id="v11AnnWarning">2026 daha önce incelenmiş olduğundan kör test değildir. 2023–2025 örnekleri büyük ölçüde örtüşen 14 günlük hedefler taşır. Gerçek banka ASK/BID fiyatı ve haber firstprint kanıtı yoktur; otomatik al-sat yapılmaz.</p>
     </div>
    </section>
    <footer>GOLD / GUARD · Yerel, salt okunur araştırma paneli · <span id="footerVersion"></span></footer>
