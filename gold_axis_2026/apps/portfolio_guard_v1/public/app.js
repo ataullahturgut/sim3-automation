@@ -311,3 +311,57 @@ async function runV4Research(){
  }finally{button.disabled=false;}
 }
 $("runV4").addEventListener("click",runV4Research);
+
+
+async function runLongScientificReview(){
+ const button=$("runLongReview"),status=$("longStatus");button.disabled=true;
+ status.textContent="V4 ve V5 2026 Şubat–Eylül verileri ve önceki yıllar sırayla hesaplanıyor…";
+ try{
+  const replies=await Promise.all([
+   fetch("/api/algorithm/v4/forward",{cache:"no-store"}),
+   fetch("/api/algorithm/v5",{cache:"no-store"})
+  ]);
+  if(replies.some(r=>!r.ok))throw Error("SUNUCU_ISTEGI_BASARISIZ");
+  const [v4,v5]=await Promise.all(replies.map(r=>r.json()));
+  if(v4.actual.finalUSD<=0||v5.fromFebThroughSeptember.finalUSD<=0||
+     v4.monthly.length!==8||v5.monthResults.length!==8||
+     v5.promotionAuthorized!==false||v4.monthEndCarryVerified!==true||
+     v4.hasProspectiveBlindValidation!==false||
+     v5.status!=="EXPLORATORY_DESIGNED_AFTER_SEEING_2026")
+   throw Error("ARASTIRMA_VERI_SOZLESMESI_HATASI");
+  $("longV4").textContent=money(v4.actual.finalUSD);
+  $("longV5").textContent=money(v5.fromFebThroughSeptember.finalUSD);
+  $("longCash").textContent=money(v4.benchmarks.cashOnlyUSD);
+  $("longHold").textContent=money(v4.benchmarks.firstBankWindowBuyHoldUSD);
+  $("longMonths").innerHTML=table(
+    ["Ay","V4 net","V5 net","NAKİT","İlk AL/TUT","V5 işlem"],
+    v4.monthly.map(function(x,i){
+     const y=v5.monthResults[i],c=v4.monthlyBenchmarks[i];
+     if(x.month!==y.month||x.month!==c.month)throw Error("AY_ESLESMESI_BOZULDU");
+     return "<tr>"+cell(escapeText(x.month))+cell(money(x.terminalNetUSD))+
+      cell(money(y.finalUSD))+cell(money(c.cashOnlyUSD))+
+      cell(money(c.firstBankWindowBuyHoldUSD))+
+      cell(y.buys+" AL / "+y.sells+" SAT")+"</tr>";
+    })
+  );
+  $("longAnnual").innerHTML=table(
+    ["Yıl","V5","Altını al ve tut","Nakitte bekle","V5 işlemler"],
+    v5.years.map(function(y){
+     return "<tr>"+cell(y.year+(y.coverageWarning?" *":""))+
+      cell(money(y.finalUSD))+cell(money(y.buyHoldUSD))+cell(money(y.cashOnlyUSD))+
+      cell(y.buys+" AL / "+y.sells+" SAT")+"</tr>";
+    })
+  );
+  status.textContent="Bilimsel kıyas tamamlandı: V4 "+money(v4.actual.finalUSD)+
+    " → V5 "+money(v5.fromFebThroughSeptember.finalUSD)+
+    ". Ancak V5 hem nakitte beklemeden kötü, hem eski yıllardaki kazançları düşürüyor.";
+  $("longVerdict").textContent="MODEL SEÇİM KARARI: V5 ONAYLANMADI. 2023 veri kapsamı eksik; "+
+   "2024–2025 testlerinde gereksiz AL/SAT arttı. 2026 sonuçları V5 geliştirilmeden önce "+
+   "görüldüğünden bağımsız ileri test değildir. Yalnız araştırma; "+
+   "G05-C/G06-B nedensellik doğrulanmadı, gerçek banka ASK/BID makası ve emir kayması yok.";
+ }catch(error){
+  status.textContent="Uzun dönem araştırması yüklenemedi: "+error.message+
+    ". Eski V1–V4 sonuçları değişmedi.";
+ }finally{button.disabled=false;}
+}
+$("runLongReview").addEventListener("click",runLongScientificReview);
