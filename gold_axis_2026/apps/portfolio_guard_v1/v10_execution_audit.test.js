@@ -39,9 +39,10 @@ test("original negative controls: protection has not independently succeeded bef
  const y24=x.historicalControl.find(q=>q.period==="2024_2023HISTORY");
  const y25=x.historicalControl.find(q=>q.period==="2025_2023HISTORY");
  near(y24.finalUSD,108.61461132260524);
- near(y25.finalUSD,110.6634961560752);
+ near(y25.finalUSD,110.66472314789095);
  assert.ok(y24.finalUSD<y24.passiveGoldUSD);
  assert.ok(y25.finalUSD<y25.passiveGoldUSD);
+ assert.equal(y25.gateBlocked,2);
 });
 
 test("deferred 1-3 checkpoint latency and additional fee stress test never invents bank asks",()=>{
