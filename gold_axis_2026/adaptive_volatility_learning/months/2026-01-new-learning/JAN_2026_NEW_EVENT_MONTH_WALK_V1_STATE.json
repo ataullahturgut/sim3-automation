@@ -1,0 +1,103 @@
+{
+  "month": "2026-01",
+  "status": "RETROSPECTIVE_NOT_OOS",
+  "initial_usd": 100,
+  "initial_asset": "CASH",
+  "final_cash": 119.753917,
+  "final_gold_oz": 0,
+  "net_pct": 19.7539,
+  "max_dd_pct": 3.613,
+  "baseline_3h_usd": 118.337853,
+  "baseline_15m_price_only_usd": 119.753917,
+  "incremental_economic_dna_usd": 0,
+  "open_15m_price": 4313.305,
+  "last_15m_price": 4873.855,
+  "trades": [
+    {
+      "at_utc": "2026-01-05T06:30:00.000Z",
+      "at_tr": "2026-01-05 09:30",
+      "action": "BUY_GOLD",
+      "price": 4424.055,
+      "ounces": 0.022422867708471073,
+      "reason": "PRICE5_WITH_ARCHIVED_EVENT_CROSSCHECK",
+      "analog_risk": 0.5784870048781355,
+      "analog_dist": 0.1661544669527142,
+      "closest": [
+        {
+          "id": "SWING_V1_030",
+          "org": "UNMAPPED_OR_NOT_DIRECT_DEEP_V1",
+          "low": -3.637519,
+          "d": 0.166
+        },
+        {
+          "id": "SWING_V1_022",
+          "org": "UNMAPPED_OR_NOT_DIRECT_DEEP_V1",
+          "low": -3.085897,
+          "d": 0.207
+        },
+        {
+          "id": "SWING_V1_017",
+          "org": "ORG01",
+          "low": -4.018973,
+          "d": 0.21
+        }
+      ],
+      "phase": "P0_PRICE_STATE_UNKNOWN_CAUSE",
+      "r92": 1.00534,
+      "r276": 1.16125,
+      "r4": 0.4973,
+      "v92": 2.69994
+    },
+    {
+      "at_utc": "2026-01-29T15:15:00.000Z",
+      "at_tr": "2026-01-29 18:15",
+      "action": "SELL_TO_CASH",
+      "price": 5383.775,
+      "cash_after": 119.75391720039644,
+      "reason": "CROSS_SELL_EVENT_NOVELTY",
+      "analog_risk": 0.10973940050027532,
+      "analog_dist": 1.2799206879482352,
+      "closest": [
+        {
+          "id": "SWING_V1_023",
+          "org": "UNMAPPED_OR_NOT_DIRECT_DEEP_V1",
+          "low": -2.325734,
+          "d": 1.28
+        },
+        {
+          "id": "C_CORR_028",
+          "org": "UNMAPPED_OR_NOT_DIRECT_DEEP_V1",
+          "low": -2.325734,
+          "d": 1.28
+        },
+        {
+          "id": "C_CORR_040",
+          "org": "UNMAPPED_OR_NOT_DIRECT_DEEP_V1",
+          "low": -0.606515,
+          "d": 1.35
+        }
+      ],
+      "phase": "P2_EVENT_PLUS_OUTLIER_CAUSE_UNRESOLVED",
+      "nq6": -1.46388,
+      "r4": -2.2366
+    }
+  ],
+  "checks": {
+    "n": 2976,
+    "market": 1804,
+    "closed": 1172
+  },
+  "library_mature_cases": 92,
+  "news_date_firstprint_confirmed_for_tagging": true,
+  "news_actual_causality_confirmed": false,
+  "event_library_org_causality_verified": false,
+  "lessons": [
+    "15 minute cadence improved fill vs older 3hour comparison by $1.41606, but post-hoc and costs unsimulated.",
+    "Jan5 BUY has analog historical down3 risk >0.57 despite profitable UP move: uncalibrated event-anchor sampling, cannot gate entries with this score.",
+    "Jan29 SELL has analog risk <0.12 but distance >1 (OOD), so NOVELTY/unknown-shock gate catches this movement; price-only trailing also independently triggers at exactly same 15m.",
+    "No incremental portfolio action or net return attributable to DNA/macro layer on Jan 2026.",
+    "Jan29 large shock can be classified observed XAU/NQ sell pressure, NOT causally assigned to ORG12 vs ORG10 until firstprint/economic crosschecks verified.",
+    "Do not optimize Jan2026 thresholds and re-score Jan as OOS; next month evaluates frozen V1 and true bank cost.",
+    "Cash at end-of-Jan; February 2026 start $119.753917 cash carried. No forced sale 31Jan."
+  ]
+}
