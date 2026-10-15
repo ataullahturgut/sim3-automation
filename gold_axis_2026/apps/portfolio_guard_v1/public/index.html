@@ -27,9 +27,24 @@
   </aside>
   <main>
    <header class="topbar">
-    <div><div class="eyebrow">ARAŞTIRMA / OCAK 2026</div><h1>Altın portföy koruma</h1><p class="subtitle">Marjinal yükselişleri yakala, büyük düşüşlerde korun. Gereksiz al-sat yapma.</p></div>
+    <div><div class="eyebrow" id="monthHeading">ARAŞTIRMA / OCAK 2026</div><h1>Altın portföy koruma</h1><p class="subtitle">Marjinal yükselişleri yakala, büyük düşüşlerde korun. Gereksiz al-sat yapma.</p></div>
     <div class="ribbon"><span class="statusdot"></span> DOĞRULANMIŞ VERİ ANLIK GÖRÜNTÜSÜ</div>
    </header>
+   <section class="monthpanel" aria-label="Aylık araştırma çalıştırıcı">
+     <div class="monthintro">
+       <strong>Ay ay araştırma motoru</strong>
+       <span>Önce Ocak 2026 çalışır, portföy nakdi Şubat 2026'ya devredilir. Kurallar kilitlidir.</span>
+     </div>
+     <div class="monthcontrols">
+       <label for="monthSelect">Çalışılacak ay</label>
+       <select id="monthSelect" aria-label="Çalışılacak ay">
+         <option value="2026-01">Ocak 2026 · Referans</option>
+         <option value="2026-02">Şubat 2026 · Ocak'tan devret</option>
+       </select>
+       <button id="runMonth" type="button">Ayı Çalıştır</button>
+     </div>
+     <p class="monthstatus" id="monthStatus" role="status">Ocak 2026 referansı gösteriliyor. Şubat'ı seçip Ayı Çalıştır'a basabilirsin.</p>
+   </section>
    <section id="overview" class="section">
     <div class="sectionhead"><h2>Strateji karşılaştırması</h2><p>Veri, kurallar ve komisyon oranı kilitli. Modu değiştirmek sadece aynı veri üzerindeki farklı sabit stratejiyi görüntüler.</p></div>
     <div id="modes" class="modes" role="group" aria-label="Model karşılaştırması">
@@ -46,7 +61,7 @@
     </div>
     <div class="twocol">
      <article class="panel chartpanel">
-      <div class="paneltitle"><h3>Günlük portföy değeri</h3><span>100 $ başlangıç</span></div>
+      <div class="paneltitle"><h3>Günlük portföy değeri</h3><span id="startingCash">100 $ başlangıç</span></div>
       <div id="chart" class="chart" role="img" aria-label="Ocak 2026 günlük portföy çizgi grafiği"></div>
      </article>
      <article class="panel summarypanel">
@@ -71,7 +86,7 @@
       <div id="transactions" class="tablewrap"></div>
     </div>
     <div class="panel">
-      <div class="paneltitle"><h3>Ocak 2026 · Gün gün</h3><span>Ay sonuna kadar pozisyon korunur</span></div>
+      <div class="paneltitle"><h3 id="dailyTitle">Ocak 2026 · Gün gün</h3><span>Ay sonuna kadar pozisyon korunur</span></div>
       <div id="daily" class="tablewrap"></div>
     </div>
    </section>
