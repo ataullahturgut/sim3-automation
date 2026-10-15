@@ -1,5 +1,19 @@
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
+> **15 EKİM 2026 — OLAY + GERÇEK MAKRO İLE V6 BİLİMSEL DENETİM TAMAMLANDI; EKONOMİK AL/SAT KABUL EDİLMEDİ.**
+> [V6 ekonomik karar ve sonuç raporu](apps/portfolio_guard_v1/V6_ECONOMIC_MACRO_PORTFOLIO_FINAL_AUDIT_20261015.md),
+> [V6 baştan yazılı ekonomik hipotez protokolü](apps/portfolio_guard_v1/V6_CROSS_ASSET_EVIDENCE_PROTOCOL_20261015.md).
+> OLAY-02 96 olayın 0'ında ilk haber ve 0'ında nedensellik kanıtı bulundu; veri uydurulmadı.
+> 2023–26 NQ/ZN/SI as-of 3h 7682 gözlem, portföy kararları Türkiye 09/12/15,
+> 2024 V6 111,2276 = V5 111,2276; 2025 V6 135,0403 = V5 135,0403,
+> Şubat–Eylül 2026 V6 107,7404 < V5 107,8329 USD; CASH 119,753917 USD.
+> Önceden mevcut ayrı V6 logistic risk denetiminde 2024 Brier iyileşti, 2025 kötüleşti;
+> güvenilir uzun-dönem ek fayda görülmedi. Ekonomik sebep UNRESOLVED kaldı.
+> V6 `REJECT_AUTOMATIC_PROMOTION`, canlı emir yetkisi yok.
+> V1–V5, OLAY-02/ÖĞREN-03 ve önceki eğitim verileri silinmedi/değiştirilmedi;
+> V6 ayrılmış bilimsel deney modülü ve uygulama ekranı olarak tutuluyor.
+
+
 > **15 EKİM 2026 — V6 EKONOMİK ÖRGÜ KANIT KAPISI / TAHMİN TESTİ SONUÇLANDI: OTOMATİK İŞLEM KABUL EDİLMEDİ.**
 > [V6 tam doğrulama raporu](apps/portfolio_guard_v1/V6_CROSS_MARKET_EVIDENCE_FINAL_AUDIT_20261015.md),
 > [V6 ön kayıt](apps/portfolio_guard_v1/V6_CROSS_MARKET_DOWNSIDE_PRE_REG_20261015.md),
