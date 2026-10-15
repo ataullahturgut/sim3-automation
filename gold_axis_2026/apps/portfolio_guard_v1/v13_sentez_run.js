@@ -123,7 +123,7 @@ function one(built,opt={}){
   feedback:opt.includeFeedback?events:undefined,
   assumptions:{eachFee:.008,bankBidAsk:false,
    execution:"NEXT_BANK_CHECKPOINT",asof:"09TR",
-   14dLearningSpacingDays:14,56dLearningSpacingDays:28,
+   learning14SpacingDays:14,learning56SpacingDays:28,
    allHorizonOutcomesStrictlyMatured:true,
    long56LabelsOverlapAcross28DayBlocks:true},
   scientificGate:{promote:false,blind:false,liveTrade:false}};
