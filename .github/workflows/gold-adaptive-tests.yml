@@ -1,0 +1,25 @@
+name: Gold Adaptive Research Unit Tests
+
+on:
+  push:
+    branches:
+      - research-gold-adaptive-olay-engine-20261015
+    paths:
+      - 'gold_axis_2026/adaptive_volatility_learning/engine/**'
+      - '.github/workflows/gold-adaptive-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: Chronology and macro calibration tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test without API keys or database writes
+        run: python -m unittest discover -s gold_axis_2026/adaptive_volatility_learning/engine -p 'test_*.py' -v
