@@ -100,3 +100,22 @@ test("critical January checks show separated event and calendar samples",()=>{
   assert.equal(d.control.positiveCasesAreNotVerifiedEventFree,true);
  }
 });
+
+
+test("V2 audit and delayed feedback are exposed through read-only APIs",()=>{
+ const {requestHandler}=require("./server");
+ function read(route,method="GET"){
+  let status,content;
+  requestHandler({url:route,method},{writeHead(code){status=code;},end(payload){content=payload;}});
+  return {status,object:JSON.parse(content)};
+ }
+ const d=read("/api/algorithm/v2");
+ assert.equal(d.status,200);
+ assert.equal(d.object.timeSampledControls.count,163);
+ assert.equal(d.object.critical.length,2);
+ const learning=read("/api/learning/v2");
+ assert.equal(learning.status,200);
+ assert.equal(learning.object.feedbackReadiness.pending,1);
+ assert.equal(learning.object.nextMonth.autoRetrain,false);
+ assert.equal(read("/api/learning/v2","POST").status,405);
+});
