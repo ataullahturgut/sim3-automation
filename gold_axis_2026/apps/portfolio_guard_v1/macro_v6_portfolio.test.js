@@ -46,3 +46,28 @@ t("V6 source input and the frozen V5 are not mutated",()=>{
  assert.ok(Math.abs(b.finalUSD-119.75391720039644)<1e-8);
  assert.equal(base.VERSION,"V5_SLOW_TREND_PROTECTION_SHADOW_20261015");
 });
+
+
+t("economic V6 portfolio UI and HTTP endpoint are read-only and do not modify V1",()=>{
+ const {requestHandler}=require("./server");
+ function get(url,method="GET"){
+  let status,body;
+  requestHandler({url,method},{writeHead(x){status=x;},end(s){body=s;}});
+  return {status,data:JSON.parse(body)};
+ }
+ const v6=get("/api/algorithm/v6/portfolio");
+ assert.equal(v6.status,200);
+ assert.equal(v6.data.promotionAuthorized,false);
+ assert.equal(v6.data.economicEventEvidence.cases,96);
+ assert.ok(Math.abs(v6.data.finalUSD-107.74039881415796)<1e-6);
+ assert.equal(get("/api/algorithm/v6/portfolio","POST").status,405);
+ const jan=get("/api/summary");
+ assert.ok(Math.abs(jan.data.comparison[2].finalUSD-119.75391720039644)<1e-8);
+ const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
+ const html=fs.readFileSync(path.join(__dirname,"public/index.html"),"utf8");
+ const script=fs.readFileSync(path.join(__dirname,"public/app.js"),"utf8");
+ assert.match(html,/id="runV6Portfolio"/);
+ assert.match(html,/id="v6PortfolioMonths"/);
+ assert.match(script,/api\/algorithm\/v6\/portfolio/);
+ assert.doesNotThrow(()=>new vm.Script(script));
+});
