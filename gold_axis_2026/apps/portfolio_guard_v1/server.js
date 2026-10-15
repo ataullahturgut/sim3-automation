@@ -48,6 +48,27 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v4/forward"){
+  const r=require("./v4_forward_review").runForwardReview();
+  return respond(res,200,JSON.stringify({
+   version:r.version,status:r.status,source:r.source,unchangedPolicy:r.unchangedPolicy,
+   actual:r.actual,benchmarks:r.benchmarks,monthly:r.monthly,
+   monthlyBenchmarks:r.monthlyBenchmarks,actions:r.actions,
+   monthEndCarryVerified:r.monthEndCarryVerified,
+   hasProspectiveBlindValidation:r.hasProspectiveBlindValidation,
+   economicMechanismVerified:r.economicMechanismVerified,
+   bankBidAskIncluded:r.bankBidAskIncluded,decision:r.decision
+  }));
+ }
+ if(route==="/api/algorithm/v5"){
+  const r=require("./recovery_v5").fullResearch();
+  return respond(res,200,JSON.stringify({
+   version:r.version,status:r.status,years:r.years,monthResults:r.monthResults,
+   fromFebThroughSeptember:r.fromFebThroughSeptember,comparison:r.comparison,
+   warnings:r.warnings,promotionAuthorized:r.promotionAuthorized,
+   training:r.training
+  }));
+ }
  if(route==="/api/algorithm/v4"){
   const model=require("./recovery_v4").runResearch();
   return respond(res,200,JSON.stringify({
