@@ -48,6 +48,10 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v6"){
+  const audit=require("./macro_v6").runAudit();
+  return respond(res,200,JSON.stringify(audit));
+ }
  if(route==="/api/algorithm/v4/forward"){
   const r=require("./v4_forward_review").runForwardReview();
   return respond(res,200,JSON.stringify({
