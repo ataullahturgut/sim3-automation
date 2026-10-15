@@ -10,8 +10,9 @@ const {dataset}=require("./v11_ann_research");
 const E=require("./v12_episodic_memory");
 const HR=E.HR,DAY=E.DAY,FEE=E.FEE,clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 const VARIANTS=Object.freeze({
- REHBER_CORE:{adapt:true,stressExit:true,margin:.6,prob:.58},
- REHBER_FIXED_MARGIN:{adapt:false,stressExit:true,margin:.6,prob:.58},
+ REHBER_CORE:{adapt:true,stressExit:true,reliabilityAdaptive:true,margin:.6,prob:.58},
+ REHBER_FIXED_MARGIN:{adapt:false,stressExit:true,reliabilityAdaptive:true,margin:.6,prob:.58},
+ REHBER_NO_RELIABILITY:{adapt:true,stressExit:true,reliabilityAdaptive:false,margin:.6,prob:.58},
  REHBER_NO_STRESS:{adapt:true,stressExit:false,margin:.6,prob:.58},
  REHBER_SAFETY:{adapt:true,stressExit:true,margin:1.2,prob:.64}
 });
@@ -59,7 +60,7 @@ function memoryTimeline(ds,opts={}){
  const initial=opts.initial??119.753917,variant=opts.variant||"REHBER_CORE";
  if(!Object.hasOwn(VARIANTS,variant))throw Error("BAD_REHBER_VARIANT");
  const settings=VARIANTS[variant];
- const memory=E.create();
+ const memory=E.create();memory.freezeSpecialistLoss=settings.reliabilityAdaptive===false;
  const state={buyMargin:settings.margin,learnedDecisions:0,errorTypes:{},history:[]};
  const all=[...ds.samples].sort((a,b)=>a.exit14Ts-b.exit14Ts);
  const seenBlock=new Set(),completedRegretBlocks=new Set();
