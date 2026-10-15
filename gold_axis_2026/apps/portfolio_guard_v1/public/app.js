@@ -265,3 +265,49 @@ async function runV3Research(){
  }finally{btn.disabled=false;}
 }
 $("runV3").addEventListener("click",runV3Research);
+
+
+async function runV4Research(){
+ const button=$("runV4"),state=$("v4status");
+ button.disabled=true;
+ state.textContent="V4 geçmiş öğrenme ve yıllık stres sonuçları hesaplanıyor…";
+ try{
+  const response=await fetch("/api/algorithm/v4",{cache:"no-store"});
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const s=await response.json();
+  if(s.version!=="V4_ADAPTIVE_CARRY_GUARD_SHADOW_20261015"||
+     s.status!=="EXPLORATORY_NOT_BLIND_OOS"||s.annual.length!==3||
+     s.bankBidAskSpreadIncluded!==false||s.economicCauseVerified!==false)
+   throw Error("V4_CONTRACT_MISMATCH");
+  $("v4Feb").textContent=money(s.february.finalUSD);
+  $("v4Jan").textContent=money(s.january.finalUSD);
+  $("v4Actions").textContent=s.february.actionCount+" işlem";
+  $("v4Cases").textContent=s.training.episodeCount+" olay";
+  $("v4Annual").innerHTML=table(
+   ["Yıl","V4","Başta AL / TUT","NAKİT","V4 AL / SAT"],
+   s.annual.map(function(y){
+    return "<tr>"+cell(y.year)+cell(money(y.V4))+
+     cell(money(y.buyHoldUSD))+cell(money(y.cashUSD))+
+     cell(y.buys+" AL / "+y.sells+" SAT")+"</tr>";
+   })
+  );
+  $("v4Trades").innerHTML=s.february.actions.length?table(
+   ["Türkiye zamanı","Karar","Fiyat","Gerekçe","Karardan önceki XAU verileri"],
+   s.february.actions.map(function(a){
+    return "<tr>"+cell(escapeText(a.tr))+
+     cell(a.action==="BUY_GOLD"?"AL":"SAT")+
+     cell(money(a.price))+cell(escapeText(a.reason))+
+     cell("4 saat: "+pct(a.decisionData.r4)+" · Orta vade: "+pct(a.decisionData.r92)+
+      " · Ekonomik neden: BELİRSİZ")+"</tr>";
+   })
+  ):"<p>V4 bu ay AL veya SAT yapmadı.</p>";
+  const delta=s.february.finalUSD-s.baseline.v3FebUSD;
+  state.textContent="V4 hesaplandı · Şubat "+money(s.february.finalUSD)+
+   " · V3'e göre "+(delta<0?"":"+")+money(delta)+
+   " · 2025'te pasif altının gerisinde kaldı. Kör doğrulama yapılmadı.";
+ }catch(error){
+  state.textContent="V4 araştırması hesaplanamadı: "+error.message+
+   ". Eski V1/V3 işlemleri korunuyor.";
+ }finally{button.disabled=false;}
+}
+$("runV4").addEventListener("click",runV4Research);
