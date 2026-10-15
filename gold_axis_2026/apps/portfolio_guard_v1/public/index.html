@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="tr">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="color-scheme" content="dark">
+ <title>Altın Portföy Koruma · Araştırma Paneli</title>
+ <link rel="stylesheet" href="/style.css">
+ <script src="/app.js" defer></script>
+</head>
+<body>
+ <div class="shell">
+  <aside class="sidebar">
+   <div class="logo"><span class="logoicon">◈</span> GOLD<span class="muted"> /</span> GUARD</div>
+   <p class="sidekicker">PORTFÖY KORUMA LABORATUVARI</p>
+   <nav aria-label="Bölümler">
+    <a href="#overview" class="active">◉ &nbsp; Genel görünüm</a>
+    <a href="#history">▤ &nbsp; Karar geçmişi</a>
+    <a href="#audit">⌑ &nbsp; Veri ve model denetimi</a>
+   </nav>
+   <div class="sidebottom">
+    <div class="statusrow"><span class="statusdot"></span> Tarihsel araştırma</div>
+    <p>Canlı fiyat akışı yok<br>Banka bağlantısı yok<br>Otomatik emir yok</p>
+    <small id="modelVersion">Sürüm doğrulanıyor…</small>
+   </div>
+  </aside>
+  <main>
+   <header class="topbar">
+    <div><div class="eyebrow">ARAŞTIRMA / OCAK 2026</div><h1>Altın portföy koruma</h1><p class="subtitle">Marjinal yükselişleri yakala, büyük düşüşlerde korun. Gereksiz al-sat yapma.</p></div>
+    <div class="ribbon"><span class="statusdot"></span> DOĞRULANMIŞ VERİ ANLIK GÖRÜNTÜSÜ</div>
+   </header>
+   <section id="overview" class="section">
+    <div class="sectionhead"><h2>Strateji karşılaştırması</h2><p>Veri, kurallar ve komisyon oranı kilitli. Modu değiştirmek sadece aynı veri üzerindeki farklı sabit stratejiyi görüntüler.</p></div>
+    <div id="modes" class="modes" role="group" aria-label="Model karşılaştırması">
+     <button data-mode="event15m" class="selected" type="button">Olay destekli · 15 dk</button>
+     <button data-mode="price15m" type="button">Yalnız fiyat · 15 dk</button>
+     <button data-mode="legacy3h" type="button">Eski model · 3 saat</button>
+    </div>
+    <div id="notice" class="notice">Kaynakların doğrulanması sürüyor…</div>
+    <div class="kpis">
+      <article class="kpi featured"><span>Ay sonu nakit / net tasfiye değeri</span><strong id="finalUSD">—</strong><small id="profitUSD">—</small></article>
+      <article class="kpi"><span>Net aylık getiri</span><strong id="returnPct">—</strong><small>Komisyonlar dahil · spread hariç</small></article>
+      <article class="kpi"><span>Karşılaştırma: al ve tut</span><strong id="benchmark">—</strong><small id="benchmarkNote">Aynı zaman sınırı</small></article>
+      <article class="kpi"><span>Azami geri çekilme</span><strong id="maxDD">—</strong><small>Teorik tasfiye değeri üzerinden</small></article>
+    </div>
+    <div class="twocol">
+     <article class="panel chartpanel">
+      <div class="paneltitle"><h3>Günlük portföy değeri</h3><span>100 $ başlangıç</span></div>
+      <div id="chart" class="chart" role="img" aria-label="Ocak 2026 günlük portföy çizgi grafiği"></div>
+     </article>
+     <article class="panel summarypanel">
+      <div class="paneltitle"><h3>Portföy ve işlem özeti</h3></div>
+      <div class="summaryrow"><span>Ay sonu konum</span><b id="position">—</b></div>
+      <div class="summaryrow"><span>AL / SAT işlemi</span><b id="tradesCount">—</b></div>
+      <div class="summaryrow"><span>Verili kontrol noktası</span><b id="checksCount">—</b></div>
+      <div class="summaryrow"><span>Takvim slotu</span><b id="calendarCount">—</b></div>
+      <div class="summaryrow"><span>Öğrenme arşivi</span><b id="archivesCount">—</b></div>
+      <div class="summaryfooter" id="learningNote">Olay katmanının fiyat modeline göre ek katkısı ayrıca ölçülür.</div>
+     </article>
+    </div>
+    <div class="panel comparison">
+      <div class="paneltitle"><h3>Sabit referans sonuçları</h3><span>Her hesap aynı depodan</span></div>
+      <div id="comparisonTable" class="tablewrap"></div>
+    </div>
+   </section>
+   <section id="history" class="section">
+    <div class="sectionhead"><h2>Karar günlüğü</h2><p>AL / SAT kararları ve nedenleri görünür; ara günlerde ALTIN TUT veya NAKİT BEKLE.</p></div>
+    <div class="panel">
+      <div class="paneltitle"><h3>İşlemler ve gerekçeleri</h3><span>Türkiye saati</span></div>
+      <div id="transactions" class="tablewrap"></div>
+    </div>
+    <div class="panel">
+      <div class="paneltitle"><h3>Ocak 2026 · Gün gün</h3><span>Ay sonuna kadar pozisyon korunur</span></div>
+      <div id="daily" class="tablewrap"></div>
+    </div>
+   </section>
+   <section id="audit" class="section">
+    <div class="sectionhead"><h2>Denetlenebilirlik</h2><p>Model sürümü, veri imzaları ve hesaplama sözleşmesi her koşu için sabitlenmiştir.</p></div>
+    <div class="panel audit">
+      <dl>
+       <dt>Karar kuralı</dt><dd>Frozen V1: 16/92/276 tamamlanmış M15 trend, tepe ve oynaklık, çapraz piyasa, geçmiş vaka benzerliği ve bilinmeyen şok kapısı.</dd>
+       <dt>Alım / satım maliyeti</dt><dd>%0,8 alış + %0,8 satış. Gerçek banka BID/ASK, stopaj ve kayma <strong>dahil değil.</strong></dd>
+       <dt>Ekonomik DNA</dt><dd>92 tarihsel olgunlaşmış olay; yakın benzerlik puanı <strong>kalibre edilmiş olasılık değil.</strong> Ekonomik nedensellik ve haberin ilk yayın zamanı tam doğrulanmış değil.</dd>
+       <dt>Veri ve sürüm kontrolü</dt><dd>Kaynak dosyalar Git blob SHA ile doğrulanır. Kaynak değişirse uygulama eski sonuçla çalışmaz; açıkça hata verir.</dd>
+       <dt>İleri test durumu</dt><dd>Bu Ocak 2026 koşusu geçmişe dönük araştırmadır, bağımsız kör test veya alım-satım tavsiyesi değildir.</dd>
+      </dl>
+      <h3 class="auditheading">Kaynak dosya imzaları</h3>
+      <div id="hashes" class="hashes"></div>
+    </div>
+   </section>
+   <footer>GOLD / GUARD · Yerel, salt okunur araştırma paneli · <span id="footerVersion"></span></footer>
+  </main>
+ </div>
+</body>
+</html>
