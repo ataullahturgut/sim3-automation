@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "verify": "node server.js --verify",
-    "test": "node --test test.js v2.test.js monthly_learning_v2.test.js",
+    "test": "node --test test.js v2.test.js monthly_learning_v2.test.js monthly_runner.test.js",
     "audit": "node -e \"const a=require('./event_audit_v2').runAudit(); console.log(JSON.stringify({archive:a.archive,controls:a.timeSampledControls,temporal:a.chronologicalTest,events:a.critical.map(z=>({utc:z.utc,risk:z.analog,control:z.control,phase:z.phase}))},null,2))\""
   },
   "engines": {
