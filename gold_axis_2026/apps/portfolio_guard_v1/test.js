@@ -88,3 +88,20 @@ test("read-only local API exposes pinned health, three models and full ledger",(
  assert.equal(request("/api/unknown").code,404);
  assert.equal(request("/api/summary","POST").code,405);
 });
+
+
+test("dashboard JavaScript parses and the local landing page is served",()=>{
+ const vm=require("node:vm"),fs=require("node:fs"),path=require("node:path");
+ const script=fs.readFileSync(path.join(__dirname,"public","app.js"),"utf8");
+ assert.doesNotThrow(()=>new vm.Script(script,{filename:"public/app.js"}));
+ const {requestHandler}=require("./server");
+ let status,content,header;
+ requestHandler({method:"GET",url:"/"},{
+  writeHead(s,h){status=s;header=h;},
+  end(v){content=v;}
+ });
+ assert.equal(status,200);
+ assert.match(header["Content-Type"],/text\/html/);
+ assert.match(content,/Altın portföy koruma/);
+ assert.match(content,/data-mode="event15m"/);
+});
