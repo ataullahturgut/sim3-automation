@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - 'research-gold-v14-*'
+  pull_request:
+    branches:
+      - 'research-gold-v13-sentez-hybrid-20261016'
   workflow_dispatch:
 jobs:
   science-v14:
