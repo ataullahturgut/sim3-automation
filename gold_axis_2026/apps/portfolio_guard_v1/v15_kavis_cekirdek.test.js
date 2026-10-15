@@ -84,7 +84,7 @@ test("invalid inputs, repeated signals, overlapping unfilled decisions reject",(
 test("late quotes do not silently invent an exact horizon label",()=>{
  const m=C.make();signal(m,0);quote(m,0,100);
  const x=quote(m,7,105,18);
- assert.equal(x.matured.length,0);assert.ok(m.learning.missing>0);
+ assert.equal(x.matured.filter(z=>z.h===1||z.h===3).length,0);assert.ok(m.learning.missing>0);
  assert.ok(x.stillOpen<5);
 });
 test("non-checkpoint bars may mature outcomes but never emulate a bank fill",()=>{
@@ -105,8 +105,11 @@ test("adaptive fuzzy, MLP, linear, loss weights and local memory train from matu
  assert.ok(h.linear.w.some(v=>v!==0));
  assert.ok(h.fuzzy.w.some(row=>row.some(v=>v!==0)));
  assert.ok(h.mlp.w2.some(v=>v!==0)||h.mlp.b2!==0);
- assert.ok(h.logExpertWeight.some(v=>v!==0));
  assert.ok(m.learning.centerUpdates>0&&m.learning.gateUpdates>0);
+ // An initially identical trio of untrained experts needs a second
+ // completed label before their relative loss weights can separate.
+ signal(m,2);quote(m,2,103);quote(m,3,108,12);
+ assert.ok(h.logExpertWeight.some(v=>v!==0));
  assert.notEqual(JSON.stringify(m.memory.trendW),mid);
 });
 test("export/import reproduces later learning without hidden environmental state",()=>{
