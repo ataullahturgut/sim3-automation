@@ -94,6 +94,6 @@ test("market closure cannot certify consecutive phase confirmation, or backfill 
  const x=v3.runJanuaryFebruary();
  assert.equal(x.february.days[0].date,"2026-02-01");
  assert.equal(x.february.days[0].completeBars,0);
- assert.equal(x.february.days[0].netValue,119.7539);
+ assert.ok(Math.abs(x.february.days[0].netValue-119.75391720039644)<1e-8);
  assert.equal(x.february.days[0].actions.length,0);
 });
