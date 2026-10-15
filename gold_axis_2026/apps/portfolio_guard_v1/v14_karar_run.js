@@ -14,13 +14,14 @@ const PERIODS=[
  {name:"2026_FEB_SEP",start:"2026-02-02T06:00:00Z",end:"2026-09-30T12:00:00Z",initial:119.753917}
 ];
 const MAX14=14*V13.DAY,MAX56=28*V13.DAY;
+const f14Legacy=p=>p.net56;
 function one(b,opt={}){
  const start=Date.parse(opt.start||PERIODS[0].start),
    end=Date.parse(opt.end||PERIODS[0].end),initial=opt.initial??100;
  if(!(start<end&&initial>0))throw Error("INVALID_PERIOD");
  const s13=V13.create(),s14=V14.create(opt);
- const q13={14:[],56:[]},q14={7:[],28:[]};
- const used13={14:new Set(),56:new Set()},used14={7:new Set(),28:new Set()};
+ const q13={14:[],56:[]},q14={7:[],28:[],56:[]};
+ const used13={14:new Set(),56:new Set()},used14={7:new Set(),28:new Set(),56:new Set()};
  const ds=b.extended;
  let cash=initial,ounces=0,pending=null,network=null,year=null,prev=-Infinity,peak=initial,maxDD=0;
  const trades=[],monthly=[],feedback=[],diagnostics=[];
@@ -35,7 +36,7 @@ function one(b,opt={}){
        V13.applyOutcome(s13,old,{now},h);
      }
    }
-   for(const h of [7,28]){
+   for(const h of [7,28,56]){
      while(q14[h].length&&q14[h][0].exitTs<now){
        const old=q14[h].shift();
        const u=V14.learn(s14,old,now);
@@ -84,8 +85,8 @@ function one(b,opt={}){
        }
      }
    }
-   for(const h of [7,28]){
-     const spacing=h===7?7:14,key=Math.floor(now/(spacing*V14.DAY));
+   for(const h of [7,28,56]){
+     const spacing=h===7?7:h===28?14:28,key=Math.floor(now/(spacing*V14.DAY));
      if(used14[h].has(key))continue;
      const label=V14.label(ds.bank,now,h);
      if(label){
@@ -102,7 +103,7 @@ function one(b,opt={}){
        at:row.tt,position:pos,proposed:choice.target,
        mu:forecast.mu,downside:forecast.downside,uncertainty:forecast.uncertainty,
        netScore:choice.advantage,old14:f13.net14,old56:f13.net56,
-       learn7:s14.heads[7].n,learn28:s14.heads[28].n,
+       learn7:s14.heads[7].n,learn28:s14.heads[28].n,learn56:s14.heads[56].n,legacy:f14Legacy(f13),
        gate:s14.gateW.slice(),reason:choice.reason
      });
    }
@@ -115,7 +116,7 @@ function one(b,opt={}){
  return {version:"V14_ADAPTIVE_ACTION_RESEARCH_20261016",
    initial,final:monthly.at(-1).nav,buyHold:passive,netPct:100*(monthly.at(-1).nav/initial-1),
    tradeCount:trades.length,trades,maxDrawdownPct:maxDD,
-   monthly,learned7:s14.heads[7].n,learned28:s14.heads[28].n,
+   monthly,learned7:s14.heads[7].n,learned28:s14.heads[28].n,learned56:s14.heads[56].n,
    learnedGate:s14.gateW,feedbackCount:feedback.length,
    diagnostics:opt.includeDiagnostics?diagnostics:undefined,
    feedback:opt.includeFeedback?feedback:undefined,
@@ -131,7 +132,7 @@ function audit(){
        disableRisk:variant==="V14_NO_RISK"});
      out.push({period:p.name,variant,initial:q.initial,final:q.final,
        buyHold:q.buyHold,trades:q.tradeCount,maxDD:q.maxDrawdownPct,
-       matured7:q.learned7,matured28:q.learned28,gate:q.learnedGate,
+       matured7:q.learned7,matured28:q.learned28,matured56:q.learned56,gate:q.learnedGate,
        ledger:q.trades});
    }
  }
