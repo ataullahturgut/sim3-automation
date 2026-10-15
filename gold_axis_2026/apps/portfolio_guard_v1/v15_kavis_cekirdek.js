@@ -59,11 +59,13 @@ function configOf(o={}){
  if(!Array.isArray(hours)||hours.length<1||hours.length>12||
    hours.some(h=>!Number.isInteger(h)||h<0||h>23)||
    new Set(hours).size!==hours.length)throw Error("INVALID_BANK_CHECKPOINT_HOURS");
+ const maxGap=o.maxQuoteGapHours===undefined?78:o.maxQuoteGapHours;
+ if(!finite(maxGap)||maxGap<1||maxGap>336)throw Error("INVALID_QUOTE_COVERAGE_GAP");
  const riskBudget=o.maxHypotheticalDownsidePct??null;
  if(riskBudget!==null&&(!finite(riskBudget)||riskBudget<=0||riskBudget>=100))
    throw Error("INVALID_RISK_BUDGET");
  return {feePerSide:fee,confidenceZ:z,minMaturedLabels:minLabels,
-   maxHypotheticalDownsidePct:riskBudget,checkpointHoursUTC:hours.slice().sort((a,b)=>a-b),
+   maxHypotheticalDownsidePct:riskBudget,maxQuoteGapHours:maxGap,checkpointHoursUTC:hours.slice().sort((a,b)=>a-b),
    skipLegacy:!!o.skipLegacy,skipFuzzy:!!o.skipFuzzy,
    skipMLP:!!o.skipMLP,skipAdaptiveMemory:!!o.skipAdaptiveMemory,
    researchOnly:true,liveTrade:false};
@@ -298,14 +300,15 @@ function startEpisodes(s,pending,at,price){
    if(last!=null&&at-last<spacing)continue;
    s.lastOriginByH[h]=at;
    s.queue.push({h,origin:pending.id,signalAt:pending.at,entryAt:at,
-     dueAt:at+h*DAY,entryPrice:price,minRel:0,maxRel:0,
+     dueAt:at+h*DAY,entryPrice:price,minRel:0,maxRel:0,coverageReliable:true,
      snapshot:pending.snapshot});
    started.push(h);
  }
  return started;
 }
 function updateRisk(s,ep,worstLoss){
- if(s.config.maxHypotheticalDownsidePct===null||ep.h!==28)return;
+ if(s.config.maxHypotheticalDownsidePct===null||ep.h!==28||
+   ep.coverageReliable!==true)return;
  // Dual gradient for a fixed investor-specified *hypothetical* loss budget.
  const budget=s.config.maxHypotheticalDownsidePct;
  const model=s.risk.model,x=ep.snapshot.x;
@@ -323,7 +326,9 @@ function settle(s,ep,price,at){
  const entry=gross+fee,exit=-gross+fee;
  const label={h:ep.h,origin:ep.origin,signalAt:ep.signalAt,
    entryAt:ep.entryAt,knownAt:at,gross,entry,exit,
-   worstHoldingLoss:-ep.minRel,worstExitMissedRise:ep.maxRel};
+   worstHoldingLoss:ep.coverageReliable?-ep.minRel:null,
+   worstExitMissedRise:ep.coverageReliable?ep.maxRel:null,
+   sampledRiskCoverageComplete:ep.coverageReliable===true};
  updateHead(s,"ENTRY",ep.h,ep.snapshot,entry);
  updateHead(s,"EXIT",ep.h,ep.snapshot,exit);
  updateRisk(s,ep,label.worstHoldingLoss);
@@ -341,7 +346,10 @@ function receiveQuote(s,quote){
  }
  s.market.lastQuoteAt=at;s.market.lastPrice=quote.price;
  const matured=[],remaining=[];
+ const gapTooLong=prev!==null&&
+   (at-prev)>s.config.maxQuoteGapHours*HOUR;
  for(const ep of s.queue){
+   if(gapTooLong)ep.coverageReliable=false;
    const change=100*Math.log(quote.price/ep.entryPrice);
    ep.minRel=Math.min(ep.minRel,change);ep.maxRel=Math.max(ep.maxRel,change);
    if(at>=ep.dueAt){
