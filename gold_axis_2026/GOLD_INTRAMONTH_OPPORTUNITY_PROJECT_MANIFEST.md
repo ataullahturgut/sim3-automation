@@ -1,6 +1,20 @@
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
 
+
+> **15 EKİM 2026 — OCAK 2023 AY AY ÖĞRENME V2 DENEMESİ TAMAMLANDI (RETROSPEKTİF, DOĞRULANMADI).**
+> [Ocak 2023 yeni V2 bilimsel koşu](adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_SCIENTIFIC_REPLAY_20261015.md);
+> 31×96=2.976 takvim kontrolü; 1.763 M15+lookback tam karar slotu; 4 Ocak 10.30 TSİ AL (1.852,848 XAU MID);
+> 0 koruma satışı; ay sonunda **0,0535392001934 XAU GOLD** Şubat'a taşındı.
+> **Son altın MID mark $103,24419; yalnız teorik satış olsaydı net $102,41824, ilk kullanılabilir kaynaktan pasif altın $103,91290**.
+> OLAY-02/ÖĞREN-03 G01/G07 hipotez soruları 15m olay takvimiyle işlendi, ancak **olay katmanı ve çapraz piyasa katmanı kaldırıldığında Ocak işlem kararları ve NAV değişmedi**: olay-öğrenme ticari ek katkısı bu ay **sıfır**.
+> Ekonomik ilk yayın/zaman ve nedenler topluca doğrulanmış olmadığı için bu çalışma ekonomik neden tanıyan kanıtlanmış model değil; banka gerçek BID/ASK uygulanabilirliği de teyit edilmedi.
+> [Kaynak panel](adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_PANEL_20261015.csv),
+> [tam 15m ledger](adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_15M_LEDGER_20261015.csv),
+> [ay sonu öğrenme/devir](adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_STATE_20261015.json),
+> [replay kodu](adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_REPLAY_20261015.js).
+> Önceki 2023 V0/V1 ve diğer dönemleri silmeyin; Ocak 2026'ya ilişkin silinmiş deney dosyalarını geri yüklemeyin.
+
 ## GÜNCEL DURUM — OCAK 2026 DENEYİ SIFIRLANDI
 
 Ocak 2026 önceki deney kayıtları bu dalın güncel dosya ağacından çıkarıldı. Önceki 2.976 kontrolün veya model sonuçlarının yeni deney için delil/karar otoritesi olarak kullanılmasına izin verilmez. Diğer yılların bağımsız ekonomik DNA kayıtları korunur.
