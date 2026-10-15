@@ -6,6 +6,7 @@
  */
 const core=require("./engine"),feb=require("./monthly_runner");
 const v3=require("./recovery_v3"),v4=require("./recovery_v4"),review=require("./v4_forward_review");
+const selection=require("./scientific_promotion_gate");
 const VERSION="V5_SLOW_TREND_PROTECTION_SHADOW_20261015";
 const FEE=.008,DAY=86400000;
 const P=Object.freeze({
@@ -155,7 +156,7 @@ function fullResearch(){
   prev=current;
  }
  const continuousV4=review.runForwardReview();
- return {
+ const result={
   version:VERSION,status:"EXPLORATORY_DESIGNED_AFTER_SEEING_2026",
   fixedPolicy:P,
   training:{originUTC:train.asOfUTC,trainingRows:train.trainBars,stressCases:train.episodeCount,
@@ -175,5 +176,8 @@ function fullResearch(){
    "The portfolio state never resets between months; no future label is a decision input."],
   promotionAuthorized:false
  };
+ result.scientificGate=selection.evaluate(v4.compareAnnual(hist),yearly,continuousV4,result);
+ result.promotionAuthorized=result.scientificGate.authorized;
+ return result;
 }
 module.exports={VERSION,P,warmup,updateEma,run,fullResearch};
