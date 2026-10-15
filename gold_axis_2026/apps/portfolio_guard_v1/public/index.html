@@ -26,6 +26,7 @@
     <a href="#adaptiveV7">↻ &nbsp; V7 adaptif öğrenme (araştırma)</a>
     <a href="#v8Regret">↻ &nbsp; V8 hata öğrenmesi denetimi</a>
     <a href="#v9Scientific">↻ &nbsp; V9 bilimsel rejim ve hata testi</a>
+    <a href="#v10Evidence">↻ &nbsp; V10 işlem zamanı ve koruma denetimi</a>
    </nav>
    <div class="sidebottom">
     <div class="statusrow"><span class="statusdot"></span> Tarihsel araştırma</div>
@@ -335,6 +336,29 @@
       <h3>Maliyet ve rejim hatalarının etkisi</h3>
       <p id="v9Findings">2026 bilgisine bakarak en iyi aday seçilmesi bir tahmin başarısı değildir. Komisyon, işlem sayısı ve rejim dayanıklılığı ayrı ayrı karşılaştırılacaktır.</p>
       <p class="notice" id="v9ScientificWarning">V9, V7'nin yerine geçmeyen araştırma sürümüdür. Fiyatlar MID vekilidir; bankanın gerçek alış-satış kotasyonu ve makro haberlerin ilk yayın saatleri doğrulanmamıştır.</p>
+    </div>
+   </section>
+   <section id="v10Evidence" class="section">
+    <div class="sectionhead">
+      <h2>V10 · Banka saatinde uygulanabilir işlem ve yeniden alım koruması</h2>
+      <p>Sinyalden sonraki ilk banka kesitinde emir vekili; %0,8 alış, %0,8 satış; satıştan sonra 336 saat bekleme ve yükseliş rejimi teyidi. 2026 geriye dönük araştırmadır, gerçek bankada yürütülen emir değildir.</p>
+    </div>
+    <div class="panel">
+      <button class="researchbtn" type="button" id="runV10Evidence">V10 zamanlama ve hata-öğrenme denetimini çalıştır</button>
+      <p class="monthstatus" id="v10EvidenceStatus" role="status">Henüz çalıştırılmadı. V7 korunuyor, otomatik terfi veya işlem yok.</p>
+      <div class="kpis">
+        <article class="kpi"><span>V7 eski aynı-bar fiyat</span><strong id="v10OldUSD">—</strong><small>Zamanlama yanlılığı riski</small></article>
+        <article class="kpi"><span>V7, gecikmeli banka icrası</span><strong id="v10LagUSD">—</strong><small>Sinyalden sonraki banka kontrol noktası</small></article>
+        <article class="kpi"><span>V10, 336 saatlik koruma</span><strong id="v10ProtectedUSD">—</strong><small>Gecikmeli icra, maliyetler düşülmüş</small></article>
+        <article class="kpi"><span>Bağımsız terfi kapısı</span><strong id="v10Gate">—</strong><small>2026 önceden görüldü</small></article>
+      </div>
+      <h3>İcra zamanı ve işlem kararları</h3>
+      <div id="v10TradeTable" class="tablewrap">Deney çalıştırılmadı.</div>
+      <h3>Gecikme ve ek maliyet hassasiyeti</h3>
+      <div id="v10Sensitivity" class="tablewrap">Deney çalıştırılmadı.</div>
+      <h3>2025 negatif kontrolü ve 2024 tarihsel çalışma</h3>
+      <div id="v10Historical" class="tablewrap">Deney çalıştırılmadı.</div>
+      <p class="notice" id="v10Warning">2026'daki kâr, bağımsız doğrulama değildir. 2025 döneminde bu koruma hiçbir işlem kararını değiştirmedi. Gerçek banka alış-satış kotasyonları ve olayların ilk yayımlanma zamanları doğrulanmadı.</p>
     </div>
    </section>
    <footer>GOLD / GUARD · Yerel, salt okunur araştırma paneli · <span id="footerVersion"></span></footer>
