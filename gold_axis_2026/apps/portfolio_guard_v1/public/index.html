@@ -28,6 +28,7 @@
     <a href="#v9Scientific">↻ &nbsp; V9 bilimsel rejim ve hata testi</a>
     <a href="#v10Evidence">↻ &nbsp; V10 işlem zamanı ve koruma denetimi</a>
     <a href="#v11Ann">↻ &nbsp; V11 gerçek ANN ve hata öğrenmesi</a>
+    <a href="#v12Rehber">↻ &nbsp; V12 REHBER özgün karar hafızası</a>
    </nav>
    <div class="sidebottom">
     <div class="statusrow"><span class="statusdot"></span> Tarihsel araştırma</div>
@@ -382,6 +383,28 @@
       <h3>2026 ANN kararı: sinyal ve sonraki banka kontrol noktasındaki işlem</h3>
       <div class="tablewrap" id="v11AnnTrades">Eğitim ve deney başlatılmadı.</div>
       <p class="notice" id="v11AnnWarning">2026 daha önce incelenmiş olduğundan kör test değildir. 2023–2025 örnekleri büyük ölçüde örtüşen 14 günlük hedefler taşır. Gerçek banka ASK/BID fiyatı ve haber firstprint kanıtı yoktur; otomatik al-sat yapılmaz.</p>
+    </div>
+   </section>
+
+   <section id="v12Rehber" class="section">
+    <div class="sectionhead">
+      <h2>V12 · REHBER — Özgün durum hafızası ve karar öğrenme motoru</h2>
+      <p>ANN ağı yok. Üç ayrı geçmiş-benzerlik uzmanı (trend, stres, piyasa yapısı), yalnız tamamlanmış sonuçlardan kendini güncelleyen olay hafızası, geçmiş tahmin hatasına göre güven ve işlem maliyetinden sonra AL/SAT/BEKLE kararları.</p>
+    </div>
+    <div class="panel">
+      <button class="researchbtn" type="button" id="runV12Rehber">REHBER hafızasını, öğrenme katkısını ve bilimsel testleri çalıştır</button>
+      <p class="monthstatus" role="status" id="v12Status">REHBER deneyi çalıştırılmadı; önceki V1–V11 korunuyor.</p>
+      <div class="kpis">
+        <article class="kpi"><span>2026 kendi kendine güncellenen hafıza</span><strong id="v12Online">—</strong><small>119,75 $ nakit başlangıç</small></article>
+        <article class="kpi"><span>2026 yıl başında dondurulmuş hafıza</span><strong id="v12Frozen">—</strong><small>Öğrenmenin gerçekten etkisini karşılaştır</small></article>
+        <article class="kpi"><span>2025 REHBER</span><strong id="v12Year2025">—</strong><small>Yükseliş kaçırma kontrolü</small></article>
+        <article class="kpi"><span>Bilimsel kabul</span><strong id="v12Gate">—</strong><small>Kör test ve banka fiyatı zorunlu</small></article>
+      </div>
+      <h3>2024–2026 öğrenme katmanları ve işlemler</h3>
+      <div class="tablewrap" id="v12Results">Deney çalıştırılmadı.</div>
+      <h3>REHBER 2026 gerçekleşen banka-kesiti işlemleri</h3>
+      <div class="tablewrap" id="v12Trades">Deney çalıştırılmadı.</div>
+      <p class="notice" id="v12Warning">REHBER gerçek işlem sistemi değildir. 2026 önceden incelenmiştir. Komisyonlar düşülmüştür ancak gerçek banka alış/satış fiyatları, ekonomik olayların doğrulanmış ilk yayın zamanları ve bağımsız gelecek testleri bulunmuyor.</p>
     </div>
    </section>
    <footer>GOLD / GUARD · Yerel, salt okunur araştırma paneli · <span id="footerVersion"></span></footer>
