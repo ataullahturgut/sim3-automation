@@ -456,3 +456,69 @@ async function runV6Portfolio(){
  finally{button.disabled=false;}
 }
 $("runV6Portfolio").addEventListener("click",runV6Portfolio);
+
+async function runAdaptiveV7(){
+ const button=$("runAdaptiveV7"),state=$("adaptiveV7Status");
+ button.disabled=true;
+ state.textContent="V7: 2025 öğrenme, 2026 güncellemeleri, işlem maliyeti ve karşı deneyler hesaplanıyor…";
+ try{
+  const response=await fetch("/api/algorithm/v7/adaptive",{cache:"no-store"});
+  if(!response.ok)throw Error("SUNUCU_HTTP_"+response.status);
+  const d=await response.json();
+  if(d.version!=="V7_ADAPTIVE_DUAL_HORIZON_RESEARCH_20261015"||
+     d.status!=="EX_POST_RESEARCH_NOT_BLIND"||
+     d.scientificGate.promote!==false||d.scientificGate.bankTradeAuthorized!==false||
+     d.scientificGate.economicCausalityProven!==false||
+     d.primary.months.length!==8||d.primary.initialUSD<119||d.primary.trades.length!==4)
+   throw Error("V7_BILIMSEL_VERI_SOZLESMESI");
+  $("adaptiveV7Net").textContent=money(d.primary.finalUSD);
+  $("adaptiveV7Frozen").textContent=money(d.ablations.learningFrozenUSD);
+  $("adaptiveV7NoStress").textContent=money(d.ablations.stressRuleDisabledUSD);
+  $("adaptiveV7News").textContent=d.primary.trainingCounts.verifiedEconomicCheckpoints+" / 96";
+  $("adaptiveV7Months").innerHTML=table(
+   ["Ay","Dönem sonu net","Pozisyon","Son kontrol saati"],
+   d.primary.months.map(function(m){
+    const time=new Intl.DateTimeFormat("tr-TR",{
+      timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false
+    }).format(new Date(m.lastCheckpoint));
+    return "<tr>"+cell(escapeText(m.month))+cell(money(m.nav))+
+      cell(m.position==="GOLD"?"ALTIN":"NAKİT")+cell(escapeText(time))+"</tr>";
+   })
+  );
+  $("adaptiveV7Trades").innerHTML=table(
+   ["Türkiye saati","Karar","XAU MID vekili","Gerekçe","Net tasfiye"],
+   d.primary.trades.map(function(t){
+    const time=new Intl.DateTimeFormat("tr-TR",{
+      timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false
+    }).format(new Date(t.time));
+    const why=t.reason==="XAU_NQ_STRESS"?"Altın + Nasdaq stres satış kuralı":
+      t.reason==="ADAPTIVE_LONG_OPPORTUNITY"?"14 gün ileri adaptif alım fırsatı":t.reason;
+    return "<tr>"+cell(escapeText(time))+cell(t.action==="BUY"?"AL":"SAT")+
+      cell(format.format(t.fill_proxy))+cell(escapeText(why))+
+      cell(money(t.nav))+"</tr>";
+   })
+  );
+  $("adaptiveV7Failures").innerHTML=table(
+    ["Karşı test","V7 net","Pasif altın","Yorum"],
+    [
+      {title:"2025 başlangıç 100 $",v:d.negativeControls.year2025,warning:"Uzun UP trendi büyük ölçüde kaçırıldı"},
+      {title:"Ocak 2026 başlangıç 100 $",v:d.negativeControls.january2026,warning:"Eski Ocak 119,75 $ referansı yerine geçmez"}
+    ].map(function(x){return "<tr>"+cell(escapeText(x.title))+cell(money(x.v.finalUSD))+
+      cell(money(x.v.passiveGoldUSD))+cell(escapeText(x.warning))+"</tr>";})
+  );
+  state.textContent="V7 geriye dönük test: "+money(d.primary.finalUSD)+
+    " (başlangıç "+money(d.primary.initialUSD)+"). Öğrenme dondurulunca "+
+    money(d.ablations.learningFrozenUSD)+
+    ". Ekonomi uzmanı doğrulanmış olay bulamadığından devreye girmedi.";
+  $("adaptiveV7Warning").textContent="BİLİMSEL KARAR: ONAYLANMADI. 2025 karşı testinde V7 "+
+    money(d.negativeControls.year2025.finalUSD)+", pasif altın "+
+    money(d.negativeControls.year2025.passiveGoldUSD)+
+    ". 2026 birçok kez görüldüğünden kör doğrulama değil. Fiyat + çapraz piyasa uzmanlarının ilave işlem avantajı kanıtlanmadı. "+
+    "Kullanılan 3 saatlik MID paneli V4/V5 ile aynı banka icra sözleşmesi değildir; gerçek ASK/BID ve kayma eksik. Bankaya emir gönderilmez.";
+ }catch(e){
+  state.textContent="V7 ayrı araştırması çalıştırılamadı: "+e.message+
+    ". V1–V6 referansları etkilenmedi.";
+ }finally{button.disabled=false;}
+}
+$("runAdaptiveV7").addEventListener("click",runAdaptiveV7);
+
