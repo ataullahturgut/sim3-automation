@@ -17,7 +17,6 @@ const FEATURE_NAMES=Object.freeze(["bias","r4","r1","r3","rv","dd","nq6",
  "nqPresent","trendMemory","stressMemory","changeSurprise","verifiedEvent",
  "legacy14","legacy56"]);
 const D=FEATURE_NAMES.length,MEM_T=8,MEM_S=9,R=5,HIDDEN=6;
-const LOG_FEE=2*100*Math.log(1-.008);
 const minmax=(x,lo,hi)=>Math.max(lo,Math.min(hi,x));
 function finite(x){return typeof x==="number"&&Number.isFinite(x);}
 function bounded(x,scale=1){return finite(x)?minmax(x/scale,-3,3):0;}
@@ -42,7 +41,7 @@ function newMLP(){
 }
 function newHead(){
  return {n:0,linear:newLinear(),fuzzy:newFuzzy(),mlp:newMLP(),
-   q:newLinear(),logExpertWeight:[0,0,0],mse:16,residuals:[]};
+   q:newLinear(),logExpertWeight:[0,0,0],expertLoss:[16,16,16],mse:16,residuals:[]};
 }
 function configOf(o={}){
  const fee=o.feePerSide===undefined?.008:o.feePerSide;
@@ -72,7 +71,7 @@ function make(o={}){
     moments:{n:0,mean:0,m2:0},surpriseEma:0},
   queue:[],pending:[],seq:0,lastOriginByH:{},
   learning:{matured:0,missing:0,byH:{},gateUpdates:0,centerUpdates:0},
-  risk:{lambda:0,observations:0}};
+  risk:{lambda:0,observations:0,model:newLinear(),modelObservations:0}};
 }
 function weightedCenters(centers,z){
  const distances=centers.map(c=>c.reduce((s,v,i)=>s+(z[i]-v)**2,0));
@@ -170,19 +169,27 @@ function choose(s,snap,position){
  const allowed=position==="CASH"?[28,56]:[1,3,7,28,56];
  const candidates=allowed.map(h=>modelPredict(s,act,h,snap));
  const ready=candidates.filter(c=>c.n>=s.config.minMaturedLabels);
- // Compare independent action-value counterfactuals, rather than
- // blending different horizon return predictions.
- const selected=ready.sort((a,b)=>b.netScore-a.netScore)[0]||null;
- let score=selected?.netScore??null;
+ // Completed finite-horizon switching premia are different investments.
+ // Compare the log-wealth advantage PER CALENDAR DAY rather than selecting
+ // whichever raw cumulative return has the longest horizon.
+ // This is an explicit time-normalization heuristic, not Bellman optimality.
+ const selected=ready.sort((a,b)=>b.netScore/b.h-a.netScore/a.h)[0]||null;
+ let score=selected?.netScore/selected.h??null;
+ let goldDownside28=null,riskAdjustmentPerDay=0;
  if(selected&&s.config.maxHypotheticalDownsidePct!==null){
-   // Constrained risk preference set by user, dual learned from mature
-   // episodes. This is a hypothetical-gold risk proxy, not actual MDD.
-   score-=s.risk.lambda*Math.max(0,-(selected.lowerTail??selected.mean));
+   // Lambda penalizes CASH->GOLD and encourages GOLD->CASH when the same
+   // 28-day gold downside *holding* risk breaches the supplied budget.
+   // Never penalize a protective EXIT for exposure it eliminates.
+   goldDownside28=Math.max(0,dot(s.risk.model.w,snap.x));
+   const excess=Math.max(0,goldDownside28-s.config.maxHypotheticalDownsidePct);
+   riskAdjustmentPerDay=s.risk.lambda*excess/28;
+   score+=act==="ENTRY"?-riskAdjustmentPerDay:riskAdjustmentPerDay;
  }
  const switchAsset=selected!==null&&score>0;
  return {position,target:switchAsset?(position==="CASH"?"GOLD":"CASH"):position,
    action:switchAsset?(position==="CASH"?"BUY":"SELL"):"WAIT",
-   selectedHorizon:selected?.h??null,score,selected: selected?{...selected}:null,
+   selectedHorizon:selected?.h??null,score,scoreUnit:"LOG_WEALTH_PERCENT_POINTS_PER_DAY",
+   goldDownside28,riskAdjustmentPerDay,selected: selected?{...selected}:null,
    candidates,reasons:!selected?["INSUFFICIENT_MATURED_EPISODES"]:
      switchAsset?["POSITIVE_COSTED_ACTION_PREMIUM"]:
         ["COST_AND_UNCERTAINTY_DOMINATE"],
@@ -212,11 +219,17 @@ function updateMLP(m,x,y,lr=.035){
 function updateHead(s,act,h,snapshot,target){
  const head=s.heads[act][h],x=snapshot.x,phi=snapshot.memberships;
  const p=snapshot.predictions[act][h],err=minmax(p.mean-target,-40,40);
+ // Use the pre-update memory coefficients when computing the local
+ // derivative. Using post-SGD linear weights is temporally inconsistent.
+ const preUpdateMemoryWeights=[head.linear.w[MEM_T],head.linear.w[MEM_S]];
  // Matured, action-specific prediction losses update the mixture.
  const weights=head.logExpertWeight;
  for(let i=0;i<3;i++){
-   const e=minmax(p.raw[i]-target,-30,30);
-   weights[i]=minmax(weights[i]-.10*(e*e/100),-60,0);
+   const e=minmax(p.raw[i]-target,-30,30),loss=e*e;
+   head.expertLoss[i]=head.n===0?loss:.94*head.expertLoss[i]+.06*loss;
+   // Bounded EMA reliability prevents permanent expert starvation after a
+   // temporary regime change. Disabled experts get zero mixture mass.
+   weights[i]=-Math.min(12,head.expertLoss[i]/16);
  }
  const mw=Math.max(...weights);
  for(let i=0;i<3;i++)weights[i]-=mw;
@@ -225,6 +238,24 @@ function updateHead(s,act,h,snapshot,target){
  adamStep(lin.w,lin.acc,x.map(v=>el*v/den),.12);
  if(!s.config.skipFuzzy){
    const fuzzy=head.fuzzy,ferr=minmax(fuzzyForward(fuzzy,x,phi)-target,-40,40);
+   // Supervised center gradient for normalized Gaussian-like fuzzy rules:
+   // dPrediction/dCenter_ij = phi_i*(rule_i-fuzzyPrediction)*(z_j-c_ij).
+   // An unsupervised centroid drift does NOT minimize forecasting error.
+   if(h===1&&act==="ENTRY"){
+     const z=snapshot.fuzzyInput,fuzzyPred=fuzzyForward(fuzzy,x,phi);
+     const rules=fuzzy.w.map(w=>dot(w,x));
+     const steps=[];
+     for(let i=0;i<R;i++)for(let j=0;j<z.length;j++){
+       const g=ferr*phi[i]*(rules[i]-fuzzyPred)*(z[j]-s.centers[i][j]);
+       const delta=-.035*minmax(g/den,-10,10);
+       steps.push([i,j,delta]);
+     }
+     if(steps.some(([i,j,delta])=>s.centers[i][j]+delta!==s.centers[i][j])){
+       for(const [i,j,delta] of steps)s.centers[i][j]=minmax(
+         s.centers[i][j]+delta,-3,3);
+       s.learning.centerUpdates++;
+     }
+   }
    for(let i=0;i<R;i++)adamStep(fuzzy.w[i],fuzzy.acc[i],
        x.map(v=>ferr*phi[i]*v/den),.09);
  }
@@ -240,19 +271,14 @@ function updateHead(s,act,h,snapshot,target){
    // Local recurrent derivative; not full backpropagation through time.
    for(const [name,index,deriv] of [
      ["trend",MEM_T,snapshot.dTrend],["stress",MEM_S,snapshot.dStress]]){
-     const m=s.memory,g=minmax(err*lin.w[index],-40,40);
+     const m=s.memory,g=minmax(err*preUpdateMemoryWeights[index===MEM_T?0:1],-40,40);
      const w=name==="trend"?m.trendW:m.stressW;
      const acc=name==="trend"?m.trendAcc:m.stressAcc;
      adamStep(w,acc,deriv.map(v=>g*v/den),.025);
    }
    s.learning.gateUpdates++;
  }
- if(h===1&&act==="ENTRY"&&!s.config.skipFuzzy){
-   const phi=snapshot.memberships,z=snapshot.fuzzyInput;
-   for(let i=0;i<R;i++)for(let j=0;j<z.length;j++)
-     s.centers[i][j]+=minmax(.018*phi[i]*(z[j]-s.centers[i][j]),-.025,.025);
-   s.learning.centerUpdates++;
- }
+
 }
 function startEpisodes(s,pending,at,price){
  const started=[];
@@ -271,6 +297,11 @@ function updateRisk(s,ep,worstLoss){
  if(s.config.maxHypotheticalDownsidePct===null||ep.h!==28)return;
  // Dual gradient for a fixed investor-specified *hypothetical* loss budget.
  const budget=s.config.maxHypotheticalDownsidePct;
+ const model=s.risk.model,x=ep.snapshot.x;
+ const delta=minmax(dot(model.w,x)-worstLoss,-40,40);
+ const den=1+x.reduce((a,v)=>a+v*v,0);
+ adamStep(model.w,model.acc,x.map(v=>delta*v/den),.10);
+ s.risk.modelObservations++;
  s.risk.lambda=minmax(s.risk.lambda+.003*(worstLoss-budget),0,3);
  s.risk.observations++;
 }
