@@ -48,6 +48,12 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v7/monthly-regimes"){
+  const benchmark=require("./monthly_regime_benchmark_v7");
+  const model=require("./adaptive_v7_app");
+  const result=benchmark.replayMonthlyDecision(model.loadRows());
+  return respond(res,200,JSON.stringify(result));
+ }
  if(route==="/api/algorithm/v7/adaptive"){
   const model=require("./adaptive_v7_app").runResearch();
   return respond(res,200,JSON.stringify(model));
