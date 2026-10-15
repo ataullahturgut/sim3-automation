@@ -57,6 +57,7 @@ function pastOnlyEpisodeBank(hist,asof){
  const events=[];let last=-Infinity,prev=null,phase="UNKNOWN";
  for(let i=0;i<hist.length;i++){
   const r=hist[i];if(r.time+H96>asof)break;
+  if(prev&&r.time-prev.time>12*3600000){prev=null;phase="UNKNOWN";}
   const newPhase=condition(r,prev,phase);
   if(["FALLING_FAST","CAPITULATION_CANDIDATE"].includes(newPhase)&&r.time-last>=H96){
    const forward=[];
@@ -100,7 +101,7 @@ function execute(rows,{startUSD=100,bank=[],id="sample",endUTC=null}={}){
  const trades=[],ledger=[];let observationCount=0;
  for(const r of rows){
   if(endUTC&&r.time>=endUTC)break;
-  const stale=prev&&r.time-prev.time>72*3600000;
+  const stale=prev&&r.time-prev.time>12*3600000;
   if(stale){prev=null;phase="UNKNOWN";streak=0;prevStreakPhase=null;}
   if(!Number.isFinite(r.p)||!Number.isFinite(r.c))throw Error("NO_PRICE");
   const freshPhase=condition(r,prev,phase);
@@ -191,13 +192,13 @@ function runJanuaryFebruary(){
   history:{totalRows:hist.length,trainEpisodesMatureBeforeJan:bank.length,byYear:hist.reduce((a,r)=>(a[r.tt.slice(0,4)]=(a[r.tt.slice(0,4)]||0)+1,a),{})},
   sourcePriceHistory2023Incomplete:true,annual,
   january:{
-   ...january,days:groupDays(january.ledger,"2026-01",31),ledger:undefined,
+   ...january,days:groupDays(january.ledger,"2026-01",31,100),ledger:undefined,
    archiveCases:bank.length,fullCalendarSlots:2976,checks:jan.length,
    benchmarkBuyHoldUSD:core.runAll().scenarios.event15m.benchmarkBuyHoldUSD,
    period:"Ocak 2026"
   },
   february:{
-   ...february,days:groupDays(february.ledger,"2026-02",28),ledger:undefined,
+   ...february,days:groupDays(february.ledger,"2026-02",28,original.finalUSD),ledger:undefined,
    archiveCases:bank.length,fullCalendarSlots:2688,checks:fe.length,
    benchmarkBuyHoldUSD:original.finalUSD*(1-FEE)/feb.loadFebruary().rows[0].p*feb.loadFebruary().rows.at(-1).c*(1-FEE),
    benchmarkNote:"Şubat ilk tam barda AL ve ay sonu teorik SAT",
@@ -208,7 +209,7 @@ function runJanuaryFebruary(){
   scientificLearning:"G05-C/G06-B both candidate economic mechanisms, firstprint/causal evidence not verified."
  };
 }
-function groupDays(ledger,month,n){
+function groupDays(ledger,month,n,openingValue){
  const groups=[];
  for(let d=1;d<=n;d++){
   const date=month+"-"+String(d).padStart(2,"0");
@@ -219,7 +220,7 @@ function groupDays(ledger,month,n){
     .map(x=>({when:x.turkey.slice(11),action:x.action})),macroWindows:[]});
  }
  // Last observed level carries through market-closed days.
- let last=ledger[0]?ledger[0].nav:null,position=ledger[0]?ledger[0].position:"CASH";
+ let last=openingValue,position="CASH";
  for(const g of groups){if(g.netValue===null){g.netValue=last;g.position=position;}else{last=g.netValue;position=g.position;}}
  return groups;
 }
