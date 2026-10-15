@@ -48,6 +48,10 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v13/sentez"){
+  const study=require("./v13_sentez_run").audit();
+  return respond(res,200,JSON.stringify(study));
+ }
  if(route==="/api/algorithm/v12/earliest"){
   const data=require("./v12_earliest_origin_audit").diag();
   return respond(res,200,JSON.stringify(data));
