@@ -414,9 +414,19 @@ function restore(payload){
  for(const act of ["ENTRY","EXIT"])for(const h of HORIZONS){
    const head=obj.heads[act]?.[h],lin=head?.linear;
    if(!head||!lin||!Array.isArray(lin.w)||lin.w.length!==D||
+     lin.w.some(z=>!finite(z))||
      !Array.isArray(head.expertLoss)||head.expertLoss.length!==3||
+     head.expertLoss.some(z=>!finite(z)||z<0)||
+     !Array.isArray(head.logExpertWeight)||head.logExpertWeight.length!==3||
+     head.logExpertWeight.some(z=>!finite(z))||
      !Array.isArray(head.mlp?.w1)||head.mlp.w1.length!==HIDDEN||
-     head.mlp.w1.some(row=>!Array.isArray(row)||row.length!==D)||
+     head.mlp.w1.some(row=>!Array.isArray(row)||row.length!==D||
+       row.some(z=>!finite(z)))||
+     !Array.isArray(head.fuzzy?.w)||head.fuzzy.w.length!==R||
+     head.fuzzy.w.some(row=>!Array.isArray(row)||row.length!==D||
+       row.some(z=>!finite(z)))||
+     !Array.isArray(head.q?.w)||head.q.w.length!==D||
+     head.q.w.some(z=>!finite(z))||
      !Number.isInteger(head.n)||head.n<0)
      throw Error("CORRUPT_MODEL_HEAD");
  }
