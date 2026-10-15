@@ -51,6 +51,9 @@ jobs:
       - name: V5 slow-trend protection scientific experiment
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run verify-v5
+      - name: V6 as-of macro cross-market candidate counterfactual
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify-cross-v6
       - name: V6 lag-safe NQ ZN CL macro predictive audit
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run verify-macro-v6
