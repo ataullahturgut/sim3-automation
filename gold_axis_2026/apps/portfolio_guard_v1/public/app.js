@@ -614,3 +614,56 @@ async function runIntramonthOracleV7(){
 }
 $("runIntramonthOracleV7").addEventListener("click",runIntramonthOracleV7);
 
+async function runV8Regret(){
+ const button=$("runV8Regret"),state=$("v8RegretStatus");
+ button.disabled=true;
+ state.textContent="2023–2025 geçmişi ve 2026 öğrenme hataları kronolojik yeniden oynatılıyor…";
+ try{
+  const result=await fetch("/api/algorithm/v8/regret",{cache:"no-store"});
+  if(!result.ok)throw Error("HTTP_"+result.status);
+  const d=await result.json();
+  if(d.version!=="V8_REGRET_SHADOW_REJECT_PROMOTION_20261015"||
+      d.status!=="REJECT_PROMOTION_SHADOW_ONLY"||
+      d.scientificGate.authorized!==false||
+      d.contract.liveTradeAuthorized!==false||
+      d.contract.automaticPromotionAuthorized!==false||
+      d.contract.bankBidAskIncluded!==false||
+      d.yearScores.length!==3)throw Error("V8_SCIENTIFIC_CONTRACT_INVALID");
+  $("v8EndUSD").textContent=money(d.controls.v8OnlineUSD);
+  $("v8V7USD").textContent=money(d.controls.referenceV7USD);
+  $("v8FrozenUSD").textContent=money(d.controls.v8AllLearningFrozenUSD);
+  $("v8NoRegretUSD").textContent=money(d.controls.v8RegretLearningOffUSD);
+  $("v8YearTable").innerHTML=table(["Dönem","Başlangıç","V8 net","Pasif ALTIN / V7","Sonuç"],d.yearScores.map(function(x){
+   const baseline=x.v7FinalUSD??x.passiveGoldUSD;
+   return "<tr>"+cell(escapeText(x.year))+cell(money(x.initialUSD))+
+     cell(money(x.v8FinalUSD))+cell(money(baseline))+
+     cell(x.v8FinalUSD>baseline?"İyileşti, bağımsız test değil":"Karşı stratejinin altında")+"</tr>";
+  }));
+  const when=function(utc){return new Intl.DateTimeFormat("tr-TR",{
+    timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false
+   }).format(new Date(utc));};
+  $("v8TradesTable").innerHTML=table(["Türkiye saati","AL / SAT","Fiyat","Gerekçe","Net tasfiye"],d.trades.map(function(t){
+    return "<tr>"+cell(escapeText(when(t.at)))+cell(t.action==="BUY"?"AL":"SAT")+
+      cell(format.format(t.mid))+cell(escapeText(t.reason))+cell(money(t.nav))+"</tr>";
+  }));
+  $("v8ErrorsTable").innerHTML=table(
+    ["Hatanın başlangıç ayı","Tamamlanan etiket","Kaçırılan yükseliş","Eldeyken düşüş","Nakitte kaçınılan düşüş"],
+    d.errorsByMonth.map(function(m){
+      return "<tr>"+cell(escapeText(m.month))+cell(m.completedLabels)+
+      cell(m.missedUP)+cell(m.missedDOWN)+cell(m.avoidedDOWN)+"</tr>";
+    })
+  );
+  state.textContent="V8 araştırması tamamlandı. 2026 V8 "+
+    money(d.controls.v8OnlineUSD)+", V7 "+money(d.controls.referenceV7USD)+
+    ". Hata düzeltmesini kapatmak V8 sonucunu değiştirmedi. Model terfisi: REDDEDİLDİ.";
+  $("v8GateWarning").textContent="Bilimsel karar: REDDEDİLDİ. "+
+   "Geçmiş hata etiketleri yalnız 96 saat veya 14 gün olgunlaştıktan sonra güncellenir; "+
+   "örtüşen vakalar bağımsız kâr sayılmaz. 2026 geçmişi daha önce görüldüğünden kör test değildir. "+
+   "Ekonomik olayların doğrulanmış ilk erişim saati 0/96, bankanın gerçek BID/ASK makası yok. "+
+   "V1–V7 orijinal modelleri değiştirilmedi, canlı yatırım emri yok.";
+ }catch(err){
+   state.textContent="V8 gölge deney yüklenemedi: "+err.message+". V1–V7 korunuyor.";
+ }finally{button.disabled=false;}
+}
+$("runV8Regret").addEventListener("click",runV8Regret);
+
