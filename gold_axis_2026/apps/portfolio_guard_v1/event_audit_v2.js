@@ -18,6 +18,10 @@ const ROOT=path.resolve(__dirname,"../../..");
 const ORIGIN=Date.parse("2025-12-31T21:00:00Z");
 const MATURE_MS=96*3600*1000;
 const FEE=0.008;
+const CONTROLS=Object.freeze({
+ path:"gold_axis_2026/apps/portfolio_guard_v1/data/CALENDAR_CONTROLS_2023_2025_M15_96H_V1.csv",
+ blob:"cd6f520d4991dc7d429cb6e06deb9b73e161e6f6"
+});
 const ROUND_TRIP_COST_PCT=(1/((1-FEE)*(1-FEE))-1)*100;
 const F=[
  ["r4","asof_ret4h_pct",1.2,1],
@@ -95,6 +99,68 @@ function buildV2Knowledge(){
   }
  };
 }
+function buildCalendarControls(){
+ const data=frozenInput(CONTROLS);
+ const controls=data.map((r,i)=>({
+  id:"CALENDAR_"+String(i+1).padStart(3,"0"),utc:r.tt,ms:Date.parse(r.tt),
+  low96:n(r.forward96hlowpct),high96:n(r.forward96hhighpct),
+  observedBars:n(r.ct),
+  x:Object.fromEntries(F.map(([k])=>[k,n(r[k])]))
+ }));
+ if(controls.length!==163 ||
+    controls.some(r=>!Number.isFinite(r.ms)||r.ms+MATURE_MS>ORIGIN||
+      r.low96===null||r.observedBars<40))throw new Error("CALENDAR_CONTROL_DATA_CONTRACT_FAILED");
+ return controls;
+}
+/**
+ * Calendar samples are deterministic fixed-clock controls chosen without
+ * inspecting a future move (one every four calendar days, 15:00 UTC).
+ * They are UNCONDITIONAL market controls, NOT certified no-news days.
+ * Distinct from ex-post salient event case archive; do not treat as
+ * equal-frequency case-control cohorts or a calibrated event probability.
+ */
+function controlBaseline(row,controls,k=21) {
+ const comparable=controls.map(c=>{
+  let total=0,weight=0;
+  for(const [key,unused,scale,w] of F){
+   const a=row[key],b=c.x[key];
+   if(a===null||a===undefined||b===null)continue;
+   total+=w*((a-b)/scale)**2;weight+=w;
+  }
+  return {c,d:weight>0?Math.sqrt(total/weight):Infinity};
+ }).filter(x=>Number.isFinite(x.d))
+ .sort((a,b)=>a.d-b.d||a.c.id.localeCompare(b.c.id)).slice(0,k);
+ if(comparable.length<5)throw new Error("NOT_ENOUGH_CALENDAR_CONTROLS");
+ let sum=0,squares=0,down=0;
+ for(const z of comparable){
+  const w=1/(z.d+0.35)**2;sum+=w;squares+=w*w;
+  if(z.c.low96<=-3)down+=w;
+ }
+ return {observedControlFraction:down/sum,rawBaseRate:controls.filter(x=>x.low96<=-3).length/controls.length,
+  effectiveN:sum**2/squares,neighbors:comparable.length,nearestDistance:comparable[0].d,
+  hasReliableConditionalProbability:false,kind:"UNCONDITIONAL_TIME_SAMPLED_COMPARATOR_NOT_PROBABILITY"};
+}
+function temporalControlReview(controls){
+ const train=controls.filter(c=>c.utc<"2025"),test=controls.filter(c=>c.utc>="2025");
+ if(train.length!==100||test.length!==63)throw new Error("TEMPORAL_CONTROL_SPLIT_CHANGED");
+ const baseRate=train.filter(c=>c.low96<=-3).length/train.length;
+ let brierBase=0,brierLocal=0;
+ for(const c of test){
+  const label=c.low96<=-3?1:0;
+  const p=controlBaseline(c.x,train);
+  brierBase+=(baseRate-label)**2;
+  brierLocal+=(p.observedControlFraction-label)**2;
+ }
+ return {
+  kind:"2023_2024_TRAIN_2025_TIME_ORDERED_DIAGNOSTIC",
+  trainN:train.length,testN:test.length,trainDown3:train.filter(x=>x.low96<=-3).length,
+  testDown3:test.filter(x=>x.low96<=-3).length,
+  brierUnconditionalBaseline:brierBase/test.length,
+  brierLocalControlNeighbors:brierLocal/test.length,
+  clinicalOrFinancialForecastValidated:false,
+  warning:"Sparse deterministic calendar observations; tests not prospectively blind; no fitted event/news model."
+ };
+}
 function scoreDedup(row,cases){
  const ranked=cases.map(c=>{
   let sum=0,wsum=0;
@@ -123,9 +189,10 @@ function scoreDedup(row,cases){
   economicMechanismConfirmed:false
  };
 }
-function diagnostic(row,position,knowledge,eventV1){
+function diagnostic(row,position,knowledge,eventV1,controls){
  const a=scoreDedup(row,knowledge.cases);
  const original=analog(row,loadFrozen_cached.events); // regression-only: old score, raw aliases
+ const background=controlBaseline(row,controls);
  const cosell=row.r4<=-1&&row.nq6!==null&&row.nq6<=-1;
  const unfamiliar=a.analogDistance>=1 && row.rv!==null && row.rv>=0.8;
  const exitPrice=row.r4<=-2;
@@ -148,6 +215,7 @@ function diagnostic(row,position,knowledge,eventV1){
   observed:{goldR4Pct:row.r4,nasdaqR6Pct:row.nq6,rv4:row.rv,cosell,unfamiliar},
   sampleQuality:{libraryRows:knowledge.metrics.archiveRows,uniqueHistoricalCases:knowledge.metrics.uniqueCheckpoints,
     episodesInNine:a.episodeCount,distance:a.analogDistance,weightedEffectiveSampleCount:a.weightEffectiveN},
+  control:{...background,positiveCasesAreNotVerifiedEventFree:true},
   analog:{legacySelectedEventFraction:original.riskScore,correctedSelectedEventFraction:a.rawEventFraction,
     selectedCases:a.nearest,probabilityCalibrated:false},
   trading:{currentAction:eventV1?.action||"OBSERVE_ONLY",protectCandidate:position==="GOLD"&&(exitPrice||cosell&&unfamiliar),
@@ -162,11 +230,13 @@ function runAudit(){
  loadFrozen_cached=loadFrozen();
  const v1=runAll().scenarios.event15m;
  const knowledge=buildV2Knowledge();
+ const calendar=buildCalendarControls();
+ const chronologicalTest=temporalControlReview(calendar);
  const actions=new Map(v1.actions.map(a=>[a.utc,a]));
  const positions=new Map(v1.ledger.map(x=>[x.utc,x.position]));
  const items=loadFrozen_cached.rows.map(row=>{
   const at=actions.get(row.tt),p=positions.get(row.tt);
-  return diagnostic(row,p,knowledge,at);
+  return diagnostic(row,p,knowledge,at,calendar);
  });
  const critical=v1.actions.map(a=>{
   const d=items.find(x=>x.utc===a.utc);
@@ -187,6 +257,12 @@ function runAudit(){
   observedExtraValueFromEventLayerUSD:0,
   objective:"Portfolio protection against marginal >3% shocks, not daily trading.",
   archive:knowledge.metrics,
+  timeSampledControls:{count:calendar.length,down3:calendar.filter(x=>x.low96<=-3).length,
+   byYear:Object.fromEntries([2023,2024,2025].map(y=>[y,{n:calendar.filter(x=>x.utc.startsWith(String(y))).length,
+    down3:calendar.filter(x=>x.utc.startsWith(String(y))&&x.low96<=-3).length}])),
+   label:"Unconditional fixed-clock samples, not verified no-news samples",
+   dataGitBlob:CONTROLS.blob},
+  chronologicalTest,
   metrics:counts,
   critical,
   riskLabels:"Selected event case fraction is not a calibrated probability of a drop.",
@@ -196,4 +272,4 @@ function runAudit(){
   inputHistoryFrozenBefore:"2026-01-01T00:00:00+03:00"
  };
 }
-module.exports={ROUND_TRIP_COST_PCT,buildV2Knowledge,scoreDedup,runAudit};
+module.exports={ROUND_TRIP_COST_PCT,buildV2Knowledge,buildCalendarControls,controlBaseline,temporalControlReview,scoreDedup,runAudit};
