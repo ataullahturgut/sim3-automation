@@ -6,6 +6,7 @@ on:
   pull_request:
     branches:
       - 'research-gold-v14-karar-ogrenme-20261016'
+      - 'research-gold-v15-kural-yerine-ogrenme-20261016'
   workflow_dispatch:
 permissions:
   contents: read
