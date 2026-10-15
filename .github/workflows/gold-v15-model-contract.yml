@@ -23,10 +23,10 @@ jobs:
         run: node --check v15_kavis_cekirdek.js
       - name: V15 algorithm-only synthetic acceptance
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
-        run: node --test v15_kavis_cekirdek.test.js
+        run: node --test v15_kavis_cekirdek.test.js v15_kavis_formal_audit.test.js
       - name: Confirm V15 CI has no historical portfolio replay
         run: |
-          if grep -E 'v14_karar_run|v13_sentez_run|2026_FEB_SEP|v8_regret_engine' gold_axis_2026/apps/portfolio_guard_v1/v15_kavis_cekirdek.js gold_axis_2026/apps/portfolio_guard_v1/v15_kavis_cekirdek.test.js; then
+          if grep -E 'v14_karar_run|v13_sentez_run|2026_FEB_SEP|v8_regret_engine' gold_axis_2026/apps/portfolio_guard_v1/v15_kavis_cekirdek.js gold_axis_2026/apps/portfolio_guard_v1/v15_kavis_cekirdek.test.js gold_axis_2026/apps/portfolio_guard_v1/v15_kavis_formal_audit.test.js; then
             echo "Unexpected historical simulation in algorithm-only phase"
             exit 1
           fi
