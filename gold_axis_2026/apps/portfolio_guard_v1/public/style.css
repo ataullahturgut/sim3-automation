@@ -27,3 +27,5 @@
 .monthcontrols button:hover:not(:disabled){background:#e1c292}
 .monthstatus{flex-basis:100%;margin:0;color:#e0c698;font-size:12px;line-height:1.6}
 @media(max-width:700px){.monthpanel{padding:15px}.monthcontrols{width:100%}.monthcontrols select{flex:1;min-width:155px}}
+
+.researchbtn{background:#d3ad76;border:0;border-radius:8px;padding:13px 18px;font-weight:700;cursor:pointer;color:#182433;margin:5px 0 15px}.researchbtn:disabled{opacity:.55;cursor:wait}
