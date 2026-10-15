@@ -1,7 +1,7 @@
 "use strict";
 const $=function(id){return document.getElementById(id);};
 const format=new Intl.NumberFormat("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2});
-let response=null,mode="event15m";
+let response=null,mode="event15m",activeMonth="2026-01";
 function money(v){return format.format(v)+" $";}
 function pct(v){return (v>=0?"+":"")+format.format(v)+"%";}
 function escapeText(v){
@@ -19,22 +19,23 @@ function chart(days){
  const values=days.map(function(d){return d.netValue;});
  const min=Math.floor((Math.min(...values)-1)/5)*5,max=Math.ceil((Math.max(...values)+1)/5)*5;
  const xr=function(i){return padL+i*(W-padL-padR)/(days.length-1);};
+ const suffix=activeMonth==="2026-02"?"Şub":"Oca";
  const yr=function(v){return padT+(max-v)*(H-padT-padB)/(max-min);};
  const coords=values.map(function(v,i){return xr(i).toFixed(1)+","+yr(v).toFixed(1);});
  const baseY=yr(min);
  let svg='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" aria-labelledby="chart-title" role="img">'+
- '<title id="chart-title">Ocak 2026 günlük net portföy değeri</title>';
+ '<title id="chart-title">${activeMonth==="2026-02"?"Şubat":"Ocak"} 2026 günlük net portföy değeri</title>';
  for(let i=0;i<=4;i++){
   const v=min+i*(max-min)/4,y=yr(v);
   svg+='<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="#29394b" stroke-width="1"/>'+
        '<text x="'+(padL-9)+'" y="'+(y+4)+'" text-anchor="end">'+format.format(v)+' $</text>';
  }
- svg+='<polygon points="'+xr(0)+','+baseY+' '+coords.join(" ")+' '+xr(30)+','+baseY+
+ svg+='<polygon points="'+xr(0)+','+baseY+' '+coords.join(" ")+' '+xr(days.length-1)+','+baseY+
    '" fill="#cfa96f" fill-opacity=".09"/>';
  svg+='<polyline points="'+coords.join(" ")+'" fill="none" stroke="#d8b37b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
  for(let i=0;i<days.length;i++){
-  if([0,4,9,14,19,24,30].includes(i)){
-   svg+='<text x="'+xr(i)+'" y="'+(H-12)+'" text-anchor="middle">'+(i+1)+' Oca</text>';
+  if([0,4,9,14,19,24,days.length-1].includes(i)){
+   svg+='<text x="'+xr(i)+'" y="'+(H-12)+'" text-anchor="middle">'+(i+1)+' '+suffix+'</text>';
   }
   if(days[i].actions.length){
    svg+='<circle cx="'+xr(i)+'" cy="'+yr(values[i])+'" r="6" fill="#d8b37b" stroke="#0c1420" stroke-width="2">'+
@@ -84,10 +85,10 @@ function render(){
  const baseline=response.comparison.find(function(z){return z.model==="price15m";});
  const event=response.comparison.find(function(z){return z.model==="event15m";});
  $("finalUSD").textContent=money(s.finalUSD);
- $("profitUSD").textContent="Başlangıç 100,00 $ · Net fark "+money(s.finalUSD-100);
+ $("profitUSD").textContent="Başlangıç "+money(s.startUSD)+" · Net fark "+money(s.finalUSD-s.startUSD);
  $("returnPct").textContent=pct(s.returnPct);
  $("benchmark").textContent=money(s.benchmarkBuyHoldUSD);
- $("benchmarkNote").textContent="Aynı kontrol sıklığı ve fiyat kaynağı";
+ $("benchmarkNote").textContent=s.benchmarkNote||"Aynı kontrol sıklığı ve fiyat kaynağı";
  $("maxDD").textContent=format.format(s.maxDrawdownPct)+"%";
  $("position").textContent=s.terminalAsset==="CASH"?"NAKİT":"ALTIN";
  $("tradesCount").textContent=s.actions.filter(function(x){return x.action==="BUY_GOLD";}).length+
@@ -95,11 +96,18 @@ function render(){
  $("checksCount").textContent=new Intl.NumberFormat("tr-TR").format(s.checks);
  $("calendarCount").textContent=new Intl.NumberFormat("tr-TR").format(s.fullCalendarSlots);
  $("archivesCount").textContent=s.archiveCases+" olgunlaşmış olay";
- $("notice").textContent="Sabit Ocak 2026 veri görüntüsü · Gerçek banka makası dahil değil · Bağımsız ileri test değil."+
+ $("notice").textContent=(activeMonth==="2026-02"?"Şubat 2026 V1 — Ocak sonu nakitten devredildi":"Ocak 2026 V1 referans")+ " · Gerçek banka makası dahil değil · Bağımsız ileri test değil."+
    " Ekonomik nedenler henüz doğrulanmadı. Bu uygulama emir üretmez.";
- $("learningNote").textContent="Ocak'ta olay katmanının fiyat modeline ek kazancı: "+
+ $("learningNote").textContent=(activeMonth==="2026-02"?"Şubat":"Ocak")+" ayında olay katmanının fiyat modeline ek kazancı: "+
    money(event.finalUSD-baseline.finalUSD)+
    ". Tanınmayan şok alarmı gerekçe sunar; bu ay ek işlem sağlamamıştır.";
+ $("monthHeading").textContent="ARAŞTIRMA / "+(activeMonth==="2026-02"?"ŞUBAT":"OCAK")+" 2026";
+ $("dailyTitle").textContent=(activeMonth==="2026-02"?"Şubat":"Ocak")+" 2026 · Gün gün";
+ $("startingCash").textContent=money(s.startUSD)+" başlangıç";
+ $("hashes").innerHTML=Object.entries(response.dataHashes).map(function(pair){
+   return '<div class="hashline"><b>'+escapeText(pair[0])+'</b><small> '+escapeText(pair[1].path)+
+     '</small><code>'+escapeText(pair[1].gitBlob)+'</code></div>';
+ }).join("");
  $("chart").innerHTML=chart(s.days);
  $("comparisonTable").innerHTML=compare(response.comparison,mode);
  $("transactions").innerHTML=transactions(s.actions);
@@ -131,6 +139,33 @@ for(const btn of document.querySelectorAll("[data-mode]")){
  btn.addEventListener("click",function(){mode=btn.dataset.mode;render();});
 }
 load();
+async function executeSelectedMonth(){
+ const wanted=$("monthSelect").value;
+ const control=$("runMonth"),status=$("monthStatus");
+ control.disabled=true;
+ status.textContent=(wanted==="2026-02"?"Şubat 2026":"Ocak 2026")+" çalıştırılıyor; kaynak imzaları ve kararlar denetleniyor…";
+ try{
+   const url=wanted==="2026-02"?"/api/months/2026-02/run":"/api/summary";
+   const reply=await fetch(url,{cache:"no-store"});
+   if(!reply.ok)throw new Error("Sunucu "+reply.status);
+   const data=await reply.json();
+   if(data.status!=="RESEARCH_ONLY_NOT_LIVE"||data.comparison.length!==3)
+     throw new Error("FROZEN_MONTHLY_DATA_CONTRACT_FAILED");
+   response=data;activeMonth=wanted;
+   render();
+   const end=response.comparison.find(x=>x.model==="event15m");
+   status.textContent=(wanted==="2026-02"?"Şubat 2026":"Ocak 2026")+" tamamlandı · Başlangıç "+
+     money(end.startUSD)+" → Son değer "+money(end.finalUSD)+" · "+
+     (end.terminalAsset==="CASH"?"NAKİT":"ALTIN")+
+     (end.hypotheticalExitFeeDeducted?" (satılmadan, yalnız teorik satış komisyonuyla değerlenmiş)":"")+
+     ". Kurallar geçmişe dönük güncellenmedi.";
+ }catch(error){
+   status.textContent="Ay çalıştırılamadı: "+error.message+". Önceki sonuç korunuyor.";
+ }finally{
+   control.disabled=false;
+ }
+}
+$("runMonth").addEventListener("click",executeSelectedMonth);
 
 function renderScientificV2(data){
  if(data.stage!=="DIAGNOSTIC_SHADOW_ONLY"||data.archive.archiveRows!==96||!Array.isArray(data.critical)){
