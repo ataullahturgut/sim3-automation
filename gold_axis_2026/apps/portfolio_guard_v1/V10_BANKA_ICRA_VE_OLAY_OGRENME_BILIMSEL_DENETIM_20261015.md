@@ -54,10 +54,10 @@ Bu hücreler aynı **önceden görülmüş 2026** fiyat yolundaki as-of kural de
 2023 geçmişi ekleyip aynı yöntemi (farklı eğitim başlangıcı, aynı kaynak fiyat kontratı) sınayınca:
 
 - 2024 V10: **108,614611 USD** vs pasif altın **123,849710 USD**.
-- 2025 V10: **110,663496 USD** vs pasif altın **160,415265 USD**.
+- 2025 V10: **110,664723 USD** vs pasif altın **160,415265 USD**.
 - 2026 V10: **130,666324 USD**, fakat 2026 tasarım sırasında incelenmişti.
 
-**En önemli sınırlama:** 2024 ve 2025 negatif kontrollerinde aynı korumanın ekonomik katkısını bağımsız olarak gösteremedik. Yalnız 2026 Mart'ta devreye girip sonucu iyileştirmesi, *keşif niteliğinde bir hipotez* olarak değerlendirilmelidir. Kesin ve tekrarlanabilir al-sat avantajı henüz gösterilmedi.
+**En önemli sınırlama:** 2025-only doğrulama panelinde kapı 0 kez, 2023 eğitimli ayrı 2025 panelinde 2 kez çalıştı; bu ikinci panelde sonuç yalnız yaklaşık **0,00123 $** değişti. 2024'te de engelleme yoktu. Dolayısıyla 2024–2025 kontrolleri korumanın ekonomik katkısını bağımsız olarak göstermiyor. Yalnız 2026 Mart'ta devreye girip sonucu iyileştirmesi, *keşif niteliğinde bir hipotez* olarak değerlendirilmelidir. Kesin ve tekrarlanabilir al-sat avantajı henüz gösterilmedi.
 
 ## Hatalardan öğrenme yol haritasında kaydedilen düzeltmeler
 
