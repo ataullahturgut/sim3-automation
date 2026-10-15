@@ -33,3 +33,6 @@ jobs:
       - name: Model output attestation
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run verify
+      - name: Event V2 scientific control audit
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run audit
