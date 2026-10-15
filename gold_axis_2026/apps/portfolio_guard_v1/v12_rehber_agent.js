@@ -135,6 +135,12 @@ function memoryTimeline(ds,opts={}){
     position,proposed,reason:decision.why,
     predictedNet14:pred.net14??null,predictedNet4:pred.net4??null,
     pProfit:pred.pProfit??null,nEffective:pred.nEffective,
+    tail20:pred.tail20??null,
+    gates:pred.ready?{
+      profit:pred.net14>Math.max(state.buyMargin,.35*pred.uncertaintyPct),
+      probability:pred.pProfit>settings.prob,
+      tail:pred.tail20>-6,
+      stressFree:!stress}:null,
     uncertaintyPct:pred.uncertaintyPct??null,
     buyMargin:state.buyMargin,analogs:pred.ready?pred.experts?.TREND?.analogs:[]});
    predictions.push({asOf:row.tt,pred});
