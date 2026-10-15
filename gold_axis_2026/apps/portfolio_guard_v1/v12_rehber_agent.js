@@ -159,8 +159,9 @@ function memoryTimeline(ds,opts={}){
   scientificGate:{promote:false,reason:"NO_UNSEEN_PROSPECTIVE_GENERALIZATION_YET"}
  };
 }
-let cacheDS;
+let cacheDS,cacheAudit;
 function audit(){
+ if(cacheAudit)return cacheAudit;
  const ds=cacheDS??(cacheDS=dataset(loadFullRows().rows));
  const periods=[
   {year:"2024",start:"2024-01-02T06:00:00Z",end:"2024-12-31T12:00:00Z",initial:100},
@@ -175,7 +176,7 @@ function audit(){
     analogBlocks:s.independentEpisodeBlocks,learning:s.learning,trades:s.trades,
     monthly:s.monthly});
  }
- return {version:"V12_REHBER_ORIGINAL_CAUSAL_MEMORY_RESEARCH",
+ return cacheAudit={version:"V12_REHBER_ORIGINAL_CAUSAL_MEMORY_RESEARCH",
   status:"NO_AUTOMATIC_PROMOTION",data:{rows:ds.records,labeledOrigins:ds.samples.length},
   design:{ANNArchitecture:false,learnableLayers:[
     "episodic_state_memory",
