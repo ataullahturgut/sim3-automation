@@ -74,7 +74,9 @@ const POLICIES={
  shockGuard:{buyNet14:1.5,stopNet4:-4.5,sellNet14:-2.6,
    minHoldHours:96,liquidateRisk:true,monthlyRetrain:false},
  adaptiveMonthly:{buyNet14:1.5,stopNet4:-4.5,sellNet14:-2.6,
-   minHoldHours:96,liquidateRisk:true,monthlyRetrain:true}
+   minHoldHours:96,liquidateRisk:true,monthlyRetrain:true},
+ calibratedAbstain:{buyNet14:1.5,stopNet4:-4.5,sellNet14:-2.6,
+   minHoldHours:96,liquidateRisk:true,monthlyRetrain:false,uncertaintyGate:true}
 };
 function simulate(ds,opts={}){
  const cutoff=opts.start||"2026-02-02T06:00:00Z",
@@ -128,7 +130,9 @@ function simulate(ds,opts={}){
   if(!feat)throw Error("MISSING_ASOF_FEATURES");
   const prediction=ANN.predict(ann,feat);
   const shock=row.r4!=null&&row.r4<=-1&&row.nq6!=null&&row.nq6<=-1;
-  const longOK=prediction.net14>policy.buyNet14&&prediction.net4> -4;
+  const threshold=policy.uncertaintyGate?
+    Math.max(policy.buyNet14,ann.validationMAE14Pct):policy.buyNet14;
+  const longOK=prediction.net14>threshold&&prediction.net4> -4;
   const out=prediction.net4<policy.stopNet4||
     prediction.net14<policy.sellNet14||(policy.liquidateRisk&&shock);
   let desired=ounces?"GOLD":"CASH",why="NO_COSTED_EDGE";
@@ -153,8 +157,8 @@ function simulate(ds,opts={}){
   initial,final:last.finalUSD,netPct:100*(last.finalUSD/initial-1),
   trials:seenOrigins,training:trainUpdates,firstTrainN:trainUpdates[0].maturedN,
   trades,signals,monthly,
-  predictionErrors:predictions.filter(x=>x.at<=
-     new Date(end-21*DAY).toISOString()).length,
+  maturedDiagnosticCount:predictions.filter(x=>x.actual14!==null&&
+    ds.byOrigin.get(x.at).exit14Ts<=end).length,
   predictions:opts.includePredictions?predictions:undefined,
   fees:{eachLeg:FEE,roundTripNoPriceChange:(1-FEE)**2,
      realBankBidAsk:false},
