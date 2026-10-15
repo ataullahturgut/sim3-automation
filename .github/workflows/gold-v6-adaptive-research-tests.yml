@@ -1,0 +1,19 @@
+name: Gold V6 adaptive research tests
+on:
+  push:
+    branches:
+      - research-gold-v6-adaptive-dual-horizon-20261015
+    paths:
+      - "gold_axis_2026/adaptive_volatility_learning/v6/**"
+      - ".github/workflows/gold-v6-adaptive-research-tests.yml"
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run regression and no-lookahead tests
+        run: node --test gold_axis_2026/adaptive_volatility_learning/v6/test_v6.js
