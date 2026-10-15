@@ -116,3 +116,16 @@ Sol menüde **Yeni V3 toparlanma modeli** bölümünü aç ve **V3 sonuçların�
 İşlemler sadece Türkiye saati **09:00, 12:00, 15:00** tamamlanmış üç saatlik kesitlerde araştırma fiyatı üzerinden yapılır. Ekonomik olayın G05-C veya G06-B olması **kanıtlanmamış hipotez**: neden UNRESOLVED. Olay benzerliğinde ileri 96h etiketler yalnız kaynak tarihinde olgunlaşmışsa alınır, geleceğin bilgisi kullanılmaz. %0,8 alış ve %0,8 satış var, gerçek banka alış-satış makası ayrıca mevcut değil. Ocak/Şubat V1 dondurulmuş sonuçları değiştirilmedi.
 
 Teknik dosyalar: `recovery_v3.js`, `recovery_v3.test.js`, `data/RECOVERY_HIST_3H_2020_2022_V1.csv`, `data/RECOVERY_HIST_3H_2023_2025_V1.csv`, `RECOVERY_V3_EXECUTION_REPORT_20261015.md`. Windows ve Linux test: `npm test`, `npm run verify-v3`. Arayüzde çalıştırma, yatırım sinyallerinin canlı onayı değil, retrospektif karşılaştırmadır.
+
+
+## V4 — Adaptif TUT algoritması (15 Ekim 2026)
+
+Programda sol menüden **V4 adaptif strateji** > **V4 algoritmasını çalıştır ve karşılaştır**. Eski Ocak/Şubat V1 ve V3 sonuçları aynı kalır.
+
+V4 geçmiş dönem oynaklık yüzdeliklerinden (2020–2025) eşik öğrenir; RECOVERY_CANDIDATE durumunda kademeli giriş, UP_TREND'de kalan nakdi altına geçirme, riskte iki farklı onayla satış, aşırı şokta erken risk azaltma mekanizmasına sahiptir. Ekonomik G05-C ve G06-B DNA hipotezlerini nedensel olarak doğrulamaz, tüm ekonomik mekanizma adayları UNRESOLVED. Türkiye 09:00,12:00,15:00 işlem saatlerini kullanır.
+
+- Şubat 2026: 119,753917 USD nakit devrinden **V4 122,867909 USD** (GOLD, varsayımsal SAT ücreti düşülmüş); V1 114,274468 USD; V3 120,442260 USD; CASH 119,753917 USD. V4 **4 Şubat 09:00 AL** ve **19 Şubat 12:00 AL**, satış yok.
+- Ocak V4 100 dolardan **109,534460 USD**, Ocak V1 **119,753917 USD**: V4 Ocak'ta kötü. 2024 V4 **125,518805** vs V3 119,389706 / altın al-tut 124,430292. 2025 V4 **141,125260 USD** vs altın al-tut **161,151041 USD**: önemli fırsat kaybı.
+- 2023 fiyat kapsamı eksik. Şubat 2026 strateji geliştirmeden önce bilinmiş olduğundan kör ileri test değildir. Gerçek banka alış/satış makası ve slip fiyatı yok, komisyon her yönde %0,8.
+
+Uygulama kaynağı: recovery_v4.js; test recovery_v4.test.js; analiz RECOVERY_V4_SCIENTIFIC_EXECUTION_REPORT_20261015.md. npm test ve npm run verify-v4 çalışır; GET /api/algorithm/v4 salt okunur ve gerçek banka emri vermez.
