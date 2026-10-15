@@ -54,13 +54,13 @@ Ocak içinde olay öğrenme katmanı, fiyat modelinin işlem kararlarını **de�
 8. Repo'nun var olan altın tahmin uygulamalarına müdahale edilmedi. Bu uygulama yeni dalda ve ayrı klasördedir.
 
 ## Bilerek ertelenen işlevler
-- Şubat ve sonraki aylara evrilen genelleştirilmiş ay-ay motor / veri ithalatı
+- Mart ve sonraki aylara genelleştirilmiş ay-ay motor / veri ithalatı
 - Geçmişe bakmayan model güncelleme/değişiklik kaydı ve aylık run-id defteri
 - Zaman doğrulanmış haberlerin ekonomik DNA P0–P5 evreleriyle gerçek entegre öğrenilmesi
 - Olaysız negatif kontroller, şok kalibrasyonu ve bağımsız performans testleri
 - Gerçek banka ASK/BID / likidite / işlemin verilebilme saatleri
 
-**Bu V1 yalnız Ocak 2026 sabit arşivine göre çalışan prototiptir.** Diğer aylarda performans iddiası yoktur.
+**Ocak ve Şubat 2026 çalıştırılabilir.** Mart ve sonraki aylar henüz eklenmedi. Şubat için V1 karar kuralları Ocak'tan değiştirilmeden devredildi.
 
 Kaynak: gold_axis_2026/adaptive_volatility_learning/months/2026-01-new-learning/JAN_2026_NEW_EVENT_MONTH_WALK_V1_SCIENTIFIC_REPORT.md
 
@@ -80,3 +80,30 @@ Kaynak:
 - `npm.cmd test` ve `npm.cmd run audit` — Windows doğrulaması.
 
 **Önemli:** V2 bir onaylı ekonomik tahmin sistemi veya banka emir motoru değildir. Şubat ayı stratejisi için henüz V2 yürürlüğe alınmadı; önce kontrol validasyonu ve gerçek banka maliyeti gerekir.
+
+## Şubat 2026 — Gerçek "Ayı Çalıştır" özelliği (15 Ekim 2026)
+
+**Bilgisayarda açma:** GitHub Desktop > Fetch origin > Pull origin; çalışan eski siyah sunucu penceresini kapat, `BASLAT.bat` dosyasına çift tıkla. Üstte **Çalışılacak ay: Şubat 2026** seç > **Ayı Çalıştır** düğmesine bas. Komut yazmak gerekmiyor.
+
+Bu düğme `GET /api/months/2026-02/run` yoluyla **1723** tamamlanmış 15m fiyat özellik satırını Git SHA doğrulamasıyla okur; 1–28 Şubat takvimindeki 2688 adet 15 dakikalık slotun her birinde fiyat yoksa BEKLE/TUT olarak taşır. **Ocak 2026 119,75391720039644 dolar NAKİT** durumundan başlatır, Ocak V1 AL/SAT kurallarını *hiç değiştirmez*, Ocak 2026 sonrasındaki haber veya sonuçları ekonomik nedensel açıklama olarak uydurmaz.
+
+Aynı 0,8% / 0,8% maliyetle (banka makası hariç):
+
+| Şubat 2026 sabit koşu | Başlangıç USD | Ay sonu net (varsayımsal satılırsa) | Portföy |
+|---|---:|---:|---|
+| Fiyat V1 · 15 dk | 119,753917 | **114,274468** | GOLD |
+| Olay benzerliği V1 · 15 dk | 119,753917 | **114,274468** | GOLD |
+| Fiyat V1 · 3 saat aralık | 119,753917 | **119,895812** | GOLD |
+
+15 dakikalık model **4 AL + 3 SAT** yaptı; son AL 25 Şubat 17:15 Türkiye saati. 3 saatlik senaryo da **aynı Ocak sonu nakitten** başlatılmış yalnız Şubat için karşılaştırmadır; Ocak'taki kendi 118,34 dolar başlangıç serisini sürdürmez. Bu ayrım bilinçli olarak korunur.
+
+Her iki model **Şubat sonunda gerçek SAT yapmadı**: sonuçlar açık GOLD pozisyonunu ayın son kullanılabilir XAU MID kapanışından **varsayımsal çıkış ücreti düşülmüş değerlemedir**. Gerçekte nakitte duran tutar 0, altın birimleri korunur. Son kullanılabilir Şubat M15 fiyatı **27 Şubat 21:30 UTC = 28 Şubat 00:30 Türkiye**; piyasanın kapalı sonraki saatlerinde yeni işlem üretilmedi.
+
+Şubat çalışması V2'yi kanıtlanmış ekonomik yapay zekâya dönüştürmez. Olay katmanının Şubat AL/SAT saatlerine ve getiriye ek katkısı yine sıfırdır. **15 dakikalık modelin Şubat'ta daha sık satış yapıp daha kötü performans göstermesi yeni hata olarak kaydedildi; aynı Şubat verisi üzerinden ayar yapıp daha iyi sonuç iddia edilmez.** Takip eden güncellemeler yalnız daha sonraki aylarda validasyona girmelidir.
+
+- Dondurulmuş Şubat paneli: `data/FEB_2026_V1_ASOF_PANEL.csv`, Git blob `8e3bb94acc3d38d12778439115292388b295734f`.
+- Ay yürütücüsü: `monthly_runner.js`.
+- Testler: `monthly_runner.test.js`, `npm.cmd test`, `npm.cmd run verify-months`.
+- Yalnız izin verilen API: `GET /api/months`, `GET /api/months/2026-02/run`. Üçüncü ay kapalı.
+
+**Not:** Bu uygulama geçmiş veri araştırmasıdır; canlı banka işlemi, otomatik öğrenmeyle strateji değiştirme veya Mart 2026'yı çalıştırma henüz desteklenmiyor.
