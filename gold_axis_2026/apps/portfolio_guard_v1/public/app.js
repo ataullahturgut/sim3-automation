@@ -409,3 +409,50 @@ async function runV6EconomicEvidence(){
  }finally{b.disabled=false;}
 }
 $("runV6").addEventListener("click",runV6EconomicEvidence);
+
+
+async function runV6Portfolio(){
+ const button=$("runV6Portfolio"),status=$("v6PortfolioStatus");
+ button.disabled=true;
+ status.textContent="Ekonomik veri eşleştirmesi, kararlar ve yıllık testler hesaplanıyor…";
+ try{
+  const res=await fetch("/api/algorithm/v6/portfolio",{cache:"no-store"});
+  if(!res.ok)throw Error("HTTP "+res.status);
+  const d=await res.json();
+  if(d.status!=="CROSS_ASSET_RETROSPECTIVE_NOT_BLIND"||
+     d.scientificGate.authorized!==false||d.promotionAuthorized!==false||
+     d.economicEventEvidence.allowedAsCausalTradingInputs!==false||
+     d.monthResults.length!==8||d.years.length!==3||d.bankSpreadIncluded!==false)
+   throw Error("V6_RESEARCH_CONTRACT_INVALID");
+  $("v6PortfolioFinal").textContent=money(d.finalUSD);
+  $("v6PortfolioV5").textContent=money(d.comparison.V5);
+  $("v6Firstprints").textContent=d.economicEventEvidence.verifiedFirstprints+" / "+d.economicEventEvidence.cases;
+  $("v6Promotion").textContent="REDDEDİLDİ";
+  const pairs=d.scientificGate.testedFullYears;
+  $("v6PortfolioAnnual").innerHTML=table(
+   ["Yıl","V6 ekonomi","V5 fiyat","Altın al / tut","V6 AL / SAT"],
+   d.years.map(function(y){
+    const pair=pairs.find(z=>z.year===y.year);
+    return "<tr>"+cell(y.year+(y.coverageWarning?" *":""))+
+     cell(money(y.finalUSD))+cell(pair?money(pair.V5):"—")+
+     cell(money(y.buyHoldUSD))+cell(y.buys+" AL / "+y.sells+" SAT")+"</tr>";
+   })
+  );
+  $("v6PortfolioMonths").innerHTML=table(
+   ["Ay","V6 net değer","Durum","AL / SAT"],
+   d.monthResults.map(function(y){
+    return "<tr>"+cell(escapeText(y.month))+cell(money(y.finalUSD))+
+     cell(y.position==="CASH"?"NAKİT":"ALTIN")+
+     cell(y.buys+" AL / "+y.sells+" SAT")+"</tr>";
+   })
+  );
+  status.textContent="Deney tamamlandı: V6 "+money(d.finalUSD)+
+   ", V5 "+money(d.comparison.V5)+
+   ". Ekonomik göstergelerin kalıcı üstünlüğü kanıtlanmadı; canlı karar olarak onaylanmadı.";
+  $("v6PortfolioCaveat").textContent="2024–2025 V6 eski fiyat modelini iyileştirmedi. 2026 veri dönemleri daha önce görüldüğü için kör ileri test değil. "+
+   "96 OLAY-02 vakasında ilk haber ve ekonomik nedensellik kanıtı yok. Gerçek banka makası dahil değil. "+
+   "Yalnız geçmiş fiyat/ekonomik durum deneyi; uygulama canlı banka işlemi yapmaz.";
+ }catch(e){status.textContent="V6 ekonomik deney çalıştırılamadı: "+e.message+". Eski modeller değişmedi.";}
+ finally{button.disabled=false;}
+}
+$("runV6Portfolio").addEventListener("click",runV6Portfolio);
