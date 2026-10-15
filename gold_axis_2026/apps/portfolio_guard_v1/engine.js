@@ -67,12 +67,28 @@ function numerical(x) {
  const v=Number(x);
  return Number.isFinite(v)?v:null;
 }
-function loadSource(spec) {
- const bytes=fs.readFileSync(path.join(REPO,spec.path));
+function gitBlobHash(bytes) {
  const head=Buffer.from("blob "+bytes.length+"\0");
- const gitBlob=crypto.createHash("sha1").update(head).update(bytes).digest("hex");
- if(gitBlob!==spec.blob)throw new Error("DATA_VERSION_MISMATCH: "+spec.path+" expected "+spec.blob+" received "+gitBlob);
- return {rows:csvParse(bytes.toString("utf8")),gitBlob,bytes:bytes.length};
+ return crypto.createHash("sha1").update(head).update(bytes).digest("hex");
+}
+/**
+ * Git for Windows may check out UTF-8 CSV as CRLF even when the pinned Git
+ * blob stores LF. Verify the *canonical content* against the original Git blob
+ * SHA, never bypass the integrity check. Any changed data still fail closed.
+ */
+function decodePinnedSource(spec,raw) {
+ const rawHash=gitBlobHash(raw);
+ let checked=raw,converted=false;
+ if(rawHash!==spec.blob) {
+  checked=Buffer.from(raw.toString("utf8").replace(/\r\n/g,"\n"),"utf8");
+  converted=gitBlobHash(checked)===spec.blob;
+  if(!converted)throw new Error("DATA_VERSION_MISMATCH: "+spec.path+" expected "+spec.blob+" received "+rawHash);
+ }
+ return {rows:csvParse(checked.toString("utf8")),gitBlob:spec.blob,bytes:checked.length,
+  windowsLineEndingsNormalized:converted};
+}
+function loadSource(spec) {
+ return decodePinnedSource(spec,fs.readFileSync(path.join(REPO,spec.path)));
 }
 function loadFrozen() {
  const panel=loadSource(DATA.panel),archive=loadSource(DATA.archive),outcomes=loadSource(DATA.outcomes);
@@ -214,4 +230,4 @@ function runAll() {
     event.actions.length!==2||event.fullCalendarSlots!==2976)throw new Error("FROZEN_REFERENCE_TEST_FAILED");
  return {version:VERSION,inputs:data.inputs,scenarios:{event15m:event,price15m:price,legacy3h:legacy}};
 }
-module.exports={VERSION,DATA,csvParse,loadFrozen,analog,simulate,runAll};
+module.exports={VERSION,DATA,csvParse,gitBlobHash,decodePinnedSource,loadFrozen,analog,simulate,runAll};
