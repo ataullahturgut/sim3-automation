@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-guard-replay-v1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FROZEN Jan 2026 gold portfolio protection replay. Historical research only.",
+  "scripts": {
+    "start": "node server.js",
+    "verify": "node server.js --verify",
+    "test": "node --test test.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
