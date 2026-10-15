@@ -224,3 +224,44 @@ async function loadScientificV2(){
  }
 }
 loadScientificV2();
+
+
+async function runV3Research(){
+ const btn=$("runV3"),status=$("v3status");btn.disabled=true;
+ status.textContent="V3 geçmiş evreleri, olay epizotları ve Ocak-Şubat sonuçları hesaplanıyor…";
+ try{
+  const http=await fetch("/api/algorithm/v3",{cache:"no-store"});
+  if(!http.ok)throw new Error("API HTTP "+http.status);
+  const v=await http.json();
+  if(v.status!=="EXPLORATORY_RETROSPECTIVE_NOT_OOS"||v.annual.length!==3||
+     v.february.startUSD<119||v.bankSpreadIncluded!==false)throw Error("V3_RESEARCH_SCHEMA_INVALID");
+  $("v3FebFinal").textContent=money(v.february.finalUSD);
+  $("v3JanFinal").textContent=money(v.january.finalUSD);
+  $("v3History").textContent=new Intl.NumberFormat("tr-TR").format(v.history.totalRows);
+  $("v3Episodes").textContent=String(v.history.trainEpisodesMatureBeforeJan);
+  const orders=v.february.actions.map(function(a){
+   return "<tr>"+cell(escapeText(a.tr))+
+    cell(a.action==="BUY_GOLD"?"AL":"SAT")+
+    cell(money(a.price))+
+    cell(escapeText(a.phase))+
+    cell(escapeText(a.reason)+" · Ekonomik neden: doğrulanmadı")+"</tr>";
+  });
+  $("v3FebActions").innerHTML=table(["Türkiye saati","Karar","Ons","Fiyat evresi","Gerekçe"],orders);
+  const annual=v.annual.map(function(y){
+    return "<tr>"+cell(y.year)+cell(y.bankEpisodes)+cell(y.rows)+
+     cell(money(y.finalUSD))+cell(money(y.buyHoldUSD))+
+     cell(y.buyCount+" AL / "+y.sellCount+" SAT")+"</tr>";
+  });
+  $("v3Annual").innerHTML=table(["Yıl","Geçmiş epizot","Kontrol noktası","V3 net","Al ve tut","İşlem"],annual);
+  const comparison=(v.february.finalUSD-v.frozenOriginalJanuaryCashUSD);
+  status.textContent="V3 hesaplandı · Şubat: "+money(v.february.finalUSD)+
+   " · Nakitte kalmaya göre fark: "+(comparison>=0?"+":"")+money(comparison)+
+   " · Şubat'ta "+v.february.actions.length+" işlem. Ekonomik neden henüz doğrulanmadı.";
+  $("v3Caveat").textContent="Uyarı: 2023 veri kapsaması 2024–2025'ten daha zayıf. 2025 'al ve tut' "+money(v.annual[2].buyHoldUSD)+
+   ", V3 "+money(v.annual[2].finalUSD)+
+   ". Model birden fazla yılda pasif altından geride kaldı. Şubat sonucu kör bağımsız test değil. Gerçek banka BID/ASK makası dahil değil.";
+ }catch(error){
+  status.textContent="V3 araştırması yüklenemedi: "+error.message+"; V1 sonuçları değişmedi.";
+ }finally{btn.disabled=false;}
+}
+$("runV3").addEventListener("click",runV3Research);
