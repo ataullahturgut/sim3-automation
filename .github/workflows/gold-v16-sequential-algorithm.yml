@@ -25,10 +25,10 @@ jobs:
           node --check v16_kavis_siralama.test.js
       - name: Validate causal Bellman update and multi-trade synthetic episodes
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
-        run: node --test v15_kavis_cekirdek.test.js v15_kavis_formal_audit.test.js v15_kavis_stress.test.js v16_kavis_siralama.test.js v16_kavis_counterfactual_audit.test.js
+        run: node --test v15_kavis_cekirdek.test.js v15_kavis_formal_audit.test.js v15_kavis_stress.test.js v16_kavis_siralama.test.js v16_kavis_counterfactual_audit.test.js v16_kavis_v15_uzman_koprusu.test.js
       - name: Prohibit historical portfolio backtests in this phase
         run: |
-          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|2026_FEB_SEP|loadFullRows' gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_siralama.js gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_siralama.test.js gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_counterfactual_audit.test.js; then
+          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|2026_FEB_SEP|loadFullRows' gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_siralama.js gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_siralama.test.js gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_counterfactual_audit.test.js gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_v15_uzman_koprusu.js gold_axis_2026/apps/portfolio_guard_v1/v16_kavis_v15_uzman_koprusu.test.js; then
             echo "Unexpected historical portfolio dependency"
             exit 1
           fi
