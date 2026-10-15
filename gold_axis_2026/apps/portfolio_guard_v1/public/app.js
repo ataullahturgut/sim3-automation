@@ -131,3 +131,56 @@ for(const btn of document.querySelectorAll("[data-mode]")){
  btn.addEventListener("click",function(){mode=btn.dataset.mode;render();});
 }
 load();
+
+function renderScientificV2(data){
+ if(data.stage!=="DIAGNOSTIC_SHADOW_ONLY"||data.archive.archiveRows!==96||!Array.isArray(data.critical)){
+  throw new Error("Unexpected scientific audit schema");
+ }
+ $("v2Raw").textContent=String(data.archive.archiveRows);
+ $("v2Unique").textContent=String(data.archive.uniqueCheckpoints);
+ $("v2Proven").textContent=String(data.archive.clearlyCausalEvents);
+ $("v2Cost").textContent=format.format(data.critical[0].trading.roundTripCommissionBreakEvenPct)+"%";
+ $("v2status").textContent="V2 analizi: "+
+   data.archive.duplicateAliases+" mükerrer olay kaydı ayrıştırıldı. "+
+   "Ekonomik ilk yayın ve neden kanıtlanmadığından vaka skoru tek başına AL/SAT üretmiyor. "+
+   "Ocak 2026 V1 portföy sonucu değiştirilmedi.";
+ const content=[];
+ for(const d of data.critical){
+  content.push('<article class="v2decision"><h3>'+escapeText(d.action==="BUY_GOLD"?"ALTIN AL":"NAKDE GEÇ")+
+   ' · '+escapeText(new Date(d.utc).toLocaleString("tr-TR",{timeZone:"Europe/Istanbul",dateStyle:"short",timeStyle:"short"}))+
+   '</h3><p>V1 işlem fiyatı: <b>'+money(d.decisionPrice)+
+   '</b> · Fiyat profilindeki eski benzer-vaka payı: '+pct(d.analog.legacySelectedEventFraction*100)+
+   ' · Mükerrer kayıtlar ayrıştırılınca: '+pct(d.analog.correctedSelectedEventFraction*100)+
+   ' <em>(bunlar tahmin olasılığı değil)</em></p>'+
+   '<p>Benzer bağımsız olay evresi: '+d.sampleQuality.episodesInNine+
+   ' · En yakın uzaklık: '+format.format(d.sampleQuality.distance)+
+   ' · Ekonomik neden: doğrulanmadı</p>');
+  content.push('<div class="v2questionGrid">'+d.questions.map(function(q){
+   const status=q.verified?'KONTROL EDİLDİ':'KANIT EKSİK';
+   return '<div class="v2question"><b>'+escapeText(q.id)+' · '+escapeText(q.question)+
+     '</b><p>'+escapeText(q.answer)+'</p><small>'+status+'</small></div>';
+  }).join("")+'</div></article>');
+ }
+ $("v2decisions").innerHTML=content.join("");
+ const items=[
+  "Haberlerin ilk yayımı ve aynı andaki piyasa beklentisi arşivde doğrulanmalı",
+  "Olay olmayan kontrol günleri eklenmeden risk oranı kalibre edilmiş olasılık sayılmamalı",
+  "Benzer olayların farklı kimlikli kopyaları ve üst üste gelen 96 saatlik dönemleri ayrı örnek sayılmamalı",
+  "Gerçek banka alış/satış kotasyonları olmadan bir risk alarmının kazanç sağlayacağı varsayılmamalı",
+  "Model değişikliği yalnız sonraki ayda sınanmalı; Ocak sonucu görülüp Ocak yeniden başarı testi sayılamaz"
+ ];
+ $("v2gaps").innerHTML=items.map(function(item){
+  return '<p><span class="v2bullet">○</span>'+escapeText(item)+'</p>';
+ }).join("");
+}
+async function loadScientificV2(){
+ try{
+  const req=await fetch("/api/algorithm/v2",{cache:"no-store"});
+  if(!req.ok)throw new Error("HTTP "+req.status);
+  renderScientificV2(await req.json());
+ }catch(error){
+  $("v2status").textContent="V2 bilimsel denetim henüz yüklenemiyor: "+error.message+
+    ". Eski model ve ana ekran bu durumdan etkilenmez.";
+ }
+}
+loadScientificV2();
