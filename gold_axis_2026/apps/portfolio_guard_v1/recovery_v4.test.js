@@ -48,3 +48,33 @@ t("V4 can abstain, or signal emergency, without inventing a G05/G06 cause",()=>{
  const x=v4.quantile([10,20,30,40,50],.75);
  assert.equal(x,40);
 });
+
+
+t("V4 endpoint actually replays and old V1 endpoint remains frozen",()=>{
+ const {requestHandler}=require("./server");
+ function read(url,method="GET"){
+  let status,body;
+  requestHandler({url,method},{writeHead(code){status=code;},end(content){body=content;}});
+  return {status,value:JSON.parse(body)};
+ }
+ const m=read("/api/algorithm/v4");
+ assert.equal(m.status,200);
+ assert.equal(m.value.version,v4.VERSION);
+ assert.equal(m.value.february.startUSD,119.75391720039644);
+ assert.equal(m.value.annual.length,3);
+ assert.equal(m.value.economicCauseVerified,false);
+ assert.equal(m.value.bankBidAskSpreadIncluded,false);
+ assert.equal(read("/api/algorithm/v4","POST").status,405);
+ const old=read("/api/summary");
+ assert.equal(old.status,200);
+ assert.ok(Math.abs(old.value.comparison[2].finalUSD-119.75391720039644)<1e-8);
+});
+t("V4 button and read-only JS visualizer are present and parse cleanly",()=>{
+ const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
+ const html=fs.readFileSync(path.join(__dirname,"public/index.html"),"utf8");
+ const js=fs.readFileSync(path.join(__dirname,"public/app.js"),"utf8");
+ assert.match(html,/id="runV4"/);
+ assert.match(html,/id="v4Trades"/);
+ assert.match(js,/api\/algorithm\/v4/);
+ assert.doesNotThrow(()=>new vm.Script(js,{filename:"public/app.js"}));
+});
