@@ -48,6 +48,10 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v8/regret"){
+  const audit=require("./v8_regret_audit").assess();
+  return respond(res,200,JSON.stringify(audit));
+ }
  if(route==="/api/algorithm/v7/intramonth-oracle"){
   const analysis=require("./intramonth_oracle_v7").runIntramonthOracle();
   return respond(res,200,JSON.stringify(analysis));
