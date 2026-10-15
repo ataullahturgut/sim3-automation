@@ -48,6 +48,21 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/algorithm/v6/portfolio"){
+  const r=require("./macro_v6_portfolio").fullResearch();
+  return respond(res,200,JSON.stringify({
+   version:r.version,status:r.status,years:r.years,monthResults:r.monthResults,
+   initialUSD:r.fromFebThroughSeptember.openingUSD,
+   finalUSD:r.fromFebThroughSeptember.finalUSD,
+   position:r.fromFebThroughSeptember.position,
+   trades:r.fromFebThroughSeptember.trades,
+   comparison:r.comparison,scientificGate:r.scientificGate,
+   promotionAuthorized:r.promotionAuthorized,
+   economicEventEvidence:r.eventEvidence,macroCoverage:r.cmeByYear,
+   dataSourcePins:r.sourcePins,
+   bankSpreadIncluded:false
+  }));
+ }
  if(route==="/api/algorithm/v6"){
   const audit=require("./macro_v6").runAudit();
   return respond(res,200,JSON.stringify(audit));
