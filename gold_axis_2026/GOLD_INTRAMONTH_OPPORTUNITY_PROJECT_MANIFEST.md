@@ -1,5 +1,17 @@
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
+> **15 EKİM 2026 — V6 NQ/ZN FİYAT TEYİDİ EK FAYDA SAĞLADIĞINI GÖSTEREMEDİ (RED).**
+> 96 OLAY-02 fişinin doğrulanmış ilk haber saati **0/96**, kanıtlanmış ekonomik mekanizma **0/96**, onaylı as-of işlem ataması **0/96**.
+> [V6 çalışma ve bulgu raporu](apps/portfolio_guard_v1/ECONOMIC_CROSSMARKET_V6_VALIDATION_20261015.md).
+> HistData XAU + kapandığı bilinen saatlik CME NQ/ZN, karar saatinde yalnız en az 1h önce başlayan ve yaşı en fazla 4h olan H1 fiyatlarından toplam 4.107 kayıt üretildi.
+> V4 tabanlı V6: 2023/2024/2025'te V4'e sıfır fark; 2026 Şubat–Eylül 119,753917 USD nakitten 98,285174 USD,
+> fiyat V4 96,706968 USD, ancak V6 işlem sayısı 7'den 13'e yükseldi. Gerçek banka makası yok ve 2026 geriye dönük bilinen dönem, kör OOS değil.
+> Ayrı V5 tabanlı makro portföy deneyi Şubat–Eylül 107,740399 USD, V5 107,832861 USD, üstünlük yok.
+> R71/72 ekonomik sürpriz arşivi 2024–2026'yı kapsamıyor; 2024/2025 günlük sert düşüş etiketleri çok az.
+> G05-C/G06-B ve diğer ekonomik DNA açıklamaları doğrulanmadan işlem nedeni OLAMAZ.
+> Son karar: **V6 otomatik ticaret onayı yok**, OLAY-02 ve ÖĞREN-03 ve V1–V5 değişmedi. Yeni ana manifest oluşturulmadı.
+
+
 > **15 EKİM 2026 — OLAY + GERÇEK MAKRO İLE V6 BİLİMSEL DENETİM TAMAMLANDI; EKONOMİK AL/SAT KABUL EDİLMEDİ.**
 > [V6 ekonomik karar ve sonuç raporu](apps/portfolio_guard_v1/V6_ECONOMIC_MACRO_PORTFOLIO_FINAL_AUDIT_20261015.md),
 > [V6 baştan yazılı ekonomik hipotez protokolü](apps/portfolio_guard_v1/V6_CROSS_ASSET_EVIDENCE_PROTOCOL_20261015.md).
