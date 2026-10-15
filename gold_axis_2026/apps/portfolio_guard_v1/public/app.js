@@ -24,7 +24,7 @@ function chart(days){
  const coords=values.map(function(v,i){return xr(i).toFixed(1)+","+yr(v).toFixed(1);});
  const baseY=yr(min);
  let svg='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" aria-labelledby="chart-title" role="img">'+
- '<title id="chart-title">${activeMonth==="2026-02"?"Şubat":"Ocak"} 2026 günlük net portföy değeri</title>';
+ '<title id="chart-title">'+(activeMonth==="2026-02"?"Şubat":"Ocak")+' 2026 günlük net portföy değeri</title>';
  for(let i=0;i<=4;i++){
   const v=min+i*(max-min)/4,y=yr(v);
   svg+='<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="#29394b" stroke-width="1"/>'+
@@ -100,7 +100,9 @@ function render(){
    " Ekonomik nedenler henüz doğrulanmadı. Bu uygulama emir üretmez.";
  $("learningNote").textContent=(activeMonth==="2026-02"?"Şubat":"Ocak")+" ayında olay katmanının fiyat modeline ek kazancı: "+
    money(event.finalUSD-baseline.finalUSD)+
-   ". Tanınmayan şok alarmı gerekçe sunar; bu ay ek işlem sağlamamıştır.";
+   (Math.abs(event.finalUSD-baseline.finalUSD)<1e-8?". Bu ay olay katmanı ek getiri sağlamadı.":". İşlem farkı ve net sonuç karar geçmişinden denetlenmelidir.");
+ $("modelVersion").textContent=response.version;
+ $("footerVersion").textContent=response.version;
  $("monthHeading").textContent="ARAŞTIRMA / "+(activeMonth==="2026-02"?"ŞUBAT":"OCAK")+" 2026";
  $("dailyTitle").textContent=(activeMonth==="2026-02"?"Şubat":"Ocak")+" 2026 · Gün gün";
  $("startingCash").textContent=money(s.startUSD)+" başlangıç";
