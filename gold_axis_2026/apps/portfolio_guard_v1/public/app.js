@@ -906,3 +906,42 @@ async function runV12Rehber(){
 }
 $("runV12Rehber").addEventListener("click",runV12Rehber);
 
+async function runV12Earliest(){
+ const button=$("runV12Earliest"),status=$("v12EarliestStatus");
+ button.disabled=true;
+ status.textContent="3 Ocak 2023'ten başlayarak sıfırlanmayan 100 dolarlık portföy yeniden oynatılıyor…";
+ try{
+  const response=await fetch("/api/algorithm/v12/earliest",{cache:"no-store"});
+  if(!response.ok)throw Error("HTTP_"+response.status);
+  const a=await response.json();
+  if(a.version!=="V12_EARLIEST_UNBROKEN_CHRONOLOGICAL_AUDIT_20261016"||
+    a.scientificGate.promote!==false||
+    a.auditLimitations.prospectiveBlindPeriod!==false||
+    a.auditLimitations.trueBankBidAsk!==false)throw Error("EARLIEST_RESEARCH_CONTRACT_INVALID");
+  const entries=[
+   ...a.continuous.yearly.map(y=>({
+     period:String(y.year)+" sonu",final:y.yearEndUSD,
+     details:y.filledTrades+" işlem · "+y.memoryReadyDays+" model-hazır gün"
+   })),
+   {period:"2023–2026 pasif ALTIN",final:a.passiveGold.finalUSD,details:"İlk banka saati al, Eylül 2026 sonunda sat"},
+   {period:"Yalnız Şubat–Eylül 2026",final:a.resetFeb2026.finalUSD,details:"119,75 $ farklı başlangıç; kesintisiz koşu değil"}
+  ];
+  $("v12EarliestTable").innerHTML=table(
+    ["Karşı deney","Komisyon sonrası son bakiye","Gözlem"],
+    entries.map(x=>"<tr>"+cell(escapeText(x.period))+
+      cell(money(x.final))+cell(escapeText(x.details))+"</tr>")
+  );
+  const y24=a.continuous.yearly.find(x=>x.year===2024),
+    y25=a.continuous.yearly.find(x=>x.year===2025);
+  status.textContent="Kesintisiz 2023–2026: 100 $ → "+money(a.continuous.finalUSD)+
+    ". İlk kullanılabilir hafıza: "+a.continuous.earliestMemoryReady.slice(0,10)+
+    ". İlk gerçek AL: "+a.continuous.firstFilledTrade.at.slice(0,10)+
+    ". 2024 net kazanç eşiğini geçen gün: "+y24.buyNetGainGateDays+
+    "; 2025 %58 kâr olasılığını geçen gün: "+y25.buyProbabilityGateDays+
+    ". Model bilimsel olarak başarılı ilan edilmedi.";
+ }catch(err){
+  status.textContent="Kesintisiz yürüyüş yüklenemedi: "+err.message;
+ }finally{button.disabled=false;}
+}
+$("runV12Earliest").addEventListener("click",runV12Earliest);
+
