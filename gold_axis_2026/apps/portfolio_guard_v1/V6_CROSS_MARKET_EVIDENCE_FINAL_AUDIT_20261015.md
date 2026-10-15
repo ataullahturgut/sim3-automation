@@ -37,3 +37,11 @@
 
 ## Tek tıkla uygulama
 Windows'ta GitHub Desktop Fetch origin→Pull origin, `BASLAT.bat`, sol menü **V6 piyasa aktarım denetimi** > **V6 ekonomik aktarım testini çalıştır**. API `GET /api/algorithm/v6`; `npm test`, `npm run verify-macro-v6`; salt okunur, gerçek banka bağlantısı ve emir işleme yok.
+
+## OLAY-02 özgün 96 vaka dosyası — ekonomik nedensellik kabul kapısı
+- Ana CSV kaynak doğrulaması: `gold_axis_2026/OLAY_02_96_TUM_VAKA_EVRENSEL_ORUNTU_MATRIKS_20261015.csv`, Git blob `4b6c8fd84ea291ae22ddc9b0d5d545ce2d8fa527`. 96 satır, **84 farklı** `unique_checkpoint_id`.
+- 96 olayın **0/96** tanesinde `onset_firstprint_verified=YES`, **0/96** `mechanism_caused_proven=YES`, **0/96** `asof_action_validated=YES`. Diğer deyişle mevcut OLAY-02 geçmiş ekonomik vaka fişleri, herhangi bir vakaya otomatik nedensel veya onaylanmış al-sat örgüsü atamak için **henüz yeterli kanıt sağlamıyor**.
+- Kanıt basamakları: 56 `D1_DATED_NEWS_CONTEXT_NOT_FIRSTPRINT`, 22 `D0_NO_IN_WINDOW_DATED_NEWS`, 18 `D2_DEEP_DOCUMENTARY_REVIEW_NO_CAUSAL_ATTRIBUTION`. Örgü tablosunda **78/96** `UNMAPPED_OR_NOT_DIRECT_DEEP_V1`. Karşıt örgü hipotezleri korunur; veri eksik diye G05-C/G06-B otomatik atanmaz.
+- **İlk yayın zamanına karşı somut olumsuz kontrol**: `SWING_V1_002` as-of noktası 2023-02-01 06:15 UTC, resmî ABD Merkez Bankası 1 Şubat 2023 FOMC açıklaması aynı gün 2:00 pm EST = **19:00 UTC**. Açıklama karar anından **765 dakika sonra** olduğundan bu erken fiyat davranışının nedeni olarak o FOMC açıklamasını kullanmak gelecek bilgisi kaçağıdır. Resmî kaynak: https://www.federalreserve.gov/monetarypolicy/fomcpresconf20230201.htm . Bu kontrol daha eski başka haberler olamaz demek değildir.
+- Uygulanan güvenlik kodu `event_evidence_gate_v6.js`, sınama `event_evidence_gate_v6.test.js`, çalıştırma `npm run audit-event-evidence-v6`. Orijinal 96 vaka dosyası **değiştirilmedi**. Çıktı `causalEventTradeAuthorization=false`.
+- Karar: Bilimsel V6 testinde çapraz piyasa risk sınıflandırması ile gerçek ekonomik *neden* aynı şey değildir. Müşteri için AL/SAT kararını herhangi bir ekonomik örgüye dayandırmak için önce ilk yayın verisini gerçek tarih/UTC, özgün sürüm, birden çok kaynak teyidi ve nedensel alternatiflerle doldurmak gerekir.
