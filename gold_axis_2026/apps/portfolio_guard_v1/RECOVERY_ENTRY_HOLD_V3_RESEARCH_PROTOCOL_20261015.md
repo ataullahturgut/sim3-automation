@@ -34,3 +34,20 @@ Ocak sonunda NAKİT olan $119.75391720039644 portföyü, Şubat 2026'da yükseli
 
 ## Şu anki durum
 **Ön inceleme ve V3 deney protokolü tamamlandı.** Eğitilmiş/dogrulanmış V3, geçmiş stres verisi ve banka maliyeti henüz tamamlanmadı; bu dosya getiriyi değiştirmez. Öncelik aşağı rejimlerde daha erken toparlanma tanıma ve işlem churn azaltma. Her yeni sonuca işlem ve karar defterinde hangi tarihte hangi verilere dayanıldığının yazılması zorunlu.
+
+## Ek kesinleştirme — ekonomik olay örgüsünden V3 karar algoritmasına
+
+**Mevcut ekonomik örgüler:** ÖĞREN-03 G05-C = likidite satışı sonrası fonlama rahatlaması; G06-B = pozisyon/aşırı hareket sonrası dönüş. İkisi ekonomik *hipotez*, Şubat 2026 için kanıtlanmış açıklama değil. İlk haber saati ve USD/faiz/NQ/metallerden zamansal teyit yoksa G05-C/G06-B'ye kesin neden atama: UNRESOLVED. İki model başlığı ayrı: ekonomik neden adayı (ÖĞREN-03) ve gözlenen fiyat davranışı (uygulama). Tekil tarihler OLAY-02'de; yeni aktif manifest açılmaz.
+
+**Yeni veri keşfi:** HistData 2020–21 M15 tablosunda 47.188 bar mevcut (2020 22.371 ve 2021 22.602 uygun türetilmiş uzun lookback kesiti). Şubat'a bakılarak tanımlanan sıkı `r276<=-5,r92>=2,r4>0` şablonu 2020'de yalnız 3 bar/2 takvim günü; 2021 ve 2023–25 sıfır. Bunlar bağımsız epizot sayılmaz, risk olasılığı kalibre etmek için yetersiz. Hafif `r276<=-3,r92>=1,r4>0` 2020 62 bar/6 gün; 2021 7 bar/3 gün; 2025 37 bar/3 gün. 2022 kapsamı ayrıca taranmalı. 2010–2019 verisinin varlığı teyit edilmiş değil.
+
+**V3 somut algorithm router:**
+1. 15m tamamlanmış fiyat/4h volatilite/downside, 92/276 bar eğilim ve doğrulanmış geriye dönük NQ/ZN/USD/2Y/XAG ile `FALLING_FAST`, `STABILIZING`, `RECOVERY_CANDIDATE`, `UP_TREND`, `FAILED_REBOUND`, `UNKNOWN` evrelerini sürdür. Başlangıç fiyat evresini ekonomik DNA sanma. İlk aday finite-state + volatilite uyarlı eşik + giriş/çıkış histerezis; HMM/HSMM/hazard ancak olay sayısı yeterliyse test edilecek rakip.
+2. CASH konumunda WAIT öncelikli. Baskı zayıflaması ve birden fazla bağımsız toparlanma teyidinde önce kademeli AL adayı. GOLD'da HOLD öncelikli; tek 15m düşüşle otomatik SAT yok, ancak yeni kuvvetli şok için hızlı koruma kapısı var. Alım ve satışın eşiklerini farklı tut (hysteresis).
+3. Sinyal kararına `expected future risk/reward` doğrulanmadan kalibre edilmiş olasılık etiketi verme. Önlenebilir düşüşün beklenen büyüklüğü ve kaçırılan UP ile %0,8 alış + %0,8 satış komisyon, ayrıca gerçek bid/ask+slippage karşılaştırılmalı.
+4. Öğrenme birimi 15m kayıt değil, bağımsız 24/48/96h şok epizodu ve 5/10/20 işlem günü yükseliş/yatay/tekrar düşüş yolu. İleri fiyat yollarını yalnız olgunlaştıktan sonra *label* olarak kullan. Aynı şoktan onlarca bağımsız örnek türetme.
+5. Örnekleri `first_evidence`, `phase_sequence`, `candidate_economic_DNA`, `firstprint_verified`, `XAU+cross_market_asof`, `failed_or_sustained_recovery`, `fwd_path_labels`, `event_overlap_group`, `cost` ve `version/hash` alanlarıyla sakla. Ekonomik neden kanıtsızsa UNKNOWN/UNRESOLVED ayrımı korunur.
+6. Eğitim ve hiperparametre seçimini Şubat 2026 getirisinden yapma. 2020–2025 temiz verisini böl; 2023→2024→2025 walk-forward sonradan değerlendirme, 2026 Şubat ise daha önce görüldüğünden yalnız stres örneği. Her ay için train_until ve kilitli parametre kontrolü zorunlu.
+7. Aynı başlangıç nakdiyle karşılaştırmalar: CASH, ilk bar BUY/HOLD (sonuç bilindiğinden fırsat/üst sınır), V1 15m, V1 3h ve V3. Kabul: bankacılık maliyeti sonrası net performans, büyük DOWN korunması, yakalanan UP, giriş gecikmesi, başarısız toparlanma, gereksiz AL/SAT, max drawdown, güven aralığı ve kötü epizotlar. Tek Şubat'ta 132,91 doları geçmişe uydurarak yakalamak *validasyon değil*.
+
+**Durum:** V3 mimarisi, veri girişleri, örgü ayrımı ve reddetme ölçütleri belirlendi. Eğitilmiş ve doğrulanmış yeni AL/SAT algoritması henüz oluşturulmadı; mevcut V1 portföy kararları değiştirilmedi.
