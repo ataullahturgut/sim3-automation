@@ -1,0 +1,26 @@
+name: Gold V11 Real ANN Backprop and Scientific Validation
+on:
+  push:
+    branches:
+      - research-gold-v11-ann-supervised-20261016
+    paths:
+      - "gold_axis_2026/apps/portfolio_guard_v1/**"
+      - ".github/workflows/portfolio-guard-v11-real-ann-science.yml"
+  workflow_dispatch:
+jobs:
+  ann-v11:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Regress V1 to V11 and ANN finite-difference backpropagation
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Verify untouched historical source inputs
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
+      - name: Enforce ANN not promoted without independent evidence
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node -e "const a=require('./v11_ann_research').research(); console.log(JSON.stringify({version:a.version,status:a.status,gate:a.gate,models:a.model,results:a.experiments.map(x=>({year:x.year,policy:x.policy,net:x.final,transactions:x.nTrades}))},null,2));if(a.gate.promote)process.exit(1)"
