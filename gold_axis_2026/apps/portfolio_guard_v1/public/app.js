@@ -365,3 +365,41 @@ async function runLongScientificReview(){
  }finally{button.disabled=false;}
 }
 $("runLongReview").addEventListener("click",runLongScientificReview);
+
+
+async function runV6EconomicEvidence(){
+ const b=$("runV6"),st=$("v6Status");b.disabled=true;
+ st.textContent="Altın, Nasdaq, tahvil ve petrol kapanış saatleri eşleştiriliyor…";
+ try{
+  const res=await fetch("/api/algorithm/v6",{cache:"no-store"});
+  if(!res.ok)throw Error("SUNUCU_HTTP_"+res.status);
+  const x=await res.json();
+  if(x.status!=="READ_ONLY_NO_AUTOTRADING"||x.annual.length!==3||
+     x.acceptance.tradeAuthorized!==false||
+     x.predictionTarget!=="XAU_ANY_3H_CLOSE_DOWN_2PCT_WITHIN_NEXT_24H")
+   throw Error("V6_BILIMSEL_SOZLESME");
+  const y25=x.annual.find(r=>r.year===2025);
+  $("v6Pairs").textContent=new Intl.NumberFormat("tr-TR").format(x.coverage.completePairs);
+  $("v6Cases").textContent=String(y25.test.positive);
+  $("v6Gold").textContent=y25.xauOnly.brier.toFixed(5);
+  $("v6Macro").textContent=y25.xauPlusCross.brier.toFixed(5);
+  $("v6Table").innerHTML=table(
+   ["Yıl","İncelenen gün","Büyük düşüş günü","Altın Brier","Altın + diğerleri Brier","Ek veri katkısı"],
+   x.annual.map(function(v){
+    return "<tr>"+cell(v.year)+cell(v.test.n)+cell(v.test.positive)+
+      cell(v.xauOnly.brier.toFixed(5))+cell(v.xauPlusCross.brier.toFixed(5))+
+      cell(v.crossBeatsPrice.brier&&v.crossBeatsPrice.logLoss?"İyileşme (örnek yetersiz olabilir)":"Kanıtlanmadı")+"</tr>";
+   })
+  );
+  st.textContent=x.acceptance.incrementalEvidenceOn2024And2025?
+    "Ek piyasalarda yalnız sınıflandırma sinyali görüldü; canlı/otomatik karar onaylanmadı.":
+    "V6 sonucunda ek piyasa bilgileri iki yılda da güvenilir tahmin üstünlüğü sağlamadı. İşleme açılmadı.";
+  $("v6Verdict").textContent="SONUÇ: "+x.acceptance.verdict+
+   ". Fed/TÜFE/NFP ilk yayın sürümleri doğrulanmadı. 2024–2025'te düşüş sayısı az; "+
+   "2026 verileri geriye dönük stres değerlendirmesi. Gerçek banka BID/ASK makası bulunmuyor. "+
+   "G05-C/G06-B ekonomik olay nedenleri doğrulanmadı ve bu kontrol AL/SAT üretmez.";
+ }catch(err){
+  st.textContent="V6 hesaplaması tamamlanamadı: "+err.message+". Eski sonuçlar değişmedi.";
+ }finally{b.disabled=false;}
+}
+$("runV6").addEventListener("click",runV6EconomicEvidence);
