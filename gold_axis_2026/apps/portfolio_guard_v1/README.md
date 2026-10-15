@@ -63,3 +63,20 @@ Ocak içinde olay öğrenme katmanı, fiyat modelinin işlem kararlarını **de�
 **Bu V1 yalnız Ocak 2026 sabit arşivine göre çalışan prototiptir.** Diğer aylarda performans iddiası yoktur.
 
 Kaynak: gold_axis_2026/adaptive_volatility_learning/months/2026-01-new-learning/JAN_2026_NEW_EVENT_MONTH_WALK_V1_SCIENTIFIC_REPORT.md
+
+
+## 15 Ekim 2026 — V2 bilimsel algoritma denetimi eklendi
+**Algoritma V2 denetimi** sol menüde ayrı bir bölüm. Ocak 2026'nın V1 işlem sonuçlarını değiştirmez.
+
+Düzeltmeler: OLAY-02 aynı checkpoint kopyalarının tekilleştirilmesi; **163** takvimle seçilmiş geçmiş kontrolünün karşılaştırılması; tarihsel risk oranının gerçek olasılık olmadığının açık işaretlenmesi; **%1,6194** tam tur asgari komisyon eşiği; ekonomik ilk haber ve nedensellikte **UNRESOLVED**; 96 saat ileri etiketin olgunlaşma kontrolü; sonraki aya yalnız olgun bilgi aktarımı.
+
+Özellikle 2025 tarihle sıralı kontrol örneklerinde V2 basit yakın-komşu tahmininin Brier hatası **0,115535**, sabit tarihsel taban **0,115346**: Henüz daha iyi tahmin göstermedi. Bu nedenle yeni olay skoru otomatik işlem açamaz. V1 Ocak getirisi **119,753917 USD** olarak korunur.
+
+Kaynak:
+- `event_audit_v2.js` — kaynaklı cevaplar, olay deduplikasyonu ve takvim kontrol riski.
+- `data/CALENDAR_CONTROLS_2023_2025_M15_96H_V1.csv` — 163 bağımsız takvim örnek noktası, 96 saat ileri etiketleri yalnız eğitim sonuç alanıdır.
+- `monthly_learning_v2.js` — 29 Ocak satışının ileri etiketini 2 Şubat'a kadar bekletir.
+- `V2_ALGORITHM_SCIENTIFIC_AUDIT_20261015.md` — sonuç, yanlışlama ve henüz eksik bilimsel doğrulamalar.
+- `npm.cmd test` ve `npm.cmd run audit` — Windows doğrulaması.
+
+**Önemli:** V2 bir onaylı ekonomik tahmin sistemi veya banka emir motoru değildir. Şubat ayı stratejisi için henüz V2 yürürlüğe alınmadı; önce kontrol validasyonu ve gerçek banka maliyeti gerekir.
