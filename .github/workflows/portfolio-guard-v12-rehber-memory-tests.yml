@@ -1,0 +1,26 @@
+name: Gold V12 Original REHBER Causal Memory
+on:
+  push:
+    branches:
+      - research-gold-v12-episodic-learning-20261016
+    paths:
+      - "gold_axis_2026/apps/portfolio_guard_v1/**"
+      - ".github/workflows/portfolio-guard-v12-rehber-memory-tests.yml"
+  workflow_dispatch:
+jobs:
+  state-learning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Full legacy V1–V12 and original REHBER future-leakage tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Original portfolio integrity
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
+      - name: Fail-closed live trade guard and research outcome
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node -e "const a=require('./v12_rehber_agent').audit();const x=a.results.find(t=>t.year==='2026_FEB_SEP'&&t.variant==='REHBER_CORE');console.log(JSON.stringify({researchVersion:a.version,gate:a.scientificGate,experimentalNet:x.final,trainingErrors:x.learning.mistakes},null,2));if(a.scientificGate.promote||a.scientificGate.liveTradingAuthorized)process.exit(1)"
