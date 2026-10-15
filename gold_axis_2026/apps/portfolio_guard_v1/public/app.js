@@ -667,3 +667,56 @@ async function runV8Regret(){
 }
 $("runV8Regret").addEventListener("click",runV8Regret);
 
+async function runV9Scientific(){
+ const b=$("runV9Scientific"),status=$("v9ScientificStatus");
+ b.disabled=true;
+ status.textContent="2023–2026 sıralı veriyle V9 maliyetli stratejileri ve geçmişte olgunlaşmış öğrenme etiketlerini değerlendiriyor…";
+ try{
+  const res=await fetch("/api/algorithm/v9/scientific",{cache:"no-store"});
+  if(!res.ok)throw Error("HTTP_"+res.status);
+  const a=await res.json();
+  if(a.version!=="V9_STATE_REGRET_SCIENTIFIC_AUDIT_20261015"||
+     a.status!=="REJECT_V9_PROMOTION_SAVE_LEARNING_EXPERIMENTS"||
+     a.gate.promote!==false||a.gate.canTradeLive!==false||
+     a.execution.sameCheckpointSignalFill!==false||
+     a.execution.bankBidAsk!==false||
+     a.method.prospectiveBlindPeriod!==false)throw Error("V9_SCIENTIFIC_AUDIT_GATE_INVALID");
+  const choose=(name,year)=>a.shadowCandidates.find(x=>x.variant===name&&x.year===year);
+  const episode=(name,year)=>a.episodeCandidates.find(x=>x.variant===name&&x.year===year);
+  $("v9Meta2026").textContent=money(choose("VOTE_42D","2026").final);
+  $("v9Episode2026").textContent=money(episode("POSTERIOR","2026").final);
+  $("v9LegacyV7").textContent=money(a.comparisons.V7_2026);
+  $("v9Promotion").textContent="ONAY YOK";
+  const rows=[
+   {label:"2024 · Histerezis / rejim",price:episode("BASE","2024").final,ref:123.84971030121015,why:"Pasif altın"},
+   {label:"2025 · Histerezis / rejim",price:episode("BASE","2025").final,ref:160.4152649234894,why:"Pasif altın"},
+   {label:"2026 · Naif uzman karışımı",price:a.naiveMixture.find(x=>x.year==="2026_FebSep"&&x.policy==="ensemble").finalUSD,ref:119.753917,why:"Nakit"},
+   {label:"2026 · Çevrimiçi uzman seçici",price:choose("VOTE_42D","2026").final,ref:a.comparisons.V7_2026,why:"V7"},
+   {label:"2026 · Gecikmeli etiket koruması",price:episode("POSTERIOR","2026").final,ref:a.comparisons.V7_2026,why:"V7"}
+  ];
+  $("v9ResultsTable").innerHTML=table(["Araştırma / Dönem","Net sonuç","Karşılaştırma","Karar"],rows.map(x=>
+   "<tr>"+cell(escapeText(x.label))+cell(money(x.price))+
+   cell(money(x.ref)+" · "+escapeText(x.why))+
+   cell(x.price>x.ref?"ÜSTÜN (yalnız tarihsel)":"ALTINDA / EŞİT")+"</tr>"
+  ));
+  $("v9Findings").textContent="Önemli bulgular: ani politika geçişleri yüzünden komisyon kaybı; "+
+   "2024'te iyi görünen stratejinin 2025 ve 2026'ya taşınamaması; "+
+   "14 günlük gecikmeli etiketlerin bağımsız sayılabilmesi için seyrek eğitim ihtiyacı; "+
+   "42–84 günlük geçmişte en çok kazandıran uzmanı seçmenin 2026 rejimini öngörememesi. "+
+   "2024–2025'te pasif altını HER İKİ yılda geçen yeni aday: "+
+   a.pre2026PassBothPassive.count+".";
+  $("v9ScientificWarning").textContent="BİLİMSEL KARAR: V9 TERFİ REDDEDİLDİ. "+
+   "Tüm emir vekilleri sinyalden sonraki 09/12/15 banka saatinde uygulanır; "+
+   "%0,8 alış + %0,8 satış düşülür. "+
+   "2026 zaten incelenmiş olduğundan kör test değildir. "+
+   "Gerçek banka alış/satış fiyatları ve 96 OLAY-02 firstprint kanıtları eksik. "+
+   "2026 sonuçlarına bakarak seçilen 'en iyi V9' model değildir, yatırıma uygulanamaz.";
+  status.textContent="V9 analiz tamamlandı: adayların hiçbirinde sağlam çok-yıllı üstünlük yok. "+
+   "V7 korunuyor. V9 otomatik işlem veya model değiştirme yapmıyor.";
+ }catch(err){
+  status.textContent="V9 bilimsel deneyi yüklenemedi: "+err.message+
+   ". V7 kaynakları ve mevcut program değişmedi.";
+ }finally{b.disabled=false;}
+}
+$("runV9Scientific").addEventListener("click",runV9Scientific);
+
