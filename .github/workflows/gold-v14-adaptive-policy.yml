@@ -24,6 +24,9 @@ jobs:
         run: |
           node v14_karar_run.js > v14_research_results.json
           node -e "const x=require('./v14_research_results.json'); console.log(JSON.stringify({version:x.version,gate:x.scientificGate,experiments:x.experiments.map(z=>({period:z.period,model:z.variant,final:z.final,hold:z.buyHold,trades:z.trades,mdd:z.maxDD}))},null,2))"
+      - name: V14 no-trade score diagnostics
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node v14_diagnostic.js
       - name: Preserve complete V14 experiment
         if: always()
         uses: actions/upload-artifact@v4
