@@ -1,5 +1,25 @@
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
+> **15 EKİM 2026 — V6 EKONOMİK ÖRGÜ KANIT KAPISI / TAHMİN TESTİ SONUÇLANDI: OTOMATİK İŞLEM KABUL EDİLMEDİ.**
+> [V6 tam doğrulama raporu](apps/portfolio_guard_v1/V6_CROSS_MARKET_EVIDENCE_FINAL_AUDIT_20261015.md),
+> [V6 ön kayıt](apps/portfolio_guard_v1/V6_CROSS_MARKET_DOWNSIDE_PRE_REG_20261015.md),
+> [ekonomik olay firstprint denetimi](apps/portfolio_guard_v1/event_evidence_gate_v6.js).
+> 2023–2026 Nasdaq NQ, 10Y tahvil vadeli ZN, petrol CL piyasalarından 2.904
+> doğru karar saati kesiti alındı, 506 XAU + çapraz piyasa + 24h sonuç etiketi tam günlük gözlemi oluştu.
+> 2024 -%2/24h 5 vaka (148 gözlem): XAU-only Brier 0,033162, çapraz 0,031546.
+> 2025 8 vaka (155): XAU 0,047953, çapraz 0,050139 (**kötü**).
+> 2026 Ocak–Eylül 14 vaka (114): XAU 0,112185, çapraz 0,112769 (**kötü**).
+> Ek veri **kanıtlanmış ilave üstünlük sağlamadı**, risk tahminini AL/SAT'a bağlamak reddedildi.
+> ÖZGÜN OLAY-02 96 vaka / 84 farklı kontrol noktası: **0 ilk yayın doğrulaması,
+> 0 ekonomik neden doğrulaması, 0 karar zamanı AL/SAT onayı**; 78 vakada örgü doğrudan
+> sınıflandırılmamış. `G05-C/G06-B` kesin ekonomik neden değil hipotez.
+> Somut örnek: 1 Şubat 2023 06:15 UTC fiyat noktasına aynı gün 19:00 UTC'de
+> yayımlanan Fed açıklamasını sebep göstermek zaman sırasına aykırı.
+> V1–V5 fiyat modelleri, OLAY-02 ve ÖĞREN-03 dosyaları **korundu**. V6 ayrı araştırma.
+> Nihai güvenlik kapısı: **NO_TRADING_AUTHORIZATION**; kör ileri test, ilk haber
+> vintage ve gerçek banka ASK/BID olmadan yatırım için doğrulanmış algoritma iddiası yok.
+
+
 > **15 EKİM 2026 — V4 UZUN DÖNEMDE BAŞARISIZ, V5 GÖLGE ADAYI BİLİMSEL KABUL KAPISINDA REDDEDİLDİ.**
 > [Tekrar üretilebilir V4→V5 denetim raporu](apps/portfolio_guard_v1/SCIENTIFIC_V4_V5_CONTINUOUS_REVIEW_20261015.md),
 > [V4 Şubat-sonrası ön kayıt](apps/portfolio_guard_v1/V4_POST_FEB_2026_PRE_REGISTERED_EVALUATION_20261015.md),
