@@ -155,7 +155,7 @@ def overlay_groups(events,asof,half_life_hours=24):
 
 def explain_walk(bars,events,cases,start=None,stop=None):
     """Single chronological walk: validated news AND metrics at same clock."""
-    for row in walk(bars,events,cases,start=start,stop=stop):
+    for row in walk(bars,events,(),start=start,stop=stop):
         t=instant(row['at_utc'])
         og=overlay_groups(events,t)
         feats=row['features']
