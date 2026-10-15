@@ -42,10 +42,11 @@ function inputs(rows,i){
 }
 function dataset(rows){
  const bank=rows.filter(isBank).map(x=>({...x,ts:date(x.tt)}));
- const samples=[];
+ const samples=[],featuresByOrigin=new Map();
  for(let i=0;i<rows.length;i++){
   const row=rows[i];if(!isOrigin(row))continue;
-  const ts=date(row.tt),entry=upperBound(bank,ts);
+  const ts=date(row.tt),features=inputs(rows,i),entry=upperBound(bank,ts);
+  featuresByOrigin.set(row.tt,features);
   if(!entry||entry.ts-ts>72*HR)continue;
   const exit4=atOrAfter(bank,entry.ts+96*HR),exit14=atOrAfter(bank,entry.ts+336*HR);
   if(!exit4||!exit14||exit4.ts-entry.ts-96*HR>78*HR||
@@ -54,10 +55,10 @@ function dataset(rows){
   samples.push({at:row.tt,ts,entryUTC:entry.tt,entryTs:entry.ts,
    exit4UTC:exit4.tt,exit4Ts:exit4.ts,
    exit14UTC:exit14.tt,exit14Ts:exit14.ts,
-   priceAtEntry:entry.p,y,features:inputs(rows,i)});
+   priceAtEntry:entry.p,y,features});
  }
  const byOrigin=new Map(samples.map(s=>[s.at,s]));
- return {bank,samples,byOrigin,records:rows.length,sampleCount:samples.length};
+ return {bank,samples,byOrigin,featuresByOrigin,records:rows.length,sampleCount:samples.length};
 }
 function chronologicalTraining(ds,cutoff){
  const t=date(cutoff);
@@ -123,8 +124,8 @@ function simulate(ds,opts={}){
   if(!isOrigin(row))continue;
   const origin=ds.byOrigin.get(row.tt);
   // Even if a label is missing past dataset end, input is still as-of.
-  const feat=origin?.features||inputs(opts.rawRows||[],0);
-  if(!origin){continue;}
+  const feat=ds.featuresByOrigin.get(row.tt);
+  if(!feat)throw Error("MISSING_ASOF_FEATURES");
   const prediction=ANN.predict(ann,feat);
   const shock=row.r4!=null&&row.r4<=-1&&row.nq6!=null&&row.nq6<=-1;
   const longOK=prediction.net14>policy.buyNet14&&prediction.net4> -4;
@@ -138,7 +139,7 @@ function simulate(ds,opts={}){
   }
   const side=desired==="GOLD"?"BUY":"SELL";
   predictions.push({at:row.tt,net4:prediction.net4,net14:prediction.net14,
-    actual4:origin.y[0],actual14:origin.y[1],
+    actual4:origin?origin.y[0]:null,actual14:origin?origin.y[1]:null,
     regime:shock?"STRESS":"OTHER",wasHolding:!!ounces,desired});
   if(desired!==(ounces?"GOLD":"CASH")&&!pending){
    pending={side,at:row.tt,ts:t,why};
