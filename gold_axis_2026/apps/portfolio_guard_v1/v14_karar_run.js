@@ -102,7 +102,7 @@ function one(b,opt={}){
      if(opt.includeDiagnostics)diagnostics.push({
        at:row.tt,position:pos,proposed:choice.target,
        mu:forecast.mu,downside:forecast.downside,uncertainty:forecast.uncertainty,
-       netScore:choice.advantage,old14:f13.net14,old56:f13.net56,
+       netScore:choice.advantage,shortMu:choice.shortMu,old14:f13.net14,old56:f13.net56,
        learn7:s14.heads[7].n,learn28:s14.heads[28].n,learn56:s14.heads[56].n,legacy:f14Legacy(f13),
        gate:s14.gateW.slice(),reason:choice.reason
      });
@@ -127,9 +127,9 @@ function one(b,opt={}){
 function audit(){
  const b=V13RUN.build(),out=[];
  for(const p of PERIODS){
-   for(const variant of ["V14_FULL","V14_NO_GATE","V14_NO_RISK"]){
+   for(const variant of ["V14_FULL","V14_NO_GATE","V14_NO_RISK","V14_NO_SHORT_EXIT"]){
      const q=one(b,{...p,disableGate:variant==="V14_NO_GATE",
-       disableRisk:variant==="V14_NO_RISK"});
+       disableRisk:variant==="V14_NO_RISK",disableShortExit:variant==="V14_NO_SHORT_EXIT"});
      out.push({period:p.name,variant,initial:q.initial,final:q.final,
        buyHold:q.buyHold,trades:q.tradeCount,maxDD:q.maxDrawdownPct,
        matured7:q.learned7,matured28:q.learned28,matured56:q.learned56,gate:q.learnedGate,
