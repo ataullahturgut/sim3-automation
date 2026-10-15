@@ -45,3 +45,6 @@ jobs:
       - name: V4 adaptive hold and shock protection audit
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run verify-v4
+      - name: Preregistered Feb-Sep continuous V4 comparison
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run review-v4-holdout
