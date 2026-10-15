@@ -52,7 +52,7 @@ No future-derived attributes enter a decision. Future 96h low is used only to la
 
 ## 4. Aynı kaynak ve checkpoint evreninde sonuç
 2025 değerlendirmesi için yalnız 2023–2024 prototipleri (53 tarihli arşiv kesiti).
-2026 değerlendirmesi için yalnız 2023–2025 prototipleri (93 kesit).
+2026 değerlendirmesi için 2023–2025'teki 93 prototip adayından **ilk karar anında 96 saatlik ileri etiketi olgunlaşmış 92 kesit**. `C_CORR_054` (29 Aralık 2025) ilk 2026 kararında henüz olgunlaşmadığından **dışlandı**.
 Hesaplama evreni sırasıyla **2000** ve **1511** uygun M15-temelli 3 saatlik checkpoint;
 kaynak zamanı ve kalite kapısı değişince daha önceki başka örneklemli sayılarla bire bir kıyaslanmaz.
 
@@ -92,18 +92,18 @@ G) Ancak üstteki kanıtlar tamamlandığında 15 dakikalık gerçek karar döng
 Girdiler üç CSV: orijinal OLAY-02 vaka matrisi, aynı 96 vaka için M15'ten türetilmiş
 `case_id,low96,high96,ct` sonuç tablosu, tamamlanmış M15 ve H1'den
 üretilmiş `tt,p,c,r4,r1,r3,rv,ds,eff,loc,dd,nq1,nq6,zn1` checkpoint paneli.
-Bu iki türetilmiş CSV, aşağıdaki değişmez as-of veri hazırlama sözleşmesine göre üretilmelidir:
+Bu iki türetilmiş CSV **bu araştırma klasöründe ayrıca GitHub'a kaydedilmiştir**. Aşağıdaki değişmez as-of veri hazırlama sözleşmesine göre yeniden üretilebilmelidir:
 - Archive case anchor `checkpoint_utc`'den **önceki** tamamlanmış XAU M15 close fiyatı.
-- Anchor'dan sonraki `[anchor, anchor+96h)` M15 low/high; sonuç tablosu yalnız tarihsel hedef üretir.
+- Anchor'dan sonraki `[anchor, anchor+96h)` M15 low/high; sonuç tablosu yalnız tarihsel hedef üretir. **Bir olayın hedefi tam olgunlaşmadan başka bir yılın karar eğitimine giremez (minimum 96 saat embargo).**
 - Checkpoint at origin time, en son tamamlanmış fiyatı ve bir sonraki M15 OPEN'u kullanır;
   16/92/276 bar geriye bakış; en son tamamlanmış CME H1 ve yalnız geçmiş 6 H1 NQ.
 - Henüz kapanmamış veriyi, gerçek ilk yayımı belirsiz haberi veya `expost_price_label`'ı predictor yapma.
 - Örnekleme değişirse sonuçlar eski raporun devamı sayılmaz, yeni sürüm gerekir.
 ```sh
 python event_analog_portfolio_guard_v0.py \
-  --library OLAY_02_96_TUM_VAKA_EVRENSEL_ORUNTU_MATRIKS_20261015.csv \
-  --outcomes historical_96h_case_outcomes.csv \
-  --checkpoints verified_3h_asof_features.csv \
+  --library ../../OLAY_02_96_TUM_VAKA_EVRENSEL_ORUNTU_MATRIKS_20261015.csv \
+  --outcomes historical_96h_case_outcomes_v0.csv \
+  --checkpoints verified_3h_asof_features_2025_2026_v0.csv \
   --year 2026 --mode hybrid --output replay_2026.json
 ```
 **Repo güvenliği:** Bu dosya eski Ocak 2026 strateji deneyi değildir;
