@@ -138,6 +138,8 @@ function renderScientificV2(data){
  }
  $("v2Raw").textContent=String(data.archive.archiveRows);
  $("v2Unique").textContent=String(data.archive.uniqueCheckpoints);
+ $("v2Controls").textContent=String(data.timeSampledControls.count);
+ $("v2ControlDrops").textContent=String(data.timeSampledControls.down3);
  $("v2Proven").textContent=String(data.archive.clearlyCausalEvents);
  $("v2Cost").textContent=format.format(data.critical[0].trading.roundTripCommissionBreakEvenPct)+"%";
  $("v2status").textContent="V2 analizi: "+
@@ -154,7 +156,8 @@ function renderScientificV2(data){
    ' <em>(bunlar tahmin olasılığı değil)</em></p>'+
    '<p>Benzer bağımsız olay evresi: '+d.sampleQuality.episodesInNine+
    ' · En yakın uzaklık: '+format.format(d.sampleQuality.distance)+
-   ' · Ekonomik neden: doğrulanmadı</p>');
+   ' · Ekonomik neden: doğrulanmadı. Takvim kontrol grubu komşularının riskli örnek payı: '+pct(d.control.observedControlFraction*100)+
+   ' (olasılık değil)</p>');
   content.push('<div class="v2questionGrid">'+d.questions.map(function(q){
    const status=q.verified?'KONTROL EDİLDİ':'KANIT EKSİK';
    return '<div class="v2question"><b>'+escapeText(q.id)+' · '+escapeText(q.question)+
