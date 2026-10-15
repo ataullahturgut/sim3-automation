@@ -84,7 +84,10 @@ function runForwardReview(){
  const train=v4.trainBefore(v3.loadHistorical(),Date.parse("2026-01-01T00:00:00Z"));
  const february=loadFebruary3h();
  const remaining=loadHoldout();
- const observations=[...february,...remaining.rows];
+ // Sept 30, 21:00 UTC is Oct 1, 00:00 Turkey, so exclude it
+ // from a September month-end result. Source stays byte-for-byte pinned.
+ const cutoffTurkeyMonth=Date.parse("2026-09-30T21:00:00.000Z");
+ const observations=[...february,...remaining.rows.filter(r=>r.time<cutoffTurkeyMonth)];
  const actual=v4.simulate(observations,train,{initialUSD:initial.finalUSD,id:"FROZEN_V4_FEB_TO_SEP_2026"});
  const febOnly=v4.simulate(february,train,{initialUSD:initial.finalUSD,id:"REFERENCE_FEB_ONLY"});
  const months=["2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"];
@@ -132,7 +135,7 @@ function runForwardReview(){
    ({utc,tr,action,price,reason,phase,decisionData,cashUSD,goldOunces})),
   monthEndCarryVerified:monthly.every((m,i)=>i===0||
     Math.abs(m.initialNetUSD-monthly[i-1].terminalNetUSD)<1e-9),
-  observations:observations.length,largeGaps:severeGaps,
+  observations:observations.length,monthEndTurkeyUTC:"2026-09-30T21:00:00.000Z",largeGaps:severeGaps,
   economicMechanismVerified:false,bankBidAskIncluded:false,
   futureLabelAsDecisionFeature:false,
   hasProspectiveBlindValidation:false,
