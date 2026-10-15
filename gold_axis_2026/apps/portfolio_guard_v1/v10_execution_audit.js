@@ -57,11 +57,12 @@ function audit(){
     !close(lagged2025.final_usd,101.4365705394282)||
     !close(guarded2025.final_usd,lagged2025.final_usd)||
     !close(historic2024.final_usd,108.61461132260524)||
-    !close(historic2025.final_usd,110.6634961560752)||
+    !close(historic2025.final_usd,110.66472314789095)||
     !close(historic2026.final_usd,guarded.final_usd))
    throw Error("V10_LOCKED_RESEARCH_CHECKSUM_MISMATCH");
- // The policy gate did not activate on 2024 or 2025, so its 2026 apparent
- // effect is not supported by any independent prior observed protection.
+ // Same 2025-only panel: gate blocked 0. Extended 2023-history 2025 panel:
+ // gate blocked 2, but aggregate NAV effect is negligible and below passive GOLD.
+ // No independent multi-episode risk-reduction demonstration exists.
  const historicControls=[
    {period:"2024_2023HISTORY",initialUSD:100,finalUSD:historic2024.final_usd,
     passiveGoldUSD:historic2024.hold_gold_usd,gateBlocked:historic2024.gateAudit.length},
