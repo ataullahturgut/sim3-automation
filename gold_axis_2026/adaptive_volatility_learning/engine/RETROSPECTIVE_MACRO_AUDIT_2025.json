@@ -1,0 +1,77 @@
+{
+  "title": "Experimental ORG01/ORG02 macro-release 2025 holdout and 2025 prequential audit",
+  "generated_utc": "2026-10-15",
+  "source": "gold_axis_2026/GOLD_2023_2025_CPI_NFP_FOMC_M15_RELEASE_WEEKMATCH_EVENTSTUDY_20261014.csv",
+  "protocol": "Macro arm=0, no overlapping macro, CPI/NFP only, nonzero headline surprise; negative => tentative ORG01, positive => tentative ORG02; outcome available after release+h; 4-pseudocount shrink toward expanding unconditional base; predict UP if p>=0.5, no 2025 retuning; MIN 8 group / MIN 20 total.",
+  "notices": [
+    "Economic mechanism labels are provisional and omit labor/wage revisions, Fed reaction and DXY/TIPS.",
+    "Macro actual/consensus retrospectively assembled, PIT/unrevised firstprint not verified; not deployable or fully blind.",
+    "One target for every release; not a trade strategy; bank fees/spread not assessed.",
+    "2025 was examined in earlier research so it is not a genuinely untouched holdout.",
+    "News eventstudy includes CPI/NFP/FOMC; FOMC excluded until unambiguous surprise coding.",
+    "2025 frozen and prequential modes deliberately reported separately.",
+    "Hypothesis selected from research; these statistics are exploratory."
+  ],
+  "results": [
+    {
+      "horizon_minutes": 60,
+      "mode": "frozen",
+      "test_count": 18,
+      "covered_n": 18,
+      "correct": 13,
+      "baseline_correct": 10,
+      "brier": 0.199769,
+      "baseline_brier": 0.247058,
+      "prediction_examples": [],
+      "direction_counts": {
+        "up": 10,
+        "down": 8
+      }
+    },
+    {
+      "horizon_minutes": 60,
+      "mode": "prequential",
+      "test_count": 18,
+      "covered_n": 18,
+      "correct": 13,
+      "baseline_correct": 10,
+      "brier": 0.20785,
+      "baseline_brier": 0.252467,
+      "prediction_examples": [],
+      "direction_counts": {
+        "up": 10,
+        "down": 8
+      }
+    },
+    {
+      "horizon_minutes": 240,
+      "mode": "frozen",
+      "test_count": 18,
+      "covered_n": 18,
+      "correct": 11,
+      "baseline_correct": 10,
+      "brier": 0.235022,
+      "baseline_brier": 0.247139,
+      "prediction_examples": [],
+      "direction_counts": {
+        "up": 10,
+        "down": 8
+      }
+    },
+    {
+      "horizon_minutes": 240,
+      "mode": "prequential",
+      "test_count": 18,
+      "covered_n": 18,
+      "correct": 11,
+      "baseline_correct": 10,
+      "brier": 0.245003,
+      "baseline_brier": 0.252576,
+      "prediction_examples": [],
+      "direction_counts": {
+        "up": 10,
+        "down": 8
+      }
+    }
+  ]
+}
