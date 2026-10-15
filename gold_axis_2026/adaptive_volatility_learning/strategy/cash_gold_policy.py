@@ -152,8 +152,8 @@ def run(data,calendar):
     hold=simulate(data,calendar,p,year=2025)
     jan=simulate(data,calendar,p,start_at=parse("2026-01-01T00:00:00+03:00"),
                  end_at=parse("2026-02-01T00:00:00+03:00"))
-    no_calendar=dict(p,calendar_gate=False)
-    jan_no_gate=simulate(data,calendar,no_calendar,
+    alternate_calendar=dict(p,calendar_gate=not p["calendar_gate"])
+    jan_alt_gate=simulate(data,calendar,alternate_calendar,
         start_at=parse("2026-01-01T00:00:00+03:00"),
         end_at=parse("2026-02-01T00:00:00+03:00"))
     return dict(name="CASH_GOLD_POLICY_V1",status="RESEARCH_NOT_TRADABLE",
@@ -162,7 +162,7 @@ def run(data,calendar):
       costs="0.8pct each side, extra bank bid/ask spread unavailable",
       training_years=[2023,2024],selection_score=score,selected=p,
       training={2023:a,2024:b},validation_2025=hold,
-      january_2026=jan,january_no_event_calendar=jan_no_gate,
+      january_2026=jan,january_toggled_event_calendar=jan_alt_gate,
       top5=[dict(score=s,params=q,train2023=m["net_pct"],train2024=n["net_pct"])
             for s,q,m,n in train[:5]],
       warnings=[
@@ -189,7 +189,7 @@ def main():
                          if k not in ("trades","daily")},
                  january={k:v for k,v in result["january_2026"].items()
                           if k not in ("daily",)},
-                 january_without_macro={k:v for k,v in result["january_no_event_calendar"].items()
+                 january_toggled_calendar={k:v for k,v in result["january_toggled_event_calendar"].items()
                           if k not in ("daily","trades")},
                  top5=result["top5"])
     print("STRATEGY_RESULT_BEGIN")
