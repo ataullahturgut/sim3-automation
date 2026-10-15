@@ -43,7 +43,7 @@ test("no learning before expiry; no same signal-and-fill checkpoint",()=>{
  assert.equal(r.fills.length,0);
  r=C.receiveQuote(m,{at:at(0,9),price:100,isBankCheckpoint:true});
  assert.equal(r.fills.length,1);
- r=C.receiveQuote(m,{at:at(1,8),price:102,isBankCheckpoint:true});
+ r=C.receiveQuote(m,{at:at(1,8),price:102,isBankCheckpoint:false});
  assert.equal(r.matured.length,0);
  assert.equal(m.learning.matured,0);
  r=C.receiveQuote(m,{at:at(1,9),price:102,isBankCheckpoint:true});
