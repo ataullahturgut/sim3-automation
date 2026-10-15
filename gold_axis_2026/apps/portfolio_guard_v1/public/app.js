@@ -720,3 +720,70 @@ async function runV9Scientific(){
 }
 $("runV9Scientific").addEventListener("click",runV9Scientific);
 
+async function runV10Evidence(){
+ const b=$("runV10Evidence"),status=$("v10EvidenceStatus");
+ b.disabled=true;
+ status.textContent="Gecikmeli banka icrası, yeniden alım hataları ve 2024–2026 karşı testleri hesaplanıyor…";
+ try{
+  const res=await fetch("/api/algorithm/v10/evidence",{cache:"no-store"});
+  if(!res.ok)throw Error("HTTP "+res.status);
+  const x=await res.json();
+  if(x.version!=="V10_BANK_LAG_RECOVERY_GUARD_20261015"||
+     x.status!=="SCIENTIFIC_SHADOW_CANDIDATE_NOT_VALIDATED"||
+     x.scientificGate.validationPassed!==false||
+     x.scientificGate.liveTradingAuthorized!==false||
+     x.scientificGate.automaticPromotion!==false||
+     x.contracts.barSignalNotSameBarFill!==true||
+     x.contracts.realBankBidAskPresent!==false||
+     x.contracts.independentBlindValidation!==false)throw Error("V10_RESEARCH_CONTRACT_INVALID");
+  $("v10OldUSD").textContent=money(x.base2026.v7OriginalSameBarUSD);
+  $("v10LagUSD").textContent=money(x.base2026.v7DelayedBankUSD);
+  $("v10ProtectedUSD").textContent=money(x.base2026.v10BankRecoveryUSD);
+  $("v10Gate").textContent="ONAY YOK";
+  const dateTR=function(utc){return new Intl.DateTimeFormat("tr-TR",{
+    timeZone:"Europe/Istanbul",day:"2-digit",month:"2-digit",
+    hour:"2-digit",minute:"2-digit",hour12:false
+  }).format(new Date(utc));};
+  $("v10TradeTable").innerHTML=table(
+   ["Sinyal (TR)","Sonraki işlem (TR)","Emir","İşlem fiyat vekili","Karar","Net bakiye"],
+   x.transactions.guarded.map(t=>"<tr>"+cell(escapeText(dateTR(t.signalAt)))+
+    cell(escapeText(dateTR(t.at)))+cell(escapeText(t.side==="BUY"?"AL":"SAT"))+
+    cell(format.format(t.mid))+cell(escapeText(t.reason))+
+    cell(money(t.netUSD))+"</tr>")
+  );
+  $("v10Sensitivity").innerHTML=table(
+    ["Her yönde maliyet","Beklenen banka kesiti","2026 teorik son bakiye","İşlem sayısı"],
+    x.costLatencySensitivity.map(v=>"<tr>"+cell(pct(v.feePerSide*100))+
+      cell(v.executionBankCheckpoints)+cell(money(v.finalUSD))+
+      cell(v.tradeCount)+"</tr>")
+  );
+  const controls=[
+   {period:"2025 · Önceki V7, gecikmeli",v:x.negativeControl2025.delayedV7USD,
+      ref:x.negativeControl2025.passiveGoldUSD,flag:"Koruma 0 kez tetiklendi"},
+   {period:"2025 · V10 koruma, gecikmeli",v:x.negativeControl2025.guardedV10USD,
+      ref:x.negativeControl2025.passiveGoldUSD,flag:"Önceki V7 ile aynı"},
+   ...x.historicalControl.map(q=>({period:q.period,v:q.finalUSD,
+      ref:q.passiveGoldUSD,flag:"Bağımsız doğrulama değil"}))
+  ];
+  $("v10Historical").innerHTML=table(
+     ["Tarihsel kontrol","Strateji sonucu","Pasif altın","Denetim"],
+     controls.map(v=>"<tr>"+cell(escapeText(v.period))+cell(money(v.v))+
+         cell(money(v.ref))+cell(escapeText(v.flag))+"</tr>")
+  );
+  status.textContent="V10 araştırması tamamlandı. 2026 gecikmeli temel "+
+    money(x.base2026.v7DelayedBankUSD)+", korumalı "+money(x.base2026.v10BankRecoveryUSD)+
+    ". Korunan işlem girişimi "+x.deniedBuys.total+
+    " kez engellendi; 2025'te ise 0 kez. Model bilimsel terfi almadı.";
+  $("v10Warning").textContent=
+     "ÖNEMLİ: 2026 örneklemini bu kuralın tasarımından önce görmüştük. "+
+     "Bu nedenle "+money(x.base2026.v10BankRecoveryUSD)+
+     " bağımsız geleceğe dönük doğrulama değildir. 2025'te koruma karar değiştirmedi. "+
+     "2024–25 stratejisi pasif altında kaldı. Fiyatlar banka MID vekili, gerçek banka ASK/BID yok. "+
+     "Olay-öğren kütüphanesinde kaynaklı 96 vakadan 0 doğrulanmış ilk yayın zamanı var. "+
+     "V7 asıl modeli ve eski dosyalar değiştirilmedi; canlı banka emri üretilmiyor.";
+ }catch(err){
+  status.textContent="V10 denetimi çalıştırılamadı: "+err.message+". V1–V9 araştırma sürümleri korunuyor.";
+ }finally{b.disabled=false;}
+}
+$("runV10Evidence").addEventListener("click",runV10Evidence);
+
