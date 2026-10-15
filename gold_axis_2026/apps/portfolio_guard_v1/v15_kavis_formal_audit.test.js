@@ -110,3 +110,15 @@ test("AUDIT: stable EMA expert loss permits recovery and bounded reliability",()
  A.ok(h.logExpertWeight.every(v=>Math.abs(v)<=13));
  A.ok(h.expertLoss.every(v=>v>=0&&Number.isFinite(v)));
 });
+
+test("AUDIT: CASH can enter on a 3-day profitable shock despite bearish long horizon",()=>{
+ const s=K.make({minMaturedLabels:3,confidenceZ:0});
+ for(const h of [3,28,56]){
+   s.heads.ENTRY[h].n=10;
+   s.heads.ENTRY[h].linear.w[0]=h===3?5:-5;
+ }
+ const z=sig(s,0,"CASH");
+ A.equal(z.decision.action,"BUY");
+ A.equal(z.decision.selectedHorizon,3);
+ A.ok(z.decision.score>0);
+});
