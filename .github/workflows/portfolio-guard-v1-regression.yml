@@ -36,3 +36,6 @@ jobs:
       - name: Event V2 scientific control audit
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: npm run audit
+      - name: Verify February monthly carry-forward and recorded actions
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify-months
