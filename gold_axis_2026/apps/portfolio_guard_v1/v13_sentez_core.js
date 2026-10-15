@@ -96,7 +96,14 @@ function expertWeights(model,keys){
  return weights;
 }
 function predict(model,features,network,opts={}){
- const g=model.gated,m=member(null,features,g);
+ // The no-memory control uses contemporaneous, non-recurrent features.
+ // This preserves a genuinely executable policy rather than forcing CASH
+ // merely because the recurrent state was deleted.
+ const g=opts.disableGate?{
+   trend:clamp(features[2]/10,-1,1),
+   stress:clamp(-features[0]/3+features[3]/6,-1,1),
+   recovery:clamp(features[1]/6-features[2]/10,-1,1)
+ }:model.gated,m=member(null,features,g);
  const f14=fuzzyPredict(m.w,model.theta14,m.x);
  const f56=fuzzyPredict(m.w,model.theta56,m.x);
  // True pre-cutoff ANN head. No if not trained from >90 matured labels.
@@ -112,7 +119,7 @@ function predict(model,features,network,opts={}){
    (opts.disableFuzzy?g56:weights56.f56*f56+weights56.g56*g56);
  const short=opts.disableFuzzy?(a14??0):net14;
  return {net14:short,net56,f14,a14,f56,g56,weights14,weights56,
-  regime:!opts.disableGate?g:{trend:0,stress:0,recovery:0},
+  regime:g,
   fuzzyWeights:m.w,member:m,
   uncertainty14:model.residual.mae14,uncertainty56:model.residual.mae56,
   n14:model.labelsApplied14,n56:model.labelsApplied56};
@@ -199,14 +206,16 @@ function decision(pred,hold,position,opts){
  const stress=pred.regime.stress>.72;
  // All predictions are already full roundtrip transaction-FEE-NET.
  // Hysteresis discourages 1.6% roundtrips on weak edges.
- const enoughHistory=pred.n14>=24&&pred.n56>=8;
+ const enoughHistory=pred.n14>=24&&(v56==null||pred.n56>=8);
  const longThreshold=opts.uncertainty?Math.max(1.8,.40*pred.uncertainty56):1.8;
- const wantGold=enoughHistory && (
-  (strength56>longThreshold&&confirmedBull&&pred.net14>-.8)||
-  (strength56>longThreshold+2.5&&pred.net14>-.35)
- );
- const sell=stress&&pred.net14<1.5||
-    (strength56< -2&&pred.net14< -1.0);
+ const wantGold=v56==null?
+   enoughHistory&&pred.net14>Math.max(1.8,.35*pred.uncertainty14)&&confirmedBull:
+   enoughHistory&&((
+    strength56>longThreshold&&confirmedBull&&pred.net14>-.8)||
+    (strength56>longThreshold+2.5&&pred.net14>-.35));
+ const sell=v56==null? (stress||pred.net14< -1.2):
+    (stress&&pred.net14<1.5||
+    (strength56< -2&&pred.net14< -1.0));
  if(cash){
   if(wantGold&&hold.hoursSinceExit>=72&&!stress)return{position:"GOLD",reason:"MULTIHORIZON_CONFIRMED_NET_EDGE"};
   return {position:"CASH",reason:!enoughHistory?"WARMUP":"NO_FEE_NET_ADVANTAGE"};
