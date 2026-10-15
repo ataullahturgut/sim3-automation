@@ -566,3 +566,51 @@ async function runMonthlyRegimeBenchmarkV7(){
 }
 $("runMonthlyBenchmarkV7").addEventListener("click",runMonthlyRegimeBenchmarkV7);
 
+async function runIntramonthOracleV7(){
+ const button=$("runIntramonthOracleV7"),status=$("intramonthOracleV7Status");
+ button.disabled=true;
+ status.textContent="Tüm ayların üç saatlik AL/SAT zamanlaması geriye dönük eniyileniyor…";
+ try{
+  const reply=await fetch("/api/algorithm/v7/intramonth-oracle",{cache:"no-store"});
+  if(!reply.ok)throw Error("HTTP "+reply.status);
+  const x=await reply.json();
+  if(x.status!=="EX_POST_UNTRADEABLE_ORACLE"||
+      x.liveTradingAuthorized!==false||x.independentBlindTest!==false||
+      x.costs.realBankBidAsk!==false||
+      x.months.length!==9)throw Error("THEORETICAL_ORACLE_SCHEMA_MISMATCH");
+  $("intramonthBasicUSD").textContent=money(x.continuationUSD.cashMonthly);
+  $("intramonthOneUSD").textContent=money(x.continuationUSD.one);
+  $("intramonthTwoUSD").textContent=money(x.continuationUSD.two);
+  $("intramonthAllUSD").textContent=money(x.continuationUSD.upto15);
+  const trShort=function(utc){return new Intl.DateTimeFormat("tr-TR",{
+    timeZone:"Europe/Istanbul",day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false
+  }).format(new Date(utc));};
+  $("intramonthOracleV7Table").innerHTML=table(
+    ["Ay","Ay boyu altın","Ayın en iyi tek AL/SAT turu","En iyi 2 tura kadar",
+     "Tek turun geriye dönük AL → SAT zamanları"],
+    x.months.map(function(m){
+     const acts=m.bestOneRound.actions;
+     const when=acts.length===2?trShort(acts[0].utc)+" → "+trShort(acts[1].utc):
+       "İşlem avantajı yok";
+     return "<tr>"+cell(escapeText(m.month))+
+      cell(pct(m.holdGoldNetUSD-100))+
+      cell(pct(m.bestOneRound.netPct))+
+      cell(pct(m.bestTwoRounds.netPct))+
+      cell(escapeText(when))+"</tr>";
+    })
+  );
+  status.textContent="Geriye dönük araştırma hesaplandı. Bir aylık ideal işlem tek turuyla "+
+   money(x.continuationUSD.one)+" ve iki tura kadar "+money(x.continuationUSD.two)+
+   " teorik portföy görülüyor. Bu sonuçların hiçbiri ileriye dönük olarak bilinemiyordu.";
+  $("intramonthOracleV7Warning").textContent=
+   "UYARI: Bunlar ayın bütün fiyatlarını gördükten sonra seçilmiş işlem zamanlarıdır. "+
+   "Yalnız üç saatlik 09/12/15 kontrol noktaları ve %0,8 / %0,8 maliyet vardır. "+
+   "Gerçek banka alış-satış kotasyonları, emir gecikmesi ve başka saatlerdeki fiyatlar yoktur. "+
+   "Dolayısıyla bankada uygulanabilir azami kâr veya başarılı tahmin sayılmaz. "+
+   "Aylık NAKİT/ALTIN etiketi yerine al-sat modelinin hata açıklamasında araştırma karşı örneğidir.";
+ }catch(e){
+  status.textContent="Ay içi ideal işlem denetimi çalıştırılamadı: "+e.message;
+ }finally{button.disabled=false;}
+}
+$("runIntramonthOracleV7").addEventListener("click",runIntramonthOracleV7);
+
