@@ -325,7 +325,7 @@ async function runLongScientificReview(){
   const [v4,v5]=await Promise.all(replies.map(r=>r.json()));
   if(v4.actual.finalUSD<=0||v5.fromFebThroughSeptember.finalUSD<=0||
      v4.monthly.length!==8||v5.monthResults.length!==8||
-     v5.promotionAuthorized!==false||v4.monthEndCarryVerified!==true||
+     v5.promotionAuthorized!==false||v5.scientificGate.status!=="REJECT_PROMOTION"||v4.monthEndCarryVerified!==true||
      v4.hasProspectiveBlindValidation!==false||
      v5.status!=="EXPLORATORY_DESIGNED_AFTER_SEEING_2026")
    throw Error("ARASTIRMA_VERI_SOZLESMESI_HATASI");
@@ -356,7 +356,7 @@ async function runLongScientificReview(){
     " → V5 "+money(v5.fromFebThroughSeptember.finalUSD)+
     ". Ancak V5 hem nakitte beklemeden kötü, hem eski yıllardaki kazançları düşürüyor.";
   $("longVerdict").textContent="MODEL SEÇİM KARARI: V5 ONAYLANMADI. 2023 veri kapsamı eksik; "+
-   "2024–2025 testlerinde gereksiz AL/SAT arttı. 2026 sonuçları V5 geliştirilmeden önce "+
+   "2024–2025 testlerinde gereksiz AL/SAT arttı; başarısız bilimsel kabul ölçütü sayısı: "+v5.scientificGate.unmetRequirements.length+". 2026 sonuçları V5 geliştirilmeden önce "+
    "görüldüğünden bağımsız ileri test değildir. Yalnız araştırma; "+
    "G05-C/G06-B nedensellik doğrulanmadı, gerçek banka ASK/BID makası ve emir kayması yok.";
  }catch(error){
