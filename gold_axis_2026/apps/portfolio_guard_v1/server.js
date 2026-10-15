@@ -66,6 +66,7 @@ function requestHandler(req,res) {
    version:r.version,status:r.status,years:r.years,monthResults:r.monthResults,
    fromFebThroughSeptember:r.fromFebThroughSeptember,comparison:r.comparison,
    warnings:r.warnings,promotionAuthorized:r.promotionAuthorized,
+   scientificGate:r.scientificGate,
    training:r.training
   }));
  }
