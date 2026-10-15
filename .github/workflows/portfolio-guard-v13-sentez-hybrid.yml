@@ -1,0 +1,26 @@
+name: Gold V13 SENTEZ Hybrid Multi-horizon Science
+on:
+  push:
+    branches:
+      - research-gold-v13-sentez-hybrid-20261016
+    paths:
+      - "gold_axis_2026/apps/portfolio_guard_v1/**"
+      - ".github/workflows/portfolio-guard-v13-sentez-hybrid.yml"
+  workflow_dispatch:
+jobs:
+  science-and-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: All original V1 to V13 learning and asof tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Frozen historical source integrity
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
+      - name: Print cross-year SENTEZ hybrid layer-ablation results and no-promotion gate
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node -e "const r=require('./v13_sentez_run').audit(); console.log(JSON.stringify({version:r.version,gate:r.scientificGate,experiments:r.experiments.map(x=>({year:x.period,variant:x.variant,final:x.finalUSD,buyHold:x.buyHoldUSD,trades:x.trades}))},null,2));if(r.scientificGate.promote||r.scientificGate.liveTrading)process.exit(1)"
