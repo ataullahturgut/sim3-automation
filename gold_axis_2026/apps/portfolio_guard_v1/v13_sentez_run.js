@@ -160,7 +160,7 @@ function audit(){
       ANFIS:"Six normalized Sugeno fuzzy rules with matured-label adaptive consequents",
       LSTM:"LSTM-inspired recurrent forget/update gated state; gates are deterministic NOT trained LSTM",
       objective:"Bank-cost net 14d + 56d opportunity, not a future optimal trade oracle",
-      14dFeedbackSpacingDays:14,56dFeedbackSpacingDays:28
+      feedbackSpacing14Days:14,feedbackSpacing56Days:28
     },
     source:{rows:b.src.rows.length,originLabels:b.primary.samples.length},
     experiments,scientificGate:{
