@@ -16,7 +16,7 @@ import argparse
 import csv
 import json
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 FEATURES = (
     ("r4", 1.2, 1.0), ("rv", 0.65, 1.0),
@@ -39,7 +39,7 @@ def rows(path):
 def utc(value):
     return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
 
-def library(archive, outcomes, evaluation_year):
+def library(archive, outcomes, evaluation_year, first_origin):
     future = {r["case_id"]: r for r in rows(outcomes)}
     events = []
     for r in rows(archive):
@@ -48,6 +48,8 @@ def library(archive, outcomes, evaluation_year):
         year = utc(r["checkpoint_utc"]).year
         if year >= evaluation_year:
             continue  # Prevent future-year event knowledge.
+        if utc(r["checkpoint_utc"]) + timedelta(hours=96) > first_origin:
+            continue  # The historical outcome was not yet known at first evaluation origin.
         result = future.get(r["case_id"])
         if not result or f(result.get("low96")) is None or (f(result.get("ct")) or 0) < 40:
             continue
@@ -177,7 +179,9 @@ def main():
     ap.add_argument("--output", required=True)
     args = ap.parse_args()
     checks = [r for r in rows(args.checkpoints) if utc(r["tt"]).year == args.year]
-    events = library(args.library, args.outcomes, args.year)
+    if not checks:
+        raise ValueError("No valid checkpoints for requested evaluation year")
+    events = library(args.library, args.outcomes, args.year, utc(checks[0]["tt"]))
     result = replay(checks, events, args.mode, args.fee)
     result["model_status"] = "RESEARCH_ONLY_NOT_VALIDATED"
     result["archive_cases_used"] = len(events)
