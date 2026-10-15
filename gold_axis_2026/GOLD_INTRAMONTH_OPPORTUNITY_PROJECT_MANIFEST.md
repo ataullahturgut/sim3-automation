@@ -1,5 +1,22 @@
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
+> **15 EKİM 2026 — V4 UZUN DÖNEMDE BAŞARISIZ, V5 GÖLGE ADAYI BİLİMSEL KABUL KAPISINDA REDDEDİLDİ.**
+> [Tekrar üretilebilir V4→V5 denetim raporu](apps/portfolio_guard_v1/SCIENTIFIC_V4_V5_CONTINUOUS_REVIEW_20261015.md),
+> [V4 Şubat-sonrası ön kayıt](apps/portfolio_guard_v1/V4_POST_FEB_2026_PRE_REGISTERED_EVALUATION_20261015.md),
+> [V5 uzun trend hipotezi](apps/portfolio_guard_v1/V5_SLOW_TREND_PROTECTION_PRE_REGISTER_20261015.md).
+> Ocak V1 nakit 119,753917 USD'den Şubat–Eylül 2026 sıralı, kesintisiz koşuda:
+> V4 Eylül 96,706968 USD, V5 Eylül 107,832861 USD, nakit 119,753917 USD,
+> Şubat 2 TR09 ilk AL/TUT 107,741250 USD (vekil fiyat; gerçek banka kotasyonu değil).
+> V4 max drawdown %26,68, V5 %17,28; buna rağmen V5 2023,2024,2025
+> karşılaştırmalarının her birinde V4'ten daha az final USD üretmiş,
+> özellikle 2024–25'te gereksiz işlem sayısını artırmıştır.
+> V5 2026 sonuçları görülerek tasarlanmıştır: bu dönem bağımsız ileri test değildir.
+> Ekonomik G05-C/G06-B nedenleri doğrulanmadı ve gerçek banka makası yok.
+> `scientific_promotion_gate.js` V5'i `REJECT_PROMOTION` olarak kayıtlar.
+> Önceki V1/V2/V3/V4 dondurulmuş sonuçlar, OLAY-02 ve ÖĞREN-03 değişmedi;
+> yeni ana manifest yok. Uygulamada **Uzun dönem bilimsel test** bölümü ile görülebilir.
+
+
 > **15 EKİM 2026 — PORTFOLIO GUARD V3 GÖLGE ALGORİTMA ÇALIŞTIRILDI, DOĞRULANMIŞ STRATEJİ DEĞİL.**
 > Şubatta erken toparlanma/TUT problemi için gerçek, tekrarlanabilir kod eklendi:
 > [V3 yürütücü](apps/portfolio_guard_v1/recovery_v3.js),
