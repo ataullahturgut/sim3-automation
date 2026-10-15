@@ -2,6 +2,24 @@
 
 
 
+
+> **15 EKİM 2026 — DOĞRU HEDEF OCAK 2026 / YENİ AYLIK OLAY-ÖĞRENME YÜRÜYÜŞÜ V1 TAMAMLANDI.**
+> Önceki yanıt Ocak 2023'ü yanlışlıkla önceliklendirmişti; aşağıdaki eski Ocak 2023 çalışma geçmişte kalır.
+> Doğru ay **Ocak 2026**, 100 dolar **NAKİT** başlangıç, 31×96=2976 takvim kontrolü;
+> **1804 geçerli yeni 15m as-of ölçümü** (diğer 1172 kapalı/veri yetersiz).
+> **5 Ocak 2026 09:30 TSİ ALTIN AL $4424.055**; **29 Ocak 2026 18:15 TSİ SAT $5383.775**;
+> net **$119.753917 (+%19.753917)**, komisyon %0.8/alım ve %0.8/satış, gerçek banka spreadi hariç;
+> ay sonu nakit **$119.753917**, Şubat 2026'ya bu nakit taşınır.
+> 2023–2025'ten **92 olgunlaşmış** OLAY-02 arşiv profili kullanıldı, fakat
+> olay-öğrenme overlay'i bu Ocak ayındaki alış-satış zamanlarını değiştirmedi
+> (**ek net katkı sıfır**); şokun gerçek ekonomik nedeni hâlâ **UNRESOLVED**.
+> Bu +%19,75 bağımsız ileri test veya doğrulanmış nedensel AI başarısı olarak gösterilmez.
+> [Yeni Ocak 2026 raporu](adaptive_volatility_learning/months/2026-01-new-learning/JAN_2026_NEW_EVENT_MONTH_WALK_V1_SCIENTIFIC_REPORT.md);
+> [2976 karar/kontrol slotu](adaptive_volatility_learning/months/2026-01-new-learning/JAN_2026_NEW_EVENT_MONTH_WALK_V1_15M_DECISION_LEDGER.csv);
+> [Şubat 2026 devir öğrenmesi](adaptive_volatility_learning/months/2026-01-new-learning/JAN_2026_NEW_EVENT_MONTH_WALK_V1_STATE.json);
+> [replay motoru](adaptive_volatility_learning/months/2026-01-new-learning/JAN_2026_NEW_EVENT_MONTH_WALK_V1_REPLAY.js).
+> **Koruma sınırı:** Daha önce silinmiş Ocak 2026 deney dosyaları restore edilmedi.
+
 > **15 EKİM 2026 — OCAK 2023 AY AY ÖĞRENME V2 DENEMESİ TAMAMLANDI (RETROSPEKTİF, DOĞRULANMADI).**
 > [Ocak 2023 yeni V2 bilimsel koşu](adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_SCIENTIFIC_REPLAY_20261015.md);
 > 31×96=2.976 takvim kontrolü; 1.763 M15+lookback tam karar slotu; 4 Ocak 10.30 TSİ AL (1.852,848 XAU MID);
