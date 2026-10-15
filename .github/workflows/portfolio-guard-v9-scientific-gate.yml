@@ -1,0 +1,26 @@
+name: Gold Portfolio V9 Scientific Fail-Closed Gate
+on:
+  push:
+    branches:
+      - research-gold-v9-state-transition-20261015
+    paths:
+      - "gold_axis_2026/apps/portfolio_guard_v1/**"
+      - ".github/workflows/portfolio-guard-v9-scientific-gate.yml"
+  workflow_dispatch:
+jobs:
+  scientific-v9:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Execute all legacy V1-V9 tests, including fail-closed checks
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Check original frozen V1 data integrity
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
+      - name: Generate machine-readable V9 scientific audit (never promotes)
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node -e "const a=require('./v9_research_audit').report(); console.log(JSON.stringify({version:a.version,status:a.status,gate:a.gate,pre2026:a.pre2026PassBothPassive,reference:a.comparisons},null,2)); if(a.gate.promote) process.exit(1)"
