@@ -1,0 +1,23 @@
+name: Gold Portfolio V8 Delayed Mistake Learning
+on:
+  push:
+    branches:
+      - research-gold-v8-regret-online-20261015
+    paths:
+      - "gold_axis_2026/apps/portfolio_guard_v1/**"
+      - ".github/workflows/portfolio-guard-v8-regret-tests.yml"
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate all frozen old models and V8 regressions
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm test
+      - name: Validate frozen V1 source integrity
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run verify
