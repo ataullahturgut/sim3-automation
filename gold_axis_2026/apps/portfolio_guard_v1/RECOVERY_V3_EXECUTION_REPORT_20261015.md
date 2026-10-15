@@ -46,3 +46,6 @@
 
 ## Veri kapanışı düzeltmesi
 Model ikinci doğrulamada piyasa kapalıyken geçen süreyi iki bağımsız toparlanma teyidi saymamayı garanti etti: son uygun 3h kesit ile yeni kesit arasında 12 saatten fazla boşluk olduğunda evre teyit sayacı sıfırlanır. Şubat 1'de veri yokken nakit ilk durum $119,753917 olarak korunur. Bu düzeltmeden sonra Şubat sonucu aynı $120,442260 kalmış, 2024 yıllık sonuç $119,389706 olarak düzelmiştir. İzinsiz ticaret saati veya hayalî piyasa verisi üretilmez.
+
+## İlk banka saatindeki pasif alternatifin doğru hesabı
+Şubat ilk tam M15 gözlemi 2 Şubat **06.45 Türkiye** saati (p=4665,628), banka 09–17 işlem penceresinin **dışında**. Bu fiyatla ay sonuna dek AL/TUT sonucu 132,906170 USD'dir ama işlem saati kullanıcı kısıtına uymaz. **2 Şubat 09.00 Türkiye** saatinde (06:00 UTC) ilk banka zamanlı karar p=4547,265, aynı altın son fiyatı 5261,895 ve %0,8+%0,8 proxy komisyonla ay sonu pasif karşılaştırma **136,365650 USD**. 09.00 as-of sinyali XAU 4 saatlik getiri -%3,974, 92-bar getirisi -%12,946, downside varyans payı 0,905 ile çok sert düşüş rejimidir. Bu yüksek pasif kâr **yalnız geriye dönük fırsat maliyeti üst sınırı**: gelecekteki Şubat yükselişi o saatte bilinmiyordu. V3'ün %50 kademeli girişi 4 Şubat 09.00 TSİ'dedir. Mevcut V1 frozen grafik/benchmark rakamlarını bu açıklama için geriye dönük değiştirmiyoruz.
