@@ -178,7 +178,7 @@ function modelPredict(s,act,h,snap){
 function choose(s,snap,position){
  if(!["CASH","GOLD"].includes(position))throw Error("INVALID_POSITION");
  const act=position==="CASH"?"ENTRY":"EXIT";
- const allowed=position==="CASH"?[28,56]:[1,3,7,28,56];
+ const allowed=HORIZONS; // entry and protective exit must both learn short and long shocks
  const candidates=allowed.map(h=>modelPredict(s,act,h,snap));
  const ready=candidates.filter(c=>c.n>=s.config.minMaturedLabels);
  // Completed finite-horizon switching premia are different investments.
