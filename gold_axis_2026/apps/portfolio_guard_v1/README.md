@@ -129,3 +129,21 @@ V4 geçmiş dönem oynaklık yüzdeliklerinden (2020–2025) eşik öğrenir; RE
 - 2023 fiyat kapsamı eksik. Şubat 2026 strateji geliştirmeden önce bilinmiş olduğundan kör ileri test değildir. Gerçek banka alış/satış makası ve slip fiyatı yok, komisyon her yönde %0,8.
 
 Uygulama kaynağı: recovery_v4.js; test recovery_v4.test.js; analiz RECOVERY_V4_SCIENTIFIC_EXECUTION_REPORT_20261015.md. npm test ve npm run verify-v4 çalışır; GET /api/algorithm/v4 salt okunur ve gerçek banka emri vermez.
+
+
+## 15 Ekim 2026 — Şubat–Eylül kesintisiz bilimsel yürüyüş ve V5 reddi
+
+Normal kullanıcı: GitHub Desktop'ta **Fetch origin → Pull origin**, eski siyah sunucu penceresini kapat, `BASLAT.bat` ile aç. Sol menüde **Uzun dönem bilimsel test** bölümüne gir, **8 aylık V4 / V5 bilimsel testini çalıştır** düğmesini kullan.
+
+Bu ekran mevcut Ocak–Şubat V1, V2, V3, V4 modellerini değiştirmez. V4 ve V5 çalışmaları ve bunların başarısızlıkları yalnız ayrı, salt okunur araştırma panosunda gösterilir. Şubat V1 kapanış nakdi 119,753917 USD ile başlayan kesintisiz 2026 Şubat–Eylül değerlendirmesi, Türkiye'deki her ay sonunda:
+
+| Gösterge | V4 | V5 | Alternatifler |
+|---|---:|---:|---|
+| Eylül sonu USD | **96,706968** | **107,832861** | NAKİT 119,753917; Şubat TR09 AL/TUT 107,741250 |
+| Maksimum gerileme | %26,68 | %17,28 | NAKİT 0 varsayımı |
+
+V5, yükselişi kaçırma ve aşırı koruyucu satış sorununu çözmedi: 2024'te V4 125,52 vs V5 111,23; 2025'te V4 141,13 vs V5 135,04 (her yıl ayrı 100 USD). V5'te her iki yılda daha çok alım/satım oluştu. Kodun bilimsel kabul kapısı `REJECT_PROMOTION`, otomatik model değişimi YOK.
+
+Teknik: `v4_forward_review.js`, `recovery_v5.js`, `scientific_promotion_gate.js`, veri `data/RECOVERY_HOLDOUT_2026_MAR_SEP_3H_ASOF_V1.csv` (Git blob SHA 860917258c84a86a210d8c7f44655d46d878470e). Tam ayrıntılar `SCIENTIFIC_V4_V5_CONTINUOUS_REVIEW_20261015.md`; V4 ve V5 hipotez kayıtları da aynı klasörde. Yalnız veri kaynağı bitişinde 2026 Sep30 21UTC satırı Türkiye 1 Ekim olduğu için Eylül sonu hesaplanmaz.
+
+Bu deneyler geçmiş dönemler görülerek geliştirildiğinden **kör ileri validasyon değildir**. Gerçek banka alış/satış makası, slippage, doğrulanmış ilk haber ve ekonomik G05-C/G06-B nedenselliği yoktur. V5 bir önerilen canlı işlem algoritması değildir.
