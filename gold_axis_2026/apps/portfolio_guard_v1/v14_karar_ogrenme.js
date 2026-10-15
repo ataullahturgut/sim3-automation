@@ -15,7 +15,8 @@ function create(opts={}){
  return {heads:{7:makeHead(),28:makeHead(),56:makeHead()},legacy:{n:0,mse:64},gateW:[0,0,0],gateAcc:[.001,.001,.001],
    memory:0,drift:{n:0,mean:0,m2:0,last:0},observations:0,
    config:{riskAversion:opts.riskAversion??.20,disableGate:!!opts.disableGate,
-     disableRisk:!!opts.disableRisk,disable7:!!opts.disable7,disable28:!!opts.disable28,disable56:!!opts.disable56}};
+     disableRisk:!!opts.disableRisk,disable7:!!opts.disable7,disable28:!!opts.disable28,disable56:!!opts.disable56,
+     disableShortExit:!!opts.disableShortExit}};
 }
 function observe(s,f,oldForecast={}){
  const ret=clip(f[0]/3,-3,3),trend=clip((f[1]/6+f[2]/10)/2,-2,2);
@@ -69,6 +70,7 @@ function forecast(s,snapshot){
    estimates[h].weight*estimates[h].downside,0)/shortW:0;
  const ready=s.heads[7].n>=8&&s.heads[28].n>=3&&longMu!=null;
  return {estimates,ready,mu:longMu??0,
+   shortMu:estimates[7]?.n>=8?estimates[7].mu:null,
    downside:shortDown,uncertainty:norm?varMix/norm:8,
    x:snapshot.x,gderiv:snapshot.gderiv,legacyGross:legacy,
    longLearnedCount:s.heads[56].n,legacyLoss:s.legacy.mse};
@@ -82,12 +84,19 @@ function action(s,pred,position){
  // GOLD->CASH is compared against retaining already owned GOLD; 1 sale
  // is common to both paths. Reserve one fee for later re-entry.
  const entryBarrier=2*feeLog,exitBarrier=feeLog;
+ // In an existing GOLD position, a 7-day risk-off/re-entry round trip
+ // requires an expected downside exceeding the two real bank legs.
+ // This learned short-horizon head is separate from the 56d entry head.
+ const shortExit=!s.config.disableShortExit&&pred.shortMu!=null&&
+   pred.shortMu< -entryBarrier;
  const target=!pred.ready?position:
    position==="CASH"?(advantage>entryBarrier?"GOLD":"CASH"):
-   (advantage< -exitBarrier?"CASH":"GOLD");
- return {target,position,advantage,entryBarrier,exitBarrier,
-    reason:!pred.ready?"INSUFFICIENT_MATURED_EXPERIENCE":
-      target===position?"NET_WEALTH_HOLD":"LEARNED_NET_WEALTH_SWITCH"};
+   ((advantage< -exitBarrier||shortExit)?"CASH":"GOLD");
+ return {target,position,advantage,shortMu:pred.shortMu,
+   entryBarrier,exitBarrier,shortExit,
+   reason:!pred.ready?"INSUFFICIENT_MATURED_EXPERIENCE":
+     target===position?"NET_WEALTH_HOLD":
+       shortExit?"LEARNED_SHORT_RISK_OFF":"LEARNED_NET_WEALTH_SWITCH"};
 }
 function stepAda(w,acc,x,err,lr=.12){
  const e=clip(err,-25,25),scale=1+x.reduce((a,v)=>a+v*v,0);
