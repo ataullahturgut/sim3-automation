@@ -124,7 +124,7 @@ function rank(s,x,p){
    Math.sqrt(Math.max(1,Math.min(h1.n,h2.n)));
  let riskDelta=0,estimatedDownside=null;
  if(s.config.goldDownsideBudgetPct!==null){
-  estimatedDownside=riskValue(s,x);
+  estimatedDownside=riskValue(s,maskExpert(x,"GOLD",p));
   const exceed=Math.max(0,estimatedDownside-s.config.goldDownsideBudgetPct);
   riskDelta=s.risk.dual*exceed;
  }
@@ -285,13 +285,23 @@ function restore(x){
    !Number.isInteger(h.n)||h.n<0||
    !num(h.mse)||h.mse<0)throw Error("V16_BAD_Q_CHECKPOINT");
  }
+ const validVector=x=>Array.isArray(x)&&x.length===D&&x.every(num);
  if(!Number.isInteger(a.learned)||a.learned<0||
    !Number.isInteger(a.seq)||a.seq<0||
+   !num(a.memory.trend)||!num(a.memory.stress)||
+   !num(a.risk.dual)||a.risk.dual<0||
+   !a.risk.head||!validVector(a.risk.head.w)||
+   !validVector(a.risk.head.acc)||
    a.pending!==null&&(!num(a.pending.at)||
-      !Array.isArray(a.pending.x)||a.pending.x.length!==D)||
+      !STATES.includes(a.pending.position)||
+      !ACTS.includes(a.pending.choice)||
+      !validVector(a.pending.x))||
    a.lastExecution!==null&&(!num(a.lastExecution.at)||
       !num(a.lastExecution.price)||a.lastExecution.price<=0||
-      !Array.isArray(a.lastExecution.x)||a.lastExecution.x.length!==D))
+      !STATES.includes(a.lastExecution.startingPosition)||
+      !ACTS.includes(a.lastExecution.chosenAction)||
+      !validVector(a.lastExecution.x))||
+   a.pending!==null&&a.lastSignalAt!==a.pending.at)
    throw Error("V16_BAD_LIFECYCLE_CHECKPOINT");
  a.config=cfg;return a;
 }
