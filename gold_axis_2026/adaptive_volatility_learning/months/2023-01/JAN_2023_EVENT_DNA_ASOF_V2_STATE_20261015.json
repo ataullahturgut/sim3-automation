@@ -1,0 +1,64 @@
+{
+  "month": "2023-01",
+  "model_id": "JAN2023_EVENT_DNA_ASOF_V2",
+  "status": "HYPOTHESIS_DISCOVERY_NOT_ECONOMIC_CAUSAL_OR_BLIND",
+  "origin_asset": "CASH",
+  "origin_amount_usd": 100,
+  "next_month_initial_state": {
+    "asset": "GOLD",
+    "ounces": 0.05353920019343195,
+    "cash_usd": 0,
+    "last_mid_price": 1928.385,
+    "marked_usd_before_sale_fee": 103.24419056501128,
+    "liquidation_value_if_sold": 102.41823704049119,
+    "time_utc": "2023-01-31T21:00:00.000Z",
+    "source": "HistData MID"
+  },
+  "january_result": {
+    "trade_count": 1,
+    "net_pct_if_liquidated": 2.418237040491192,
+    "mdd_pct": 2.981015690439792,
+    "buyhold_same_source_first_full_open_1826_197": 103.91289968387858,
+    "full_calendar_slots": 2976,
+    "valid_decision_slots": 1763,
+    "missing_or_closed_slots": 1213,
+    "cross_asset_complete_slots": 1666,
+    "phaseCounts": {
+      "P0_OR_NO_VERIFIED_RELEASE": 1584,
+      "P2_G07_UNRESOLVED": 153,
+      "P2_G01A_CANDIDATE": 26
+    },
+    "transactions": [
+      {
+        "time_utc": "2023-01-04T07:30:00.000Z",
+        "time_tr": "2023-01-04 10:30",
+        "action": "BUY_GOLD",
+        "price": 1852.848,
+        "quantity": 0.05353920019343195,
+        "reason": "PRICE_AND_CROSS_ASSET",
+        "event": "NONE",
+        "phase": "P0_OR_NO_VERIFIED_RELEASE",
+        "r4": 0.395,
+        "r92": 0.31244,
+        "r276": 2.46648,
+        "rise400": 3.05938,
+        "nq1": 0.04327,
+        "zn1": 0.09674
+      }
+    ]
+  },
+  "lessons_to_february": [
+    "Four January major macro release types did not justify a new trade while already holding GOLD.",
+    "Do not use ex-post event family assignment or post-release reports as January firstprints.",
+    "Keep GOLD through short drawdowns under the 2-sided bank trading cost; January generated no major defensive liquidation.",
+    "The model entered at January 4 after 3% past 400-bar rise; observed Jan3 early UP move was missed. Evaluate timing but do not optimize on Jan to claim better Jan predictions.",
+    "The 93 archived events from 2023-2025 were not PIT-known in January 2023. Only mechanism templates and actual release time channels can support this month's decisions.",
+    "Evidence score is a candidate not a calibrated probability; no economic-causal learning claim."
+  ],
+  "frozen_rule_month": "price+cross-asset OR published macro+cross-asset; sell only confirmed severe co-sell/breakdown/macro-down",
+  "fees": {
+    "buy": 0.008,
+    "sell": 0.008,
+    "bank_spread_included": false
+  }
+}
