@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "verify": "node server.js --verify",
-    "test": "node --test test.js"
+    "test": "node --test test.js v2.test.js"
   },
   "engines": {
     "node": ">=18.0.0"
