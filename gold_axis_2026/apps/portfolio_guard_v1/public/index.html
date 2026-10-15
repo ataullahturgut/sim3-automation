@@ -263,6 +263,18 @@
       <div id="adaptiveV7Trades" class="tablewrap">Araştırma çalıştırılmadı.</div>
       <h3>Modelin başarısızlık ve karşı-test özeti</h3>
       <div id="adaptiveV7Failures" class="tablewrap">Araştırma çalıştırılmadı.</div>
+      <h3>2026 aylık en iyi strateji ve gerçek zamanlı seçim farkı</h3>
+      <p>Ay bittikten sonra kazanan NAKİT / ALTIN seçimi öğrenme hedefidir, ileriye dönük sinyal değildir. Geçen ay kazananı takip etmenin yeterli olup olmadığını ayrı ölçeriz.</p>
+      <button class="researchbtn" id="runMonthlyBenchmarkV7" type="button">2026 aylık strateji karşılaştırmasını hesapla</button>
+      <p class="monthstatus" role="status" id="monthlyBenchmarkV7Status">Şubat–Eylül için ay sonu bilgisiyle ideal seçim, bir önceki ayı takip ve gerçek V7 farkı hesaplanacak.</p>
+      <div class="kpis">
+        <article class="kpi"><span>Ay sonrası ideal seçim</span><strong id="monthlyOracleUSD">—</strong><small>Geleceği önceden biliyormuş gibi; işlem sinyali değil</small></article>
+        <article class="kpi"><span>Geçen ayın kazananını takip</span><strong id="monthlyLaggedUSD">—</strong><small>Ay başında bilinebilir; 09:00 giriş</small></article>
+        <article class="kpi"><span>Gerçek V7 deney sonucu</span><strong id="monthlyV7USD">—</strong><small>3 saatlik panel üzerinden</small></article>
+        <article class="kpi"><span>V7'nin aylık hedefe farkı</span><strong id="monthlyRegretUSD">—</strong><small>Benchmark farkı, azami kâr sınırı değil</small></article>
+      </div>
+      <div id="monthlyBenchmarkV7Table" class="tablewrap">Düğmeye basınca ay bazında görünür.</div>
+      <p class="notice" id="monthlyBenchmarkV7Warning">Bu referans her ay için yalnız NAKİT ve ay boyu ALTIN seçeneklerini kapsar. Komisyonlar var, gerçek banka fiyatı yok. Aylık kazanan önceden bilinemez.</p>
       <p class="notice" id="adaptiveV7Warning">V7 geçmişi görerek oluşturulmuş bir deneydir. Ekonomik haber katkısı doğrulanmadı. Gerçek banka ASK/BID ve kayma yok; otomatik alım-satım yok.</p>
     </div>
    </section>
