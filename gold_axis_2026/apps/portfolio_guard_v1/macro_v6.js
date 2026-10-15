@@ -9,7 +9,7 @@ const VERSION="V6_CME_CROSS_ASSET_DOWNSIDE_DIAGNOSTIC_20261015";
 const PINS=[
  ["2023","4ebf1c8dbbbac361bc345707fd46724d19214fb7"],
  ["2024","4080780e93cccabfc6c4271c4b10cdda93cbf76d"],
- ["2025","2c308b79a2ba26de611aa22e3ca2a50bdbf2cd8"],
+ ["2025","2c308b79a2ba26de611aa22e3ca2a50bdbf2cd8c"],
  ["2026","7da219b4f5d6b81a7a618d38e4dc1af3e662a7f8"]
 ];
 const XAU=["r4","r92","r276","rv","ds"],OTHER=["nq1","nq6","zn1","zn6","cl1","cl6"],ALL=XAU.concat(OTHER);
@@ -34,7 +34,7 @@ function macroRows(){
 }
 function priceRows(){
  const a=v3.loadHistorical().filter(r=>r.tt>="2023-01-01");
- const jan=core.loadFrozen().rows.filter(r=>new Date(r.time).getUTCMinutes()===0&&new Date(r.time).getUTCHours()%3===0);
+ const jan=core.loadFrozen().rows.filter(r=>r.tt>="2026-01-01"&&new Date(r.time).getUTCMinutes()===0&&new Date(r.time).getUTCHours()%3===0);
  const febRows=more.loadFebruary3h();
  const later=more.loadHoldout().rows.filter(r=>r.time<Date.parse("2026-09-30T21:00:00.000Z"));
  const all=[...a,...jan,...febRows,...later];
