@@ -43,3 +43,40 @@ test("V5 refuses unsorted prices, invalid initial capital and future warmup",()=
  assert.throws(()=>model.run([r],train,{initialUSD:0}),/INVALID_INITIAL_USD/);
  assert.throws(()=>model.run([r],train,{priorHistory:[r]}),/WARMUP_FUTURE_DATA/);
 });
+
+
+test("scientific promotion gate must reject V5 despite improving 2026 shock P/L",()=>{
+ const r=model.fullResearch(),gate=r.scientificGate;
+ assert.equal(gate.status,"REJECT_PROMOTION");
+ assert.equal(gate.authorized,false);
+ assert.equal(r.promotionAuthorized,false);
+ assert.equal(gate.currentResearchComparisons.completeYearV4Wins,0);
+ assert.equal(gate.currentResearchComparisons.completeYearHoldWins,0);
+ assert.ok(gate.currentResearchComparisons.V5AdditionalUSDFromFebThroughSep>0);
+ assert.ok(gate.unmetRequirements.includes("prospectivelyBlindValidation"));
+ assert.ok(gate.unmetRequirements.includes("verifiedRealBankBidAsk"));
+});
+test("read-only V4 forward and V5 API reflect unvalidated outcomes without mutating V1",()=>{
+ const {requestHandler}=require("./server");
+ function read(path,method="GET"){
+  let status,body;requestHandler({url:path,method},{writeHead(c){status=c;},end(b){body=b;}});
+  return {status,value:JSON.parse(body)};
+ }
+ const a=read("/api/algorithm/v4/forward"),b=read("/api/algorithm/v5");
+ assert.equal(a.status,200);assert.equal(b.status,200);
+ assert.equal(a.value.monthEndCarryVerified,true);
+ assert.equal(b.value.scientificGate.authorized,false);
+ assert.ok(Math.abs(a.value.actual.finalUSD-96.70696771810788)<.000001);
+ assert.ok(Math.abs(b.value.fromFebThroughSeptember.finalUSD-107.8328612157861)<.000001);
+ assert.equal(read("/api/algorithm/v5","POST").status,405);
+ const original=read("/api/summary");
+ assert.ok(Math.abs(original.value.comparison[2].finalUSD-119.75391720039644)<1e-8);
+});
+test("long audit screen renders a working read-only V4/V5 comparison control",()=>{
+ const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
+ const html=fs.readFileSync(path.join(__dirname,"public/index.html"),"utf8");
+ const app=fs.readFileSync(path.join(__dirname,"public/app.js"),"utf8");
+ assert.match(html,/id="runLongReview"/);assert.match(html,/id="longMonths"/);
+ assert.match(app,/api\/algorithm\/v4\/forward/);assert.match(app,/api\/algorithm\/v5/);
+ assert.doesNotThrow(()=>new vm.Script(app));
+});
