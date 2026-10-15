@@ -1,5 +1,25 @@
 # GOLD INTRAMONTH — OLAY TEMELLİ ORTA/BÜYÜK UP–DOWN FIRSATLARI ANA MANİFESTİ
 
+> **15 EKİM 2026 — PORTFOLIO GUARD V3 GÖLGE ALGORİTMA ÇALIŞTIRILDI, DOĞRULANMIŞ STRATEJİ DEĞİL.**
+> Şubatta erken toparlanma/TUT problemi için gerçek, tekrarlanabilir kod eklendi:
+> [V3 yürütücü](apps/portfolio_guard_v1/recovery_v3.js),
+> [V3 denetim raporu](apps/portfolio_guard_v1/RECOVERY_V3_EXECUTION_REPORT_20261015.md),
+> [20–25 öğrenme fiyat veri kesitleri](apps/portfolio_guard_v1/data/RECOVERY_HIST_3H_2020_2022_V1.csv),
+> [23–25 devam veri kesitleri](apps/portfolio_guard_v1/data/RECOVERY_HIST_3H_2023_2025_V1.csv).
+> 10.850 geçmişte tamamlanmış 3h kontrol kesiti, 65 geçmişte olgunlaşmış stres epizodu,
+> Şubat 2026 V1 Ocak terminali 119,753917 USD NAKİT başlangıç;
+> V3 Şubat 120,442260 USD, V1 Şubat 114,274468 USD, nakitte bekleme 119,753917 USD.
+> Buna karşılık Ocak V3 110,981208 USD ile Ocak V1 119,753917 USD altında;
+> 2024–2025 V3, maliyetli fiyat vekilli AL/TUT rakibinden geride kaldı.
+> 2023 veri kapsamı daha düşük; modellerin 2026 Şubat sonuçları görülerek geliştirildiği için
+> geriye dönük Şubat testi kör OOS değildir. İlk haber/dış piyasa teyidi olmadığı için
+> G05-C/G06-B sadece ÖĞREN-03'te kayıtlı ekonomik hipotezlerdir, Şubat'a
+> doğrulanmış ekonomik DNA atanmadı (UNRESOLVED). V1 kayıtları, OLAY-02 ve
+> ÖĞREN-03 hiçbir şekilde silinmedi/değiştirilmedi; yeni aktif manifest açılmadı.
+> Uygulama sol menüsünde **Yeni V3 toparlanma modeli** deney bölümü bulunur,
+> yalnız tarihsel araştırma ve banka %0,8+%0,8 komisyon vekilidir (gerçek ASK/BID yok).
+
+
 
 
 
