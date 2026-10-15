@@ -787,3 +787,62 @@ async function runV10Evidence(){
 }
 $("runV10Evidence").addEventListener("click",runV10Evidence);
 
+async function runV11Ann(){
+ const button=$("runV11Ann"),status=$("v11AnnStatus");
+ button.disabled=true;
+ status.textContent="Gerçek ANN eğitiliyor: yalnız olgunlaşmış etiketlerle 2024, 2025 ve 2026 sırayla deneniyor…";
+ try{
+  const response=await fetch("/api/algorithm/v11/ann",{cache:"no-store"});
+  if(!response.ok)throw Error("HTTP_"+response.status);
+  const obj=await response.json();
+  if(obj.version!=="V11_ANN_CORRECTLY_SUPERVISED_20261016"||
+    obj.status!=="RESEARCH_NOT_PROMOTED"||
+    obj.model.learnAlgorithm!=="FULL_BACKPROP_ADAM_HUBER"||
+    obj.gate.promote!==false||
+    obj.gate.realBankAskBid!==false||
+    obj.gate.independentBlindTest!==false||
+    obj.source.trainLabels<900)throw Error("V11_INVALID_RESEARCH_OUTPUT");
+  const find=(year,policy)=>obj.experiments.find(x=>x.year===year&&x.policy===policy);
+  const base=find("2026_FEB_SEP","netPositive");
+  const upd=find("2026_FEB_SEP","adaptiveMonthly");
+  const abs=find("2026_FEB_SEP","calibratedAbstain");
+  $("v11BaseUSD").textContent=money(base.final);
+  $("v11MonthlyUSD").textContent=money(upd.final);
+  $("v11AbstainUSD").textContent=money(abs.final);
+  $("v11Promotion").textContent="ONAY YOK";
+  $("v11AnnResults").innerHTML=table(
+   ["Dönem","ANN strateji","İlk olgun eğitim örneği","Komisyon sonrası net bakiye","İşlem"],
+   obj.experiments.map(x=>"<tr>"+cell(escapeText(x.year))+
+    cell(escapeText(x.policy))+
+    cell(x.training[0].maturedN)+
+    cell(money(x.final))+
+    cell(x.nTrades)+"</tr>")
+  );
+  const tr=function(t){return new Intl.DateTimeFormat("tr-TR",{
+   timeZone:"Europe/Istanbul",day:"2-digit",month:"2-digit",
+   hour:"2-digit",minute:"2-digit",hour12:false
+  }).format(new Date(t));};
+  $("v11AnnTrades").innerHTML=table(
+    ["Sinyal zamanı","İcra zamanı","AL/SAT","Fiyat vekili","Karar gerekçesi"],
+    abs.trades.map(x=>"<tr>"+cell(escapeText(tr(x.asOf)))+
+     cell(escapeText(tr(x.at)))+cell(escapeText(x.side==="BUY"?"AL":"SAT"))+
+     cell(format.format(x.mid))+
+     cell(escapeText(x.why))+"</tr>")
+  );
+  status.textContent="ANN araştırması tamamlandı: 2026 temel "+money(base.final)+
+    ", her ay yeniden öğrenme "+money(upd.final)+
+    ", belirsizlikten kaçınma "+money(abs.final)+
+    ". Model başarıyla doğrulanmadığı için otomatik kabul edilmedi.";
+  $("v11AnnWarning").textContent=
+   "BİLİMSEL KARAR: TERFİ YOK. ANN 14-12-8-2 topolojisi gerçek backpropagation/Adam ile eğitildi. "+
+   "4/14 günlük hedef yalnız sinyalden sonraki banka kesitinin alışından sonra başlayan, "+
+   "her yönde %0,8 maliyetli gerçekleşen getiridir. İlk eğitim etiketi hedef tamamlanmadan öğrenilmiyor; "+
+   "son %20 kronolojik doğrulama ve 21 günlük embargo var. Ancak etiketler zaman içinde "+
+   "örtüşüyor, 2026 zaten görülmüş, banka ASK/BID ve ilk yayınlı haber kayıtları mevcut değil. "+
+   "2025'te belirsizlikten kaçınan model hiç altın almadığı için pasif altının güçlü yükselişini kaçırdı. "+
+   "Bu ekran geçmiş deneydir, gerçek yatırım emri üretmez.";
+ }catch(err){status.textContent="ANN denetimi yürütülemedi: "+err.message+". V1–V10 sürümleri korunuyor.";}
+ finally{button.disabled=false;}
+}
+$("runV11Ann").addEventListener("click",runV11Ann);
+
