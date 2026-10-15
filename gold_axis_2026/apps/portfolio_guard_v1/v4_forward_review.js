@@ -42,7 +42,8 @@ function loadHoldout(){
 function loadFebruary3h(){
  const source=feb.loadFebruary().rows;
  const rows=source.filter(r=>new Date(r.time).getUTCMinutes()===0&&new Date(r.time).getUTCHours()%3===0);
- if(rows.length<150||!rows[0].tt.startsWith("2026-02"))throw Error("FEBRUARY_3H_BAD");
+ if(rows.length!==149||rows[0].tt!=="2026-02-02T06:00:00.000Z"||
+    rows.at(-1).tt!=="2026-02-27T21:00:00.000Z")throw Error("FEBRUARY_3H_BAD");
  return rows;
 }
 function buyingAtFirstBankTime(rows,initialUSD){
