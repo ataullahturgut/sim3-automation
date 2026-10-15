@@ -77,7 +77,7 @@ function audit(){
     extendedRows:history.rows.length,extended2025Overlap:history.data.overlapVerified},
   contracts:{feePerDirection:.008,bankHoursTR:[9,12,15],barSignalNotSameBarFill:true,
     nextBankCheckpointFill:true,realBankBidAskPresent:false,verifiedMacroFirstprints:0,
-    2026AlreadyInspected:true,independentBlindValidation:false},
+    alreadyInspected2026:true,independentBlindValidation:false},
   model:{
     sameV7Predictors:true,onlyExecutionAndReentryPolicyAltered:true,
     saleToReentryMinimumHours:336,
