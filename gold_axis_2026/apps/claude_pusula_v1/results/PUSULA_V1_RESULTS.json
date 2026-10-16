@@ -1,0 +1,218 @@
+{
+ "model": "PUSULA_V1",
+ "panel": "PUSULA_V1_DAILY_ASOF_PANEL.csv",
+ "period": [
+  "2023-01-03",
+  "2026-09-30"
+ ],
+ "trading_days": 967,
+ "acceptance": {
+  "K1_calibration": {
+   "coverage80": 0.84375,
+   "N": 96,
+   "passed": true
+  },
+  "K2_skill": {
+   "spearman": -0.16199131850244167,
+   "ci95": [
+    -0.38031092006839906,
+    0.10884936296530283
+   ],
+   "N": 96,
+   "passed": false
+  },
+  "K3_beyond_drift": {
+   "mean_logscore_ensemble": -2.6733871458719065,
+   "mean_logscore_S0_d0997": -2.6534070793340008,
+   "passed": false
+  },
+  "K4_economic": {
+   "final_nav": 124.12981581845183,
+   "final_nav_trend": 185.88464941193038,
+   "final_nav_passive": 224.62395673108867,
+   "maxdd": 22.842978086609943,
+   "maxdd_passive": 27.868583184579045,
+   "maxdd_trend": 32.52372555369543,
+   "passed": false
+  }
+ },
+ "all_passed": false,
+ "trades": [
+  {
+   "date": "2025-07-22",
+   "action": "BUY",
+   "nav": 98.393,
+   "mu": 1.1624,
+   "sd": 0.8788
+  },
+  {
+   "date": "2025-11-11",
+   "action": "SELL",
+   "nav": 120.0699,
+   "mu": -0.3611,
+   "sd": 2.6073
+  },
+  {
+   "date": "2025-12-17",
+   "action": "BUY",
+   "nav": 118.1397,
+   "mu": 1.3063,
+   "sd": 1.014
+  },
+  {
+   "date": "2026-03-30",
+   "action": "SELL",
+   "nav": 124.1298,
+   "mu": -0.6168,
+   "sd": 4.6736
+  }
+ ],
+ "final_position": "CASH",
+ "yearly": {
+  "2023": {
+   "sources": [
+    "EVDUKA_15M"
+   ],
+   "coverage80": 0.9230769230769231,
+   "model": {
+    "N": 26,
+    "accuracy": 0.4230769230769231,
+    "balanced_accuracy": 0.4523809523809524,
+    "up_recall": 0.8333333333333334,
+    "down_recall": 0.07142857142857142,
+    "actual_up_share": 0.46153846153846156
+   },
+   "always_up": {
+    "N": 26,
+    "accuracy": 0.46153846153846156,
+    "balanced_accuracy": 0.5,
+    "up_recall": 1.0,
+    "down_recall": 0.0,
+    "actual_up_share": 0.46153846153846156
+   },
+   "s0_drift": {
+    "N": 26,
+    "accuracy": 0.4230769230769231,
+    "balanced_accuracy": 0.4583333333333333,
+    "up_recall": 0.9166666666666666,
+    "down_recall": 0.0,
+    "actual_up_share": 0.46153846153846156
+   },
+   "vs_trend_corrected": 4,
+   "vs_trend_broken": 7,
+   "strategy_ret_pct": 0.0,
+   "passive_ret_pct": 12.668638312010172,
+   "trend_ret_pct": 3.4312164176365734
+  },
+  "2024": {
+   "sources": [
+    "EVDUKA_15M"
+   ],
+   "coverage80": 0.8846153846153846,
+   "model": {
+    "N": 26,
+    "accuracy": 0.6153846153846154,
+    "balanced_accuracy": 0.42105263157894735,
+    "up_recall": 0.8421052631578947,
+    "down_recall": 0.0,
+    "actual_up_share": 0.7307692307692307
+   },
+   "always_up": {
+    "N": 26,
+    "accuracy": 0.7307692307692307,
+    "balanced_accuracy": 0.5,
+    "up_recall": 1.0,
+    "down_recall": 0.0,
+    "actual_up_share": 0.7307692307692307
+   },
+   "s0_drift": {
+    "N": 26,
+    "accuracy": 0.7307692307692307,
+    "balanced_accuracy": 0.5,
+    "up_recall": 1.0,
+    "down_recall": 0.0,
+    "actual_up_share": 0.7307692307692307
+   },
+   "vs_trend_corrected": 0,
+   "vs_trend_broken": 3,
+   "strategy_ret_pct": 0.0,
+   "passive_ret_pct": 26.480327559785934,
+   "trend_ret_pct": 26.480327559785934
+  },
+  "2025": {
+   "sources": [
+    "EVDUKA_15M"
+   ],
+   "coverage80": 0.7307692307692307,
+   "model": {
+    "N": 26,
+    "accuracy": 0.6538461538461539,
+    "balanced_accuracy": 0.5069444444444444,
+    "up_recall": 0.8888888888888888,
+    "down_recall": 0.125,
+    "actual_up_share": 0.6923076923076923
+   },
+   "always_up": {
+    "N": 26,
+    "accuracy": 0.6923076923076923,
+    "balanced_accuracy": 0.5,
+    "up_recall": 1.0,
+    "down_recall": 0.0,
+    "actual_up_share": 0.6923076923076923
+   },
+   "s0_drift": {
+    "N": 26,
+    "accuracy": 0.6923076923076923,
+    "balanced_accuracy": 0.5,
+    "up_recall": 1.0,
+    "down_recall": 0.0,
+    "actual_up_share": 0.6923076923076923
+   },
+   "vs_trend_corrected": 1,
+   "vs_trend_broken": 2,
+   "strategy_ret_pct": 17.818060724774032,
+   "passive_ret_pct": 64.62213491004847,
+   "trend_ret_pct": 64.62213491004852
+  },
+  "2026": {
+   "sources": [
+    "DUKASCOPY_H1"
+   ],
+   "coverage80": 0.8333333333333334,
+   "model": {
+    "N": 18,
+    "accuracy": 0.3888888888888889,
+    "balanced_accuracy": 0.4375,
+    "up_recall": 0.875,
+    "down_recall": 0.0,
+    "actual_up_share": 0.4444444444444444
+   },
+   "always_up": {
+    "N": 18,
+    "accuracy": 0.4444444444444444,
+    "balanced_accuracy": 0.5,
+    "up_recall": 1.0,
+    "down_recall": 0.0,
+    "actual_up_share": 0.4444444444444444
+   },
+   "s0_drift": {
+    "N": 18,
+    "accuracy": 0.4444444444444444,
+    "balanced_accuracy": 0.5,
+    "up_recall": 1.0,
+    "down_recall": 0.0,
+    "actual_up_share": 0.4444444444444444
+   },
+   "vs_trend_corrected": 5,
+   "vs_trend_broken": 4,
+   "strategy_ret_pct": 5.357205045516933,
+   "passive_ret_pct": -2.682839623977562,
+   "trend_ret_pct": -13.686111334371187
+  }
+ },
+ "notes": [
+  "2023-2026 daha önce görülmüş dönemdir; kör test değildir.",
+  "Dukascopy BID/ASK + varsayımsal %0,8/yön banka maliyeti; Türk bankası kotasyonu değildir.",
+  "Haber verisi kullanılmadı (as-of doğrulanmış haber kaynağı yok)."
+ ]
+}
