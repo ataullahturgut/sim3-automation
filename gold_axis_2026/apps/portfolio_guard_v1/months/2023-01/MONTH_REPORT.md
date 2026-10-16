@@ -60,7 +60,7 @@ Hareketin tamamı alınıp satılarak kazanılabilecek tutar değildir; banka pe
 - `MATH_AUDIT.json`: aylık ekonometrik kayıt, 6 ex-post önemli hareket, öngörü ufukları ve başarısızlık;
 - `EVENT_ECONOMICS.jsonl`: 4 yayın-zamanlı makro kayıt, kaynak soy-ağacı;
 - `DECISIONS.csv`: 645 kararın gerçekleşen as-of puan ve masraf defteri;
-- `CORE_CHECKPOINT.json`: **öğrenilmiş head/encoder ve devam eden gecikmeli label/portföy durumu**, gelecek aylara taşıyabilmek için tarih-özelliksiz model state;
+- `CORE_CHECKPOINT.json`: **öğrenilmiş tahmin başlığı ağırlıkları ve devam eden gecikmeli label/portföy durumu; bu V0 sürümünün ekonomik özellik kodlayıcısı sabittir, henüz eğitilmiş bir encoder değildir**, gelecek aylara taşıyabilmek için tarih-özelliksiz model state;
 - `MONTH_REPORT.md`: bu insan-okunur yorum.
 
 Koşunun tüm kanıtı: https://github.com/ataullahturgut/sim3-automation/actions/runs/38908324549
