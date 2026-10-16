@@ -83,7 +83,7 @@ test("Observed economic wave never trains on later no-event anchors",()=>{
  assert.equal(s.audit.ruleMerged,0);
 });
 test("No trained event alpha: paired replay backs off to market-only and records the abstention",()=>{
- const start=Date.parse("2023-01-06T12:00:00Z"),rows=[];
+ const start=Date.parse("2023-01-03T16:00:00Z"),rows=[];
  for(let i=0;i<20;i++){
   const at=new Date(start+i*240*60000).toISOString();
   rows.push({...obs(at,{}),price:1900+i*2+(i%3)*.1});
