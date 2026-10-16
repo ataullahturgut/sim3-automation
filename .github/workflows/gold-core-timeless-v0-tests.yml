@@ -115,3 +115,10 @@ jobs:
           node --check replay_slow_position_memory_s3.js
           node --check replay_slow_position_memory_s3.test.js
           node --test replay_slow_position_memory_s3.test.js
+
+      - name: M4 shadow chronological comparison runner and null-alpha contracts
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check adaptive_long_cycle_s3.js
+          node --check replay_s3_monthly_challengers.js
+          node --test replay_s3_monthly_challengers.test.js
