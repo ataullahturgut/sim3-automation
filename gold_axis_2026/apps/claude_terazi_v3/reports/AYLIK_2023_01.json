@@ -3,12 +3,12 @@
  "days": 21,
  "gold_change_pct": 5.42,
  "nav_start": 100.0,
- "nav_end": 97.4158,
- "month_ret_pct": -2.58,
+ "nav_end": 102.1796,
+ "month_ret_pct": 2.18,
  "position_end": "ALTIN",
  "phase_days_rising": 21,
  "break_days": 0,
- "position_matches_phase": "3/21",
+ "position_matches_phase": "21/21",
  "mean_P": 0.548,
  "mean_Q": 0.088,
  "exit_lambda": 0.5,
@@ -16,12 +16,12 @@
  "macro_confirm_days": 9,
  "trades": [
   {
-   "date": "2023-01-27",
+   "date": "2023-01-03",
    "action": "AL",
-   "price": 1926.13,
-   "reason": "tek sonsal: yükselme evresine emin",
-   "P": 0.548,
-   "U": 0.071,
+   "price": 1836.33,
+   "reason": "v2 giriş kuralı (dokunulmadı): yükselme evresine emin",
+   "P": 0.546,
+   "U": 0.076,
    "rules": [
     [
      "altın 20g getiri > -1.5σ VE 60g zirveye uzaklık > -1.0σ VE dolar endeksi 20g değişim < +1.5σ",
@@ -34,13 +34,13 @@
      0.93
     ],
     [
-     "altın 20g getiri > -1.5σ VE 60g zirveye uzaklık > -1.0σ VE 10Y reel faiz 20g değişim < +1.5σ",
-     0.565,
+     "altın 5g getiri > -1.0σ VE altın 20g getiri > -1.5σ VE 60g zirveye uzaklık > -1.0σ",
+     0.557,
      0.9
     ],
     [
-     "altın 20g getiri > -1.5σ VE 60g zirveye uzaklık > -0.5σ VE 10Y reel faiz 20g değişim < +1.5σ",
-     0.596,
+     "altın 20g getiri > -1.5σ VE 60g zirveye uzaklık > -1.0σ VE 10Y reel faiz 20g değişim < +1.5σ",
+     0.565,
      0.9
     ]
    ]

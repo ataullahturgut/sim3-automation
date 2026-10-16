@@ -287,10 +287,12 @@ def combine(P, U, Q, UQ, p0):
 
 
 class TeraziV3:
-    """mode='unified' (v3.2, birincil): iki kanal tek sonsalda birleşir, karar v2'nin tek kuralı.
-    mode='dual'   (v3.1, kayıt için): hızlı kanal ayrı oy verir — çelişki üretir, bkz. ek-3."""
+    """mode='unified_sell' (v3.3, ön kayda UYUMLU): birleşik sonsal yalnız SATIŞ testinde kullanılır;
+       ALIŞ testi v2'nin kendi P ve U'sudur — ön kayıt §2.1 "giriş değiştirilmez" maddesi gereği.
+    mode='unified' (v3.2): birleşik sonsal her iki tarafta — §2.1'i İHLAL eder, girişi bozdu (ek-4).
+    mode='dual'    (v3.1, kayıt için): hızlı kanal ayrı oy verir — çelişki üretir, bkz. ek-3."""
 
-    def __init__(self, p0, exit_lam=EXIT_LAM, mode="unified", macro_gate=True):
+    def __init__(self, p0, exit_lam=EXIT_LAM, mode="unified_sell", macro_gate=True):
         self.entry = T2.TeraziV2()          # giriş kanalı — v2 koduyla birebir aynı
         self.exitb = BreakBase(p0)
         self.exit_lam = float(exit_lam)
@@ -318,6 +320,18 @@ class TeraziV3:
                     Pe=Pe, Ue=Ue, zq=zq, lam=self.exit_lam, macro=macro_confirms(mrow),
                     entry_top=None if de is None else de["top"],
                     exit_top=None if dx is None else dx["top"], reason=None)
+
+        if self.mode == "unified_sell":
+            # v3.3 — ön kayda uyumlu: ALIŞ v2'nin kuralı (dokunulmaz), SATIŞ birleşik sonsal.
+            if pos == 0:
+                if de is not None and de["P"] - LAM * de["U"] > 0.5:
+                    info["reason"] = "v2 giriş kuralı (dokunulmadı): yükselme evresine emin"
+                    return "AL", info
+                return "HOLD", info
+            if Pe is not None and Pe + LAM * Ue < 0.5 and (info["macro"] or not self.macro_gate):
+                info["reason"] = "birleşik sonsal: düşme evresine emin"
+                return "SAT", info
+            return "HOLD", info
 
         if self.mode == "unified":
             # Ek-3: TEK sonsal, TEK kural (v2'nin kuralı). Alış ve satış aynı sayıyı kullanır,

@@ -1,7 +1,15 @@
-# TERAZİ v3 — Sonuç: teşhis doğrulandı, mimari başarısız
+# TERAZİ v3 — Sonuç: teşhis doğrulandı, hedef tutulamadı
+
+> **GÜNCELLEME (ek-4, `TERAZI_V3_ON_KAYIT_EKI_UYUM_DUZELTMESI.md`):** v3.2'nin ön kayıt §2.1'i
+> ("giriş değiştirilmez") ihlal ettiği tespit edildi ve **v3.3** ile uyum sağlandı: birleşik sonsal
+> yalnız satış testinde kullanılır, alış testi v2'nin kuralıdır. v3.3 net NAV **213,49**
+> (v2: 202,82), 5 işlem, sıfır savrulma, maks düşüş %11,27, 11/11 nedensellik testi OK.
+> **G3 yine geçmedi** (çıkış 27 Şubat) ve hedef penceremizde v3.3 v2'den 0,89 puan geride.
+> Kazancın tamamı v2'nin Aralık 2023 gidiş-dönüşünden kaçınmaktan geliyor, hedeften değil.
+> Ayrıntı ve ölçülmüş "kanıt açığı" (1,6–1,8 kat) ek-4'tedir. Aşağıdaki bölümler v3.0–v3.2'yi anlatır.
 
 2026-10-16. Sıra: ön kayıt `1fcdcaf` → kod + ek-1 `278066b` → v3.0 koşusu → ek-2 `aa5ab2c` →
-v3.1 koşusu → ek-3 + etiket düzeltmesi `41fc0c6` → v3.2 koşusu → bu rapor.
+v3.1 koşusu → ek-3 + etiket düzeltmesi `41fc0c6` → v3.2 koşusu → bu rapor → ek-4 + v3.3.
 Isıtma 2020-01→2022-12, koşu 2023-01-03→2025-12-31. **2026 verisi yüklenmedi** (testle doğrulandı).
 
 > **Bu rapordaki 2023–2025 sayıları kanıt değildir, geliştirme kaydıdır.** v3, kullanıcının açık
@@ -148,14 +156,15 @@ Girişi %+4,89 pahalı, çıkışı %−0,91 kötü. **Hedef işlemde 5,4 puan k
 
 ## 7. Karar
 
-Ön kayıt §4 gereği **v3 başarısızdır** (G3). Ön kayıt ayrıca v3.3'ü yasaklıyor: üç denemede
-mimari fikir sınanmış sayılır, dördüncüsü çatallanan yol problemi yaratır.
+Ön kayıt §4 gereği **v3 başarısızdır** (G3 hiçbir sürümde geçmedi — v3.3 dâhil).
 
-**v2 dondurulmuş haliyle, kodu değiştirilmeden 2026'ya tek başına girer.**
+**v2 dondurulmuş haliyle, kodu değiştirilmeden 2026'ya girer.** v3.3'ün de yanında girip girmeyeceği
+ayrı bir kullanıcı kararıdır; girerse "G3'ü geçmemiş, 4 denemeden sonra elde edilmiş aday"
+etiketiyle ve v2 ile yan yana raporlanır. Beşinci mimari denenmeyecektir.
 
-v3.2 dosyaları (`TERAZI_V3_DONDURULMUS_MODEL.json`, `reports/`) kayıt için saklanır; 2026
-testine sokulmaları ayrı bir kullanıcı kararıdır ve o durumda v2 ile yan yana, "G3'ü geçmemiş
-aday" etiketiyle raporlanır.
+Dondurulmuş dosyalar: `TERAZI_V3_DONDURULMUS_MODEL.json` (v3.3, birincil mod `unified_sell`),
+`TERAZI_V3_3_SONUC.json`, `TERAZI_V3_2_SONUC.json`, `TERAZI_V3_0_ONKAYIT_HALI_SONUC.json`,
+`TERAZI_V3_DUYARLILIK.json`, `reports/`, `reports_v3_0/`.
 
 Masrafı karara geri koymak (kullanıcının "banka komisyonu şimdi boşver, sonra ayarlarız" dediği
 madde) bu çalışmanın işaret ettiği bir sonraki adımdır: v3'ün üç patolojisinin hepsinde eksik olan

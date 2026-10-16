@@ -31,7 +31,7 @@ def warmup_base_rate(brk, conf, warm_end_idx):
     return float(np.mean(vals)), len(vals)
 
 
-def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, mode="unified", macro_gate=True, write=True):
+def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, mode="unified_sell", macro_gate=True, write=True):
     rows = S.load_rows(dev_only=True)
     raw, macro = S.build_states(rows)
     Z, std = S.standardize(raw)

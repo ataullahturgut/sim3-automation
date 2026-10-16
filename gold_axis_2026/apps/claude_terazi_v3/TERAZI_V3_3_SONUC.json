@@ -1,0 +1,110 @@
+[
+ {
+  "name": "v3.3 uyumlu (alış=v2, satış=birleşik)",
+  "net": 213.49,
+  "gross": 222.26,
+  "trades": 5,
+  "churn": 0,
+  "mdd": 11.27,
+  "jan_end": 102.18,
+  "feb_end": 97.0,
+  "janfeb": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33
+   ],
+   [
+    "2023-02-27",
+    "SAT",
+    1810.02
+   ]
+  ],
+  "ledger": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33,
+    "v2 giriş kuralı (dokunulmadı): yükselme evresine emin"
+   ],
+   [
+    "2023-02-27",
+    "SAT",
+    1810.02,
+    "birleşik sonsal: düşme evresine emin"
+   ],
+   [
+    "2023-03-06",
+    "AL",
+    1853.65,
+    "v2 giriş kuralı (dokunulmadı): yükselme evresine emin"
+   ],
+   [
+    "2023-10-02",
+    "SAT",
+    1839.47,
+    "birleşik sonsal: düşme evresine emin"
+   ],
+   [
+    "2023-10-12",
+    "AL",
+    1880.56,
+    "v2 giriş kuralı (dokunulmadı): yükselme evresine emin"
+   ]
+  ]
+ },
+ {
+  "name": "v3.3 makro freni yok",
+  "net": 213.49,
+  "gross": 222.26,
+  "trades": 5,
+  "churn": 0,
+  "mdd": 11.27,
+  "jan_end": 102.18,
+  "feb_end": 97.0,
+  "janfeb": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33
+   ],
+   [
+    "2023-02-27",
+    "SAT",
+    1810.02
+   ]
+  ],
+  "ledger": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33,
+    "v2 giriş kuralı (dokunulmadı): yükselme evresine emin"
+   ],
+   [
+    "2023-02-27",
+    "SAT",
+    1810.02,
+    "birleşik sonsal: düşme evresine emin"
+   ],
+   [
+    "2023-03-06",
+    "AL",
+    1853.65,
+    "v2 giriş kuralı (dokunulmadı): yükselme evresine emin"
+   ],
+   [
+    "2023-10-02",
+    "SAT",
+    1839.47,
+    "birleşik sonsal: düşme evresine emin"
+   ],
+   [
+    "2023-10-12",
+    "AL",
+    1880.56,
+    "v2 giriş kuralı (dokunulmadı): yükselme evresine emin"
+   ]
+  ]
+ }
+]
