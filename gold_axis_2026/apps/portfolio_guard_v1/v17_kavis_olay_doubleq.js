@@ -23,7 +23,8 @@ const STATES=Object.freeze(["CASH","GOLD"]),ACTS=Object.freeze(["KEEP","SWITCH"]
 const KEYS=Object.freeze(["CASH_KEEP","CASH_SWITCH","GOLD_KEEP","GOLD_SWITCH"]);
 const FEATURES=Object.freeze(["bias","r4","r1","r3","rv","dd","nq6","nq_present",
  "v15_edge","v15_present","memory_trend","memory_stress",
- "verified_event_polarity","regime_surprise"]);
+ "event_G01","event_G02","event_G03","event_G04","event_G05",
+ "event_G06","event_G07","regime_surprise"]);
 const D=FEATURES.length;
 const clamp=(x,l,h)=>Math.min(h,Math.max(l,x));
 const num=x=>typeof x==="number"&&Number.isFinite(x);
@@ -106,7 +107,7 @@ function features(s,o){
  }
  const ev=o.events??[];
  if(!Array.isArray(ev)||ev.length>16)throw Error("V17_BAD_EVENTS");
- let eventPolarity=0;
+ const eventFamilies=Array(7).fill(0);
  for(const e of ev){
   if(!e||e.verifiedFirstPublication!==true||
     !["G01","G02","G03","G04","G05","G06","G07"].includes(e.family)||
@@ -116,7 +117,7 @@ function features(s,o){
     throw Error("V17_FUTURE_EVENT_BLOCKED");
   if(!num(e.polarity)||Math.abs(e.polarity)>1)
     throw Error("V17_BAD_EVENT_POLARITY");
-  eventPolarity+=e.polarity;
+  eventFamilies[Number(e.family.slice(1))-1]+=e.polarity;
  }
  const r=s.regime,z=scaled(f.r4,3),oldStd=r.n>=8?
    Math.sqrt(Math.max(.04,r.var)):1;
@@ -133,7 +134,7 @@ function features(s,o){
    st=gs*oldStress+(1-gs)*stress;
  const x=[1,scaled(f.r4,3),scaled(f.r1,6),scaled(f.r3,9),
    scaled(f.rv,3),scaled(f.dd,6),scaled(f.nq6,5),
-   f.nq6==null?0:1,e,flag,t,st,clamp(eventPolarity,-3,3),surprise];
+   f.nq6==null?0:1,e,flag,t,st,...eventFamilies.map(x=>clamp(x,-3,3)),surprise];
  // Only as-of observations update the running moments. Date/weekday/year
  // NEVER enters feature x, but elapsed duration remains causal discount.
  r.n++;
