@@ -43,7 +43,8 @@ function settings(o={}){
   maxGap=o.maxIntervalHours??80,unc=o.uncertaintyScale??.10,
   hours=o.bankCheckpointHoursUTC??[6,9,12],budget=o.goldDownsideBudgetPct??null,
   criticDisagreementPenalty=o.criticDisagreementPenalty??.16,
-  regimePenalty=o.regimePenalty??.05;
+  regimePenalty=o.regimePenalty??.05,
+  gradientMemory=o.gradientMemory??.985,regimeMemory=o.regimeMemory??.93;
  if(!num(f)||f<0||f>=.1)throw Error("V16_BAD_FEE");
  if(!num(discount)||discount<0||discount>1)throw Error("V16_BAD_GAMMA");
  if(!num(lr)||lr<=0||lr>1)throw Error("V16_BAD_LR");
@@ -52,6 +53,9 @@ function settings(o={}){
  if(!num(unc)||unc<0||unc>5)throw Error("V17_BAD_UNCERTAINTY");
  if(!num(criticDisagreementPenalty)||criticDisagreementPenalty<0||criticDisagreementPenalty>2||
   !num(regimePenalty)||regimePenalty<0||regimePenalty>2)throw Error("V17_BAD_PENALTY");
+ if(!num(gradientMemory)||gradientMemory<.9||gradientMemory>=1||
+  !num(regimeMemory)||regimeMemory<.5||regimeMemory>=1)
+    throw Error("V17_BAD_FORGETTING");
  if(!Array.isArray(hours)||hours.length===0||hours.length>12||
   hours.some(x=>!Number.isInteger(x)||x<0||x>23)||
   new Set(hours).size!==hours.length)throw Error("V16_BAD_CHECKPOINTS");
@@ -61,6 +65,7 @@ function settings(o={}){
   minimumMaturedIntervals:n,maxIntervalHours:maxGap,uncertaintyScale:unc,
   bankCheckpointHoursUTC:[...hours].sort((a,b)=>a-b),
   goldDownsideBudgetPct:budget,criticDisagreementPenalty,regimePenalty,
+  gradientMemory,regimeMemory,
   liveTrade:false,researchOnly:true};
 }
 function newHead(){
@@ -73,7 +78,7 @@ function create(o={}){
   qb:Object.fromEntries(KEYS.map(k=>[k,newHead()])),
   risk:{head:newHead(),dual:0,matured:0},
   memory:{trend:0,stress:0},
-  regime:{n:0,mean:0,m2:0,lastSurprise:0},
+  regime:{n:0,mean:0,m2:0,var:.25,lastSurprise:0},
   lastSignalAt:null,lastQuoteAt:null,
   virtualPosition:null,seq:0,pending:null,
   lastExecution:null,learned:0,skipped:0,
@@ -114,7 +119,7 @@ function features(s,o){
   eventPolarity+=e.polarity;
  }
  const r=s.regime,z=scaled(f.r4,3),oldStd=r.n>=8?
-   Math.sqrt(Math.max(.04,r.m2/(r.n-1))):1;
+   Math.sqrt(Math.max(.04,r.var)):1;
  const surprise=r.n>=8?clamp(Math.abs(z-r.mean)/oldStd/3,0,3):0;
  const m=s.memory,oldTrend=m.trend,oldStress=m.stress;
  const trend=Math.tanh((scaled(f.r1,6)+scaled(f.r3,9))/2);
@@ -131,7 +136,12 @@ function features(s,o){
    f.nq6==null?0:1,e,flag,t,st,clamp(eventPolarity,-3,3),surprise];
  // Only as-of observations update the running moments. Date/weekday/year
  // NEVER enters feature x, but elapsed duration remains causal discount.
- r.n++;const delta=z-r.mean;r.mean+=delta/r.n;r.m2+=delta*(z-r.mean);
+ r.n++;
+ const prevMean=r.mean,decay=s.config.regimeMemory,rate=1-decay;
+ r.mean=decay*r.mean+rate*z;
+ const residual=z-prevMean;
+ r.var=Math.max(.04,decay*r.var+rate*residual*residual);
+ r.m2+=residual*(z-r.mean); // unused historic audit
  r.lastSurprise=surprise;s.audit.eventObservations+=ev.length;
  return {x,nextMemory:{trend:t,stress:st},
    at:stamp(o.asof),v15Included:flag===1};
@@ -207,10 +217,11 @@ function signal(s,ob){
    v15ExpertUsed:snap.v15Included,
    noLiveOrders:true,notAValidatedForecast:true};
 }
-function ada(w,acc,gradient,lr){
+function ada(w,acc,gradient,lr,memory=.985){
  for(let j=0;j<w.length;j++){
   const g=clamp(gradient[j],-50,50);
-  acc[j]+=g*g;
+  // Decaying RMS gradient statistics adapt after distribution shift.
+  acc[j]=Math.max(.05,memory*acc[j]+(1-memory)*g*g);
   w[j]=clamp(w[j]-lr*g/Math.sqrt(acc[j]),-100,100);
  }
 }
@@ -249,7 +260,7 @@ function backup(s,old,newExecutionAt,price,nextX,nextObservedPosition){
  for(const u of upd){
   const den=1+u.x.reduce((v,z)=>v+z*z,0);
   ada(u.head.w,u.head.acc,u.x.map(v=>u.error*v/den),
-   s.config.learningRate);
+   s.config.learningRate,s.config.gradientMemory);
   u.head.mse=u.head.n===0?u.error*u.error:
    .96*u.head.mse+.04*u.error*u.error;
   u.head.n++;u.head.lastTD=u.error;
@@ -259,7 +270,7 @@ function backup(s,old,newExecutionAt,price,nextX,nextObservedPosition){
    x=maskExpert(old.x,"GOLD",old.startingPosition),
    err=clamp(dot(h.w,x)-downside,-50,50),
    den=1+x.reduce((v,z)=>v+z*z,0);
-  ada(h.w,h.acc,x.map(v=>err*v/den),s.config.learningRate/2);
+  ada(h.w,h.acc,x.map(v=>err*v/den),s.config.learningRate/2,s.config.gradientMemory);
   h.mse=h.n===0?err*err:.96*h.mse+.04*err*err;
   h.n++;h.lastTD=err;
   s.risk.dual=clamp(s.risk.dual+.005*(downside-
@@ -332,7 +343,7 @@ function restore(x){
    !Number.isInteger(a.seq)||a.seq<0||
    !num(a.memory.trend)||!num(a.memory.stress)||
    !a.regime||!Number.isInteger(a.regime.n)||a.regime.n<0||
-   !num(a.regime.mean)||!num(a.regime.m2)||
+   !num(a.regime.mean)||!num(a.regime.m2)||!num(a.regime.var)||a.regime.var<.04||
    !num(a.risk.dual)||a.risk.dual<0||
    !a.risk.head||!validVector(a.risk.head.w)||
    !validVector(a.risk.head.acc)||
