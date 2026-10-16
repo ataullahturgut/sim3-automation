@@ -38,7 +38,7 @@ function create(options={}){
  return {version:VERSION,learningMode,registry:copy(registry),
   config:{lookbackBars:16,entryZ:1.25,exitZ:0.2,
    pullbackNorm:0.7,anchorMinutes:anchors,horizonMinutes:horizon,
-   minReady},lastAt:null,lastPrice:null,window:[],lastAnchor:null,
+   minReady},lastAt:null,lastPrice:null,lastSource:null,window:[],lastAnchor:null,
   active:null,nextEpisodeId:1,completed:[],censored:0,
   endedAt:{},censoredAt:{},pending:[],observations:0,
   scores:{issued:0,ready:0,scored:0,scoredYear:{},brier:0,brierBaseline:0,
@@ -155,7 +155,8 @@ function phaseOutput(s,t,phase,z,drawdown){
 function observe(s,ob){
  if(s.version!==VERSION)throw Error("S2_BAD_VERSION");
  const t=valid(s,ob);
- if(s.lastAt!==null&&t-s.lastAt!==STEP){
+ if(s.lastAt!==null&&(t-s.lastAt!==STEP||
+    (s.lastSource!==null&&ob.priceSource!==s.lastSource))){
   // This is right censoring: no artificial weekend turning points, no
   // interpolation, and no carrying incomplete 4h forecasts over missing bars.
   endEpisode(s,s.lastAt,{censor:true});
@@ -218,7 +219,8 @@ function observe(s,ob){
     episodeId:ep.id,modelP:h.ready?h.p:null,
     baselineP:h.baselineReady?h.baselineP:null});
  }
- s.lastAt=t;s.lastPrice=ob.price;s.observations++;s.phaseCounts[phase]++;
+ s.lastAt=t;s.lastPrice=ob.price;s.lastSource=ob.priceSource;
+ s.observations++;s.phaseCounts[phase]++;
  return out;
 }
 function summary(s){
@@ -249,6 +251,7 @@ function restore(s){
  if(v.version!==VERSION||!Array.isArray(v.completed)||!Array.isArray(v.pending)||
    !Array.isArray(v.window)||!v.registry||!v.config)throw Error("S2_BAD_CHECKPOINT");
  if(v.window.length>17)throw Error("S2_INVALID_CHECKPOINT_WINDOW");
+ if(v.lastSource===undefined)v.lastSource=null;
  return v;
 }
 function closeAtEndOfSample(s){
