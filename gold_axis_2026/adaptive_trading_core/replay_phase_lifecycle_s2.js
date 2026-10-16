@@ -24,21 +24,24 @@ function replay(rows,{withS1=false}={}){
  if(!Array.isArray(rows)||!rows.length)throw Error("S2_ROWS_REQUIRED");
  const sourceId=rows[0].source_id;
  if(typeof sourceId!=="string"||!sourceId)throw Error("S2_SOURCE_MISSING");
- const sourceRegistry={[sourceId]:{kind:"MARKET",
-   evidenceStatus:"RECONSTRUCTED_MARKET_ASOF"}};
- const state=withS1?integrated.create({sourceId}):phase.create({sourceRegistry});
+ const sourceIds=[...new Set(rows.map(x=>x.source_id))];
+ if(sourceIds.some(x=>typeof x!=="string"||!x)||sourceIds.length>4)
+  throw Error("S2_MALFORMED_SOURCE_ALLOWLIST");
+ const sourceRegistry=Object.fromEntries(sourceIds.map(id=>[id,
+  {kind:"MARKET",evidenceStatus:"RECONSTRUCTED_MARKET_ASOF"}]));
+ const state=withS1?integrated.create({sourceId,sourceIds}):phase.create({sourceRegistry});
  let previous=-Infinity,passed=0,rejected=0;
  for(const r of rows){
   const start=utc(r.bar_start_utc);
   if(start<=previous)throw Error("S2_RAW_DATA_NOT_CHRONOLOGICAL");
   previous=start;
-  if(r.source_id!==sourceId)throw Error("S2_SOURCE_ID_CHANGED");
+  if(!sourceIds.includes(r.source_id))throw Error("S2_UNDECLARED_SOURCE");
   if(+r.native_minute_bars!==15){rejected++;continue;}
   const p=Number(r.close_price);
   if(!Number.isFinite(p)||p<=0)throw Error("S2_PRICE_NOT_FINITE");
   const end=new Date(start+15*60000).toISOString();
   const ob={asof:end,barStartedAt:r.bar_start_utc,barMinutes:15,
-   price:p,priceSource:sourceId,priceAvailableAt:end};
+   price:p,priceSource:r.source_id,priceAvailableAt:end};
   if(withS1)integrated.observe(state,ob);
   else phase.observe(state,ob);
   passed++;
@@ -48,7 +51,7 @@ function replay(rows,{withS1=false}={}){
  const result=withS1?integrated.summary(state):{lifecycle:phase.summary(state)};
  return {project:"GOLD-ADAPTIVE-MODEL-APP-01",stage:"S2",
   mode:"DISCOVERY_FULL_ARCHIVE",withExistingS1Core:withS1,
-  scienceGate:"PENDING_NOT_ALPHA_PROVEN",sourceId,
+  scienceGate:"PENDING_NOT_ALPHA_PROVEN",sourceId,sourceIds,
   inputRows:rows.length,validCompletedM15Bars:passed,
   rejectedIncompleteM15Bars:rejected,
   firstBar:rows[0].bar_start_utc,lastBar:rows.at(-1).bar_start_utc,
