@@ -387,3 +387,20 @@ Tüm ufuklar artık 4s kısa epizottan farklı şekilde hem END hem CONTINUE ür
 **Kod/test:** yavaş S2 bileşeni + eski S1/S2 CORE kompozisyonu + [özel veri replay](adaptive_trading_core/replay_slow_lifecycle_s2.js) + 9 yeni güvenlik testi. Eski 58 + yeni 9 = **67/67 izole JS test PASS**. GitHub Actions test adımı eklendi, bağımsız CI başarı statüsü görülmedi. Ham/lisanslı altın fiyat satırı veya özel model checkpointi repoya yüklenmedi. S3 net banka komisyonu %0,8/her yön ve 2023 Ocak strict yürüyüşü henüz başlatılmadı.
 
 **Sonraki doğru adım:** gerekli veri/lisans ve seans kalite boşluğunu gidermek; tarihsel bağımsız uzun epizot ve karşıt örnek sayısını yükseltmek. S2 bilim onayı olmadan bitiş hazard'ı gerçek ticaret sinyali ilan edilemez; S1 ekonomik öğrenmenin başarısızlığı S2 mühendislik izniyle silinmez.
+
+
+---
+
+## 22. S2 alternatif arşiv ve yavaş hareketlerin gerçek tekrar ölçümü (16 Ekim 2026)
+
+**WORKSTREAM=MODEL; STAGE=S2; DEVELOPMENT=PASS; SCIENCE=PENDING.** [Alternatif veri kaynağı ve karşıt sonuç denetimi](adaptive_trading_core/S2_ALT_SOURCE_QUALITY_AUDIT_20261016.md) · [read-only kaynak SQL](adaptive_trading_core/S2_SLOW_EV_DUKA_SESSION_AUDIT_2020_2025.sql). Önceki HistData 2023-25 **609 uygun seans/12 tamamlanmış uzun hareket** için eksikleri tahminle doldurmak yerine ayrı EVTradingLabs-Dukascopy-türevli 2020-25 BID/ASK M15 **tek kaynak** arşivi incelendi. 1.549 adaydan **1.500** kaynak/quote/gap kriterleriyle kabul edildi; **35 uzun hareket bitmiş, 24 sansürlü**, medyan **9 seans**. 2023-25 yalnız bu veriyle 748 kabul/17 bitmiş bulundu. M15 quote bütünlüğü native M1 full coverage/PIT belgesi sayılmadı; `BIDASK_M15_RECONSTRUCTED_NOT_M1` ayrı sınıfla aynı slow CORE'a eklendi. Arşivler splice edilmez.
+
+2020-25 gerçek kronolojik retrospektif S2 Brier (model / basit süre): 1g **0,043069/0,042541**, 3g **0,116184/0,123571**, 5g **0,183422/0,203705**, 10g **0,193725/0,229801**. 3/5/10 ufukları küçük avantaj gösterdi; fakat **dördünün de epizot bootstrap %95 GA sıfırı içeriyor**. Bu çalışma canlı PIT/OOS alpha değildir. S2 bilimsel kapısı **PENDING**.
+
+## 23. S3 tek CORE AL–TUT–SAT araştırma critic'i ve ilk Ocak 2023 pilotu (16 Ekim 2026)
+
+**WORKSTREAM=MODEL; STAGE=S3; S3_DEV=INITIAL_INTEGRATED; S3_SCIENCE=NOT_PROVEN; TRADE_AUTHORITY=FALSE; U1=UNCHANGED.** [S3 geliştirme, maliyet ve ilk gerçek fiyat smoke denetimi](adaptive_trading_core/S3_SHADOW_POSITION_VALUE_DEV_AUDIT_20261016.md) · [S3 critic](adaptive_trading_core/adaptive_position_value_s3.js) · [aynı CORE köprüsü](adaptive_trading_core/adaptive_market_core_s1_s2.js) · [özel-veri research replay](adaptive_trading_core/replay_position_value_s3.js).
+
+S1/S2 aynı matematiksel CORE'da S3 `Q(state, CASH/GOLD, KEEP/SWITCH)` olgunlaşmış 15dk fiyat değişimlerinden online öğreniyor; %0,8/her bankacılık yönü (bileşik tam tur **%1,5936**) sabit. Nakit 100 USD, gölge portföy, fee-net CASH/B&H GOLD/critic, drawdown/turnover; kaynağı değiştiren kağıt portföy sonuçları geçersizlenir, gelecek etiket bugünkü karara giremez. `action=null`, `tradeAllowed=false`, `bankTrades=0`; uygulama veya banka işlemi yapılmadı.
+
+**Ocak 2023 salt okunur gerçek BID/ASK MID araştırma smoke:** 1.920 tamamlanmış M15, 21 seans girişi/20 kabul, 1.898 15dk gecikmeli critic güncellemesi; **0 shadow alış/satış**. Net critic/nakit **100 USD**, iki-komisyonlu aynı kaynağın pasif altın referansı **103,8057 USD**. **Net fırsat kaybı 3,8057 USD**; modelin al/sat üstünlüğü gösterilemedi. Bu retrospektif araştırma veri çalışması **S4 sıkı Ocak 2023 tam yürüyüş değildir**, bağımsız alpha iddiası yoktur; bankanın gerçek alış/satış kotasyonları, firstprint erişim kanıtı ve bağımsız OOS eksik. Sonuç görüldü diye yapısal eşiği azaltma/aylık sonuç optimizasyonu yasak. **S1 bilim FAIL; S2 bilim PENDING; S3 bilim NOT_PROVEN; S4/S5/S6/U1 NOT_ACCEPTED.**

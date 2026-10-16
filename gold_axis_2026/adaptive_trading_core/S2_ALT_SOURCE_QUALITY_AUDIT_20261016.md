@@ -12,3 +12,15 @@
 - `replay_slow_lifecycle_s2.js` her iki veri biçimini aynı motorla işler. Salt fiyat ve olay adaylarıdır.
 ## Bilim
 Henüz alternatif 1.500 seans S2 replay modeliyle bitiş/başarı ölçümü çalıştırılmadı. İlk filtre, kapsam ve sürekliliğin *aday kanıtıdır*. Kaynaklar arası bağımsız tutarlılık, resmî altın settlement, tick-firstprint doğrulaması ve kör OOS yoktur. **S2_SCIENCE_GATE=PENDING.**
+
+## Aynı S2 slow CORE gerçek alternatif kaynak tekrar koşusu (16 Ekim 2026)
+**2020–2025** sıralı read-only Neon BID/ASK MID araştırması: 1.549 aday seans, **1.500 kabul**, **49 red**, 35 tamamlanmış uzun epizot, 24 sansürlü, medyan 9 seans. 2023–2025 ayrı başlatılan karşılaştırmada 774 aday/748 kabul, **17 bitmiş**, 11 sansürlü, medyan 10 seans. Eski HistData 2023–2025 koşusu **609 kabul, 12 bitmiş** idi; bu kaynaklar **birleştirilmedi**.
+| Ufuk | Skor | END | CONTINUE | S2 Brier | Basit baseline | Epizot-kümeli iyileşme %95 GA |
+|---|---:|---:|---:|---:|---:|---|
+| 1 seans | 231 | 10 | 221 | 0,043069 | **0,042541** | [-0,005497; +0,003775] |
+| 3 seans | 196 | 29 | 167 | **0,116184** | 0,123571 | [-0,010241; +0,022798] |
+| 5 seans | 171 | 53 | 118 | **0,183422** | 0,203705 | [-0,016597; +0,052688] |
+| 10 seans | 131 | 90 | 41 | **0,193725** | 0,229801 | [-0,022712; +0,087526] |
+3/5/10 seans araştırma Brier'ı daha düşük olsa da **TÜM GA sıfırı içeriyor** ve tam tarihsel arşivde yürütülen retrospektif deneydir. Ayrı 2023–2025 başlangıç koşusunda 1/3/5/10 skor 49/38/31/22, bitmiş epizot 17; ufukların hiçbirinde iki sınıfın her birinde 12 bağımsız etiket yok. **S2_SCIENCE_GATE=PENDING**, güvenilir alpha veya net ticaret kararı ilan edilmez.
+
+Kod yürütme: doğrudan GitHub'daki aynı `adaptive_slow_lifecycle_s2.js` işlevleri ve salt okunur Neon SQL çıktı dizisi (araştırma arşivi) ile çalıştırıldı; özel fiyat ve model checkpointi GitHub'a alınmadı.
