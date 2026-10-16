@@ -34,6 +34,9 @@ function validateNames(names){
 function makeStats(){return {n:0,mean:0,m2:0,up:0,down:0,downsideMean:0};}
 function create(options){
   const o=options||{};
+  const learningMode=o.learningMode??"STRICT_WALK_FORWARD";
+  if(!["STRICT_WALK_FORWARD","DISCOVERY_FULL_ARCHIVE"].includes(learningMode))
+    throw Error("UNKNOWN_LEARNING_MODE");
   validateNames(o.featureNames);
   const horizons=o.horizons||DEFAULT_HORIZONS;
   if(!Array.isArray(horizons)||!horizons.length||new Set(horizons).size!==horizons.length||
@@ -47,13 +50,13 @@ function create(options){
   if(!sourceRegistry||typeof sourceRegistry!=="object"||Array.isArray(sourceRegistry)||
      !Object.keys(sourceRegistry).length)throw Error("SOURCE_REGISTRY_REQUIRED");
   for(const [id,entry] of Object.entries(sourceRegistry)){
-    if(!id||!entry||!["SYNTHETIC_ONLY","RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT"].includes(entry.evidenceStatus)||
+    if(!id||!entry||!["SYNTHETIC_ONLY","RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","RECONSTRUCTED_RELEASE_RESEARCH"].includes(entry.evidenceStatus)||
        !["MARKET","EVENT","BOTH"].includes(entry.kind))throw Error("SOURCE_REGISTRY_INVALID");
   }
   const maxLateMinutes=o.maxLateMinutes??15;
   if(!Number.isInteger(maxLateMinutes)||maxLateMinutes<0||maxLateMinutes>15)
     throw Error("STRICT_M15_MATURITY_TOLERANCE_REQUIRED");
-  return {version:VERSION, featureNames:o.featureNames.slice(),horizons:horizons.slice(),
+  return {version:VERSION,learningMode,featureNames:o.featureNames.slice(),horizons:horizons.slice(),
     config:{anchorMinutes,maxRules:Math.min(32,Math.max(2,o.maxRules??16)),
       noveltyDistance:Math.max(.3,o.noveltyDistance??1.25),
       mergeDistance:.18,minReady:8,maxLateMinutes},
@@ -80,12 +83,22 @@ function featureVector(s,features,asof){
     const av=stamp(f.availableAt),obs=stamp(f.observedAt);
     if(obs>av||av>asof)throw Error("FUTURE_OR_REVERSED_FEATURE_"+n);
     if(f.kind==="EVENT"){
-      if(entry.evidenceStatus!=="VERIFIED_PIT")
-        throw Error("EVENT_SOURCE_NOT_PIT_VERIFIED_"+n);
-      if(f.firstPublishedAt===undefined||f.firstprintVerified!==true)
-        throw Error("UNVERIFIED_EVENT_FIRSTPRINT_"+n);
-      const first=stamp(f.firstPublishedAt);
-      if(first>obs||first>av)throw Error("FUTURE_EVENT_FIRSTPRINT_"+n);
+      if(entry.evidenceStatus==="RECONSTRUCTED_RELEASE_RESEARCH"&&
+         s.learningMode==="DISCOVERY_FULL_ARCHIVE"){
+        if(f.firstprintVerified!==false||f.researchReleaseConfidence!==
+             "OFFICIAL_INITIAL_ACTUAL_PRE_RELEASE_DATED_CONSENSUS"||
+           f.researchOnly!==true||f.assumedAccessDelayMinutes<60||
+           !Number.isInteger(f.assumedAccessDelayMinutes)||
+           av-obs<f.assumedAccessDelayMinutes*60000)
+          throw Error("UNPROVEN_RECONSTRUCTED_EVENT_"+n);
+      }else{
+        if(entry.evidenceStatus!=="VERIFIED_PIT")
+          throw Error("EVENT_SOURCE_NOT_PIT_VERIFIED_"+n);
+        if(f.firstPublishedAt===undefined||f.firstprintVerified!==true)
+          throw Error("UNVERIFIED_EVENT_FIRSTPRINT_"+n);
+        const first=stamp(f.firstPublishedAt);
+        if(first>obs||first>av)throw Error("FUTURE_EVENT_FIRSTPRINT_"+n);
+      }
     }
     out[n]=f.value;
   }
@@ -370,6 +383,9 @@ function checkpoint(s){return copy(s);}
 function restore(v){
   const s=copy(v);
   if(!s.splitRoutes)s.splitRoutes={};
+  if(!s.learningMode)s.learningMode="STRICT_WALK_FORWARD";
+  if(!["STRICT_WALK_FORWARD","DISCOVERY_FULL_ARCHIVE"].includes(s.learningMode))
+    throw Error("BAD_CHECKPOINT_LEARNING_MODE");
   if(!s.sourceRegistry||!Object.keys(s.sourceRegistry).length)throw Error("CHECKPOINT_MISSING_SOURCE_REGISTRY");
   if(s.version!==VERSION||!Array.isArray(s.rules)||!Array.isArray(s.pending)||
     !Array.isArray(s.horizons))throw Error("BAD_CHECKPOINT");
