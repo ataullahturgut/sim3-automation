@@ -1,0 +1,98 @@
+{
+  "status": "RETROSPECTIVE_RESEARCH_PRIVATE_VENDOR_H1_NO_BANK_BIDASK_NO_TRUE_PIT",
+  "asofAuditDate": "2026-10-16",
+  "month": "2026-01",
+  "timezone": "Europe/Istanbul",
+  "modelBranch": "research-gold-jan2026-real-h1-fee008-20261016",
+  "source": "Neon public.gold_research_dukascopy_xau_h1_monthly_source_candidate_v1",
+  "source_id": "DIRECT_DUKASCOPY_XAUUSD_H1_BIDASK_2025_2026",
+  "source_vintage": "RETRIEVED_2026_10_08_NOT_PIT",
+  "noOriginalNeonDataPublished": true,
+  "rawH1Rows": 936,
+  "januaryRawH1Rows": 744,
+  "acceptedBankWindowCheckpoints": 168,
+  "firstAcceptedUtc": "2026-01-02T06:00:00.000Z",
+  "lastAcceptedUtc": "2026-01-30T13:00:00.000Z",
+  "intendedTRBankWindow": "09:00-17:00",
+  "lastDecisionWindowStartTR": "16:00",
+  "bankFeePerLeg": 0.008,
+  "roundTripApproxPct": 1.6,
+  "simulatedBankQuotesFromDukascopyMid": true,
+  "originalActualBankQuotes": false,
+  "vendorBIDASKUsedForMidpoint": true,
+  "extraVendorSpreadCharged": false,
+  "priceAtSignalFromPreviouslyCompletedH1": true,
+  "quotedExecutionProxy": "next H1 open + 1 minute, with unchanged bar-open midpoint",
+  "retrospectiveNotContemporaneouslyObservable": true,
+  "notOOS": true,
+  "learnFromMonthOnly": true,
+  "noHistoricalPretraining": true,
+  "benchmarks": {
+    "startCash": 100,
+    "uninvested": 100,
+    "firstEligibleBuyHold": 113.770523,
+    "firstEligibleMid": 4380.76,
+    "lastEligibleMid": 5064.725
+  },
+  "models": {
+    "V18": {
+      "endingUsd": 108.638137,
+      "maxDDPct": 9.871093,
+      "learnedIntervals": 167,
+      "trades": 1,
+      "buys": 1,
+      "sells": 0,
+      "endingPosition": "GOLD"
+    },
+    "R2": {
+      "endingUsd": 108.638137,
+      "maxDDPct": 9.871093,
+      "learnedIntervals": 167,
+      "trades": 1,
+      "buys": 1,
+      "sells": 0,
+      "endingPosition": "GOLD",
+      "adviserOverrides": 0,
+      "riskMode": "soft_penalty",
+      "maxDrawdownPct": 15
+    },
+    "R3": {
+      "endingUsd": 108.638137,
+      "maxDDPct": 9.871093,
+      "learnedIntervals": 167,
+      "trades": 1,
+      "buys": 1,
+      "sells": 0,
+      "endingPosition": "GOLD",
+      "gateOverrides": 0,
+      "gateOpens": 0,
+      "gateThreshold": 1.9,
+      "scientificStatus": "PREVIOUS_SYNTHETIC_R3_PREREG_REJECTED"
+    }
+  },
+  "tradeLedger": [
+    {
+      "atUtc": "2026-01-12T08:00:00.000Z",
+      "atTR": "2026-01-12 11:00",
+      "action": "BUY",
+      "simulatedMid": 4587.72,
+      "effectiveBuyPrice": 4624.717742,
+      "effectiveSellPrice": 4551.01824,
+      "navAfterTrade": 98.4064,
+      "appliesTo": [
+        "V18",
+        "R2",
+        "R3"
+      ]
+    }
+  ],
+  "caveats": [
+    "Historical venue H1 retrieved months after January: not point-in-time recorded",
+    "Not actual bank buy/sell quotes or confirmed ability to execute +1m at H1 open",
+    "Only January price observations update the Q policy; earlier data used solely for feature lookback",
+    "No intraday causal news/events; no 15min reactions; no NQ cross-asset input",
+    "R3 failed former synthetic prereg and is not promoted by this retrospective",
+    "No transaction tax, adverse execution, regulatory charges or bank afterhours changes modeled",
+    "Not optimized on January; no thresholds retuned"
+  ]
+}
