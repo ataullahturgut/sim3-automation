@@ -97,12 +97,11 @@ test("Slow signal conditions are known only at session UTC22 close; cannot enter
  const closing=Date.parse(d.at(-1)+"T22:00:00Z");
  const pre=bridge.observe(model,m15(closing-15*60000,1900));
  assert.equal(pre.action,null);
- const old=Object.keys(model.s1.rules[0].center);
- assert.ok(!old.includes("slow_trend_z"),"future day close leaked");
+ assert.equal(model.s1.rules.length,0); // no intraday context or premature slow context
  bridge.observe(model,m15(closing+15*60000,1901));
  const nowKeys=Object.keys(model.s1.rules[0].center);
  assert.ok(nowKeys.includes("slow_trend_z"));
- assert.equal(model.summary(model).tradeAllowed,false);
+ assert.equal(bridge.summary(model).tradeAllowed,false);
 });
 test("Feed changes right-censor long trend rather than treating futures vendor continuity as one observed regime",()=>{
  const s=life.create({sourceRegistry:reg}),d=days(18);
