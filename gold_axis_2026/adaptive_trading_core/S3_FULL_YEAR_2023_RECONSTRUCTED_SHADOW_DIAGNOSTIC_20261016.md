@@ -47,3 +47,23 @@ Pasif altın sütununda **Ocak başındaki tek AL** ve ilgili ay sonunda **bir v
 - Kullanıcının istediği ekonomik davranış M2, S2 uzun epizot ve M4 öz-finansmanlı **politikaya bağlı uzun tutma değerinin** birlikte öğrenilmesi tamamlanmadı; gerçek 2023 ilk erişimli makro olay sinyali bu 2023 model yürüyüşünde bağlanmadı. S4/FIRSTPRINT ve bağımsız banka icra testleri PENDING/FAIL. 2023 tam yıl araştırma teşhisi, manifest 2023 Ocak bilim kapısını veya 2023 Şubat→Aralık eğitim devir kabulünü aşmış sayılmaz.
 
 **Reproduction lineages:** Aynı branch GitHub kodu `adaptive_market_core_s1_s2.js` / `adaptive_position_value_s3.js` / `adaptive_position_memory_s3.js` / `S2_SLOW_EV_DUKA_SESSION_AUDIT_2020_2025.sql`; read-only Neon 2023 M15 12 aylık sıralı blokta JS CORE'a uygulandı, özel ham veri depoya commitlenmedi. GitHub Actions sözleşme testleri ayrı koşar; bu özel fiyat replay'ini kendiliğinden CI'de çalıştırmaz.
+
+
+---
+
+## 16 Ekim 2026 kullanıcı düzeltmesi sonrasında saat-kısıtsız yeniden üretim
+
+**BU BÖLÜM AYNI RAPORDAKİ ESKİ 09:00–17:00 İŞLEM PENCERESİ İDDİASININ YERİNE GEÇER.** Kullanıcı altın/nakit algoritmasında banka işlem saati şartı olmadığını teyit etti; S3 `BANK_WINDOW_CLOSED_RESEARCH` kod engeli ve shadowTrade saat kontrolü kaldırıldı (commit `55f20d641cc33a43151a6cdfdcebf221833f85cf`, her iki GitHub Actions sözleşme testi PASS). Alım ve satış için ayrı ayrı %0,8 maliyet korunur, bankada fiyat/işlem imkânı kanıtlanmış değildir.
+
+Kodu değiştirdikten sonra yeni tek-süreklilik replay aynı read-only Neon **2023 Ocak–Aralık 23.544** M15 BID/ASK araştırma kaydı üzerinde gerçekten TEKRAR çalıştırıldı: 12 ay boyunca tek S1/S2/S3 state devam ettirildi; model baştan 100 USD CASH.
+
+| Yeni saat bağımsız yıllık araştırma kıyası | Bakiye 2023 sonu | Altın AL | Altın SAT |
+|---|---:|---:|---:|
+| S3 LEGACY_M15 | **100,000000 USD** | **0** | **0** |
+| S3 MULTI_SESSION_RESEARCH | **100,000000 USD** | **0** | **0** |
+| Tüm gözlenen fiyatlardan pasif GOLD | **111,104608 USD** | 1 varsayımsal giriş | 1 varsayımsal tasfiye |
+| Nakit | **100,000000 USD** | — | — |
+
+- İlk tamamlanmış M15 kapanışı `2023-01-02T23:15:00Z` MID **1827,13**; son `2023-12-29T22:00:00Z` MID **2062,90**. `100×0.992²×2062.9/1827.13=111.1046080793`. **Önceden belirtilen 110,101958 USD benchmark eski TR 09–17 penceresine bağlıdır, artık güncel deney benchmarkı değildir.** İki deneyin başlangıç/bitiş saatleri aynı olmadığından rakamlar karıştırılmaz.
+- LEGACY_M15: 18216 durum için `LEARNED_KEEP_GREATER_OR_EQUAL`; 0 alım. MULTI_SESSION_RESEARCH: 18216 araştırma kıyası; 5571 `MATURED_SESSION_SUPPORT_INSUFFICIENT` + 12645 `MATURED_5_SESSION_NOT_CONVINCING`; 0 alım. `BANK_WINDOW_CLOSED_RESEARCH` artık sıfır/yok. 2023 oturum hafızasında 812 olgun etiket, 170 sansür. Kapanmış son günün henüz sonraki M15 kararına aktarılamaması kronolojik olarak korunuyor.
+- **Sonuç:** Eski `0 işlem / 100 USD` negatif araştırma bulgusu bağımsız saat-kısıtsız replay ile teyit edildi; değişen kıyas **pasif GOLD 111,10 USD**. Bu, modelin sinyali neden vermediği konusunda daha güçlü başarısızlık kanıtıdır ama ekonomik M2 firstprint, uzun HOLD değeri ve bilimsel AL/SAT policy hâlâ eksik. **MODEL_GATE=FAIL, FIRSTPRINT_PIT=false, USER_BANK_EXECUTION=false, U1=UNCHANGED.**
