@@ -66,3 +66,10 @@ jobs:
           node --check replay_independent_event_learning_s1.js
           node --check independent_event_learning_s1.test.js
           node --test independent_event_learning_s1.test.js
+
+      - name: S1 actual CORE event-wave integration and delayed matured XAU labels
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check replay_macro_waves_in_existing_core_s1.js
+          node --check replay_macro_waves_in_existing_core_s1.test.js
+          node --test replay_macro_waves_in_existing_core_s1.test.js
