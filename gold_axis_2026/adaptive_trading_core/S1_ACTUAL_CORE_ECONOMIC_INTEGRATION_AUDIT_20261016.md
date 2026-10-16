@@ -103,3 +103,23 @@ Makro yayım bazlı açıklayıcı bootstrap Brier iyileşmesi **−0,014935**, 
 **Bilimsel karar değişmedi:** İstihdam/CPI dönemlerinde karşıt UP/DOWN sonuçlarını genelleyen ve olasılık kalitesini doğrulayan ekonomik karar kuralı hâlâ gösterilemedi. CME eklemek tek başına başarı getirmedi. Görülmüş retrospektif performansa göre sonradan tek yapılandırmayı seçip kör OOS saymak yasak.
 
 **Ek üç test:** Tamamlanmış CME H1 yanında missing SI'nin gerçekten eksik kalması, gelecekte/eskimiş CME barının karantinaya alınması, SQL'in yayın kararından sonraki barı kullanmaması. İlgili bütün matematiksel S1/core testleri **44/44** izole JS harnessinde PASS; GitHub Actions sonucu ayrıca teyit gerektirir. MODEL_GATE=FAIL.
+
+
+## 6. Tek odaklı koşullu öğrenme deneyi — mevcut CORE, yeni model değil (16 Ekim 2026)
+
+**Değişiklik:** `adaptive_rule_discovery_s1.js` içinde isteğe bağlı `forecastMethod=LOCAL_MATURED_EXAMPLES` eklendi. Mevcut bir rule prototipine bağlı **yalnızca olgunlaşmış** geçmiş örnekler arasından en yakın 12 örnek seçilir; 8 öncül (parent) eşdeğer gözlem ile shrinkage uygulanır. Yeni ANN/KNN proje modeli veya manuel ekonomik yön kuralı yok: yöntemin algoritmik tahmini ve hafızası mevcut adaptif CORE içinde; varsayılan `PROTOTYPE` **değişmedi**. Aynı yöntem hem ekonomik açık hem ekonomik kapalı CORE koluna uygulanır; parametreler gerçek koşu sonrasında seçilmedi. `replay_macro_waves_in_existing_core_s1.js` için `--local-evidence` seçeneği eklendi.
+
+**Sentetik karşıt-örnek sınaması:** Tek adaptif rule 28 olgun etikete ulaşmışken, negatif ve pozitif ekonomik durumlar için sabit prototip her ikisine 0,50 UP olasılığı verirken, olgun örneklere koşullanan yöntem 0,80 / 0,20 UP olasılığı veriyor. Bu **kodun koşullu ayrıştırma yeteneği** kanıtıdır, gerçek ekonomi doğruluğu değildir.
+
+**Gerçek 2023–2025 retrospektif ekonomi-on/off tekrar koşuları** (Brier düşük daha iyi):
+
+| Piyasa bağlamı ve aynı örnekler | Forecast | Ekonomik açık CORE Brier | Ekonomik kapalı CORE Brier | Ekonomik olaylarda açık / kapalı Brier |
+|---|---|---:|---:|---:|
+| Yalnız XAU; 196 tahmin / 40 olay | mevcut PROTOTYPE | 0,255918 | **0,253149** | 0,264965 / **0,256879** |
+| Yalnız XAU; aynı 196 / 40 | LOCAL_MATURED_EXAMPLES | 0,259068 | **0,258381** | 0,265498 / **0,261829** |
+| XAU+CME; 194 tahmin / 38 olay | mevcut PROTOTYPE | 0,256040 | **0,251404** | 0,266061 / **0,251126** |
+| XAU+CME; aynı 194 / 38 | LOCAL_MATURED_EXAMPLES | 0,266928 | **0,258135** | 0,265123 / **0,245481** |
+
+Bu deneyde yeni koşullu forecast, **hiçbir piyasa bağlamında ekonomik alpha göstermedi ve mutlak Brier değerlerini kötüleştirdi**. Parametre değiştirilip aynı arşivde sonuca göre ayar yapılmadı. **Varsayılan CORE PROTOTYPE olarak tutuldu; deneysel yöntem otomatik terfi ettirilmedi.** Yeterince çeşitli bağımsız piyasa/ekonomi vakası olmadan yüksek yerel farklılık sentetikte güzel gözükse de gerçek piyasada overfit olabilir. Aynı CORE'un event present/missing kontrolleri, olgun label filtreleri, sıkı araştırma/vintage ayrımı devam eder. Tüm ilgili JS S1 teknik testleri **46/46** izole ortamda PASS; gerçek model geçişi **FAIL**.
+
+**Karar:** `S1_LOCAL_CONDITIONAL_TECHNICAL=PASS`, `S1_LOCAL_CONDITIONAL_SCIENCE=FAIL`, `ACTIVE_FORECAST_METHOD=PROTOTYPE`, `MODEL_GATE=FAIL`. S2/S3/APP değiştirilmedi.
