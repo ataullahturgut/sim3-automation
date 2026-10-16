@@ -1,0 +1,23 @@
+=== TERAZİ v3.9 — geliştirme kaydı, kanıt değil ===
+NAV 154.11  2023 sonu 104.21  işlem 21  düşüş %11.95  2023 yolu: False  S2 False S3 False S4 False
+    2023-01-03 AL 1836.33 v2 + büyük trend yukarı
+    2023-02-06 SAT 1878.03 kısa yapı + sonsal
+    2023-03-06 AL 1853.65 v2 + büyük trend yukarı
+    2023-05-18 SAT 1975.3 büyük trend aşağı
+    2023-07-20 AL 1981.83 v2 + büyük trend yukarı
+    2023-08-17 SAT 1893.88 büyük trend aşağı
+    2023-10-18 AL 1938.62 v2 + büyük trend yukarı
+    2024-02-14 SAT 1988.36 büyük trend aşağı
+    2024-03-04 AL 2084.12 v2 + büyük trend yukarı
+    2024-05-01 SAT 2286.16 büyük trend aşağı
+    2024-05-16 AL 2386.32 v2 + büyük trend yukarı
+    2024-11-12 SAT 2600.49 büyük trend aşağı
+    2024-12-11 AL 2691.48 v2 + büyük trend yukarı
+    2024-12-19 SAT 2618.26 büyük trend aşağı
+    2025-01-21 AL 2723.61 v2 + büyük trend yukarı
+    2025-05-14 SAT 3232.11 büyük trend aşağı
+    2025-06-03 AL 3361.57 v2 + büyük trend yukarı
+    2025-07-03 SAT 3355.99 büyük trend aşağı
+    2025-07-15 AL 3361.34 v2 + büyük trend yukarı
+    2025-07-29 SAT 3326.16 büyük trend aşağı
+    2025-08-29 AL 3410.66 v2 + büyük trend yukarı
