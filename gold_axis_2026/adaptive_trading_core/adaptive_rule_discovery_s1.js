@@ -85,8 +85,17 @@ function featureVector(s,features,asof){
     if(f.kind==="EVENT"){
       if(entry.evidenceStatus==="RECONSTRUCTED_RELEASE_RESEARCH"&&
          s.learningMode==="DISCOVERY_FULL_ARCHIVE"){
-        if(f.firstprintVerified!==false||f.researchReleaseConfidence!==
-             "OFFICIAL_INITIAL_ACTUAL_PRE_RELEASE_DATED_CONSENSUS"||
+        const verifiedEditionGrade=f.researchReleaseConfidence===
+          "OFFICIAL_INITIAL_ACTUAL_PRE_RELEASE_DATED_CONSENSUS";
+        const weakerLedgerGrade=f.researchReleaseConfidence===
+          "RETROSPECTIVE_LEDGER_POST_EVENT_PAIR_UNVERIFIED"&&
+          f.researchReleaseGrade==="POST_RELEASE_ONLY_NOT_PIT"&&
+          typeof f.actualLineageId==="string"&&f.actualLineageId.length>0&&
+          typeof f.consensusLineageId==="string"&&f.consensusLineageId.length>0;
+        // Ledger grade is allowed for descriptive full-archive exploration,
+        // NEVER as verified first-print or true STRICT forecasting evidence.
+        if(f.firstprintVerified!==false||
+           !(verifiedEditionGrade||weakerLedgerGrade)||
            f.researchOnly!==true||f.assumedAccessDelayMinutes<60||
            !Number.isInteger(f.assumedAccessDelayMinutes)||
            av-obs<f.assumedAccessDelayMinutes*60000)
