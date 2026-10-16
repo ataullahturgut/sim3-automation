@@ -1,0 +1,41 @@
+name: Gold V20 R2 Jan 2023 historical price pilot
+on:
+  push:
+    branches: ['research-gold-v20-r2-real-jan2023-*']
+  pull_request:
+    branches: ['research-gold-v20-r2-shadow-prereg-20261016']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  jan-2023-frozen-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate immutable Jan 2023 historical pilot code
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v20_r2_jan2023_real_proxy_pilot.js
+          node --check v20_r2_jan2023_real_proxy_pilot.test.js
+      - name: Run all Jan 2023 asof and source-contract regressions
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node --test v20_r2_jan2023_real_proxy_pilot.test.js
+      - name: Chronological 3 Jan to 31 Jan 2023 real market price proxy pilot
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node -e "require('fs').writeFileSync('V20_R2_JAN2023_FIRST_ACTUAL_PRICE_PROXY_RESULTS.json', JSON.stringify(require('./v20_r2_jan2023_real_proxy_pilot').run(),null,2))"
+          node v20_r2_jan2023_real_proxy_pilot.js > V20_R2_JAN2023_HUMAN_REPORT.json
+          node -e "const r=require('./V20_R2_JAN2023_FIRST_ACTUAL_PRICE_PROXY_RESULTS.json'); console.log(JSON.stringify({status:r.contract,startUTC:r.startUTC,initial:r.startCapitalUSD,end:r.endNAVUSD,benchmark:r.benchmarks,trades:r.tradesCount,decisions:r.numberOfSignals,filled:r.numberOfFills,learned:r.matured,DD:r.maxDrawdownPct,adviser:r.riskAdvisorOverrides,first:r.signals[0],transactions:r.trades,missing:r.skips.length,source:r.dataLineage},null,2))"
+      - name: Store complete causal daily ledger and persisted model checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: V20-R2-JAN2023-real-historical-price-proxy-report
+          path: |
+            gold_axis_2026/apps/portfolio_guard_v1/V20_R2_JAN2023_FIRST_ACTUAL_PRICE_PROXY_RESULTS.json
+            gold_axis_2026/apps/portfolio_guard_v1/V20_R2_JAN2023_HUMAN_REPORT.json
+          if-no-files-found: ignore
