@@ -91,7 +91,49 @@ function buildSql(ledger){
  ].join("\n");
 }
 if(require.main===module){
- if(process.argv.length!==3)throw Error("Pass one private macro-ledger CSV filepath");
- process.stdout.write(buildSql(fs.readFileSync(process.argv[2],"utf8"))+"\n");
+ if(process.argv.length<3||process.argv.length>4)throw Error("Pass private macro-ledger CSV filepath [--cross-assets]");
+ const ledger=fs.readFileSync(process.argv[2],"utf8");
+ const sql=process.argv[3]==="--cross-assets"?buildCrossAssetSql(ledger):buildSql(ledger);
+ if(process.argv[3]&&process.argv[3]!=="--cross-assets")throw Error("UNKNOWN_QUERY_MODE");
+ process.stdout.write(sql+"\n");
 }
-module.exports={buildSql};
+
+/** Optional STRICTLY RESEARCH-ONLY cross-market variant.
+ * CME continuous futures may contain EX-POST roll adjustments; no point-in-time
+ * maturity/contract certification is claimed. Only completed, non-stale H1 bars
+ * are joined to the AFTER-release XAU anchor, never future bars.
+ */
+function buildCrossAssetSql(ledger){
+ const base=buildSql(ledger);
+ const roots=[["nq","NQ.c.0"],["zn","ZN.c.0"],["cl","CL.c.0"],["si","SI.c.0"]];
+ const joins=roots.map(([alias,symbol])=>
+  "LEFT JOIN LATERAL (SELECT z.known_end_utc,z.ret_1h FROM h1 z "+
+  "WHERE z.symbol='"+symbol+"' "+
+  "AND z.ts_event-z.previous_start=interval '1h' "+
+  "AND z.known_end_utc<=b.anchor_utc "+
+  "AND z.known_end_utc>=b.anchor_utc-interval '75min' "+
+  "AND z.ret_1h IS NOT NULL "+
+  "ORDER BY z.known_end_utc DESC LIMIT 1) "+alias+" ON TRUE"
+ ).join("\n");
+ const cols=roots.map(([alias])=>alias+".ret_1h "+alias+"_1h, "+
+  alias+".known_end_utc "+alias+"_known_end_utc").join(",\n ");
+ return [
+ "-- PRIVATE cross-market research query; CME continuous roll can be hindsight-adjusted.",
+ "-- DO NOT treat as verified PIT; anchor/due XAU prices are confidential transient rows.",
+ "WITH base_rows AS MATERIALIZED (",base, "),",
+ "h1 AS MATERIALIZED (",
+ " SELECT symbol,ts_event,ts_event+interval '1h' known_end_utc,",
+ " lag(ts_event) OVER (PARTITION BY symbol ORDER BY ts_event) previous_start,",
+ " CASE WHEN close>0 AND lag(close) OVER (PARTITION BY symbol ORDER BY ts_event)>0",
+ " THEN 100*ln(close/lag(close) OVER (PARTITION BY symbol ORDER BY ts_event))",
+ " ELSE NULL END ret_1h",
+ " FROM gold_research_cme_glbx_futures_2023_2026_h1_5roots_continuous_c",
+ " WHERE ts_event>='2022-12-30' AND ts_event<'2026-01-02'",
+ ")",
+ "SELECT b.*,\n "+cols,
+ "FROM base_rows b",joins,
+ "ORDER BY b.release_utc,b.kind DESC,b.anchor_utc"
+ ].join("\n");
+}
+
+module.exports={buildSql,buildCrossAssetSql};
