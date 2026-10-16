@@ -10,7 +10,8 @@ const day=24*3600000,hr=3600000,base=Date.parse("2020-01-01T00:00:00Z");
 const at=(d,h)=>new Date(base+d*day+h*hr).toISOString();
 function noise(seed){let x=(seed*9973+887)>>>0;return ()=>{x=(1664525*x+1013904223)>>>0;return x/4294967296;};}
 function build(seed){
- const gen=noise(seed),N=360,p=[100],block=40+Math.floor(gen()*55);
+ const gen=noise(seed),N=360,p=[100];
+ let block=40+Math.floor(gen()*55);
  let drift=(gen()-.5)*.03;
  for(let i=1;i<N;i++){
   if(i%block===0){block=40+Math.floor(gen()*55);drift=(gen()-.5)*.03;}
