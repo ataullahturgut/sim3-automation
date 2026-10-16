@@ -7,7 +7,7 @@
  * Hazard reference episodes enter training only AFTER their end is observable.
  * Structural phase definitions are hypotheses, not discovered causes/alpha.
  */
-const VERSION="KAVIS_S2_CAUSAL_EPISODE_PILOT_20261016";
+const VERSION="KAVIS_S2_CAUSAL_EPISODE_MULTIHORIZON_20261016";
 const STEP=15*60000,HOUR=60*60000;
 const DEFAULT_HORIZONS=[240,1440,4320,10080,20160]; // 4h, 1d, 3d, 1w, 2w
 const STATES=["NEUTRAL","START","CONTINUE","PULLBACK","END","REENTRY","WARMUP","GAP"];
