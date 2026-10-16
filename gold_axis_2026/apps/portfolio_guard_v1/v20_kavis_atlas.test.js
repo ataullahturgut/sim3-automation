@@ -37,6 +37,7 @@ test("Advisor evidence updates only after two completed checkpoints",()=>{
  const s=M.create();s.core.learned=30;
  s.risk.all=Array(30).fill(10);
  s.risk.buckets.STRESS=Array(20).fill(10);
+ for(const h of [s.core.q.CASH_SWITCH,s.core.qb.CASH_SWITCH])h.w[0]=15;
  M.signal(s,obs(s,0,-2));A.equal(s.risk.advisor.STRESS.n,0);
  fill(s,0,100);A.equal(s.risk.advisor.STRESS.n,0);
  const before=M.signal(s,obs(s,1,-2));
@@ -77,6 +78,7 @@ test("Risk consultant cannot learn same-point future quote before it exists",()=
  for(const s of [a,b]){
   s.risk.all=Array(30).fill(12);
   s.risk.buckets.STRESS=Array(20).fill(12);
+  for(const h of [s.core.q.CASH_SWITCH,s.core.qb.CASH_SWITCH])h.w[0]=15;
   M.signal(s,obs(s,0,-3));fill(s,0,100);
  }
  const x=M.signal(a,obs(a,1,-3)),y=M.signal(b,obs(b,1,-3));
