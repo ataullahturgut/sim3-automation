@@ -1,0 +1,231 @@
+{
+ "3": {
+  "nav": 201.59,
+  "trades": 5,
+  "max_dd": 14.86,
+  "chosen": [
+   {
+    "donem": "2023-01-01",
+    "al": 0.25,
+    "sat": -1.5,
+    "pencere_nav": 106.09,
+    "pencere_islem": 3
+   },
+   {
+    "donem": "2023-04-01",
+    "al": 0.25,
+    "sat": "hiç",
+    "pencere_nav": 113.81,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2023-07-01",
+    "al": 0.25,
+    "sat": "hiç",
+    "pencere_nav": 109.6,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2023-10-01",
+    "al": 0.25,
+    "sat": -0.5,
+    "pencere_nav": 111.66,
+    "pencere_islem": 2
+   },
+   {
+    "donem": "2024-01-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 110.86,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2024-04-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 109.85,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2024-07-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 119.83,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2024-10-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 138.6,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2025-01-01",
+    "al": 0.5,
+    "sat": "hiç",
+    "pencere_nav": 126.08,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2025-04-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 136.09,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2025-07-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 138.02,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2025-10-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 141.88,
+    "pencere_islem": 1
+   }
+  ],
+  "ledger": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33
+   ],
+   [
+    "2023-10-02",
+    "SAT",
+    1839.47
+   ],
+   [
+    "2023-10-19",
+    "AL",
+    1949.92
+   ],
+   [
+    "2023-11-01",
+    "SAT",
+    1982.39
+   ],
+   [
+    "2024-01-02",
+    "AL",
+    2073.53
+   ]
+  ]
+ },
+ "6": {
+  "nav": 230.82,
+  "trades": 1,
+  "max_dd": 10.79,
+  "chosen": [
+   {
+    "donem": "2023-01-01",
+    "al": 0.25,
+    "sat": -1.5,
+    "pencere_nav": 106.09,
+    "pencere_islem": 3
+   },
+   {
+    "donem": "2023-07-01",
+    "al": 0.25,
+    "sat": "hiç",
+    "pencere_nav": 109.6,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2024-01-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 110.86,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2024-07-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 119.83,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2025-01-01",
+    "al": 0.5,
+    "sat": "hiç",
+    "pencere_nav": 126.08,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2025-07-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 138.02,
+    "pencere_islem": 1
+   }
+  ],
+  "ledger": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33
+   ]
+  ]
+ },
+ "12": {
+  "nav": 205.16,
+  "trades": 5,
+  "max_dd": 13.36,
+  "chosen": [
+   {
+    "donem": "2023-01-01",
+    "al": 0.25,
+    "sat": -1.5,
+    "pencere_nav": 106.09,
+    "pencere_islem": 3
+   },
+   {
+    "donem": "2024-01-01",
+    "al": -0.5,
+    "sat": "hiç",
+    "pencere_nav": 110.86,
+    "pencere_islem": 1
+   },
+   {
+    "donem": "2025-01-01",
+    "al": 0.5,
+    "sat": "hiç",
+    "pencere_nav": 126.08,
+    "pencere_islem": 1
+   }
+  ],
+  "ledger": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33
+   ],
+   [
+    "2023-09-28",
+    "SAT",
+    1874.1
+   ],
+   [
+    "2023-10-19",
+    "AL",
+    1949.92
+   ],
+   [
+    "2023-12-13",
+    "SAT",
+    1980.22
+   ],
+   [
+    "2024-01-02",
+    "AL",
+    2073.53
+   ]
+  ]
+ }
+}
