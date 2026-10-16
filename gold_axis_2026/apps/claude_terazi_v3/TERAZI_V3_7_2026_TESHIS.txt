@@ -1,0 +1,11 @@
+2026 tepe 2026-01-29 5562.62 → dip 2026-07-01 3974.14 (%-28.6)
+193 gün: yapı kırık 39, sonsal sat 2, makro 129 | yapı+sonsal 0, yapı+makro 35, sonsal+makro 2
+2026-01: altın 4381→5185  ort P 0.858 min Pe+.5Ue 0.844  yapı kırık 0 gün  makro 16 gün
+2026-02: altın 4550→5198  ort P 0.831 min Pe+.5Ue 0.788  yapı kırık 0 gün  makro 5 gün
+2026-03: altın 5366→4569  ort P 0.831 min Pe+.5Ue 0.826  yapı kırık 12 gün  makro 20 gün
+2026-04: altın 4685→4563  ort P 0.747 min Pe+.5Ue 0.657  yapı kırık 0 gün  makro 8 gün
+2026-05: altın 4605→4515  ort P 0.671 min Pe+.5Ue 0.597  yapı kırık 7 gün  makro 17 gün
+2026-06: altın 4518→3978  ort P 0.655 min Pe+.5Ue 0.556  yapı kırık 9 gün  makro 13 gün
+2026-07: altın 3974→4074  ort P 0.537 min Pe+.5Ue 0.438  yapı kırık 1 gün  makro 19 gün
+2026-08: altın 4069→4443  ort P 0.783 min Pe+.5Ue 0.688  yapı kırık 0 gün  makro 10 gün
+2026-09: altın 4440→4178  ort P 0.680 min Pe+.5Ue 0.575  yapı kırık 10 gün  makro 21 gün
