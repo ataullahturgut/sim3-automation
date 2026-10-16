@@ -186,6 +186,8 @@ function endEpisode(s,t,{censor=false}={}){
  ep.durationMinutes=(t-ep.startedAt)/60000;
  if(censor){
   s.censoredAt[ep.id]=t;s.censored++;
+  s.censoredEpisodes.push({id:ep.id,direction:ep.direction,
+    durationMinutes:ep.durationMinutes,censoredAt:t,snapshots:ep.snapshots});
  }else{
   s.endedAt[ep.id]=t;
   s.completed.push({id:ep.id,direction:ep.direction,
@@ -196,13 +198,15 @@ function endEpisode(s,t,{censor=false}={}){
  }
  s.active=null;
 }
-function phaseOutput(s,t,phase,z,drawdown){
+function phaseOutput(s,t,phase,z,drawdown,isAnchor){
  const ep=s.active,age=ep?(t-ep.startedAt)/60000:0;
- const h=ep?hazard(s,age,ep.direction,phase):null;
+ const hazards=ep&&isAnchor?Object.fromEntries(s.config.horizonsMinutes.map(h=>[
+  h,hazard(s,age,ep.direction,phase,h)])):null;
  return {at:iso(t),phase,direction:ep?.direction??0,
    episodeAgeMinutes:age,trendZ:z?.trendZ??null,
    retracementNorm:drawdown,activeEpisode:!!ep,
-   hazard4h:h,action:null,authority:"RESEARCH_PHASE_ONLY_NOT_TRADE"};
+   hazardsByHorizon:hazards,hazard4h:hazards?.[240]??null,
+   action:null,authority:"RESEARCH_PHASE_ONLY_NOT_TRADE"};
 }
 function observe(s,ob){
  if(s.version!==VERSION)throw Error("S2_BAD_VERSION");
@@ -212,7 +216,11 @@ function observe(s,ob){
   // This is right censoring: no artificial weekend turning points, no
   // interpolation, and no carrying incomplete 4h forecasts over missing bars.
   endEpisode(s,s.lastAt,{censor:true});
-  s.scores.censoredPredictions+=s.pending.length;
+  for(const p of s.pending){
+   const h=p.horizonMinutes??240;
+   s.scores.byHorizon[h].censored++;
+   if(h===240)s.scores.censoredPredictions++;
+  }
   s.pending=[];
   s.window=[];s.lastAnchor=null;s.lastPrice=null;
  }
@@ -258,18 +266,21 @@ function observe(s,ob){
  // Completed episodes from THIS bar may be used at this timestamp; none of
  // their unobserved future data existed in previous forecasts.
  mature(s,t);
- let out=phaseOutput(s,t,phase,z,retreat);
  const last=s.lastAnchor;
- if(s.active&&(!last||t-last>=s.config.anchorMinutes*60000)){
+ const anchored=!!s.active&&(!last||t-last>=s.config.anchorMinutes*60000);
+ let out=phaseOutput(s,t,phase,z,retreat,anchored);
+ if(anchored){
   s.lastAnchor=t;
   const ep=s.active;
   ep.snapshots.push({ageMinutes:out.episodeAgeMinutes,phase,direction:ep.direction});
-  const h=out.hazard4h;
-  s.scores.issued++;
-  if(h.ready)s.scores.ready++;
-  s.pending.push({at:t,due:t+s.config.horizonMinutes*60000,
-    episodeId:ep.id,modelP:h.ready?h.p:null,
-    baselineP:h.baselineReady?h.baselineP:null});
+  for(const minutes of s.config.horizonsMinutes){
+   const h=out.hazardsByHorizon[minutes],score=s.scores.byHorizon[minutes];
+   score.issued++;if(h.ready)score.ready++;
+   if(minutes===240){s.scores.issued++;if(h.ready)s.scores.ready++;}
+   s.pending.push({at:t,due:t+minutes*60000,horizonMinutes:minutes,
+     episodeId:ep.id,modelP:h.ready?h.p:null,
+     baselineP:h.baselineReady?h.baselineP:null});
+  }
  }
  s.lastAt=t;s.lastPrice=ob.price;s.lastSource=ob.priceSource;
  s.observations++;s.phaseCounts[phase]++;
@@ -329,6 +340,11 @@ function restore(s){
 }
 function closeAtEndOfSample(s){
  if(s.lastAt!==null)endEpisode(s,s.lastAt,{censor:true});
- s.scores.censoredPredictions+=s.pending.length;s.pending=[];
+ for(const q of s.pending){
+  const h=q.horizonMinutes??240;
+  s.scores.byHorizon[h].censored++;
+  if(h===240)s.scores.censoredPredictions++;
+ }
+ s.pending=[];
 }
 module.exports={VERSION,create,observe,summary,checkpoint,restore,closeAtEndOfSample};
