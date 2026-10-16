@@ -1,0 +1,50 @@
+name: Gold V21 2023→2025 chronological monthly learning (research only)
+on:
+  push:
+    branches: ['research-gold-2023-forward-monthly-online-learning-*']
+  workflow_dispatch:
+  pull_request:
+    branches: ['research-gold-jan2026-real-h1-fee008-20261016']
+permissions:
+  contents: read
+jobs:
+  monthly-forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and asof, fee unit tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v21_monthly_2023_walk.js
+          node --test v21_monthly_2023_walk.test.js
+      - name: Continuous month-to-month learning 2023 through 2025
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          head -n 1 data/CROSSMARKET_ASOF_2023_2024_3H_V1.csv > /tmp/v21_cross.csv
+          tail -n +2 data/CROSSMARKET_ASOF_2023_2024_3H_V1.csv >> /tmp/v21_cross.csv
+          tail -n +2 data/CROSSMARKET_ASOF_2025_2026_3H_V1.csv >> /tmp/v21_cross.csv
+          mkdir -p /tmp/v21_state
+          node v21_monthly_2023_walk.js data/RECOVERY_HIST_3H_2023_2025_V1.csv /tmp/v21_cross.csv /tmp/v21_2023_2025_result.json /tmp/v21_state
+          cp /tmp/v21_2023_2025_result.json v21_2023_2025_RESULT.json
+          node -e "const x=require('./v21_2023_2025_RESULT.json');console.log(JSON.stringify({months:x.monthCount,points:x.eligiblePoints,cash:x.cashBaseline,passive:x.passiveBuyHoldFinal,agents:x.agents,firstMonths:x.monthly.slice(0,3).map(m=>({month:m.month,price:m.agents.price_only.endNAV,cross:m.agents.crossmarket.endNAV,tradesPrice:m.agents.price_only.monthTrades,tradesCross:m.agents.crossmarket.monthTrades}))},null,2));if(x.monthCount!==36)process.exitCode=1"
+      - name: State checkpoint hash integrity gate
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node -e "const x=require('./v21_2023_2025_RESULT.json');const {agents,monthly}=x;if(new Set(monthly.map(m=>m.month)).size!==36)throw Error('DUP_MONTH');for(const agent of Object.keys(agents)){for(let i=1;i<monthly.length;i++){const p=monthly[i-1].agents[agent],n=monthly[i].agents[agent];if(Math.abs(p.endNAV-n.startNAV)>0.00001)throw Error('MONTH_RESET_'+agent+'_'+monthly[i].month)}if(!agents[agent].finalStateSHA256)throw Error('MISSING_Q_CHECKPOINT')}console.log('All 36 month carryovers preserve NAV and Q snapshots')"
+      - name: Transparent all-month performance and learning evolution
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node -e "const r=require('./v21_2023_2025_RESULT.json');for(const m of r.monthly)console.log([m.month,m.eligibleCheckpoints,m.agents.price_only.endNAV,m.agents.crossmarket.endNAV,m.agents.price_only.netReturnPct,m.agents.crossmarket.netReturnPct,m.agents.price_only.monthTrades,m.agents.crossmarket.monthTrades,m.agents.price_only.learnedIntervals,m.agents.crossmarket.nqFeatureAvailable].join(','));for(const y of ['2023','2024','2025']){const a=r.monthly.filter(m=>m.month.startsWith(y));console.log('YEAR',y,JSON.stringify({pStart:a[0].agents.price_only.startNAV,pEnd:a.at(-1).agents.price_only.endNAV,cStart:a[0].agents.crossmarket.startNAV,cEnd:a.at(-1).agents.crossmarket.endNAV,pTrades:a.reduce((s,z)=>s+z.agents.price_only.monthTrades,0),cTrades:a.reduce((s,z)=>s+z.agents.crossmarket.monthTrades,0),lostMonthsPrice:a.filter(m=>m.agents.price_only.netReturnPct<0).length,lostMonthsCross:a.filter(m=>m.agents.crossmarket.netReturnPct<0).length}))}"
+      - name: Preserve full monthly research, all negative cases and final Q learning states
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v21-2023-2025-monthly-causal-learning
+          path: |
+            gold_axis_2026/apps/portfolio_guard_v1/v21_2023_2025_RESULT.json
+            /tmp/v21_state/V21_FINAL_LEARNED_STATE.json
+          if-no-files-found: ignore
