@@ -146,7 +146,8 @@ function pairedReplay({marketRows,releases,scales,featureNames,sourceRegistry,
   const withEvents=core.create(options),withoutEvents=core.create(options);
   const pending=[],stats={compared:0,withBrier:0,withoutBrier:0,
     admissibleDecisionAnchors:0,quarantined:0,admitted:0,correctWith:0,correctWithout:0,
-    eventCompared:0,eventWithBrier:0,eventWithoutBrier:0,eventCorrectWith:0,eventCorrectWithout:0};
+    eventCompared:0,eventWithBrier:0,eventWithoutBrier:0,eventCorrectWith:0,eventCorrectWithout:0,
+    eventForecastNotReady:0,marketFallbackCount:0};
   let previous=-Infinity;
   for(const ob of marketRows){
     const t=stamp(ob.asof);
@@ -188,13 +189,21 @@ function pairedReplay({marketRows,releases,scales,featureNames,sourceRegistry,
       if(evidence.admitted.length)stats.admissibleDecisionAnchors++;
       const get=r=>r.forecastAtDecision.byHorizon.find(z=>z.horizonMinutes===horizons[0]);
       const x=get(a),y=get(b);
+      if(evidence.admitted.length&&(!x||!x.ready))stats.eventForecastNotReady++;
+      // Until an event-specific prototype has >=8 mature independent labels,
+      // emit market-only comparison forecast, never synthesize event alpha.
+      const fallback=(!x||!x.ready)&&!!y?.ready;
+      if(fallback)stats.marketFallbackCount++;
       pending.push({due:t+horizons[0]*60000,price:ob.price,
-        withP:x?.ready?x.upFraction:null,withoutP:y?.ready?y.upFraction:null,
+        withP:x?.ready?x.upFraction:(fallback?y.upFraction:null),
+        withoutP:y?.ready?y.upFraction:null,
         hadEvent:evidence.admitted.length>0});
     }
   }
   return {experiment:"S1_PIT_ADMITTED_ECONOMIC_FEATURE_ABLATION",policy:"NO_TRADING",
-    learningMode,assumedAccessDelayMinutes:learningMode==="DISCOVERY_FULL_ARCHIVE"?
+    learningMode,forecastFallback:"MARKET_ONLY_IF_EVENT_RULE_UNREADY",
+    learningModeEvidenceGate:"RECONSTRUCTED_RELEASE_RESEARCH_IS_NOT_STRICT_PIT",
+    assumedAccessDelayMinutes:learningMode==="DISCOVERY_FULL_ARCHIVE"?
       assumedAccessDelayMinutes:null,
     status:learningMode==="DISCOVERY_FULL_ARCHIVE"?
       "RECONSTRUCTED_RESEARCH_ONLY_NO_TRADING":
