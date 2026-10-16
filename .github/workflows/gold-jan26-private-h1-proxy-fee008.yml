@@ -2,6 +2,8 @@ name: Gold January 2026 private vendor H1 retrospective (no raw export)
 on:
   push:
     branches: ['research-gold-jan2026-real-h1-fee008-*']
+  pull_request:
+    branches: ['research-gold-v20-r3-gate-calibration-20261016']
   workflow_dispatch:
 permissions:
   contents: read
