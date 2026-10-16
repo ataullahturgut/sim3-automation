@@ -35,6 +35,10 @@ jobs:
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: |
           node -e "const x=require('./v21_2023_2025_RESULT.json');const {agents,monthly}=x;if(new Set(monthly.map(m=>m.month)).size!==36)throw Error('DUP_MONTH');for(const agent of Object.keys(agents)){for(let i=1;i<monthly.length;i++){const p=monthly[i-1].agents[agent],n=monthly[i].agents[agent];if(Math.abs(p.endNAV-n.startNAV)>0.00001)throw Error('MONTH_RESET_'+agent+'_'+monthly[i].month)}if(!agents[agent].finalStateSHA256)throw Error('MISSING_Q_CHECKPOINT')}console.log('All 36 month carryovers preserve NAV and Q snapshots')"
+      - name: Transparent all-month performance and learning evolution
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node -e "const r=require('./v21_2023_2025_RESULT.json');for(const m of r.monthly)console.log([m.month,m.eligibleCheckpoints,m.agents.price_only.endNAV,m.agents.crossmarket.endNAV,m.agents.price_only.netReturnPct,m.agents.crossmarket.netReturnPct,m.agents.price_only.monthTrades,m.agents.crossmarket.monthTrades,m.agents.price_only.learnedIntervals,m.agents.crossmarket.nqFeatureAvailable].join(','));for(const y of ['2023','2024','2025']){const a=r.monthly.filter(m=>m.month.startsWith(y));console.log('YEAR',y,JSON.stringify({pStart:a[0].agents.price_only.startNAV,pEnd:a.at(-1).agents.price_only.endNAV,cStart:a[0].agents.crossmarket.startNAV,cEnd:a.at(-1).agents.crossmarket.endNAV,pTrades:a.reduce((s,z)=>s+z.agents.price_only.monthTrades,0),cTrades:a.reduce((s,z)=>s+z.agents.crossmarket.monthTrades,0),lostMonthsPrice:a.filter(m=>m.agents.price_only.netReturnPct<0).length,lostMonthsCross:a.filter(m=>m.agents.crossmarket.netReturnPct<0).length}))}"
       - name: Preserve full monthly research, all negative cases and final Q learning states
         if: always()
         uses: actions/upload-artifact@v4
