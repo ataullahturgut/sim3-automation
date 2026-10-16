@@ -2,20 +2,22 @@
 /**
  * GOLD-ADAPTIVE-MODEL-APP-01: one mathematical MODEL composition.
  * Existing S1 rule CORE + S2 price-lifecycle component; one timestamp, one
- * source registry and one checkpoint. No AL/SAT or policy/portfolio code.
+ * source registry and one checkpoint. S3 is a research-only shadow critic,
+ * not a deployed AL/SAT policy or bank trade interface.
  * S1 research macro is NOT silently imported; S2 is price-only at this stage.
  */
 const s1=require("./adaptive_rule_discovery_s1");
 const s2=require("./adaptive_phase_lifecycle_s2");
 const slow=require("./adaptive_slow_lifecycle_s2");
-const VERSION="GOLD_ADAPTIVE_S1_S2_SLOW_BRIDGE_20261016";
+const s3=require("./adaptive_position_value_s3");
+const VERSION="GOLD_ADAPTIVE_S1_S2_SLOW_S3_RESEARCH_BRIDGE_20261016";
 const SCHEMA=["phase_trend_z","phase_retracement_norm","phase_direction","phase_age_norm",
  "slow_trend_z","slow_direction","slow_age_norm","slow_end_5session"];
 const cp=x=>JSON.parse(JSON.stringify(x));
 const iso=x=>new Date(x).toISOString();
 const clip=x=>Math.max(-5,Math.min(5,x));
 function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_ASOF",
- learningMode="DISCOVERY_FULL_ARCHIVE"}={}){
+ learningMode="DISCOVERY_FULL_ARCHIVE",shadowResearch=false}={}){
  if(typeof sourceId!=="string"||!sourceId)
   throw Error("MODEL_SOURCE_ID_REQUIRED");
  if(!["RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","SYNTHETIC_ONLY"].includes(sourceEvidence))
@@ -31,7 +33,8 @@ function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_AS
   s1:s1.create({learningMode,featureNames:SCHEMA,sourceRegistry,
    horizons:[240],anchorMinutes:240,maxRules:16}),
   s2:s2.create({learningMode,sourceRegistry}),
-  slow:slow.create({sourceRegistry}),lastSlow:null,
+  slow:slow.create({sourceRegistry}),
+  s3:s3.create({sourceRegistry,learningMode,shadowEnabled:shadowResearch}),lastSlow:null,
   audit:{observed:0,contextReady:0,phaseTransitions:0,slowAccepted:0,slowRejected:0}};
 }
 function features(p,t,id){
@@ -85,15 +88,23 @@ function observe(s,bar){
   if(hist.pEnd5!==null)fs.slow_end_5session=market(hist.pEnd5);
  }
  const q=s1.observe(s.s1,{...bar,features:fs});
+ const v=s3.observe(s.s3,{asof:bar.asof,price:bar.price,
+  priceAvailableAt:bar.priceAvailableAt,barMinutes:bar.barMinutes,
+  sourceId:bar.priceSource,
+  fast:{phase:p.phase,direction:p.direction},
+  slow:hist&&hist.source===bar.priceSource&&
+   Date.parse(hist.observedAt)<=t&&t-Date.parse(hist.observedAt)<=4*86400000?
+    {phase:hist.phase,direction:hist.direction}:null});
  s.audit.observed++;
  if(Object.keys(fs).length>=2)s.audit.contextReady++;
  if(p.phase==="START"||p.phase==="END")s.audit.phaseTransitions++;
  return {asof:bar.asof,lifecycle:p,ruleDiscovery:q,
-  action:null,tradeAllowed:false};
+  positionResearch:v,action:null,tradeAllowed:false};
 }
 function summary(s){
  return {version:VERSION,mode:s.mode,
-  lifecycle:s2.summary(s.s2),slowLifecycle:slow.summary(s.slow),ruleDiscovery:{
+  lifecycle:s2.summary(s.s2),slowLifecycle:slow.summary(s.slow),
+  positionResearch:s3.summary(s.s3),ruleDiscovery:{
    observations:s.s1.audit.observations,anchors:s.s1.audit.anchors,
    matureLabels:s.s1.audit.labelsMatured,learnedRules:s1.rules(s.s1).length},
   audit:cp(s.audit),tradeAllowed:false,bankTrades:0};
@@ -106,6 +117,8 @@ function restore(data){
  s.s1=s1.restore(s.s1);s.s2=s2.restore(s.s2);
  if(!s.slow)throw Error("MODEL_MISSING_SLOW_LAYER_CHECKPOINT");
  s.slow=slow.restore(s.slow);
+ if(!s.s3)throw Error("MODEL_MISSING_S3_RESEARCH_CHECKPOINT");
+ s.s3=s3.restore(s.s3);
  return s;
 }
 module.exports={VERSION,create,observe,observeSlowSession,summary,checkpoint,restore,SCHEMA};

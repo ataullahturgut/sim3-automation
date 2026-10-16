@@ -92,3 +92,11 @@ jobs:
           node --check adaptive_market_core_s1_s2.js
           node --check adaptive_slow_lifecycle_s2.test.js
           node --test adaptive_slow_lifecycle_s2.test.js
+
+      - name: S3 fee-net CASH/GOLD shadow critic within the same adaptive CORE
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check adaptive_position_value_s3.js
+          node --check adaptive_position_value_s3.test.js
+          node --check adaptive_market_core_s1_s2.js
+          node --test adaptive_position_value_s3.test.js
