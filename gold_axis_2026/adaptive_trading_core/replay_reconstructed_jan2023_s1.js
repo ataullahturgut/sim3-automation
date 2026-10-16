@@ -44,11 +44,34 @@ function run(rows,options={}){
     cmeContinuousRollPointInTimeValidated:false,clipped:0,
     featureCoverage:{gold_1h:0,nq_1h:0,zn_1h:0,cl_1h:0},
     rulesNotTradeSignals:true};
-  let prior=-Infinity,anchored=0;
+  let prior=-Infinity,anchored=0,priorLabels=0,priorUp=0;
+  const delayed=[], scores={eligible:0,predictions:0,brierModelSum:0,
+    brierBaselineSum:0,maeLogPctSum:0,correctModel:0,correctBaseline:0};
   for(const row of rows){
     const t=utc(row.end_utc),bar=utc(row.bar_start_utc);
     if(t<=prior||t-bar!==15*60000)throw Error("BAR_ORDER_OR_DURATION");
     prior=t;
+    // Score only predictions genuinely issued on earlier 4h anchor with
+    // no future-known label. The baseline is the historic UP frequency
+    // at original decision time, never the same month's terminal UP rate.
+    const remains=[];
+    for(const p of delayed){
+      if(t<p.due){remains.push(p);continue;}
+      if(t-p.due>15*60000)continue;
+      const actual=Number(row.close_price)>p.price?1:0;
+      priorLabels++;priorUp+=actual;
+      if(p.modelUp!==null&&p.baselineUp!==null){
+        scores.eligible++;
+        scores.predictions++;
+        scores.brierModelSum+=(p.modelUp-actual)**2;
+        scores.brierBaselineSum+=(p.baselineUp-actual)**2;
+        scores.correctModel+=(p.modelUp>=.5?1:0)===actual?1:0;
+        scores.correctBaseline+=(p.baselineUp>=.5?1:0)===actual?1:0;
+        scores.maeLogPctSum+=Math.abs(p.predLogPct-
+          100*Math.log(Number(row.close_price)/p.price));
+      }
+    }
+    delayed.length=0;delayed.push(...remains);
     if(t<Date.parse("2023-01-01T00:00:00Z")||
        t>=Date.parse("2023-02-01T00:00:00Z"))
        throw Error("JAN2023_ONLY");
@@ -63,7 +86,15 @@ function run(rows,options={}){
       priceAvailableAt:row.end_utc,priceSource:XAU,
       barStartedAt:row.bar_start_utc,barMinutes:15,
       features:Object.fromEntries(Object.entries(v).filter(([,z])=>z!==null))};
-    if(core.observe(s,obs).anchored)anchored++;
+    const decision=core.observe(s,obs);
+    if(decision.anchored){
+      anchored++;
+      const pred=decision.forecastAtDecision.byHorizon?.find(x=>x.horizonMinutes===240);
+      delayed.push({due:t+240*60000,price:obs.price,
+        modelUp:pred?.ready?pred.upFraction:null,
+        predLogPct:pred?.ready?pred.expectedLogPct:null,
+        baselineUp:priorLabels>=8?priorUp/priorLabels:null});
+    }
   }
   const learned=core.rules(s);
   return {
@@ -74,7 +105,15 @@ function run(rows,options={}){
       rejectedAsNovel:s.audit.rulesSaturated,
       matureLabels:s.audit.labelsMatured,
       skippedLabels:s.audit.labelsSkipped,pendingLabels:s.pending.length,
-      bankTrades:0,status:"S1_RESEARCH_ONLY_ECONOMIC_CAUSALITY_UNVERIFIED"},
+      bankTrades:0,
+      prequential4h:{scored:scores.eligible,
+        modelBrier:scores.eligible?scores.brierModelSum/scores.eligible:null,
+        historicalBaseBrier:scores.eligible?scores.brierBaselineSum/scores.eligible:null,
+        modelCorrect:scores.correctModel,
+        historicalBaseCorrect:scores.correctBaseline,
+        modelMaeLogPct:scores.eligible?scores.maeLogPctSum/scores.eligible:null,
+        warning:"EX_POST_RECONSTRUCTED_ASOF_NOT_TRUE_BLIND_OOS"},
+      status:"S1_RESEARCH_ONLY_ECONOMIC_CAUSALITY_UNVERIFIED"},
     learnedRules:learned,
     checkpoint:core.checkpoint(s)
   };
