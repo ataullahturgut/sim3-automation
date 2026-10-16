@@ -49,3 +49,7 @@
 - S2 tamamlanmış yavaş seanslarından yeni S3 kalıcı `sessionMemory` öğreniyor. 2020–2025 quote-only araştırma: 1500 kabul, 35 bitmiş S2 epizot, 4955 ücretli 1/3/5/10-session olgun etiket, 1033 cenzor. 28 cohort, overlap yüksek, kâr kabulu YOK.
 - Ocak 2023 gerçek M15 iki S3 ablation: her ikisi de **0 alım/100 USD nakit**; 5 günlük zorunlu satılma getirisi gerçek bütün ay GOLD tutmanın getirisi değildir. Uygulama, model gate ve Şubat ilerleme değişmedi.
 - Kaynak, test, sayısal sonuçlar: `M2_M5_INTEGRATION_ARCHIVE_JAN2023_AUDIT_20261016.md`.
+
+
+## 16 Ekim 2026 — Kullanıcı isteğiyle 2023 tam yıl SHADOW diagnostik (bilim kapısı değil)
+Mevcut S1+S2+S3 aynı CORE, 23.544 2023 BID/ASK MID M15 fiyat gözleminde Ocak→Aralık tek replay: `LEGACY_M15` ve `MULTI_SESSION_RESEARCH` her biri **0 banka araştırma işlemi, net 100 USD CASH**. TR 09–17 fiyatında 03 Ocak'ta alıp 29 Aralık sonunda satılan pasif altın iki %0,8 bacak sonrasında **110,10 USD**; model **10,10 USD** geride. 2023'ün bu bütüncül fiyat diagnostik koşusu resmi `S5` aylık kabul zincirini açmaz, PIT banka performans kanıtı değildir. Ayrıntı: `S3_FULL_YEAR_2023_RECONSTRUCTED_SHADOW_DIAGNOSTIC_20261016.md`.

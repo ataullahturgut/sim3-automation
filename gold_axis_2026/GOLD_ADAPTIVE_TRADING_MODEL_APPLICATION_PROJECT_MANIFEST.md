@@ -427,3 +427,10 @@ S1/S2 aynı matematiksel CORE'da S3 `Q(state, CASH/GOLD, KEEP/SWITCH)` olgunlaş
 4. **M5 hafıza:** Oturum `pending`, `cohorts`, `censored` ve geçmişte hazır S1 kanıtı artık tek S3 checkpoint/restore içinde. Gizli eğitim checkpointi ve 2023–2025 aylık devir zinciri henüz yaratılmadı. Kaynak firstprint/PIT eksik, bağımsız kural üstünlüğü kanıtlanmadı. **M2_SCIENCE=FAIL, M3_SCIENCE=PENDING, M4_SCIENCE=NOT_PROVEN, S4_MODEL_GATE=FAIL, NEXT_MONTHS=BLOCKED, APP=UNCHANGED.**
 
 **Yeniden üretim:** `adaptive_trading_core/replay_slow_position_memory_s3.js`, testleri ve GitHub Actions; 2020–2025 arşiv *açıklayıcı* deneyi kronolojik Ocak 2023 performansının eğitim önbilgisine dönüştürülmez. Manifestin başlangıç, ücret, tarih, proje ve branch sözleşmesi değişmedi.
+
+
+---
+
+## 26. Kullanıcı talebiyle 2023 Ocak–Aralık tam yıl araştırma performans denetimi (16 Ekim 2026)
+
+**Yıllık sonuç: S3 LEGACY_M15 ve S3 MULTI_SESSION_RESEARCH her biri 23.544 M15 fiyatını mevcut tek CORE'dan kronolojik geçirdi; ikisi de 0 BUY / 0 SELL / 100,00 USD CASH, net getiri %0.** 2023 ilk izinli fiyatı `03 Ocak 09:00 TRT` 1840,52 USD/oz, son `29 Aralık 17:00 TRT` 2059,265 USD/oz. Her iki %0,8 işlem maliyeti dahil **pasif GOLD 110,10196 USD / +%10,10196**. Yıllık fırsat farkı model aleyhine yaklaşık **10,10 USD/100 USD**. S1 1438 anchor, 1384 olgun dört saatlik sonuç, 4 prototip; S2 fast 463 tamamlanmış mikro hareket, full-year slow arşivinde 249 kaliteli seans/6 epizot. Yıllık koşuda **makro PIT features 0**. S3 M4 oturum hafızası (son gün henüz karar zamanında olgunlaşmadığından) 812 olgun /170 sansür. **Bilim kapısı ve S5 AÇILMADI:** Bu kullanıcı talebine cevap olarak yapılan retrospective shadow performans araştırması, zorunlu Ocak gate'i geçmeden Şubat–Aralık kronolojik resmi eğitim ve aylık snapshot zincirini tamamlamak değildir; ilkprint sertifikası, banka gerçek kotasyonu ve ekonomi katkısı yoktur. [Ayrıntılı 2023 yıllık performans ve aylık tasfiye kıyasları](adaptive_trading_core/S3_FULL_YEAR_2023_RECONSTRUCTED_SHADOW_DIAGNOSTIC_20261016.md). `MODEL_GATE=FAIL` · `APP=UNCHANGED`.
