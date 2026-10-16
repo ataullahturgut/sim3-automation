@@ -109,3 +109,35 @@ test("A missing-release price does not become a simulated label or a market-only
  assert.equal(v.completeReleaseWaves,2);
  assert.equal(v.eventCases,2);
 });
+
+
+test("Completed NQ bar can condition existing CORE; unavailable silver remains missing",()=>{
+ const d=dataset(2),a=d.rows.find(x=>x.kind==="EVENT"),at=Date.parse(a.anchor_utc);
+ a.nq_1h=.35;a.nq_known_end_utc=iso(at-hour);
+ a.si_1h=null;a.si_known_end_utc=null;
+ const wave=m.observations(d.rows,d.ledger,{crossAssets:true});
+ const event=wave.events.find(x=>x.anchor?.kind==="EVENT");
+ assert.ok(event.anchor.features.nq_1h);
+ assert.equal(event.anchor.features.nq_1h.kind,"MARKET");
+ assert.ok(!Object.hasOwn(event.anchor.features,"si_1h"));
+ const v=m.run(d.rows,d.ledger,{marketContext:"XAU_PLUS_RECONSTRUCTED_CME"});
+ assert.equal(v.marketContext,"XAU_PLUS_RECONSTRUCTED_CME");
+ assert.equal(v.strictWalkForward,false);
+});
+test("CME bar from future or earlier than the allowed freshness window is rejected",()=>{
+ const d=dataset(1),a=d.rows.find(x=>x.kind==="EVENT"),at=Date.parse(a.anchor_utc);
+ a.nq_1h=.25;a.nq_known_end_utc=iso(at+60000);
+ assert.throws(()=>m.observations(d.rows,d.ledger,{crossAssets:true}),/STALE_OR_FUTURE_CROSS_ASSET/);
+ a.nq_known_end_utc=iso(at-76*60000);
+ assert.throws(()=>m.observations(d.rows,d.ledger,{crossAssets:true}),/STALE_OR_FUTURE_CROSS_ASSET/);
+ a.nq_1h=null;
+ assert.throws(()=>m.observations(d.rows,d.ledger,{crossAssets:true}),/INCOMPLETE_CROSS_ASSET_PAIR/);
+});
+test("Cross-market SQL must use completed, not future, CME H1 prices and admit missing SI",()=>{
+ const d=dataset();
+ const sql=require("./independent_event_research_query_s1").buildCrossAssetSql(d.ledger);
+ assert.match(sql,/z\.known_end_utc<=b\.anchor_utc/);
+ assert.match(sql,/z\.ts_event-z\.previous_start=interval '1h'/);
+ assert.match(sql,/SI\.c\.0/);
+ assert.match(sql,/EX-POST|hindsight-adjusted/i);
+});
