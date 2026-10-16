@@ -1,5 +1,6 @@
 # GOLD Portfolio Guard V1 — sabit tarihsel koşu uygulaması
 
+> **PROJE AYRIMI — 16 EKİM 2026:** Bu klasör mevcut **UYGULAMA (U)** araştırma arayüzünün tarihsel kodudur; içinde eski model deneylerinin bulunması yeni matematiksel CORE'un uygulamada geliştirileceği anlamına GELMEZ. **Tek aktif model+uygulama proje sözleşmesi:** [GOLD_ADAPTIVE_TRADING_MODEL_APPLICATION_PROJECT_MANIFEST.md](../../GOLD_ADAPTIVE_TRADING_MODEL_APPLICATION_PROJECT_MANIFEST.md). Uygulama yalnız onaylı MODEL çekirdeğini sürüm/checkpoint kimliğiyle çağırır; ekonomik kuralları ve AL/SAT matematiğini kendi başına seçmez. Bu README'deki eski V1/V2/V3 raporları tarihsel referanstır, yeni MODEL'in kabulü değildir.\n\n
 **Statü: RESEARCH_ONLY · READ_ONLY · LOCALHOST_ONLY · BANKAYA EMİR YOK**
 
 Bu uygulama, Ocak 2026 altın koruma deneyinin aynı veri, aynı parametreler ve aynı motorla her seferinde **aynı sonucu vermesini** sağlar. Canlı tavsiye veya alım-satım emri üretmez.
