@@ -1,0 +1,48 @@
+name: Gold V19 SIPER Scientific Algorithm Gate
+on:
+  push:
+    branches:
+      - 'research-gold-v19-*'
+  pull_request:
+    branches:
+      - 'research-gold-v18-adversarial-robustness-20261016'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scientific-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax all V19 source and tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v19_kavis_siper.js
+          node --check v19_kavis_siper.test.js
+          node --check v19_128_goal_program_scenarios.js
+      - name: V15-V19 synthetic safety and causal acceptance
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --test v15_kavis_cekirdek.test.js v15_kavis_formal_audit.test.js v15_kavis_stress.test.js v16_kavis_siralama.test.js v16_kavis_counterfactual_audit.test.js v16_kavis_v15_uzman_koprusu.test.js v17_kavis_olay_doubleq.test.js v18_kavis_adversarial.test.js v19_kavis_siper.test.js
+      - name: 128 hard fictional scenarios and exact NO-RISK ablation
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v19_128_goal_program_scenarios.js > v19_128_fictional_results.json
+          node -e "const x=require('./v19_128_fictional_results.json'); console.log(JSON.stringify({contract:x.kind,summary:x.summary,byScenario:x.regimes,worstCases:x.rows.filter(z=>z.delta<0).sort((a,b)=>a.delta-b.delta).slice(0,8).map(z=>({mode:z.mode,seed:z.seed,fee:z.fee,v18:z.v18.capital,v19:z.v19.capital,delta:z.delta,DD:z.v19.maxDrawdown}))},null,2))"
+      - name: No historical XAU data or authorized bank orders
+        run: |
+          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|loadFullRows|2026_FEB_SEP|function liveOrder' gold_axis_2026/apps/portfolio_guard_v1/v19_kavis_siper.js gold_axis_2026/apps/portfolio_guard_v1/v19_kavis_siper.test.js gold_axis_2026/apps/portfolio_guard_v1/v19_128_goal_program_scenarios.js; then
+            echo "Forbidden historical data/live order dependency"
+            exit 1
+          fi
+      - name: Store all positive AND negative research results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v19-128-fictional-risk-stress
+          path: gold_axis_2026/apps/portfolio_guard_v1/v19_128_fictional_results.json
+          if-no-files-found: ignore
