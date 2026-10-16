@@ -10,7 +10,7 @@ function obs(n,pos="CASH",r=1,shift=0,events){
 function fill(s,n,p=100,shift=0){return M.quote(s,{at:at(n,9,shift),price:p,isBankCheckpoint:true});}
 test("V17 learns two distinct critics without changing V16 production model",()=>{
  const m=M.create({minimumMaturedIntervals:2});
- A.equal(M.FEATURES.length,14);
+ A.equal(M.FEATURES.length,20);
  M.signal(m,obs(0));fill(m,0);
  M.signal(m,obs(1));const a=fill(m,1,103).update;
  A.equal(a.trainedEstimator,"A");
@@ -132,4 +132,25 @@ test("Forgetting-rate config is explicit and not learnable calendar ID",()=>{
  A.ok(m.config.regimeMemory>0&&m.config.regimeMemory<1);
  A.throws(()=>M.create({gradientMemory:1}),/BAD_FORGETTING/);
  A.throws(()=>M.create({regimeMemory:0}),/BAD_FORGETTING/);
+});
+
+test("Independent event families G01/G05 occupy independent learned channels",()=>{
+ const a=M.create(),b=M.create();
+ const template={verifiedFirstPublication:true,firstAvailableAt:at(0),
+  evidenceId:"SYNTHETIC-PUBLICATION-1",polarity:-.8};
+ M.signal(a,obs(0,"CASH",0,0,[{...template,family:"G01"}]));
+ M.signal(b,obs(0,"CASH",0,0,[{...template,family:"G05"}]));
+ const x=a.pending.x,y=b.pending.x;
+ A.ok(x[12]!==y[12]);
+ A.ok(x[16]!==y[16]);
+ A.equal(x[12],-.8);A.equal(y[16],-.8);
+ A.equal(x.at(-1),y.at(-1));
+});
+test("As-of event-group learning cannot infer tomorrow's event",()=>{
+ const a=M.create(),b=M.create();
+ const future={verifiedFirstPublication:true,firstAvailableAt:at(1),
+  evidenceId:"SYNTHETIC-FUTURE-RELEASE",family:"G02",polarity:.9};
+ A.throws(()=>M.signal(a,obs(0,"CASH",1,0,[future])),/FUTURE_EVENT/);
+ M.signal(a,obs(0));M.signal(b,obs(0));
+ A.deepEqual(a.pending.x,b.pending.x);
 });
