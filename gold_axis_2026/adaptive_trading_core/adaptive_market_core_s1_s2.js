@@ -17,7 +17,8 @@ const cp=x=>JSON.parse(JSON.stringify(x));
 const iso=x=>new Date(x).toISOString();
 const clip=x=>Math.max(-5,Math.min(5,x));
 function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_ASOF",
- learningMode="DISCOVERY_FULL_ARCHIVE",shadowResearch=false}={}){
+ learningMode="DISCOVERY_FULL_ARCHIVE",shadowResearch=false,
+ positionResearchMode="LEGACY_M15"}={}){
  if(typeof sourceId!=="string"||!sourceId)
   throw Error("MODEL_SOURCE_ID_REQUIRED");
  if(!["RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","SYNTHETIC_ONLY"].includes(sourceEvidence))
@@ -34,7 +35,8 @@ function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_AS
    horizons:[240],anchorMinutes:240,maxRules:16}),
   s2:s2.create({learningMode,sourceRegistry}),
   slow:slow.create({sourceRegistry}),
-  s3:s3.create({sourceRegistry,learningMode,shadowEnabled:shadowResearch}),lastSlow:null,
+  s3:s3.create({sourceRegistry,learningMode,shadowEnabled:shadowResearch,
+    positionResearchMode}),lastSlow:null,
   audit:{observed:0,contextReady:0,phaseTransitions:0,slowAccepted:0,slowRejected:0}};
 }
 function features(p,t,id){
@@ -62,6 +64,9 @@ function observeSlowSession(s,session){
    trendZ:out.trendZ,direction:out.direction,
    pEnd5:out.hazards?.[5]?.ready?out.hazards[5].pEnd:null};
   s.audit.slowAccepted++;
+  s3.observeCompletedSession(s.s3,{session:session.session,sourceId:session.source_id,
+   price:session.close_price,phase:out.phase,direction:out.direction??0,
+   availableAt:session.availableAt??new Date(Date.parse(session.session+"T22:00:00Z")).toISOString()});
  }
  return {session:session.session,phase:out.phase,
   action:null,tradeAllowed:false};
@@ -95,7 +100,11 @@ function observe(s,bar){
   slow:hist&&hist.source===bar.priceSource&&
    Date.parse(hist.observedAt)<=t&&t-Date.parse(hist.observedAt)<=4*86400000&&
    !["WARMUP","REJECTED_SESSION","GAP"].includes(hist.phase)?
-    {phase:hist.phase,direction:hist.direction}:null});
+    {phase:hist.phase,direction:hist.direction}:null,
+  s1Evidence:{asof:bar.asof,provenance:"MARKET_ONLY_UNVALIDATED",
+   byHorizon:(q.forecastAtDecision?.byHorizon??[]).map(x=>({
+    horizonMinutes:x.horizonMinutes,ready:x.ready,
+    expectedLogPct:x.expectedLogPct,effectiveN:x.effectiveN}))}});
  s.audit.observed++;
  if(Object.keys(fs).length>=2)s.audit.contextReady++;
  if(p.phase==="START"||p.phase==="END")s.audit.phaseTransitions++;

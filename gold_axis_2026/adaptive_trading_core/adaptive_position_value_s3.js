@@ -10,6 +10,7 @@
  * Every bank buy/sell incurs 0.8% of bank-side wealth, MID proxy research.
  * No intraday bank quotation verification and no margin/leverage.
  */
+const memory=require("./adaptive_position_memory_s3");
 const VERSION="KAVIS_S3_POSITION_VALUE_CRITIC_20261016";
 const FEE_PER_LEG=0.008, STEP=15*60*1000;
 const HOLDINGS=["CASH","GOLD"],ACTIONS=["KEEP","SWITCH"];
@@ -18,7 +19,7 @@ const finite=x=>typeof x==="number"&&Number.isFinite(x);
 function ms(s){if(typeof s!=="string"||!/(?:Z|[+-]\d\d:\d\d)$/i.test(s)||
  !Number.isFinite(Date.parse(s)))throw Error("S3_OFFSET_TIME_REQUIRED");return Date.parse(s);}
 function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
- shadowEnabled=false,minUpdates=32}={}){
+ shadowEnabled=false,minUpdates=32,positionResearchMode="LEGACY_M15"}={}){
  if(!sourceRegistry||!Object.keys(sourceRegistry).length||
   Object.values(sourceRegistry).some(v=>v?.kind!=="MARKET"||
    !["RECONSTRUCTED_MARKET_ASOF","SYNTHETIC_ONLY","VERIFIED_PIT"].includes(v.evidenceStatus)))
@@ -26,11 +27,15 @@ function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
  if(!["DISCOVERY_FULL_ARCHIVE","STRICT_WALK_FORWARD"].includes(learningMode))
   throw Error("S3_BAD_LEARNING_MODE");
  if(!Number.isInteger(minUpdates)||minUpdates<16)throw Error("S3_MIN_SUPPORT");
+ if(!["LEGACY_M15","MULTI_SESSION_RESEARCH"].includes(positionResearchMode))
+  throw Error("S3_POSITION_POLICY_MODE_INVALID");
  return {version:VERSION,mode:learningMode,registry:clone(sourceRegistry),
-  config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates},
+  config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates,positionResearchMode},
+  sessionMemory:memory.create(),lastS1Evidence:null,
   q:{},last:null,audit:{bars:0,updates:0,gaps:0,sourceBreaks:0,
    proposed:0,abstained:0,shadowTrades:0,
-   decisionsByReason:{}},
+   decisionsByReason:{},s1ResearchForecastReceived:0,
+   economicRulesCertifiedAtDecision:0,multiSessionResearchEvaluations:0},
   paper:{enabled:!!shadowEnabled,valid:true,invalidReason:null,
    cash:100,goldOunces:0,holding:"CASH",firstPrice:null,lastPrice:null,
    buyHoldOunces:0,equityPeak:100,maxDrawdownPct:0,
@@ -109,6 +114,20 @@ function observe(s,o){
   s.registry[o.sourceId].evidenceStatus!=="SYNTHETIC_ONLY")
   throw Error("S3_RECONSTRUCTED_PRICE_NOT_STRICT_PIT");
  const c=context({fast:o.fast,slow:o.slow});
+ // A genuine S1 forecast (not manually recoded direction). Retain evidence,
+ // do not promote research-only predictions to certified macro alpha.
+ if(o.s1Evidence!==undefined){
+  const e=o.s1Evidence;
+  if(!e||e.asof!==o.asof||!Array.isArray(e.byHorizon)||
+     !["MARKET_ONLY_UNVALIDATED","RESEARCH_MACRO_UNVERIFIED","VERIFIED_PIT"].includes(e.provenance)||
+     e.byHorizon.some(x=>!Number.isInteger(x.horizonMinutes)||
+       (x.ready&&(!finite(x.expectedLogPct)||!Number.isInteger(x.effectiveN)&&
+                 !(finite(x.effectiveN)&&x.effectiveN>=0)))))
+    throw Error("S3_INVALID_S1_EVIDENCE");
+  s.lastS1Evidence=clone(e);
+  s.audit.s1ResearchForecastReceived++;
+  if(e.provenance==="VERIFIED_PIT")s.audit.economicRulesCertifiedAtDecision++;
+ }
  let contiguous=false;
  if(s.last){
   contiguous=t-s.last.t===STEP&&s.last.sourceId===o.sourceId;
@@ -142,6 +161,22 @@ function observe(s,o){
   reason=proposed==="KEEP"?"LEARNED_KEEP_GREATER_OR_EQUAL":"LEARNED_SWITCH_GREATER";
   s.audit.proposed++;
  }
+ // Long-horizon shadow ablation is possible ONLY from prior, matured
+ // sessions with net buy+sell fee and fixed 5-session support, not hindsight.
+ // It is never a live signal. Baseline 15m Q remains separately testable.
+ const sessionState=s.sessionMemory.last?.state??"NO_SLOW:NONE";
+ const longValue=memory.forecast(s.sessionMemory,sessionState);
+ const longFive=longValue.byHorizon.find(x=>x.sessions===5);
+ if(s.config.positionResearchMode==="MULTI_SESSION_RESEARCH"&&ready){
+   s.audit.multiSessionResearchEvaluations++;
+   if(longFive.ready&&longFive.conservativeLowerPct>0&&h==="CASH"){
+     proposed="BUY";reason="MATURED_5_SESSION_NET_ADVANTAGE_RESEARCH";
+   }else if(longFive.ready&&longFive.netGoldVsCashLogPct<=0&&h==="CASH"){
+     proposed="KEEP";reason="MATURED_5_SESSION_NET_DISADVANTAGE";
+   }else if(!longFive.ready){
+     proposed="ABSTAIN";reason="MATURED_SESSION_SUPPORT_INSUFFICIENT";
+   }
+ }
  if(proposed==="ABSTAIN")s.audit.abstained++;
  s.audit.decisionsByReason[reason]=(s.audit.decisionsByReason[reason]||0)+1;
  // Shadow simulation is optional and NEVER changes the real portfolio.
@@ -158,6 +193,10 @@ function observe(s,o){
   qKeep:enough?keep.value:null,qSwitch:enough?sw.value:null,
   updateCount:s.audit.updates,readyForResearchComparison:ready,
   researchDecisionReason:reason,
+  s1ResearchEvidence:s.lastS1Evidence?{provenance:s.lastS1Evidence.provenance,
+    byHorizon:s.lastS1Evidence.byHorizon}:null,
+  multiSessionResearch:{state:sessionState,fiveSession:longFive,
+     policyMode:s.config.positionResearchMode},
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
 }
 function summary(s){
@@ -177,7 +216,9 @@ function summary(s){
     passiveCashNetUsd:100,
     maxDrawdownPct:s.paper.enabled&&s.paper.valid?s.paper.maxDrawdownPct:null,
     feeUsdShadow:s.paper.enabled?s.paper.fees:null
-  },scienceGate:"NOT_PROVEN",liveTradeAuthorized:false,
+  },positionMemory:memory.summary(s.sessionMemory),
+   lastS1Evidence:s.lastS1Evidence?clone(s.lastS1Evidence):null,
+   scienceGate:"NOT_PROVEN",liveTradeAuthorized:false,
   limitations:["RECONSTRUCTED_MID_NOT_BANK_EXECUTION_QUOTES",
     "15MIN_TRANSITIONS_CORRELATED_NOT_INDEPENDENT_EVIDENCE",
     "S1_S2_ALPHA_NOT_PROVEN","NO_BLIND_OOS_BACKTEST"]};
@@ -185,9 +226,16 @@ function summary(s){
 function checkpoint(s){return clone(s);}
 function restore(data){
  const s=clone(data);
- if(s.version!==VERSION||!s.q||!s.paper||!s.registry||!s.audit)
+ if(s.version!==VERSION||!s.q||!s.paper||!s.registry||!s.audit||!s.sessionMemory)
   throw Error("S3_BAD_CHECKPOINT");
+ s.sessionMemory=memory.restore(s.sessionMemory);
  return s;
 }
-module.exports={VERSION,FEE_PER_LEG,create,observe,summary,checkpoint,restore,
+function observeCompletedSession(s,session){
+ if(s.version!==VERSION)throw Error("S3_BAD_CHECKPOINT_VERSION");
+ if(!s.registry[session.sourceId])throw Error("S3_UNREGISTERED_SESSION_SOURCE");
+ return memory.completed(s.sessionMemory,session);
+}
+module.exports={VERSION,FEE_PER_LEG,create,observe,observeCompletedSession,
+ summary,checkpoint,restore,
  wealthMultiplier,context};

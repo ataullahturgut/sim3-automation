@@ -114,3 +114,51 @@ test("Decision abstention reasons are recorded without lowering support or addin
  assert.equal(b.action,null);assert.equal(b.tradeAllowed,false);
  assert.equal(s.audit.decisionsByReason.FAST_PHASE_NOT_READY,1);
 });
+
+test("M4 matured daily-session memory learns fee-net alternatives only when horizon finishes",()=>{
+ const m=require("./adaptive_position_memory_s3");
+ const s=m.create(),ds=["2023-01-02","2023-01-03","2023-01-04",
+  "2023-01-05","2023-01-06","2023-01-09"];
+ for(let i=0;i<ds.length;i++){
+  m.completed(s,{session:ds[i],sourceId:src,
+   phase:"CONTINUE",direction:1,price:1800*Math.pow(1.01,i),
+   availableAt:ds[i]+"T22:00:00Z"});
+  if(i<5)assert.equal(s.cohorts["TREND:UP#5"],undefined);
+ }
+ assert.equal(s.cohorts["TREND:UP#5"].n,1);
+ const net=100*(Math.log(Math.pow(1.01,5))+2*Math.log(.992));
+ assert.ok(Math.abs(s.cohorts["TREND:UP#5"].mean-net)<1e-10);
+ assert.equal(m.forecast(s,"TREND:UP").byHorizon.find(z=>z.sessions===5).ready,false);
+ const cp=m.restore(JSON.parse(JSON.stringify(s)));
+ assert.deepEqual(cp,s);
+});
+test("Missing completed weekday censors outstanding multi-session labels",()=>{
+ const m=require("./adaptive_position_memory_s3"),s=m.create();
+ for(const day of ["2023-01-02","2023-01-03","2023-01-05"])
+  m.completed(s,{session:day,sourceId:src,phase:"CONTINUE",direction:1,
+   price:1800,availableAt:day+"T22:00:00Z"});
+ assert.equal(s.audit.brokenSessions,1);
+ assert.equal(s.audit.maturedLabels,1);
+ assert.equal(s.audit.censoredLabels,8); // first two sessions: 3+4 pending after one horizon matures
+ assert.equal(s.cohorts["TREND:UP#3"],undefined);
+});
+test("S3 receives actual completed S1 research forecast but never calls it economic PIT",()=>{
+ const s=bridge.create({sourceId:src,sourceEvidence:"SYNTHETIC_ONLY",
+    learningMode:"STRICT_WALK_FORWARD",shadowResearch:true});
+ for(let i=0;i<38;i++)bridge.observe(s,m15(i,1800*Math.pow(1.001,i)));
+ assert.equal(s.s3.audit.s1ResearchForecastReceived,38);
+ assert.equal(s.s3.audit.economicRulesCertifiedAtDecision,0);
+ assert.equal(bridge.summary(s).positionResearch.lastS1Evidence.provenance,
+  "MARKET_ONLY_UNVALIDATED");
+ assert.equal(bridge.summary(s).positionResearch.liveTradeAuthorized,false);
+});
+test("Multi-session policy cannot buy from immature or reconstructed lookahead labels",()=>{
+ const s=critic.create({sourceRegistry:reg,shadowEnabled:true,
+    positionResearchMode:"MULTI_SESSION_RESEARCH",minUpdates:16});
+ for(let i=0;i<50;i++){
+  const out=critic.observe(s,tick(i,1800*Math.pow(1.01,i)));
+  assert.notEqual(out.proposedResearchAction,"BUY");
+ }
+ assert.equal(critic.summary(s).audit.shadowTrades,0);
+ assert.equal(critic.summary(s).liveTradeAuthorized,false);
+});
