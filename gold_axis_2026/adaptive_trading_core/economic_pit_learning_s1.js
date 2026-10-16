@@ -18,7 +18,7 @@ const maxTime=(...xs)=>Math.max(...xs.map(stamp));
 function reason(release,asof,scale){
   const t=stamp(asof),scheduled=stamp(release.scheduledUtc);
   if(t<scheduled)return "RELEASE_IN_FUTURE";
-  if(t-scheduled>4*3600000)return "EVENT_EXPOSURE_EXPIRED";
+  if(t-scheduled>=4*3600000)return "EVENT_EXPOSURE_EXPIRED";
   if(!TYPES.has(release.type)||!finite(release.actual)||!finite(release.consensus))
     return "MISSING_MACRO_COMPONENT";
   if(!finite(scale)||scale<=0||Math.abs((release.actual-release.consensus)/scale)>5)
@@ -39,6 +39,8 @@ function reason(release,asof,scale){
     if(stamp(entry.loggedAt)<stamp(entry.observedAt))return "REVERSED_PROVENANCE_CLOCK";
     if(stamp(entry.loggedAt)>t)return "PROVENANCE_RECORDED_AFTER_DECISION";
   }
+  if(stamp(p.firstprint.observedAt)>stamp(p.actual.observedAt))
+    return "FIRSTPRINT_LATER_THAN_ACTUAL";
   if(stamp(p.actual.observedAt)>t||stamp(p.firstprint.observedAt)>t)
     return "EVENT_NOT_ACCESSIBLE_AT_DECISION";
   if(p.actual.contentHash===p.consensus.contentHash)return "INDEPENDENT_VINTAGE_HASHES_REQUIRED";
@@ -53,13 +55,14 @@ function atDecision(asof,releases,scales,eventSource){
   const seen=new Set();
   for(const r of releases){
     const rt=stamp(r.scheduledUtc);
-    if(rt>now||now-rt>4*3600000)continue;
+    if(rt>now||now-rt>=4*3600000)continue;
     const k=r.scheduledUtc+"/"+r.type;
     if(seen.has(k))throw Error("DUPLICATE_MACRO_COMPONENT");
     seen.add(k);
     const why=reason(r,asof,scales[r.type]);
     if(why){quarantined.push({type:r.type,reason:why});continue;}
     const name=r.type.toLowerCase()+"_surprise_z",p=r.pit;
+    if(name in features)throw Error("DUPLICATE_ADMITTED_FEATURE_WAVE");
     const access=maxTime(p.actual.loggedAt,p.firstprint.loggedAt,p.consensus.loggedAt);
     features[name]={value:(r.actual-r.consensus)/scales[r.type],
       observedAt:iso(Math.max(rt,stamp(p.actual.observedAt))),
