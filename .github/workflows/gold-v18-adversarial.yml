@@ -1,0 +1,47 @@
+name: Gold V18 Adversarial Algorithm Safety
+on:
+  push:
+    branches:
+      - 'research-gold-v18-*'
+  pull_request:
+    branches:
+      - 'research-gold-v17-event-doubleq-20261016'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  adversarial-model-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: V18 syntax validation
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v18_kavis_dayaniqlilik.js
+          node --check v18_kavis_adversarial.test.js
+          node --check v18_128_adversarial_scenarios.js
+      - name: All previous V16/V17 and new V18 model safety tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node --test v16_kavis_siralama.test.js v16_kavis_counterfactual_audit.test.js v17_kavis_olay_doubleq.test.js v18_kavis_adversarial.test.js
+      - name: V18 hardened model on 128 hard FICTIONAL worlds and V17 baseline
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v18_128_adversarial_scenarios.js > v18_128_fictional_results.json
+          node -e "let q=require('./v18_128_fictional_results.json'); console.log(JSON.stringify({contract:q.contract,worlds:q.worlds,summary:q.summary,fees:q.feeBreakdown,weakCases:q.rows.filter(x=>x.delta<0).sort((a,b)=>a.delta-b.delta).slice(0,12)},null,2))"
+      - name: Historical gold prices must remain untouched
+        run: |
+          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|loadFullRows|2026_FEB_SEP' gold_axis_2026/apps/portfolio_guard_v1/v18_kavis_dayaniqlilik.js gold_axis_2026/apps/portfolio_guard_v1/v18_kavis_adversarial.test.js gold_axis_2026/apps/portfolio_guard_v1/v18_128_adversarial_scenarios.js; then
+            echo "Historical finance experiment referenced unexpectedly"
+            exit 1
+          fi
+      - name: Preserve all fictional adverse cases
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v18-128-adversarial-synthetic-results
+          path: gold_axis_2026/apps/portfolio_guard_v1/v18_128_fictional_results.json
+          if-no-files-found: ignore
