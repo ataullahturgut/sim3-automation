@@ -49,7 +49,9 @@ def simulate(daily, rows, start="2023-01-03"):
 
 def main():
     rows = S.load_rows(dev_only=True)
-    daily = json.load(open(os.path.join(HERE, "TERAZI_V3_5_GUNLUK.json")))
+    src = sys.argv[1] if len(sys.argv) > 1 else "V3_5"
+    out_tag = "V3_7" if src == "V3_5" else src + "_KARAR_V37"
+    daily = json.load(open(os.path.join(HERE, f"TERAZI_{src}_GUNLUK.json")))
     navs, tr, trace = simulate(daily, rows)
     dd = RV.mdd(navs)
     early = [t for t in tr if t[1] == "SAT" and "2023-01-03" <= t[0] <= "2023-02-02"]
@@ -69,7 +71,7 @@ def main():
     for x in trace:
         if x["date"] <= "2023-02-28":
             print(f"   {x['date']} altın {x['gold']} son dip {x['son_dip']} yapı kırık {x['yapi_kirik']} sonsal {x['sonsal_sat']} makro {x['makro']} pos {x['pos']}")
-    json.dump(res, open(os.path.join(HERE, "TERAZI_V3_7_SONUC.json"), "w"), indent=1, ensure_ascii=False)
+    json.dump(res, open(os.path.join(HERE, f"TERAZI_{out_tag}_SONUC.json"), "w"), indent=1, ensure_ascii=False)
 
 
 if __name__ == "__main__":

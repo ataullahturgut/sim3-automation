@@ -8,10 +8,45 @@ import run_terazi_v3 as RV
 import deneyim_states as S
 
 
+DERIVED = {"sig_equity_shock": ("nq_r5",), "sig_flight": ("zn_r5", "nq_r5"),
+           "sig_oil_shock": ("cl_r5",), "sig_vol_jump": ("gvz_d5",)}
+
+
+def untrained_features(rows, raw, frac=0.5):
+    """Ek-11: 2020–2022 günlerinin %50'sinden fazlasında ham değeri eksik olan değişkenler
+    ve onlardan türeyen ikili izler."""
+    idx = [i for i, r in enumerate(rows) if r["date"].year <= 2022]
+    out = set()
+    for f in S.FEATURES:
+        if f in DERIVED:
+            continue
+        miss = sum(1 for i in idx if raw[i].get(f) is None)
+        if miss > frac * len(idx):
+            out.add(f)
+    for f, src in DERIVED.items():
+        if any(x in out for x in src):
+            out.add(f)
+    return sorted(out)
+
+
 def run(mode):
-    T3.TRUST_MODE = "skill" if mode in ("skill", "v35") else mode
-    T3.EXIT_EXCLUDE = ("cot_mm", "cot_mm_d4") if mode == "v35" else ()
-    A = RV.marathon(tempfile.mkdtemp(), write=False)
+    T3.TRUST_MODE = "skill" if mode in ("skill", "v35", "v310") else mode
+    T3.EXIT_EXCLUDE = ("cot_mm", "cot_mm_d4") if mode in ("v35", "v310") else ()
+    orig = RV.S.standardize
+    if mode == "v310":
+        def masked(raw):
+            Z, st = orig(raw)
+            rows_ = RV.S.load_rows(dev_only=True)
+            drop = untrained_features(rows_, raw)
+            for f in drop:
+                Z[:, S.FEATURES.index(f)] = 0.0
+            print("maskelenen değişkenler:", len(drop), drop)
+            return Z, st
+        RV.S.standardize = masked
+    try:
+        A = RV.marathon(tempfile.mkdtemp(), write=False)
+    finally:
+        RV.S.standardize = orig
     rows = A["rows"]; nav = A["nav_hist"]; i0 = A["i0"]
     d2i = {str(r["date"]): i for i, r in enumerate(rows)}
     passive = 100 * (1 - S.FEE) / rows[i0]["ask"] * rows[-1]["bid"] * (1 - S.FEE)
@@ -41,7 +76,7 @@ def run(mode):
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "skill"
     res, A = run(mode)
-    print(f"=== TERAZİ v3.{ {'skill': '4', 'v35': '5'}.get(mode, '3 (kontrol)') } — geliştirme kaydı, kanıt değil ===")
+    print(f"=== TERAZİ v3.{ {'skill': '4', 'v35': '5', 'v310': '10'}.get(mode, '3 (kontrol)') } — geliştirme kaydı, kanıt değil ===")
     print(f"net NAV {res['net_nav']}  işlem {res['trades']}  maks düşüş %{res['max_dd']}  al-tut {res['passive']}")
     for k in ("S0", "S1", "S2", "S3", "S4"):
         print(f"  {k}: {'GEÇTİ' if res[k] else 'GEÇMEDİ'}")
@@ -55,7 +90,7 @@ def main():
     for d in res["feb2023"]:
         v = None if d["Pe"] is None else round(d["Pe"] + 0.5 * d["Ue"], 3)
         print(f"   {d['date']} altın {d['gold']} pos {d['pos']} P {d['P']} Q {d['Q']} Pe {d['Pe']} Ue {d['Ue']} Pe+0.5Ue {v} makro {d['macro']}")
-    tag = {"skill": "V3_4", "v35": "V3_5"}.get(mode, "V3_3_KONTROL")
+    tag = {"skill": "V3_4", "v35": "V3_5", "v310": "V3_10"}.get(mode, "V3_3_KONTROL")
     json.dump(res, open(os.path.join(HERE, f"TERAZI_{tag}_SONUC.json"), "w"), indent=1, ensure_ascii=False)
     json.dump(A["daily"], open(os.path.join(HERE, f"TERAZI_{tag}_GUNLUK.json"), "w"), indent=0)
 

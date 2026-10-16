@@ -1,0 +1,37 @@
+=== TERAZİ v3.7 — geliştirme kaydı, kanıt değil ===
+net NAV 225.68  işlem 5  maks düşüş %10.36
+  S0: GEÇTİ
+  S1: GEÇTİ
+  S2: GEÇTİ
+  S3: GEÇTİ
+  S4: GEÇTİ
+işlemler:
+   2023-01-03 AL 1836.33
+   2023-02-06 SAT 1878.03
+   2023-03-06 AL 1853.65
+   2023-09-28 SAT 1874.1
+   2023-10-12 AL 1880.56
+satış → geri alım:
+   2023-02-06 1878.03 → 2023-03-06 1853.65  %-0.3
+   2023-09-28 1874.1 → 2023-10-12 1880.56  %-1.93
+Ocak–Şubat 2023:
+   2023-01-03 altın 1840.52 son dip 1794.85 yapı kırık False sonsal False makro True pos 1
+   2023-01-04 altın 1846.36 son dip 1794.85 yapı kırık False sonsal False makro True pos 1
+   2023-01-05 altın 1852.64 son dip 1794.85 yapı kırık False sonsal False makro True pos 1
+   2023-01-06 altın 1837.15 son dip 1794.85 yapı kırık False sonsal True makro True pos 1
+   2023-01-09 altın 1878.04 son dip 1794.85 yapı kırık False sonsal False makro True pos 1
+   2023-01-10 altın 1874.15 son dip 1837.15 yapı kırık False sonsal False makro False pos 1
+   2023-01-11 altın 1882.28 son dip 1837.15 yapı kırık False sonsal False makro False pos 1
+   2023-01-12 altın 1883.69 son dip 1837.15 yapı kırık False sonsal False makro False pos 1
+   2023-01-13 altın 1893.75 son dip 1837.15 yapı kırık False sonsal False makro False pos 1
+   2023-01-16 altın 1919.62 son dip 1837.15 yapı kırık False sonsal False makro False pos 1
+   2023-01-17 altın 1911.17 son dip 1837.15 yapı kırık False sonsal True makro False pos 1
+   2023-01-18 altın 1898.04 son dip 1837.15 yapı kırık False sonsal True makro True pos 1
+   2023-01-19 altın 1910.16 son dip 1837.15 yapı kırık False sonsal False makro False pos 1
+   2023-01-20 altın 1928.06 son dip 1898.04 yapı kırık False sonsal False makro False pos 1
+   2023-01-23 altın 1926.33 son dip 1898.04 yapı kırık False sonsal False makro False pos 1
+   2023-01-24 altın 1934.11 son dip 1898.04 yapı kırık False sonsal False makro False pos 1
+   2023-01-25 altın 1927.69 son dip 1898.04 yapı kırık False sonsal False makro False pos 1
+   2023-01-26 altın 1947.57 son dip 1898.04 yapı kırık False sonsal False makro False pos 1
+   2023-01-27 altın 1925.1 son dip 1898.04 yapı kırık False sonsal True makro True pos 1
+   2023-01-30 altın 1931.47 son dip 1898.04 yapı kırık False sonsal False makro True pos 1
