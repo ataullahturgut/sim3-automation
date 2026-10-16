@@ -41,13 +41,27 @@ function create(options){
     throw Error("HORIZON_SCHEMA_INVALID");
   const anchorMinutes=o.anchorMinutes??240;
   if(!Number.isInteger(anchorMinutes)||anchorMinutes<60)throw Error("ANCHOR_INVALID");
+  // Source IDs must be reviewed by the caller. A source *name* alone is not
+  // external proof of first publication or vintage; keep this distinction in audit.
+  const sourceRegistry=o.sourceRegistry;
+  if(!sourceRegistry||typeof sourceRegistry!=="object"||Array.isArray(sourceRegistry)||
+     !Object.keys(sourceRegistry).length)throw Error("SOURCE_REGISTRY_REQUIRED");
+  for(const [id,entry] of Object.entries(sourceRegistry)){
+    if(!id||!entry||!["SYNTHETIC_ONLY","RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT"].includes(entry.evidenceStatus)||
+       !["MARKET","EVENT","BOTH"].includes(entry.kind))throw Error("SOURCE_REGISTRY_INVALID");
+  }
+  const maxLateMinutes=o.maxLateMinutes??15;
+  if(!Number.isInteger(maxLateMinutes)||maxLateMinutes<0||maxLateMinutes>15)
+    throw Error("STRICT_M15_MATURITY_TOLERANCE_REQUIRED");
   return {version:VERSION, featureNames:o.featureNames.slice(),horizons:horizons.slice(),
     config:{anchorMinutes,maxRules:Math.min(32,Math.max(2,o.maxRules??16)),
       noveltyDistance:Math.max(.3,o.noveltyDistance??1.25),
-      mergeDistance:.18,minReady:8,maxLateMinutes:Math.max(45,o.maxLateMinutes??90)},
+      mergeDistance:.18,minReady:8,maxLateMinutes},
+    sourceRegistry:copy(sourceRegistry),
     clock:null,lastAnchor:null,nextRuleId:1,rules:[],redirects:{},pending:[],
     audit:{observations:0,anchors:0,ruleCreated:0,ruleMerged:0,labelsMatured:0,
-      labelsSkipped:0,rejectedMissing:0,tradeActions:0,newsVerified:0}};
+      labelsSkipped:0,rejectedMissing:0,tradeActions:0,newsVerified:0,
+      rulesSaturated:0,sourceRejected:0}};
 }
 function featureVector(s,features,asof){
   if(!features||typeof features!=="object"||Array.isArray(features))
@@ -57,11 +71,17 @@ function featureVector(s,features,asof){
     if(!(n in features)||features[n]===null)continue; // missing means missing, never zero
     const f=features[n];
     if(!f||typeof f!=="object"||!finite(f.value)||
-       Math.abs(f.value)>5||!f.availableAt||!f.observedAt||!f.source)
+       Math.abs(f.value)>5||!f.availableAt||!f.observedAt||!f.source||
+       !["MARKET","EVENT"].includes(f.kind))
       throw Error("FEATURE_UNPROVEN_OR_UNNORMALIZED_"+n);
+    const entry=s.sourceRegistry[f.source];
+    if(!entry||!(entry.kind===f.kind||entry.kind==="BOTH"))
+      throw Error("UNREGISTERED_FEATURE_SOURCE_"+n);
     const av=stamp(f.availableAt),obs=stamp(f.observedAt);
     if(obs>av||av>asof)throw Error("FUTURE_OR_REVERSED_FEATURE_"+n);
-    if(f.kind==="NEWS"||f.kind==="EVENT"){
+    if(f.kind==="EVENT"){
+      if(entry.evidenceStatus!=="VERIFIED_PIT")
+        throw Error("EVENT_SOURCE_NOT_PIT_VERIFIED_"+n);
       if(f.firstPublishedAt===undefined||f.firstprintVerified!==true)
         throw Error("UNVERIFIED_EVENT_FIRSTPRINT_"+n);
       const first=stamp(f.firstPublishedAt);
@@ -144,13 +164,19 @@ function maybeMerge(s){
     return; // one merge per observation, stable rule IDs through redirect
   }
 }
-function validatePrice(ob,t){
+function safelyKnownSource(id,registry){return !!(registry&&registry[id]&&
+  ["MARKET","BOTH"].includes(registry[id].kind));}
+function validatePrice(s,ob,t){
   if(!finite(ob.price)||ob.price<=0||!ob.priceAvailableAt||
      !ob.barStartedAt||!Number.isInteger(ob.barMinutes)||ob.barMinutes<=0)
      throw Error("PRICE_VINTAGE_OR_BAR_MISSING");
   const start=stamp(ob.barStartedAt),avail=stamp(ob.priceAvailableAt);
   const end=start+ob.barMinutes*60000;
   if(end>t||avail<end||avail>t)throw Error("PRICE_BAR_NOT_YET_COMPLETE");
+  if(ob.barMinutes!==15)throw Error("S1_REQUIRES_FULL_M15_BAR");
+  if(!ob.priceSource||!safelyKnownSource(ob.priceSource,s.sourceRegistry))
+    throw Error("UNREGISTERED_PRICE_SOURCE");
+
 }
 function mature(s,t,price){
   const remain=[];
@@ -194,7 +220,9 @@ function predictVector(s,x){
   });
 }
 function forecast(s,ob){
-  const t=stamp(ob.asof),x=featureVector(s,ob.features,t);
+  const t=stamp(ob.asof);
+  if(s.clock!==null&&t<s.clock)throw Error("HISTORICAL_FORECAST_REQUIRES_ASOF_CHECKPOINT");
+  const x=featureVector(s,ob.features,t);
   if(Object.keys(x).length<2)return {ready:false,reason:"INSUFFICIENT_ASOF_FEATURES",byHorizon:[]};
   return {ready:true,reason:"RESEARCH_ONLY_NOT_A_TRADE_SIGNAL",
     matchedRules:scored(s,x).map(z=>({ruleId:z.r.id,distance:z.d,support:z.r.observations})),
@@ -206,7 +234,7 @@ function observe(s,ob){
     throw Error("FORBIDDEN_FUTURE_TARGET");
   const t=stamp(ob.asof);
   if(s.clock!==null&&t<=s.clock)throw Error("NONMONOTONIC_CORE_CLOCK");
-  validatePrice(ob,t);
+  validatePrice(s,ob,t);
   const x=featureVector(s,ob.features,t); // validate entire observation BEFORE mutation
   mature(s,t,ob.price);
   s.clock=t;s.audit.observations++;
@@ -221,7 +249,7 @@ function observe(s,ob){
     let r;
     if(!near.length||near[0].d>s.config.noveltyDistance){
       if(s.rules.length<s.config.maxRules)r=newRule(s,x,t);
-      else r=near[0]?.r; // saturated model: no phantom new rule
+      else {r=null;s.audit.rulesSaturated++;} // Don't force novel patterns into false prototypes
     }else r=near[0].r;
     if(r){
       if(r.bornAt!==iso(t))updateCenter(r,x,t);
@@ -250,6 +278,7 @@ function rules(s){
 function checkpoint(s){return copy(s);}
 function restore(v){
   const s=copy(v);
+  if(!s.sourceRegistry||!Object.keys(s.sourceRegistry).length)throw Error("CHECKPOINT_MISSING_SOURCE_REGISTRY");
   if(s.version!==VERSION||!Array.isArray(s.rules)||!Array.isArray(s.pending)||
     !Array.isArray(s.horizons))throw Error("BAD_CHECKPOINT");
   validateNames(s.featureNames);return s;
