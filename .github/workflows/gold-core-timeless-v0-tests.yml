@@ -57,3 +57,12 @@ jobs:
           node --check replay_jan2023_economic_research_s1.js
           node --check economic_research_vintage_s1.test.js
           node --test economic_research_vintage_s1.test.js
+
+      - name: S1 independent-release economic learning and negative-control contracts
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check independent_event_learning_s1.js
+          node --check independent_event_research_query_s1.js
+          node --check replay_independent_event_learning_s1.js
+          node --check independent_event_learning_s1.test.js
+          node --test independent_event_learning_s1.test.js
