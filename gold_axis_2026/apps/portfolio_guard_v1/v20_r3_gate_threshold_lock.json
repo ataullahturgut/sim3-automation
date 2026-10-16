@@ -1,0 +1,26 @@
+{
+  "version": "R3_GATE_CALIBRATION_LOCK_20261016",
+  "prereg_commit": "3c04badbf14c8aede2a5e4b3d1e1bc866af88134",
+  "calibration_workflow_run": 38896686668,
+  "calibration_seeds": "100000+37*i (0<=i<500)",
+  "seedCount": 500,
+  "bothFees": [
+    0.008,
+    0.025
+  ],
+  "days": 300,
+  "gridStart": 0,
+  "gridStep": 0.1,
+  "gridStop": 12,
+  "block": 16,
+  "minBlocks": 8,
+  "openConsecutiveBlocks": 2,
+  "z": 1.64,
+  "closeRule": "t < 0 OR two consecutive negative block sums",
+  "T_OPEN": 1.9,
+  "observedMaxTExceedPairs": 24,
+  "calibrationFalseOpenFraction": 0.048,
+  "locked": true,
+  "retuningProhibited": true,
+  "holdoutSeedsNeverUsed": true
+}
