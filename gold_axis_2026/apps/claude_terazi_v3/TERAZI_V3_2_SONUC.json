@@ -1,0 +1,251 @@
+[
+ {
+  "name": "v3.1 dual (yeniden)",
+  "net": 169.59,
+  "gross": 203.98,
+  "trades": 25,
+  "mdd": 13.46,
+  "feb2023": [
+   "2023-02-23"
+  ],
+  "churn": 9,
+  "ledger": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2023-02-23",
+    "SAT",
+    1826.56,
+    "yavaş kanal: düşme evresine emin"
+   ],
+   [
+    "2023-03-06",
+    "AL",
+    1853.65,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2023-10-02",
+    "SAT",
+    1839.47,
+    "yavaş kanal: düşme evresine emin"
+   ],
+   [
+    "2023-10-12",
+    "AL",
+    1880.56,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2023-12-12",
+    "SAT",
+    1983.7,
+    "yavaş kanal: düşme evresine emin"
+   ],
+   [
+    "2024-01-02",
+    "AL",
+    2073.53,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-04-15",
+    "SAT",
+    2351.53,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-04-16",
+    "AL",
+    2369.7,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-04-23",
+    "SAT",
+    2303.11,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-04-24",
+    "AL",
+    2319.45,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-05-01",
+    "SAT",
+    2286.16,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-05-02",
+    "AL",
+    2304.3,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-05-23",
+    "SAT",
+    2360.34,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-05-28",
+    "AL",
+    2345.14,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-05-30",
+    "SAT",
+    2334.92,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-05-31",
+    "AL",
+    2343.51,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-11-01",
+    "SAT",
+    2753.34,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-11-04",
+    "AL",
+    2733.64,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-11-07",
+    "SAT",
+    2657.47,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-11-08",
+    "AL",
+    2688.97,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2024-11-12",
+    "SAT",
+    2600.49,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2024-11-13",
+    "AL",
+    2607.89,
+    "yavaş kanal: yükselme evresine emin"
+   ],
+   [
+    "2025-02-12",
+    "SAT",
+    2891.55,
+    "hızlı kanal: bacak kırıldı + makro onayı"
+   ],
+   [
+    "2025-02-13",
+    "AL",
+    2911.97,
+    "yavaş kanal: yükselme evresine emin"
+   ]
+  ]
+ },
+ {
+  "name": "v3.2 tek sonsal (BİRİNCİL)",
+  "net": 203.54,
+  "gross": 212.49,
+  "trades": 5,
+  "mdd": 11.27,
+  "feb2023": [
+   "2023-02-27"
+  ],
+  "churn": 0,
+  "ledger": [
+   [
+    "2023-01-27",
+    "AL",
+    1926.13,
+    "tek sonsal: yükselme evresine emin"
+   ],
+   [
+    "2023-02-27",
+    "SAT",
+    1810.02,
+    "tek sonsal: düşme evresine emin"
+   ],
+   [
+    "2023-03-06",
+    "AL",
+    1853.65,
+    "tek sonsal: yükselme evresine emin"
+   ],
+   [
+    "2023-10-02",
+    "SAT",
+    1839.47,
+    "tek sonsal: düşme evresine emin"
+   ],
+   [
+    "2023-10-12",
+    "AL",
+    1880.56,
+    "tek sonsal: yükselme evresine emin"
+   ]
+  ]
+ },
+ {
+  "name": "v3.2 makro freni yok",
+  "net": 203.54,
+  "gross": 212.49,
+  "trades": 5,
+  "mdd": 11.27,
+  "feb2023": [
+   "2023-02-27"
+  ],
+  "churn": 0,
+  "ledger": [
+   [
+    "2023-01-27",
+    "AL",
+    1926.13,
+    "tek sonsal: yükselme evresine emin"
+   ],
+   [
+    "2023-02-27",
+    "SAT",
+    1810.02,
+    "tek sonsal: düşme evresine emin (makro freni yok)"
+   ],
+   [
+    "2023-03-06",
+    "AL",
+    1853.65,
+    "tek sonsal: yükselme evresine emin"
+   ],
+   [
+    "2023-10-02",
+    "SAT",
+    1839.47,
+    "tek sonsal: düşme evresine emin (makro freni yok)"
+   ],
+   [
+    "2023-10-12",
+    "AL",
+    1880.56,
+    "tek sonsal: yükselme evresine emin"
+   ]
+  ]
+ }
+]
