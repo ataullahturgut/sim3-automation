@@ -27,7 +27,7 @@ jobs:
       - name: V18 V19 V20 all causal research tests
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: |
-          node --test v18_kavis_adversarial.test.js v19_kavis_siper.test.js v20_kavis_atlas.test.js
+          node --test v15_kavis_cekirdek.test.js v15_kavis_formal_audit.test.js v15_kavis_stress.test.js v16_kavis_siralama.test.js v16_kavis_counterfactual_audit.test.js v16_kavis_v15_uzman_koprusu.test.js v17_kavis_olay_doubleq.test.js v18_kavis_adversarial.test.js v19_kavis_siper.test.js v20_kavis_atlas.test.js
       - name: 128 synthetic hard worlds and exact V18 no-shield ablation
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: |
