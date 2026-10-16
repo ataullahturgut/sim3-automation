@@ -1,6 +1,7 @@
 """TERAZİ v3.7 — 2026 sınavı. Ön kayıt: TERAZI_V3_7_2026_SINAV_ON_KAYIT.md. Tek koşu."""
 import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(HERE, "..", "claude_deneyim_v1"))   # import yolu (model değişikliği değil)
 import deneyim_states as S
 _orig = S.load_rows
 S.load_rows = lambda dev_only=True: _orig(dev_only=False)
