@@ -33,3 +33,9 @@ jobs:
           console.log('TIMELESS_CORE_PROTOTYPE_PASS',c.NFEATURES,
             c.LEGS_COST_PCT, 'no training or profitability claimed');
           NODE
+      - name: S1 adaptive-rule discovery as-of and delayed-learning contract
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check adaptive_rule_discovery_s1.js
+          node --check adaptive_rule_discovery_s1.test.js
+          node --test adaptive_rule_discovery_s1.test.js
