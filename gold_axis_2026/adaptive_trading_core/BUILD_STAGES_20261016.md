@@ -42,3 +42,10 @@
 **Ölçülecek ilk deney:** salt yapısal ve gecikmeli öğrenme testleri, sonra **Ocak 2023'te ilk yayın/çapraz piyasa saat-denetimi yapılmış veri** ile ekonomik kural öğrenmesi. Ocak yürüyüşünde fiyat sinyallerini ekonomik nedensellikmiş gibi raporlamak ve bu nedenle aynı ay daha iyi P&L uydurmak yasaktır.
 
 **Değişiklik kontrolü:** Bu aşamalar ve amaç, model ailesi, tarih sınırı, banka masrafı, proje/branch ve MODEL/UYGULAMA ayrımı ancak kullanıcı değişiklik kararıyla değiştirilir. Basit bug fix ayrı kayıt. Başarısız test, ileri aşamaya kısayol değil, aynı aşamanın açık hatasıdır.
+
+
+## 16 Ekim 2026 — M2–M5 entegrasyon ek denetim, başarı kapısı değişmedi
+- S1 event release alanları bilimsel ilk-baskı/vintage/admission ile aynı CORE S3 araştırma context'ine bağlandı; gerçek Jan23 M15 koşusu yalnız MARKET_ONLY, makro PIT olay sinyali=0. S1 karşıt örnek üstünlüğü hâlâ FAIL.
+- S2 tamamlanmış yavaş seanslarından yeni S3 kalıcı `sessionMemory` öğreniyor. 2020–2025 quote-only araştırma: 1500 kabul, 35 bitmiş S2 epizot, 4955 ücretli 1/3/5/10-session olgun etiket, 1033 cenzor. 28 cohort, overlap yüksek, kâr kabulu YOK.
+- Ocak 2023 gerçek M15 iki S3 ablation: her ikisi de **0 alım/100 USD nakit**; 5 günlük zorunlu satılma getirisi gerçek bütün ay GOLD tutmanın getirisi değildir. Uygulama, model gate ve Şubat ilerleme değişmedi.
+- Kaynak, test, sayısal sonuçlar: `M2_M5_INTEGRATION_ARCHIVE_JAN2023_AUDIT_20261016.md`.
