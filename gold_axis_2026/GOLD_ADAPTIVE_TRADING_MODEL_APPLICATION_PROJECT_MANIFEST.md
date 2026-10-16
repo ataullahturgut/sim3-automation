@@ -345,3 +345,20 @@ Ana `adaptive_rule_discovery_s1.js` içine tek isteğe bağlı `LOCAL_MATURED_EX
 - **Açık kalacak bilim şartları:** epizot ground-truth ve hazard kalibrasyonu, çakışmayan bağımsız olaylar, 4s–2hafta çapraz ufuklar, geleceği görmeyen fiyat-vintage, mümkünse yeni gerçek veri, bağımsız baseline/ablation. S2 hazırlığı S1 bilim FAIL'ini silmez ve **S3, S4, S5, S6, APP bilimsel ya da canlı kabulünü otomatik açmaz**. AL–TUT–SAT=NOT_IMPLEMENTED; banka maliyeti %0,8/her yön değişmedi.
 
 **WORKSTREAM=MODEL | S1_SCIENCE=FAIL | S2_DEV=INITIAL_IMPLEMENTATION_DONE | S2_SCIENCE=PENDING | S3_S4_S5_S6_U1=NOT_ACCEPTED | TRADES=0.**
+
+
+---
+
+## 20. S2 çoklu ufuk gerçek veri denetimi — 4s/1g/3g/1hft/2hft (16 Ekim 2026)
+
+**WORKSTREAM=MODEL | S2_DEV=FIVE_HORIZONS_IMPLEMENTED | S2_SCIENCE_GATE=PENDING | S1_SCIENCE=FAIL.** [Ayrıntılı araştırma denetimi](adaptive_trading_core/S2_MULTIHORIZON_LIFECYCLE_AUDIT_20261016.md).
+
+Mevcut `adaptive_phase_lifecycle_s2.js` (tek S1+S2 CORE'a bağlanan aynı bileşen) 4s, 1gün, 3gün, 1hafta, 2hafta **bitiş ve devam olasılığı** üretmek, her ufku ayrı olgunlaştırmak, gerçek END görüldüyse ufuk süresi dolmadan pozitif olarak bilmek, aksi halde tam ufuk boyunca doğrulanmış devamı beklemek ve aradaki M15/kaynak boşluğunda **etiketi sağ-sansürlemek** üzere geliştirildi. Bir ufukta yalnız END etiketi varsa `estimable=false`; bunlar yüksek yön doğruluğu sayılmaz. Sansürlü epizot, geçmişte gerçekten sağ kaldığı ufuk dışındaki END/CONTINUE etiketlerine zorla yazılmaz. S2 araştırma checkpoint sürümü `KAVIS_S2_CAUSAL_EPISODE_MULTIHORIZON_20261016`; eski tek-ufuk checkpointleri geçerli sayılmaz.
+
+**2023–2025 gerçek salt-okunur Neon:** 67.919 XAU M15 satırı / 67.653 tam; **1.223** tamamlanmış, **341** sağ-sansürlü mikro epizot. **4s:** 1.763 değerlendirilebilir tahmin, 1.137 END / 626 CONTINUE, model Brier **0,218717**, koşulsuz süre referansı **0,219215**; iyileşme **0,000499**, epizot-kümeli %95 bootstrap **[−0,001493; +0,002431]**: **üstünlük kanıtı yok**. Bu yöntem, erken gözlenmiş END'leri artık sonraki veri boşluğunda kaybolmadan skorladığından eski 1.596 tahmin/0,241926 koşusuyla aynı değerlendirme kümesi **değildir**.
+
+**1 gün, 3 gün, 1 hafta, 2 hafta:** her biri için 1.632 skorlanabilir kaydın tümü zaten erken bitmiş kısa epizotlardan **END=1**. **0 doğrulanmış CONTINUE** ⇒ **`UNESTIMABLE`**. Bu kritik tespit, 4 saatlik fiyat hareketi epizotlarını uzatarak haftalık ekonomik şok yaşam döngüsü öğrenilemeyeceğini gösteriyor. Skorlanan tüm olumlu sonuçlar için görünen küçük hata, gerçek devam/bitiş tahmin başarısı **değildir**. Gelecekte günlük/haftalık ayrı zaman ölçekli epizot/oturum süresi tanımı (planlı hafta sonu kapanışı ≠ veri kaybı) geliştirilmeli ve yeniden sınanmalı; veri yetersizliği sabit yönde kural üretme gerekçesi değildir.
+
+**Güvenlik ve denetim:** Önceki 46 S1 ve yeni/önceki 12 S2 test = **58/58 izole JS test PASS**. GitHub Actions workflow'da S2 test adımı mevcut; sunucu koşusunun sonucuna dair bağımsız kanıt henüz yok. S1'in başarısız ekonomi alpha durumu, S3 net %0,8/her-yön ücretli AL–TUT–SAT kapısı, S4 katı Ocak 2023, S5/6 ve uygulama otomatik açılmadı. Yalnız aynı matematiksel projede S2 geliştirme çalışması ilerletildi.
+
+**NEXT (tek net teknik eksik):** günlük ve haftalık **gerçek yavaş epizotların** planlı kapanışları bilinerek kronolojik tanımlanması; mikro START/END etiketlerini 2 haftalık bitiş başarısı gibi çoğaltma. `S2 SCIENCE` hâlâ kabul edilmedi.
