@@ -269,3 +269,35 @@ test("100 randomly corrupted bank fees cannot mutate an unfilled decision",()=>{
   A.deepEqual(s,frozen);
  }
 });
+
+test("40 deterministic contaminated worlds recover byte-identical Q after delayed clean fill",()=>{
+ for(let seed=1;seed<=40;seed++){
+  const a=M.create(),b=M.create();
+  let pa="CASH",pb="CASH";
+  for(let d=0;d<75;d++){
+   const r=d<32?1.6:-1.4;
+   const m={r4:r,r1:2*r,r3:3*r,rv:1.4,dd:r<0?-3:0};
+   M.signal(a,{asof:at(d),featureAvailableAt:at(d),position:pa,market:m});
+   M.signal(b,{asof:at(d),featureAvailableAt:at(d),position:pb,market:m});
+   const real=100*Math.exp(.008*Math.min(32,d)-.009*Math.max(0,d-32));
+   let x,y;
+   if(d===27){
+    const falsePrice=real*(seed%2?10000:.0001);
+    const baseline=M.quote(a,{at:at(d,9),price:real,isBankCheckpoint:false});
+    const corrupted=q(b,d,falsePrice);
+    A.equal(baseline.fill,null);
+    A.equal(corrupted.quarantined,true);
+    x=M.quote(a,{at:at(d,12),price:real,isBankCheckpoint:true}).fill;
+    y=M.quote(b,{at:at(d,12),price:real,isBankCheckpoint:true}).fill;
+   }else{
+    x=q(a,d,real).fill;y=q(b,d,real).fill;
+   }
+   pa=x.positionAfter;pb=y.positionAfter;
+   A.equal(pa,pb);
+  }
+  A.deepEqual(a.q,b.q);A.deepEqual(a.qb,b.qb);
+  A.deepEqual(a.feeKnowledge,b.feeKnowledge);
+  A.equal(a.learned,b.learned);
+  A.equal(b.audit.quarantineQuotes,1);
+ }
+});
