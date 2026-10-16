@@ -53,13 +53,18 @@ function create(options){
     if(!id||!entry||!["SYNTHETIC_ONLY","RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","RECONSTRUCTED_RELEASE_RESEARCH"].includes(entry.evidenceStatus)||
        !["MARKET","EVENT","BOTH"].includes(entry.kind))throw Error("SOURCE_REGISTRY_INVALID");
   }
+  // Optional within-rule conditional learning. The old PROTOTYPE forecast
+  // remains the default, allowing an honest same-CORE prequential ablation.
+  const forecastMethod=o.forecastMethod??"PROTOTYPE";
+  if(!["PROTOTYPE","LOCAL_MATURED_EXAMPLES"].includes(forecastMethod))
+    throw Error("FORECAST_METHOD_INVALID");
   const maxLateMinutes=o.maxLateMinutes??15;
   if(!Number.isInteger(maxLateMinutes)||maxLateMinutes<0||maxLateMinutes>15)
     throw Error("STRICT_M15_MATURITY_TOLERANCE_REQUIRED");
   return {version:VERSION,learningMode,featureNames:o.featureNames.slice(),horizons:horizons.slice(),
     config:{anchorMinutes,maxRules:Math.min(32,Math.max(2,o.maxRules??16)),
       noveltyDistance:Math.max(.3,o.noveltyDistance??1.25),
-      mergeDistance:.18,minReady:8,maxLateMinutes},
+      mergeDistance:.18,minReady:8,maxLateMinutes,forecastMethod},
     sourceRegistry:copy(sourceRegistry),
     clock:null,lastAnchor:null,nextRuleId:1,rules:[],redirects:{},splitRoutes:{},pending:[],
     audit:{observations:0,anchors:0,ruleCreated:0,ruleMerged:0,labelsMatured:0,
@@ -313,23 +318,62 @@ function mature(s,t,price){
   }
   s.pending=remain;
 }
+/** Conditional update from independently matured within-rule examples.
+ * No outcomes of pending anchors, calendar IDs or unobserved variables.
+ * Structural constants (12 neighbours, 8 prior pseudo-labels) are fixed
+ * BEFORE inspecting a trial's scores, not fitted on 2023-25 returns.
+ * A rule's matured aggregate posterior is the conservative shrinkage prior.
+ */
+function localMaturedPosterior(s,x,h,r){
+  const prior=r.outcomes[h];
+  if(prior.n<s.config.minReady||r.exampleComplete!==true||
+     !Array.isArray(r.examples))return null;
+  const records=r.examples.filter(z=>z.horizon===h&&finite(z.ret)&&z.features)
+    .map(z=>({z,d:squaredDistance(x,z.features)}))
+    .filter(z=>Number.isFinite(z.d))
+    .sort((a,b)=>a.d-b.d).slice(0,12);
+  if(records.length<s.config.minReady)return null;
+  const w=records.map(z=>Math.exp(-.5*Math.pow(z.d/1.5,2)));
+  const sw=w.reduce((a,b)=>a+b,0);
+  // Explicit rejection avoids pretending identical prototype observations
+  // constitute conditional evidence when not enough examples are near.
+  if(sw<2)return null;
+  const weightPrior=8,denom=weightPrior+sw;
+  const rawP=records.reduce((v,z,i)=>v+w[i]*(z.z.ret>0?1:0),0);
+  const rawMean=records.reduce((v,z,i)=>v+w[i]*z.z.ret,0);
+  const rawDown=records.reduce((v,z,i)=>v+w[i]*z.z.down,0);
+  return {
+    upFraction:(weightPrior*(prior.up/prior.n)+rawP)/denom,
+    expectedLogPct:(weightPrior*prior.mean+rawMean)/denom,
+    downsidePct:(weightPrior*prior.downsideMean+rawDown)/denom,
+    neighbourN:records.length,
+    effectiveN:sw
+  };
+}
+
 function predictVector(s,x){
   const neighbours=scored(s,x);
   return s.horizons.map(h=>{
     const qualified=neighbours.filter(({r})=>r.outcomes[h].n>=s.config.minReady);
     if(!qualified.length)return {horizonMinutes:h,ready:false,expectedLogPct:null,
       uncertaintyPct:null,upFraction:null,downsidePct:null,effectiveN:0,ruleIds:[]};
+    const local=s.config.forecastMethod==="LOCAL_MATURED_EXAMPLES"?
+      qualified.map(z=>localMaturedPosterior(s,x,h,z.r)):null;
     const weights=qualified.map(z=>Math.exp(-.5*(z.d/Math.max(.2,s.config.noveltyDistance))**2));
     const total=weights.reduce((a,b)=>a+b,0);
     let mean=0,var0=0,pup=0,downside=0,n=0;
     qualified.forEach(({r},i)=>{
       const w=weights[i]/total,q=r.outcomes[h];
-      mean+=w*q.mean;pup+=w*q.up/q.n;downside+=w*q.downsideMean;
+      const conditional=local?.[i];
+      mean+=w*(conditional?.expectedLogPct??q.mean);
+      pup+=w*(conditional?.upFraction??q.up/q.n);
+      downside+=w*(conditional?.downsidePct??q.downsideMean);
       n+=w*q.n;
     });
     qualified.forEach(({r},i)=>{
       const w=weights[i]/total,q=r.outcomes[h];
-      var0+=w*(Math.max(0,q.m2/Math.max(1,q.n-1))+(q.mean-mean)**2);
+      var0+=w*(Math.max(0,q.m2/Math.max(1,q.n-1))+
+        ((local?.[i]?.expectedLogPct??q.mean)-mean)**2);
     });
     return {horizonMinutes:h,ready:true,expectedLogPct:mean,
       uncertaintyPct:Math.sqrt(var0),upFraction:pup,
@@ -399,6 +443,9 @@ function restore(v){
   const s=copy(v);
   if(!s.splitRoutes)s.splitRoutes={};
   if(!s.learningMode)s.learningMode="STRICT_WALK_FORWARD";
+  if(!s.config.forecastMethod)s.config.forecastMethod="PROTOTYPE";
+  if(!["PROTOTYPE","LOCAL_MATURED_EXAMPLES"].includes(s.config.forecastMethod))
+    throw Error("BAD_CHECKPOINT_FORECAST_METHOD");
   if(!["STRICT_WALK_FORWARD","DISCOVERY_FULL_ARCHIVE"].includes(s.learningMode))
     throw Error("BAD_CHECKPOINT_LEARNING_MODE");
   if(!s.sourceRegistry||!Object.keys(s.sourceRegistry).length)throw Error("CHECKPOINT_MISSING_SOURCE_REGISTRY");
