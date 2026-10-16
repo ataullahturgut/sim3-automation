@@ -253,6 +253,10 @@ function quote(s,o){
  const entryPrice=o.price,f=result.fill,fee=f.feeLegIfSwitched;
  if(!finite(entryPrice)||entryPrice<=0||!finite(fee)||fee<0||fee>=.1)
   throw Error("V19_BAD_VERIFIED_FILL");
+ // Advisor's unrealized one-step comparison is updated only when the
+ // NEXT valid bank price is observed, never from future prices in signal.
+ if(r.lastFill&&result.update?.accepted===true)
+   updateAdvisor(s,r.lastFill,entryPrice);
  // Learn only as of this completed checkpoint, from the previous
  // accepted checkpoint's frozen conditional regime.
  if(r.lastFill){
@@ -290,7 +294,8 @@ function quote(s,o){
   r.afterForcedExit=false;r.recoveryCount=0;
  }
  if(p.drawdownPct>c.maxDrawdownPct)s.audit.postCrashGapWarnings++;
- r.lastFill={price:entryPrice,at:f.at,bucket:context.bucket};
+ r.lastFill={price:entryPrice,at:f.at,bucket:context.bucket,
+   fee:s.core.feeKnowledge.lastKnown,shadow:context.shadow};
  s.pendingContext=null;
  return {version:VERSION,fill:f,baseFeedback:result.update,
    portfolio:quoteState(s),tail:estimate(s,context.bucket),
@@ -313,7 +318,13 @@ function restore(payload){
     !finite(p.maxDrawdownPct)||p.maxDrawdownPct<p.drawdownPct||
     !finite(p.feeDollars)||p.feeDollars<0||
     !Number.isInteger(p.trades)||p.trades<0||
-    !Array.isArray(r.all)||!r.buckets||
+    !Array.isArray(r.all)||!r.buckets||!r.advisor||
+    !["STRESS","RALLY","QUIET"].every(k=>{
+      const z=r.advisor[k];
+      return !!z&&Number.isInteger(z.n)&&z.n>=0&&
+        finite(z.mean)&&finite(z.var)&&z.var>=.01&&finite(z.lastDelta)&&
+        Number.isInteger(z.positive)&&Number.isInteger(z.negative);
+    })||
     !["STRESS","RALLY","QUIET"].every(k=>Array.isArray(r.buckets[k]))||
     ![r.all,...Object.values(r.buckets)].every(a=>a.length<=s.config.tailWindow&&
        a.every(v=>finite(v)&&v>=0))||
