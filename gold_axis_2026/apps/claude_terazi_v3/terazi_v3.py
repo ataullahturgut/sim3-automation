@@ -37,6 +37,9 @@ M_BREAK = 5          # kırılma penceresi: düşen bacağın ilk m günü
 # Ek-2 (TERAZI_V3_ON_KAYIT_EKI_OLCEK_HATASI.md): ön kayıttaki "Q − λU > 2·p0" yazımı bir
 # ölçek hatasıydı — nadir olayda U_Q ≈ 0,85·Q olduğu için test ulaşılamaz hale geliyordu.
 EXIT_LAM = LAM
+# Ek-5 (TERAZI_V3_4_ON_KAYIT_NADIR_OLAY_GUVENI.md): "sign" = v3.3 (günlük işaret uyumu),
+# "skill" = v3.4 (taban orana göre kalibre log-olabilirlik becerisi). Varsayılan v3.3.
+TRUST_MODE = "sign"
 
 
 def break_labels(P, theta=THETA, m=M_BREAK):
@@ -91,13 +94,14 @@ class RuleB:
     her kural neredeyse hep 0 der ve bedava güven kazanır. Bu yüzden saha testinin
     referansı 0,5 yerine TABAN ORANDIR: "bu kural, koşulsuz orandan yüksek dedi mi?"
     """
-    __slots__ = ("gates", "s", "n", "h", "k", "born", "c0", "z_birth", "p0")
+    __slots__ = ("gates", "s", "n", "h", "k", "born", "c0", "z_birth", "p0", "G", "Kk")
 
     def __init__(self, gates, born, p0, c0=0.0, z_birth=0.0):
         self.gates = tuple(sorted(gates))
         self.s, self.n = 0.0, 0.0
         self.h, self.k = 0.0, 0.0
         self.born, self.c0, self.z_birth, self.p0 = born, c0, z_birth, p0
+        self.G, self.Kk = 0.0, 0.0
 
     def fire(self, z):
         w = 1.0
@@ -112,6 +116,9 @@ class RuleB:
 
     @property
     def trust(self):
+        if TRUST_MODE == "skill":
+            sk = 0.0 if self.Kk < 1e-12 else max(-1.0, min(1.0, self.G / self.Kk))
+            return (self.k * sk + TRUST_SHRINK * self.c0) / (self.k + TRUST_SHRINK)
         return (2 * self.h - self.k + TRUST_SHRINK * self.c0) / (self.k + TRUST_SHRINK)
 
     @property
@@ -128,6 +135,10 @@ class RuleB:
             agree = 1.0 if (mu_before >= self.p0) == (y >= 0.5) else 0.0
             self.h = RHO * self.h + w * agree
             self.k = RHO * self.k + w
+            m = min(max(mu_before, 1e-6), 1 - 1e-6); p = min(max(self.p0, 1e-6), 1 - 1e-6)
+            a, b = math.log(m / p), math.log((1 - m) / (1 - p))
+            self.G = RHO * self.G + w * (y * a + (1 - y) * b)
+            self.Kk = RHO * self.Kk + w * (m * a + (1 - m) * b)
 
     def label(self):
         parts = []
