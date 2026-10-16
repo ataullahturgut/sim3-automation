@@ -83,59 +83,100 @@ function signal(window){
    volatility:Math.max(.0001,volatility),
    log4:100*log4};
 }
-function hazard(s,age,dir,phase){
- const completed=s.completed.filter(e=>e.durationMinutes>=age);
- const prior=s.completed.filter(e=>e.durationMinutes>=age&&e.direction===dir);
- const q=pool=>pool.length?
-  (1+pool.filter(e=>e.durationMinutes<=age+s.config.horizonMinutes).length)/
-  (pool.length+2):null;
- const phasePool=prior.filter(e=>{
+/** Empirical conditional competing status for H minutes.
+ * Completed episodes are usable only after their END was observed.
+ * Right-censored episodes enter the denominator as confirmed survivors
+ * only when their observed span exceeds age+H (never as invented END).
+ */
+function hazard(s,age,dir,phase,horizonMinutes){
+ const H=horizonMinutes;
+ const ended=s.completed.filter(e=>e.durationMinutes>age);
+ const survived=s.censoredEpisodes.filter(e=>e.durationMinutes>=age+H);
+ const risk=[...ended.map(e=>({...e,ended:true})),
+   ...survived.map(e=>({...e,ended:false}))];
+ const sameDirection=risk.filter(e=>e.direction===dir);
+ const matchedPhase=e=>{
   let nearest=null;
-  for(const h of e.snapshots){if(h.ageMinutes<=age&&
-    (nearest===null||h.ageMinutes>nearest.ageMinutes))nearest=h;}
-  return nearest!==null&&nearest.phase===phase&&
+  for(const snap of e.snapshots){
+   if(snap.ageMinutes<=age&&(!nearest||snap.ageMinutes>nearest.ageMinutes))
+    nearest=snap;
+  }
+  return !!nearest&&nearest.phase===phase&&
     age-nearest.ageMinutes<=s.config.anchorMinutes;
- });
- const eligible=phasePool.length>=s.config.minReady?phasePool:prior;
- const strat=phasePool.length>=s.config.minReady?"PHASE_AND_DIRECTION":
-   "DIRECTION_ONLY_FALLBACK";
- return {ready:eligible.length>=s.config.minReady,
-  p:eligible.length>=s.config.minReady?q(eligible):null,
-  baselineReady:completed.length>=s.config.minReady,
-  baselineP:completed.length>=s.config.minReady?q(completed):null,
-  riskN:eligible.length,phaseRiskN:phasePool.length,globalRiskN:completed.length,
-  method:strat};
+ };
+ const phasePool=sameDirection.filter(matchedPhase);
+ const enough=s.config.minReady;
+ const eligible=phasePool.length>=enough?phasePool:sameDirection;
+ const calc=pool=>pool.length?
+   (1+pool.filter(e=>e.ended&&e.durationMinutes<=age+H).length)/(2+pool.length):null;
+ return {horizonMinutes:H,
+  ready:eligible.length>=enough,p:eligible.length>=enough?calc(eligible):null,
+  baselineReady:risk.length>=enough,
+  baselineP:risk.length>=enough?calc(risk):null,
+  riskN:eligible.length,phaseRiskN:phasePool.length,globalRiskN:risk.length,
+  censoredKnownSurvivors:risk.filter(e=>!e.ended).length,
+  method:phasePool.length>=enough?"PHASE_AND_DIRECTION":"DIRECTION_ONLY_FALLBACK"};
+}
+function scoreOne(s,q,label,t){
+ const h=q.horizonMinutes??240,st=s.scores.byHorizon[h];
+ if(!st)throw Error("S2_UNREGISTERED_SCORE_HORIZON");
+ if(q.modelP===null||q.baselineP===null)return;
+ st.scored++;st.positive+=label;st.negative+=1-label;
+ st.brier+=(q.modelP-label)**2;
+ st.brierBaseline+=(q.baselineP-label)**2;
+ st.correct+=Number((q.modelP>=.5)===Boolean(label));
+ st.baselineCorrect+=Number((q.baselineP>=.5)===Boolean(label));
+ const diff=(q.baselineP-label)**2-(q.modelP-label)**2;
+ const cluster=st.perEpisode[q.episodeId]??{n:0,delta:0};
+ cluster.n++;cluster.delta+=diff;
+ st.perEpisode[q.episodeId]=cluster;
+ const year=String(new Date(q.at).getUTCFullYear());
+ if(!st.byYear[year])st.byYear[year]=
+   {n:0,positive:0,negative:0,brier:0,baseBrier:0,modelCorrect:0,baseCorrect:0};
+ const z=st.byYear[year];z.n++;z.positive+=label;z.negative+=1-label;
+ z.brier+=(q.modelP-label)**2;z.baseBrier+=(q.baselineP-label)**2;
+ z.modelCorrect+=Number((q.modelP>=.5)===Boolean(label));
+ z.baseCorrect+=Number((q.baselineP>=.5)===Boolean(label));
+ // Legacy 4-hour report fields remain exactly the same unit (H=240).
+ if(h===240){
+  const x=s.scores;
+  x.scored++;x.brier+=(q.modelP-label)**2;
+  x.brierBaseline+=(q.baselineP-label)**2;
+  const c=x.perEpisode[q.episodeId]??{n:0,delta:0};
+  c.n++;c.delta+=diff;x.perEpisode[q.episodeId]=c;
+  x.correct+=Number((q.modelP>=.5)===Boolean(label));
+  x.correctBaseline+=Number((q.baselineP>=.5)===Boolean(label));
+  if(!x.scoredYear[year])x.scoredYear[year]=
+    {n:0,modelBrier:0,baseBrier:0,modelCorrect:0,baseCorrect:0};
+  const by=x.scoredYear[year];by.n++;
+  by.modelBrier+=(q.modelP-label)**2;
+  by.baseBrier+=(q.baselineP-label)**2;
+  by.modelCorrect+=Number((q.modelP>=.5)===Boolean(label));
+  by.baseCorrect+=Number((q.baselineP>=.5)===Boolean(label));
+ }
 }
 function mature(s,t){
- const survivors=[];
+ const keep=[];
  for(const q of s.pending){
-  if(t<q.due){survivors.push(q);continue;}
+  const h=q.horizonMinutes??240;
+  const ended=s.endedAt[q.episodeId],censored=s.censoredAt[q.episodeId];
+  // A real END is an irrevocable positive label as soon as observed,
+  // even if H is 14d. Never wait through a weekend to re-discover it.
+  if(ended!==undefined&&ended<=t&&ended<=q.due){
+   scoreOne(s,q,1,t);
+   continue;
+  }
+  if(censored!==undefined&&censored<=t){
+   s.scores.byHorizon[h].censored++;
+   if(h===240)s.scores.censoredPredictions++;
+   continue;
+  }
+  if(t<q.due){keep.push(q);continue;}
   if(t!==q.due)throw Error("S2_PREDICTION_MATURITY_GAP");
-  const ended=s.endedAt[q.episodeId];
-  const wasCensored=s.censoredAt[q.episodeId];
-  if(wasCensored!==undefined&&wasCensored<=t){
-   s.scores.censoredPredictions++;continue;
-  }
-  const label=ended!==undefined&&ended<=t?1:0;
-  if(q.modelP!==null&&q.baselineP!==null){
-   const z=s.scores;
-   z.scored++;z.brier+=Math.pow(q.modelP-label,2);
-   z.brierBaseline+=Math.pow(q.baselineP-label,2);
-   const diff=Math.pow(q.baselineP-label,2)-Math.pow(q.modelP-label,2);
-   const cluster=z.perEpisode[q.episodeId]??{n:0,delta:0};
-   cluster.n++;cluster.delta+=diff;z.perEpisode[q.episodeId]=cluster;
-   z.correct+=Number((q.modelP>=.5)===Boolean(label));
-   z.correctBaseline+=Number((q.baselineP>=.5)===Boolean(label));
-   const year=String(new Date(q.due).getUTCFullYear());
-   if(!z.scoredYear[year])z.scoredYear[year]=
-     {n:0,modelBrier:0,baseBrier:0,modelCorrect:0,baseCorrect:0};
-   const y=z.scoredYear[year];y.n++;y.modelBrier+=Math.pow(q.modelP-label,2);
-   y.baseBrier+=Math.pow(q.baselineP-label,2);
-   y.modelCorrect+=Number((q.modelP>=.5)===Boolean(label));
-   y.baseCorrect+=Number((q.baselineP>=.5)===Boolean(label));
-  }
+  // Observed active episode at the exact maturity => verified survival.
+  scoreOne(s,q,0,t);
  }
- s.pending=survivors;
+ s.pending=keep;
 }
 function transition(s,from,to){
  if(from!==to)s.transitionCounts[from+"->"+to]=(s.transitionCounts[from+"->"+to]||0)+1;
