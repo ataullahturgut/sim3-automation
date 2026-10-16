@@ -64,15 +64,17 @@ function create(options={}){
     drawdownPct:0,maxDrawdownPct:0,trades:0,feeDollars:0,
     realizedCheckpointCount:0},
   risk:{all:[],buckets:{STRESS:[],RALLY:[],QUIET:[]},
-    advisor:Object.fromEntries(["STRESS","RALLY","QUIET"].map(k=>
-      [k,{n:0,mean:0,var:4,lastDelta:0,positive:0,negative:0}])),
-    lastFill:null,learnedReturns:0,
+    advisor:Object.fromEntries(["STRESS","RALLY","QUIET"].flatMap(k=>
+      ["CASH","GOLD"].map(p=>[k+"_"+p,
+       {n:0,mean:0,var:4,lastDelta:0,positive:0,negative:0,
+        n2:0,mean2:0,var2:4,lastDelta2:0,opportunities:0}]))),
+    lastFill:null,twoStepQueue:[],learnedReturns:0,
     tailMisses:0,recoveryCount:0,afterForcedExit:false},
   pendingContext:null,
   audit:{forcedExits:0,blockedEntries:0,riskAbstains:0,
     normalDecisions:0,postCrashGapWarnings:0,regimeReturnLabels:0,
     unobservedGapLabels:0,prospectiveEntryBlocks:0,drawdownRiskAlerts:0,
-    advisorConsidered:0,advisorActivated:0,advisorRejected:0,advisorMatured:0}
+    advisorConsidered:0,advisorActivated:0,advisorRejected:0,advisorMatured:0,advisorMatured2:0}
  };
 }
 function bucket(ob){
@@ -119,16 +121,25 @@ function effectiveN(n,decay){
  return ((1+decay)/(1-decay))*((1-r)/(1+r));
 }
 function advisoryConfidence(s,regime){
- const z=s.risk.advisor[regime],c=s.config,ess=effectiveN(z.n,c.advisorDecay);
+ const z=s.risk.advisor[regime],c=s.config,ess=effectiveN(z.n,c.advisorDecay),
+    ess2=effectiveN(z.n2,c.advisorDecay);
  const correction=z.n?1-Math.pow(c.advisorDecay,z.n):1;
  const unbiased=z.n?z.mean/correction:0;
  const uncertainty=c.advisorConfidence*Math.sqrt(Math.max(.01,z.var))/
    Math.sqrt(Math.max(1,ess));
  const lower=unbiased-uncertainty;
- // Conservative empirical screen, NOT calibrated confidence interval.
- return {observations:z.n,effectiveObservations:ess,
-   advantage:unbiased,lowerConfidence:lower,
-   verified:z.n>=c.riskAdvisorMinLabels&&lower>0,
+ const unbiased2=z.n2?z.mean2/(1-Math.pow(c.advisorDecay,z.n2)):0;
+ const lower2=unbiased2-c.advisorConfidence*
+   Math.sqrt(Math.max(.01,z.var2))/Math.sqrt(Math.max(1,ess2));
+ // Both two-step and one-step fixed-position comparisons must confirm.
+ // These are conservative screens, NOT formal coverage statements.
+ return {observations:z.n,twoStepObservations:z.n2,
+   opportunities:z.opportunities,
+   effectiveObservations:ess,effectiveTwoStep:ess2,
+   advantage:unbiased,advantageTwoStep:unbiased2,
+   lowerConfidence:lower,lowerTwoStep:lower2,
+   verified:z.n>=c.riskAdvisorMinLabels&&
+     z.n2>=c.riskAdvisorMinLabels&&lower>0&&lower2>0,
    positive:z.positive,negative:z.negative};
 }
 function advisorReward(position,action,returnLog,fee){
@@ -137,19 +148,29 @@ function advisorReward(position,action,returnLog,fee){
  return (next==="GOLD"?returnLog:0)+
    (switched?100*Math.log(1-fee):0);
 }
-function updateAdvisor(s,old,nextPrice){
+function updateAdvisor(s,old,nextPrice,horizon=1){
  const a=old.shadow;
  if(!a||!a.eligible)return;
  const logMove=100*(Math.log(nextPrice)-Math.log(old.price));
+ // Counterfactual assumes the first action then holds position
+ // without additional trading for horizon intervals, exactly one
+ // entry/exit fee. Not a dynamic long-horizon policy roll-out.
  const difference=advisorReward(a.position,a.adviceAction,logMove,old.fee)-
    advisorReward(a.position,a.baseAction,logMove,old.fee);
- const z=s.risk.advisor[a.bucket],decay=s.config.advisorDecay,
-   x=max(difference,-35,35),last=z.mean;
- z.n++;z.mean=decay*z.mean+(1-decay)*x;
- z.var=Math.max(.01,decay*z.var+(1-decay)*(x-last)**2);
- z.lastDelta=x;
- if(difference>0)z.positive++;else if(difference<0)z.negative++;
- s.audit.advisorMatured++;
+ const z=s.risk.advisor[a.bucket+"_"+a.position],
+   decay=s.config.advisorDecay,
+   x=max(difference,-35,35),last=horizon===1?z.mean:z.mean2;
+ if(horizon===1){
+   z.n++;z.mean=decay*z.mean+(1-decay)*x;
+   z.var=Math.max(.01,decay*z.var+(1-decay)*(x-last)**2);
+   z.lastDelta=x;
+   if(difference>0)z.positive++;else if(difference<0)z.negative++;
+   s.audit.advisorMatured++;
+ }else{
+   z.n2++;z.mean2=decay*z.mean2+(1-decay)*x;
+   z.var2=Math.max(.01,decay*z.var2+(1-decay)*(x-last)**2);
+   z.lastDelta2=x;s.audit.advisorMatured2++;
+ }
 }
 function quoteState(s){
  return {capital:s.portfolio.nav,peak:s.portfolio.peak,
@@ -208,7 +229,7 @@ function signal(s,ob){
   }
  }
  const rawRiskAdvice=proposed,rawRiskReason=reason;
- const advisor=advisoryConfidence(s,which);
+ const advisor=advisoryConfidence(s,which+"_"+p);
  // Loss already realized is NOT evidence of profitable liquidation.
  const criticalBudget=false;
  const disagreement=rawRiskAdvice!==base.action;
@@ -361,17 +382,23 @@ function restore(payload){
     !finite(p.feeDollars)||p.feeDollars<0||
     !Number.isInteger(p.trades)||p.trades<0||
     !Array.isArray(r.all)||!r.buckets||!r.advisor||
-    !["STRESS","RALLY","QUIET"].every(k=>{
+    !["STRESS","RALLY","QUIET"].flatMap(k=>["CASH","GOLD"].map(p=>k+"_"+p)).every(k=>{
       const z=r.advisor[k];
       return !!z&&Number.isInteger(z.n)&&z.n>=0&&
         finite(z.mean)&&finite(z.var)&&z.var>=.01&&finite(z.lastDelta)&&
-        Number.isInteger(z.positive)&&Number.isInteger(z.negative);
+        Number.isInteger(z.positive)&&Number.isInteger(z.negative)&&
+        Number.isInteger(z.n2)&&z.n2>=0&&
+        Number.isInteger(z.opportunities)&&z.opportunities>=0&&
+        finite(z.mean2)&&finite(z.var2)&&z.var2>=.01&&
+        finite(z.lastDelta2);
     })||
     !["STRESS","RALLY","QUIET"].every(k=>Array.isArray(r.buckets[k]))||
     ![r.all,...Object.values(r.buckets)].every(a=>a.length<=s.config.tailWindow&&
        a.every(v=>finite(v)&&v>=0))||
     !Number.isInteger(r.learnedReturns)||r.learnedReturns<0||
     (r.lastFill!==null&&!validLastFill(r.lastFill))||
+    !Array.isArray(r.twoStepQueue)||r.twoStepQueue.length>1||
+    !r.twoStepQueue.every(validLastFill)||
     !Number.isInteger(r.recoveryCount)||r.recoveryCount<0||
     typeof r.afterForcedExit!=="boolean"||
     (s.pendingContext!==null&&!["CASH","GOLD"].includes(s.pendingContext.position))||
