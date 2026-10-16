@@ -141,3 +141,48 @@ test("S2 integration rejects unregistered sources and preserves no-trade authori
  assert.equal(done.action,null);
  assert.equal(done.tradeAllowed,false);
 });
+
+
+test("Five horizons are issued once per independent 4h anchor and have separate outcome ledgers",()=>{
+ const s=life.create({sourceRegistry:registry("SYNTHETIC_ONLY")});
+ const events=series(s,first,increasing(26));
+ const start=events.find(x=>x.phase==="START");
+ assert.ok(start);
+ assert.deepEqual(life.DEFAULT_HORIZONS,[240,1440,4320,10080,20160]);
+ assert.ok(start.hazardsByHorizon);
+ assert.deepEqual(Object.keys(start.hazardsByHorizon),["240","1440","4320","10080","20160"]);
+ for(const H of life.DEFAULT_HORIZONS){
+   assert.equal(s.scores.byHorizon[H].issued,1);
+   assert.equal(s.scores.byHorizon[H].scored,0);
+ }
+ assert.equal(s.pending.length,5);
+ assert.equal(start.hazard4h.horizonMinutes,240);
+ assert.equal(start.hazardsByHorizon[20160].continuationP,null); // no support, no magic future
+});
+test("A short completed episode proves a long-horizon END early, never fake horizon survival",()=>{
+ const s=life.create({sourceRegistry:registry("SYNTHETIC_ONLY"),minReady:5});
+ // Synthetic PREVIOUSLY ENDED episodes available before this test's first bar.
+ for(let i=0;i<16;i++){
+  s.completed.push({id:500+i,direction:1,durationMinutes:120+i*15,
+    endedAt:first-(i+1)*24*60*MIN,snapshots:[]});
+ }
+ const up=increasing(40),down=Array.from({length:30},(_,i)=>
+   up.at(-1)*Math.pow(.991,i+1));
+ series(s,first,[...up,...down]);
+ assert.ok(s.scores.byHorizon[1440].positive>0);
+ assert.equal(s.scores.byHorizon[1440].negative,0);
+ assert.ok(s.scores.byHorizon[20160].positive>0);
+ const long=life.summary(s).continuationAndEndByHorizon;
+ assert.equal(long[20160].estimable,false); // all positive != predictive skill
+ assert.match(long[20160].scienceWarning,/ONE_SIDED/);
+});
+test("At a missing future span, long-horizon survival must be censored, not 0-labelled",()=>{
+ const s=life.create({sourceRegistry:registry("SYNTHETIC_ONLY")});
+ series(s,first,increasing(32));
+ const due=s.pending.filter(q=>q.horizonMinutes===20160);
+ assert.ok(due.length>0);
+ const old=s.scores.byHorizon[20160].negative;
+ life.observe(s,bar(s.lastAt+24*60*MIN,1980));
+ assert.equal(s.scores.byHorizon[20160].negative,old);
+ assert.ok(s.scores.byHorizon[20160].censored>=due.length);
+});
