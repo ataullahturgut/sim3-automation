@@ -1,0 +1,430 @@
+{
+  "scope": "2023-01_ONLY",
+  "source": "HISTORICAL_HISTDATA_XAU_M15_MID_PROXY_NOT_BANK_BIDASK",
+  "historicalVintage": "HISTORICAL_SOURCE_RETRIEVED_POST_EVENT_NOT_TRUE_PIT",
+  "tradingWindow": "TR_WEEKDAYS_09_17_15MIN",
+  "eventFamiliesUsed": [
+    "G01_RATES_USD"
+  ],
+  "macroProof": "POST_RELEASE_ONLY_SOURCE_LINEAGE_WITH_RECONSTRUCTED_2026_AVAILABILITY",
+  "firstBar": "2023-01-03T03:30:00.000Z",
+  "lastBar": "2023-01-31T21:00:00.000Z",
+  "bars": 1764,
+  "releaseRecords": 4,
+  "barsWithPublishedNewsActive": 159,
+  "acceptedBankChecks": 645,
+  "costPctPerLeg": 0.8,
+  "predictedEventWeightsAreTrainable": true,
+  "maturedEconomicOutcomeLabels": 5158,
+  "changedMathematicalUpdates": 5158,
+  "finalNetUSD": 100,
+  "maxDDPct": 0,
+  "trades": [],
+  "initialUSD": 100,
+  "passiveBuyHoldNetUSD": 103.00770291899286,
+  "cashBaselineUSD": 100,
+  "headStats": [
+    {
+      "horizonMinutes": 240,
+      "n": 1609,
+      "rmsePct": 0.6171171533456238,
+      "maePct": 0.26127159181050835,
+      "weightEventG01": -0.04697031012176807,
+      "learnedWeightsNorm": 0.1582037639769558,
+      "labelsSkipped": 139
+    },
+    {
+      "horizonMinutes": 1440,
+      "n": 1309,
+      "rmsePct": 0.5945040618519373,
+      "maePct": 0.5554122041652044,
+      "weightEventG01": -0.05237919874529911,
+      "learnedWeightsNorm": 0.32985515165285134,
+      "labelsSkipped": 364
+    },
+    {
+      "horizonMinutes": 4320,
+      "n": 903,
+      "rmsePct": 0.5691923651875507,
+      "maePct": 0.7394132061518223,
+      "weightEventG01": -0.0625420005801007,
+      "learnedWeightsNorm": 0.4319244127959988,
+      "labelsSkipped": 708
+    },
+    {
+      "horizonMinutes": 10080,
+      "n": 1337,
+      "rmsePct": 1.3128113639125936,
+      "maePct": 1.155512774493353,
+      "weightEventG01": -0.09070208129206711,
+      "learnedWeightsNorm": 0.8480197890921286,
+      "labelsSkipped": 0
+    }
+  ],
+  "daily": [
+    {
+      "date": "2023-01-03",
+      "bars": 70,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 54,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-04",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 212,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-05",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 391,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-06",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 640,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-07",
+      "bars": 4,
+      "checkpoints": 0,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 652,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-09",
+      "bars": 71,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 801,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-10",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 1034,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-11",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 1304,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-12",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 1645,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-13",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 2006,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-14",
+      "bars": 4,
+      "checkpoints": 0,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 2022,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-16",
+      "bars": 58,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 2203,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-17",
+      "bars": 71,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 2427,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-18",
+      "bars": 89,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 2673,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-19",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 2999,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-20",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 3340,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-21",
+      "bars": 4,
+      "checkpoints": 0,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 3354,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-23",
+      "bars": 66,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 3558,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-24",
+      "bars": 80,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 3765,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-25",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 4022,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-26",
+      "bars": 89,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 4356,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-27",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 4704,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-28",
+      "bars": 4,
+      "checkpoints": 0,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 4720,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-30",
+      "bars": 61,
+      "checkpoints": 25,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 4924,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-01-31",
+      "bars": 91,
+      "checkpoints": 31,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 5155,
+      "nav": 100,
+      "position": "CASH"
+    },
+    {
+      "date": "2023-02-01",
+      "bars": 1,
+      "checkpoints": 0,
+      "buys": 0,
+      "sells": 0,
+      "labelsBefore": 0,
+      "labelsAtEnd": 5158,
+      "nav": 100,
+      "position": "CASH"
+    }
+  ],
+  "significantExpostMovements": [
+    {
+      "start": "2023-01-06T13:00:00.000Z",
+      "end": "2023-01-06T17:00:00.000Z",
+      "returnPct": 1.4632958341713984,
+      "changeMagnitudePct": 1.4632958341713984,
+      "selection": "EXPOST_DESCRIPTION_NOT_CORE_SIGNAL"
+    },
+    {
+      "start": "2023-01-31T12:30:00.000Z",
+      "end": "2023-01-31T16:30:00.000Z",
+      "returnPct": 1.33696576856616,
+      "changeMagnitudePct": 1.33696576856616,
+      "selection": "EXPOST_DESCRIPTION_NOT_CORE_SIGNAL"
+    },
+    {
+      "start": "2023-01-05T12:00:00.000Z",
+      "end": "2023-01-05T16:00:00.000Z",
+      "returnPct": -1.0585768446330044,
+      "changeMagnitudePct": 1.0585768446330044,
+      "selection": "EXPOST_DESCRIPTION_NOT_CORE_SIGNAL"
+    },
+    {
+      "start": "2023-01-04T04:30:00.000Z",
+      "end": "2023-01-04T08:30:00.000Z",
+      "returnPct": 0.9733718625962543,
+      "changeMagnitudePct": 0.9733718625962543,
+      "selection": "EXPOST_DESCRIPTION_NOT_CORE_SIGNAL"
+    },
+    {
+      "start": "2023-01-18T14:15:00.000Z",
+      "end": "2023-01-18T18:15:00.000Z",
+      "returnPct": -0.9725491763516321,
+      "changeMagnitudePct": 0.9725491763516321,
+      "selection": "EXPOST_DESCRIPTION_NOT_CORE_SIGNAL"
+    },
+    {
+      "start": "2023-01-03T07:45:00.000Z",
+      "end": "2023-01-03T11:45:00.000Z",
+      "returnPct": -0.9551023555564071,
+      "changeMagnitudePct": 0.9551023555564071,
+      "selection": "EXPOST_DESCRIPTION_NOT_CORE_SIGNAL"
+    }
+  ],
+  "eventLedger": [
+    {
+      "published": "2023-01-06T13:30:00.000Z",
+      "originalType": "AHE",
+      "modelMechanism": "G01_RATES_USD",
+      "normalizedSurprise": -0.5000000000000001,
+      "lineageVerified": true,
+      "remark": "candidate mechanism, not proof of causing gold response"
+    },
+    {
+      "published": "2023-01-06T13:30:00.000Z",
+      "originalType": "NFP",
+      "modelMechanism": "G01_RATES_USD",
+      "normalizedSurprise": 0.15333333333333332,
+      "lineageVerified": true,
+      "remark": "candidate mechanism, not proof of causing gold response"
+    },
+    {
+      "published": "2023-01-06T13:30:00.000Z",
+      "originalType": "UNEMP",
+      "modelMechanism": "G01_RATES_USD",
+      "normalizedSurprise": -1.0000000000000009,
+      "lineageVerified": true,
+      "remark": "candidate mechanism, not proof of causing gold response"
+    },
+    {
+      "published": "2023-01-12T13:30:00.000Z",
+      "originalType": "CPI",
+      "modelMechanism": "G01_RATES_USD",
+      "normalizedSurprise": -0.5,
+      "lineageVerified": true,
+      "remark": "candidate mechanism, not proof of causing gold response"
+    }
+  ]
+}
