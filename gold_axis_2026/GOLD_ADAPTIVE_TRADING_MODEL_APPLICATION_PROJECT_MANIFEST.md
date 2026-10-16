@@ -203,3 +203,12 @@ Aşağıdaki ihlaller bir sonraki araştırma adımını **DURDURUR**:
 Mevcut OLAY-02/ÖĞREN-03'ten kaynakları **read-only** al; Ocak 2023'ün fiyat ve çapraz-varlık/önceden yayınlı haberlerini as-of denetle; sayısal ekonomik kural keşif (M2) + hareket evresi (M3) + net pozisyon-değeri öğrenimini (M4/M5) **aynı CORE içinde kodla ve test et**. Ay raporları, gerçekten öğrenilmiş kural tabanı ve checkpoint çıkmadan **Şubat'a, başka model ailesi deneyine, yeni araştırma dalına veya uygulama ekrana geçme**. Kullanıcı U iş paketini ayrı olarak istediğinde uygulamayı çalış.
 
 **DEĞİŞMEZ YÖNLENDİRME:** `ECONOMIC_RULE_DISCOVERY → PHASE/TRAJECTORY_LEARNING → NET_PORTFOLIO_POLICY_LEARNING → MONTHLY_CORE_MEMORY`. Modelden kopuk sinyal kapıları/ekranlar bu zincirin yerini tutamaz.
+
+---
+
+## 10. S1 Geliştirme kaydı — 16 Ekim 2026 (durum, amaç değişikliği değil)
+
+- [MODEL inşa aşamaları ve kabul kapıları](adaptive_trading_core/BUILD_STAGES_20261016.md): S0–S6 ve U1; ekonomik kural öğrenimi, epizot yaşam döngüsü, net portföy critic, aylık handoff sırası.
+- [S1 ilk uygulama bilimsel denetimi](adaptive_trading_core/STAGE_S1_FIRST_IMPLEMENTATION_AUDIT_20261016.md): [çekirdek JS](adaptive_trading_core/adaptive_rule_discovery_s1.js), [8 sözleşme testi](adaptive_trading_core/adaptive_rule_discovery_s1.test.js) ve GitHub Actions doğrulaması.
+- **KANIT STATÜSÜ:** `S1=KODLANDI+SENTETİK_TEST_PASS`; `S1_GERÇEK_2023_EKONOMIK_KURAL=NOT_VERIFIED`; `MODEL_GATE=FAIL`; `S2/S3/S4=NOT_STARTED`; `UYGULAMA_ENTEGRASYON=NOT_STARTED`. Bu kayıt Ocak 2023 için başarılı AL/SAT veya gerçek piyasa öğrenmesi iddia etmez.
+- **Tek sıradaki iş:** OLAY-02/ÖĞREN-03 salt-okunur kaynaklarından S1 girdi kanıtı ve ilk-yayın/UTC/normalizasyon denetimi; Ocak 2023 ekonomik örüntüleri üzerinden gerçek kural güncellemelerinin bilimsel denetimi. Yeni branch/model/UI yok.
