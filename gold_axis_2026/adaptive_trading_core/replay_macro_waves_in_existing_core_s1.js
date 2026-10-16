@@ -82,7 +82,7 @@ function observations(rows,ledgerCSV){
  const waves=new Map(),anchors=new Map(),byTime=new Map();
  const counts={inputRows:rows.length,allReleaseWaves:0,
     incompleteReleaseWaves:0,completeReleaseWaves:0,
-    controlAssignments:0,uniqueControls:0,overlapAnchors:0};
+    controlAssignments:0,uniqueControls:0};
  const ctrlUsed=new Set();
  const create=(r,isEvent)=>{
   const t=asof(r.anchor_utc);
@@ -152,11 +152,26 @@ function run(rows,ledgerCSV){
    scoredBoth:0,eventScoredBoth:0,controlScoredBoth:0,
    brierE:0,brierM:0,brierPrior:0,
    correctE:0,correctM:0,correctPrior:0,
-   eventBrierE:0,eventBrierM:0,
+   eventBrierE:0,eventBrierM:0,eventCorrectE:0,eventCorrectM:0,
+   eventCorrectPrior:0,
    readyEventForecasts:0,marketReadyEventForecasts:0,
    noEconomicForecast:0,anchoredEvents:0,anchoredControls:0,
    missedAnchorEvents:0,rejectedNoReady:0};
- const prior={n:0,up:0};
+ const prior={n:0,up:0},eventImprovements=[];
+ // Deterministic release-level bootstrap: exploratory uncertainty only.
+ const confidence=values=>{
+   if(values.length<10)return {n:values.length,ci95:null,mean:null};
+   const average=a=>a.reduce((v,x)=>v+x,0)/a.length;
+   let state=16102026;const rng=()=>{state=(1664525*state+1013904223)>>>0;
+      return state/4294967296;};
+   const sample=[];for(let i=0;i<1000;i++){
+     let total=0;for(let j=0;j<values.length;j++)total+=values[Math.floor(rng()*values.length)];
+     sample.push(total/values.length);
+   }
+   sample.sort((a,b)=>a-b);
+   return {n:values.length,mean:average(values),ci95:[sample[24],sample[974]],
+     method:"INDEPENDENT_RELEASE_CLUSTER_BOOTSTRAP_1000_EXPLORATORY"};
+ };
  let last=-Infinity;
  for(const step of events){
   const t=step.at;
@@ -182,6 +197,10 @@ function run(rows,ledgerCSV){
       s.correctPrior+=Number((w.pr>=.5)===Boolean(y));
       if(w.kind==="EVENT"){
         s.eventBrierE+=(w.pe-y)**2;s.eventBrierM+=(w.pm-y)**2;
+        s.eventCorrectE+=Number((w.pe>=.5)===Boolean(y));
+        s.eventCorrectM+=Number((w.pm>=.5)===Boolean(y));
+        s.eventCorrectPrior+=Number((w.pr>=.5)===Boolean(y));
+        eventImprovements.push((w.pm-y)**2-(w.pe-y)**2);
       }
     }else s.rejectedNoReady++;
   }
@@ -223,13 +242,22 @@ function run(rows,ledgerCSV){
   brierPrior:s.scoredBoth?s.brierPrior/s.scoredBoth:null,
   eventBrierEconomic:s.eventScoredBoth?s.eventBrierE/s.eventScoredBoth:null,
   eventBrierMarket:s.eventScoredBoth?s.eventBrierM/s.eventScoredBoth:null,
+  eventBrierImprovementCI95:confidence(eventImprovements),
   ruleCountEconomic:bothRules.length,ruleCountMarket:marketRules.length,
   economicRuleCount:economicRules.length,
   economicRuleMatureSupport:economicRules.map(x=>({
     dimensions:Object.keys(x.center).filter(k=>k.endsWith("_surprise_z")),
-    uniqueWaveAnchors:x.anchorObservations,independentMatured4h:x.outcomes[240].n
+    uniqueWaveAnchors:x.anchorObservations,independentMatured4h:x.outcomes[240].n,
+    observedUp:x.outcomes[240].up,observedDown:x.outcomes[240].down,
+    expected4hLogPct:x.outcomes[240].meanLogPct,
+    uncertainty4hPct:x.outcomes[240].standardDeviationPct
   })),
   scientificGate:"NOT_PROVEN_ARCHIVE_RESEARCH_ONLY",modelGate:"FAIL",
+  evaluationCaveats:["RECONSTRUCTED_NOT_VERIFIED_PIT",
+    "CONTROL_TIMESTAMPS_CHOSEN_EX_POST_RESEARCH_ONLY",
+    "MATCHED_NEGATIVE_CONTROLS_CAN_BE_REUSED",
+    "RETROSPECTIVE_ARCHIVE_ALREADY_RESEARCHED_NOT_BLIND_OOS",
+    "NO_SIGNIFICANT_ECONOMIC_ALPHA_PROVEN"],
   // Never return serialized proprietary market price observations/checkpoints.
   coreCheckpointSerialization:"PRIVATE_ONLY_RESEARCH_MODE_NOT_FOR_STRICT_OR_PUBLIC_REPO"};
 }
