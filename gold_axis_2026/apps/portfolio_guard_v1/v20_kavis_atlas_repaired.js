@@ -179,6 +179,11 @@ function quoteState(s){
   position:s.portfolio.position,feesPaidDollars:s.portfolio.feeDollars,
   trades:s.portfolio.trades};
 }
+function independentRiskAdvice(position,regime,fallback){
+ if(regime==="STRESS")return position==="GOLD"?"SELL":"WAIT";
+ if(regime==="RALLY")return position==="CASH"?"BUY":"WAIT";
+ return fallback;
+}
 function signal(s,ob){
  if(!s||s.version!==VERSION)throw Error("V19_INCOMPATIBLE_STATE");
  if(!ob||ob.position!==s.portfolio.position)
@@ -228,7 +233,9 @@ function signal(s,ob){
    }else if(riskEdge<=0){proposed="WAIT";reason="AMBIGUOUS_ENTRY";}
   }
  }
- const rawRiskAdvice=proposed,rawRiskReason=reason;
+ const rawRiskAdvice=independentRiskAdvice(p,which,proposed),
+     rawRiskReason=rawRiskAdvice===proposed?reason:"INDEPENDENT_REGIME_SHADOW";
+ proposed=rawRiskAdvice;reason=rawRiskReason;
  const advisor=advisoryConfidence(s,which+"_"+p);
  // Loss already realized is NOT evidence of profitable liquidation.
  const criticalBudget=false;
@@ -296,7 +303,7 @@ function quote(s,o){
  const result=Core.quote(s.core,o);
  if(!result.fill){
    if(result.expired){s.pendingContext=null;s.risk.lastFill=null;
-      s.audit.unobservedGapLabels++;}
+       s.risk.twoStepQueue=[];s.audit.unobservedGapLabels++;}
    return {base:result,fill:null,portfolio:quoteState(s),ordersSent:0};
  }
  const context=s.pendingContext,p=s.portfolio,c=s.config,r=s.risk;
@@ -306,7 +313,15 @@ function quote(s,o){
  // Advisor's unrealized one-step comparison is updated only when the
  // NEXT valid bank price is observed, never from future prices in signal.
  if(r.lastFill&&result.update?.accepted===true)
-   updateAdvisor(s,r.lastFill,entryPrice);
+   {
+    updateAdvisor(s,r.lastFill,entryPrice,1);
+    if(r.twoStepQueue.length)
+      updateAdvisor(s,r.twoStepQueue.shift(),entryPrice,2);
+    r.twoStepQueue.push(r.lastFill);
+  }else if(r.lastFill){
+    r.twoStepQueue=[];
+    s.audit.unobservedGapLabels++;
+  }
  // Learn only as of this completed checkpoint, from the previous
  // accepted checkpoint's frozen conditional regime.
  if(r.lastFill&&result.update?.accepted===true){
@@ -345,6 +360,8 @@ function quote(s,o){
  }
  const breach=c.maxDrawdownPct!==null&&p.drawdownPct>c.maxDrawdownPct;
   if(breach)s.audit.postCrashGapWarnings++;
+ if(context.shadow?.eligible)
+   r.advisor[context.bucket+"_"+context.position].opportunities++;
  r.lastFill={price:entryPrice,at:f.at,bucket:context.bucket,
    fee:s.core.feeKnowledge.lastKnown,shadow:context.shadow};
  s.pendingContext=null;
