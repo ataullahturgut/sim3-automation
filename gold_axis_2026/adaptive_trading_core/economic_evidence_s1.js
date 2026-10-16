@@ -49,7 +49,7 @@ function readArchive(olayText,ogrenText,deepCsv){
   const orgr=Array.from(ogrenText.matchAll(/^### (ORG\d{2}) — /gm),m=>m[1]);
   if(families.length!==7||orgr.length<12)throw Error("DNA_ONTOLOGY_MISMATCH");
   const cases=csv(deepCsv).map(row=>{
-    if(!row.case_id||!row.case_id.startsWith("SWING_"))throw Error("CASE_ID_INVALID");
+    if(!row.case_id||!/^(SWING_V1_|MOVE_V2_)/.test(row.case_id))throw Error("CASE_ID_INVALID");
     if(!/^ORG\d{2}$/.test(row.primary_plot_candidate_id)||
        !orgr.includes(row.primary_plot_candidate_id))
        throw Error("UNREGISTERED_ORG_CANDIDATE");
