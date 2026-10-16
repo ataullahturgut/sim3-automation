@@ -1,0 +1,69 @@
+{
+  "project": "GOLD-ADAPTIVE-MODEL-APP-01",
+  "workstream": "MODEL",
+  "stage": "S1",
+  "mode": "DISCOVERY_FULL_ARCHIVE",
+  "warning": "Retrospective publication-time reconstruction. Reuters may have updated articles. No independent 2023 first-received timestamps. NEVER use as STRICT_WALK_FORWARD or as real trading evidence.",
+  "scales": {
+    "NFP": 100,
+    "AHE": 1,
+    "UNEMP": 1,
+    "CPI": 1
+  },
+  "scalesEvidence": "ENGINEERING_SENSITIVITY_ONLY_NOT_TRAINED_OUT_OF_SAMPLE",
+  "latencyMinutesSensitivity": [
+    60,
+    120,
+    180
+  ],
+  "releases": [
+    {
+      "type": "NFP",
+      "scheduledUtc": "2023-01-06T13:30:00Z",
+      "actual": 223,
+      "officialInitialActual": 223,
+      "consensus": 200,
+      "actualEdition": "OFFICIAL_FIRST_EDITION",
+      "actualSourceUrl": "https://www.bls.gov/news.release/archives/empsit_01062023.htm",
+      "consensusEdition": "DATED_PRE_RELEASE_PUBLICATION",
+      "consensusSourceUrl": "https://www.reuters.com/markets/us/strong-us-jobs-wages-growth-expected-december-2023-01-06/",
+      "consensusPublishedAt": "2023-01-06T05:00:00Z"
+    },
+    {
+      "type": "AHE",
+      "scheduledUtc": "2023-01-06T13:30:00Z",
+      "actual": 0.3,
+      "officialInitialActual": 0.3,
+      "consensus": 0.4,
+      "actualEdition": "OFFICIAL_FIRST_EDITION",
+      "actualSourceUrl": "https://www.bls.gov/news.release/archives/empsit_01062023.htm",
+      "consensusEdition": "DATED_PRE_RELEASE_PUBLICATION",
+      "consensusSourceUrl": "https://www.reuters.com/markets/us/strong-us-jobs-wages-growth-expected-december-2023-01-06/",
+      "consensusPublishedAt": "2023-01-06T05:00:00Z"
+    },
+    {
+      "type": "UNEMP",
+      "scheduledUtc": "2023-01-06T13:30:00Z",
+      "actual": 3.5,
+      "officialInitialActual": 3.5,
+      "consensus": 3.7,
+      "actualEdition": "OFFICIAL_FIRST_EDITION",
+      "actualSourceUrl": "https://www.bls.gov/news.release/archives/empsit_01062023.htm",
+      "consensusEdition": "DATED_PRE_RELEASE_PUBLICATION",
+      "consensusSourceUrl": "https://www.reuters.com/markets/us/strong-us-jobs-wages-growth-expected-december-2023-01-06/",
+      "consensusPublishedAt": "2023-01-06T05:00:00Z"
+    },
+    {
+      "type": "CPI",
+      "scheduledUtc": "2023-01-12T13:30:00Z",
+      "actual": -0.1,
+      "officialInitialActual": -0.1,
+      "consensus": 0,
+      "actualEdition": "OFFICIAL_FIRST_EDITION",
+      "actualSourceUrl": "https://www.bls.gov/news.release/archives/cpi_01122023.htm",
+      "consensusEdition": "DATED_PRE_RELEASE_PUBLICATION",
+      "consensusSourceUrl": "https://www.lse.co.uk/news/us-investors-bet-on-inflation-data-being-benign-q0acm1dj0xyn8f2.html",
+      "consensusPublishedAt": "2023-01-11T21:05:00Z"
+    }
+  ]
+}
