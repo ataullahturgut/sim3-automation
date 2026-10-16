@@ -189,3 +189,35 @@ test("Frozen low-fee market signals remain V18-identical when shield disabled",(
   pos=f.positionAfter;
  }
 });
+
+test("mathematical anti-deadlock: CASH after drawdown can BUY on verified recovery",()=>{
+ const z=S.create({maxDrawdownPct:12});
+ z.core.learned=50;
+ for(const h of [z.core.q.CASH_SWITCH,z.core.qb.CASH_SWITCH])h.w[0]=15;
+ z.portfolio.peak=100;z.portfolio.nav=80;
+ z.portfolio.cash=80;z.portfolio.drawdownPct=20;
+ z.portfolio.maxDrawdownPct=20;
+ z.risk.all=Array(40).fill(2);
+ z.risk.buckets.RALLY=Array(25).fill(.5);
+ const a=sig(z,0,3);
+ A.equal(a.hardLoss,true);
+ A.equal(a.entryGuard,false);
+ A.equal(a.action,"BUY");
+ A.equal(a.baseAction,"BUY");
+});
+test("two completed RALLY checkpoints restore buying after protective GOLD exit",()=>{
+ const z=S.create({maxDrawdownPct:12,recoveryObservations:2});
+ z.core.learned=50;
+ for(const h of [z.core.q.CASH_SWITCH,z.core.qb.CASH_SWITCH])h.w[0]=15;
+ z.risk.afterForcedExit=true;
+ z.risk.recoveryCount=0;
+ let a=sig(z,0,3);
+ A.equal(a.action,"WAIT");A.equal(a.reason,"RECOVERY_OBSERVATIONS");
+ q(z,0,100);
+ A.equal(z.risk.recoveryCount,1);
+ a=sig(z,1,3);
+ A.equal(a.action,"WAIT");q(z,1,101);
+ A.equal(z.risk.recoveryCount,2);
+ a=sig(z,2,3);
+ A.equal(a.action,"BUY");
+});
