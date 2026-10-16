@@ -233,7 +233,7 @@ function signal(s,ob){
    }else if(riskEdge<=0){proposed="WAIT";reason="AMBIGUOUS_ENTRY";}
   }
  }
- const rawRiskAdvice=independentRiskAdvice(p,which,proposed),
+ const rawRiskAdvice=config.useRiskPolicy?independentRiskAdvice(p,which,proposed):base.action,
      rawRiskReason=rawRiskAdvice===proposed?reason:"INDEPENDENT_REGIME_SHADOW";
  proposed=rawRiskAdvice;reason=rawRiskReason;
  const advisor=advisoryConfidence(s,which+"_"+p);
