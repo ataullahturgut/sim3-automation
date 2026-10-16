@@ -316,3 +316,16 @@ OLAY-02/ÖĞREN-03 orijinal kaynakları **read-only** kullanılarak 7 aile, 12 O
 Ana `adaptive_rule_discovery_s1.js` içine tek isteğe bağlı `LOCAL_MATURED_EXAMPLES` yöntemi kondu. Yalnız geçmişte **gerçekten olgunlaşmış** ekonomik/prototip karşıt örneklerini (k=12, 8 gözlem shrinkage önceliği) kullanır. Aynı aile içindeki farklı işaretleri ayırt edebilme **sentetik** testi başarılı (UP olasılıkları 0,80/0,20; eski prototip 0,50/0,50). **Gerçek 2023–2025** iki ayrı pazar bağlamı deneyi ise başarılı değil: yalnız XAU 196 tahminde yeni koşullu ekonomik-on Brier **0,259068** vs mevcut ekonomik-on **0,255918**; XAU+CME 194 tahminde yeni koşullu ekonomik-on **0,266928** vs mevcut **0,256040**. Eşit örnekte ekonomi-off kolu ve ekonomik olaylar için de Brier üstünlüğü gösterilemedi. Bu olumsuz sonuç sonradan hiperparametre optimize etmek için kullanılmadı; `forecastMethod=PROTOTYPE` **varsayılan kaldı**. Mevcut 46/46 S1 teknik test izole JS ortamında PASS; CI başarı bağımsız olarak teyit edilmedi.
 
 **Güvenilir ekonomi alpha/güvenli AL–SAT halen yok.** `LOCAL_CONDITIONAL_CODE_PASS` farklıdır `REAL_S1_SCIENCE_PASS` (FAIL). S2/S3/APP/2023 strict yürüyüşü açılmadı; başka branch/model yok. Sıradaki gerekli iş yalnız yeni küçük ayar denemek değil: gerçek olaylarda önceden gözlenebilen ve ilk erişimi doğrulanan ekonomik rejim verilerini genişletip, önkayıtlı bağımsız sonraki gözlemlerde ekonominin fiyat-only basit baseline'a katkısını göstermek.
+
+
+---
+
+## 18. Onaylı yöntem değişikliği — S1 tamamlanmadan S2 geliştirmesine geçiş (16 Ekim 2026)
+
+**Kullanıcı kararı:** `S1_REAL_ECONOMIC_RULE_READY=NOT_PROVEN` dururken S2 fiyat hareketi yaşam döngüsü üzerinde kod ve araştırma deneylerine geçilebilir. Bu, S1’in başarısızlığını düzeltmez, üstünü örtmez veya `S1_GATE=PASS` demez. **S2_DEV=AUTHORIZED; S2_SCIENTIFIC_GATE=PENDING**. S1 araştırmasıyla tekrar eden küçük parametre testlerinde vakit harcanmayacak.
+
+**Tek algoritma sözleşmesi:** S2, mevcut GOLD-ADAPTIVE-MODEL-APP-01 matematiksel CORE ile birlikte çağrılan **yaşam döngüsü alt mekanizmasıdır**; başka araştırma projesi / ayrı karar veren AL-SAT algoritması değildir. İlk S2 alt yapısında yalnız tamamlanmış ve as-of XAU M15 fiyatı kullanılabilir: `START/CONTINUE/PULLBACK/END/REENTRY` gözlem durumu, bağımsız epizot tanıma, yaş/duration ve bitiş hazard tahmini, geleceği görmeyen 4s etiket olgunlaşması, veri boşluklarında sağ-sansür. Haberin sonradan derlenmiş ekonomik metadata'sı S2’ye canlı özellik olarak taşınmaz.
+
+**Geliştirme ≠ bilimsel kabul:** S2 teknik testleri, geçmiş veride 2023–2025 araştırma koşusu, kalibrasyon ve basit süre/hazard baz çizgisi ayrı raporlanacak. Bir bileşenin üretilmiş olması yatırım getirisi veya OOS avantajı anlamına gelmez; retrospective `DISCOVERY_FULL_ARCHIVE` gerçek ilk-vintage `STRICT_WALK_FORWARD` yerine konmaz. 2023 Ocak tam strateji yürüyüşü/S3 bilimsel kabul/S5 handoff/U1 canlı uygulama bu izinle otomatik açılmaz. Banka makası (%0,8 her yön) değişmez. OLAY-02/ÖĞREN-03 salt-okunur.
+
+**Güncel proje durumu:** S1 bilimsel kabul açık (FAIL); **S2 mühendislik geliştirmesi başladı, bilimsel kabul açık**; S3/S4/S5/S6/U1 henüz kabul edilmedi. Bu bölüm önceki sıra kilidinin sadece **S2_DEV başlangıç koşulunu** açıkça değiştirir; diğer bilim kapılarını kaldırmaz. [Geliştirme aşamaları](adaptive_trading_core/BUILD_STAGES_20261016.md).
