@@ -6,16 +6,21 @@ const step=240*60000;
 const start=Date.parse("2023-01-03T09:00:00Z");
 const iso=t=>new Date(t).toISOString();
 const market=(time,value)=>({value,availableAt:iso(time),observedAt:iso(time),
-  source:"SYNTHETIC_TEST_NOT_MARKET_DATA"});
+  source:"SYNTHETIC_TEST_NOT_MARKET_DATA",kind:"MARKET"});
 function ob(t,price,a,b,extra={}){
  const x={usd_normalized:market(t,a),silver_confirmation:market(t,b)};
  return {asof:iso(t),price,priceAvailableAt:iso(t),
+   priceSource:"SYNTHETIC_TEST_NOT_MARKET_DATA",
    barStartedAt:iso(t-15*60000),barMinutes:15,
    features:x,...extra};
 }
 function initial(options={}){
  return core.create({featureNames:["usd_normalized","silver_confirmation"],
-    horizons:[240,1440],anchorMinutes:240,...options});
+    horizons:[240,1440],anchorMinutes:240,
+    sourceRegistry:{
+      SYNTHETIC_TEST_NOT_MARKET_DATA:{kind:"MARKET",evidenceStatus:"SYNTHETIC_ONLY"},
+      VERIFIED_EVENT_TEST:{kind:"EVENT",evidenceStatus:"VERIFIED_PIT"}
+    },...options});
 }
 test("Cannot create alpha from calendar, event ID or future target",()=>{
  for(const bad of ["year","event_id","month","future_gold","target_up","timestamp"]){
@@ -34,7 +39,7 @@ test("Only completed bars, observed-at and available-at feature vintage allowed"
  })),/FUTURE_OR_REVERSED/);
  assert.equal(s.audit.observations,0);
  assert.throws(()=>core.observe(s,ob(t,1850,-1,1,{
-   features:{usd_normalized:{...market(t,-1),kind:"NEWS",firstprintVerified:false},
+   features:{usd_normalized:{...market(t,-1),kind:"EVENT",source:"VERIFIED_EVENT_TEST",firstprintVerified:false},
      silver_confirmation:market(t,1)}
  })),/UNVERIFIED_EVENT_FIRSTPRINT/);
  assert.equal(s.audit.observations,0);
@@ -64,7 +69,7 @@ test("No future labels: delayed learning updates only after the 4h outcome is ob
  assert.ok(core.rules(s)[0].outcomes[240].meanLogPct>0);
 });
 test("Expired label is skipped rather than assigned price from the wrong day",()=>{
- const s=initial({maxLateMinutes:60});
+ const s=initial({maxLateMinutes:15});
  core.observe(s,ob(start,1850,-1,1));
  core.observe(s,ob(start+step+120*60000,1890,-1,1));
  assert.equal(s.audit.labelsSkipped,1);
@@ -113,4 +118,39 @@ test("S1 is explicitly NOT a trading policy and never outputs BUY or SELL",()=>{
  assert.equal(s.audit.tradeActions,0);
  assert.throws(()=>core.observe(s,ob(start+step,1870,-1,1,{futureReturn:20})),
    /FORBIDDEN_FUTURE_TARGET/);
+});
+
+test("Retrospective forecast cannot borrow coefficients learned later",()=>{
+  const s=initial({horizons:[240]});
+  core.observe(s,ob(start,1850,-1,1));
+  for(let i=1;i<=12;i++)core.observe(s,ob(start+i*step,1850+i*8,-1,1));
+  assert.ok(core.forecast(s,{asof:iso(start+12*step),features:ob(start+12*step,1946,-1,1).features}).byHorizon[0].ready);
+  assert.throws(()=>core.forecast(s,{asof:iso(start),features:ob(start,1850,-1,1).features}),/HISTORICAL_FORECAST/);
+});
+test("75 minute late observation does not silently become a 4 hour outcome label",()=>{
+ const s=initial({horizons:[240]});
+ core.observe(s,ob(start,1850,-1,1));
+ core.observe(s,ob(start+step+75*60000,1890,-1,1));
+ assert.equal(s.audit.labelsSkipped,1);
+ assert.equal(core.rules(s)[0].outcomes[240].n,0);
+});
+test("Unknown or merely named research sources cannot generate rules",()=>{
+ const s=initial();
+ const forged=ob(start,1800,-1,1);
+ forged.features.usd_normalized.source="FAKE_UNVERIFIED_SOURCE";
+ assert.throws(()=>core.observe(s,forged),/UNREGISTERED_FEATURE_SOURCE/);
+ assert.equal(s.rules.length,0);
+ const forgedPrice=ob(start,1800,-1,1);
+ forgedPrice.priceSource="FAKE_UNVERIFIED_SOURCE";
+ assert.throws(()=>core.observe(s,forgedPrice),/UNREGISTERED_PRICE_SOURCE/);
+ assert.equal(s.audit.observations,0);
+});
+test("Rule-cap saturation abstains rather than mislabels unrelated regimes",()=>{
+ const s=initial({horizons:[240],maxRules:2});
+ core.observe(s,ob(start,1800,-3,-3));
+ core.observe(s,ob(start+step,1790,3,3));
+ const third=core.observe(s,ob(start+2*step,1810,3,-3));
+ assert.equal(s.rules.length,2);
+ assert.equal(third.anchored,false);
+ assert.equal(s.audit.rulesSaturated,1);
 });
