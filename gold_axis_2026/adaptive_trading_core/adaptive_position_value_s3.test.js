@@ -179,11 +179,14 @@ test("Economic M2 evidence enters same CORE and S3 only with registered firstpri
  const s=bridge.create({sourceId:src,sourceEvidence:"SYNTHETIC_ONLY",
   learningMode:"STRICT_WALK_FORWARD",economicSources:{
     OFFICIAL_EVENT_TEST:{kind:"EVENT",evidenceStatus:"VERIFIED_PIT"}}});
- const t=start,asof=new Date(t).toISOString();
+ // The fast phase needs actual completed market observations before
+ // S1 can form a fully observed event-conditioned economic prototype.
+ for(let i=0;i<20;i++)bridge.observe(s,m15(i,1800+i));
+ const at=start+20*STEP,asof=new Date(at).toISOString();
  const event=(availableAt,source="OFFICIAL_EVENT_TEST")=>({
    value:.55,kind:"EVENT",source,observedAt:asof,availableAt,
    firstPublishedAt:asof,firstprintVerified:true});
- const accepted=bridge.observe(s,{...m15(0,1800),economicFeatures:{
+ const accepted=bridge.observe(s,{...m15(20,1820),economicFeatures:{
   cpi_surprise_z:event(asof)}});
  assert.equal(accepted.positionResearch.s1ResearchEvidence.provenance,
    "VERIFIED_PIT_BUT_ALPHA_NOT_PROVEN");
@@ -191,11 +194,11 @@ test("Economic M2 evidence enters same CORE and S3 only with registered firstpri
  assert.equal(s.s3.audit.economicRulesCertifiedAtDecision,0);
  assert.ok(s.s1.rules.some(rule=>"cpi_surprise_z" in rule.center));
  assert.equal(accepted.tradeAllowed,false);
- const t1=new Date(start+STEP).toISOString();
- assert.throws(()=>bridge.observe(s,{...m15(1,1800),economicFeatures:{
-  cpi_surprise_z:event(new Date(start+2*STEP).toISOString())}}),
+ const t1=new Date(at+STEP).toISOString();
+ assert.throws(()=>bridge.observe(s,{...m15(21,1821),economicFeatures:{
+  cpi_surprise_z:event(new Date(at+2*STEP).toISOString())}}),
   /FUTURE_OR_REVERSED_FEATURE/);
- assert.throws(()=>bridge.observe(s,{...m15(1,1800),economicFeatures:{
+ assert.throws(()=>bridge.observe(s,{...m15(22,1822),economicFeatures:{
   cpi_surprise_z:event(t1,"UNREGISTERED_EVENT")}}),
   /UNREGISTERED_FEATURE_SOURCE/);
 });
