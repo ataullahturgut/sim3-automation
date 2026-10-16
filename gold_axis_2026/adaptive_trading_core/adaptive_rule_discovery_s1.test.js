@@ -154,3 +154,34 @@ test("Rule-cap saturation abstains rather than mislabels unrelated regimes",()=>
  assert.equal(third.anchored,false);
  assert.equal(s.audit.rulesSaturated,1);
 });
+
+test("A contradicted mature-outcome rule splits into conditional daughters without losing labels",()=>{
+ const s=initial({horizons:[240],noveltyDistance:1.25,maxRules:8});
+ let price=1800,last=null;
+ for(let i=0;i<105;i++){
+   const feature=Math.floor(i/12)%2===0?-.2:.2;
+   if(last!==null)price*=Math.exp((last<0?.8:-.8)/100);
+   core.observe(s,ob(start+i*step,price,feature,.1));
+   last=feature;
+ }
+ assert.equal(s.audit.ruleCreated,1); // both feature states initially one rule
+ assert.equal(s.audit.ruleSplit,1);
+ assert.equal(s.rules.length,2);
+ const rr=core.rules(s), old=s.splitRoutes.R0001;
+ assert.ok(old);
+ assert.equal(rr.reduce((z,x)=>z+x.outcomes[240].n,0),s.audit.labelsMatured);
+ const up=rr.find(x=>x.center.usd_normalized<0),down=rr.find(x=>x.center.usd_normalized>0);
+ assert.ok(up.outcomes[240].meanLogPct>.5);
+ assert.ok(down.outcomes[240].meanLogPct<-.5);
+ assert.deepEqual(core.checkpoint(core.restore(core.checkpoint(s))),core.checkpoint(s));
+});
+test("Noise-free identical outcomes across contradictory features do NOT cause false splits",()=>{
+ const s=initial({horizons:[240],noveltyDistance:1.25,maxRules:8});
+ let price=1800;
+ for(let i=0;i<85;i++){
+   if(i>0)price*=Math.exp(.4/100);
+   core.observe(s,ob(start+i*step,price,i%2===0?-.2:.2,.1));
+ }
+ assert.equal(s.audit.ruleSplit,0);
+ assert.equal(s.rules.length,1);
+});
