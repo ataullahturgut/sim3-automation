@@ -362,3 +362,28 @@ Mevcut `adaptive_phase_lifecycle_s2.js` (tek S1+S2 CORE'a bağlanan aynı bileş
 **Güvenlik ve denetim:** Önceki 46 S1 ve yeni/önceki 12 S2 test = **58/58 izole JS test PASS**. GitHub Actions workflow'da S2 test adımı mevcut; sunucu koşusunun sonucuna dair bağımsız kanıt henüz yok. S1'in başarısız ekonomi alpha durumu, S3 net %0,8/her-yön ücretli AL–TUT–SAT kapısı, S4 katı Ocak 2023, S5/6 ve uygulama otomatik açılmadı. Yalnız aynı matematiksel projede S2 geliştirme çalışması ilerletildi.
 
 **NEXT (tek net teknik eksik):** günlük ve haftalık **gerçek yavaş epizotların** planlı kapanışları bilinerek kronolojik tanımlanması; mikro START/END etiketlerini 2 haftalık bitiş başarısı gibi çoğaltma. `S2 SCIENCE` hâlâ kabul edilmedi.
+
+
+---
+
+## 21. S2 yavaş günlük/haftalık hareketlerin as-of öğrenimi — 16 Ekim 2026
+
+**WORKSTREAM=MODEL | SINGLE_ADAPTIVE_CORE | S2_SLOW_DEV=IMPLEMENTED_AND_REAL_DATA_TESTED | S2_SCIENCE=PENDING | S1_SCIENCE=FAIL | S3_TRADE_NOT_IMPLEMENTED.** [Gerçek günlük/haftalık S2 denetimi](adaptive_trading_core/S2_SLOW_DAILY_WEEKLY_LIFECYCLE_AUDIT_20261016.md).
+
+§20'deki 4s mikro-epizotların 1g–2hafta için tek sınıflı kalması sebebiyle, **aynı S2/CORE sistemine** tamamlanmış günlük işlem-seansı ölçeğinde bir trend ve epizot bileşeni [eklendi](adaptive_trading_core/adaptive_slow_lifecycle_s2.js). S1'e fiziksel olarak [mevcut tek CORE köprüsü](adaptive_trading_core/adaptive_market_core_s1_s2.js) ile as-of bağlandı; S2 ayrı AL-SAT politikası, ayrı proje/branch veya APP değildir. Slow state kapatılmış günün UTC22 araştırma kesiminden **önceki M15 kararına aktarılmıyor**. Normatif resmî altın settlement ve güncel firstprint/vintage sertifikası **yok**, bu yalnız arşiv araştırmasıdır.
+
+**Ne öğrendi:** 10 seanslık geçmiş fiyat/oynaklık tabanlı yönsel mikro-dışı trend başlama, devam, düzeltme, yeniden giriş, bitiş fazları; yalnız kapanmış eski uzun epizotlardan 1/3/5/10 **işlem-seansı** içindeki bitiş riski `P(END)` ve devamı `1-P(END)`. Her ufuk bağımsız gecikmiş outcome; hafta sonu (cuma→pazartesi) planlı kapanış olarak kabul edilir, ancak bilinmeyen hafta içi eksik/tatil seansı, kaynak geçişi veya örnek sonu **sağ-sansür** edilir. Resmî borsa takvimi yokken tatil tam açık veri gibi gösterilmez.
+
+**Gerçek salt-okunur Neon 2023–2025:** [tekrar üretilebilir seans SQL](adaptive_trading_core/S2_SLOW_SESSION_AGGREGATE_2023_2025.sql) kaynaklı **774 aday / 609 kalite kapısını geçen** seans; 2023 **118/257**, 2024 **246/259**, 2025 **245/258**. **165 reddedilen**; Mart–Temmuz 2023 özellikle kısa/kısmi günlük fiyat arşivi nedeniyle reddedildi. Araştırma amaçlı **99** kabul edilmiş seansın en çok 2 kısmi *intraday* barı vardı, **son fiyat barı daima tam** ve diğer kalite/boşluk şartları sağlandı; tam PIT kalitesi iddia edilmedi. **12 tamamlanmış uzun epizot (medyan 9 işlem seansı)**, **10 sansürlü**, **7 tarih aralığı kırığı**, 2025 kaynak değişimi nedeniyle **1 kaynak kırığı**.
+
+**Ufkuna göre gerçek tahmin ve bilim kararı** (tümü 2025'te oluşabilen olgun ve karşılaştırılabilir veri; değerlendirme yılları yeni OOS değildir):
+- **1 işlem seansı:** 24 skor / 1 END + 23 CONTINUE; Brier S2 **0,050526** vs basit geçmiş süre **0,047538** → model daha kötü.
+- **3 işlem seansı:** 21 skor / 3 + 18; S2 **0,139235** vs baseline **0,141383** → çok küçük açıklayıcı fark, kanıt değil.
+- **5 işlem seansı:** 17 skor / 5 + 12; S2 **0,214835** vs baseline **0,214398** → daha kötü.
+- **10 işlem seansı:** 9 skor / 5 + 4; S2 **0,272305** vs baseline **0,248663** → daha kötü.
+
+Tüm ufuklar artık 4s kısa epizottan farklı şekilde hem END hem CONTINUE üretse de, **her ufukta bağımsız iki sınıfı yeterince öğrenme şartı sağlanmadı**, `estimable=false`; epizot kümeleri yalnız 2–5 olduğundan bootstrap CI yok. Dolayısıyla **S2_SCIENTIFIC_GATE=PENDING / ALPHA_NOT_PROVEN**. Başarısızlıkta minReady/keyfî eşik düşürülmedi; 2023–25 hindsight hiperparametre avına dönülmedi.
+
+**Kod/test:** yavaş S2 bileşeni + eski S1/S2 CORE kompozisyonu + [özel veri replay](adaptive_trading_core/replay_slow_lifecycle_s2.js) + 9 yeni güvenlik testi. Eski 58 + yeni 9 = **67/67 izole JS test PASS**. GitHub Actions test adımı eklendi, bağımsız CI başarı statüsü görülmedi. Ham/lisanslı altın fiyat satırı veya özel model checkpointi repoya yüklenmedi. S3 net banka komisyonu %0,8/her yön ve 2023 Ocak strict yürüyüşü henüz başlatılmadı.
+
+**Sonraki doğru adım:** gerekli veri/lisans ve seans kalite boşluğunu gidermek; tarihsel bağımsız uzun epizot ve karşıt örnek sayısını yükseltmek. S2 bilim onayı olmadan bitiş hazard'ı gerçek ticaret sinyali ilan edilemez; S1 ekonomik öğrenmenin başarısızlığı S2 mühendislik izniyle silinmez.
