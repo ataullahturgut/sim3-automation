@@ -131,3 +131,34 @@ test("Save/restore replays all shadow checkpoint and Q decisions deterministical
  A.deepEqual(M.signal(a,obs(a,1,2)),M.signal(b,obs(b,1,2)));
  A.deepEqual(q(a,1,104),q(b,1,104));
 });
+
+test("Soft tail-risk score can veto a marginal BUY in a fresh stressed market",()=>{
+ const x=M.create({riskMode:"soft_penalty",maxDrawdownPct:15});
+ for(const model of [x.inner.core.q,x.inner.core.qb]){
+  model.CASH_KEEP.w.fill(0);model.CASH_SWITCH.w.fill(0);
+  model.CASH_SWITCH.w[0]=2;
+ }
+ x.inner.core.learned=70;
+ x.inner.risk.all=Array(30).fill(10);
+ x.inner.risk.buckets.STRESS=Array(25).fill(10);
+ const a=M.signal(x,obs(x,0,-2));
+ A.equal(a.baseAction,"BUY");
+ A.equal(a.action,"WAIT");
+ A.equal(a.reason,"SOFT_TAIL_RISK_ENTRY");
+ A.ok(a.penalty>0);
+});
+test("Soft tail risk has NO permanent underwater CASH veto when BUY advantage is strong",()=>{
+ const x=M.create({riskMode:"soft_penalty",maxDrawdownPct:15});
+ for(const model of [x.inner.core.q,x.inner.core.qb]){
+  model.CASH_KEEP.w.fill(0);model.CASH_SWITCH.w.fill(0);
+  model.CASH_SWITCH.w[0]=40;
+ }
+ x.inner.core.learned=70;
+ x.inner.risk.all=Array(30).fill(10);
+ x.inner.risk.buckets.STRESS=Array(25).fill(10);
+ x.inner.portfolio.cash=51;x.inner.portfolio.nav=51;
+ x.inner.portfolio.peak=100;x.inner.portfolio.drawdownPct=49;
+ x.inner.portfolio.maxDrawdownPct=49;
+ const a=M.signal(x,obs(x,0,-2));
+ A.equal(a.action,"BUY","Strong expected benefit can overcome soft bounded penalty");
+});
