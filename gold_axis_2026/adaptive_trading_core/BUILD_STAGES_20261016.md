@@ -53,3 +53,7 @@
 
 ## 16 Ekim 2026 — Kullanıcı isteğiyle 2023 tam yıl SHADOW diagnostik (bilim kapısı değil)
 Mevcut S1+S2+S3 aynı CORE, 23.544 2023 BID/ASK MID M15 fiyat gözleminde Ocak→Aralık tek replay: `LEGACY_M15` ve `MULTI_SESSION_RESEARCH` her biri **0 banka araştırma işlemi, net 100 USD CASH**. TR 09–17 fiyatında 03 Ocak'ta alıp 29 Aralık sonunda satılan pasif altın iki %0,8 bacak sonrasında **110,10 USD**; model **10,10 USD** geride. 2023'ün bu bütüncül fiyat diagnostik koşusu resmi `S5` aylık kabul zincirini açmaz, PIT banka performans kanıtı değildir. Ayrıntı: `S3_FULL_YEAR_2023_RECONSTRUCTED_SHADOW_DIAGNOSTIC_20261016.md`.
+
+## 16 Ekim 2026 — Eski modellerden tek CORE'a kanıt temelli aktarım
+
+SENTEZ'in 14/56 gün + hafıza bulgusunu, V10'un gecikmeli fill düzeltmesini ve V20 R3'ün null bilim kapısı uyarısını esas alan M3/M4/M5 kodu ve aynı veriyle üçlü shadow karşılaştırma eklendi. 2023: **LEGACY 100$; 5SESSION 100$; INTEGRATED_LONG 100$; pasif GOLD 111,104608$**. 56g geç olgunlaşan n=11, effectiveN=6; 0 BUY. Ekonomik firstprint M2 hâlâ yok, gerçek kâr kanıtı yok, S4/APP kapalı. [Açık iş matrisi](M2_M5_LEGACY_CONSOLIDATION_DELIVERY_MATRIX_20261016.md).

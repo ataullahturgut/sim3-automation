@@ -450,3 +450,15 @@ M2–M5 arızaları: (a) gerçek 2023 ekonomik firstprint feature'ları S3 karar
 ## 28. Zorunlu saat filtresi kaldırıldıktan sonra 2023 bağımsız araştırma teyidi (16 Ekim 2026)
 
 GitHub `55f20d641cc33a43151a6cdfdcebf221833f85cf` sonrası aynı S1/S2/S3 mevcut CORE, 2023 **23.544 M15** fiyatında kullanıcı isteğine uygun **saat filtresiz** 12 aylık tek shadow replay olarak çalıştırıldı: `LEGACY_M15` **0 AL/0 SAT/100,00 USD CASH**; `MULTI_SESSION_RESEARCH` **0 AL/0 SAT/100,00 USD CASH**; tüm gözlenen veri ilk/son MID üzerinde %0,8+%0,8 masraflı pasif GOLD **111,104608 USD**. S3 multi-session: 18.216 karar kıyası, 5.571 yetersiz destek, 12.645 ikna etmeyen 5-seanslık etiket, 0 AL. Bunlar 15 Ekim'in eski SENTEZ/REHBER çalışma varsayımlarıyla doğrudan başarı yarışı değil ve gerçek banka kotasyonu değildir. Önceki §26'nın 09–17 bazlı **110,10 USD** benchmarkı güncel kıyas olarak geçerli sayılmaz. Kaynak/açıklama: [2023 yıllık denetimin saat bağımsız ek bölümü](adaptive_trading_core/S3_FULL_YEAR_2023_RECONSTRUCTED_SHADOW_DIAGNOSTIC_20261016.md#16-ekim-2026-kullanıcı-düzeltmesi-sonrasında-saat-kısıtsız-yeniden-üretim). `M2/M3/M4/M5` mimari eksikleri aynı, `MODEL_GATE=FAIL`, APP/TRADE=UNAUTHORIZED.
+
+
+---
+
+## 29. Eski V7–V20 deneylerinden tek CORE öğrenme iyileştirmesi (16 Ekim 2026)
+
+**WORKSTREAM=MODEL | STAGE=M2–M5 | ENGINEERING=PARTIAL_PASS | SCIENTIFIC_MODEL_GATE=FAIL | APP=UNCHANGED.**
+[Ayrıntılı önceki-algoritma envanteri, uygulama ve 2023 negatif karşılaştırması](adaptive_trading_core/M2_M5_LEGACY_CONSOLIDATION_DELIVERY_MATRIX_20261016.md).
+
+Mevcut S3 modeline yeni bir uygulama veya dal açmadan `adaptive_long_cycle_s3.js` eklendi: SENTEZ deneylerinden 14/56 takvim günlü olgunlaşmış getiri, recurrent trend/stres belleği; geçmiş sonucuyla AdaGrad güncellenen kapılı uzman; olgunlaşan tahmin-hata uzman ağırlıkları; CASH iken kaçırılan/kaçınılan değerlerin M5 kaydı; yalnız sonraki tamamlanmış M15'te gölge icra; **zorunlu işlem saati YOK**. Bu gerçek LSTM/ANN veya başarıyla öğrenilmiş ekonomik M2 ilişkisi değildir. `LEGACY_M15` ve `MULTI_SESSION_RESEARCH` karşı modelleri saklandı; `INTEGRATED_LONG_RESEARCH` üçüncü shadow moddur. `replay_s3_monthly_challengers.js` aynı kaynak, iki yön %0,8 maliyet, input SHA ve aylık kıyası sistematik üretir. S3 checkpoint sürümü R2; eski checkpoint R2 diye açılamaz.
+
+**2023 gerçek yeniden araştırma:** aynı 23.544 M15 quote-only arşivde bütün üç mod da **100 USD, 0 BUY/0 SELL**; pasif altın **111,104608 USD**. Yeni öğrenme 25 olgun 14g ve 11 olgun 56g etiket; 56g etkin destek 6; sonuç negatif/kararsız. Ocak/2023 sonucuna bakarak işlem açtıran keyfî eşik eklenmedi. İlk-published makro veri modeline gerçek 2023 girişi 0; M2 bilimsel performans, M3 kalan hareket, M4 öğrenilmiş değişken süreli HOLD, M5 immutable aylık devir, S4 başarılı geçiş hâlâ **EKSİK/FAIL**. Başarı denetimi ve açık iş sırası bağlantılı raporda tutulur.
