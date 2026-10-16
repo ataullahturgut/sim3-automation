@@ -108,6 +108,12 @@ function featureVector(s,features,asof){
   return out;
 }
 function squaredDistance(a,b){
+  // A missing economic release is NOT an economically neutral zero and is
+  // NOT interchangeable with an observed surprise. Without this firewall,
+  // later no-event anchors contaminate event prototypes/outcome histories.
+  const eventNames=new Set([...Object.keys(a),...Object.keys(b)]
+    .filter(k=>k.endsWith("_surprise_z")));
+  for(const k of eventNames)if((k in a)!==(k in b))return Infinity;
   let sum=0,common=0,only=0;
   for(const k of Object.keys(a)){
     if(k in b){sum+=(a[k]-b[k])**2;common++;}else only++;
