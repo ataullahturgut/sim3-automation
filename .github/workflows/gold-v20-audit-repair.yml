@@ -2,6 +2,8 @@ name: Gold V20 Audit Repair R1
 on:
   push:
     branches: ['research-gold-v20-audit-repair-*']
+  pull_request:
+    branches: ['research-gold-v20-atlas-regret-gated-20261016']
   workflow_dispatch:
 permissions:
   contents: read
