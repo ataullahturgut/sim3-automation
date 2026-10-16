@@ -12,7 +12,7 @@
  */
 const memory=require("./adaptive_position_memory_s3");
 const longCycle=require("./adaptive_long_cycle_s3");
-const VERSION="KAVIS_S3_POSITION_VALUE_CRITIC_20261016";
+const VERSION="KAVIS_S3_POSITION_VALUE_CRITIC_R2_20261016";
 const FEE_PER_LEG=0.008, STEP=15*60*1000;
 const HOLDINGS=["CASH","GOLD"],ACTIONS=["KEEP","SWITCH"];
 const clone=x=>JSON.parse(JSON.stringify(x));
@@ -216,6 +216,8 @@ function observe(s,o){
      proposed="ABSTAIN";
      reason=!contiguous?"LONG_BAR_GAP":!s.paper.valid?
       "LONG_UNCOMPARABLE_SOURCE":"LONG_FAST_PHASE_NOT_READY";
+   }else if(!s.longCycle.last||t-s.longCycle.last.t>5*86400000){
+     proposed="ABSTAIN";reason="LONG_MEMORY_STALE";
    }else{
      proposed=longResearch.action;
      reason=longResearch.reason;

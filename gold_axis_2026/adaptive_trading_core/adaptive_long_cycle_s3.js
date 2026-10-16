@@ -51,16 +51,16 @@ function predict(s,state){
    drawdown:s.gated.drawdown,byHorizon,
    provenance:"MATURED_PRIOR_SESSIONS_NOT_CAUSAL_MACRO",scienceGate:"NOT_PROVEN"};
 }
-function record(s,state,h,net,startIndex,date){
+function record(s,state,h,net,originTs,date){
  const k=key(state,h),c=s.cohorts[k]??(s.cohorts[k]={
   n:0,mean:0,m2:0,independentN:0,independentMean:0,
-  independentM2:0,lastIndependentOrigin:-1,positive:0,lastMaturedAt:null});
+  independentM2:0,lastIndependentOriginMs:null,positive:0,lastMaturedAt:null});
  c.n++;const delta=net-c.mean;c.mean+=delta/c.n;c.m2+=delta*(net-c.mean);
- if(c.lastIndependentOrigin<0||startIndex-c.lastIndependentOrigin>=h){
+ if(c.lastIndependentOriginMs===null||originTs-c.lastIndependentOriginMs>=h*DAY){
   c.independentN++;const d=net-c.independentMean;
   c.independentMean+=d/c.independentN;
   c.independentM2+=d*(net-c.independentMean);
-  c.lastIndependentOrigin=startIndex;
+  c.lastIndependentOriginMs=originTs;
  }
  if(net>0)c.positive++;c.lastMaturedAt=date;
 }
@@ -91,8 +91,8 @@ function observe(s,{session,sourceId,price,phase,direction=0,availableAt,
   // is accepted (weekend and 1-day holiday). Otherwise censor.
   if(t-stamp(p.due)>4*DAY){s.audit.censored++;continue;}
   const net=100*(Math.log(price/p.price)+2*Math.log(1-FEE));
-  record(s,"ALL",p.h,net,p.originIndex,session);
-  record(s,p.state,p.h,net,p.originIndex,session);
+  record(s,"ALL",p.h,net,p.originTs,session);
+  record(s,p.state,p.h,net,p.originTs,session);
   if(p.forecast){
    feedback(s,"global",p.h,p.forecast.global.mean,net);
    feedback(s,"state",p.h,p.forecast.conditional.mean,net);
@@ -122,7 +122,7 @@ function observe(s,{session,sourceId,price,phase,direction=0,availableAt,
   const prev=s.originDates[h],minGap=(h===14?14:28)*DAY;
   if(prev!==null&&t-prev<minGap)continue;
   const f=snapshot.byHorizon.find(v=>v.horizonDays===h);
-  s.pending.push({state,h,price,sourceId,originIndex:s.audit.sessions,
+  s.pending.push({state,h,price,sourceId,originTs:t,
     due:plus(t,h),forecast:f,shadowHolding,shadowProposal});
   s.originDates[h]=t;
   if(h===14)s.audit.origin14++;else s.audit.origin56++;

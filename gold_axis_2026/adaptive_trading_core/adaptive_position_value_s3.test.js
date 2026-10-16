@@ -277,8 +277,8 @@ test("Integrated long action is queued and fills next completed observation even
   positionResearchMode:"INTEGRATED_LONG_RESEARCH",shadowEnabled:true,minUpdates:16});
  // Provide an as-of pretrained synthetic long-memory snapshot using only
  // completed sessions before the first test bar, not an arbitrary BUY rule.
- const dates=[];for(let i=0;i<210;i++){
-  const d=new Date(Date.parse("2022-01-03T00:00:00Z")+i*86400000);
+ const dates=[];for(let i=0;i<214;i++){
+  const d=new Date(Date.parse("2022-06-20T00:00:00Z")+i*86400000);
   if(d.getUTCDay()>0&&d.getUTCDay()<6)dates.push(d.toISOString().slice(0,10));
  }
  for(const [i,day] of dates.entries())long.observe(s.longCycle,{
@@ -292,12 +292,11 @@ test("Integrated long action is queued and fills next completed observation even
  const second=critic.observe(s,p(1));
  assert.equal(second.action,null);
  assert.equal(second.tradeAllowed,false);
- if(second.proposedResearchAction==="BUY"){
-  assert.equal(s.paper.holding,"CASH");
-  const third=critic.observe(s,p(2));
-  assert.equal(s.paper.holding,"GOLD");
-  assert.equal(s.audit.executedNextBar,1);
-  assert.equal(third.at,"2023-01-19T20:30:00.000Z");
- }
+ assert.equal(second.proposedResearchAction,"BUY");
+ assert.equal(s.paper.holding,"CASH");
+ const third=critic.observe(s,p(2));
+ assert.equal(s.paper.holding,"GOLD");
+ assert.equal(s.audit.executedNextBar,1);
+ assert.equal(third.at,"2023-01-19T20:30:00.000Z");
  assert.equal(critic.summary(s).liveTradeAuthorized,false);
 });
