@@ -21,6 +21,7 @@ jobs:
         run: |
           node --check v20_atlas_r2_shadow.js
           node --check v20_atlas_r2_shadow.test.js
+          node --check v20_r2_48_postfreeze_fictional.js
           node --check v20_r2_128_dev_worlds.js
       - name: New R2 contract adversarial tests
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
@@ -33,6 +34,11 @@ jobs:
         run: |
           node v20_r2_128_dev_worlds.js > v20_r2_128_dev_results.json
           node -e "const x=require('./v20_r2_128_dev_results.json'); console.log(JSON.stringify({status:x.contract,results:x.summary,limit15:x.user15Subset,risks:x.lowQuality},null,2))"
+      - name: 48 post-freeze new fictional stress worlds without retuning
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v20_r2_48_postfreeze_fictional.js > v20_r2_48_postfreeze_results.json
+          node -e "const x=require('./v20_r2_48_postfreeze_results.json');console.log(JSON.stringify({contract:x.contract,summary:x.summary,byKind:x.byKind},null,2))"
       - name: Confirm simulation-only research
         run: |
           if grep -E 'loadFullRows|v13_sentez_run|2026_FEB_SEP|function placeOrder' gold_axis_2026/apps/portfolio_guard_v1/v20_atlas_r2_shadow.js; then
@@ -44,5 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v20-R2-exposed-128-worlds
-          path: gold_axis_2026/apps/portfolio_guard_v1/v20_r2_128_dev_results.json
+          path: |
+            gold_axis_2026/apps/portfolio_guard_v1/v20_r2_128_dev_results.json
+            gold_axis_2026/apps/portfolio_guard_v1/v20_r2_48_postfreeze_results.json
           if-no-files-found: ignore
