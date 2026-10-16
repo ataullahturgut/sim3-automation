@@ -1,0 +1,4 @@
+{"published":"2023-01-06T13:30:00.000Z","originalType":"AHE","modelMechanism":"G01_RATES_USD","normalizedSurprise":-0.5000000000000001,"lineageVerified":true,"remark":"candidate mechanism, not proof of causing gold response"}
+{"published":"2023-01-06T13:30:00.000Z","originalType":"NFP","modelMechanism":"G01_RATES_USD","normalizedSurprise":0.15333333333333332,"lineageVerified":true,"remark":"candidate mechanism, not proof of causing gold response"}
+{"published":"2023-01-06T13:30:00.000Z","originalType":"UNEMP","modelMechanism":"G01_RATES_USD","normalizedSurprise":-1.0000000000000009,"lineageVerified":true,"remark":"candidate mechanism, not proof of causing gold response"}
+{"published":"2023-01-12T13:30:00.000Z","originalType":"CPI","modelMechanism":"G01_RATES_USD","normalizedSurprise":-0.5,"lineageVerified":true,"remark":"candidate mechanism, not proof of causing gold response"}
