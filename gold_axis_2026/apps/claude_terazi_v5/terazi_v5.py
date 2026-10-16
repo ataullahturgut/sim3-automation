@@ -49,3 +49,32 @@ class Terazi5(T4.Terazi):
         RuleV5.REF = self.p0
         with _v5_rules():
             return super().restructure(Zm, ym, now)
+
+
+def rebuild_rules(net, Zm, ym, days):
+    """Ek-1: her kuralın s, n, h, k istatistiklerini güncel etiketlerle baştan, sırayla yeniden kur.
+    RuleV5.observe ile birebir aynı güncelleme; post_birth = gün > kuralın doğduğu gün."""
+    import numpy as np
+    RuleV5.REF = net.p0
+    RHO, PW, PP = T2.RHO, T2.PRIOR_W, T2.PRIOR_P
+    ref = net.p0
+    N = len(ym)
+    for R in net.rules:
+        w = np.ones(N)
+        for (j, d, c) in R.gates:
+            w *= T2.gate_value(Zm, j, d, c)
+        s = n = h = k = 0.0
+        born = R.born
+        for t in range(N):
+            wt = w[t]
+            if wt < 1e-6:
+                continue
+            y = ym[t]
+            mu_b = (s + PW * PP) / (n + PW)
+            s = RHO * s + wt * y
+            n = RHO * n + wt
+            if days[t] > born:
+                agree = 1.0 if (mu_b >= ref) == (y >= 0.5) else 0.0
+                h = RHO * h + wt * agree
+                k = RHO * k + wt
+        R.s, R.n, R.h, R.k = s, n, h, k
