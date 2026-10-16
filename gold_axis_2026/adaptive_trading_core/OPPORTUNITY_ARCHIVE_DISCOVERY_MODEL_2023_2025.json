@@ -1,0 +1,183 @@
+{
+  "scope": "DISCOVERY_FULL_ARCHIVE_IN_SAMPLE",
+  "schema": "KAVIS_S3_OPPORTUNITY_MEMORY_V1_20261016",
+  "lastTrainedYear": 2023,
+  "years": [
+    {
+      "year": 2023,
+      "bars": 23544,
+      "acceptedSessions": 248,
+      "rejectedSessions": 8,
+      "upCandidates": 305,
+      "downCandidates": 278,
+      "learning": {
+        "bars": 23544,
+        "candidates": 776,
+        "accepted": 583,
+        "matured": 1478,
+        "censored": 189,
+        "brokenSessions": 2,
+        "sameSessionSkipped": 1677,
+        "missingEconomicContext": 583
+      },
+      "cohortCount": 9,
+      "examples": [
+        {
+          "at": "2023-01-06T03:15:00.000Z",
+          "price": 1840.54,
+          "phase": "START",
+          "direction": 1,
+          "prequential": "NO_SUPPORTED_ENTRY_ADVANTAGE"
+        },
+        {
+          "at": "2023-01-06T17:00:00.000Z",
+          "price": 1863.485,
+          "phase": "START",
+          "direction": 1,
+          "prequential": "NO_SUPPORTED_ENTRY_ADVANTAGE"
+        },
+        {
+          "at": "2023-01-06T21:45:00.000Z",
+          "price": 1866.575,
+          "phase": "REENTRY",
+          "direction": 1,
+          "prequential": "NO_SUPPORTED_ENTRY_ADVANTAGE"
+        },
+        {
+          "at": "2023-01-09T03:15:00.000Z",
+          "price": 1877.51,
+          "phase": "START",
+          "direction": 1,
+          "prequential": "NO_SUPPORTED_ENTRY_ADVANTAGE"
+        },
+        {
+          "at": "2023-01-09T11:15:00.000Z",
+          "price": 1872.4,
+          "phase": "START",
+          "direction": -1,
+          "prequential": "NO_SUPPORTED_ENTRY_ADVANTAGE"
+        }
+      ],
+      "completePhaseEpisodes": 463,
+      "source": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+      "rawPricesIncluded": false
+    }
+  ],
+  "knowledge": {
+    "version": "KAVIS_S3_OPPORTUNITY_MEMORY_V1_20261016",
+    "cohorts": {
+      "GLOBAL#5": {
+        "n": 536,
+        "mean": -1.3992678404524066,
+        "m2": 2145.797273229328,
+        "independentN": 48,
+        "independentMean": -1.297287470383443,
+        "independentM2": 183.66488891054377,
+        "lastIndependentIndex": 241,
+        "up": 122,
+        "down": 414,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "FAST:TREND:UP#5": {
+        "n": 274,
+        "mean": -1.2873767168310006,
+        "m2": 1044.1181971035053,
+        "independentN": 45,
+        "independentMean": -1.2327981544669706,
+        "independentM2": 204.94319106271027,
+        "lastIndependentIndex": 242,
+        "up": 61,
+        "down": 213,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "FAST:TREND:DOWN#5": {
+        "n": 262,
+        "mean": -1.5162837483618157,
+        "m2": 1094.661205926009,
+        "independentN": 45,
+        "independentMean": -1.2557027597742494,
+        "independentM2": 189.47122151195168,
+        "lastIndependentIndex": 242,
+        "up": 61,
+        "down": 201,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "GLOBAL#10": {
+        "n": 507,
+        "mean": -1.364807172294946,
+        "m2": 4490.239656632304,
+        "independentN": 23,
+        "independentMean": -1.232754961465326,
+        "independentM2": 212.04589849580836,
+        "lastIndependentIndex": 236,
+        "up": 155,
+        "down": 352,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "FAST:TREND:UP#10": {
+        "n": 263,
+        "mean": -1.2262355476602393,
+        "m2": 2453.063375498086,
+        "independentN": 23,
+        "independentMean": -1.1495513060485836,
+        "independentM2": 244.97296805131052,
+        "lastIndependentIndex": 236,
+        "up": 86,
+        "down": 177,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "FAST:TREND:DOWN#10": {
+        "n": 244,
+        "mean": -1.5141692103233386,
+        "m2": 2026.6827296181696,
+        "independentN": 23,
+        "independentMean": -1.05365089740416,
+        "independentM2": 252.94973599881888,
+        "lastIndependentIndex": 237,
+        "up": 69,
+        "down": 175,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "GLOBAL#20": {
+        "n": 435,
+        "mean": -1.4441287786027421,
+        "m2": 6259.839551504014,
+        "independentN": 11,
+        "independentMean": -0.718108062443152,
+        "independentM2": 246.46004469870184,
+        "lastIndependentIndex": 226,
+        "up": 119,
+        "down": 316,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "FAST:TREND:UP#20": {
+        "n": 225,
+        "mean": -1.5530177679009198,
+        "m2": 3145.8725658597623,
+        "independentN": 11,
+        "independentMean": -0.7143610635299221,
+        "independentM2": 240.99845904447764,
+        "lastIndependentIndex": 226,
+        "up": 58,
+        "down": 167,
+        "lastMaturedAt": "2023-12-28"
+      },
+      "FAST:TREND:DOWN#20": {
+        "n": 210,
+        "mean": -1.3274620043546934,
+        "m2": 3108.4408643415923,
+        "independentN": 11,
+        "independentMean": -0.619978893183376,
+        "independentM2": 218.45857421004843,
+        "lastIndependentIndex": 227,
+        "up": 61,
+        "down": 149,
+        "lastMaturedAt": "2023-12-28"
+      }
+    },
+    "declaredHindsight": "DISCOVERY_FULL_ARCHIVE_IN_SAMPLE_ONLY",
+    "trainedAt": "2023-12-28"
+  },
+  "source": "Neon Gold Control reconstructed BIDASK MID",
+  "liveTradeAuthorized": false
+}
