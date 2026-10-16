@@ -1,0 +1,41 @@
+=== TERAZİ v3.3 (kontrol) — geliştirme kaydı, kanıt değil ===
+net NAV 213.49  işlem 5  maks düşüş %11.27  al-tut 230.82
+  S1: GEÇMEDİ
+  S2: GEÇMEDİ
+  S3: GEÇTİ
+  S4: GEÇTİ
+
+işlemler:
+   2023-01-03 AL 1836.33
+   2023-02-27 SAT 1810.02
+   2023-03-06 AL 1853.65
+   2023-10-02 SAT 1839.47
+   2023-10-12 AL 1880.56
+
+satış → geri alım:
+   2023-02-27 1810.02 → 2023-03-06 1853.65  %-3.91
+   2023-10-02 1839.47 → 2023-10-12 1880.56  %-3.74
+
+Şubat 2023:
+   2023-01-30 altın 1931.47 pos 1 P 0.549 Q 0.081 Pe 0.4934 Ue 0.289 Pe+0.5Ue 0.638 makro True
+   2023-01-31 altın 1917.42 pos 1 P 0.544 Q 0.105 Pe 0.4198 Ue 0.2775 Pe+0.5Ue 0.559 makro True
+   2023-02-01 altın 1926.11 pos 1 P 0.556 Q 0.076 Pe 0.5213 Ue 0.2823 Pe+0.5Ue 0.662 makro True
+   2023-02-02 altın 1952.66 pos 1 P 0.559 Q 0.073 Pe 0.532 Ue 0.2799 Pe+0.5Ue 0.672 makro True
+   2023-02-03 altın 1915.03 pos 1 P 0.555 Q None Pe 0.5547 Ue 0.0779 Pe+0.5Ue 0.594 makro False
+   2023-02-06 altın 1878.11 pos 1 P 0.531 Q None Pe 0.5307 Ue 0.0952 Pe+0.5Ue 0.578 makro True
+   2023-02-07 altın 1875.06 pos 1 P 0.532 Q 0.072 Pe 0.5089 Ue 0.2638 Pe+0.5Ue 0.641 makro True
+   2023-02-08 altın 1877.02 pos 1 P 0.529 Q 0.07 Pe 0.5133 Ue 0.2615 Pe+0.5Ue 0.644 makro True
+   2023-02-09 altın 1879.17 pos 1 P 0.526 Q 0.07 Pe 0.5101 Ue 0.2614 Pe+0.5Ue 0.641 makro True
+   2023-02-10 altın 1860.14 pos 1 P 0.511 Q 0.083 Pe 0.4517 Ue 0.2689 Pe+0.5Ue 0.586 makro True
+   2023-02-13 altın 1859.76 pos 1 P 0.506 Q 0.069 Pe 0.4967 Ue 0.2588 Pe+0.5Ue 0.626 makro True
+   2023-02-14 altın 1859.45 pos 1 P 0.51 Q 0.07 Pe 0.4967 Ue 0.2623 Pe+0.5Ue 0.628 makro True
+   2023-02-15 altın 1846.45 pos 1 P 0.499 Q 0.079 Pe 0.4535 Ue 0.2741 Pe+0.5Ue 0.591 makro True
+   2023-02-16 altın 1837.13 pos 1 P 0.474 Q 0.074 Pe 0.4452 Ue 0.2705 Pe+0.5Ue 0.58 makro True
+   2023-02-17 altın 1827.6 pos 1 P 0.443 Q 0.071 Pe 0.4244 Ue 0.2622 Pe+0.5Ue 0.556 makro True
+   2023-02-20 altın 1844.53 pos 1 P 0.478 Q 0.065 Pe 0.4827 Ue 0.255 Pe+0.5Ue 0.61 makro True
+   2023-02-21 altın 1839.85 pos 1 P 0.466 Q 0.07 Pe 0.4493 Ue 0.2662 Pe+0.5Ue 0.582 makro True
+   2023-02-22 altın 1837.07 pos 1 P 0.468 Q 0.07 Pe 0.4542 Ue 0.2666 Pe+0.5Ue 0.588 makro True
+   2023-02-23 altın 1828.93 pos 1 P 0.427 Q 0.071 Pe 0.4092 Ue 0.2603 Pe+0.5Ue 0.539 makro True
+   2023-02-24 altın 1824.69 pos 1 P 0.442 Q 0.069 Pe 0.4296 Ue 0.2627 Pe+0.5Ue 0.561 makro True
+   2023-02-27 altın 1808.83 pos 0 P 0.393 Q 0.084 Pe 0.3352 Ue 0.2534 Pe+0.5Ue 0.462 makro True
+   2023-02-28 altın 1813.49 pos 0 P 0.414 Q 0.07 Pe 0.3993 Ue 0.2613 Pe+0.5Ue 0.53 makro True
