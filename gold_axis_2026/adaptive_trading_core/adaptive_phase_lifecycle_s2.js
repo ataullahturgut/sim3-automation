@@ -115,6 +115,8 @@ function hazard(s,age,dir,phase,horizonMinutes){
   baselineP:risk.length>=enough?calc(risk):null,
   riskN:eligible.length,phaseRiskN:phasePool.length,globalRiskN:risk.length,
   censoredKnownSurvivors:risk.filter(e=>!e.ended).length,
+  continuationP:eligible.length>=enough?1-calc(eligible):null,
+  baselineContinuationP:risk.length>=enough?1-calc(risk):null,
   method:phasePool.length>=enough?"PHASE_AND_DIRECTION":"DIRECTION_ONLY_FALLBACK"};
 }
 function scoreOne(s,q,label,t){
