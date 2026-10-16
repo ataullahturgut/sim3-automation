@@ -26,6 +26,9 @@ DEATH_MIN_FIELD = 15.0                   # doğum sonrası kanıt eşiği
 DEATH_MIN_N = 5.0
 MAX_RULES = 60
 TRUST_SHRINK = 10.0
+TAU = 1.0                                # kanıt bulanıklığı (kanıt birimi)
+ADMIT_MARGIN = 1.5                       # kabul tabanı: z > pen - 1.5*TAU
+C0_LO, C0_HI = -0.4, 0.9                 # doğum güveni kırpma
 W_MIN = 0.5
 LAM = 0.5
 FEE = S.FEE
@@ -38,10 +41,12 @@ def gate_value(Z, j, d, c):
 
 
 class Rule:
-    __slots__ = ("gates", "mu", "v", "n", "h", "k", "born", "births_seen")
+    __slots__ = ("gates", "mu", "v", "n", "h", "k", "born", "births_seen", "c0", "z_birth")
 
-    def __init__(self, gates, born):
+    def __init__(self, gates, born, c0=0.0, z_birth=0.0):
         self.gates = tuple(sorted(gates))
+        self.c0 = c0                       # doğum güveni (dereceli kanıt), öncül
+        self.z_birth = z_birth             # doğumdaki kanıt oranı
         self.mu, self.v, self.n = MU0, V0, 0.0
         self.h, self.k = 0.0, 0.0            # sahada sınanmış: isabet / toplam (doğum sonrası)
         self.born = born                      # doğduğu gün indeksi
@@ -61,7 +66,8 @@ class Rule:
 
     @property
     def trust(self):
-        return (self.h - (self.k - self.h)) / (self.k + TRUST_SHRINK)
+        # doğum güveni öncül; saha kanıtı (k) büyüdükçe sahada ölçülen isabet baskın gelir
+        return (2 * self.h - self.k + TRUST_SHRINK * self.c0) / (self.k + TRUST_SHRINK)
 
     @property
     def weight(self):
@@ -93,7 +99,8 @@ class Rule:
     def to_dict(self):
         return dict(gates=[list(g) for g in self.gates], label=self.label(), mu=round(self.mu, 4),
                     v=round(self.v, 4), n=round(self.n, 2), trust=round(self.trust, 4),
-                    field_k=round(self.k, 2), born_index=self.born)
+                    field_k=round(self.k, 2), born_index=self.born,
+                    birth_credibility=round(self.c0, 3), birth_evidence_z=round(self.z_birth, 3))
 
 
 class Terazi:
@@ -172,7 +179,9 @@ class Terazi:
                         gs = tuple(sorted(R.gates + ((j, d_, c),)))
                         if gs not in have:
                             cands.append(gs)
-        M = max(2, len(cands))
+        # etkin bağımsız deneme: eşik ızgarası tek aile sayılır (komşu eşikler korelasyonlu)
+        fam = {tuple(sorted((j, d_) for (j, d_, c) in gs)) for gs in cands}
+        M = max(2, len(fam))
         pen = math.sqrt(2 * math.log(M))
         scored = []
         for gs in cands:
@@ -184,16 +193,19 @@ class Terazi:
                 continue
             m = float((w @ res) / n_eff)
             m_shrunk = m * n_eff / (n_eff + MIN_SUPPORT)      # küçültme
-            if abs(m_shrunk) > pen * sd / math.sqrt(n_eff):    # çoklu deneme cezası
-                scored.append((abs(m_shrunk), gs, m, n_eff))
-        scored.sort(reverse=True)
+            z = abs(m_shrunk) * math.sqrt(n_eff) / sd          # kanıt oranı
+            if z > pen - ADMIT_MARGIN * TAU:                   # dereceli kabul tabanı
+                c0 = max(C0_LO, min(C0_HI, math.tanh((z - pen) / TAU)))
+                scored.append((z, gs, m, n_eff, c0))
+        scored.sort(key=lambda x: -x[0])
         born = []
-        for _, gs, m, n_eff in scored[:BIRTH_PER_MONTH]:
-            R = Rule(gs, born=now)
-            for q, z in enumerate(Zm):             # doğum anındaki bölge özetini kur (oy hakkı vermez)
-                R.observe(R.fire(z), rm[q], post_birth=False)
+        for z, gs, m, n_eff, c0 in scored[:BIRTH_PER_MONTH]:
+            R = Rule(gs, born=now, c0=c0, z_birth=z)
+            for q, zrow in enumerate(Zm):          # doğum anındaki bölge özetini kur (oy hakkı vermez)
+                R.observe(R.fire(zrow), rm[q], post_birth=False)
             self.rules.append(R); self.audit["born"] += 1
-            born.append(dict(label=R.label(), mu=round(R.mu, 3), support=round(n_eff, 1), residual_mean=round(m, 3)))
+            born.append(dict(label=R.label(), mu=round(R.mu, 3), support=round(n_eff, 1), residual_mean=round(m, 3),
+                             evidence_z=round(z, 2), birth_credibility=round(c0, 3), bar=round(pen, 2)))
         # ölüm
         died = []
         keep = []

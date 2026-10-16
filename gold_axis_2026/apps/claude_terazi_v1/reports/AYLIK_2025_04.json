@@ -2,35 +2,44 @@
  "month": "2025-04",
  "days": 21,
  "gold_change_pct": 6.19,
- "nav_start": 100.0,
- "nav_end": 100.0,
- "month_ret_pct": 0.0,
- "position_end": "NAKİT",
+ "nav_start": 111.5689,
+ "nav_end": 117.3671,
+ "month_ret_pct": 5.2,
+ "position_end": "ALTIN",
  "trades": [],
- "mean_E": null,
- "mean_U": null,
- "days_without_opinion": 21,
- "wrong_days_vs_ideal": 10,
+ "mean_E": 1.054,
+ "mean_U": 0.276,
+ "days_without_opinion": 0,
+ "wrong_days_vs_ideal": 11,
  "trading_days_in_month": 21,
- "rule_base_size": 24,
+ "rule_base_size": 60,
  "rules_born": [
   {
-   "label": "Nasdaq 20g > +0.0σ",
-   "mu": 0.715,
-   "support": 625.8,
-   "residual_mean": -0.492
+   "label": "Nasdaq 20g > -1.5σ",
+   "mu": 0.983,
+   "support": 1220.9,
+   "residual_mean": -0.836,
+   "evidence_z": 9.77,
+   "birth_credibility": 0.9,
+   "bar": 3.54
   },
   {
-   "label": "Nasdaq 20g > -0.5σ",
-   "mu": 0.782,
-   "support": 903.7,
-   "residual_mean": -0.47
+   "label": "COT managed money net < +1.5σ VE sonraki FOMC'ye gün > -1.5σ VE altın/gümüş oranı 20g değişim < +1.5σ",
+   "mu": 1.207,
+   "support": 807.1,
+   "residual_mean": -1.019,
+   "evidence_z": 9.6,
+   "birth_credibility": 0.9,
+   "bar": 3.54
   },
   {
-   "label": "Nasdaq 20g > -1.0σ",
-   "mu": 0.876,
-   "support": 1104.2,
-   "residual_mean": -0.444
+   "label": "sonraki FOMC'ye gün > -1.5σ VE Nasdaq 20g > -1.5σ VE petrol 5g > -1.5σ",
+   "mu": 1.074,
+   "support": 840.4,
+   "residual_mean": -0.998,
+   "evidence_z": 9.6,
+   "birth_credibility": 0.9,
+   "bar": 3.54
   }
  ],
  "rules_died": [],
@@ -39,96 +48,126 @@
    "gates": [
     [
      14,
+     -1,
+     1.0
+    ],
+    [
+     21,
      1,
-     1.0
+     -1.5
     ]
    ],
-   "label": "COT managed money net > +1.0σ",
-   "mu": 1.5951,
-   "v": 5.359,
-   "n": 125.07,
-   "trust": 0.6216,
-   "field_k": 19.6,
-   "born_index": 1332
+   "label": "COT managed money net < +1.0σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": 1.4187,
+   "v": 4.809,
+   "n": 41.18,
+   "trust": 0.9267,
+   "field_k": 3.65,
+   "born_index": 1353,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 7.02
   },
   {
    "gates": [
     [
      14,
-     -1,
-     0.0
-    ]
-   ],
-   "label": "COT managed money net < +0.0σ",
-   "mu": 1.0411,
-   "v": 2.3706,
-   "n": 34.04,
-   "trust": 0.2505,
-   "field_k": 11.6,
-   "born_index": 1031
-  },
-  {
-   "gates": [
-    [
-     8,
      -1,
      1.0
     ],
     [
-     14,
-     -1,
-     0.0
-    ]
-   ],
-   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < +0.0σ",
-   "mu": 1.035,
-   "v": 2.6504,
-   "n": 24.44,
-   "trust": 0.2402,
-   "field_k": 8.44,
-   "born_index": 1053
-  },
-  {
-   "gates": [
-    [
-     8,
-     -1,
-     0.5
+     21,
+     1,
+     -1.5
     ],
     [
-     14,
-     -1,
-     0.0
+     24,
+     1,
+     -1.5
     ]
    ],
-   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
-   "mu": 0.9809,
-   "v": 2.7572,
-   "n": 19.8,
-   "trust": 0.2056,
-   "field_k": 6.91,
-   "born_index": 1053
+   "label": "COT managed money net < +1.0σ VE sonraki FOMC'ye gün > -1.5σ VE Nasdaq 20g > -1.5σ",
+   "mu": 0.8601,
+   "v": 2.3856,
+   "n": 31.01,
+   "trust": 0.9102,
+   "field_k": 1.13,
+   "born_index": 1353,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 7.029
   },
   {
    "gates": [
     [
-     8,
+     14,
      -1,
      1.5
     ],
     [
-     14,
-     -1,
-     -0.5
+     21,
+     1,
+     -1.5
+    ],
+    [
+     24,
+     1,
+     -1.0
     ]
    ],
-   "label": "10Y reel faiz 20g değişim < +1.5σ VE COT managed money net < -0.5σ",
-   "mu": 1.0426,
-   "v": 1.9871,
-   "n": 17.96,
-   "trust": 0.1729,
-   "field_k": 4.61,
-   "born_index": 1053
+   "label": "COT managed money net < +1.5σ VE sonraki FOMC'ye gün > -1.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.8462,
+   "v": 2.4792,
+   "n": 38.03,
+   "trust": 0.9082,
+   "field_k": 0.9,
+   "born_index": 1353,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 7.001
+  },
+  {
+   "gates": [
+    [
+     14,
+     -1,
+     1.5
+    ],
+    [
+     19,
+     -1,
+     1.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "COT managed money net < +1.5σ VE son NFP'den beri gün < +1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": 1.5531,
+   "v": 5.3884,
+   "n": 53.49,
+   "trust": 0.9037,
+   "field_k": 10.65,
+   "born_index": 1332,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 6.799
+  },
+  {
+   "gates": [
+    [
+     24,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "Nasdaq 20g > -1.5σ",
+   "mu": 0.9832,
+   "v": 3.2636,
+   "n": 150.53,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1374,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 9.765
   }
  ]
 }

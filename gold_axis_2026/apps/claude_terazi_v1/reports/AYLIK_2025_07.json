@@ -2,145 +2,187 @@
  "month": "2025-07",
  "days": 23,
  "gold_change_pct": 0.32,
- "nav_start": 100.1097,
- "nav_end": 100.7413,
+ "nav_start": 117.534,
+ "nav_end": 118.2755,
  "month_ret_pct": 0.63,
  "position_end": "ALTIN",
  "trades": [],
- "mean_E": 1.009,
- "mean_U": 0.406,
+ "mean_E": 1.07,
+ "mean_U": 0.326,
  "days_without_opinion": 0,
  "wrong_days_vs_ideal": 11,
  "trading_days_in_month": 23,
- "rule_base_size": 32,
+ "rule_base_size": 60,
  "rules_born": [
   {
-   "label": "2Y faiz 20g değişim < +0.5σ VE COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ",
-   "mu": 2.597,
-   "support": 68.3,
-   "residual_mean": 1.994
+   "label": "COT managed money net < +1.5σ VE son makro yayına altın tepkisi > -1.5σ VE Nasdaq 20g > -1.5σ",
+   "mu": 0.566,
+   "support": 1029.1,
+   "residual_mean": -0.63,
+   "evidence_z": 6.84,
+   "birth_credibility": 0.9,
+   "bar": 3.6
   },
   {
-   "label": "COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ VE gümüş 20g < +1.0σ",
-   "mu": 2.564,
-   "support": 70.3,
-   "residual_mean": 1.97
+   "label": "altın 20g getiri > -1.5σ VE son NFP sürprizi < +1.5σ VE Nasdaq 20g > -1.5σ",
+   "mu": 0.627,
+   "support": 1058.0,
+   "residual_mean": -0.621,
+   "evidence_z": 6.84,
+   "birth_credibility": 0.9,
+   "bar": 3.6
   },
   {
-   "label": "2Y faiz 5g değişim < +0.5σ VE COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ",
-   "mu": 2.659,
-   "support": 66.7,
-   "residual_mean": 1.983
+   "label": "COT managed money net < +1.5σ VE son NFP sürprizi < +1.0σ VE Nasdaq 20g > -1.5σ",
+   "mu": 0.527,
+   "support": 945.0,
+   "residual_mean": -0.657,
+   "evidence_z": 6.82,
+   "birth_credibility": 0.9,
+   "bar": 3.6
   }
  ],
- "rules_died": [
-  {
-   "label": "200g ortalamaya uzaklık < +0.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "trust": 0.052,
-   "field_k": 1.9,
-   "lifetime_days": 473
-  }
- ],
+ "rules_died": [],
  "strongest_rules": [
   {
    "gates": [
     [
      14,
-     1,
-     1.0
-    ]
-   ],
-   "label": "COT managed money net > +1.0σ",
-   "mu": 1.2707,
-   "v": 4.028,
-   "n": 111.08,
-   "trust": 0.2136,
-   "field_k": 35.31,
-   "born_index": 1332
-  },
-  {
-   "gates": [
-    [
-     14,
-     -1,
-     0.0
-    ]
-   ],
-   "label": "COT managed money net < +0.0σ",
-   "mu": 0.8668,
-   "v": 2.1841,
-   "n": 35.73,
-   "trust": 0.1708,
-   "field_k": 19.61,
-   "born_index": 1031
-  },
-  {
-   "gates": [
-    [
-     8,
-     -1,
-     1.0
-    ],
-    [
-     14,
-     -1,
-     0.0
-    ]
-   ],
-   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < +0.0σ",
-   "mu": 0.866,
-   "v": 2.3165,
-   "n": 27.11,
-   "trust": 0.1692,
-   "field_k": 15.62,
-   "born_index": 1053
-  },
-  {
-   "gates": [
-    [
-     8,
-     -1,
-     0.5
-    ],
-    [
-     14,
-     -1,
-     0.0
-    ]
-   ],
-   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
-   "mu": 0.8483,
-   "v": 2.3327,
-   "n": 22.11,
-   "trust": 0.1567,
-   "field_k": 12.85,
-   "born_index": 1053
-  },
-  {
-   "gates": [
-    [
-     3,
      -1,
      1.5
     ],
     [
-     8,
+     22,
+     1,
+     -1.5
+    ],
+    [
+     24,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "COT managed money net < +1.5σ VE son makro yayına altın tepkisi > -1.5σ VE Nasdaq 20g > -1.5σ",
+   "mu": 0.5655,
+   "v": 2.3835,
+   "n": 89.93,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1440,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 6.842
+  },
+  {
+   "gates": [
+    [
+     2,
+     1,
+     -1.5
+    ],
+    [
+     18,
      -1,
+     1.5
+    ],
+    [
+     24,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "altın 20g getiri > -1.5σ VE son NFP sürprizi < +1.5σ VE Nasdaq 20g > -1.5σ",
+   "mu": 0.6273,
+   "v": 2.6041,
+   "n": 134.29,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1440,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 6.836
+  },
+  {
+   "gates": [
+    [
+     14,
+     -1,
+     1.5
+    ],
+    [
+     18,
+     -1,
+     1.0
+    ],
+    [
+     24,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "COT managed money net < +1.5σ VE son NFP sürprizi < +1.0σ VE Nasdaq 20g > -1.5σ",
+   "mu": 0.5266,
+   "v": 2.3059,
+   "n": 82.35,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1440,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 6.816
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
      0.5
     ],
     [
      14,
      -1,
-     0.0
+     1.0
+    ],
+    [
+     21,
+     1,
+     -1.5
     ]
    ],
-   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
-   "mu": 0.9441,
-   "v": 1.9462,
-   "n": 16.58,
-   "trust": 0.1401,
-   "field_k": 7.37,
-   "born_index": 1074
+   "label": "10Y reel faiz 20g değişim > +0.5σ VE COT managed money net < +1.0σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": 0.9182,
+   "v": 2.7686,
+   "n": 16.33,
+   "trust": 0.6263,
+   "field_k": 8.19,
+   "born_index": 1269,
+   "birth_credibility": 0.87,
+   "birth_evidence_z": 4.873
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
+     1.0
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ],
+    [
+     22,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +1.0σ VE sonraki FOMC'ye gün > -1.5σ VE son makro yayına altın tepkisi > -1.5σ",
+   "mu": 0.9877,
+   "v": 2.8055,
+   "n": 18.26,
+   "trust": 0.609,
+   "field_k": 8.12,
+   "born_index": 1290,
+   "birth_credibility": 0.714,
+   "birth_evidence_z": 4.436
   }
  ]
 }

@@ -7,109 +7,162 @@
  "month_ret_pct": 0.0,
  "position_end": "NAKİT",
  "trades": [],
- "mean_E": null,
- "mean_U": null,
- "days_without_opinion": 19,
+ "mean_E": 0.622,
+ "mean_U": 0.326,
+ "days_without_opinion": 0,
  "wrong_days_vs_ideal": 8,
  "trading_days_in_month": 19,
- "rule_base_size": 6,
- "rules_born": [],
+ "rule_base_size": 26,
+ "rules_born": [
+  {
+   "label": "60g zirveye uzaklık < +1.0σ VE 10Y reel faiz 20g değişim > +0.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.469,
+   "support": 290.1,
+   "residual_mean": -0.584,
+   "evidence_z": 3.19,
+   "birth_credibility": -0.344,
+   "bar": 3.54
+  },
+  {
+   "label": "60g zirveye uzaklık < +0.5σ VE 10Y reel faiz 20g değişim > +0.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.494,
+   "support": 258.2,
+   "residual_mean": -0.62,
+   "evidence_z": 3.16,
+   "birth_credibility": -0.363,
+   "bar": 3.54
+  },
+  {
+   "label": "60g zirveye uzaklık < +1.5σ VE 10Y reel faiz 20g değişim > +0.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.44,
+   "support": 310.6,
+   "residual_mean": -0.558,
+   "evidence_z": 3.16,
+   "birth_credibility": -0.363,
+   "bar": 3.54
+  }
+ ],
  "rules_died": [],
  "strongest_rules": [
   {
    "gates": [
     [
      8,
+     1,
+     0.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +0.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.4001,
+   "v": 2.9795,
+   "n": 62.71,
+   "trust": 0.8666,
+   "field_k": 0.52,
+   "born_index": 795,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.228
+  },
+  {
+   "gates": [
+    [
+     2,
+     1,
+     -1.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "altın 20g getiri > -1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.1083,
+   "v": 3.0717,
+   "n": 104.81,
+   "trust": 0.5989,
+   "field_k": 5.0,
+   "born_index": 795,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.276
+  },
+  {
+   "gates": [
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "sonraki FOMC'ye gün > -1.5σ",
+   "mu": 0.0031,
+   "v": 3.136,
+   "n": 123.4,
+   "trust": 0.4581,
+   "field_k": 5.2,
+   "born_index": 795,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.273
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.5
+    ],
+    [
+     8,
      -1,
      1.0
     ],
     [
-     14,
-     -1,
-     -0.5
-    ]
-   ],
-   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < -0.5σ",
-   "mu": 0.9987,
-   "v": 4.0734,
-   "n": 77.13,
-   "trust": 0.3103,
-   "field_k": 8.78,
-   "born_index": 815
-  },
-  {
-   "gates": [
-    [
-     8,
-     -1,
-     0.5
-    ],
-    [
-     14,
-     -1,
-     -0.5
-    ]
-   ],
-   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.9865,
-   "v": 3.9237,
-   "n": 64.09,
-   "trust": 0.2788,
-   "field_k": 7.82,
-   "born_index": 815
-  },
-  {
-   "gates": [
-    [
-     6,
-     -1,
-     1.0
-    ],
-    [
-     8,
-     -1,
-     0.5
-    ]
-   ],
-   "label": "200g ortalamaya uzaklık < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ",
-   "mu": 0.926,
-   "v": 3.7971,
-   "n": 68.05,
-   "trust": 0.1969,
-   "field_k": 3.76,
-   "born_index": 815
-  },
-  {
-   "gates": [
-    [
-     8,
+     15,
      -1,
      1.5
     ]
    ],
-   "label": "10Y reel faiz 20g değişim < +1.5σ",
-   "mu": 0.6661,
-   "v": 4.7806,
-   "n": 152.2,
-   "trust": 0.0915,
-   "field_k": 41.49,
-   "born_index": 795
+   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +1.0σ VE COT MM 4 hafta değişim < +1.5σ",
+   "mu": 1.0904,
+   "v": 4.5663,
+   "n": 77.32,
+   "trust": 0.3971,
+   "field_k": 36.56,
+   "born_index": 710,
+   "birth_credibility": 0.175,
+   "birth_evidence_z": 3.438
   },
   {
    "gates": [
     [
+     3,
+     -1,
+     1.5
+    ],
+    [
      8,
      -1,
-     1.0
+     1.5
+    ],
+    [
+     15,
+     -1,
+     1.5
     ]
    ],
-   "label": "10Y reel faiz 20g değişim < +1.0σ",
-   "mu": 0.6424,
-   "v": 4.6759,
-   "n": 133.63,
-   "trust": 0.0562,
-   "field_k": 37.6,
-   "born_index": 795
+   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +1.5σ VE COT MM 4 hafta değişim < +1.5σ",
+   "mu": 1.0442,
+   "v": 4.7445,
+   "n": 91.48,
+   "trust": 0.3756,
+   "field_k": 37.79,
+   "born_index": 731,
+   "birth_credibility": 0.034,
+   "birth_evidence_z": 3.168
   }
  ]
 }

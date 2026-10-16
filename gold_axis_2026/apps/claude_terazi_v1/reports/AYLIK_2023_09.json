@@ -7,165 +7,193 @@
  "month_ret_pct": 0.0,
  "position_end": "NAKİT",
  "trades": [],
- "mean_E": null,
- "mean_U": null,
- "days_without_opinion": 21,
+ "mean_E": 0.307,
+ "mean_U": 0.31,
+ "days_without_opinion": 0,
  "wrong_days_vs_ideal": 0,
  "trading_days_in_month": 21,
- "rule_base_size": 10,
+ "rule_base_size": 17,
  "rules_born": [
   {
-   "label": "200g ortalamaya uzaklık < +0.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.816,
-   "support": 222.0,
-   "residual_mean": 0.8
+   "label": "COT managed money net < +0.0σ",
+   "mu": 0.359,
+   "support": 700.6,
+   "residual_mean": 0.393,
+   "evidence_z": 3.54,
+   "birth_credibility": 0.192,
+   "bar": 3.35
   },
   {
-   "label": "10Y reel faiz 5g değişim < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.699,
-   "support": 254.8,
-   "residual_mean": 0.784
+   "label": "10Y reel faiz 20g değişim < +1.5σ",
+   "mu": 0.157,
+   "support": 777.3,
+   "residual_mean": 0.36,
+   "evidence_z": 3.43,
+   "birth_credibility": 0.082,
+   "bar": 3.35
   },
   {
-   "label": "200g ortalamaya uzaklık < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.773,
-   "support": 257.4,
-   "residual_mean": 0.783
+   "label": "COT managed money net < -0.5σ",
+   "mu": 0.397,
+   "support": 569.3,
+   "residual_mean": 0.423,
+   "evidence_z": 3.41,
+   "birth_credibility": 0.069,
+   "bar": 3.35
   }
  ],
  "rules_died": [
   {
-   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < -0.5σ",
-   "trust": -0.009,
-   "field_k": 19.5,
-   "lifetime_days": 152
+   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < +0.0σ VE COT MM 4 hafta değişim < +1.5σ",
+   "trust": -0.059,
+   "field_k": 16.6,
+   "lifetime_days": 65
+  },
+  {
+   "label": "altın 60g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +1.0σ VE COT MM 4 hafta değişim < +1.5σ",
+   "trust": -0.016,
+   "field_k": 71.6,
+   "lifetime_days": 323
+  },
+  {
+   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +1.0σ VE COT MM 4 hafta değişim < +1.5σ",
+   "trust": -0.028,
+   "field_k": 73.1,
+   "lifetime_days": 257
+  },
+  {
+   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT MM 4 hafta değişim < +1.5σ",
+   "trust": -0.045,
+   "field_k": 56.2,
+   "lifetime_days": 257
+  },
+  {
+   "label": "altın 60g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +1.5σ VE COT MM 4 hafta değişim < +1.5σ",
+   "trust": -0.271,
+   "field_k": 22.7,
+   "lifetime_days": 44
   }
  ],
  "strongest_rules": [
   {
    "gates": [
     [
-     8,
-     -1,
-     0.5
+     2,
+     1,
+     -1.5
     ],
     [
-     14,
-     -1,
-     -0.5
+     21,
+     1,
+     -1.5
     ]
    ],
-   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.673,
-   "v": 2.4704,
-   "n": 47.24,
-   "trust": -0.0194,
-   "field_k": 14.82,
-   "born_index": 815
+   "label": "altın 20g getiri > -1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.3371,
+   "v": 2.0594,
+   "n": 82.87,
+   "trust": 0.5171,
+   "field_k": 25.36,
+   "born_index": 795,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.276
   },
   {
    "gates": [
     [
-     3,
+     8,
+     1,
+     0.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +0.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.3671,
+   "v": 2.038,
+   "n": 46.85,
+   "trust": 0.4703,
+   "field_k": 11.02,
+   "born_index": 795,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.228
+  },
+  {
+   "gates": [
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "sonraki FOMC'ye gün > -1.5σ",
+   "mu": -0.2068,
+   "v": 2.1138,
+   "n": 96.36,
+   "trust": 0.4137,
+   "field_k": 28.26,
+   "born_index": 795,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.273
+  },
+  {
+   "gates": [
+    [
+     8,
      -1,
      1.5
     ],
     [
-     8,
+     14,
      -1,
      0.5
     ],
     [
-     14,
+     15,
      -1,
-     -0.5
+     1.5
     ]
    ],
-   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.7328,
-   "v": 2.4391,
-   "n": 41.41,
-   "trust": -0.1621,
-   "field_k": 7.86,
-   "born_index": 902
+   "label": "10Y reel faiz 20g değişim < +1.5σ VE COT managed money net < +0.5σ VE COT MM 4 hafta değişim < +1.5σ",
+   "mu": 0.4203,
+   "v": 2.7828,
+   "n": 96.08,
+   "trust": 0.3211,
+   "field_k": 8.51,
+   "born_index": 946,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 6.148
   },
   {
    "gates": [
     [
-     3,
+     8,
+     -1,
+     1.5
+    ],
+    [
+     14,
      -1,
      1.0
     ],
     [
-     8,
+     15,
      -1,
-     0.5
-    ],
-    [
-     14,
-     -1,
-     -0.5
+     1.5
     ]
    ],
-   "label": "altın 60g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.7202,
-   "v": 2.4509,
-   "n": 37.4,
-   "trust": -0.1571,
-   "field_k": 7.61,
-   "born_index": 902
-  },
-  {
-   "gates": [
-    [
-     3,
-     -1,
-     0.5
-    ],
-    [
-     8,
-     -1,
-     0.5
-    ],
-    [
-     14,
-     -1,
-     -0.5
-    ]
-   ],
-   "label": "altın 60g getiri < +0.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.7017,
-   "v": 2.4819,
-   "n": 32.05,
-   "trust": -0.1449,
-   "field_k": 7.01,
-   "born_index": 902
-  },
-  {
-   "gates": [
-    [
-     2,
-     -1,
-     1.0
-    ],
-    [
-     8,
-     -1,
-     0.5
-    ],
-    [
-     14,
-     -1,
-     -0.5
-    ]
-   ],
-   "label": "altın 20g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
-   "mu": 0.776,
-   "v": 2.713,
-   "n": 33.59,
-   "trust": -0.1319,
-   "field_k": 3.21,
-   "born_index": 946
+   "label": "10Y reel faiz 20g değişim < +1.5σ VE COT managed money net < +1.0σ VE COT MM 4 hafta değişim < +1.5σ",
+   "mu": 0.3184,
+   "v": 2.8182,
+   "n": 111.89,
+   "trust": 0.3036,
+   "field_k": 8.91,
+   "born_index": 946,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 6.109
   }
  ]
 }
