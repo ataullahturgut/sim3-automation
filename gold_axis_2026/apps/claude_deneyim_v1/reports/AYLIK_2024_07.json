@@ -1,0 +1,324 @@
+{
+ "month": "2024-07",
+ "days": 23,
+ "gold": {
+  "start_prev_close": 2325.81,
+  "end": 2417.86,
+  "change_pct": 3.96,
+  "high": 2467.03,
+  "low": 2321.91
+ },
+ "ideal": {
+  "month_log_return_pct": 8.11,
+  "gold_days_share": 0.652,
+  "legs": [
+   {
+    "entry": "2024-06-27",
+    "entry_price": 2307.83,
+    "exit": "2024-07-17",
+    "exit_price": 2474.87,
+    "net_pct": 5.53
+   },
+   {
+    "entry": "2024-07-26",
+    "entry_price": 2373.22,
+    "exit": "2024-07-31",
+    "exit_price": 2421.32,
+    "net_pct": 0.4
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 105.4521,
+  "nav_end": 109.6501,
+  "month_ret_pct": 3.98,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.378,
+  "capture_of_ideal": 0.5
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 8,
+  "wrong_day_share": 0.348
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2024-06-27",
+    "exit": "2024-07-17",
+    "net_pct": 5.53,
+    "state_at_entry": [
+     [
+      "COT managed money net",
+      2.26
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.25
+     ],
+     [
+      "COT MM 4 hafta değişim",
+      1.21
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      1.2
+     ],
+     [
+      "petrol 20g",
+      0.94
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      2.29
+     ],
+     [
+      "altın 5g getiri",
+      1.93
+     ],
+     [
+      "COT MM 4 hafta değişim",
+      -1.93
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      1.73
+     ],
+     [
+      "60g zirveye uzaklık",
+      1.71
+     ]
+    ]
+   },
+   {
+    "entry": "2024-07-26",
+    "exit": "2024-07-31",
+    "net_pct": 0.4,
+    "state_at_entry": [
+     [
+      "Nasdaq 5g",
+      -2.32
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -2.13
+     ],
+     [
+      "Nasdaq 20g",
+      -2.02
+     ],
+     [
+      "COT managed money net",
+      1.71
+     ],
+     [
+      "gümüş 5g",
+      -1.67
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      1.35
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      -1.07
+     ],
+     [
+      "hisse şoku",
+      -1.0
+     ],
+     [
+      "GVZ 5g değişim",
+      0.99
+     ],
+     [
+      "altın 5g getiri",
+      0.99
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2024-07-17",
+    "end": "2024-07-25",
+    "gold_move_pct": -2.57,
+    "state_at_start": [
+     [
+      "200g ortalamaya uzaklık",
+      2.02
+     ],
+     [
+      "altın 5g getiri",
+      1.79
+     ],
+     [
+      "son CPI sürprizi",
+      -1.73
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      1.71
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.69
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 5g getiri",
+      -3.62
+     ],
+     [
+      "altın 1g getiri",
+      -3.16
+     ],
+     [
+      "gümüş 5g",
+      -2.32
+     ],
+     [
+      "GVZ 5g değişim",
+      -2.04
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      1.51
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2024-07-05T12:30",
+    "surprise": 15.0,
+    "gold_post60": 0.328825,
+    "gold_post240": 0.793115
+   },
+   {
+    "kind": "CPI",
+    "utc": "2024-07-11T12:30",
+    "surprise": -0.2,
+    "gold_post60": 1.177393,
+    "gold_post240": 1.38955
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2024-07-31T18:00",
+    "surprise": null,
+    "gold_post60": 0.311305,
+    "gold_post240": null
+   }
+  ],
+  "cot_mm_change": -0.0769,
+  "real_rate_20d_change_start_end": [
+   -0.16000000000000014,
+   -0.2400000000000002
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_017",
+    "dir": "UP",
+    "move_pct": "7.632614",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2024-06-07",
+    "end": "2024-07-16"
+   },
+   {
+    "key": "SWING_V1_018",
+    "dir": "DOWN",
+    "move_pct": "-4.222006",
+    "cls": "FONLAMA_FİNANSAL_STRES",
+    "mech": "Teminat, zorunlu satış, likidite ve kaldıraç",
+    "start": "2024-07-16",
+    "end": "2024-07-25"
+   },
+   {
+    "key": "SWING_V1_019",
+    "dir": "UP",
+    "move_pct": "17.88621",
+    "cls": "ALTIN_FİZİKİ_RESERVE_TALEP",
+    "mech": "ETF/CTA/OTC/metal akışı ve çokgünlü talep",
+    "start": "2024-07-25",
+    "end": "2024-10-30"
+   },
+   {
+    "key": "C_CORR_019",
+    "dir": "UP",
+    "move_pct": "4.430199",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2024-07-16",
+    "end": "2024-07-17"
+   },
+   {
+    "key": "C_CORR_020",
+    "dir": "DOWN",
+    "move_pct": "3.29307",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Teminat, zorunlu satış, likidite ve kaldıraç",
+    "start": "2024-07-25",
+    "end": "2024-07-25"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 408,
+  "ideal_gold_share": 0.52,
+  "alpha_analog": 0.608,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1217
+   ],
+   [
+    "si_r5",
+    0.1004
+   ],
+   [
+    "g_r1",
+    0.0788
+   ],
+   [
+    "nfp_surp",
+    0.0538
+   ],
+   [
+    "cl_r5",
+    0.0455
+   ],
+   [
+    "nq_r5",
+    0.045
+   ],
+   [
+    "g_dd60",
+    0.0413
+   ],
+   [
+    "zn_r5",
+    0.0393
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.329,
+   "faiz (reel ve nominal)": 0.06,
+   "dolar": 0.031,
+   "altın oynaklığı": 0.074,
+   "spekülatif pozisyon (COT)": 0.025,
+   "makro veri sürprizi/takvim": 0.108,
+   "hisse/tahvil/petrol/gümüş": 0.29,
+   "olay izi (şok)": 0.083
+  }
+ }
+}

@@ -1,0 +1,183 @@
+{
+ "month": "2023-09",
+ "days": 21,
+ "gold": {
+  "start_prev_close": 1945.49,
+  "end": 1867.43,
+  "change_pct": -4.01,
+  "high": 1944.63,
+  "low": 1867.43
+ },
+ "ideal": {
+  "month_log_return_pct": 0,
+  "gold_days_share": 0.0,
+  "legs": []
+ },
+ "model": {
+  "nav_start": 95.258,
+  "nav_end": 95.258,
+  "month_ret_pct": 0.0,
+  "trades": [],
+  "position_end": "NAKİT",
+  "mean_p": 0.457,
+  "capture_of_ideal": null
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 0,
+  "wrong_day_share": 0.0
+ },
+ "why": {
+  "ideal_legs_drivers": [],
+  "ideal_cash_spells": [
+   {
+    "start": "2023-09-01",
+    "end": "2023-09-29",
+    "gold_move_pct": -3.82,
+    "state_at_start": [
+     [
+      "COT MM 4 hafta değişim",
+      -2.96
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -2.19
+     ],
+     [
+      "GVZ düzeyi",
+      -2.01
+     ],
+     [
+      "Nasdaq 5g",
+      1.58
+     ],
+     [
+      "COT managed money net",
+      -1.57
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "COT MM 4 hafta değişim",
+      4.44
+     ],
+     [
+      "son FOMC'den beri gün",
+      -2.2
+     ],
+     [
+      "altın 5g getiri",
+      -2.0
+     ],
+     [
+      "Nasdaq 5g",
+      -1.98
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      1.84
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2023-09-01T12:30",
+    "surprise": 17.0,
+    "gold_post60": 0.12428,
+    "gold_post240": -0.342827
+   },
+   {
+    "kind": "CPI",
+    "utc": "2023-09-13T12:30",
+    "surprise": 0.0,
+    "gold_post60": 0.095415,
+    "gold_post240": -0.024849
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2023-09-20T18:00",
+    "surprise": null,
+    "gold_post60": -0.29716,
+    "gold_post240": null
+   }
+  ],
+  "cot_mm_change": 0.087,
+  "real_rate_20d_change_start_end": [
+   0.14000000000000012,
+   0.4099999999999999
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_006",
+    "dir": "DOWN",
+    "move_pct": "-8.020636",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-07-18",
+    "end": "2023-10-05"
+   },
+   {
+    "key": "C_CORR_005",
+    "dir": "DOWN",
+    "move_pct": "4.584884",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-09-29",
+    "end": "2023-10-03"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 193,
+  "ideal_gold_share": 0.389,
+  "alpha_analog": 0.517,
+  "th_in": 0.7,
+  "th_out": 0.5,
+  "top_weights": [
+   [
+    "g_r5",
+    0.0936
+   ],
+   [
+    "fomc_to",
+    0.073
+   ],
+   [
+    "si_r5",
+    0.0575
+   ],
+   [
+    "g_r1",
+    0.0552
+   ],
+   [
+    "cpi_surp",
+    0.055
+   ],
+   [
+    "g_r20",
+    0.0499
+   ],
+   [
+    "rr_d5",
+    0.0496
+   ],
+   [
+    "nq_r5",
+    0.0466
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.329,
+   "faiz (reel ve nominal)": 0.089,
+   "dolar": 0.005,
+   "altın oynaklığı": 0.058,
+   "spekülatif pozisyon (COT)": 0.038,
+   "makro veri sürprizi/takvim": 0.236,
+   "hisse/tahvil/petrol/gümüş": 0.205,
+   "olay izi (şok)": 0.04
+  }
+ }
+}

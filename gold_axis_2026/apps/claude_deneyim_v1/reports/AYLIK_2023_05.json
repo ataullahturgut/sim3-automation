@@ -1,0 +1,250 @@
+{
+ "month": "2023-05",
+ "days": 23,
+ "gold": {
+  "start_prev_close": 1984.84,
+  "end": 1964.48,
+  "change_pct": -1.03,
+  "high": 2046.02,
+  "low": 1933.5
+ },
+ "ideal": {
+  "month_log_return_pct": 3.12,
+  "gold_days_share": 0.174,
+  "legs": [
+   {
+    "entry": "2023-05-01",
+    "entry_price": 1977.59,
+    "exit": "2023-05-05",
+    "exit_price": 2039.8,
+    "net_pct": 1.5
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 95.258,
+  "nav_end": 95.258,
+  "month_ret_pct": 0.0,
+  "trades": [],
+  "position_end": "NAKİT",
+  "mean_p": 0.451,
+  "capture_of_ideal": 0.0
+ },
+ "errors": {
+  "missed_gold_days": 4,
+  "false_gold_days": 0,
+  "wrong_day_share": 0.174
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2023-05-01",
+    "exit": "2023-05-05",
+    "net_pct": 1.5,
+    "state_at_entry": [
+     [
+      "sonraki FOMC'ye gün",
+      -4.0
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.76
+     ],
+     [
+      "son FOMC'den beri gün",
+      1.29
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      -1.21
+     ],
+     [
+      "son NFP'den beri gün",
+      0.95
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "son FOMC'den beri gün",
+      -2.84
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      2.79
+     ],
+     [
+      "petrol 20g",
+      -2.26
+     ],
+     [
+      "GVZ 5g değişim",
+      1.84
+     ],
+     [
+      "gümüş 5g",
+      1.74
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2023-05-05",
+    "end": "2023-05-31",
+    "gold_move_pct": -3.97,
+    "state_at_start": [
+     [
+      "200g ortalamaya uzaklık",
+      2.28
+     ],
+     [
+      "GVZ 5g değişim",
+      1.89
+     ],
+     [
+      "petrol 20g",
+      -1.64
+     ],
+     [
+      "son FOMC'den beri gün",
+      -1.55
+     ],
+     [
+      "gümüş 5g",
+      1.52
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      -2.96
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      2.41
+     ],
+     [
+      "gümüş 5g",
+      -2.38
+     ],
+     [
+      "Nasdaq 5g",
+      2.22
+     ],
+     [
+      "gümüş 20g",
+      -2.2
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "FOMC",
+    "utc": "2023-05-03T18:00",
+    "surprise": null,
+    "gold_post60": -0.037067,
+    "gold_post240": null
+   },
+   {
+    "kind": "NFP",
+    "utc": "2023-05-05T12:30",
+    "surprise": 73.0,
+    "gold_post60": -1.272834,
+    "gold_post240": -0.994868
+   },
+   {
+    "kind": "CPI",
+    "utc": "2023-05-10T12:30",
+    "surprise": 0.0,
+    "gold_post60": 0.182075,
+    "gold_post240": -0.211525
+   }
+  ],
+  "cot_mm_change": -0.0185,
+  "real_rate_20d_change_start_end": [
+   0.020000000000000018,
+   0.20999999999999996
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_003",
+    "dir": "UP",
+    "move_pct": "13.199859",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2023-02-24",
+    "end": "2023-05-04"
+   },
+   {
+    "key": "SWING_V1_004",
+    "dir": "DOWN",
+    "move_pct": "-6.959525",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-05-04",
+    "end": "2023-06-28"
+   },
+   {
+    "key": "C_CORR_004",
+    "dir": "UP",
+    "move_pct": "3.430114",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-05-04",
+    "end": "2023-05-04"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 106,
+  "ideal_gold_share": 0.472,
+  "alpha_analog": 0.562,
+  "th_in": 0.7,
+  "th_out": 0.5,
+  "top_weights": [
+   [
+    "g_r5",
+    0.081
+   ],
+   [
+    "rr_d5",
+    0.0734
+   ],
+   [
+    "g_r20",
+    0.0724
+   ],
+   [
+    "fomc_to",
+    0.0677
+   ],
+   [
+    "cot_mm",
+    0.0664
+   ],
+   [
+    "y2_d20",
+    0.0584
+   ],
+   [
+    "g_dd60",
+    0.048
+   ],
+   [
+    "zn_r5",
+    0.0478
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.294,
+   "faiz (reel ve nominal)": 0.186,
+   "dolar": 0.005,
+   "altın oynaklığı": 0.024,
+   "spekülatif pozisyon (COT)": 0.09,
+   "makro veri sürprizi/takvim": 0.163,
+   "hisse/tahvil/petrol/gümüş": 0.209,
+   "olay izi (şok)": 0.029
+  }
+ }
+}

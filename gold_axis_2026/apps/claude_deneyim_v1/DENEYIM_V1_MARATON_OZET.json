@@ -1,0 +1,262 @@
+{
+ "period": [
+  "2023-01-03",
+  "2025-12-31"
+ ],
+ "trading_days": 774,
+ "model": {
+  "final_nav": 195.0522,
+  "maxdd": 10.36,
+  "trades": 5,
+  "trade_list": [
+   {
+    "date": "2023-02-01",
+    "action": "AL",
+    "price": 1925.96,
+    "p": 0.66
+   },
+   {
+    "date": "2023-03-01",
+    "action": "SAT",
+    "price": 1835.72,
+    "p": 0.138
+   },
+   {
+    "date": "2023-03-14",
+    "action": "AL",
+    "price": 1904.6,
+    "p": 0.679
+   },
+   {
+    "date": "2023-04-03",
+    "action": "SAT",
+    "price": 1965.62,
+    "p": 0.22
+   },
+   {
+    "date": "2023-12-04",
+    "action": "AL",
+    "price": 2069.99,
+    "p": 0.794
+   }
+  ]
+ },
+ "passive": {
+  "final_nav": 230.8164,
+  "maxdd": 10.79
+ },
+ "trend_sma100": {
+  "final_nav": 215.3589,
+  "maxdd": 11.42
+ },
+ "ideal_oracle": {
+  "final_nav": 580.5736,
+  "legs": 39,
+  "gold_days_share": 0.609
+ },
+ "learning_by_year": {
+  "2023": {
+   "wrong_day_share": 0.49,
+   "model_ret_pct": -6.33,
+   "gold_change_pct": 13.93,
+   "trades": 5
+  },
+  "2024": {
+   "wrong_day_share": 0.475,
+   "model_ret_pct": 26.48,
+   "gold_change_pct": 25.69,
+   "trades": 0
+  },
+  "2025": {
+   "wrong_day_share": 0.329,
+   "model_ret_pct": 64.62,
+   "gold_change_pct": 64.55,
+   "trades": 0
+  }
+ },
+ "mechanism": {
+  "state_before_ideal_entries": [
+   [
+    "sonraki FOMC'ye gün",
+    -1.75
+   ],
+   [
+    "200g ortalamaya uzaklık",
+    1.06
+   ],
+   [
+    "altın 1g getiri",
+    -1.03
+   ],
+   [
+    "COT managed money net",
+    0.87
+   ],
+   [
+    "altın 5g getiri",
+    -0.86
+   ],
+   [
+    "gümüş 5g",
+    -0.7
+   ],
+   [
+    "altın 60g getiri",
+    0.47
+   ],
+   [
+    "Nasdaq 20g",
+    -0.34
+   ]
+  ],
+  "state_before_ideal_exits": [
+   [
+    "200g ortalamaya uzaklık",
+    1.88
+   ],
+   [
+    "sonraki FOMC'ye gün",
+    -1.61
+   ],
+   [
+    "altın 60g getiri",
+    1.32
+   ],
+   [
+    "altın 5g getiri",
+    1.14
+   ],
+   [
+    "altın 1g getiri",
+    1.09
+   ],
+   [
+    "altın 20g getiri",
+    1.06
+   ],
+   [
+    "60g zirveye uzaklık",
+    0.96
+   ],
+   [
+    "COT managed money net",
+    0.8
+   ]
+  ],
+  "ideal_gold_minus_cash": [
+   [
+    "altın 1g getiri",
+    0.56
+   ],
+   [
+    "altın 5g getiri",
+    0.54
+   ],
+   [
+    "gümüş 5g",
+    0.46
+   ],
+   [
+    "GVZ düzeyi",
+    0.27
+   ],
+   [
+    "petrol 20g",
+    -0.22
+   ],
+   [
+    "sonraki FOMC'ye gün",
+    0.17
+   ],
+   [
+    "Nasdaq 20g",
+    -0.16
+   ],
+   [
+    "dolar endeksi 20g değişim",
+    0.14
+   ],
+   [
+    "GVZ 5g değişim",
+    0.13
+   ],
+   [
+    "Nasdaq 5g",
+    0.12
+   ]
+  ],
+  "final_group_weights": {
+   "altın fiyat yapısı": 0.404,
+   "faiz (reel ve nominal)": 0.04,
+   "dolar": 0.037,
+   "altın oynaklığı": 0.072,
+   "spekülatif pozisyon (COT)": 0.046,
+   "makro veri sürprizi/takvim": 0.071,
+   "hisse/tahvil/petrol/gümüş": 0.265,
+   "olay izi (şok)": 0.065
+  },
+  "logistic_positive": [
+   [
+    "altın 5g getiri",
+    0.68
+   ],
+   [
+    "altın 1g getiri",
+    0.488
+   ],
+   [
+    "COT managed money net",
+    0.283
+   ],
+   [
+    "gümüş 5g",
+    0.271
+   ],
+   [
+    "son NFP sürprizi",
+    0.257
+   ],
+   [
+    "GVZ düzeyi",
+    0.244
+   ]
+  ],
+  "logistic_negative": [
+   [
+    "200g ortalamaya uzaklık",
+    -0.432
+   ],
+   [
+    "petrol 20g",
+    -0.42
+   ],
+   [
+    "Nasdaq 20g",
+    -0.363
+   ],
+   [
+    "60g zirveye uzaklık",
+    -0.332
+   ],
+   [
+    "altın/gümüş oranı 20g değişim",
+    -0.267
+   ],
+   [
+    "oynaklık sıçraması",
+    -0.258
+   ]
+  ]
+ },
+ "final_params": {
+  "alpha_analog": 0.561,
+  "th_in": 0.7,
+  "th_out": 0.1
+ },
+ "honesty": [
+  "Geliştirme (deneyim) dönemi sonucudur; test değildir.",
+  "Model kararları her ay yalnız önceki ay sonu bilgisiyle gerçek zamanlı verildi; ideal etiketler geriye dönüktür.",
+  "Dukascopy BID/ASK + varsayımsal %0,8/yön; Türk bankası kotasyonu değildir.",
+  "Haber metni yok; olaylar piyasa izi ve planlı makro yayınlarla temsil edildi."
+ ]
+}

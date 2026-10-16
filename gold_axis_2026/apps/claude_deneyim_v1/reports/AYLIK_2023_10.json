@@ -1,0 +1,261 @@
+{
+ "month": "2023-10",
+ "days": 22,
+ "gold": {
+  "start_prev_close": 1867.43,
+  "end": 1993.13,
+  "change_pct": 6.73,
+  "high": 1999.67,
+  "low": 1819.52
+ },
+ "ideal": {
+  "month_log_return_pct": 9.29,
+  "gold_days_share": 0.818,
+  "legs": [
+   {
+    "entry": "2023-10-05",
+    "entry_price": 1820.09,
+    "exit": "2023-10-31",
+    "exit_price": 1996.85,
+    "net_pct": 7.96
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 95.258,
+  "nav_end": 95.258,
+  "month_ret_pct": 0.0,
+  "trades": [],
+  "position_end": "NAKİT",
+  "mean_p": 0.461,
+  "capture_of_ideal": 0.0
+ },
+ "errors": {
+  "missed_gold_days": 18,
+  "false_gold_days": 0,
+  "wrong_day_share": 0.818
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2023-10-05",
+    "exit": "2023-10-31",
+    "net_pct": 7.96,
+    "state_at_entry": [
+     [
+      "petrol 5g",
+      -2.53
+     ],
+     [
+      "son NFP'den beri gün",
+      1.97
+     ],
+     [
+      "gümüş 5g",
+      -1.77
+     ],
+     [
+      "10Y reel faiz 20g değişim",
+      1.63
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      1.54
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 20g getiri",
+      3.5
+     ],
+     [
+      "gümüş 20g",
+      2.79
+     ],
+     [
+      "60g zirveye uzaklık",
+      2.42
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      -1.93
+     ],
+     [
+      "son FOMC'den beri gün",
+      1.84
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2023-10-02",
+    "end": "2023-10-04",
+    "gold_move_pct": -2.63,
+    "state_at_start": [
+     [
+      "altın 5g getiri",
+      -2.06
+     ],
+     [
+      "son NFP'den beri gün",
+      1.69
+     ],
+     [
+      "gümüş 5g",
+      -1.61
+     ],
+     [
+      "altın 1g getiri",
+      -1.57
+     ],
+     [
+      "altın 20g getiri",
+      -1.5
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "COT MM 4 hafta değişim",
+      -2.01
+     ],
+     [
+      "altın 1g getiri",
+      1.65
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      -1.09
+     ],
+     [
+      "GVZ düzeyi",
+      0.88
+     ],
+     [
+      "petrol 5g",
+      -0.69
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2023-10-06T12:30",
+    "surprise": 166.0,
+    "gold_post60": 0.226422,
+    "gold_post240": 0.674187
+   },
+   {
+    "kind": "CPI",
+    "utc": "2023-10-12T12:30",
+    "surprise": 0.10000000000000003,
+    "gold_post60": -0.421413,
+    "gold_post240": -0.670307
+   }
+  ],
+  "cot_mm_change": -0.0738,
+  "real_rate_20d_change_start_end": [
+   0.3500000000000001,
+   0.17999999999999972
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_006",
+    "dir": "DOWN",
+    "move_pct": "-8.020636",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-07-18",
+    "end": "2023-10-05"
+   },
+   {
+    "key": "SWING_V1_007",
+    "dir": "UP",
+    "move_pct": "10.226942",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2023-10-05",
+    "end": "2023-10-27"
+   },
+   {
+    "key": "SWING_V1_008",
+    "dir": "DOWN",
+    "move_pct": "-3.387824",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2023-10-27",
+    "end": "2023-11-10"
+   },
+   {
+    "key": "C_CORR_005",
+    "dir": "DOWN",
+    "move_pct": "4.584884",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-09-29",
+    "end": "2023-10-03"
+   },
+   {
+    "key": "C_CORR_006",
+    "dir": "UP",
+    "move_pct": "5.641056",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2023-10-13",
+    "end": "2023-10-20"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 215,
+  "ideal_gold_share": 0.433,
+  "alpha_analog": 0.509,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1056
+   ],
+   [
+    "g_r1",
+    0.0659
+   ],
+   [
+    "cot_mm",
+    0.064
+   ],
+   [
+    "nfp_surp",
+    0.0622
+   ],
+   [
+    "si_r5",
+    0.0619
+   ],
+   [
+    "cl_r20",
+    0.0602
+   ],
+   [
+    "fomc_to",
+    0.0597
+   ],
+   [
+    "gvz_lvl",
+    0.0492
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.308,
+   "faiz (reel ve nominal)": 0.092,
+   "dolar": 0.011,
+   "altın oynaklığı": 0.074,
+   "spekülatif pozisyon (COT)": 0.08,
+   "makro veri sürprizi/takvim": 0.193,
+   "hisse/tahvil/petrol/gümüş": 0.208,
+   "olay izi (şok)": 0.035
+  }
+ }
+}

@@ -1,0 +1,407 @@
+{
+ "month": "2023-12",
+ "days": 20,
+ "gold": {
+  "start_prev_close": 2041.68,
+  "end": 2072.33,
+  "change_pct": 1.5,
+  "high": 2086.05,
+  "low": 1978.88
+ },
+ "ideal": {
+  "month_log_return_pct": 6.21,
+  "gold_days_share": 0.55,
+  "legs": [
+   {
+    "entry": "2023-11-13",
+    "entry_price": 1936.8,
+    "exit": "2023-12-04",
+    "exit_price": 2069.68,
+    "net_pct": 5.16
+   },
+   {
+    "entry": "2023-12-13",
+    "entry_price": 1980.58,
+    "exit": "2023-12-28",
+    "exit_price": 2077.3,
+    "net_pct": 3.21
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 95.258,
+  "nav_end": 93.6784,
+  "month_ret_pct": -1.66,
+  "trades": [
+   {
+    "date": "2023-12-04",
+    "action": "AL",
+    "price": 2069.99,
+    "p": 0.794
+   }
+  ],
+  "position_end": "ALTIN",
+  "mean_p": 0.423,
+  "capture_of_ideal": -0.3
+ },
+ "errors": {
+  "missed_gold_days": 1,
+  "false_gold_days": 9,
+  "wrong_day_share": 0.5
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2023-11-13",
+    "exit": "2023-12-04",
+    "net_pct": 5.16,
+    "state_at_entry": [
+     [
+      "sonraki FOMC'ye gün",
+      -2.24
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      -1.78
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      -1.65
+     ],
+     [
+      "gümüş 20g",
+      1.51
+     ],
+     [
+      "2Y faiz 5g değişim",
+      -1.36
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      2.31
+     ],
+     [
+      "GVZ 5g değişim",
+      1.93
+     ],
+     [
+      "GVZ düzeyi",
+      1.02
+     ],
+     [
+      "oynaklık sıçraması",
+      1.0
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      0.7
+     ]
+    ]
+   },
+   {
+    "entry": "2023-12-13",
+    "exit": "2023-12-28",
+    "net_pct": 3.21,
+    "state_at_entry": [
+     [
+      "sonraki FOMC'ye gün",
+      -2.86
+     ],
+     [
+      "petrol 20g",
+      -1.84
+     ],
+     [
+      "gümüş 5g",
+      -1.7
+     ],
+     [
+      "son CPI'dan beri gün",
+      -1.66
+     ],
+     [
+      "GVZ 5g değişim",
+      -1.63
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      3.68
+     ],
+     [
+      "altın 5g getiri",
+      2.05
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      1.95
+     ],
+     [
+      "son FOMC'den beri gün",
+      -1.94
+     ],
+     [
+      "altın 60g getiri",
+      1.78
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2023-12-04",
+    "end": "2023-12-12",
+    "gold_move_pct": -3.06,
+    "state_at_start": [
+     [
+      "GVZ 5g değişim",
+      2.51
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -2.41
+     ],
+     [
+      "altın 1g getiri",
+      2.25
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      1.84
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      -1.77
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      -4.46
+     ],
+     [
+      "gümüş 5g",
+      -3.24
+     ],
+     [
+      "son NFP'den beri gün",
+      -3.06
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      -2.93
+     ],
+     [
+      "altın 1g getiri",
+      -2.86
+     ]
+    ]
+   },
+   {
+    "start": "2023-12-28",
+    "end": "2023-12-29",
+    "gold_move_pct": 0.07,
+    "state_at_start": [
+     [
+      "GVZ 5g değişim",
+      2.05
+     ],
+     [
+      "altın 60g getiri",
+      1.96
+     ],
+     [
+      "10Y reel faiz 20g değişim",
+      -1.9
+     ],
+     [
+      "2Y faiz 20g değişim",
+      -1.64
+     ],
+     [
+      "60g zirveye uzaklık",
+      1.38
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      -1.73
+     ],
+     [
+      "oynaklık sıçraması",
+      -1.0
+     ],
+     [
+      "petrol 5g",
+      -0.67
+     ],
+     [
+      "petrol 20g",
+      -0.64
+     ],
+     [
+      "GVZ 5g değişim",
+      -0.62
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2023-12-08T13:30",
+    "surprise": 19.0,
+    "gold_post60": -1.067005,
+    "gold_post240": -1.510382
+   },
+   {
+    "kind": "CPI",
+    "utc": "2023-12-12T13:30",
+    "surprise": 0.1,
+    "gold_post60": -0.344459,
+    "gold_post240": -0.564991
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2023-12-13T19:00",
+    "surprise": null,
+    "gold_post60": 1.580669,
+    "gold_post240": null
+   }
+  ],
+  "cot_mm_change": 0.0694,
+  "real_rate_20d_change_start_end": [
+   -0.2999999999999998,
+   -0.4800000000000002
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_009",
+    "dir": "UP",
+    "move_pct": "6.889178",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-11-10",
+    "end": "2023-12-01"
+   },
+   {
+    "key": "SWING_V1_010",
+    "dir": "DOWN",
+    "move_pct": "-4.463277",
+    "cls": "FONLAMA_FİNANSAL_STRES",
+    "mech": "Pozisyonun aşırı uzaması ve geri dönüşü",
+    "start": "2023-12-01",
+    "end": "2023-12-12"
+   },
+   {
+    "key": "SWING_V1_011",
+    "dir": "UP",
+    "move_pct": "4.965042",
+    "cls": "ALTIN_FİZİKİ_RESERVE_TALEP",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-12-12",
+    "end": "2023-12-27"
+   },
+   {
+    "key": "SWING_V1_012",
+    "dir": "DOWN",
+    "move_pct": "-4.112955",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-12-27",
+    "end": "2024-02-14"
+   },
+   {
+    "key": "C_CORR_007",
+    "dir": "UP",
+    "move_pct": "3.567082",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-12-01",
+    "end": "2023-12-01"
+   },
+   {
+    "key": "C_CORR_008",
+    "dir": "DOWN",
+    "move_pct": "3.053501",
+    "cls": "İÇSEL_POZİSYON_DÖNÜŞÜ",
+    "mech": "Pozisyonun aşırı uzaması ve geri dönüşü",
+    "start": "2023-12-04",
+    "end": "2023-12-04"
+   },
+   {
+    "key": "C_CORR_009",
+    "dir": "DOWN",
+    "move_pct": "3.252864",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-12-08",
+    "end": "2023-12-08"
+   },
+   {
+    "key": "C_CORR_010",
+    "dir": "UP",
+    "move_pct": "3.070915",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-12-19",
+    "end": "2023-12-19"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 257,
+  "ideal_gold_share": 0.459,
+  "alpha_analog": 0.527,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1222
+   ],
+   [
+    "si_r5",
+    0.0866
+   ],
+   [
+    "g_r1",
+    0.0774
+   ],
+   [
+    "cl_r20",
+    0.0742
+   ],
+   [
+    "cot_mm",
+    0.0582
+   ],
+   [
+    "y2_d20",
+    0.0424
+   ],
+   [
+    "gvz_lvl",
+    0.0424
+   ],
+   [
+    "g_dd60",
+    0.042
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.339,
+   "faiz (reel ve nominal)": 0.11,
+   "dolar": 0.001,
+   "altın oynaklığı": 0.07,
+   "spekülatif pozisyon (COT)": 0.058,
+   "makro veri sürprizi/takvim": 0.139,
+   "hisse/tahvil/petrol/gümüş": 0.263,
+   "olay izi (şok)": 0.019
+  }
+ }
+}

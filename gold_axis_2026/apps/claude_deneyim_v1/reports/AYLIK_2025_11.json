@@ -1,0 +1,319 @@
+{
+ "month": "2025-11",
+ "days": 20,
+ "gold": {
+  "start_prev_close": 4005.16,
+  "end": 4182.32,
+  "change_pct": 4.42,
+  "high": 4212.05,
+  "low": 3964.95
+ },
+ "ideal": {
+  "month_log_return_pct": 8.65,
+  "gold_days_share": 0.8,
+  "legs": [
+   {
+    "entry": "2025-10-28",
+    "entry_price": 3897.84,
+    "exit": "2025-11-13",
+    "exit_price": 4232.51,
+    "net_pct": 6.86
+   },
+   {
+    "entry": "2025-11-18",
+    "entry_price": 4037.05,
+    "exit": "2025-11-28",
+    "exit_price": 4167.98,
+    "net_pct": 1.6
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 181.6029,
+  "nav_end": 188.748,
+  "month_ret_pct": 3.93,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.611,
+  "capture_of_ideal": 0.4
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 4,
+  "wrong_day_share": 0.2
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2025-10-28",
+    "exit": "2025-11-13",
+    "net_pct": 6.86,
+    "state_at_entry": [
+     [
+      "altın 20g oynaklık",
+      3.07
+     ],
+     [
+      "son NFP'den beri gün",
+      2.86
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      2.07
+     ],
+     [
+      "altın 60g getiri",
+      2.0
+     ],
+     [
+      "GVZ düzeyi",
+      1.97
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      4.43
+     ],
+     [
+      "altın 5g getiri",
+      3.2
+     ],
+     [
+      "gümüş 5g",
+      2.87
+     ],
+     [
+      "altın 1g getiri",
+      2.4
+     ],
+     [
+      "60g zirveye uzaklık",
+      1.57
+     ]
+    ]
+   },
+   {
+    "entry": "2025-11-18",
+    "exit": "2025-11-28",
+    "net_pct": 1.6,
+    "state_at_entry": [
+     [
+      "son NFP'den beri gün",
+      2.68
+     ],
+     [
+      "GVZ düzeyi",
+      2.41
+     ],
+     [
+      "altın 20g oynaklık",
+      2.17
+     ],
+     [
+      "altın 20g getiri",
+      -2.08
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      1.98
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "son NFP'den beri gün",
+      -3.63
+     ],
+     [
+      "Nasdaq 5g",
+      3.25
+     ],
+     [
+      "altın 20g getiri",
+      2.82
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      -2.78
+     ],
+     [
+      "altın 5g getiri",
+      2.59
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2025-11-13",
+    "end": "2025-11-17",
+    "gold_move_pct": -1.31,
+    "state_at_start": [
+     [
+      "GVZ 5g değişim",
+      3.23
+     ],
+     [
+      "GVZ düzeyi",
+      3.03
+     ],
+     [
+      "altın 20g oynaklık",
+      2.95
+     ],
+     [
+      "altın 60g getiri",
+      2.83
+     ],
+     [
+      "son NFP'den beri gün",
+      2.72
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      -5.86
+     ],
+     [
+      "altın 5g getiri",
+      -2.59
+     ],
+     [
+      "gümüş 5g",
+      -1.46
+     ],
+     [
+      "60g zirveye uzaklık",
+      -1.21
+     ],
+     [
+      "altın 20g getiri",
+      -1.1
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2025-11-20T13:30",
+    "surprise": 66.0,
+    "gold_post60": -0.134449,
+    "gold_post240": -0.732842
+   }
+  ],
+  "cot_mm_change": -0.0807,
+  "real_rate_20d_change_start_end": [
+   0.06000000000000005,
+   -0.010000000000000009
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_039",
+    "dir": "UP",
+    "move_pct": "6.755117",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2025-10-29",
+    "end": "2025-11-12"
+   },
+   {
+    "key": "SWING_V1_040",
+    "dir": "DOWN",
+    "move_pct": "-3.582393",
+    "cls": "ALTIN_FİZİKİ_RESERVE_TALEP",
+    "mech": "Teminat, zorunlu satış, likidite ve kaldıraç",
+    "start": "2025-11-12",
+    "end": "2025-11-17"
+   },
+   {
+    "key": "SWING_V1_041",
+    "dir": "UP",
+    "move_pct": "12.077002",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "ETF/CTA/OTC/metal akışı ve çokgünlü talep",
+    "start": "2025-11-17",
+    "end": "2025-12-26"
+   },
+   {
+    "key": "C_CORR_050",
+    "dir": "UP",
+    "move_pct": "5.407982",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2025-11-10",
+    "end": "2025-11-13"
+   },
+   {
+    "key": "C_CORR_051",
+    "dir": "DOWN",
+    "move_pct": "3.582393",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Teminat, zorunlu satış, likidite ve kaldıraç",
+    "start": "2025-11-14",
+    "end": "2025-11-17"
+   },
+   {
+    "key": "C_CORR_052",
+    "dir": "UP",
+    "move_pct": "3.796863",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2025-11-28",
+    "end": "2025-11-28"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 752,
+  "ideal_gold_share": 0.601,
+  "alpha_analog": 0.55,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r1",
+    0.1441
+   ],
+   [
+    "g_r5",
+    0.1416
+   ],
+   [
+    "si_r5",
+    0.1163
+   ],
+   [
+    "cl_r20",
+    0.0595
+   ],
+   [
+    "gvz_lvl",
+    0.0443
+   ],
+   [
+    "nq_r20",
+    0.0366
+   ],
+   [
+    "usd_d20",
+    0.036
+   ],
+   [
+    "sig_oil_shock",
+    0.0356
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.382,
+   "faiz (reel ve nominal)": 0.04,
+   "dolar": 0.036,
+   "altın oynaklığı": 0.077,
+   "spekülatif pozisyon (COT)": 0.045,
+   "makro veri sürprizi/takvim": 0.086,
+   "hisse/tahvil/petrol/gümüş": 0.27,
+   "olay izi (şok)": 0.063
+  }
+ }
+}

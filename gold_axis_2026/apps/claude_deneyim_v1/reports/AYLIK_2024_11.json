@@ -1,0 +1,391 @@
+{
+ "month": "2024-11",
+ "days": 21,
+ "gold": {
+  "start_prev_close": 2785.21,
+  "end": 2662.42,
+  "change_pct": -4.41,
+  "high": 2755.02,
+  "low": 2558.66
+ },
+ "ideal": {
+  "month_log_return_pct": 7.04,
+  "gold_days_share": 0.429,
+  "legs": [
+   {
+    "entry": "2024-11-14",
+    "entry_price": 2556.39,
+    "exit": "2024-11-22",
+    "exit_price": 2697.22,
+    "net_pct": 3.83
+   },
+   {
+    "entry": "2024-11-26",
+    "entry_price": 2613.64,
+    "exit": "2024-11-29",
+    "exit_price": 2657.16,
+    "net_pct": 0.04
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 125.8472,
+  "nav_end": 120.3301,
+  "month_ret_pct": -4.38,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.431,
+  "capture_of_ideal": -0.6
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 12,
+  "wrong_day_share": 0.571
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2024-11-14",
+    "exit": "2024-11-22",
+    "net_pct": 3.83,
+    "state_at_entry": [
+     [
+      "altın 1g getiri",
+      -1.96
+     ],
+     [
+      "altın 5g getiri",
+      -1.9
+     ],
+     [
+      "son NFP sürprizi",
+      -1.82
+     ],
+     [
+      "son CPI'dan beri gün",
+      -1.66
+     ],
+     [
+      "COT managed money net",
+      1.53
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 5g getiri",
+      4.06
+     ],
+     [
+      "altın 1g getiri",
+      3.08
+     ],
+     [
+      "petrol 5g",
+      2.34
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      1.92
+     ],
+     [
+      "60g zirveye uzaklık",
+      1.56
+     ]
+    ]
+   },
+   {
+    "entry": "2024-11-26",
+    "exit": "2024-11-29",
+    "net_pct": 0.04,
+    "state_at_entry": [
+     [
+      "son NFP sürprizi",
+      -1.74
+     ],
+     [
+      "altın 1g getiri",
+      -1.65
+     ],
+     [
+      "gümüş 20g",
+      -1.57
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      1.42
+     ],
+     [
+      "altın 20g getiri",
+      -1.41
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      2.74
+     ],
+     [
+      "GVZ 5g değişim",
+      -1.19
+     ],
+     [
+      "2Y faiz 5g değişim",
+      -1.07
+     ],
+     [
+      "petrol 20g",
+      -0.7
+     ],
+     [
+      "2Y faiz 20g değişim",
+      -0.66
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2024-11-01",
+    "end": "2024-11-13",
+    "gold_move_pct": -6.37,
+    "state_at_start": [
+     [
+      "200g ortalamaya uzaklık",
+      2.0
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.97
+     ],
+     [
+      "COT managed money net",
+      1.85
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      1.64
+     ],
+     [
+      "altın 60g getiri",
+      1.64
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "son NFP sürprizi",
+      -2.82
+     ],
+     [
+      "altın 5g getiri",
+      -2.79
+     ],
+     [
+      "son FOMC'den beri gün",
+      -2.78
+     ],
+     [
+      "GVZ 5g değişim",
+      -2.62
+     ],
+     [
+      "son NFP'den beri gün",
+      -1.77
+     ]
+    ]
+   },
+   {
+    "start": "2024-11-22",
+    "end": "2024-11-25",
+    "gold_move_pct": 0.12,
+    "state_at_start": [
+     [
+      "altın 5g getiri",
+      2.16
+     ],
+     [
+      "son NFP sürprizi",
+      -1.76
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      1.57
+     ],
+     [
+      "gümüş 20g",
+      -1.38
+     ],
+     [
+      "COT managed money net",
+      1.32
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      -2.02
+     ],
+     [
+      "Nasdaq 5g",
+      0.91
+     ],
+     [
+      "altın 5g getiri",
+      -0.85
+     ],
+     [
+      "gümüş 5g",
+      0.55
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      -0.54
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2024-11-01T12:30",
+    "surprise": -94.0,
+    "gold_post60": 0.098097,
+    "gold_post240": -0.269534
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2024-11-07T19:00",
+    "surprise": null,
+    "gold_post60": -0.0436,
+    "gold_post240": null
+   },
+   {
+    "kind": "CPI",
+    "utc": "2024-11-13T13:30",
+    "surprise": 0.0,
+    "gold_post60": 0.166783,
+    "gold_post240": -1.162538
+   }
+  ],
+  "cot_mm_change": -0.049,
+  "real_rate_20d_change_start_end": [
+   0.3699999999999999,
+   0.040000000000000036
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_020",
+    "dir": "DOWN",
+    "move_pct": "-8.048451",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2024-10-30",
+    "end": "2024-11-15"
+   },
+   {
+    "key": "SWING_V1_021",
+    "dir": "UP",
+    "move_pct": "5.974173",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2024-11-15",
+    "end": "2024-11-22"
+   },
+   {
+    "key": "SWING_V1_022",
+    "dir": "DOWN",
+    "move_pct": "-3.360232",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2024-11-22",
+    "end": "2024-11-25"
+   },
+   {
+    "key": "SWING_V1_023",
+    "dir": "UP",
+    "move_pct": "3.547926",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2024-11-25",
+    "end": "2024-12-11"
+   },
+   {
+    "key": "C_CORR_026",
+    "dir": "DOWN",
+    "move_pct": "5.321442",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2024-11-06",
+    "end": "2024-11-15"
+   },
+   {
+    "key": "C_CORR_027",
+    "dir": "UP",
+    "move_pct": "5.974173",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2024-11-20",
+    "end": "2024-11-22"
+   },
+   {
+    "key": "C_CORR_028",
+    "dir": "DOWN",
+    "move_pct": "3.360232",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2024-11-25",
+    "end": "2024-11-25"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 495,
+  "ideal_gold_share": 0.537,
+  "alpha_analog": 0.535,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1327
+   ],
+   [
+    "si_r5",
+    0.1069
+   ],
+   [
+    "g_r1",
+    0.101
+   ],
+   [
+    "nq_r5",
+    0.0509
+   ],
+   [
+    "gvz_d5",
+    0.0497
+   ],
+   [
+    "g_dd60",
+    0.0459
+   ],
+   [
+    "nfp_surp",
+    0.0458
+   ],
+   [
+    "cpi_days",
+    0.0441
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.361,
+   "faiz (reel ve nominal)": 0.064,
+   "dolar": 0.022,
+   "altın oynaklığı": 0.092,
+   "spekülatif pozisyon (COT)": 0.014,
+   "makro veri sürprizi/takvim": 0.126,
+   "hisse/tahvil/petrol/gümüş": 0.276,
+   "olay izi (şok)": 0.046
+  }
+ }
+}

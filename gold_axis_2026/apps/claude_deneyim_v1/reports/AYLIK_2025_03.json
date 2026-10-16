@@ -1,0 +1,193 @@
+{
+ "month": "2025-03",
+ "days": 21,
+ "gold": {
+  "start_prev_close": 2864.14,
+  "end": 3116.65,
+  "change_pct": 8.82,
+  "high": 3116.65,
+  "low": 2863.97
+ },
+ "ideal": {
+  "month_log_return_pct": 8.91,
+  "gold_days_share": 0.952,
+  "legs": [
+   {
+    "entry": "2025-02-28",
+    "entry_price": 2856.33,
+    "exit": "2025-03-31",
+    "exit_price": 3121.99,
+    "net_pct": 7.56
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 129.3283,
+  "nav_end": 141.3801,
+  "month_ret_pct": 9.32,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.637,
+  "capture_of_ideal": 1.0
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 1,
+  "wrong_day_share": 0.048
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2025-02-28",
+    "exit": "2025-03-31",
+    "net_pct": 7.56,
+    "state_at_entry": [
+     [
+      "son CPI sürprizi",
+      1.83
+     ],
+     [
+      "Nasdaq 5g",
+      -1.74
+     ],
+     [
+      "COT managed money net",
+      1.58
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      1.52
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.37
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "son CPI sürprizi",
+      -2.65
+     ],
+     [
+      "altın 5g getiri",
+      2.62
+     ],
+     [
+      "Nasdaq 20g",
+      -2.15
+     ],
+     [
+      "son FOMC'den beri gün",
+      -1.55
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      1.49
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2025-03-07T13:30",
+    "surprise": -8.0,
+    "gold_post60": 0.150437,
+    "gold_post240": -0.123159
+   },
+   {
+    "kind": "CPI",
+    "utc": "2025-03-12T12:30",
+    "surprise": -0.09999999999999998,
+    "gold_post60": -0.121708,
+    "gold_post240": 0.795428
+   }
+  ],
+  "cot_mm_change": -0.0103,
+  "real_rate_20d_change_start_end": [
+   -0.2200000000000002,
+   0.07000000000000006
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_027",
+    "dir": "UP",
+    "move_pct": "9.639908",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-02-28",
+    "end": "2025-04-02"
+   },
+   {
+    "key": "C_CORR_032",
+    "dir": "UP",
+    "move_pct": "4.058308",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-03-13",
+    "end": "2025-03-19"
+   },
+   {
+    "key": "C_CORR_033",
+    "dir": "UP",
+    "move_pct": "3.760016",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-03-31",
+    "end": "2025-04-02"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 579,
+  "ideal_gold_share": 0.584,
+  "alpha_analog": 0.491,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1368
+   ],
+   [
+    "si_r5",
+    0.1109
+   ],
+   [
+    "g_r1",
+    0.1097
+   ],
+   [
+    "gvz_lvl",
+    0.0521
+   ],
+   [
+    "nq_r20",
+    0.05
+   ],
+   [
+    "gvz_d5",
+    0.0472
+   ],
+   [
+    "zn_r5",
+    0.047
+   ],
+   [
+    "nfp_surp",
+    0.0428
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.342,
+   "faiz (reel ve nominal)": 0.079,
+   "dolar": 0.029,
+   "altın oynaklığı": 0.099,
+   "spekülatif pozisyon (COT)": 0.03,
+   "makro veri sürprizi/takvim": 0.1,
+   "hisse/tahvil/petrol/gümüş": 0.305,
+   "olay izi (şok)": 0.017
+  }
+ }
+}
