@@ -58,10 +58,10 @@ function create(options){
       noveltyDistance:Math.max(.3,o.noveltyDistance??1.25),
       mergeDistance:.18,minReady:8,maxLateMinutes},
     sourceRegistry:copy(sourceRegistry),
-    clock:null,lastAnchor:null,nextRuleId:1,rules:[],redirects:{},pending:[],
+    clock:null,lastAnchor:null,nextRuleId:1,rules:[],redirects:{},splitRoutes:{},pending:[],
     audit:{observations:0,anchors:0,ruleCreated:0,ruleMerged:0,labelsMatured:0,
       labelsSkipped:0,rejectedMissing:0,tradeActions:0,newsVerified:0,
-      rulesSaturated:0,sourceRejected:0}};
+      rulesSaturated:0,sourceRejected:0,ruleSplit:0,splitRejected:0}};
 }
 function featureVector(s,features,asof){
   if(!features||typeof features!=="object"||Array.isArray(features))
@@ -112,7 +112,7 @@ function newRule(s,x,at){
     bornAt:iso(at),observations:1,center:copy(x),
     featureN:Object.fromEntries(Object.keys(x).map(k=>[k,1])),
     outcomes:Object.fromEntries(s.horizons.map(h=>[h,makeStats()])),
-    lastSeenAt:iso(at)};
+    examples:[],exampleComplete:true,lastSeenAt:iso(at)};
   s.rules.push(r);s.audit.ruleCreated++;return r;
 }
 function updateCenter(r,x,at){
@@ -123,11 +123,19 @@ function updateCenter(r,x,at){
     r.featureN[k]=n;
   }
 }
-function activeId(s,id){
+function activeId(s,id,features={}){
   let i=0;
-  while(s.redirects[id]&&i++<100)id=s.redirects[id];
-  if(i>=100)throw Error("RULE_REDIRECT_LOOP");
-  return id;
+  while(i++<100){
+    if(s.redirects[id]){id=s.redirects[id];continue;}
+    const r=s.splitRoutes[id];
+    if(r){
+      if(!finite(features[r.feature]))throw Error("SPLIT_FEATURE_MISSING");
+      id=features[r.feature]<=r.threshold?r.left:r.right;
+      continue;
+    }
+    return id;
+  }
+  throw Error("RULE_REDIRECT_LOOP");
 }
 function integrate(st,ret,down){
   st.n++;const delta=ret-st.mean;
@@ -160,12 +168,87 @@ function maybeMerge(s){
     }
     a.observations+=b.observations;
     for(const horizon of s.horizons)mergeStats(a.outcomes[horizon],b.outcomes[horizon]);
+    a.examples=[...(a.examples||[]),...(b.examples||[])].sort((x,y)=>x.at.localeCompare(y.at));
+    a.exampleComplete=!!a.exampleComplete&&!!b.exampleComplete&&a.examples.length<=2000;
+    if(a.examples.length>2000)a.examples=a.examples.slice(-2000);
     s.redirects[b.id]=a.id;s.rules.splice(j,1);s.audit.ruleMerged++;
     return; // one merge per observation, stable rule IDs through redirect
   }
 }
 function safelyKnownSource(id,registry){return !!(registry&&registry[id]&&
   ["MARKET","BOTH"].includes(registry[id].kind));}
+
+/** Matured-outcome evidence can refute a single-state prototype.
+ * Split requires substantial within-state opposed behavior conditioned on
+ * OBSERVED FEATURE (not calendar date or ex-post optimum trade).
+ * Welch statistic and effect size are structural scientific gates, not trade edges.
+ * Only split when every old label is retained for honest reassignment.
+ */
+function maybeSplit(s,now){
+  if(s.rules.length>=s.config.maxRules)return;
+  const h=s.horizons[0];
+  for(let i=0;i<s.rules.length;i++){
+    const r=s.rules[i];
+    if(!r.exampleComplete||!Array.isArray(r.examples))continue;
+    const ex=r.examples.filter(e=>e.horizon===h);
+    if(ex.length<32)continue;
+    let best=null;
+    for(const name of s.featureNames){
+      const ordered=ex.filter(e=>finite(e.features?.[name]))
+        .slice().sort((a,b)=>a.features[name]-b.features[name]);
+      if(ordered.length<32)continue;
+      const median=ordered[Math.floor((ordered.length-1)/2)].features[name];
+      const left=ordered.filter(e=>e.features[name]<=median);
+      const right=ordered.filter(e=>e.features[name]>median);
+      if(left.length<12||right.length<12)continue;
+      const moments=a=>{
+        const avg=a.reduce((z,e)=>z+e.ret,0)/a.length;
+        const variance=a.reduce((z,e)=>z+(e.ret-avg)**2,0)/Math.max(1,a.length-1);
+        return {mean:avg,variance};
+      };
+      const a=moments(left),b=moments(right);
+      const effect=Math.abs(a.mean-b.mean),err=Math.sqrt(a.variance/left.length+b.variance/right.length);
+      const tstat=err>0?effect/err:(effect>0?Infinity:0);
+      if(effect>=.20&&tstat>=3.5&&(!best||tstat>best.tstat)){
+        best={name,threshold:median,tstat,effect,left,right};
+      }
+    }
+    if(!best)continue;
+    const born=iso(now),old=r.id;
+    const makeChild=side=>{
+      const cohort=side==="left"?best.left:best.right;
+      const exampleSet=r.examples.filter(e=>{
+        const v=e.features[best.name];
+        return finite(v)&&(side==="left"?v<=best.threshold:v>best.threshold);
+      });
+      const x={};
+      for(const name of s.featureNames){
+        const vals=cohort.map(e=>e.features[name]).filter(finite);
+        if(vals.length)x[name]=vals.reduce((a,b)=>a+b,0)/vals.length;
+      }
+      const nfeatures=Object.fromEntries(Object.entries(x).map(([key])=>[key,cohort.length]));
+      const child={id:"R"+String(s.nextRuleId++).padStart(4,"0"),
+        bornAt:born,lastSeenAt:born,observations:cohort.length,
+        center:x,featureN:nfeatures,
+        outcomes:Object.fromEntries(s.horizons.map(h=>[h,makeStats()])),
+        examples:exampleSet,exampleComplete:true,splitFrom:old};
+      for(const e of exampleSet)integrate(child.outcomes[e.horizon],e.ret,e.down);
+      return child;
+    };
+    const left=makeChild("left"),right=makeChild("right");
+    // Coverage check: never silently discard earlier labeled outcomes.
+    for(const horizon of s.horizons){
+      if(left.outcomes[horizon].n+right.outcomes[horizon].n!==r.outcomes[horizon].n)
+        throw Error("SPLIT_REASSIGNMENT_WOULD_LOSE_OUTCOMES");
+    }
+    s.rules.splice(i,1,left,right);
+    s.splitRoutes[old]={feature:best.name,threshold:best.threshold,
+      left:left.id,right:right.id,createdAt:born,
+      supportedTScore:best.tstat,observedEffectPct:best.effect};
+    s.audit.ruleSplit++;return;
+  }
+}
+
 function validatePrice(s,ob,t){
   if(!finite(ob.price)||ob.price<=0||!ob.priceAvailableAt||
      !ob.barStartedAt||!Number.isInteger(ob.barMinutes)||ob.barMinutes<=0)
@@ -186,11 +269,18 @@ function mature(s,t,price){
     if(t-p.due>s.config.maxLateMinutes*60000){
       s.audit.labelsSkipped++;continue;
     }
-    const r=s.rules.find(q=>q.id===activeId(s,p.ruleId));
+    const r=s.rules.find(q=>q.id===activeId(s,p.ruleId,p.features));
     if(!r)throw Error("PENDING_RULE_MISSING");
     const ret=100*Math.log(price/p.price);
     const down=Math.max(0,100*Math.log(p.price/p.low));
     integrate(r.outcomes[p.horizon],ret,down);
+    if(r.exampleComplete){
+      if(!Array.isArray(r.examples))r.examples=[];
+      r.examples.push({horizon:p.horizon,at:p.at,features:copy(p.features),ret,down});
+      if(r.examples.length>2000){
+        r.examples.shift();r.exampleComplete=false;
+      }
+    }
     s.audit.labelsMatured++;
   }
   s.pending=remain;
@@ -237,6 +327,7 @@ function observe(s,ob){
   validatePrice(s,ob,t);
   const x=featureVector(s,ob.features,t); // validate entire observation BEFORE mutation
   mature(s,t,ob.price);
+  maybeSplit(s,t);
   s.clock=t;s.audit.observations++;
   const decisionForecast=Object.keys(x).length<2?
      {ready:false,reason:"INSUFFICIENT_ASOF_FEATURES",byHorizon:[]}:
@@ -256,7 +347,7 @@ function observe(s,ob){
       ruleId=r.id;anchored=true;s.lastAnchor=t;s.audit.anchors++;
       for(const horizon of s.horizons)s.pending.push({
         ruleId,horizon,at:iso(t),due:t+horizon*60000,
-        price:ob.price,low:ob.price});
+        price:ob.price,low:ob.price,features:copy(x)});
       maybeMerge(s);
     }
   }else if(Object.keys(x).length<2)s.audit.rejectedMissing++;
@@ -278,6 +369,7 @@ function rules(s){
 function checkpoint(s){return copy(s);}
 function restore(v){
   const s=copy(v);
+  if(!s.splitRoutes)s.splitRoutes={};
   if(!s.sourceRegistry||!Object.keys(s.sourceRegistry).length)throw Error("CHECKPOINT_MISSING_SOURCE_REGISTRY");
   if(s.version!==VERSION||!Array.isArray(s.rules)||!Array.isArray(s.pending)||
     !Array.isArray(s.horizons))throw Error("BAD_CHECKPOINT");
