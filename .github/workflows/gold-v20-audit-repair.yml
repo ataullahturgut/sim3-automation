@@ -1,0 +1,31 @@
+name: Gold V20 Audit Repair R1
+on:
+  push:
+    branches: ['research-gold-v20-audit-repair-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse repaired model + property tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v20_kavis_atlas_repaired.js
+          node --check v20_kavis_atlas_repaired.test.js
+      - name: Repaired model strict adversarial tests plus legacy core
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --test v16_kavis_siralama.test.js v16_kavis_counterfactual_audit.test.js v17_kavis_olay_doubleq.test.js v18_kavis_adversarial.test.js v20_kavis_atlas_repaired.test.js
+      - name: Explicit refusal of historical-data simulation
+        run: |
+          if grep -E 'loadFullRows|v13_sentez_run|2026_FEB_SEP|function placeOrder' gold_axis_2026/apps/portfolio_guard_v1/v20_kavis_atlas_repaired.js gold_axis_2026/apps/portfolio_guard_v1/v20_kavis_atlas_repaired.test.js; then
+            echo "Unexpected live-order or historical backtest dependency"
+            exit 1
+          fi
