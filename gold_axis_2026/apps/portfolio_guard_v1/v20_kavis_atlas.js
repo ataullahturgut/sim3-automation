@@ -196,13 +196,27 @@ function signal(s,ob){
    }else if(riskEdge<=0){proposed="WAIT";reason="AMBIGUOUS_ENTRY";}
   }
  }
- if(proposed!=="WAIT"&&!base.readiness&&!hardLoss)proposed="WAIT";
+ const rawRiskAdvice=proposed,rawRiskReason=reason;
+ const advisor=advisoryConfidence(s,which);
+ const criticalBudget=p==="GOLD"&&hardLoss&&config.maxDrawdownPct!==null;
+ const disagreement=rawRiskAdvice!==base.action;
+ if(config.useRiskPolicy&&disagreement){
+  s.audit.advisorConsidered++;
+  if(!criticalBudget&&!advisor.verified){
+    proposed=base.action;reason="RISK_ADVISOR_NOT_PROVEN";
+    s.audit.advisorRejected++;
+  }else{s.audit.advisorActivated++;}
+ }
+ if(proposed!=="WAIT"&&!base.readiness&&!criticalBudget)proposed="WAIT";
  const choice=proposed==="WAIT"?"KEEP":"SWITCH";
  fork.pending.choice=choice;
  fork.pending.reason=reason;
  s.core=fork;
- s.pendingContext={bucket:which,position:p,asof:base.at,forced:
-   proposed==="SELL"&&reason!=="DOUBLE_Q"&&reason!=="RISK_ADJUSTED_EXIT"};
+ s.pendingContext={bucket:which,position:p,asof:base.at,
+   shadow:{eligible:disagreement,position:p,bucket:which,
+      adviceAction:rawRiskAdvice,baseAction:base.action},
+   forced:proposed==="SELL"&&
+      (reason==="DRAW_DOWN_GUARD"||reason==="TAIL_BUDGET_GUARD")};
  if(proposed==="SELL"&&(reason.startsWith("TAIL_")||reason==="DRAW_DOWN_GUARD"))
   s.audit.forcedExits++;
  if(p==="CASH"&&base.action==="BUY"&&proposed==="WAIT")s.audit.blockedEntries++;
@@ -213,7 +227,10 @@ function signal(s,ob){
   baseAdvantage:base.actionGap,riskAdjustedAdvantage:riskEdge,
   tailEstimate:tail,drawdownPct:dd,projectedOneIntervalLossPct:projected,
   hardLoss,guardHot:p==="GOLD"?exitGuard:entryGuard,
-  exitGuard,entryGuard,learnedIntervals:s.core.learned,
+  exitGuard,entryGuard,advisorEvidence:advisor,
+  riskAdvisorAction:rawRiskAdvice,riskAdvisorReason:rawRiskReason,
+  advisorApplied:proposed!==base.action,
+  learnedIntervals:s.core.learned,
   ordersSent:0,noLiveOrders:true,notValidatedFinancialForecast:true};
 }
 function appendLoss(a,v,maxLen){
