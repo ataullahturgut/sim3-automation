@@ -1,0 +1,34 @@
+name: Gold January 2026 private vendor H1 retrospective (no raw export)
+on:
+  push:
+    branches: ['research-gold-jan2026-real-h1-fee008-*']
+  pull_request:
+    branches: ['research-gold-v20-r3-gate-calibration-20261016']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: January H1 replay source syntax and private input guards
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check jan2026_h1_fee008_replay.js
+          node --test jan2026_h1_fee008_replay.test.js
+      - name: Research-only baseline and R3 compatibility
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --test v20_atlas_r3_gate.test.js
+          node --test v20_atlas_r2_shadow.test.js
+      - name: Enforce no private raw quotes committed
+        run: |
+          if find gold_axis_2026/apps/portfolio_guard_v1 -maxdepth 1 -iname '*dukascopy*2026*raw*' | grep -q .; then
+            echo 'Do not upload proprietary vendor source files'
+            exit 1
+          fi
