@@ -87,6 +87,7 @@ function create(o={}){
   risk:{head:newHead(),dual:0,matured:0},
   memory:{trend:0,stress:0},
   regime:{n:0,mean:0,m2:0,var:.25,lastSurprise:0},
+  feeKnowledge:{n:0,mean:settings(o).feePerSide,lastKnown:settings(o).feePerSide},
   lastSignalAt:null,lastQuoteAt:null,
   virtualPosition:null,seq:0,pending:null,
   lastExecution:null,learned:0,skipped:0,
@@ -174,7 +175,7 @@ function qValue(s,x,p,a){
  const k=key(p,a);return .5*(dot(s.q[k].w,x)+dot(s.qb[k].w,x));
 }
 function riskValue(s,x){return Math.max(0,dot(s.risk.head.w,x));}
-function rank(s,x,p){
+function rank(s,x,p,currentFee=null){
  const hold=qValue(s,x,p,"KEEP"),switchQ=qValue(s,x,p,"SWITCH");
  const h1=s.q[key(p,"KEEP")],h2=s.q[key(p,"SWITCH")],
    b1=s.qb[key(p,"KEEP")],b2=s.qb[key(p,"SWITCH")];
@@ -196,10 +197,17 @@ function rank(s,x,p){
  // Risk discourages BUY and supports SELL. The risk proxy is the
  // one-interval downside of holding GOLD, not portfolio drawdown or CVaR.
  const signedRisk=p==="CASH"?-riskDelta:riskDelta;
- const edge=switchQ-hold+signedRisk-uncertainty;
+ // Q learned with fees actually paid in past episodes. As-of posted
+ // bank spread may differ. Correct only that difference, never levy
+ // a second fee on top of the learned action value.
+ const benchmark=s.feeKnowledge.mean;
+ const feeCorrection=currentFee===null?0:
+   100*(Math.log(1-currentFee)-Math.log(1-benchmark));
+ const edge=switchQ-hold+signedRisk-uncertainty+feeCorrection;
  const warm=s.learned>=s.config.minimumMaturedIntervals;
  return {action:warm&&edge>0?"SWITCH":"KEEP",
    edge,rawAdvantage:switchQ-hold,uncertainty,disagreement,regimeSurprise:x[D-1],
+   feeCorrection,currentFee:currentFee??benchmark,
    signedRisk,riskDownside:estimatedDownside,
    qKeep:hold,qSwitch:switchQ,ready:warm,
    reason:warm?(edge>0?"Q_SWITCH_POSITIVE":"Q_KEEP_FEE_OR_RISK"):
@@ -219,7 +227,17 @@ function signal(s,ob){
  if(s.virtualPosition!==null&&s.virtualPosition!==ob.position)
    throw Error("V16_VIRTUAL_POSITION_MISMATCH");
  // Validation before state mutation.
- const snap=features(s,ob),choice=rank(s,snap.x,ob.position);
+ let postedFee=null;
+ if(ob.bankFeeQuote!==undefined){
+  const fq=ob.bankFeeQuote;
+  if(!fq||typeof fq!=="object"||!num(fq.feePerSide)||
+   fq.feePerSide<0||fq.feePerSide>=.1||
+   stamp(fq.availableAt)>at||
+   at-stamp(fq.availableAt)>6*HR)
+    throw Error("V18_UNVERIFIED_OR_STALE_BANK_FEE_QUOTE");
+  postedFee=fq.feePerSide;
+ }
+ const snap=features(s,ob),choice=rank(s,snap.x,ob.position,postedFee);
  s.memory=snap.nextMemory;
  if(s.virtualPosition===null)s.virtualPosition=ob.position;
  s.lastSignalAt=at;s.seq++;
@@ -231,7 +249,8 @@ function signal(s,ob){
    action:choice.action==="KEEP"?"WAIT":ob.position==="CASH"?"BUY":"SELL",
    expectedPosition:target(ob.position,choice.action),readiness:choice.ready,
    actionGap:choice.edge,rawAdvantage:choice.rawAdvantage,
-   uncertainty:choice.uncertainty,criticDisagreement:choice.disagreement,
+   uncertainty:choice.uncertainty,bankFeeAdjustment:choice.feeCorrection,
+   estimatedFeePerSide:choice.currentFee,criticDisagreement:choice.disagreement,
    regimeSurprise:choice.regimeSurprise,learnedIntervals:s.learned,
    v15ExpertUsed:snap.v15Included,
    noLiveOrders:true,notAValidatedForecast:true};
@@ -309,6 +328,23 @@ function backup(s,old,newExecutionAt,price,nextX,nextObservedPosition){
    trainedHeads:upd.map(z=>({head:z.k,reward:z.reward,target:z.y})),
    fullInformationCounterfactual:true};
 }
+function hasCorroboration(o,at){
+ const c=o.corroboration;
+ if(!c||!Array.isArray(c.sources)||c.sources.length<2||
+    c.sources.length>5)return false;
+ const seen=new Set();
+ for(const e of c.sources){
+   if(!e||typeof e.provider!=="string"||e.provider.length<3||
+      seen.has(e.provider)||!num(e.referencePrice)||e.referencePrice<=0||
+      typeof e.asof!=="string")return false;
+   let t;try{t=stamp(e.asof);}catch(_){return false;}
+   if(t>at||at-t>HR)return false;
+   if(Math.abs(Math.log(e.referencePrice)-Math.log(o.price))>.05)
+      return false;
+   seen.add(e.provider);
+ }
+ return seen.size>=2;
+}
 function quote(s,o){
  if(!num(o?.price)||o.price<=0)throw Error("V16_INVALID_PRICE");
  const realizedFee=o.bankFeePerSide??s.config.feePerSide;
@@ -343,19 +379,24 @@ function quote(s,o){
    Math.log(s.lastExecution.price)));
   const elapsed=Math.max(1,(at-s.lastExecution.at)/DAY);
   const threshold=s.config.maxQuoteJumpLogPct*Math.max(1,elapsed);
-  if(logJump>threshold&&!o.confirmedExtremeQuote){
+  const substantiated=o.confirmedExtremeQuote===true&&hasCorroboration(o,at);
+  if(logJump>threshold&&!substantiated){
    s.audit.quarantineQuotes++;
    return {at:o.at,quarantined:true,
      reason:"EXCESSIVE_UNCORROBORATED_QUOTE_JUMP",
      quoteLogJumpPct:logJump,needsIndependentEvidence:true,
      fill:null,update:null,ordersSent:0};
   }
-  if(logJump>threshold&&o.confirmedExtremeQuote)
+  if(logJump>threshold&&substantiated)
    s.audit.confirmedExtremeQuotes++;
  }
  const p=s.pending,update=s.lastExecution?
    backup(s,s.lastExecution,at,o.price,p.x,p.position):null;
  const endPosition=target(p.position,p.choice);
+ s.feeKnowledge.n++;
+ s.feeKnowledge.lastKnown=realizedFee;
+ s.feeKnowledge.mean=s.feeKnowledge.n===1?realizedFee:
+   .96*s.feeKnowledge.mean+.04*realizedFee;
  s.lastExecution={at,price:o.price,x:p.x,feePerSide:realizedFee,
    startingPosition:p.position,chosenAction:p.choice,endPosition};
  s.virtualPosition=endPosition;
@@ -389,6 +430,11 @@ function restore(x){
    !num(a.memory.trend)||!num(a.memory.stress)||
    !a.regime||!Number.isInteger(a.regime.n)||a.regime.n<0||
    !num(a.regime.mean)||!num(a.regime.m2)||!num(a.regime.var)||a.regime.var<.04||
+   !a.feeKnowledge||!Number.isInteger(a.feeKnowledge.n)||
+   a.feeKnowledge.n<0||!num(a.feeKnowledge.mean)||
+   !num(a.feeKnowledge.lastKnown)||
+   a.feeKnowledge.mean<0||a.feeKnowledge.mean>=.1||
+   a.feeKnowledge.lastKnown<0||a.feeKnowledge.lastKnown>=.1||
    !num(a.risk.dual)||a.risk.dual<0||
    !a.risk.head||!validVector(a.risk.head.w)||
    !validVector(a.risk.head.acc)||
