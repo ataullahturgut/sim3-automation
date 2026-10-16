@@ -35,7 +35,7 @@
 | Yeni AL/SAT getirisi | Hesaplanamaz; karar motoru yok |
 | Bu eklentinin yeni teknik testleri | 5/5 V8 çalışma ortamında geçti; Actions ayrıca takip edilecek |
 
-Önceki gerçek Ocak S1 piyasa incelemesinin sonucu DEĞİŞMEDİ: 102 tam gözlem; 70 olgun dört saatlik yön karşılaştırmasında S1 31/70, basit tarihsel oran 35/70, Brier sırasıyla 0.271422 ve 0.256330. Bu yeni modülle 102 fiyat gözlemi baştan koşulmadı. Dolayısıyla fiyat başarısı veya P&L arttı iddiası YOK. Sentetik belge-tarih deneyinde olay özelliği model prototipine giriyor, gerçek BLS arşiviyle ilk erişim denetiminde sıfır kalıyor. PIT yokken ekonomik on/off ablation modelleri özdeş olmalı ve bu da test edildi.
+**Ek gerçek piyasa koşusu:** Salt okunur Neon sorgusu ile Ocak 2023'ün 102 fiyat gözlemi tekrar alındı ve mevcut replay_reconstructed_jan2023_s1.run ile kontrol edildi: 70 olgun 4 saatlik yön karşılaştırmasında S1 31/70, basit geçmiş oran 35/70; Brier 0.2714222191 ve 0.2563301662. Ardından **yeni pairedReplay modülü aynı 102 gerçek fiyat gözlemiyle ayrı çalıştırıldı:** 70 değerlendirilebilir sonuç, 0 sertifikalı EVENT kabulü, 4 karantina edilmiş olay-bileşeni gözlemi, ekonomik-on Brier 0.2714222191 ve ekonomik-off Brier 0.2714222191; her ikisi 31/70 doğru; 8/8 prototip **tamamen özdeş**. Lisanslı ham fiyatlar GitHub'a yazılmadı. Sonuç: iki koşulun farkı 0 ve hiçbir ekonomi üstünlüğü henüz kanıtlanmadı. Sentetik zaman zinciri örneğinde onaylı olay özelliği mevcut S1 prototipine girebiliyor; gerçek dört makro girdisi karantinada kalıyor.
 
 ## Açık kabul kapıları ve tek sonraki iş
 
