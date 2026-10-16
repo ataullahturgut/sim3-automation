@@ -329,3 +329,19 @@ Ana `adaptive_rule_discovery_s1.js` içine tek isteğe bağlı `LOCAL_MATURED_EX
 **Geliştirme ≠ bilimsel kabul:** S2 teknik testleri, geçmiş veride 2023–2025 araştırma koşusu, kalibrasyon ve basit süre/hazard baz çizgisi ayrı raporlanacak. Bir bileşenin üretilmiş olması yatırım getirisi veya OOS avantajı anlamına gelmez; retrospective `DISCOVERY_FULL_ARCHIVE` gerçek ilk-vintage `STRICT_WALK_FORWARD` yerine konmaz. 2023 Ocak tam strateji yürüyüşü/S3 bilimsel kabul/S5 handoff/U1 canlı uygulama bu izinle otomatik açılmaz. Banka makası (%0,8 her yön) değişmez. OLAY-02/ÖĞREN-03 salt-okunur.
 
 **Güncel proje durumu:** S1 bilimsel kabul açık (FAIL); **S2 mühendislik geliştirmesi başladı, bilimsel kabul açık**; S3/S4/S5/S6/U1 henüz kabul edilmedi. Bu bölüm önceki sıra kilidinin sadece **S2_DEV başlangıç koşulunu** açıkça değiştirir; diğer bilim kapılarını kaldırmaz. [Geliştirme aşamaları](adaptive_trading_core/BUILD_STAGES_20261016.md).
+
+
+---
+
+## 19. S2 DEV ilk gerçek yürüyüş — fiyat yaşam döngüsü ve bitiş hazard (16 Ekim 2026)
+
+**Kullanıcı onaylı §18 esnetmesi uygulandı.** [S2 tam denetim raporu](adaptive_trading_core/S2_PRICE_LIFECYCLE_PILOT_AUDIT_20261016.md) · [epizot ve hazard öğrenme CORE bileşeni](adaptive_trading_core/adaptive_phase_lifecycle_s2.js) · [tek S1+S2 CORE birleşimi](adaptive_trading_core/adaptive_market_core_s1_s2.js) · [salt-okunur piyasa replay](adaptive_trading_core/replay_phase_lifecycle_s2.js) · [dokuz S2 testi](adaptive_trading_core/adaptive_phase_lifecycle_s2.test.js).
+
+- **S2_DEV başladı ve ilk kod gerçek veride çalıştı, S2 bilimsel kabul edilmedi.** S1 ekonomik sürprizlerinden bağımsız, tamamlanmış XAU M15'e dayanan tarafsız/dairesel olmayan basit trend/retracement evre adayları (START/CONTINUE/PULLBACK/END/REENTRY), kapanmış/sansürlü epizot hafızası, tamamlandıktan sonra öğrenilen durum/istikamet-koşullu 4s bitiş riski ve gecikmiş etiketli kıyaslama kuruldu. Bu evreler **mühendislik koşullu tanımlarıdır**, ekonomik nedenle veya AL/SAT kararıyla karıştırılmayacak. Yapısal eşik kalibrasyonu 2023–25 sonuçlarına göre sonradan optimize edilmedi.
+- **Gerçek Neon 2023–25:** 67.919 XAU M15 satırı / **67.653 tam** / 266 reddedilen; **1.223 tamamlanmış** epizot, **341 sağ-sansürlü**; medyan süre 3s 45dk; **1.596** zamanında olgunlaşmış karşılaştırılabilir 4s bitiş tahmini. 2023–24 ve 2025 iki farklı XAU kaynak kimliği taşıdığı için kaynak değişiminde **sansür** zorunlu, fiyat/epizot yapay olarak birleştirilmedi.
+- **S2 Brier 0,241926**, yalnız önceden bitmiş epizotların geçmiş süre risk dağılımı baz çizgisi **0,243622**. Küçük iyileşme **+0,001696**, epizot bazlı 1.000-bootstrap açıklayıcı %95 **[−0,000320; +0,003733]** ve **sıfır dahil**. Bu, bağımsız OOS başarı/alpha değil, 2023–25 arşivinde retrospektif research. `S2_SCIENCE_GATE=PENDING`.
+- **Tek model doğrulaması:** 2023 Ocak'taki 1.903 tam M15 barı mevcut S1 kural motoruna S2'nin as-of evre/süre/yön/drawdown özellikleriyle birleştirilmiş girildi; S1 CORE **101 anchor, 94 olgun sonuç, 2 öğrenilmiş prototip** üretti. İki alt mekanizma birlikte çalıştı; S1'in ekonomik genellemesi hâlâ bilimsel kabul edilmiş değil.
+- **Test:** Önceki 46 S1 + yeni 9 S2 = **55/55** izolasyonlu JS regresyon testi başarılı; workflow'a yeni S2 CI adımı eklendi, gerçek Actions çalışması henüz ayrıca doğrulanmadı. Ham fiyatlar veya gerçek lisanslı piyasa checkpointleri depoya yazılmadı.
+- **Açık kalacak bilim şartları:** epizot ground-truth ve hazard kalibrasyonu, çakışmayan bağımsız olaylar, 4s–2hafta çapraz ufuklar, geleceği görmeyen fiyat-vintage, mümkünse yeni gerçek veri, bağımsız baseline/ablation. S2 hazırlığı S1 bilim FAIL'ini silmez ve **S3, S4, S5, S6, APP bilimsel ya da canlı kabulünü otomatik açmaz**. AL–TUT–SAT=NOT_IMPLEMENTED; banka maliyeti %0,8/her yön değişmedi.
+
+**WORKSTREAM=MODEL | S1_SCIENCE=FAIL | S2_DEV=INITIAL_IMPLEMENTATION_DONE | S2_SCIENCE=PENDING | S3_S4_S5_S6_U1=NOT_ACCEPTED | TRADES=0.**
