@@ -261,4 +261,17 @@ function run(rows,ledgerCSV){
   // Never return serialized proprietary market price observations/checkpoints.
   coreCheckpointSerialization:"PRIVATE_ONLY_RESEARCH_MODE_NOT_FOR_STRICT_OR_PUBLIC_REPO"};
 }
+if(require.main===module){
+ // Only private runtime inputs. stdout contains summaries and SHA256, not bars.
+ const fs=require("node:fs"),crypto=require("node:crypto");
+ if(process.argv.length!==4)throw Error(
+   "Usage: node replay_macro_waves_in_existing_core_s1.js PRIVATE_ROWS.json PRIVATE_MACRO_LEDGER.csv");
+ const raw=fs.readFileSync(process.argv[2],"utf8");
+ const ledger=fs.readFileSync(process.argv[3],"utf8");
+ const sha=crypto.createHash("sha256").update(raw).update("\n").update(ledger)
+   .digest("hex");
+ const out=run(JSON.parse(raw),ledger);
+ console.log(JSON.stringify({runId:"S1_ARCHIVE_CORE_"+sha.slice(0,16),inputSha256:sha,
+   ...out},null,2));
+}
 module.exports={run,observations,make,eventFeatures,registry};
