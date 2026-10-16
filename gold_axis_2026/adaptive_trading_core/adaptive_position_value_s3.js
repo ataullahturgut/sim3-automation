@@ -12,6 +12,7 @@
  */
 const memory=require("./adaptive_position_memory_s3");
 const longCycle=require("./adaptive_long_cycle_s3");
+const opportunity=require("./adaptive_opportunity_learning_s3");
 const VERSION="KAVIS_S3_POSITION_VALUE_CRITIC_R2_20261016";
 const FEE_PER_LEG=0.008, STEP=15*60*1000;
 const HOLDINGS=["CASH","GOLD"],ACTIONS=["KEEP","SWITCH"];
@@ -32,7 +33,8 @@ function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
   throw Error("S3_POSITION_POLICY_MODE_INVALID");
  return {version:VERSION,mode:learningMode,registry:clone(sourceRegistry),
   config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates,positionResearchMode},
-  sessionMemory:memory.create(),longCycle:longCycle.create(),lastS1Evidence:null,
+  sessionMemory:memory.create(),longCycle:longCycle.create(),
+   opportunity:opportunity.create(),lastS1Evidence:null,
   q:{},last:null,audit:{bars:0,updates:0,gaps:0,sourceBreaks:0,
    proposed:0,abstained:0,shadowTrades:0,
    decisionsByReason:{},s1ResearchForecastReceived:0,
@@ -165,6 +167,9 @@ function observe(s,o){
   s.paper.firstPrice=o.price;
   s.paper.buyHoldOunces=100*(1-FEE_PER_LEG)/o.price;
  }
+ const opportunityResearch=opportunity.observeCandidate(s.opportunity,{
+    at:o.asof,price:o.price,sourceId:o.sourceId,fast:o.fast,slow:o.slow,
+    s1Evidence:o.s1Evidence});
  const h=s.paper.holding;
  const keep=s.q[key(c,h,"KEEP")],sw=s.q[key(c,h,"SWITCH")];
  // Correlated M15 updates are NOT independent episodes or a science PASS.
@@ -253,7 +258,7 @@ function observe(s,o){
   multiSessionResearch:{state:sessionState,fiveSession:longFive,
      policyMode:s.config.positionResearchMode,
      quoteAccepted:true,executionVenueCertified:false},
-  longCycleResearch:longResearch,
+  longCycleResearch:longResearch,opportunityResearch,
   nextObservedBarResearchOrder:s.paper.pendingOrder?
    clone(s.paper.pendingOrder):null,
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
@@ -276,6 +281,7 @@ function summary(s){
     maxDrawdownPct:s.paper.enabled&&s.paper.valid?s.paper.maxDrawdownPct:null,
     feeUsdShadow:s.paper.enabled?s.paper.fees:null
   },positionMemory:memory.summary(s.sessionMemory),
+   opportunityMemory:opportunity.summary(s.opportunity),
    longCycleMemory:longCycle.summary(s.longCycle),
    lastS1Evidence:s.lastS1Evidence?clone(s.lastS1Evidence):null,
    scienceGate:"NOT_PROVEN",liveTradeAuthorized:false,
@@ -291,16 +297,21 @@ function restore(data){
   throw Error("S3_BAD_CHECKPOINT");
  s.sessionMemory=memory.restore(s.sessionMemory);
  s.longCycle=longCycle.restore(s.longCycle);
+ // Legacy checkpoints have no opportunity state; never invent previous learning.
+ s.opportunity=s.opportunity?opportunity.restore(s.opportunity):opportunity.create();
  return s;
 }
 function observeCompletedSession(s,session){
  if(s.version!==VERSION)throw Error("S3_BAD_CHECKPOINT_VERSION");
  if(!s.registry[session.sourceId])throw Error("S3_UNREGISTERED_SESSION_SOURCE");
  const updated=memory.completed(s.sessionMemory,session);
+ const opportunityUpdate=opportunity.closeSession(s.opportunity,{
+  session:session.session,sourceId:session.sourceId,price:session.price,
+  availableAt:session.availableAt});
  const outcome=longCycle.observe(s.longCycle,{...session,
     shadowHolding:s.paper.holding,
     shadowProposal:s.lastProposedResearchAction??"KEEP"});
- return {...updated,longCycle:outcome};
+ return {...updated,longCycle:outcome,opportunity:opportunityUpdate};
 }
 module.exports={VERSION,FEE_PER_LEG,create,observe,observeCompletedSession,
  summary,checkpoint,restore,
