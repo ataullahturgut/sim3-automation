@@ -67,7 +67,8 @@ test("Missing 15m bar right-censors open episode and unresolved forecasts",()=>{
  assert.equal(s.censored,1);
  assert.equal(s.completed.length,0);
  assert.equal(s.pending.length,0);
- assert.ok(s.scores.censoredPredictions>=n);
+ assert.ok(Object.values(s.scores.byHorizon).reduce((z,h)=>z+h.censored,0)>=n);
+ assert.ok(s.scores.censoredPredictions>0);
 });
 test("Price first-access, complete M15 and strict provenance prevent time travel",()=>{
  const s=life.create({sourceRegistry:registry("RECONSTRUCTED_MARKET_ASOF"),
@@ -127,7 +128,8 @@ test("Different 2025 price source switches must right-censor, even on adjacent M
  assert.equal(s.censored,1);
  assert.equal(s.completed.length,0);
  assert.equal(s.pending.length,0);
- assert.ok(s.scores.censoredPredictions>=n);
+ assert.ok(Object.values(s.scores.byHorizon).reduce((z,h)=>z+h.censored,0)>=n);
+ assert.ok(s.scores.censoredPredictions>0);
 });
 test("S2 integration rejects unregistered sources and preserves no-trade authority",()=>{
  const b=model.create({sourceId:SRC,sourceEvidence:"SYNTHETIC_ONLY",
