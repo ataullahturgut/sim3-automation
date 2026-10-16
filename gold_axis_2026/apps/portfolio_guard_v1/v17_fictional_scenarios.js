@@ -35,8 +35,8 @@ function features(prices,d){
  const prev=[];
  for(let j=Math.max(1,last-9);j<=last;j++)
   prev.push(100*(ln(j)-ln(j-1)));
- const mu=prev.reduce((a,b)=>a+b,0)/prev.length;
- const rv=Math.sqrt(prev.reduce((a,b)=>a+(b-mu)**2,0)/prev.length);
+ const mu=prev.length?prev.reduce((a,b)=>a+b,0)/prev.length:0;
+ const rv=prev.length?Math.sqrt(prev.reduce((a,b)=>a+(b-mu)**2,0)/prev.length):0;
  const pk=Math.max(...prices.slice(Math.max(0,last-40),last+1));
  return {r4:r(1),r1:r(3),r3:r(8),rv,dd:100*Math.log(prices[last]/pk)};
 }
