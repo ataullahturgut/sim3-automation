@@ -75,7 +75,11 @@ def break_labels(P, theta=THETA, m=M_BREAK):
     brk = [None if lab[i] is None else 0 for i in range(n)]
     for top, c in tops:
         for q in range(top + 1, min(top + m, c) + 1):
-            if q < n:
+            # Bacağın DİBİ hariç: zigzag dip gününü yükselen bacağa yazar ve o gün aynı anda
+            # düşüş bacağının onay günü olabilir (ör. 2020-08-12). Dibi "kırılma" diye
+            # etiketlemek, satış sinyaline tam tersini öğretirdi. Mantıksal çıkarım
+            # brk ⟹ düşme burada zorunlu kılınır (ek-3'teki birleştirmenin dayanağı).
+            if q < n and lab[q] == 0:
                 brk[q] = 1
     return brk, conf, tops
 
@@ -256,13 +260,42 @@ def macro_confirms(mrow):
     return bool((rr is not None and rr > 0) or (y2 is not None and y2 > 0))
 
 
-class TeraziV3:
-    """Giriş: v2 nesnesi aynen. Çıkış: hızlı kırılma kanalı VEYA v2'nin yavaş kanalı."""
+def combine(P, U, Q, UQ, p0):
+    """Ek-3: kırılma kanıtını olabilirlik oranı olarak yükselme bahsine uygula.
 
-    def __init__(self, p0, exit_lam=EXIT_LAM):
+    brk ⟹ düşme olduğu için kırılma kanıtı yükselme aleyhine kanıttır.
+        odds_etkin = odds(P) / LR,   LR = [Q/(1−Q)] / [p0/(1−p0)]
+    Belirsizlik logit ölçeğinde toplanır (delta yöntemi); yeni parametre yoktur (κ = 1).
+    """
+    eps = 1e-9
+    P = min(max(P, eps), 1 - eps)
+    odds = P / (1 - P)
+    s_P = U / max(P * (1 - P), eps)
+    if Q is None or UQ is None:
+        Pe = P
+        s = s_P
+    else:
+        Q = min(max(Q, eps), 1 - eps)
+        p0 = min(max(p0, eps), 1 - eps)
+        LR = (Q / (1 - Q)) / (p0 / (1 - p0))
+        odds = odds / max(LR, eps)
+        Pe = odds / (1 + odds)
+        s_Q = UQ / max(Q * (1 - Q), eps)
+        s = math.sqrt(s_P * s_P + s_Q * s_Q)
+    Ue = s * Pe * (1 - Pe)
+    return Pe, Ue
+
+
+class TeraziV3:
+    """mode='unified' (v3.2, birincil): iki kanal tek sonsalda birleşir, karar v2'nin tek kuralı.
+    mode='dual'   (v3.1, kayıt için): hızlı kanal ayrı oy verir — çelişki üretir, bkz. ek-3."""
+
+    def __init__(self, p0, exit_lam=EXIT_LAM, mode="unified", macro_gate=True):
         self.entry = T2.TeraziV2()          # giriş kanalı — v2 koduyla birebir aynı
         self.exitb = BreakBase(p0)
         self.exit_lam = float(exit_lam)
+        self.mode = mode
+        self.macro_gate = bool(macro_gate)
 
     @property
     def p0(self):
@@ -275,17 +308,38 @@ class TeraziV3:
         zq = None
         if dx is not None and dx["U"] > 0:
             zq = (dx["Q"] - self.p0) / dx["U"]      # v2'nin z-testi, referans p0
+        Pe = Ue = None
+        if de is not None:
+            Pe, Ue = combine(de["P"], de["U"],
+                             None if dx is None else dx["Q"],
+                             None if dx is None else dx["U"], self.p0)
         info = dict(P=None if de is None else de["P"], U=None if de is None else de["U"],
                     Q=None if dx is None else dx["Q"], UQ=None if dx is None else dx["U"],
-                    zq=zq, lam=self.exit_lam, macro=macro_confirms(mrow),
+                    Pe=Pe, Ue=Ue, zq=zq, lam=self.exit_lam, macro=macro_confirms(mrow),
                     entry_top=None if de is None else de["top"],
                     exit_top=None if dx is None else dx["top"], reason=None)
+
+        if self.mode == "unified":
+            # Ek-3: TEK sonsal, TEK kural (v2'nin kuralı). Alış ve satış aynı sayıyı kullanır,
+            # bu yüzden "sat sonra ertesi gün al" çelişkisi yapısal olarak imkânsızdır.
+            if Pe is None:
+                return "HOLD", info
+            if pos == 0:
+                if Pe - LAM * Ue > 0.5:
+                    info["reason"] = "tek sonsal: yükselme evresine emin"
+                    return "AL", info
+                return "HOLD", info
+            if Pe + LAM * Ue < 0.5 and (info["macro"] or not self.macro_gate):
+                info["reason"] = "tek sonsal: düşme evresine emin" + ("" if self.macro_gate else " (makro freni yok)")
+                return "SAT", info
+            return "HOLD", info
+
+        # mode == "dual": v3.1, kayıt için korunuyor
         if pos == 0:
             if de is not None and de["P"] - LAM * de["U"] > 0.5:
                 info["reason"] = "yavaş kanal: yükselme evresine emin"
                 return "AL", info
             return "HOLD", info
-        # pozisyondayız: hızlı kanal önce sınanır
         if zq is not None and info["macro"] and zq > self.exit_lam:
             info["reason"] = "hızlı kanal: bacak kırıldı + makro onayı"
             return "SAT", info

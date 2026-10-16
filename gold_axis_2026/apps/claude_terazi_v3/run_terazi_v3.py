@@ -31,7 +31,7 @@ def warmup_base_rate(brk, conf, warm_end_idx):
     return float(np.mean(vals)), len(vals)
 
 
-def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, write=True):
+def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, mode="unified", macro_gate=True, write=True):
     rows = S.load_rows(dev_only=True)
     raw, macro = S.build_states(rows)
     Z, std = S.standardize(raw)
@@ -42,7 +42,7 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, w
     warm_end_idx = max(i for i, r in enumerate(rows) if r["date"] <= WARM_END)
     p0, n_p0 = warmup_base_rate(brk, bconf, warm_end_idx)
 
-    net = T3.TeraziV3(p0, exit_lam)
+    net = T3.TeraziV3(p0, exit_lam, mode=mode, macro_gate=macro_gate)
     learned_lab, learned_brk = set(), set()
     if write:
         os.makedirs(os.path.join(outdir, "reports"), exist_ok=True)
@@ -79,13 +79,18 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, w
                                 P=None if info["P"] is None else round(info["P"], 3),
                                 Q=None if info["Q"] is None else round(info["Q"], 3),
                                 UQ=None if info["UQ"] is None else round(info["UQ"], 3),
-                                zq=None if info["zq"] is None else round(info["zq"], 3), lam=info["lam"], macro=info["macro"],
-                                rules=info["exit_top"] if info["reason"].startswith("hızlı") else info["entry_top"]))
+                                Pe=None if info["Pe"] is None else round(info["Pe"], 4),
+                                Ue=None if info["Ue"] is None else round(info["Ue"], 4),
+                                zq=None if info["zq"] is None else round(info["zq"], 3),
+                                lam=info["lam"], macro=info["macro"],
+                                rules=info["entry_top"], exit_rules=info["exit_top"]))
             rec = dict(date=str(r["date"]), gold=round(r["p06"], 2), pos=pos,
                        P=None if info["P"] is None else round(info["P"], 3),
                        U=None if info["U"] is None else round(info["U"], 3),
                        Q=None if info["Q"] is None else round(info["Q"], 3),
                        UQ=None if info["UQ"] is None else round(info["UQ"], 3),
+                       Pe=None if info["Pe"] is None else round(info["Pe"], 4),
+                       Ue=None if info["Ue"] is None else round(info["Ue"], 4),
                        zq=None if info["zq"] is None else round(info["zq"], 3),
                        macro=info["macro"], phase=lab[i], brk=brk[i])
             days.append(rec); daily.append(rec)
@@ -163,7 +168,7 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, w
     return dict(rows=rows, raw=raw, Z=Z, std=std, net=net, i0=i0, p0=p0, n_p0=n_p0,
                 nav_hist=nav_hist, gross_hist=gross_hist, trades=trades, reports=reports,
                 lab=lab, conf=conf, brk=brk, bconf=bconf, tops=tops, daily=daily,
-                theta=theta, m_break=m_break, exit_lam=exit_lam)
+                theta=theta, m_break=m_break, exit_lam=exit_lam, mode=mode, macro_gate=macro_gate)
 
 
 def gate_census(rules):

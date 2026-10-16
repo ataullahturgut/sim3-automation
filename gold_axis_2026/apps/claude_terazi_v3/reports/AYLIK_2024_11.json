@@ -2,18 +2,148 @@
  "month": "2024-11",
  "days": 21,
  "gold_change_pct": -4.41,
- "nav_start": 131.9154,
- "nav_end": 125.1232,
- "month_ret_pct": -5.15,
+ "nav_start": 123.809,
+ "nav_end": 112.07,
+ "month_ret_pct": -9.48,
  "position_end": "ALTIN",
  "phase_days_rising": 12,
  "break_days": 5,
- "position_matches_phase": "12/21",
+ "position_matches_phase": "14/21",
  "mean_P": 0.631,
  "mean_Q": 0.06,
- "exit_threshold": 0.1353,
+ "exit_lambda": 0.5,
+ "base_rate": 0.0677,
  "macro_confirm_days": 16,
- "trades": [],
+ "trades": [
+  {
+   "date": "2024-11-07",
+   "action": "SAT",
+   "price": 2657.47,
+   "reason": "hızlı kanal: bacak kırıldı + makro onayı",
+   "P": 0.626,
+   "Q": 0.157,
+   "UQ": 0.093,
+   "zq": 0.956,
+   "lam": 0.5,
+   "macro": true,
+   "rules": [
+    [
+     "altın 1g getiri < -1.5σ VE altın 20g getiri > -1.5σ VE petrol 20g < +1.5σ",
+     0.163,
+     0.54
+    ],
+    [
+     "altın 1g getiri < -1.5σ VE altın 20g getiri > -1.0σ VE petrol 20g < +1.5σ",
+     0.172,
+     0.55
+    ],
+    [
+     "altın 1g getiri < -1.5σ VE altın 20g getiri > -1.0σ VE son CPI sürprizi < +1.5σ",
+     0.173,
+     0.54
+    ],
+    [
+     "altın 1g getiri < -1.0σ VE altın 20g getiri > -1.0σ VE son NFP sürprizi < +1.5σ",
+     0.135,
+     0.35
+    ]
+   ]
+  },
+  {
+   "date": "2024-11-08",
+   "action": "AL",
+   "price": 2688.97,
+   "reason": "yavaş kanal: yükselme evresine emin",
+   "P": 0.659,
+   "U": 0.119,
+   "rules": [
+    [
+     "60g zirveye uzaklık < +1.0σ",
+     0.63,
+     0.76
+    ],
+    [
+     "altın 20g getiri > -1.5σ VE 60g zirveye uzaklık > -1.0σ VE GVZ düzeyi > -1.5σ",
+     0.761,
+     0.72
+    ],
+    [
+     "altın 5g getiri < +1.0σ VE 60g zirveye uzaklık < +0.5σ",
+     0.567,
+     0.93
+    ],
+    [
+     "altın 5g getiri < +0.5σ VE 60g zirveye uzaklık < +0.5σ",
+     0.55,
+     0.93
+    ]
+   ]
+  },
+  {
+   "date": "2024-11-12",
+   "action": "SAT",
+   "price": 2600.49,
+   "reason": "hızlı kanal: bacak kırıldı + makro onayı",
+   "P": 0.587,
+   "Q": 0.141,
+   "UQ": 0.096,
+   "zq": 0.765,
+   "lam": 0.5,
+   "macro": true,
+   "rules": [
+    [
+     "altın 1g getiri < -1.5σ VE altın 20g getiri > -1.5σ VE petrol 20g < +1.5σ",
+     0.163,
+     0.54
+    ],
+    [
+     "altın 1g getiri < -1.5σ VE altın 20g getiri > -1.0σ VE petrol 20g < +1.5σ",
+     0.172,
+     0.55
+    ],
+    [
+     "altın 1g getiri < -1.5σ VE altın 20g getiri > -1.0σ VE son CPI sürprizi < +1.5σ",
+     0.173,
+     0.54
+    ],
+    [
+     "altın 1g getiri < -1.0σ VE altın 20g getiri > -1.0σ VE son NFP sürprizi < +1.5σ",
+     0.135,
+     0.35
+    ]
+   ]
+  },
+  {
+   "date": "2024-11-13",
+   "action": "AL",
+   "price": 2607.89,
+   "reason": "yavaş kanal: yükselme evresine emin",
+   "P": 0.581,
+   "U": 0.099,
+   "rules": [
+    [
+     "altın 5g getiri < +1.0σ VE 60g zirveye uzaklık < +0.5σ",
+     0.567,
+     0.93
+    ],
+    [
+     "altın 5g getiri < +0.5σ VE 60g zirveye uzaklık < +0.5σ",
+     0.55,
+     0.93
+    ],
+    [
+     "altın 20g getiri < +1.0σ VE 60g zirveye uzaklık < +0.5σ",
+     0.568,
+     0.94
+    ],
+    [
+     "altın 5g getiri < +1.0σ VE 60g zirveye uzaklık < +0.5σ VE son NFP sürprizi < +1.5σ",
+     0.535,
+     0.9
+    ]
+   ]
+  }
+ ],
  "entry_base_size": 60,
  "exit_base_size": 39,
  "entry_rules_born": [

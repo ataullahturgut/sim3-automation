@@ -2,18 +2,84 @@
  "month": "2024-04",
  "days": 22,
  "gold_change_pct": 5.72,
- "nav_start": 104.177,
- "nav_end": 108.9085,
- "month_ret_pct": 4.54,
+ "nav_start": 102.6072,
+ "nav_end": 104.8144,
+ "month_ret_pct": 2.15,
  "position_end": "ALTIN",
  "phase_days_rising": 22,
  "break_days": 0,
- "position_matches_phase": "22/22",
+ "position_matches_phase": "21/22",
  "mean_P": 0.646,
  "mean_Q": 0.063,
- "exit_threshold": 0.1353,
+ "exit_lambda": 0.5,
+ "base_rate": 0.0677,
  "macro_confirm_days": 19,
- "trades": [],
+ "trades": [
+  {
+   "date": "2024-04-23",
+   "action": "SAT",
+   "price": 2303.11,
+   "reason": "hızlı kanal: bacak kırıldı + makro onayı",
+   "P": 0.607,
+   "Q": 0.131,
+   "UQ": 0.079,
+   "zq": 0.806,
+   "lam": 0.5,
+   "macro": true,
+   "rules": [
+    [
+     "altın 5g getiri > -1.5σ",
+     0.053,
+     0.7
+    ],
+    [
+     "altın 1g getiri < -1.0σ VE altın 20g getiri > -1.0σ VE altın 20g oynaklık > -1.5σ",
+     0.158,
+     0.29
+    ],
+    [
+     "altın 1g getiri < -1.0σ VE altın 20g getiri > -1.0σ VE petrol 5g < +1.5σ",
+     0.149,
+     0.25
+    ],
+    [
+     "altın 1g getiri < -1.0σ VE altın 20g getiri > -1.0σ VE GVZ düzeyi > -1.5σ",
+     0.168,
+     0.26
+    ]
+   ]
+  },
+  {
+   "date": "2024-04-24",
+   "action": "AL",
+   "price": 2319.45,
+   "reason": "yavaş kanal: yükselme evresine emin",
+   "P": 0.629,
+   "U": 0.118,
+   "rules": [
+    [
+     "altın 20g getiri > -0.5σ VE altın 20g oynaklık > -1.5σ VE 60g zirveye uzaklık > -0.5σ",
+     0.677,
+     0.9
+    ],
+    [
+     "altın 20g getiri > -0.5σ VE altın 20g oynaklık > -1.0σ VE 60g zirveye uzaklık > -0.5σ",
+     0.707,
+     0.89
+    ],
+    [
+     "altın 20g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ VE GVZ düzeyi > -1.0σ",
+     0.736,
+     0.9
+    ],
+    [
+     "altın 20g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ VE petrol 20g < +1.0σ",
+     0.69,
+     0.88
+    ]
+   ]
+  }
+ ],
  "entry_base_size": 60,
  "exit_base_size": 47,
  "entry_rules_born": [

@@ -11,7 +11,8 @@
  "position_matches_phase": "22/22",
  "mean_P": 0.564,
  "mean_Q": 0.054,
- "exit_threshold": 0.1353,
+ "exit_lambda": 0.5,
+ "base_rate": 0.0677,
  "macro_confirm_days": 16,
  "trades": [
   {
