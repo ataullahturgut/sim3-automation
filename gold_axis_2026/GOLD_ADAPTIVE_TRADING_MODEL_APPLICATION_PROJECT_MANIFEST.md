@@ -235,3 +235,17 @@ OLAY-02/ÖĞREN-03 orijinal kaynakları **read-only** kullanılarak 7 aile, 12 O
 102 piyasa gözleminden, 2 açıklama için aynı-UTC saatli/daha önce bilinen piyasa durumlarına göre kontrol eşleştirmesi yapıldı; 68 olaysız kontrolün 33'ü UP, 35'i UP dışı. 6 Ocak olay sonrası 4s +%0,3486 ve kontrol ortalaması +%0,2437; 12 Ocak +%0,4711 ve kontrol ortalaması +%0,2473. Her iki seçilmiş kontrol grubu da pozitif olduğundan **ekonomik haberin altın yükselişine neden olduğuna veya kuralın bağımsız öngörü sağladığına kanıt yoktur**. Bu yalnız retrospektif olay-kontrol araştırmasıdır; causal signal veya öğrenilmiş net işlem politikası değildir.
 
 **Model durum kilidi:** `ECONOMIC_EVIDENCE_RESEARCH_LINK=YES`, `CERTIFIED_PIT_EVENT_SIGNAL=NO`, `MODEL_GATE=FAIL`, `S2/S3=NOT_STARTED`, `UYGULAMA=UNCHANGED`; ekonomik araştırma için ayrı branch/model/sinyal kapısı açılmadı. Başka aya atlama yok. Bir sonraki gereklilik ilk baskı ve vintage ile doğrulanmış ekonomik veri + çapraz-piyasa saat kanıtı, ardından yalnız eğitimin izinli saatinde S1 kural öğrenimine giriş ve karşıt/olaysız kontrollere karşı bağımsız denetim.
+
+
+---
+
+## 13. S1 PIT ekonomik veri kabulü + öğrenim/ablasyon köprüsü — 16 Ekim 2026
+
+**Kayıt:** [Ocak 2023 S1 PIT ekonomik öğrenim ve bilim kapısı](adaptive_trading_core/JAN2023_S1_PIT_ECONOMIC_LEARNING_GATE_20261016.md) · [PIT-gated mevcut CORE bağlantısı](adaptive_trading_core/economic_pit_learning_s1.js) · [5 yeni test](adaptive_trading_core/economic_pit_learning_s1.test.js) · [BLS ilk-vintage kontrol satırları](adaptive_trading_core/JAN2023_BLS_ORIGINAL_RELEASE_VINTAGE_AUDIT_20261016.csv).
+
+- Yeni model/branch/app veya manuel yön kuralı açılmadı; aynı S1 çekirdeği için source-vintage şartlı EVENT özellikleri ve aynı CORE ile ekonomik-on/off prequential ablation koşucu kodlandı.
+- Resmî BLS 6 Ocak NFP 223 bin / UNEMP %3,5 / AHE %0,3 ile 12 Ocak TÜFE -%0,1 ilk açıklama arşivinden karşılaştırıldı; **4/4 initial actual içerik doğrulandı**. Ancak resmî embargo 13:30 UTC **ilk gerçek ulaşma zamanı sertifikası değildir**; contemporaneous actual erişim logu ve ön-yayın konsensüs vintage hâlâ yok.
+- Yeni katmanda iki açıklama dalgasında **0/4 PIT-sertifikalı bileşen**, **0 gerçek EVENT özelliği**; 6 Ocak üç bileşen aynı yayım, 12 Ocak CPI tek yayım. Sentetik complete-PIT kaydı CORE'a öğrenen özellik olarak aktarılabilir; mevcut gerçek arşiv bu yetkiyi almadı.
+- Yeni 5/5 eklenti sözleşme testi izole JS çalışma ortamında PASS; aynı dalda [var olan CORE GitHub Actions workflow'u](../.github/workflows/gold-core-timeless-v0-tests.yml) yeni testleri de çalıştıracak şekilde güncellendi. **GitHub Actions sonucunun ayrıca okunması gerekir; teknik test real alpha başarısı değildir.**
+- Değişmeyen bilimsel durum: **MODEL_GATE=FAIL**, VERIFIED_ECONOMIC_RULE=NOT_PROVEN, S2/S3/S4=NOT_STARTED, AL_SAT=NOT_IMPLEMENTED, APP=UNCHANGED. Önceki Ocak S1 31/70 vs baseline 35/70 sonuçları aynen tarihsel referanstır; 102 bar yeni eklentiyle koşuldu denmez.
+- Tek izinli ilerleme: ilk erişim ve konsensüs gerçek PIT kanıtını bul/doğrula; aynı-UTC çapraz piyasa/missing/roll denetimini tamamla; sonra aynı S1 ekonomik-on/off ayrışmasını bağımsız negatif kontrollerde test et. Şubat'a veya alternatif algoritmaya geçme.
