@@ -114,3 +114,28 @@ test("Lifecycle never claims bank fees, trading readiness, or science success",(
  assert.equal(r.status,"S2_DEVELOPMENT_RESEARCH_NOT_ACCEPTED");
  assert.equal(r.prediction.brier,null);
 });
+
+
+test("Different 2025 price source switches must right-censor, even on adjacent M15 bars",()=>{
+ const other="OTHER_HISTORICAL_SOURCE";
+ const s=life.create({sourceRegistry:{[SRC]:{kind:"MARKET",evidenceStatus:"RECONSTRUCTED_MARKET_ASOF"},
+   [other]:{kind:"MARKET",evidenceStatus:"RECONSTRUCTED_MARKET_ASOF"}}});
+ series(s,first,increasing(30));
+ const n=s.pending.length;
+ const t=s.lastAt+15*MIN;
+ life.observe(s,{...bar(t,2000),priceSource:other});
+ assert.equal(s.censored,1);
+ assert.equal(s.completed.length,0);
+ assert.equal(s.pending.length,0);
+ assert.ok(s.scores.censoredPredictions>=n);
+});
+test("S2 integration rejects unregistered sources and preserves no-trade authority",()=>{
+ const b=model.create({sourceId:SRC,sourceEvidence:"SYNTHETIC_ONLY",
+  learningMode:"STRICT_WALK_FORWARD"});
+ assert.throws(()=>model.observe(b,{...bar(first,1700),priceSource:"FORGED"}),
+   /MODEL_UNDECLARED_SOURCE/);
+ assert.equal(b.audit.observed,0);
+ const done=model.observe(b,bar(first,1700));
+ assert.equal(done.action,null);
+ assert.equal(done.tradeAllowed,false);
+});
