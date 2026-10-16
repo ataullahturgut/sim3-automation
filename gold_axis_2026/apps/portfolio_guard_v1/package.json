@@ -26,7 +26,8 @@
     "verify-v11-real-ann": "node --test v11_ann_research.test.js",
     "verify-v12-rehber": "node --test v12_rehber.test.js",
     "verify-v12-earliest": "node --test v12_earliest_origin_audit.test.js",
-    "verify-v13-sentez": "node --test v13_sentez.test.js"
+    "verify-v13-sentez": "node --test v13_sentez.test.js",
+    "test:kavis-research": "node --test v15_kavis_cekirdek.test.js v15_kavis_formal_audit.test.js v15_kavis_stress.test.js v16_kavis_siralama.test.js v16_kavis_counterfactual_audit.test.js v16_kavis_v15_uzman_koprusu.test.js v17_kavis_olay_doubleq.test.js v18_kavis_adversarial.test.js v19_kavis_siper.test.js v20_kavis_atlas.test.js v20_kavis_atlas_repaired.test.js"
   },
   "engines": {
     "node": ">=18.0.0"
