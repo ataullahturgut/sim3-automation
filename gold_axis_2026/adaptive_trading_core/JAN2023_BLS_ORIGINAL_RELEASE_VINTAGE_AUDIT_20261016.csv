@@ -1,0 +1,9 @@
+# Ocak 2023 ilk BLS yayımları — resmî arşiv karşılaştırması
+# Kaynak: BLS ilk açıklama arşivinin bugünkü korunan sayfası; intraday erişim günlüğü DEĞİLDİR.
+# planned_utc: ABD EST 08:30 = UTC 13:30, ilk gerçek ağ erişimi kanıtı değildir.
+# Components at the same scheduledUtc are a single release wave.
+scheduled_utc,component,official_initial_actual,unit,original_release_archive,content_verified,release_clock_evidence,first_actual_access_pit,consensus_vintage_pit,s1_feature_admitted
+2023-01-06T13:30:00Z,NFP,223,thousands,https://www.bls.gov/news.release/archives/empsit_01062023.htm,YES,EMBARGO_SCHEDULE_ONLY,UNKNOWN,UNKNOWN,NO
+2023-01-06T13:30:00Z,AHE,0.3,percent_mom,https://www.bls.gov/news.release/archives/empsit_01062023.htm,YES,EMBARGO_SCHEDULE_ONLY,UNKNOWN,UNKNOWN,NO
+2023-01-06T13:30:00Z,UNEMP,3.5,percent_level,https://www.bls.gov/news.release/archives/empsit_01062023.htm,YES,EMBARGO_SCHEDULE_ONLY,UNKNOWN,UNKNOWN,NO
+2023-01-12T13:30:00Z,CPI,-0.1,percent_mom_sa,https://www.bls.gov/news.release/archives/cpi_01122023.htm,YES,EMBARGO_SCHEDULE_ONLY,UNKNOWN,UNKNOWN,NO
