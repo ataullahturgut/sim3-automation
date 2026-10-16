@@ -27,7 +27,11 @@ function contig(a,start,end){
  return true;
 }
 function vector(a,i){
- if(i<64||!contig(a,i-64,i))return null;
+ // The last 16 returns must be from uninterrupted 15m bars;
+ // the older 64-observation state is allowed to cross overnight gaps,
+ // and always uses already observed rows only.
+ if(i<64||!contig(a,i-16,i))return null;
+ if(a[i].t-a[i-64].t>96*3600000)return null;
  const price=j=>a[j].close;
  const ret=(j,k)=>100*Math.log(price(j)/price(k));
  const changes=[];for(let j=i-15;j<=i;j++)changes.push(ret(j,j-1));
