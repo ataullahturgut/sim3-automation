@@ -64,3 +64,39 @@ test("Paired real mode refuses accidental promotion of retrospective source to v
    featureNames:options.featureNames,sourceRegistry:options.sourceRegistry,eventSource:src,
    learningMode:"STRICT_WALK_FORWARD"}),/EVENT_SOURCE_REGISTRY_NOT_VERIFIED/);
 });
+
+
+test("Observed economic wave never trains on later no-event anchors",()=>{
+ const at="2023-01-06T16:00:00Z",before=Date.parse(at);
+ const e=researchReconstructedAtDecision(at,[release],scale,src);
+ const s=core.create({...options,learningMode:"DISCOVERY_FULL_ARCHIVE"});
+ core.observe(s,obs(at,e.features));
+ core.observe(s,obs(new Date(before+240*60000).toISOString(),{}));
+ core.observe(s,obs(new Date(before+480*60000).toISOString(),{}));
+ const withEvent=core.rules(s).filter(x=>Object.hasOwn(x.center,"nfp_surprise_z"));
+ const withoutEvent=core.rules(s).filter(x=>!Object.hasOwn(x.center,"nfp_surprise_z"));
+ assert.equal(withEvent.length,1);
+ assert.equal(withoutEvent.length,1);
+ assert.equal(withEvent[0].anchorObservations,1);
+ assert.equal(withEvent[0].outcomes["240"].n,1);
+ assert.equal(withoutEvent[0].anchorObservations,2);
+ assert.equal(s.audit.ruleMerged,0);
+});
+test("No trained event alpha: paired replay backs off to market-only and records the abstention",()=>{
+ const start=Date.parse("2023-01-06T12:00:00Z"),rows=[];
+ for(let i=0;i<20;i++){
+  const at=new Date(start+i*240*60000).toISOString();
+  rows.push({...obs(at,{}),price:1900+i*2+(i%3)*.1});
+ }
+ const r=pairedReplay({marketRows:rows,releases:[release],scales:scale,
+    featureNames:options.featureNames,sourceRegistry:options.sourceRegistry,
+    eventSource:src,learningMode:"DISCOVERY_FULL_ARCHIVE",
+    assumedAccessDelayMinutes:60,noveltyDistance:1.25});
+ assert.equal(r.admissibleDecisionAnchors,1);
+ assert.equal(r.eventForecastNotReady,1);
+ assert.ok(r.marketFallbackCount>=1);
+ assert.equal(r.eventCompared,1);
+ assert.equal(r.eventWithBrier,r.eventWithoutBrier);
+ assert.equal(r.learnedWith.some(x=>Object.hasOwn(x.center,"nfp_surprise_z")),true);
+ assert.equal(r.policy,"NO_TRADING");
+});
