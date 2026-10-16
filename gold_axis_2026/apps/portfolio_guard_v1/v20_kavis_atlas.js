@@ -111,6 +111,35 @@ function estimate(s,regime){
  return {ready:true,regime,n:samples.length,conditional:useLocal,
     cvar:t.cvar,upper,mean:t.mean,vol:t.vol};
 }
+function advisoryConfidence(s,regime){
+ const z=s.risk.advisor[regime],c=s.config;
+ const uncertainty=c.advisorConfidence*Math.sqrt(Math.max(.01,z.var))/
+   Math.sqrt(Math.max(1,z.n));
+ const lower=z.mean-uncertainty;
+ return {observations:z.n,advantage:z.mean,lowerConfidence:lower,
+   verified:z.n>=c.riskAdvisorMinLabels&&lower>0,
+   positive:z.positive,negative:z.negative};
+}
+function advisorReward(position,action,returnLog,fee){
+ const next=action==="WAIT"?position:action==="BUY"?"GOLD":"CASH";
+ const switched=next!==position;
+ return (next==="GOLD"?returnLog:0)+
+   (switched?100*Math.log(1-fee):0);
+}
+function updateAdvisor(s,old,nextPrice){
+ const a=old.shadow;
+ if(!a||!a.eligible)return;
+ const logMove=100*(Math.log(nextPrice)-Math.log(old.price));
+ const difference=advisorReward(a.position,a.adviceAction,logMove,old.fee)-
+   advisorReward(a.position,a.baseAction,logMove,old.fee);
+ const z=s.risk.advisor[a.bucket],decay=s.config.advisorDecay,
+   x=max(difference,-35,35),last=z.mean;
+ z.n++;z.mean=decay*z.mean+(1-decay)*x;
+ z.var=Math.max(.01,decay*z.var+(1-decay)*(x-last)**2);
+ z.lastDelta=x;
+ if(difference>0)z.positive++;else if(difference<0)z.negative++;
+ s.audit.advisorMatured++;
+}
 function quoteState(s){
  return {capital:s.portfolio.nav,peak:s.portfolio.peak,
   currentDrawdownPct:s.portfolio.drawdownPct,
