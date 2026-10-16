@@ -1,0 +1,34 @@
+name: Gold R3 Preregistered Block-Gate Audit
+on:
+  push:
+    branches: ['research-gold-v20-r3-*']
+  pull_request:
+    branches: ['research-gold-v20-r2-shadow-prereg-20261016']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  causal-r3-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse R3 source and new tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v20_atlas_r3_gate.js
+          node --check v20_atlas_r3_gate.test.js
+      - name: Execute new R3 prereg contract
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node --test v20_atlas_r3_gate.test.js
+      - name: Preserve R2 prior regressions and V15-20 contracts
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --test v20_atlas_r2_shadow.test.js
+          npm run test:kavis-research
+      - name: Check for prohibited live trade connection
+        run: |
+          if grep -E 'function liveOrder|function placeOrder|2026_FEB_SEP|loadFullRows' gold_axis_2026/apps/portfolio_guard_v1/v20_atlas_r3_gate.js; then exit 1; fi
