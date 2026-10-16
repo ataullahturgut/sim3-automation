@@ -1,0 +1,47 @@
+name: Gold V22 January 2023 ONLY autonomous mathematical learning
+on:
+  push:
+    branches: ['research-gold-jan2023-self-improving-math-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  january-math:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Mathematical learning tests (causal label maturity, fee, one month)
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v22_jan2023_math.js
+          node --test v22_jan2023_math.test.js
+      - name: Run ONLY January 2023 on historical XAU M15 data
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          mkdir -p /tmp/v22
+          node v22_jan2023_math.js ../../adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_PANEL_20261015.csv /tmp/v22/result.json /tmp/v22/decisions.json
+      - name: Verify mathematical learning AND January-only cost ledger
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const r=JSON.parse(fs.readFileSync('/tmp/v22/result.json','utf8'));
+          console.log(JSON.stringify({bars:r.bars,targets:r.totalTargetsMatured,nonzeroUpdates:r.nonzeroMathematicalUpdates,readyChecks:r.acceptedBankChecks,capital:r.endingNetLiquidationUSD,fee:r.feePerSide,trades:r.trades,heads:r.heads,daily:r.daily},null,2));
+          if(r.metadata.monthCount!==1||r.metadata.usingOtherMarketFeatures!==false)throw Error('WRONG_SCOPE');
+          if(r.totalTargetsMatured<100||r.nonzeroMathematicalUpdates<100||r.bars<1000)throw Error('NO_MATHEMATICAL_LEARNING');
+          if(r.feePerSide!==.008||r.trades.some(t=>t.sideFeeRate!==.008))throw Error('WRONG_FEE');
+          if(r.daily.some(d=>!d.date.startsWith('2023-01')))throw Error('OTHER_MONTH_INCLUDED');
+          for(const x of r.trades)if(!x.timeTR.startsWith('2023-01'))throw Error('NON_JANUARY_TRADE');
+          NODE
+      - name: Preserve complete January daily learning and every decision
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v22-JAN2023-ONLY-self-learning-and-decisions
+          path: |
+            /tmp/v22/result.json
+            /tmp/v22/decisions.json
+          if-no-files-found: ignore
