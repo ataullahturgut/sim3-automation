@@ -30,12 +30,15 @@ def period_key(d, period):
     return str(d)[:7]
 
 
-def marathon(period="month", k=H.K_LAG, relabel=False):
+def marathon(period="month", k=H.K_LAG, relabel=False, variant=None):
     rows = S.load_rows(dev_only=True)
     raw, _ = S.build_states(rows)
     Z, _ = S.standardize(raw)
     i0 = next(i for i, r in enumerate(rows) if r["date"] >= START)
-    net = T5.Terazi5()
+    if variant is None:
+        net = T5.Terazi5()
+    else:
+        net = T5.Terazi6(strong=variant in ("A", "C"), stable=variant in ("B", "C"))
     groups = OrderedDict()
     for i in range(len(rows)):
         groups.setdefault(period_key(rows[i]["date"], period), []).append(i)
@@ -81,6 +84,8 @@ def marathon(period="month", k=H.K_LAG, relabel=False):
             net.p0 = float(np.mean([learned[q] for q in ok]))
             Zm = Z[ok]; ym = np.array([float(learned[q]) for q in ok])
             T5.rebuild_rules(net, Zm, ym, ok)
+            if variant is not None:
+                net.years = [rows[q]["date"].year for q in ok]
             if len(ok) >= MIN_SUPPORT:
                 net.restructure(Zm, ym, now=i_end)
             continue
@@ -95,7 +100,7 @@ def marathon(period="month", k=H.K_LAG, relabel=False):
         if len(ok) >= MIN_SUPPORT:
             net.restructure(Z[ok], np.array([float(learned[q]) for q in ok]), now=i_end)
     return dict(rows=rows, Z=Z, net=net, i0=i0, nav_hist=nav_hist, gross_hist=gross_hist,
-                trades=trades, daily=daily, learned=learned, period=period, k=k, relabel=relabel)
+                trades=trades, daily=daily, learned=learned, period=period, k=k, relabel=relabel, variant=variant)
 
 
 def evaluate(A):
@@ -143,9 +148,10 @@ def main():
     period = sys.argv[1] if len(sys.argv) > 1 else "month"
     k = int(sys.argv[2]) if len(sys.argv) > 2 else H.K_LAG
     relabel = len(sys.argv) > 3 and sys.argv[3] == "relabel"
-    A = marathon(period, k, relabel)
+    variant = sys.argv[4] if len(sys.argv) > 4 else None
+    A = marathon(period, k, relabel, variant)
     res, crit, legs = evaluate(A)
-    print(f"\n=== TERAZİ v5{'.1 (yeniden etiketleme)' if relabel else ''} ({period}, K={k}) — geliştirme kaydı, kanıt değil ===")
+    print(f"\n=== TERAZİ v5{('.2'+variant) if variant else ('.1 (yeniden etiketleme)' if relabel else '')} ({period}, K={k}) — geliştirme kaydı, kanıt değil ===")
     for a, b in res.items():
         print(f"  {a:28} {b}")
     print("\n  ÖLÇÜTLER")
@@ -157,7 +163,7 @@ def main():
     print("\n  İŞLEMLER")
     for t in A["trades"]:
         print(f"    {t['date']} {t['action']:3} @ {t['price']:8.2f}  P={t['P']} z={t['z']}")
-    tag = f"{period}_K{k}" + ("_relabel" if relabel else "")
+    tag = f"{period}_K{k}" + ("_relabel" if relabel else "") + (f"_v52{variant}" if variant else "")
     json.dump(dict(result=res, criteria={g: v[0] for g, v in crit.items()}, legs=legs, trades=A["trades"]),
               open(os.path.join(HERE, f"TERAZI_V5_SONUC_{tag}.json"), "w"), indent=1, ensure_ascii=False)
     json.dump(A["daily"], open(os.path.join(HERE, f"TERAZI_V5_GUNLUK_{tag}.json"), "w"), indent=0)
