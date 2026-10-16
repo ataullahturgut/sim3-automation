@@ -1,0 +1,243 @@
+{
+ "month": "2023-06",
+ "days": 22,
+ "gold": {
+  "start_prev_close": 1964.48,
+  "end": 1907.22,
+  "change_pct": -2.91,
+  "high": 1980.65,
+  "low": 1904.53
+ },
+ "ideal": {
+  "month_log_return_pct": 1.21,
+  "gold_days_share": 0.045,
+  "legs": [
+   {
+    "entry": "2023-05-30",
+    "entry_price": 1945.2,
+    "exit": "2023-06-02",
+    "exit_price": 1979.02,
+    "net_pct": 0.12
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 99.9025,
+  "nav_end": 97.174,
+  "month_ret_pct": -2.73,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.54,
+  "capture_of_ideal": -2.3,
+  "mean_Er": 0.425,
+  "mean_Pdown": 0.363
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 21,
+  "wrong_day_share": 0.955
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2023-05-30",
+    "exit": "2023-06-02",
+    "net_pct": 0.12,
+    "state_at_entry": [
+     [
+      "sonraki FOMC'ye gün",
+      -3.16
+     ],
+     [
+      "gümüş 20g",
+      -1.47
+     ],
+     [
+      "petrol 5g",
+      -1.42
+     ],
+     [
+      "son NFP'den beri gün",
+      1.29
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.19
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "petrol 5g",
+      1.26
+     ],
+     [
+      "altın 1g getiri",
+      0.99
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      0.79
+     ],
+     [
+      "altın 5g getiri",
+      0.57
+     ],
+     [
+      "petrol 20g",
+      0.48
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2023-06-02",
+    "end": "2023-06-30",
+    "gold_move_pct": -2.8,
+    "state_at_start": [
+     [
+      "sonraki FOMC'ye gün",
+      -3.22
+     ],
+     [
+      "gümüş 20g",
+      -1.64
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      1.43
+     ],
+     [
+      "son NFP'den beri gün",
+      1.39
+     ],
+     [
+      "Nasdaq 20g",
+      1.35
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 60g getiri",
+      -2.19
+     ],
+     [
+      "Nasdaq 5g",
+      -1.67
+     ],
+     [
+      "gümüş 20g",
+      1.64
+     ],
+     [
+      "Nasdaq 20g",
+      -1.63
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      -1.49
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2023-06-02T12:30",
+    "surprise": 159.0,
+    "gold_post60": -0.14083,
+    "gold_post240": -1.163154
+   },
+   {
+    "kind": "CPI",
+    "utc": "2023-06-13T12:30",
+    "surprise": -0.1,
+    "gold_post60": 0.006631,
+    "gold_post240": -0.712067
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2023-06-14T18:00",
+    "surprise": null,
+    "gold_post60": -0.180084,
+    "gold_post240": null
+   }
+  ],
+  "cot_mm_change": -0.0208,
+  "real_rate_20d_change_start_end": [
+   0.22999999999999998,
+   0.07000000000000006
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_004",
+    "dir": "DOWN",
+    "move_pct": "-6.959525",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-05-04",
+    "end": "2023-06-28"
+   },
+   {
+    "key": "SWING_V1_005",
+    "dir": "UP",
+    "move_pct": "3.751586",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-06-28",
+    "end": "2023-07-18"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 903,
+  "ideal_gold_share": 0.533,
+  "alpha_analog": 0.554,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1149
+   ],
+   [
+    "g_r1",
+    0.1126
+   ],
+   [
+    "g_dd60",
+    0.0952
+   ],
+   [
+    "g_r20",
+    0.0835
+   ],
+   [
+    "g_r60",
+    0.0617
+   ],
+   [
+    "rr_d20",
+    0.0614
+   ],
+   [
+    "y2_d20",
+    0.0608
+   ],
+   [
+    "usd_d20",
+    0.0592
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.499,
+   "faiz (reel ve nominal)": 0.185,
+   "dolar": 0.059,
+   "altın oynaklığı": 0.013,
+   "spekülatif pozisyon (COT)": 0.021,
+   "makro veri sürprizi/takvim": 0.094,
+   "hisse/tahvil/petrol/gümüş": 0.112,
+   "olay izi (şok)": 0.018
+  }
+ }
+}

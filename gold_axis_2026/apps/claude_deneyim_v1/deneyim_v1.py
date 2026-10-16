@@ -151,13 +151,14 @@ def logloss(p, y):
 
 
 # ---------------------------------------------------------------- maraton
-def marathon(outdir, mode="C0", report_dir="reports"):
+def marathon(outdir, mode="C0", report_dir="reports", warmup=False):
     assert mode in ("C0", "C1", "C2")
     rows = S.load_rows(dev_only=True)
     raw, macro = S.build_states(rows)
     Z, std = S.standardize(raw)
     eventreg = load_event_register()
     i_start = next(i for i, r in enumerate(rows) if r["date"] >= START)
+    m0 = 0 if warmup else i_start                      # deneyim/sonuç hafızasının başlangıcı
     months = OrderedDict()
     for i in range(i_start, len(rows)):
         months.setdefault(rows[i]["date"].strftime("%Y-%m"), []).append(i)
@@ -169,6 +170,17 @@ def marathon(outdir, mode="C0", report_dir="reports"):
     prev_w = None
     reports = []
     os.makedirs(os.path.join(outdir, report_dir), exist_ok=True)
+    if warmup and i_start > 0:
+        # ISITMA: yalnız işlem başlangıcından ÖNCEKİ veriyle öğren (hiçbir 2023+ bilgisi yok)
+        wpos, _ = oracle(rows, m0, i_start - 1)
+        Yw = np.array(wpos)
+        model.fit(Z[m0:i_start], Yw)
+        oiw = list(range(m0, i_start - H_OUT))
+        if oiw:
+            midw = lambda q: (rows[q]["bid"] + rows[q]["ask"]) / 2
+            model.set_outcomes(Z[oiw],
+                               np.array([100 * math.log(midw(q + H_OUT) / midw(q)) for q in oiw]),
+                               np.array([1.0 if 100 * math.log(min(midw(q + j) for j in range(1, H_OUT + 1)) / midw(q)) < -C_RT else 0.0 for q in oiw]))
     for m, idxs in months.items():
         # (A) ay içi gerçek zamanlı kararlar: model parametreleri önceki ay sonundan
         month_trades = []; nav0 = cash + units * rows[idxs[0] - 1]["bid"] * (1 - S.FEE) if idxs[0] > i_start else 100.0
@@ -198,17 +210,17 @@ def marathon(outdir, mode="C0", report_dir="reports"):
         trades_all += month_trades
         i_end = idxs[-1]
         # (B) ideal yol: başlangıçtan bu ay sonuna (yalnız mevcut veriyle)
-        opos, olog = oracle(rows, i_start, i_end)
+        opos, olog = oracle(rows, m0, i_end)
         Y = np.array(opos)
-        legs = legs_from_positions(rows, i_start, opos)
+        legs = legs_from_positions(rows, m0, opos)
         # (C) bu ayın analizi ve hatalar
-        rep = month_report(m, idxs, rows, raw, Z, Y, i_start, legs, nav_hist, month_trades, nav0, rt, model,
+        rep = month_report(m, idxs, rows, raw, Z, Y, m0, legs, nav_hist, month_trades, nav0, rt, model,
                            macro, eventreg, prev_w)
         # (D) deneyimi güncelle ve yeniden öğren (yalnız bu ay sonuna kadarki veri)
-        X = Z[i_start:i_end + 1]
+        X = Z[m0:i_end + 1]
         model.fit(X, Y)
         # sonuç belleği: yalnız bu ay sonuna kadar olgunlaşmış ileri sonuçlar (i + H <= i_end)
-        oi = list(range(i_start, i_end - H_OUT + 1))
+        oi = list(range(m0, i_end - H_OUT + 1))
         if oi:
             mid = lambda q: (rows[q]["bid"] + rows[q]["ask"]) / 2
             rH = np.array([100 * math.log(mid(q + H_OUT) / mid(q)) for q in oi])
@@ -221,8 +233,8 @@ def marathon(outdir, mode="C0", report_dir="reports"):
         hist_i = [i for i in range(i_start, i_end + 1) if rt.get(i, (None,))[0] is not None]
         recent = hist_i[-126:]
         if len(recent) >= 60:
-            lla = np.mean([logloss(rt[i][1], Y[i - i_start]) for i in recent])
-            lll = np.mean([logloss(rt[i][2], Y[i - i_start]) for i in recent])
+            lla = np.mean([logloss(rt[i][1], Y[i - m0]) for i in recent])
+            lll = np.mean([logloss(rt[i][2], Y[i - m0]) for i in recent])
             model.alpha = float((1 / lla) / ((1 / lla) + (1 / lll)))
             probs = [rt[i][0] for i in hist_i]
             best = None
@@ -242,7 +254,8 @@ def marathon(outdir, mode="C0", report_dir="reports"):
         write_report(outdir, rep, report_dir)
         reports.append(rep)
     return dict(rows=rows, raw=raw, Z=Z, std=std, model=model, rt=rt, est=est, mode=mode, nav_hist=nav_hist, trades=trades_all,
-                reports=reports, i_start=i_start, macro=macro, oracle_final=(opos, olog), legs_final=legs)
+                reports=reports, i_start=i_start, m0=m0, warmup=warmup, macro=macro,
+                oracle_final=(opos, olog), legs_final=legs)
 
 
 def load_event_register():

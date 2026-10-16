@@ -1,0 +1,55 @@
+{
+ "v1_1_cold": {
+  "nav_2023": 102.54,
+  "nav_2024": 129.69,
+  "nav_final": 213.49,
+  "maxdd": 10.79,
+  "trades": 1,
+  "trade_list": [
+   {
+    "date": "2023-04-24",
+    "action": "AL",
+    "price": 1985.33,
+    "p": 0.464,
+    "Er": 0.887,
+    "Pdown": 0.356
+   }
+  ]
+ },
+ "v1_2_warm": {
+  "nav_2023": 105.7,
+  "nav_2024": 133.68,
+  "nav_final": 220.07,
+  "maxdd": 10.79,
+  "trades": 1,
+  "trade_list": [
+   {
+    "date": "2023-02-01",
+    "action": "AL",
+    "price": 1925.96,
+    "p": 0.835,
+    "Er": 1.131,
+    "Pdown": 0.248
+   }
+  ]
+ },
+ "warmup_days": 775,
+ "memory_days_total": 1549,
+ "january_2023": {
+  "est_min": 0.203,
+  "est_max": 0.439,
+  "buy_threshold": 0.803,
+  "traded": false
+ },
+ "benchmarks": {
+  "passive_final": 230.82,
+  "passive_maxdd": 10.79,
+  "trend_final": 215.36,
+  "ideal_final": 2289.69
+ },
+ "honesty": [
+  "Isıtma yalnız 2020-01-02..2022-12-30 verisini kullanır; 2023+ bilgisi sızmaz.",
+  "Karar kuralı C1 değişmedi; ısıtma bir kurulum düzeltmesidir, performansa göre seçim değildir.",
+  "Geliştirme dönemi sonucudur; 2026 testi ayrıdır."
+ ]
+}

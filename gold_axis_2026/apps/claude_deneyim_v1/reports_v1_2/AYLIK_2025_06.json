@@ -1,0 +1,359 @@
+{
+ "month": "2025-06",
+ "days": 21,
+ "gold": {
+  "start_prev_close": 3303.78,
+  "end": 3289.16,
+  "change_pct": -0.44,
+  "high": 3426.21,
+  "low": 3289.16
+ },
+ "ideal": {
+  "month_log_return_pct": 5.48,
+  "gold_days_share": 0.333,
+  "legs": [
+   {
+    "entry": "2025-05-15",
+    "entry_price": 3163.03,
+    "exit": "2025-06-05",
+    "exit_price": 3375.05,
+    "net_pct": 5.0
+   },
+   {
+    "entry": "2025-06-09",
+    "entry_price": 3320.1,
+    "exit": "2025-06-13",
+    "exit_price": 3424.15,
+    "net_pct": 1.49
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 168.3827,
+  "nav_end": 168.046,
+  "month_ret_pct": -0.2,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.52,
+  "capture_of_ideal": -0.0,
+  "mean_Er": 0.513,
+  "mean_Pdown": 0.36
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 14,
+  "wrong_day_share": 0.667
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2025-05-15",
+    "exit": "2025-06-05",
+    "net_pct": 5.0,
+    "state_at_entry": [
+     [
+      "altın 20g oynaklık",
+      2.01
+     ],
+     [
+      "GVZ 5g değişim",
+      -1.94
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.77
+     ],
+     [
+      "son NFP'den beri gün",
+      1.6
+     ],
+     [
+      "altın 60g getiri",
+      1.52
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      2.03
+     ],
+     [
+      "altın 5g getiri",
+      1.59
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      0.94
+     ],
+     [
+      "2Y faiz 5g değişim",
+      0.76
+     ],
+     [
+      "COT MM 4 hafta değişim",
+      0.61
+     ]
+    ]
+   },
+   {
+    "entry": "2025-06-09",
+    "exit": "2025-06-13",
+    "net_pct": 1.49,
+    "state_at_entry": [
+     [
+      "altın 1g getiri",
+      -1.64
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.64
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.6
+     ],
+     [
+      "son NFP'den beri gün",
+      -1.53
+     ],
+     [
+      "altın 20g oynaklık",
+      1.48
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      3.14
+     ],
+     [
+      "petrol 5g",
+      2.77
+     ],
+     [
+      "son CPI'dan beri gün",
+      -2.77
+     ],
+     [
+      "petrol 20g",
+      1.84
+     ],
+     [
+      "altın 20g getiri",
+      1.27
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2025-06-05",
+    "end": "2025-06-06",
+    "gold_move_pct": 0.07,
+    "state_at_start": [
+     [
+      "son NFP'den beri gün",
+      1.92
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.87
+     ],
+     [
+      "altın 60g getiri",
+      1.67
+     ],
+     [
+      "altın 20g oynaklık",
+      1.52
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.44
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "gümüş 5g",
+      1.34
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      -1.07
+     ],
+     [
+      "petrol 5g",
+      0.99
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      -0.94
+     ],
+     [
+      "2Y faiz 5g değişim",
+      -0.83
+     ]
+    ]
+   },
+   {
+    "start": "2025-06-13",
+    "end": "2025-06-30",
+    "gold_move_pct": -2.04,
+    "state_at_start": [
+     [
+      "petrol 5g",
+      3.58
+     ],
+     [
+      "petrol 20g",
+      2.46
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.99
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.82
+     ],
+     [
+      "son CPI'dan beri gün",
+      -1.54
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "petrol 5g",
+      -6.67
+     ],
+     [
+      "2Y faiz 5g değişim",
+      -1.98
+     ],
+     [
+      "son CPI'dan beri gün",
+      1.89
+     ],
+     [
+      "son NFP'den beri gün",
+      1.89
+     ],
+     [
+      "Nasdaq 5g",
+      1.85
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2025-06-06T12:30",
+    "surprise": 13.0,
+    "gold_post60": -0.151946,
+    "gold_post240": -1.046839
+   },
+   {
+    "kind": "CPI",
+    "utc": "2025-06-11T12:30",
+    "surprise": -0.1,
+    "gold_post60": -0.072925,
+    "gold_post240": -0.250295
+   }
+  ],
+  "cot_mm_change": 0.0556,
+  "real_rate_20d_change_start_end": [
+   0.10999999999999988,
+   -0.1299999999999999
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_033",
+    "dir": "UP",
+    "move_pct": "8.03015",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-05-14",
+    "end": "2025-06-13"
+   },
+   {
+    "key": "SWING_V1_034",
+    "dir": "DOWN",
+    "move_pct": "-4.610566",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2025-06-13",
+    "end": "2025-06-27"
+   },
+   {
+    "key": "SWING_V1_035",
+    "dir": "UP",
+    "move_pct": "4.795238",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-06-27",
+    "end": "2025-07-22"
+   },
+   {
+    "key": "C_CORR_042",
+    "dir": "UP",
+    "move_pct": "3.681743",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2025-06-13",
+    "end": "2025-06-13"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 1418,
+  "ideal_gold_share": 0.564,
+  "alpha_analog": 0.528,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r1",
+    0.1424
+   ],
+   [
+    "g_r5",
+    0.1411
+   ],
+   [
+    "g_dd60",
+    0.0959
+   ],
+   [
+    "si_r5",
+    0.0831
+   ],
+   [
+    "g_r60",
+    0.0544
+   ],
+   [
+    "g_r20",
+    0.0524
+   ],
+   [
+    "g_dist200",
+    0.0456
+   ],
+   [
+    "rr_d20",
+    0.0442
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.535,
+   "faiz (reel ve nominal)": 0.086,
+   "dolar": 0.021,
+   "altın oynaklığı": 0.017,
+   "spekülatif pozisyon (COT)": 0.032,
+   "makro veri sürprizi/takvim": 0.074,
+   "hisse/tahvil/petrol/gümüş": 0.199,
+   "olay izi (şok)": 0.035
+  }
+ }
+}

@@ -1,0 +1,404 @@
+{
+ "month": "2025-05",
+ "days": 22,
+ "gold": {
+  "start_prev_close": 3309.59,
+  "end": 3303.78,
+  "change_pct": -0.18,
+  "high": 3387.88,
+  "low": 3129.06
+ },
+ "ideal": {
+  "month_log_return_pct": 9.77,
+  "gold_days_share": 0.5,
+  "legs": [
+   {
+    "entry": "2025-05-01",
+    "entry_price": 3235.53,
+    "exit": "2025-05-07",
+    "exit_price": 3382.66,
+    "net_pct": 2.88
+   },
+   {
+    "entry": "2025-05-15",
+    "entry_price": 3163.03,
+    "exit": "2025-05-26",
+    "exit_price": 3334.45,
+    "net_pct": 3.74
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 167.8073,
+  "nav_end": 168.3827,
+  "month_ret_pct": 0.34,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.548,
+  "capture_of_ideal": 0.0,
+  "mean_Er": 0.37,
+  "mean_Pdown": 0.367
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 11,
+  "wrong_day_share": 0.5
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2025-05-01",
+    "exit": "2025-05-07",
+    "net_pct": 2.88,
+    "state_at_entry": [
+     [
+      "altın 20g oynaklık",
+      3.57
+     ],
+     [
+      "petrol 20g",
+      -2.97
+     ],
+     [
+      "altın 1g getiri",
+      -2.37
+     ],
+     [
+      "GVZ 5g değişim",
+      -2.29
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      -2.11
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      3.89
+     ],
+     [
+      "altın 1g getiri",
+      3.09
+     ],
+     [
+      "gümüş 20g",
+      2.55
+     ],
+     [
+      "petrol 20g",
+      2.48
+     ],
+     [
+      "son NFP'den beri gün",
+      -2.45
+     ]
+    ]
+   },
+   {
+    "entry": "2025-05-15",
+    "exit": "2025-05-26",
+    "net_pct": 3.74,
+    "state_at_entry": [
+     [
+      "altın 1g getiri",
+      -3.46
+     ],
+     [
+      "altın 5g getiri",
+      -3.33
+     ],
+     [
+      "altın 20g oynaklık",
+      3.19
+     ],
+     [
+      "Nasdaq 20g",
+      2.45
+     ],
+     [
+      "60g zirveye uzaklık",
+      -2.31
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 5g getiri",
+      4.92
+     ],
+     [
+      "altın 1g getiri",
+      4.12
+     ],
+     [
+      "60g zirveye uzaklık",
+      2.18
+     ],
+     [
+      "Nasdaq 5g",
+      -2.09
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      1.86
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2025-05-07",
+    "end": "2025-05-14",
+    "gold_move_pct": -4.38,
+    "state_at_start": [
+     [
+      "altın 20g oynaklık",
+      3.35
+     ],
+     [
+      "GVZ düzeyi",
+      3.0
+     ],
+     [
+      "altın 20g getiri",
+      2.73
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      2.53
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -2.09
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      -4.76
+     ],
+     [
+      "altın 5g getiri",
+      -3.22
+     ],
+     [
+      "son FOMC'den beri gün",
+      -3.06
+     ],
+     [
+      "altın 20g getiri",
+      -2.93
+     ],
+     [
+      "son CPI'dan beri gün",
+      -2.89
+     ]
+    ]
+   },
+   {
+    "start": "2025-05-26",
+    "end": "2025-05-30",
+    "gold_move_pct": -0.92,
+    "state_at_start": [
+     [
+      "altın 20g oynaklık",
+      2.15
+     ],
+     [
+      "GVZ düzeyi",
+      2.04
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      2.0
+     ],
+     [
+      "altın 60g getiri",
+      1.88
+     ],
+     [
+      "altın 5g getiri",
+      1.59
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 5g getiri",
+      -1.99
+     ],
+     [
+      "GVZ 5g değişim",
+      -1.66
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      -1.33
+     ],
+     [
+      "GVZ düzeyi",
+      -0.96
+     ],
+     [
+      "gümüş 5g",
+      -0.92
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2025-05-02T12:30",
+    "surprise": 39.0,
+    "gold_post60": -0.061225,
+    "gold_post240": -0.787736
+   },
+   {
+    "kind": "CPI",
+    "utc": "2025-05-13T12:30",
+    "surprise": -0.09999999999999998,
+    "gold_post60": 0.120122,
+    "gold_post240": 0.406044
+   }
+  ],
+  "cot_mm_change": -0.0196,
+  "real_rate_20d_change_start_end": [
+   0.10999999999999988,
+   0.20999999999999996
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_030",
+    "dir": "DOWN",
+    "move_pct": "-5.41054",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-04-21",
+    "end": "2025-05-01"
+   },
+   {
+    "key": "SWING_V1_031",
+    "dir": "UP",
+    "move_pct": "5.948176",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2025-05-01",
+    "end": "2025-05-06"
+   },
+   {
+    "key": "SWING_V1_032",
+    "dir": "DOWN",
+    "move_pct": "-7.410996",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2025-05-06",
+    "end": "2025-05-14"
+   },
+   {
+    "key": "SWING_V1_033",
+    "dir": "UP",
+    "move_pct": "8.03015",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-05-14",
+    "end": "2025-06-13"
+   },
+   {
+    "key": "C_CORR_037",
+    "dir": "DOWN",
+    "move_pct": "3.294754",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2025-05-01",
+    "end": "2025-05-01"
+   },
+   {
+    "key": "C_CORR_038",
+    "dir": "UP",
+    "move_pct": "5.948176",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2025-05-06",
+    "end": "2025-05-07"
+   },
+   {
+    "key": "C_CORR_039",
+    "dir": "DOWN",
+    "move_pct": "5.564232",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2025-05-09",
+    "end": "2025-05-16"
+   },
+   {
+    "key": "C_CORR_040",
+    "dir": "UP",
+    "move_pct": "3.142854",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Pozisyonun aşırı uzaması ve geri dönüşü",
+    "start": "2025-05-15",
+    "end": "2025-05-15"
+   },
+   {
+    "key": "C_CORR_041",
+    "dir": "UP",
+    "move_pct": "4.824663",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "ABD politika güvenilirliği ve dolar güveni hipotezi",
+    "start": "2025-05-21",
+    "end": "2025-05-26"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 1397,
+  "ideal_gold_share": 0.564,
+  "alpha_analog": 0.536,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r1",
+    0.1414
+   ],
+   [
+    "g_r5",
+    0.1398
+   ],
+   [
+    "g_dd60",
+    0.0978
+   ],
+   [
+    "si_r5",
+    0.0783
+   ],
+   [
+    "g_r20",
+    0.053
+   ],
+   [
+    "g_r60",
+    0.0515
+   ],
+   [
+    "rr_d20",
+    0.0486
+   ],
+   [
+    "g_dist200",
+    0.0448
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.528,
+   "faiz (reel ve nominal)": 0.112,
+   "dolar": 0.026,
+   "altın oynaklığı": 0.02,
+   "spekülatif pozisyon (COT)": 0.029,
+   "makro veri sürprizi/takvim": 0.077,
+   "hisse/tahvil/petrol/gümüş": 0.193,
+   "olay izi (şok)": 0.015
+  }
+ }
+}

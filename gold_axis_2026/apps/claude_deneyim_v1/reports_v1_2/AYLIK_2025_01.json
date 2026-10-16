@@ -1,0 +1,177 @@
+{
+ "month": "2025-01",
+ "days": 22,
+ "gold": {
+  "start_prev_close": 2604.5,
+  "end": 2795.73,
+  "change_pct": 7.34,
+  "high": 2795.73,
+  "low": 2633.98
+ },
+ "ideal": {
+  "month_log_return_pct": 6.54,
+  "gold_days_share": 0.955,
+  "legs": [
+   {
+    "entry": "2024-12-20",
+    "entry_price": 2605.8,
+    "exit": "2025-01-31",
+    "exit_price": 2793.14,
+    "net_pct": 5.48
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 133.6848,
+  "nav_end": 142.7147,
+  "month_ret_pct": 6.75,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.587,
+  "capture_of_ideal": 1.0,
+  "mean_Er": 0.477,
+  "mean_Pdown": 0.362
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 1,
+  "wrong_day_share": 0.045
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2024-12-20",
+    "exit": "2025-01-31",
+    "net_pct": 5.48,
+    "state_at_entry": [
+     [
+      "COT managed money net",
+      1.79
+     ],
+     [
+      "Nasdaq 20g",
+      -1.22
+     ],
+     [
+      "10Y reel faiz 20g değişim",
+      1.15
+     ],
+     [
+      "altın 1g getiri",
+      1.14
+     ],
+     [
+      "son NFP'den beri gün",
+      1.14
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "60g zirveye uzaklık",
+      1.79
+     ],
+     [
+      "10Y reel faiz 20g değişim",
+      -1.64
+     ],
+     [
+      "gümüş 20g",
+      1.55
+     ],
+     [
+      "altın 20g getiri",
+      1.35
+     ],
+     [
+      "GVZ 5g değişim",
+      1.32
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2025-01-10T13:30",
+    "surprise": 92.0,
+    "gold_post60": 0.433949,
+    "gold_post240": 0.632872
+   },
+   {
+    "kind": "CPI",
+    "utc": "2025-01-15T13:30",
+    "surprise": 0.0,
+    "gold_post60": 0.212336,
+    "gold_post240": 0.263817
+   }
+  ],
+  "cot_mm_change": 0.0138,
+  "real_rate_20d_change_start_end": [
+   0.3200000000000003,
+   -0.0900000000000003
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_025",
+    "dir": "UP",
+    "move_pct": "14.242996",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2024-12-18",
+    "end": "2025-02-24"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 1313,
+  "ideal_gold_share": 0.557,
+  "alpha_analog": 0.504,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1407
+   ],
+   [
+    "g_r1",
+    0.1329
+   ],
+   [
+    "g_dd60",
+    0.0881
+   ],
+   [
+    "si_r5",
+    0.0828
+   ],
+   [
+    "g_r20",
+    0.0548
+   ],
+   [
+    "g_r60",
+    0.0497
+   ],
+   [
+    "g_dist200",
+    0.0421
+   ],
+   [
+    "rr_d5",
+    0.0419
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.515,
+   "faiz (reel ve nominal)": 0.103,
+   "dolar": 0.025,
+   "altın oynaklığı": 0.014,
+   "spekülatif pozisyon (COT)": 0.016,
+   "makro veri sürprizi/takvim": 0.09,
+   "hisse/tahvil/petrol/gümüş": 0.213,
+   "olay izi (şok)": 0.024
+  }
+ }
+}
