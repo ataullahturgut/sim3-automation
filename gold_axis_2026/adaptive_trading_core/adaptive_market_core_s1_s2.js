@@ -12,14 +12,19 @@ const SCHEMA=["phase_trend_z","phase_retracement_norm","phase_direction","phase_
 const cp=x=>JSON.parse(JSON.stringify(x));
 const iso=x=>new Date(x).toISOString();
 const clip=x=>Math.max(-5,Math.min(5,x));
-function create({sourceId,sourceEvidence="RECONSTRUCTED_MARKET_ASOF",
+function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_ASOF",
  learningMode="DISCOVERY_FULL_ARCHIVE"}={}){
  if(typeof sourceId!=="string"||!sourceId)
   throw Error("MODEL_SOURCE_ID_REQUIRED");
  if(!["RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","SYNTHETIC_ONLY"].includes(sourceEvidence))
   throw Error("MODEL_SOURCE_EVIDENCE_INVALID");
- const sourceRegistry={[sourceId]:{kind:"MARKET",evidenceStatus:sourceEvidence}};
- return {version:VERSION,sourceId,
+ const known=sourceIds??[sourceId];
+ if(!Array.isArray(known)||!known.length||known.some(x=>typeof x!=="string"||!x)||
+   !known.includes(sourceId)||new Set(known).size!==known.length)
+  throw Error("MODEL_SOURCE_ALLOWLIST_INVALID");
+ const sourceRegistry=Object.fromEntries(known.map(id=>[id,
+   {kind:"MARKET",evidenceStatus:sourceEvidence}]));
+ return {version:VERSION,sourceId,allowedSources:known.slice(),
   mode:learningMode,
   s1:s1.create({learningMode,featureNames:SCHEMA,sourceRegistry,
    horizons:[240],anchorMinutes:240,maxRules:16}),
@@ -37,10 +42,11 @@ function features(p,t,id){
 }
 function observe(s,bar){
  if(s.version!==VERSION)throw Error("MODEL_BRIDGE_CHECKPOINT_VERSION");
- if(bar.priceSource!==s.sourceId)throw Error("MODEL_SOURCE_ID_DRIFT");
+ if(!(s.allowedSources??[s.sourceId]).includes(bar.priceSource))
+  throw Error("MODEL_UNDECLARED_SOURCE");
  // Price is validated by S2 and by S1; source and complete-bar time match.
  const p=s2.observe(s.s2,bar);
- const t=Date.parse(bar.asof),fs=features(p,t,s.sourceId);
+ const t=Date.parse(bar.asof),fs=features(p,t,bar.priceSource);
  const q=s1.observe(s.s1,{...bar,features:fs});
  s.audit.observed++;
  if(Object.keys(fs).length>=2)s.audit.contextReady++;
@@ -59,6 +65,7 @@ function checkpoint(s){return cp(s);}
 function restore(data){
  const s=cp(data);
  if(s.version!==VERSION)throw Error("MODEL_BRIDGE_CHECKPOINT_VERSION");
+ if(!s.allowedSources)s.allowedSources=[s.sourceId];
  s.s1=s1.restore(s.s1);s.s2=s2.restore(s.s2);
  return s;
 }
