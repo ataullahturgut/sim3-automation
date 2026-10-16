@@ -1,0 +1,402 @@
+{
+ "period": [
+  "2023-01-03",
+  "2025-12-31"
+ ],
+ "trading_days": 774,
+ "terazi_v2": {
+  "nav_2023": 99.22,
+  "nav_2024": 123.2,
+  "nav_final_net": 202.82,
+  "nav_final_gross_no_fee": 215.31,
+  "maxdd": 11.67,
+  "trades": 7,
+  "position_matches_phase": "540/774",
+  "trade_list": [
+   [
+    "2023-01-03",
+    "AL",
+    1836.33,
+    0.546
+   ],
+   [
+    "2023-02-23",
+    "SAT",
+    1826.56,
+    0.427
+   ],
+   [
+    "2023-03-06",
+    "AL",
+    1853.65,
+    0.619
+   ],
+   [
+    "2023-10-02",
+    "SAT",
+    1839.47,
+    0.381
+   ],
+   [
+    "2023-10-12",
+    "AL",
+    1880.56,
+    0.598
+   ],
+   [
+    "2023-12-12",
+    "SAT",
+    1983.7,
+    0.442
+   ],
+   [
+    "2024-01-02",
+    "AL",
+    2073.53,
+    0.615
+   ]
+  ]
+ },
+ "benchmarks": {
+  "passive": 230.82,
+  "passive_maxdd": 10.79,
+  "trend_sma100": 215.36,
+  "ideal": 2289.69,
+  "terazi_v1_hard": 131.1,
+  "terazi_v1_1_fuzzy": 153.92,
+  "deneyim_v1_2": 220.07
+ },
+ "zigzag_sensitivity": {
+  "theta_3pct": {
+   "nav_final": 182.96,
+   "trades": 23
+  },
+  "theta_8pct": {
+   "nav_final": 176.29,
+   "trades": 5
+  }
+ },
+ "rule_base": {
+  "final_size": 60,
+  "total_born": 198,
+  "total_died": 51,
+  "days_without_opinion": 0
+ },
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     2,
+     -1,
+     1.5
+    ],
+    [
+     5,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 20g getiri < +1.5σ VE 60g zirveye uzaklık < +0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.783,
+   "n": 57.65,
+   "trust": 0.9373,
+   "field_k": 5.96,
+   "born_index": 1506,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 17.073
+  },
+  {
+   "gates": [
+    [
+     1,
+     -1,
+     1.0
+    ],
+    [
+     5,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri < +1.0σ VE 60g zirveye uzaklık < +0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.7236,
+   "n": 54.61,
+   "trust": 0.9293,
+   "field_k": 4.15,
+   "born_index": 1506,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 17.138
+  },
+  {
+   "gates": [
+    [
+     5,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık < +0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.7461,
+   "n": 69.54,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1526,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 17.244
+  },
+  {
+   "gates": [
+    [
+     5,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık < +1.0σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.7731,
+   "n": 89.92,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1526,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 17.048
+  },
+  {
+   "gates": [
+    [
+     5,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "60g zirveye uzaklık < +1.0σ VE COT managed money net < +1.0σ",
+   "p_rising": 0.7468,
+   "n": 64.13,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1526,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 16.983
+  },
+  {
+   "gates": [
+    [
+     1,
+     -1,
+     1.5
+    ],
+    [
+     5,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri < +1.5σ VE 60g zirveye uzaklık < +0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.7341,
+   "n": 60.58,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1548,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 17.261
+  },
+  {
+   "gates": [
+    [
+     1,
+     -1,
+     1.5
+    ],
+    [
+     5,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "altın 5g getiri < +1.5σ VE 60g zirveye uzaklık < +1.0σ VE COT managed money net < +1.0σ",
+   "p_rising": 0.7328,
+   "n": 54.55,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 1548,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 17.066
+  },
+  {
+   "gates": [
+    [
+     2,
+     -1,
+     1.0
+    ],
+    [
+     5,
+     -1,
+     0.5
+    ],
+    [
+     18,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 20g getiri < +1.0σ VE 60g zirveye uzaklık < +0.5σ VE son NFP sürprizi < +1.5σ",
+   "p_rising": 0.8291,
+   "n": 72.33,
+   "trust": 0.8536,
+   "field_k": 51.81,
+   "born_index": 1269,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 12.272
+  },
+  {
+   "gates": [
+    [
+     2,
+     -1,
+     0.5
+    ],
+    [
+     5,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 20g getiri < +0.5σ VE 60g zirveye uzaklık < +0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.8018,
+   "n": 43.34,
+   "trust": 0.8498,
+   "field_k": 28.39,
+   "born_index": 1312,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 11.577
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     0.0
+    ],
+    [
+     2,
+     1,
+     -1.5
+    ],
+    [
+     5,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "altın 5g getiri > +0.0σ VE altın 20g getiri > -1.5σ VE 60g zirveye uzaklık > -1.0σ",
+   "p_rising": 0.8946,
+   "n": 102.28,
+   "trust": 0.8479,
+   "field_k": 93.98,
+   "born_index": 1053,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.493
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     0.0
+    ],
+    [
+     2,
+     1,
+     -0.5
+    ],
+    [
+     5,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "altın 5g getiri > +0.0σ VE altın 20g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ",
+   "p_rising": 0.8966,
+   "n": 83.55,
+   "trust": 0.8456,
+   "field_k": 77.4,
+   "born_index": 1053,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.717
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     0.0
+    ],
+    [
+     2,
+     1,
+     -1.5
+    ],
+    [
+     8,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri > +0.0σ VE altın 20g getiri > -1.5σ VE 10Y reel faiz 20g değişim < +1.5σ",
+   "p_rising": 0.8963,
+   "n": 103.48,
+   "trust": 0.8455,
+   "field_k": 94.78,
+   "born_index": 1074,
+   "birth_credibility": 0.879,
+   "birth_evidence_z": 4.945
+  }
+ ],
+ "honesty": [
+  "Geliştirme dönemi kaydıdır; v1→v1.1→v2 zinciri bu döneme bakılarak değişti, kanıt değildir.",
+  "Masraf kararda kullanılmadı; NAV'da %0,8/yön tam uygulandı (brüt NAV de verildi).",
+  "Evre etiketi geriye dönüktür; yalnız onaylanmış bacaklar öğrenildi.",
+  "Tek gerçek sınav 2026 testidir."
+ ]
+}
