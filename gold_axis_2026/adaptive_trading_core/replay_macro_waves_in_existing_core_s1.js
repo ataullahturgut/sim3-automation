@@ -21,9 +21,12 @@ const safeNumber=x=>x===null||x===undefined?null:Number(x);
 const scale={NFP:100,AHE:1,UNEMP:1,CPI:1};
 const MKT="HISTDATA_XAUUSD_M1_FIXED_EST_M15_2022_2024_QC_CANDIDATE_V1";
 const EVENT="MACRO_ARCHIVE_POST_RELEASE_PAIR_UNVERIFIED";
-const features=["gold_1h","gold_prev_1h","nfp_surprise_z","ahe_surprise_z","unemp_surprise_z","cpi_surprise_z"];
+const CME="DATABENTO_GLBX_MDP3_OHLCV_1H_CALENDAR_CONTINUOUS_C_SOURCE_V1";
+const features=["gold_1h","gold_prev_1h","nq_1h","zn_1h","cl_1h","si_1h",
+  "nfp_surprise_z","ahe_surprise_z","unemp_surprise_z","cpi_surprise_z"];
 function registry(){return {
  [MKT]:{kind:"MARKET",evidenceStatus:"RECONSTRUCTED_MARKET_ASOF"},
+ [CME]:{kind:"MARKET",evidenceStatus:"RECONSTRUCTED_MARKET_ASOF"},
  [EVENT]:{kind:"EVENT",evidenceStatus:"RECONSTRUCTED_RELEASE_RESEARCH"}
 };}
 function ledgerIndex(text){
@@ -39,12 +42,29 @@ function ledgerIndex(text){
  }
  return ix;
 }
-function marketFeatures(row,t){
+function marketFeatures(row,t,{crossAssets=false}={}){
  const a=row.pre1h,b=row.pre2h;
  if(!num(a)||!num(b))throw Error("MARKET_STATE_MISSING");
  const m=x=>({value:Math.max(-5,Math.min(5,x/1.5)),source:MKT,
   observedAt:iso(t),availableAt:iso(t),kind:"MARKET"});
- return {gold_1h:m(a),gold_prev_1h:m(b)};
+ const out={gold_1h:m(a),gold_prev_1h:m(b)};
+ if(crossAssets){
+  // Precommitted engineering scales (not fitted to observed gold outcomes).
+  const crossScale={nq_1h:1.5,zn_1h:.35,cl_1h:2.5,si_1h:2};
+  for(const [name,scale] of Object.entries(crossScale)){
+    const raw=row[name],observed=row[name.replace("_1h","_known_end_utc")];
+    if(raw===null||raw===undefined){
+      if(observed!==null&&observed!==undefined)throw Error("INCOMPLETE_CROSS_ASSET_PAIR_"+name);
+      continue;
+    }
+    if(!num(raw)||!observed)throw Error("INVALID_CROSS_ASSET_"+name);
+    const end=asof(observed);
+    if(end>t||t-end>75*60000)throw Error("STALE_OR_FUTURE_CROSS_ASSET_"+name);
+    out[name]={value:Math.max(-5,Math.min(5,raw/scale)),
+      observedAt:iso(end),availableAt:iso(end),source:CME,kind:"MARKET"};
+  }
+ }
+ return out;
 }
 function eventFeatures(row,t,ix){
  if(!["EMP","CPI"].includes(row.release_family))throw Error("BAD_RELEASE_FAMILY");
@@ -76,7 +96,7 @@ function validatePriceRow(r){
  if(Math.abs(100*Math.log(r.due_price/r.anchor_price)-r.next4h)>1e-7)
   throw Error("DUE_PRICE_RETURN_CONFLICT");
 }
-function observations(rows,ledgerCSV){
+function observations(rows,ledgerCSV,{crossAssets=false}={}){
  if(!Array.isArray(rows)||rows.length<2)throw Error("DERIVED_ROWS_REQUIRED");
  const index=ledgerIndex(ledgerCSV);
  const waves=new Map(),anchors=new Map(),byTime=new Map();
@@ -88,14 +108,14 @@ function observations(rows,ledgerCSV){
   const t=asof(r.anchor_utc);
   validatePriceRow(r);
   const entry={at:t,kind:isEvent?"EVENT":"CONTROL",release:isEvent?r.release_utc:null,
-    price:r.anchor_price,features:marketFeatures(r,t),
+    price:r.anchor_price,features:marketFeatures(r,t,{crossAssets}),
     outcome:r.next4h,duePrice:r.due_price};
   if(isEvent)Object.assign(entry.features,eventFeatures(r,t,index));
   return entry;
  };
  for(const input of rows){
   const r={...input};
-  for(const k of ["nfp","ahe","unemp","cpi","pre1h","pre2h","next4h","anchor_price","due_price"])
+  for(const k of ["nfp","ahe","unemp","cpi","pre1h","pre2h","next4h","anchor_price","due_price","nq_1h","zn_1h","cl_1h","si_1h"])
     if(r[k]!==undefined)r[k]=safeNumber(r[k]);
   if(r.kind==="EVENT"){
     if(waves.has(r.release_utc))throw Error("ONE_WAVE_ONLY_NO_DUPLICATES");
@@ -145,8 +165,11 @@ function make(){
     maxLateMinutes:15,sourceRegistry:registry()});
 }
 const pPrior=x=>(x.up+1)/(x.n+2);
-function run(rows,ledgerCSV){
- const {events,counts}=observations(rows,ledgerCSV);
+function run(rows,ledgerCSV,{marketContext="XAU_ONLY"}={}){
+ if(!["XAU_ONLY","XAU_PLUS_RECONSTRUCTED_CME"].includes(marketContext))
+  throw Error("UNKNOWN_MARKET_CONTEXT");
+ const {events,counts}=observations(rows,ledgerCSV,
+   {crossAssets:marketContext==="XAU_PLUS_RECONSTRUCTED_CME"});
  const withEconomy=make(),marketOnly=make(),waiting=[];
  const s={settled:0,eventCases:0,controlCases:0,
    scoredBoth:0,eventScoredBoth:0,controlScoredBoth:0,
@@ -234,7 +257,8 @@ function run(rows,ledgerCSV){
  const bothRules=core.rules(withEconomy),marketRules=core.rules(marketOnly);
  const economicRules=bothRules.filter(x=>Object.keys(x.center).some(k=>k.endsWith("_surprise_z")));
  return {model:"EXISTING_ADAPTIVE_RULE_DISCOVERY_S1",
-  mode:"DISCOVERY_FULL_ARCHIVE",strictWalkForward:false,tradePolicy:"NOT_IMPLEMENTED",
+  mode:"DISCOVERY_FULL_ARCHIVE",marketContext,
+  strictWalkForward:false,tradePolicy:"NOT_IMPLEMENTED",
   dataQuality:"RETROSPECTIVE_LEDGER_UNVERIFIED_POST_RELEASE_ONLY",
   ...counts,stepEvents:events.length,...s,
   brierEconomic:s.scoredBoth?s.brierE/s.scoredBoth:null,
@@ -264,13 +288,15 @@ function run(rows,ledgerCSV){
 if(require.main===module){
  // Only private runtime inputs. stdout contains summaries and SHA256, not bars.
  const fs=require("node:fs"),crypto=require("node:crypto");
- if(process.argv.length!==4)throw Error(
-   "Usage: node replay_macro_waves_in_existing_core_s1.js PRIVATE_ROWS.json PRIVATE_MACRO_LEDGER.csv");
+ if(process.argv.length<4||process.argv.length>5)throw Error(
+   "Usage: node replay_macro_waves_in_existing_core_s1.js PRIVATE_ROWS.json PRIVATE_MACRO_LEDGER.csv [--cross-assets]");
+ if(process.argv[4]&&process.argv[4]!=="--cross-assets")throw Error("UNKNOWN_MARKET_CONTEXT");
  const raw=fs.readFileSync(process.argv[2],"utf8");
  const ledger=fs.readFileSync(process.argv[3],"utf8");
  const sha=crypto.createHash("sha256").update(raw).update("\n").update(ledger)
    .digest("hex");
- const out=run(JSON.parse(raw),ledger);
+ const out=run(JSON.parse(raw),ledger,
+   {marketContext:process.argv[4]?"XAU_PLUS_RECONSTRUCTED_CME":"XAU_ONLY"});
  console.log(JSON.stringify({runId:"S1_ARCHIVE_CORE_"+sha.slice(0,16),inputSha256:sha,
    ...out},null,2));
 }
