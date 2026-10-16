@@ -136,7 +136,10 @@ function signal(s,ob){
   if(p==="GOLD"){
    riskEdge+=adjustedRisk;
    if(guardHot){proposed="SELL";reason=hardLoss?"DRAW_DOWN_GUARD":"TAIL_BUDGET_GUARD";}
-   else if(riskEdge>0&&base.readiness){proposed="SELL";reason="RISK_ADJUSTED_EXIT";}
+   else if(base.readiness){
+     proposed=riskEdge>0?"SELL":"WAIT";
+     reason=proposed==="SELL"?"RISK_ADJUSTED_EXIT":"RISK_ADJUSTED_HOLD";
+   }
   }else{
    riskEdge-=adjustedRisk;
    if(guardHot){proposed="WAIT";reason="RISK_BUDGET_BLOCK";}
@@ -153,7 +156,7 @@ function signal(s,ob){
  s.core=fork;
  s.pendingContext={bucket:which,position:p,asof:base.at,forced:
    proposed==="SELL"&&reason!=="DOUBLE_Q"&&reason!=="RISK_ADJUSTED_EXIT"};
- if(proposed==="SELL"&&reason.startsWith("TAIL_")||reason==="DRAW_DOWN_GUARD")
+ if(proposed==="SELL"&&(reason.startsWith("TAIL_")||reason==="DRAW_DOWN_GUARD"))
   s.audit.forcedExits++;
  if(p==="CASH"&&base.action==="BUY"&&proposed==="WAIT")s.audit.blockedEntries++;
  if(base.action!==proposed)s.audit.riskAbstains++;else s.audit.normalDecisions++;
@@ -177,7 +180,10 @@ function quote(s,o){
  }
  // V18 enforces datetime/fee/extreme-quote corroboration.
  const result=Core.quote(s.core,o);
- if(!result.fill)return {base:result,fill:null,portfolio:quoteState(s),ordersSent:0};
+ if(!result.fill){
+   if(result.expired)s.pendingContext=null;
+   return {base:result,fill:null,portfolio:quoteState(s),ordersSent:0};
+ }
  const context=s.pendingContext,p=s.portfolio,c=s.config,r=s.risk;
  const entryPrice=o.price,f=result.fill,fee=f.feeLegIfSwitched;
  if(!finite(entryPrice)||entryPrice<=0||!finite(fee)||fee<0||fee>=.1)
