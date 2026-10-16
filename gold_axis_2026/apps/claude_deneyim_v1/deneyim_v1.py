@@ -16,6 +16,9 @@ TH_OUT = [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50]
 DEFAULT_TH = (0.60, 0.40)
 RIDGE = 10.0
 PRIOR_W, PRIOR_P = 2.0, 0.5
+H_OUT = 10                                   # v1.1 sonuç belleği ufku (karar günü)
+C_RT = -200.0 * math.log(1 - S.FEE)          # tam tur log maliyet (%)
+OUT_PRIOR_W = 5.0                            # sonuç tahmini öncül ağırlığı (sözde gözlem)
 
 
 # ---------------------------------------------------------------- ideal al/sat (dinamik programlama)
@@ -66,6 +69,21 @@ class DeneyimModel:
     def __init__(self):
         self.w = None; self.beta = None; self.alpha = 0.5; self.th = DEFAULT_TH
         self.memX = None; self.memY = None; self.h = 1.0
+        self.outX = None; self.outR = None; self.outD = None
+
+    def set_outcomes(self, X, r, d):
+        self.outX, self.outR, self.outD = X.copy(), r.copy(), d.copy()
+
+    def outcome_est(self, x):
+        """Benzer geçmiş durumlardan E[r_H] ve P(düşüş) (öncüllü çekirdek ortalaması)."""
+        if self.outX is None or self.w is None or len(self.outR) == 0:
+            return None
+        d2 = ((self.outX - x) ** 2 * self.w).sum(1)
+        k = np.exp(-d2 / (2 * self.h ** 2))
+        base = float(self.outD.mean())
+        Er = float((k @ self.outR + OUT_PRIOR_W * 0.0) / (k.sum() + OUT_PRIOR_W))
+        Pd = float((k @ self.outD + OUT_PRIOR_W * base) / (k.sum() + OUT_PRIOR_W))
+        return Er, Pd
 
     def fit(self, X, Y):
         """X: durum vektörleri, Y: ideal pozisyon (0/1). Tarih kullanılmaz."""
@@ -133,7 +151,8 @@ def logloss(p, y):
 
 
 # ---------------------------------------------------------------- maraton
-def marathon(outdir):
+def marathon(outdir, mode="C0", report_dir="reports"):
+    assert mode in ("C0", "C1", "C2")
     rows = S.load_rows(dev_only=True)
     raw, macro = S.build_states(rows)
     Z, std = S.standardize(raw)
@@ -143,12 +162,13 @@ def marathon(outdir):
     for i in range(i_start, len(rows)):
         months.setdefault(rows[i]["date"].strftime("%Y-%m"), []).append(i)
     model = DeneyimModel()
+    est = {}                      # gerçek zamanlı sonuç tahminleri: i -> (E[r_H], P(düşüş))
     rt = {}                       # gerçek zamanlı skorlar: i -> (p, pa, pl)
     cash, units, pos = 100.0, 0.0, 0
     nav_hist, trades_all = [], []
     prev_w = None
     reports = []
-    os.makedirs(os.path.join(outdir, "reports"), exist_ok=True)
+    os.makedirs(os.path.join(outdir, report_dir), exist_ok=True)
     for m, idxs in months.items():
         # (A) ay içi gerçek zamanlı kararlar: model parametreleri önceki ay sonundan
         month_trades = []; nav0 = cash + units * rows[idxs[0] - 1]["bid"] * (1 - S.FEE) if idxs[0] > i_start else 100.0
@@ -156,13 +176,24 @@ def marathon(outdir):
             r = rows[i]
             p, pa, pl = model.p(Z[i])
             rt[i] = (p, pa, pl)
-            if p is not None:
-                if pos == 0 and p >= model.th[0]:
-                    units = cash * (1 - S.FEE) / r["ask"]; cash = 0.0; pos = 1
-                    month_trades.append(dict(date=r["date"].isoformat(), action="AL", price=r["ask"], p=round(p, 3)))
-                elif pos == 1 and p <= model.th[1]:
-                    cash = units * r["bid"] * (1 - S.FEE); units = 0.0; pos = 0
-                    month_trades.append(dict(date=r["date"].isoformat(), action="SAT", price=r["bid"], p=round(p, 3)))
+            est[i] = model.outcome_est(Z[i]) if mode != "C0" else None
+            buy = sell = False
+            if mode == "C0" and p is not None:
+                buy = pos == 0 and p >= model.th[0]; sell = pos == 1 and p <= model.th[1]
+            elif mode in ("C1", "C2") and est[i] is not None:
+                Er, Pd = est[i]
+                if mode == "C1":
+                    buy = pos == 0 and Er > C_RT / 2; sell = pos == 1 and Er < -C_RT / 2
+                else:
+                    buy = pos == 0 and Er > 0 and Pd < 0.30; sell = pos == 1 and Pd > 0.50
+            if buy:
+                units = cash * (1 - S.FEE) / r["ask"]; cash = 0.0; pos = 1
+                month_trades.append(dict(date=r["date"].isoformat(), action="AL", price=r["ask"], p=None if p is None else round(p, 3),
+                                         Er=None if est[i] is None else round(est[i][0], 3), Pdown=None if est[i] is None else round(est[i][1], 3)))
+            elif sell:
+                cash = units * r["bid"] * (1 - S.FEE); units = 0.0; pos = 0
+                month_trades.append(dict(date=r["date"].isoformat(), action="SAT", price=r["bid"], p=None if p is None else round(p, 3),
+                                         Er=None if est[i] is None else round(est[i][0], 3), Pdown=None if est[i] is None else round(est[i][1], 3)))
             nav_hist.append((i, cash + units * r["bid"] * (1 - S.FEE), pos))
         trades_all += month_trades
         i_end = idxs[-1]
@@ -176,6 +207,17 @@ def marathon(outdir):
         # (D) deneyimi güncelle ve yeniden öğren (yalnız bu ay sonuna kadarki veri)
         X = Z[i_start:i_end + 1]
         model.fit(X, Y)
+        # sonuç belleği: yalnız bu ay sonuna kadar olgunlaşmış ileri sonuçlar (i + H <= i_end)
+        oi = list(range(i_start, i_end - H_OUT + 1))
+        if oi:
+            mid = lambda q: (rows[q]["bid"] + rows[q]["ask"]) / 2
+            rH = np.array([100 * math.log(mid(q + H_OUT) / mid(q)) for q in oi])
+            dH = np.array([1.0 if 100 * math.log(min(mid(q + j) for j in range(1, H_OUT + 1)) / mid(q)) < -C_RT else 0.0 for q in oi])
+            model.set_outcomes(Z[oi], rH, dH)
+        if mode != "C0":
+            ests = [est[q] for q in idxs if est.get(q) is not None]
+            rep["model"]["mean_Er"] = round(float(np.mean([e[0] for e in ests])), 3) if ests else None
+            rep["model"]["mean_Pdown"] = round(float(np.mean([e[1] for e in ests])), 3) if ests else None
         hist_i = [i for i in range(i_start, i_end + 1) if rt.get(i, (None,))[0] is not None]
         recent = hist_i[-126:]
         if len(recent) >= 60:
@@ -197,9 +239,9 @@ def marathon(outdir):
             top_weights=[(S.FEATURES[j], round(float(model.w[j]), 4)) for j in np.argsort(-model.w)[:8]],
             group_weights={g: round(float(sum(model.w[S.FEATURES.index(f)] for f in fs)), 3) for g, fs in S.GROUPS.items()})
         prev_w = model.w.copy()
-        write_report(outdir, rep)
+        write_report(outdir, rep, report_dir)
         reports.append(rep)
-    return dict(rows=rows, raw=raw, Z=Z, std=std, model=model, rt=rt, nav_hist=nav_hist, trades=trades_all,
+    return dict(rows=rows, raw=raw, Z=Z, std=std, model=model, rt=rt, est=est, mode=mode, nav_hist=nav_hist, trades=trades_all,
                 reports=reports, i_start=i_start, macro=macro, oracle_final=(opos, olog), legs_final=legs)
 
 
@@ -284,9 +326,9 @@ def month_report(m, idxs, rows, raw, Z, Y, i_start, legs, nav_hist, mtrades, nav
     return rep
 
 
-def write_report(outdir, rep):
+def write_report(outdir, rep, report_dir="reports"):
     m = rep["month"]
-    json.dump(rep, open(os.path.join(outdir, "reports", f"AYLIK_{m.replace('-', '_')}.json"), "w"), indent=1, ensure_ascii=False, default=str)
+    json.dump(rep, open(os.path.join(outdir, report_dir, f"AYLIK_{m.replace('-', '_')}.json"), "w"), indent=1, ensure_ascii=False, default=str)
     g, ide, mo, er, why, le = rep["gold"], rep["ideal"], rep["model"], rep["errors"], rep["why"], rep["learning_after_month"]
     L = [f"# DENEYİM v1 — Aylık matematiksel model raporu: {m}", "",
          f"**Altın (06:00Z mid):** {g['start_prev_close']} → {g['end']} (%{g['change_pct']}), ay içi en yüksek {g['high']}, en düşük {g['low']}.", "",
@@ -298,8 +340,11 @@ def write_report(outdir, rep):
         L.append("- Bu ay ideal yolda altın pozisyonu yok.")
     L += ["", "## Modelin bu ayki kendi kararları (gerçek zamanlı, önceki ay sonu bilgisiyle)",
           f"NAV {mo['nav_start']} → {mo['nav_end']} (%{mo['month_ret_pct']}); ay sonu pozisyon {mo['position_end']}; ort. skor {mo['mean_p']}; ideal getirinin yakalanan payı %{mo['capture_of_ideal']}."]
+    if "mean_Er" in mo:
+        L.append(f"Benzer geçmiş durumlardan tahmin (ay ortalaması): 10 günlük beklenen getiri %{mo['mean_Er']}, düşüş (> %1,6) olasılığı {mo['mean_Pdown']}.")
     for t in mo["trades"]:
-        L.append(f"- {t['date']} {t['action']} @ {round(t['price'], 2)} (skor {t['p']})")
+        extra = f", E[r]={t['Er']}, P(düşüş)={t['Pdown']}" if t.get("Er") is not None else ""
+        L.append(f"- {t['date']} {t['action']} @ {round(t['price'], 2)} (skor {t['p']}{extra})")
     if not mo["trades"]:
         L.append("- İşlem yok.")
     L += ["", f"**Hatalar:** ideal ALTIN iken NAKİT kalınan gün {er['missed_gold_days']}, ideal NAKİT iken ALTIN tutulan gün {er['false_gold_days']} (yanlış gün payı %{round(100 * er['wrong_day_share'])}).", "",
@@ -320,5 +365,5 @@ def write_report(outdir, rep):
           f"Hafıza {le['memory_days']} gün, ideal ALTIN payı %{round(100 * le['ideal_gold_share'])}; benzer-deneyim ağırlığı α={le['alpha_analog']}; eşikler giriş {le['th_in']} / çıkış {le['th_out']}.",
           "Değişken grubu önemleri: " + ", ".join(f"{g} {w}" for g, w in sorted(le["group_weights"].items(), key=lambda kv: -kv[1])) + ".",
           "En ayırt edici değişkenler: " + ", ".join(f"{S.LABEL_TR[a]} {b}" for a, b in le["top_weights"]) + ".", ""]
-    with open(os.path.join(outdir, "reports", f"AYLIK_{m.replace('-', '_')}.md"), "w") as fh:
+    with open(os.path.join(outdir, report_dir, f"AYLIK_{m.replace('-', '_')}.md"), "w") as fh:
         fh.write("\n".join(L))
