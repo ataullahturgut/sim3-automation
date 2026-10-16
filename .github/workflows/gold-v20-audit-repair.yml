@@ -22,6 +22,7 @@ jobs:
           node --check v20_kavis_atlas_repaired.js
           node --check v20_kavis_atlas_repaired.test.js
           node --check v20_audit_128_economic.js
+          node --check v20_audit_64_newworlds.js
       - name: Repaired model strict adversarial tests plus legacy core
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: |
@@ -34,6 +35,11 @@ jobs:
         run: |
           node v20_audit_128_economic.js > v20_audit_128_economic_results.json
           node -e "const r=require('./v20_audit_128_economic_results.json');console.log(JSON.stringify({kind:r.label,summary:r.summary,explicit15pct:r.explicit15pct,byMode:r.byMode,worst:r.worstCases},null,2))"
+      - name: 64 fresh fictional worlds outside the former 128 price generator
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v20_audit_64_newworlds.js > v20_audit_64_newworlds_results.json
+          node -e "const r=require('./v20_audit_64_newworlds_results.json');console.log(JSON.stringify({contract:r.contract,summary:r.summary,worlds:r.summaryByWorld},null,2))"
       - name: Explicit refusal of historical-data simulation
         run: |
           if grep -E 'loadFullRows|v13_sentez_run|2026_FEB_SEP|function placeOrder' gold_axis_2026/apps/portfolio_guard_v1/v20_kavis_atlas_repaired.js gold_axis_2026/apps/portfolio_guard_v1/v20_kavis_atlas_repaired.test.js; then
@@ -45,5 +51,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v20-audit-128-worlds-plus-24-budget
-          path: gold_axis_2026/apps/portfolio_guard_v1/v20_audit_128_economic_results.json
+          path: |
+            gold_axis_2026/apps/portfolio_guard_v1/v20_audit_128_economic_results.json
+            gold_axis_2026/apps/portfolio_guard_v1/v20_audit_64_newworlds_results.json
           if-no-files-found: ignore
