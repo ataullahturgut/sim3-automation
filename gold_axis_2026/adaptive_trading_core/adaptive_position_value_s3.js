@@ -168,7 +168,6 @@ function observe(s,o){
   proposed=sw.value>keep.value?
    (h==="CASH"?"BUY":"SELL"):"KEEP";
   reason=proposed==="KEEP"?"LEARNED_KEEP_GREATER_OR_EQUAL":"LEARNED_SWITCH_GREATER";
-  s.audit.proposed++;
  }
  // Long-horizon shadow ablation is possible ONLY from prior, matured
  // sessions with net buy+sell fee and fixed 5-session support, not hindsight.
@@ -199,9 +198,11 @@ function observe(s,o){
    }
  }
  if(proposed==="ABSTAIN")s.audit.abstained++;
+ else s.audit.proposed++;
  s.audit.decisionsByReason[reason]=(s.audit.decisionsByReason[reason]||0)+1;
  // Shadow simulation is optional and NEVER changes the real portfolio.
- if(s.paper.enabled&&ready&&proposed!=="KEEP")paperTrade(s,proposed,o.price);
+ if(s.paper.enabled&&ready&&bankWindow&&proposed!=="KEEP")
+  paperTrade(s,proposed,o.price);
  s.paper.lastPrice=o.price;
  if(s.paper.valid){
   const net=paperNet(s,o.price);
