@@ -216,3 +216,56 @@ test("real bank fee is estimated from checkpoint history, checkpoint stable",()=
  A.equal(s.feeKnowledge.lastKnown,.03);
  A.doesNotThrow(()=>M.restore(M.save(s)));
 });
+
+test("poisoned bank quote does not alter later Q weights after clean 12TR recovery",()=>{
+ const a=init(),b=init();
+ sig(a,1);sig(b,1);
+ const clean=M.quote(a,{at:at(1,9),price:101,isBankCheckpoint:false});
+ const injection=q(b,1,100000);
+ A.equal(clean.fill,null);A.equal(injection.quarantined,true);
+ const verifiedA=M.quote(a,{at:at(1,12),price:102,isBankCheckpoint:true});
+ const verifiedB=M.quote(b,{at:at(1,12),price:102,isBankCheckpoint:true});
+ A.deepEqual(verifiedA.fill,verifiedB.fill);
+ A.deepEqual(a.q,b.q);A.deepEqual(a.qb,b.qb);
+ A.deepEqual(a.regime,b.regime);A.deepEqual(a.feeKnowledge,b.feeKnowledge);
+ A.equal(a.audit.quarantineQuotes,0);A.equal(b.audit.quarantineQuotes,1);
+});
+test("event-derived model remains invariant to a 2000-day joint calendar shift",()=>{
+ const o=(d,h,shift)=>new Date(base+(d+shift)*D+h*H).toISOString();
+ const a=M.create(),b=M.create();
+ let pa="CASH",pb="CASH";
+ for(let d=0;d<65;d++){
+  const m=market({r4:d<30?1:-2,r1:d<30?2:-4,r3:d<30?3:-6});
+  const va=M.signal(a,{asof:o(d,6,0),featureAvailableAt:o(d,6,0),position:pa,market:m});
+  const vb=M.signal(b,{asof:o(d,6,2000),featureAvailableAt:o(d,6,2000),position:pb,market:m});
+  A.equal(va.action,vb.action);
+  const fA=M.quote(a,{at:o(d,9,0),price:100*Math.exp(.01*Math.min(d,30)-.02*Math.max(0,d-30)),
+    isBankCheckpoint:true}).fill;
+  const fB=M.quote(b,{at:o(d,9,2000),price:100*Math.exp(.01*Math.min(d,30)-.02*Math.max(0,d-30)),
+    isBankCheckpoint:true}).fill;
+  pa=fA.positionAfter;pb=fB.positionAfter;
+ }
+ A.deepEqual(a.q,b.q);A.deepEqual(a.qb,b.qb);
+});
+test("200 seeded malformed sensor updates fail closed and preserve state",()=>{
+ let z=811251;const random=()=>{z=(1664525*z+1013904223)>>>0;return z/2**32;};
+ const fixtures=[
+  ()=>({r4:Infinity}),()=>({r1:NaN}),()=>({r3:null}),
+  ()=>({rv:Infinity}),()=>({dd:1e8}),()=>({nq6:-1e7}),
+  ()=>({r4:"100"}),()=>({r1:900000}),()=>({r3:-900000}),
+ ];
+ for(let i=0;i<200;i++){
+  const s=M.create(),old=M.save(s),m=fixtures[Math.floor(random()*fixtures.length)]();
+  A.throws(()=>sig(s,0,"CASH",m),/FEATURE|MARKET/);
+  A.deepEqual(s,old);
+ }
+});
+test("100 randomly corrupted bank fees cannot mutate an unfilled decision",()=>{
+ let z=1998769;const random=()=>{z=(1664525*z+1013904223)>>>0;return z/2**32;};
+ for(let i=0;i<100;i++){
+  const s=init();sig(s,1);const frozen=M.save(s);
+  const fee=random()<.5?-.0001-random()*10:.11+random()*10;
+  A.throws(()=>q(s,1,102,{bankFeePerSide:fee}),/INVALID_EXECUTION_FEE/);
+  A.deepEqual(s,frozen);
+ }
+});
