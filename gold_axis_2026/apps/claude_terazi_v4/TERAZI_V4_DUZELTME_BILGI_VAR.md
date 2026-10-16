@@ -14,7 +14,9 @@ Karar anında bilinen, nedensel standartlaştırılmış tek bir değişken, hi�
 | altın 5g getiri | **0,799** | **0,679** | **0,637** |
 | altın 1g getiri | 0,683 | 0,626 | 0,677 |
 | 60g zirveye uzaklık | 0,672 | 0,647 | 0,633 |
-| **model P (karar anı)** | **0,501** | **0,611** | **0,455** |
+| **model P (karar anı)** | **0,556** | **0,624** | **0,466** |
+
+(Model P değerleri v4.1'in yeniden üretilmiş günlük kaydından; ilk sürümde yanlışlıkla v4.0 dosyası okunmuştu — bkz. rapor §4 notu.)
 
 (Değişkenler 35 içinden en iyi 10 olarak seçildi — seçim örneklem içi. Ama 5g getiri üç yılın
 üçünde de ilk sıralarda, yani tesadüf değil.)

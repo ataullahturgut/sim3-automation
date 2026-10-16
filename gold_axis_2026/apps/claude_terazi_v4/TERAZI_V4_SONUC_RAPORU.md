@@ -69,21 +69,25 @@ kusursuz öğrenmiş bir model, gerçek zamanda yalnız ilk etiketleri görebild
 
 ## 4. Başarısızlığın gerçek nedeni — ölçülmüş
 
+> **Düzeltme notu:** bu bölümün ilk sürümü v4.0'ın günlük dosyasından hesaplanmıştı (v4.1 koşusu çıktı
+> `head` ile kesildiği için dosya yazılmadan sonlanmıştı). v4.1 yeniden üretildi, sayılar güncellendi.
+> Ayrıca bu bölümün "bilgi yok" yorumu yanlıştır — bkz. `TERAZI_V4_DUZELTME_BILGI_VAR.md`.
+
 Modelin hedefi ayırt etme gücü (karar anındaki P ile, 2023–2025):
 
 | | |
 |---|---:|
-| hedef = ALTINDA günler, ortalama P | 0,4298 |
-| hedef = NAKİT günler, ortalama P | 0,3951 |
-| **toplam AUC** | **0,618** |
+| hedef = ALTINDA günler, ortalama P | 0,4288 |
+| hedef = NAKİT günler, ortalama P | 0,3879 |
+| **toplam AUC** | **0,631** |
 
 Ama yıl bazında kırılım toplamın aldatıcı olduğunu gösteriyor:
 
 | yıl | AUC | altında / nakit gün |
 |---|---:|---|
-| 2023 | **0,501** | 94 / 163 |
-| 2024 | 0,611 | 122 / 137 |
-| 2025 | **0,455** | 177 / 81 |
+| 2023 | **0,556** | 94 / 163 |
+| 2024 | 0,624 | 122 / 137 |
+| 2025 | **0,466** | 177 / 81 |
 
 0,618'lik toplam, yıllar arası seviye kaymasından (P zamanla yukarı sürükleniyor, hedefin
 taban oranı da yükseliyor) geliyor; **yıl içinde ayırt etme gücü yazı-tura.** 2025'te
