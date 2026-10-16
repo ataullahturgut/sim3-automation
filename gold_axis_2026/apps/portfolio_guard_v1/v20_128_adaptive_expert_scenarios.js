@@ -31,6 +31,10 @@ function riskReplay(prices,fee,opt={}){
   maxDrawdown:+p.maxDrawdownPct.toFixed(3),
   forced,blocked,breachedCheckpoints:misses,
   changedDecisions:early,tailSamples:s.risk.learnedReturns,
+  advisorConsidered:s.audit.advisorConsidered,
+  advisorActivated:s.audit.advisorActivated,
+  advisorRejected:s.audit.advisorRejected,
+  advisorMatured:s.audit.advisorMatured,
   realCash:+p.cash.toFixed(3),units:+p.units.toFixed(6)};
 }
 function run(){
@@ -66,6 +70,10 @@ function run(){
    medianMDD:pctl(dd,.5),p95MDD:pctl(dd,.95),
    belowCash:rows.filter(r=>r.v19.capital<100).length,
    beatsPassive:rows.filter(r=>r.v19.capital>r.passive).length,
+   advisorConsidered:rows.reduce((x,y)=>x+y.v19.advisorConsidered,0),
+   advisorActivated:rows.reduce((x,y)=>x+y.v19.advisorActivated,0),
+   advisorRejected:rows.reduce((x,y)=>x+y.v19.advisorRejected,0),
+   advisorMatured:rows.reduce((x,y)=>x+y.v19.advisorMatured,0),
    forcedExits:rows.reduce((x,y)=>x+y.v19.forced,0),
    blockedEntries:rows.reduce((x,y)=>x+y.v19.blocked,0),
    ablationMismatch:0},
