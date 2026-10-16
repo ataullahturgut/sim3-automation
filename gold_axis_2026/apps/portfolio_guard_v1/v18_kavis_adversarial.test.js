@@ -9,6 +9,10 @@ const q=(s,d,price=100,extra={})=>M.quote(s,{
  at:at(d,9),price,isBankCheckpoint:true,...extra});
 const near=(a,b)=>A.ok(Math.abs(a-b)<1e-8,String(a)+" vs "+String(b));
 function init(o){const s=M.create(o);sig(s,0);q(s,0);return s;}
+const corroboration=(d,p)=>({sources:[
+ {provider:"BANK_RAW_PRIMARY",referencePrice:p,asof:at(d,9)},
+ {provider:"INDEPENDENT_METAL_TAPE",referencePrice:p*1.001,asof:at(d,9)}
+]});
 const evt=(id="BANK-A")=>({verifiedFirstPublication:true,
  evidenceId:id,firstAvailableAt:at(0),family:"G05",polarity:-.8});
 test("V18 invalid fee and guard configuration cannot start",()=>{
@@ -65,7 +69,7 @@ test("quarantine can recover on later valid checkpoint without inventing an orde
 });
 test("independently confirmed extreme quote can be learned as real severe crash",()=>{
  const s=init();sig(s,1);
- const z=q(s,1,20,{confirmedExtremeQuote:true});
+ const z=q(s,1,20,{confirmedExtremeQuote:true,corroboration:corroboration(1,20)});
  A.equal(z.quarantined,undefined);A.equal(s.learned,1);
  A.equal(s.audit.confirmedExtremeQuotes,1);
  A.ok(z.update.knownReturnPct< -100);
@@ -119,7 +123,7 @@ test("confirmed extreme high-to-low-to-high movement cannot create NaNs",()=>{
  for(let d=1;d<=40;d++){
   sig(s,d,pos, {r4:d%2?-20:20,r1:d%2?-40:40,r3:d%2?-60:60});
   const extreme=d%2?1e-75:1e75;
-  const x=q(s,d,extreme,{confirmedExtremeQuote:true});
+  const x=q(s,d,extreme,{confirmedExtremeQuote:true,corroboration:corroboration(d,extreme)});
   pos=x.fill.positionAfter;
   A.doesNotThrow(()=>M.restore(M.save(s)));
  }
@@ -154,4 +158,61 @@ test("research engine never emits authorized real orders",()=>{
  A.equal(z.ordersSent,0);
  A.equal(z.fill.simulatedExecutionOnly,true);
  A.equal(s.config.liveTrade,false);
+});
+
+test("unverified boolean extreme confirmation alone NEVER bypasses quarantine",()=>{
+ const s=init();sig(s,1);
+ const z=q(s,1,220,{confirmedExtremeQuote:true});
+ A.equal(z.quarantined,true);A.equal(s.learned,0);
+ A.equal(s.audit.confirmedExtremeQuotes,0);
+});
+test("fabricated duplicated extreme price source and future-dated proof rejected",()=>{
+ for(const wrong of [
+  {sources:[{provider:"REPEAT",asof:at(1,9),referencePrice:210},
+            {provider:"REPEAT",asof:at(1,9),referencePrice:210}]},
+  {sources:[{provider:"ONE",asof:at(1,9),referencePrice:210},
+            {provider:"TWO",asof:at(2,9),referencePrice:210}]},
+  {sources:[{provider:"ONE",asof:at(1,9),referencePrice:210},
+            {provider:"TWO",asof:at(1,9),referencePrice:100}]}
+ ]){
+  const s=init();sig(s,1);
+  const a=q(s,1,210,{confirmedExtremeQuote:true,corroboration:wrong});
+  A.equal(a.quarantined,true);A.equal(s.learned,0);
+ }
+});
+test("posted time-safe higher bank fee reduces switching advantage without duplicate fee",()=>{
+ const mk=(f)=>{
+  const s=M.create({minimumMaturedIntervals:2});
+  s.learned=40;
+  s.q.CASH_SWITCH.w[0]=2;s.qb.CASH_SWITCH.w[0]=2;
+  const x=sig(s,0,"CASH",{}, {bankFeeQuote:{feePerSide:f,availableAt:at(0)}});
+  return x;
+ };
+ const normal=mk(.008),wide=mk(.04),narrow=mk(.001);
+ A.ok(wide.actionGap<normal.actionGap);
+ A.ok(narrow.actionGap>normal.actionGap);
+ const correction=100*(Math.log(1-.04)-Math.log(1-.008));
+ near(wide.bankFeeAdjustment,correction);
+ near(normal.bankFeeAdjustment,0);
+});
+test("future or stale bank fee cannot contaminate decision",()=>{
+ const cases=[
+  {feePerSide:.03,availableAt:at(1)},
+  {feePerSide:.03,availableAt:at(-1)},
+  {feePerSide:-1,availableAt:at(0)}
+ ];
+ for(const z of cases){
+  const s=M.create(),prior=M.save(s);
+  A.throws(()=>sig(s,0,"CASH",{}, {bankFeeQuote:z}),/BANK_FEE_QUOTE/);
+  A.deepEqual(s,prior);
+ }
+});
+test("real bank fee is estimated from checkpoint history, checkpoint stable",()=>{
+ const s=M.create();
+ sig(s,0);q(s,0,100,{bankFeePerSide:.008});
+ sig(s,1);q(s,1,102,{bankFeePerSide:.03});
+ A.equal(s.feeKnowledge.n,2);
+ A.ok(s.feeKnowledge.mean>.008);
+ A.equal(s.feeKnowledge.lastKnown,.03);
+ A.doesNotThrow(()=>M.restore(M.save(s)));
 });
