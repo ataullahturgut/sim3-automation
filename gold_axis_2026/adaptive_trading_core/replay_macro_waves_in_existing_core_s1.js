@@ -159,18 +159,20 @@ function observations(rows,ledgerCSV,{crossAssets=false}={}){
  const events=[...byTime.values()].sort((a,b)=>a.at-b.at);
  return {events,counts};
 }
-function make(){
- return core.create({learningMode:"DISCOVERY_FULL_ARCHIVE",featureNames:features,
+function make({forecastMethod="PROTOTYPE"}={}){
+ return core.create({learningMode:"DISCOVERY_FULL_ARCHIVE",forecastMethod,featureNames:features,
     horizons:[240],anchorMinutes:240,noveltyDistance:1.25,maxRules:32,
     maxLateMinutes:15,sourceRegistry:registry()});
 }
 const pPrior=x=>(x.up+1)/(x.n+2);
-function run(rows,ledgerCSV,{marketContext="XAU_ONLY"}={}){
+function run(rows,ledgerCSV,{marketContext="XAU_ONLY",forecastMethod="PROTOTYPE"}={}){
+ if(!["PROTOTYPE","LOCAL_MATURED_EXAMPLES"].includes(forecastMethod))
+  throw Error("UNSUPPORTED_CORE_FORECAST_METHOD");
  if(!["XAU_ONLY","XAU_PLUS_RECONSTRUCTED_CME"].includes(marketContext))
   throw Error("UNKNOWN_MARKET_CONTEXT");
  const {events,counts}=observations(rows,ledgerCSV,
    {crossAssets:marketContext==="XAU_PLUS_RECONSTRUCTED_CME"});
- const withEconomy=make(),marketOnly=make(),waiting=[];
+ const withEconomy=make({forecastMethod}),marketOnly=make({forecastMethod}),waiting=[];
  const s={settled:0,eventCases:0,controlCases:0,
    scoredBoth:0,eventScoredBoth:0,controlScoredBoth:0,
    brierE:0,brierM:0,brierPrior:0,
@@ -257,7 +259,7 @@ function run(rows,ledgerCSV,{marketContext="XAU_ONLY"}={}){
  const bothRules=core.rules(withEconomy),marketRules=core.rules(marketOnly);
  const economicRules=bothRules.filter(x=>Object.keys(x.center).some(k=>k.endsWith("_surprise_z")));
  return {model:"EXISTING_ADAPTIVE_RULE_DISCOVERY_S1",
-  mode:"DISCOVERY_FULL_ARCHIVE",marketContext,
+  mode:"DISCOVERY_FULL_ARCHIVE",marketContext,forecastMethod,
   strictWalkForward:false,tradePolicy:"NOT_IMPLEMENTED",
   dataQuality:"RETROSPECTIVE_LEDGER_UNVERIFIED_POST_RELEASE_ONLY",
   ...counts,stepEvents:events.length,...s,
@@ -288,15 +290,18 @@ function run(rows,ledgerCSV,{marketContext="XAU_ONLY"}={}){
 if(require.main===module){
  // Only private runtime inputs. stdout contains summaries and SHA256, not bars.
  const fs=require("node:fs"),crypto=require("node:crypto");
- if(process.argv.length<4||process.argv.length>5)throw Error(
-   "Usage: node replay_macro_waves_in_existing_core_s1.js PRIVATE_ROWS.json PRIVATE_MACRO_LEDGER.csv [--cross-assets]");
- if(process.argv[4]&&process.argv[4]!=="--cross-assets")throw Error("UNKNOWN_MARKET_CONTEXT");
+ if(process.argv.length<4||process.argv.length>6)throw Error(
+   "Usage: node replay_macro_waves_in_existing_core_s1.js PRIVATE_ROWS.json PRIVATE_MACRO_LEDGER.csv [--cross-assets] [--local-evidence]");
+ const args=process.argv.slice(4);
+ if(args.some(a=>!["--cross-assets","--local-evidence"].includes(a))||new Set(args).size!==args.length)
+  throw Error("UNKNOWN_OR_REPEATED_CORE_OPTION");
  const raw=fs.readFileSync(process.argv[2],"utf8");
  const ledger=fs.readFileSync(process.argv[3],"utf8");
  const sha=crypto.createHash("sha256").update(raw).update("\n").update(ledger)
    .digest("hex");
  const out=run(JSON.parse(raw),ledger,
-   {marketContext:process.argv[4]?"XAU_PLUS_RECONSTRUCTED_CME":"XAU_ONLY"});
+   {marketContext:args.includes("--cross-assets")?"XAU_PLUS_RECONSTRUCTED_CME":"XAU_ONLY",
+    forecastMethod:args.includes("--local-evidence")?"LOCAL_MATURED_EXAMPLES":"PROTOTYPE"});
  console.log(JSON.stringify({runId:"S1_ARCHIVE_CORE_"+sha.slice(0,16),inputSha256:sha,
    ...out},null,2));
 }
