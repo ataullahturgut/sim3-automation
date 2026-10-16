@@ -78,6 +78,7 @@ test("SQL builder only uses retrospective pair-complete releases and matches con
  const s=q.buildSql([hdr,...lines].join("\n"));
  assert.match(s,/ORDER BY abs\(x.pre1h-e.pre1h\)/);
  assert.match(s,/lead\(close_price,16\)/);
+ assert.match(s,/min_pre_complete=15/);
  assert.match(s,/NOT EXISTS/);
  assert.ok(!s.includes("ORDER BY abs(x.next4h"));
 });
