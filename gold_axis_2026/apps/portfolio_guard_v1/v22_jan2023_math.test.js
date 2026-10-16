@@ -11,7 +11,7 @@ test("January-only price source and strict past feature vector",()=>{
  const mutated=structuredClone(a);mutated[65].close*=10;
  assert.deepEqual(V.vector(mutated,64),x);
  assert.equal(V.vector(a,63),null);
- a[20].t+=60000;
+ a[60].t+=60000;
  assert.equal(V.vector(a,64),null);
 });
 test("Prediction labels mature ONLY after their forward horizon",()=>{
