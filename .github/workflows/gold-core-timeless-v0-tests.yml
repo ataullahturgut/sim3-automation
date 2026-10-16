@@ -1,0 +1,35 @@
+name: KAVIS timeless learning CORE — strict causal contract (no research performance claim)
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  timeless-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and seven timeless-event math tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check kavis_core_timeless_v0.js
+          node --check kavis_core_timeless_v0.test.js
+          node --test kavis_core_timeless_v0.test.js
+      - name: Ensure decision CORE is untrained library, not fabricated backtest
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node - <<'NODE'
+          const c=require('./kavis_core_timeless_v0');
+          const s=c.create();
+          if(s.totalMatured!==0||s.portfolio.trades!==0||s.portfolio.cash!==100)
+            throw Error('PRETRAINING/EXPERIMENT_LEAK');
+          if(c.LEGS_COST_PCT<1.6||c.LEGS_COST_PCT>1.62)
+            throw Error('WRONG_BANK_FEE');
+          console.log('TIMELESS_CORE_PROTOTYPE_PASS',c.NFEATURES,
+            c.LEGS_COST_PCT, 'no training or profitability claimed');
+          NODE
