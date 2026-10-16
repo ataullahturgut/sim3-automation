@@ -30,7 +30,15 @@ def period_key(d, period):
     return str(d)[:7]
 
 
-def marathon(period="month", k=H.K_LAG, relabel=False, variant=None):
+def forget_mean(ys, rho=None):
+    """Ek-4: kurallarla aynı unutma hızıyla taban oran. ys kronolojik sırada."""
+    rho = T5.T2.RHO if rho is None else rho
+    ys = np.asarray(ys, dtype=float)
+    w = rho ** np.arange(len(ys) - 1, -1, -1, dtype=float)
+    return float((w * ys).sum() / w.sum())
+
+
+def marathon(period="month", k=H.K_LAG, relabel=False, variant=None, forget=False):
     rows = S.load_rows(dev_only=True)
     raw, _ = S.build_states(rows)
     Z, _ = S.standardize(raw)
@@ -81,7 +89,8 @@ def marathon(period="month", k=H.K_LAG, relabel=False, variant=None):
             ok = sorted(learned)
             if not ok:
                 continue
-            net.p0 = float(np.mean([learned[q] for q in ok]))
+            ys_ = [learned[q] for q in ok]
+            net.p0 = forget_mean(ys_) if forget else float(np.mean(ys_))
             Zm = Z[ok]; ym = np.array([float(learned[q]) for q in ok])
             T5.rebuild_rules(net, Zm, ym, ok)
             if variant is not None:
@@ -100,7 +109,7 @@ def marathon(period="month", k=H.K_LAG, relabel=False, variant=None):
         if len(ok) >= MIN_SUPPORT:
             net.restructure(Z[ok], np.array([float(learned[q]) for q in ok]), now=i_end)
     return dict(rows=rows, Z=Z, net=net, i0=i0, nav_hist=nav_hist, gross_hist=gross_hist,
-                trades=trades, daily=daily, learned=learned, period=period, k=k, relabel=relabel, variant=variant)
+                trades=trades, daily=daily, learned=learned, period=period, k=k, relabel=relabel, variant=variant, forget=forget)
 
 
 def evaluate(A):
@@ -148,10 +157,11 @@ def main():
     period = sys.argv[1] if len(sys.argv) > 1 else "month"
     k = int(sys.argv[2]) if len(sys.argv) > 2 else H.K_LAG
     relabel = len(sys.argv) > 3 and sys.argv[3] == "relabel"
-    variant = sys.argv[4] if len(sys.argv) > 4 else None
-    A = marathon(period, k, relabel, variant)
+    variant = sys.argv[4] if len(sys.argv) > 4 and sys.argv[4] != "forget" else None
+    forget = "forget" in sys.argv[3:]
+    A = marathon(period, k, relabel, variant, forget)
     res, crit, legs = evaluate(A)
-    print(f"\n=== TERAZİ v5{('.2'+variant) if variant else ('.1 (yeniden etiketleme)' if relabel else '')} ({period}, K={k}) — geliştirme kaydı, kanıt değil ===")
+    print(f"\n=== TERAZİ v5{'.4 (unutan referans)' if forget else (('.2'+variant) if variant else ('.1 (yeniden etiketleme)' if relabel else ''))} ({period}, K={k}) — geliştirme kaydı, kanıt değil ===")
     for a, b in res.items():
         print(f"  {a:28} {b}")
     print("\n  ÖLÇÜTLER")
@@ -163,7 +173,7 @@ def main():
     print("\n  İŞLEMLER")
     for t in A["trades"]:
         print(f"    {t['date']} {t['action']:3} @ {t['price']:8.2f}  P={t['P']} z={t['z']}")
-    tag = f"{period}_K{k}" + ("_relabel" if relabel else "") + (f"_v52{variant}" if variant else "")
+    tag = f"{period}_K{k}" + ("_relabel" if relabel else "") + (f"_v52{variant}" if variant else "") + ("_v54" if forget else "")
     json.dump(dict(result=res, criteria={g: v[0] for g, v in crit.items()}, legs=legs, trades=A["trades"]),
               open(os.path.join(HERE, f"TERAZI_V5_SONUC_{tag}.json"), "w"), indent=1, ensure_ascii=False)
     json.dump(A["daily"], open(os.path.join(HERE, f"TERAZI_V5_GUNLUK_{tag}.json"), "w"), indent=0)

@@ -1,0 +1,29 @@
+
+R = 3 ay: net NAV 230.82, 1 işlem, maks düşüş %10.79
+   2023-01-01: AL z>+0.5  SAT z<-1.0   (geçmiş 12 ay: 101.03, 7 işlem)
+   2023-04-01: AL z>+1.0  SAT z<hiç   (geçmiş 12 ay: 110.07, 1 işlem)
+   2023-07-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 108.9, 1 işlem)
+   2023-10-01: AL z>+0.75  SAT z<hiç   (geçmiş 12 ay: 107.43, 1 işlem)
+   2024-01-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 110.86, 1 işlem)
+   2024-04-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 109.85, 1 işlem)
+   2024-07-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 119.83, 1 işlem)
+   2024-10-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 138.85, 1 işlem)
+   2025-01-01: AL z>+0.25  SAT z<hiç   (geçmiş 12 ay: 126.08, 1 işlem)
+   2025-04-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 136.09, 1 işlem)
+   2025-07-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 137.19, 1 işlem)
+   2025-10-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 141.88, 1 işlem)
+
+R = 6 ay (BİRİNCİL): net NAV 230.82, 1 işlem, maks düşüş %10.79
+   2023-01-01: AL z>+0.5  SAT z<-1.0   (geçmiş 12 ay: 101.03, 7 işlem)
+   2023-07-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 108.9, 1 işlem)
+   2024-01-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 110.86, 1 işlem)
+   2024-07-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 119.83, 1 işlem)
+   2025-01-01: AL z>+0.25  SAT z<hiç   (geçmiş 12 ay: 126.08, 1 işlem)
+   2025-07-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 137.19, 1 işlem)
+
+R = 12 ay: net NAV 201.93, 7 işlem, maks düşüş %14.72
+   2023-01-01: AL z>+0.5  SAT z<-1.0   (geçmiş 12 ay: 101.03, 7 işlem)
+   2024-01-01: AL z>-0.5  SAT z<hiç   (geçmiş 12 ay: 110.86, 1 işlem)
+   2025-01-01: AL z>+0.25  SAT z<hiç   (geçmiş 12 ay: 126.08, 1 işlem)
+
+kıyas: al-tut 230,82 · v5.1 189,94 · v5.3 230,82

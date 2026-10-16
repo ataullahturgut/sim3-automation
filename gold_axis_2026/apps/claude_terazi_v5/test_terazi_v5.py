@@ -7,6 +7,7 @@ for p in ("claude_terazi_v4", "claude_terazi_v2", "claude_deneyim_v1"):
 import deneyim_states as S
 import hedef_v5 as H
 import run_terazi_v5 as RV
+FORGET = os.environ.get("V54") == "1"   # V54=1 → aynı testler ek-4 (unutan referans) ile
 
 
 class T5Test(unittest.TestCase):
@@ -14,7 +15,7 @@ class T5Test(unittest.TestCase):
     def setUpClass(cls):
         cls.rows = S.load_rows()
         cls.d2i = {str(r["date"]): i for i, r in enumerate(cls.rows)}
-        cls.A = RV.marathon("month", 2, relabel=True)
+        cls.A = RV.marathon("month", 2, relabel=True, forget=FORGET)
 
     def test_no_2026(self):
         self.assertLessEqual(max(r["date"] for r in self.rows), date(2025, 12, 31))
@@ -41,7 +42,7 @@ class T5Test(unittest.TestCase):
         orig = S.load_rows
         try:
             S.load_rows = lambda dev_only=True: rows2
-            B = RV.marathon("month", 2, relabel=True)
+            B = RV.marathon("month", 2, relabel=True, forget=FORGET)
         finally:
             S.load_rows = orig
         da = [(i, round(v, 9), p) for (i, v, p) in self.A["nav_hist"] if i <= cut]
@@ -53,7 +54,7 @@ class T5Test(unittest.TestCase):
         orig = S.load_rows
         try:
             S.load_rows = lambda dev_only=True: rows2
-            B = RV.marathon("month", 2, relabel=True)
+            B = RV.marathon("month", 2, relabel=True, forget=FORGET)
         finally:
             S.load_rows = orig
         da = [(i, round(v, 9), p) for (i, v, p) in self.A["nav_hist"] if self.rows[i]["date"] <= cut]
@@ -61,11 +62,18 @@ class T5Test(unittest.TestCase):
         self.assertEqual(da, db)
 
     def test_deterministic(self):
-        B = RV.marathon("month", 2, relabel=True)
+        B = RV.marathon("month", 2, relabel=True, forget=FORGET)
         self.assertEqual(self.A["nav_hist"], B["nav_hist"]); self.assertEqual(self.A["trades"], B["trades"])
 
     def test_fee_in_nav(self):
         self.assertGreater(self.A["gross_hist"][-1][1], self.A["nav_hist"][-1][1])
+
+    def test_base_rate_from_learned_labels_only(self):
+        """p0 yalnız öğrenilmiş etiketlerden; ek-4'te kronolojik unutan ortalama."""
+        import numpy as np
+        L = self.A["learned"]; ys = [L[q] for q in sorted(L)]
+        want = RV.forget_mean(ys) if FORGET else float(np.mean(ys))
+        self.assertAlmostEqual(self.A["net"].p0, want, places=12)
 
 
 if __name__ == "__main__":
