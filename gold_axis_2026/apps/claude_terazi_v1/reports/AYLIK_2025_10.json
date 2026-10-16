@@ -1,0 +1,139 @@
+{
+ "month": "2025-10",
+ "days": 23,
+ "gold_change_pct": 3.5,
+ "nav_start": 116.1557,
+ "nav_end": 122.0648,
+ "month_ret_pct": 5.09,
+ "position_end": "ALTIN",
+ "trades": [],
+ "mean_E": 1.13,
+ "mean_U": 0.375,
+ "days_without_opinion": 0,
+ "wrong_days_vs_ideal": 10,
+ "trading_days_in_month": 23,
+ "rule_base_size": 39,
+ "rules_born": [
+  {
+   "label": "altın 60g getiri > +1.5σ VE son FOMC'den beri gün > +0.0σ VE Nasdaq 20g > -1.0σ",
+   "mu": -0.145,
+   "support": 86.3,
+   "residual_mean": -1.809
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE Nasdaq 20g > -0.5σ",
+   "mu": 0.422,
+   "support": 148.8,
+   "residual_mean": -1.662
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.469,
+   "support": 182.1,
+   "residual_mean": -1.625
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     0.5
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +0.5σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.5548,
+   "v": 8.2616,
+   "n": 99.1,
+   "trust": 0.4637,
+   "field_k": 44.1,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     1.0
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +1.0σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.4813,
+   "v": 7.6807,
+   "n": 112.34,
+   "trust": 0.4558,
+   "field_k": 47.37,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ",
+   "mu": 1.784,
+   "v": 6.5543,
+   "n": 110.98,
+   "trust": 0.3955,
+   "field_k": 56.56,
+   "born_index": 1332
+  },
+  {
+   "gates": [
+    [
+     12,
+     -1,
+     0.0
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "GVZ düzeyi < +0.0σ VE COT managed money net > +1.0σ",
+   "mu": 2.182,
+   "v": 3.9717,
+   "n": 45.68,
+   "trust": 0.3785,
+   "field_k": 15.45,
+   "born_index": 1353
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "altın 60g getiri < +1.0σ VE COT managed money net > +1.0σ",
+   "mu": 2.0351,
+   "v": 4.2147,
+   "n": 63.87,
+   "trust": 0.3573,
+   "field_k": 27.45,
+   "born_index": 1353
+  }
+ ]
+}

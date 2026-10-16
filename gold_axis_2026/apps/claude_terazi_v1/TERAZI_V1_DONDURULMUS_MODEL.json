@@ -1,0 +1,1075 @@
+{
+ "model": "TERAZI_V1",
+ "frozen_at_month": "2025-12",
+ "features": [
+  "g_r1",
+  "g_r5",
+  "g_r20",
+  "g_r60",
+  "g_vol20",
+  "g_dd60",
+  "g_dist200",
+  "rr_d5",
+  "rr_d20",
+  "y2_d5",
+  "y2_d20",
+  "usd_d20",
+  "gvz_lvl",
+  "gvz_d5",
+  "cot_mm",
+  "cot_mm_d4",
+  "cpi_surp",
+  "cpi_days",
+  "nfp_surp",
+  "nfp_days",
+  "fomc_since",
+  "fomc_to",
+  "last_react",
+  "nq_r5",
+  "nq_r20",
+  "zn_r5",
+  "cl_r5",
+  "cl_r20",
+  "si_r5",
+  "si_r20",
+  "gs_ratio_d20",
+  "sig_equity_shock",
+  "sig_flight",
+  "sig_oil_shock",
+  "sig_vol_jump"
+ ],
+ "standardizer": {
+  "n": {
+   "g_r1": 1548,
+   "g_r5": 1544,
+   "g_r20": 1529,
+   "g_r60": 1489,
+   "g_vol20": 1528,
+   "g_dd60": 1490,
+   "g_dist200": 1350,
+   "rr_d5": 1542,
+   "rr_d20": 1527,
+   "y2_d5": 775,
+   "y2_d20": 760,
+   "usd_d20": 1522,
+   "gvz_lvl": 1289,
+   "gvz_d5": 1284,
+   "cot_mm": 1549,
+   "cot_mm_d4": 1549,
+   "cpi_surp": 659,
+   "cpi_days": 766,
+   "nfp_surp": 666,
+   "nfp_days": 770,
+   "fomc_since": 752,
+   "fomc_to": 1549,
+   "last_react": 634,
+   "nq_r5": 771,
+   "nq_r20": 762,
+   "zn_r5": 771,
+   "cl_r5": 771,
+   "cl_r20": 762,
+   "si_r5": 712,
+   "si_r20": 740,
+   "gs_ratio_d20": 740,
+   "sig_equity_shock": 0,
+   "sig_flight": 0,
+   "sig_oil_shock": 0,
+   "sig_vol_jump": 0
+  },
+  "m": {
+   "g_r1": 0.0669511422350874,
+   "g_r5": 0.3384946968172801,
+   "g_r20": 1.3325333006589177,
+   "g_r60": 3.911654991268088,
+   "g_vol20": 0.9057660028925242,
+   "g_dd60": -3.805143005186964,
+   "g_dist200": 5.299999094777643,
+   "rr_d5": 0.005979247730220483,
+   "rr_d20": 0.024151931892599815,
+   "y2_d5": -0.005199999999999992,
+   "y2_d20": -0.019960526315789495,
+   "usd_d20": 0.06186125581289061,
+   "gvz_lvl": 17.06030256012409,
+   "gvz_d5": 0.012570093457943892,
+   "cot_mm": 0.20164777188536837,
+   "cot_mm_d4": 0.0004811710168989125,
+   "cpi_surp": -0.18002859262981252,
+   "cpi_days": 16.85922541340297,
+   "nfp_surp": 0.23703750360017145,
+   "nfp_days": 17.46360930735931,
+   "fomc_since": 22.912621897163117,
+   "fomc_to": 41.17982031418123,
+   "last_react": -0.0040027397476339755,
+   "nq_r5": 0.44833225196775073,
+   "nq_r20": 1.7944825012632166,
+   "zn_r5": -0.015672805291425226,
+   "cl_r5": -0.16139063353411273,
+   "cl_r20": -0.6264221901403053,
+   "si_r5": 0.6783567241049647,
+   "si_r20": 2.0747349058974986,
+   "gs_ratio_d20": 0.21197957889721747,
+   "sig_equity_shock": 0.0,
+   "sig_flight": 0.0,
+   "sig_oil_shock": 0.0,
+   "sig_vol_jump": 0.0
+  },
+  "q": {
+   "g_r1": 1525.9611562610323,
+   "g_r5": 7658.7112180726035,
+   "g_r20": 25992.268112977137,
+   "g_r60": 74863.64053165623,
+   "g_vol20": 169.8184857163437,
+   "g_dd60": 14036.374425762573,
+   "g_dist200": 76239.06664408522,
+   "rr_d5": 23.33987133592733,
+   "rr_d20": 85.85667675180092,
+   "y2_d5": 16.635144,
+   "y2_d20": 59.59169881578943,
+   "usd_d20": 3537.444765830705,
+   "gvz_lvl": 12032.474582001567,
+   "gvz_d5": 4059.7547186915936,
+   "cot_mm": 17.43446779590306,
+   "cot_mm_d4": 5.788914934017713,
+   "cpi_surp": 1101.3835205097923,
+   "cpi_days": 81797.32935568968,
+   "nfp_surp": 352.8884918160216,
+   "nfp_days": 82172.37396566116,
+   "fomc_since": 137243.49637771503,
+   "fomc_to": 676519.7892860993,
+   "last_react": 527.976389901504,
+   "nq_r5": 5409.4890830221675,
+   "nq_r20": 18157.35055807329,
+   "zn_r5": 512.9818982110281,
+   "cl_r5": 13758.106522592749,
+   "cl_r20": 35656.911507100005,
+   "si_r5": 11880.696662762473,
+   "si_r20": 41488.94390162418,
+   "gs_ratio_d20": 28611.915530808135,
+   "sig_equity_shock": 0.0,
+   "sig_flight": 0.0,
+   "sig_oil_shock": 0.0,
+   "sig_vol_jump": 0.0
+  }
+ },
+ "constants": {
+  "H": 10,
+  "gate_s": 0.5,
+  "rho": 0.995,
+  "w_min": 0.5,
+  "lam": 0.5,
+  "buy_th": 0.8032171697264266,
+  "sell_th": -0.8032171697264266,
+  "fee": 0.008,
+  "max_gates": 3,
+  "min_support": 20.0,
+  "trust_shrink": 10.0
+ },
+ "rules": [
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     1.0
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +1.0σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.4826,
+   "v": 6.5808,
+   "n": 110.51,
+   "trust": 0.4328,
+   "field_k": 57.87,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     0.5
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +0.5σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.5089,
+   "v": 6.9825,
+   "n": 97.59,
+   "trust": 0.4213,
+   "field_k": 53.03,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ",
+   "mu": 1.7446,
+   "v": 5.6692,
+   "n": 103.29,
+   "trust": 0.394,
+   "field_k": 59.2,
+   "born_index": 1332
+  },
+  {
+   "gates": [
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "Nasdaq 20g > -1.0σ",
+   "mu": 1.5153,
+   "v": 6.1981,
+   "n": 152.2,
+   "trust": 0.3718,
+   "field_k": 96.46,
+   "born_index": 1374
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "altın 60g getiri < +1.0σ VE COT managed money net > +1.0σ",
+   "mu": 2.0609,
+   "v": 3.4828,
+   "n": 53.34,
+   "trust": 0.3606,
+   "field_k": 23.84,
+   "born_index": 1353
+  },
+  {
+   "gates": [
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "COT managed money net < +0.0σ",
+   "mu": 1.5578,
+   "v": 4.8432,
+   "n": 34.56,
+   "trust": 0.3565,
+   "field_k": 25.18,
+   "born_index": 1031
+  },
+  {
+   "gates": [
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "Nasdaq 20g > -0.5σ",
+   "mu": 1.4903,
+   "v": 6.1755,
+   "n": 126.18,
+   "trust": 0.3542,
+   "field_k": 82.23,
+   "born_index": 1374
+  },
+  {
+   "gates": [
+    [
+     12,
+     -1,
+     0.0
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "GVZ düzeyi < +0.0σ VE COT managed money net > +1.0σ",
+   "mu": 2.1857,
+   "v": 3.2417,
+   "n": 37.39,
+   "trust": 0.3535,
+   "field_k": 12.9,
+   "born_index": 1353
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < +0.0σ",
+   "mu": 1.6289,
+   "v": 5.1753,
+   "n": 27.87,
+   "trust": 0.3503,
+   "field_k": 21.19,
+   "born_index": 1053
+  },
+  {
+   "gates": [
+    [
+     24,
+     1,
+     0.0
+    ]
+   ],
+   "label": "Nasdaq 20g > +0.0σ",
+   "mu": 1.4823,
+   "v": 6.0045,
+   "n": 93.14,
+   "trust": 0.3367,
+   "field_k": 62.51,
+   "born_index": 1374
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
+   "mu": 1.6458,
+   "v": 5.2468,
+   "n": 23.03,
+   "trust": 0.3297,
+   "field_k": 17.65,
+   "born_index": 1053
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "altın 60g getiri < +0.5σ VE COT managed money net > +1.0σ",
+   "mu": 2.109,
+   "v": 3.2294,
+   "n": 38.97,
+   "trust": 0.3289,
+   "field_k": 17.43,
+   "born_index": 1353
+  },
+  {
+   "gates": [
+    [
+     24,
+     -1,
+     -1.5
+    ]
+   ],
+   "label": "Nasdaq 20g < -1.5σ",
+   "mu": 2.494,
+   "v": 4.5384,
+   "n": 30.05,
+   "trust": 0.2811,
+   "field_k": 5.81,
+   "born_index": 1461
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.5516,
+   "v": 4.2716,
+   "n": 15.98,
+   "trust": 0.2773,
+   "field_k": 10.4,
+   "born_index": 1053
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ],
+    [
+     24,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ VE Nasdaq 20g < -0.5σ",
+   "mu": 2.1358,
+   "v": 5.1113,
+   "n": 40.02,
+   "trust": 0.2747,
+   "field_k": 12.6,
+   "born_index": 1396
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.5
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
+   "mu": 1.7088,
+   "v": 3.7698,
+   "n": 14.75,
+   "trust": 0.2743,
+   "field_k": 9.38,
+   "born_index": 1074
+  },
+  {
+   "gates": [
+    [
+     3,
+     1,
+     1.5
+    ],
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "altın 60g getiri > +1.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 1.0856,
+   "v": 9.7497,
+   "n": 53.66,
+   "trust": 0.2469,
+   "field_k": 27.5,
+   "born_index": 1483
+  },
+  {
+   "gates": [
+    [
+     3,
+     1,
+     1.5
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "altın 60g getiri > +1.5σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.1279,
+   "v": 9.7597,
+   "n": 44.26,
+   "trust": 0.2279,
+   "field_k": 22.13,
+   "born_index": 1483
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     12,
+     1,
+     -1.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE GVZ düzeyi > -1.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.6888,
+   "v": 4.8837,
+   "n": 10.14,
+   "trust": 0.2241,
+   "field_k": 7.94,
+   "born_index": 989
+  },
+  {
+   "gates": [
+    [
+     10,
+     -1,
+     1.5
+    ],
+    [
+     14,
+     1,
+     1.0
+    ],
+    [
+     24,
+     -1,
+     -1.0
+    ]
+   ],
+   "label": "2Y faiz 20g değişim < +1.5σ VE COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ",
+   "mu": 2.4741,
+   "v": 4.636,
+   "n": 25.08,
+   "trust": 0.2235,
+   "field_k": 5.68,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     12,
+     1,
+     -1.0
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE GVZ düzeyi > -1.0σ VE COT managed money net < -0.5σ",
+   "mu": 1.7365,
+   "v": 5.1358,
+   "n": 9.3,
+   "trust": 0.2198,
+   "field_k": 7.48,
+   "born_index": 989
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.0
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "altın 60g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
+   "mu": 1.5984,
+   "v": 3.3181,
+   "n": 11.31,
+   "trust": 0.2134,
+   "field_k": 6.55,
+   "born_index": 1074
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ],
+    [
+     27,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ VE petrol 20g < +1.0σ",
+   "mu": 1.6724,
+   "v": 4.6579,
+   "n": 9.5,
+   "trust": 0.2111,
+   "field_k": 7.14,
+   "born_index": 989
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ],
+    [
+     24,
+     -1,
+     -1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ",
+   "mu": 2.4024,
+   "v": 4.6271,
+   "n": 26.56,
+   "trust": 0.2109,
+   "field_k": 6.35,
+   "born_index": 1396
+  },
+  {
+   "gates": [
+    [
+     7,
+     -1,
+     1.0
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 5g değişim < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.5122,
+   "v": 4.4735,
+   "n": 9.7,
+   "trust": 0.2006,
+   "field_k": 7.46,
+   "born_index": 967
+  },
+  {
+   "gates": [
+    [
+     2,
+     -1,
+     1.5
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "altın 20g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.6656,
+   "v": 3.356,
+   "n": 9.13,
+   "trust": 0.1967,
+   "field_k": 7.2,
+   "born_index": 946
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ],
+    [
+     24,
+     -1,
+     -1.0
+    ],
+    [
+     29,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ VE gümüş 20g < +1.0σ",
+   "mu": 2.6398,
+   "v": 3.8798,
+   "n": 20.41,
+   "trust": 0.189,
+   "field_k": 3.7,
+   "born_index": 1440
+  },
+  {
+   "gates": [
+    [
+     10,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     1,
+     1.0
+    ],
+    [
+     24,
+     -1,
+     -1.0
+    ]
+   ],
+   "label": "2Y faiz 20g değişim < +0.5σ VE COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ",
+   "mu": 2.5827,
+   "v": 4.7156,
+   "n": 20.45,
+   "trust": 0.1842,
+   "field_k": 4.2,
+   "born_index": 1440
+  },
+  {
+   "gates": [
+    [
+     2,
+     -1,
+     1.0
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "altın 20g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.6799,
+   "v": 3.2281,
+   "n": 7.73,
+   "trust": 0.1753,
+   "field_k": 6.08,
+   "born_index": 946
+  },
+  {
+   "gates": [
+    [
+     9,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     1,
+     1.0
+    ],
+    [
+     24,
+     -1,
+     -1.0
+    ]
+   ],
+   "label": "2Y faiz 5g değişim < +0.5σ VE COT managed money net > +1.0σ VE Nasdaq 20g < -1.0σ",
+   "mu": 2.5677,
+   "v": 5.0334,
+   "n": 19.68,
+   "trust": 0.1718,
+   "field_k": 4.2,
+   "born_index": 1440
+  },
+  {
+   "gates": [
+    [
+     6,
+     -1,
+     1.0
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "200g ortalamaya uzaklık < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
+   "mu": 1.469,
+   "v": 2.928,
+   "n": 8.22,
+   "trust": 0.1621,
+   "field_k": 3.77,
+   "born_index": 1074
+  },
+  {
+   "gates": [
+    [
+     7,
+     -1,
+     0.5
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 5g değişim < +0.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.4465,
+   "v": 4.3413,
+   "n": 8.12,
+   "trust": 0.1595,
+   "field_k": 6.45,
+   "born_index": 946
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ],
+    [
+     24,
+     -1,
+     -1.5
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ VE Nasdaq 20g < -1.5σ",
+   "mu": 2.6964,
+   "v": 4.306,
+   "n": 17.35,
+   "trust": 0.1305,
+   "field_k": 2.85,
+   "born_index": 1396
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
+     1.5
+    ],
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.7312,
+   "v": 5.1201,
+   "n": 9.61,
+   "trust": 0.0847,
+   "field_k": 1.41,
+   "born_index": 1506
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
+     1.5
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE Nasdaq 20g > -0.5σ",
+   "mu": 0.6533,
+   "v": 5.1431,
+   "n": 7.66,
+   "trust": 0.0589,
+   "field_k": 1.04,
+   "born_index": 1506
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
+     1.5
+    ],
+    [
+     18,
+     -1,
+     1.0
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE son NFP sürprizi < +1.0σ VE Nasdaq 20g > -0.5σ",
+   "mu": 0.6648,
+   "v": 5.3099,
+   "n": 6.29,
+   "trust": 0.052,
+   "field_k": 1.51,
+   "born_index": 1483
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
+     1.5
+    ],
+    [
+     12,
+     1,
+     -0.5
+    ],
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE GVZ düzeyi > -0.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.4965,
+   "v": 6.1173,
+   "n": 7.61,
+   "trust": 0.0451,
+   "field_k": 0.47,
+   "born_index": 1526
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
+     1.5
+    ],
+    [
+     12,
+     1,
+     0.0
+    ],
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE GVZ düzeyi > +0.0σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.3828,
+   "v": 6.6201,
+   "n": 6.59,
+   "trust": 0.0431,
+   "field_k": 0.45,
+   "born_index": 1526
+  },
+  {
+   "gates": [
+    [
+     3,
+     1,
+     1.5
+    ],
+    [
+     20,
+     1,
+     0.0
+    ],
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "altın 60g getiri > +1.5σ VE son FOMC'den beri gün > +0.0σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.2714,
+   "v": 10.3734,
+   "n": 25.57,
+   "trust": -0.0749,
+   "field_k": 5.16,
+   "born_index": 1506
+  },
+  {
+   "gates": [
+    [
+     8,
+     1,
+     1.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ],
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -1.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 1.0576,
+   "v": 4.7499,
+   "n": 6.01,
+   "trust": 0.0,
+   "field_k": 0.0,
+   "born_index": 1548
+  }
+ ],
+ "note": "2026 testi bu dosyayla, kod değiştirilmeden yapılır. 2026 verisi yüklenmedi."
+}

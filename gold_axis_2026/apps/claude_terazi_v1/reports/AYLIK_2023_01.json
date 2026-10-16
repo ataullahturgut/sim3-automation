@@ -1,0 +1,87 @@
+{
+ "month": "2023-01",
+ "days": 21,
+ "gold_change_pct": 5.42,
+ "nav_start": 100.0,
+ "nav_end": 100.0,
+ "month_ret_pct": 0.0,
+ "position_end": "NAKİT",
+ "trades": [],
+ "mean_E": null,
+ "mean_U": null,
+ "days_without_opinion": 21,
+ "wrong_days_vs_ideal": 17,
+ "trading_days_in_month": 21,
+ "rule_base_size": 3,
+ "rules_born": [
+  {
+   "label": "10Y reel faiz 20g değişim < +0.5σ",
+   "mu": 0.843,
+   "support": 431.9,
+   "residual_mean": 0.574
+  },
+  {
+   "label": "10Y reel faiz 20g değişim < +1.0σ",
+   "mu": 0.841,
+   "support": 541.0,
+   "residual_mean": 0.524
+  },
+  {
+   "label": "10Y reel faiz 20g değişim < +1.5σ",
+   "mu": 0.772,
+   "support": 625.4,
+   "residual_mean": 0.467
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ",
+   "mu": 0.8427,
+   "v": 3.8136,
+   "n": 99.07,
+   "trust": 0.0,
+   "field_k": 0.0,
+   "born_index": 795
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.0σ",
+   "mu": 0.8414,
+   "v": 3.9246,
+   "n": 121.08,
+   "trust": 0.0,
+   "field_k": 0.0,
+   "born_index": 795
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.5σ",
+   "mu": 0.7721,
+   "v": 4.0401,
+   "n": 140.91,
+   "trust": 0.0,
+   "field_k": 0.0,
+   "born_index": 795
+  }
+ ]
+}

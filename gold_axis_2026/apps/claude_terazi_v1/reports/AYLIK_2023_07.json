@@ -1,0 +1,135 @@
+{
+ "month": "2023-07",
+ "days": 21,
+ "gold_change_pct": 2.51,
+ "nav_start": 100.0,
+ "nav_end": 100.0,
+ "month_ret_pct": 0.0,
+ "position_end": "NAKİT",
+ "trades": [],
+ "mean_E": null,
+ "mean_U": null,
+ "days_without_opinion": 21,
+ "wrong_days_vs_ideal": 13,
+ "trading_days_in_month": 21,
+ "rule_base_size": 6,
+ "rules_born": [],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < -0.5σ",
+   "mu": 0.9402,
+   "v": 2.9386,
+   "n": 60.85,
+   "trust": 0.2035,
+   "field_k": 11.76,
+   "born_index": 815
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.9384,
+   "v": 2.8291,
+   "n": 50.09,
+   "trust": 0.1935,
+   "field_k": 9.67,
+   "born_index": 815
+  },
+  {
+   "gates": [
+    [
+     6,
+     -1,
+     1.0
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ]
+   ],
+   "label": "200g ortalamaya uzaklık < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ",
+   "mu": 0.8167,
+   "v": 2.7245,
+   "n": 62.12,
+   "trust": 0.0985,
+   "field_k": 15.94,
+   "born_index": 815
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.5
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.0471,
+   "v": 2.6839,
+   "n": 43.0,
+   "trust": 0.0618,
+   "field_k": 1.17,
+   "born_index": 902
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.0
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "altın 60g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.0574,
+   "v": 2.6763,
+   "n": 38.29,
+   "trust": 0.0614,
+   "field_k": 1.15,
+   "born_index": 902
+  }
+ ]
+}

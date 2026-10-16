@@ -1,0 +1,134 @@
+{
+ "month": "2025-04",
+ "days": 21,
+ "gold_change_pct": 6.19,
+ "nav_start": 100.0,
+ "nav_end": 100.0,
+ "month_ret_pct": 0.0,
+ "position_end": "NAKİT",
+ "trades": [],
+ "mean_E": null,
+ "mean_U": null,
+ "days_without_opinion": 21,
+ "wrong_days_vs_ideal": 10,
+ "trading_days_in_month": 21,
+ "rule_base_size": 24,
+ "rules_born": [
+  {
+   "label": "Nasdaq 20g > +0.0σ",
+   "mu": 0.715,
+   "support": 625.8,
+   "residual_mean": -0.492
+  },
+  {
+   "label": "Nasdaq 20g > -0.5σ",
+   "mu": 0.782,
+   "support": 903.7,
+   "residual_mean": -0.47
+  },
+  {
+   "label": "Nasdaq 20g > -1.0σ",
+   "mu": 0.876,
+   "support": 1104.2,
+   "residual_mean": -0.444
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ",
+   "mu": 1.5951,
+   "v": 5.359,
+   "n": 125.07,
+   "trust": 0.6216,
+   "field_k": 19.6,
+   "born_index": 1332
+  },
+  {
+   "gates": [
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "COT managed money net < +0.0σ",
+   "mu": 1.0411,
+   "v": 2.3706,
+   "n": 34.04,
+   "trust": 0.2505,
+   "field_k": 11.6,
+   "born_index": 1031
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < +0.0σ",
+   "mu": 1.035,
+   "v": 2.6504,
+   "n": 24.44,
+   "trust": 0.2402,
+   "field_k": 8.44,
+   "born_index": 1053
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
+   "mu": 0.9809,
+   "v": 2.7572,
+   "n": 19.8,
+   "trust": 0.2056,
+   "field_k": 6.91,
+   "born_index": 1053
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.0426,
+   "v": 1.9871,
+   "n": 17.96,
+   "trust": 0.1729,
+   "field_k": 4.61,
+   "born_index": 1053
+  }
+ ]
+}

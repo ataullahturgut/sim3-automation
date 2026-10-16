@@ -1,0 +1,158 @@
+{
+ "month": "2025-11",
+ "days": 20,
+ "gold_change_pct": 4.42,
+ "nav_start": 122.0648,
+ "nav_end": 126.8674,
+ "month_ret_pct": 3.93,
+ "position_end": "ALTIN",
+ "trades": [],
+ "mean_E": 1.557,
+ "mean_U": 0.461,
+ "days_without_opinion": 0,
+ "wrong_days_vs_ideal": 4,
+ "trading_days_in_month": 20,
+ "rule_base_size": 39,
+ "rules_born": [
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE GVZ düzeyi > +0.0σ VE Nasdaq 20g > -1.0σ",
+   "mu": -0.083,
+   "support": 98.1,
+   "residual_mean": -1.867
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE GVZ düzeyi > -0.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.1,
+   "support": 127.0,
+   "residual_mean": -1.771
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -1.0σ VE Nasdaq 20g > -1.0σ",
+   "mu": 0.882,
+   "support": 133.7,
+   "residual_mean": -1.735
+  }
+ ],
+ "rules_died": [
+  {
+   "label": "200g ortalamaya uzaklık < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "trust": 0.074,
+   "field_k": 2.6,
+   "lifetime_days": 559
+  },
+  {
+   "label": "altın 60g getiri < +0.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "trust": 0.06,
+   "field_k": 3.3,
+   "lifetime_days": 624
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -1.0σ VE Nasdaq 20g > -1.0σ",
+   "trust": 0.0,
+   "field_k": 0.0,
+   "lifetime_days": 0
+  }
+ ],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     0.5
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +0.5σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.4178,
+   "v": 7.8217,
+   "n": 103.99,
+   "trust": 0.3841,
+   "field_k": 54.24,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     1.0
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +1.0σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.3655,
+   "v": 7.318,
+   "n": 116.28,
+   "trust": 0.3805,
+   "field_k": 57.5,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     12,
+     -1,
+     0.0
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "GVZ düzeyi < +0.0σ VE COT managed money net > +1.0σ",
+   "mu": 2.1758,
+   "v": 3.5901,
+   "n": 41.54,
+   "trust": 0.3648,
+   "field_k": 14.19,
+   "born_index": 1353
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "altın 60g getiri < +1.0σ VE COT managed money net > +1.0σ",
+   "mu": 2.0362,
+   "v": 3.8439,
+   "n": 58.53,
+   "trust": 0.3539,
+   "field_k": 25.59,
+   "born_index": 1353
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ",
+   "mu": 1.6623,
+   "v": 6.3625,
+   "n": 109.66,
+   "trust": 0.3517,
+   "field_k": 60.43,
+   "born_index": 1332
+  }
+ ]
+}

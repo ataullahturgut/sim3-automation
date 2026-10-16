@@ -1,0 +1,134 @@
+{
+ "month": "2025-03",
+ "days": 21,
+ "gold_change_pct": 8.82,
+ "nav_start": 100.0,
+ "nav_end": 100.0,
+ "month_ret_pct": 0.0,
+ "position_end": "NAKİT",
+ "trades": [],
+ "mean_E": null,
+ "mean_U": null,
+ "days_without_opinion": 21,
+ "wrong_days_vs_ideal": 20,
+ "trading_days_in_month": 21,
+ "rule_base_size": 21,
+ "rules_born": [
+  {
+   "label": "altın 60g getiri < +0.5σ VE COT managed money net > +1.0σ",
+   "mu": 1.819,
+   "support": 140.5,
+   "residual_mean": 1.122
+  },
+  {
+   "label": "altın 60g getiri < +1.0σ VE COT managed money net > +1.0σ",
+   "mu": 1.687,
+   "support": 189.1,
+   "residual_mean": 1.057
+  },
+  {
+   "label": "GVZ düzeyi < +0.0σ VE COT managed money net > +1.0σ",
+   "mu": 1.712,
+   "support": 154.9,
+   "residual_mean": 1.061
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ",
+   "mu": 1.2848,
+   "v": 4.1044,
+   "n": 125.05,
+   "trust": 0.4403,
+   "field_k": 7.87,
+   "born_index": 1332
+  },
+  {
+   "gates": [
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "COT managed money net < +0.0σ",
+   "mu": 0.883,
+   "v": 1.6042,
+   "n": 36.04,
+   "trust": 0.2073,
+   "field_k": 11.12,
+   "born_index": 1031
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < +0.0σ",
+   "mu": 0.8407,
+   "v": 1.6303,
+   "n": 25.68,
+   "trust": 0.1999,
+   "field_k": 7.9,
+   "born_index": 1053
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < +0.0σ",
+   "mu": 0.7749,
+   "v": 1.6144,
+   "n": 20.78,
+   "trust": 0.1685,
+   "field_k": 6.47,
+   "born_index": 1053
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.9331,
+   "v": 1.4742,
+   "n": 19.31,
+   "trust": 0.1531,
+   "field_k": 4.48,
+   "born_index": 1053
+  }
+ ]
+}

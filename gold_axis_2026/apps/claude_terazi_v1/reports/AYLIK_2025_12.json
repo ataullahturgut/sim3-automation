@@ -1,0 +1,147 @@
+{
+ "month": "2025-12",
+ "days": 22,
+ "gold_change_pct": 2.48,
+ "nav_start": 126.8674,
+ "nav_end": 131.1047,
+ "month_ret_pct": 3.34,
+ "position_end": "ALTIN",
+ "trades": [],
+ "mean_E": 1.377,
+ "mean_U": 0.428,
+ "days_without_opinion": 0,
+ "wrong_days_vs_ideal": 4,
+ "trading_days_in_month": 22,
+ "rule_base_size": 40,
+ "rules_born": [
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -1.0σ VE Nasdaq 20g > -1.0σ",
+   "mu": 1.119,
+   "support": 134.2,
+   "residual_mean": -1.875
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -1.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 1.058,
+   "support": 150.1,
+   "residual_mean": -1.837
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -0.5σ VE Nasdaq 20g > -1.0σ",
+   "mu": 1.078,
+   "support": 108.5,
+   "residual_mean": -1.912
+  }
+ ],
+ "rules_died": [
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -1.0σ VE Nasdaq 20g > -1.0σ",
+   "trust": 0.0,
+   "field_k": 0.0,
+   "lifetime_days": 0
+  },
+  {
+   "label": "10Y reel faiz 20g değişim > +1.5σ VE sonraki FOMC'ye gün > -0.5σ VE Nasdaq 20g > -1.0σ",
+   "trust": 0.0,
+   "field_k": 0.0,
+   "lifetime_days": 0
+  }
+ ],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     1.0
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +1.0σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.4826,
+   "v": 6.5808,
+   "n": 110.51,
+   "trust": 0.4328,
+   "field_k": 57.87,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     18,
+     -1,
+     0.5
+    ],
+    [
+     24,
+     1,
+     -0.5
+    ]
+   ],
+   "label": "son NFP sürprizi < +0.5σ VE Nasdaq 20g > -0.5σ",
+   "mu": 1.5089,
+   "v": 6.9825,
+   "n": 97.59,
+   "trust": 0.4213,
+   "field_k": 53.03,
+   "born_index": 1417
+  },
+  {
+   "gates": [
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "COT managed money net > +1.0σ",
+   "mu": 1.7446,
+   "v": 5.6692,
+   "n": 103.29,
+   "trust": 0.394,
+   "field_k": 59.2,
+   "born_index": 1332
+  },
+  {
+   "gates": [
+    [
+     24,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "Nasdaq 20g > -1.0σ",
+   "mu": 1.5153,
+   "v": 6.1981,
+   "n": 152.2,
+   "trust": 0.3718,
+   "field_k": 96.46,
+   "born_index": 1374
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     1,
+     1.0
+    ]
+   ],
+   "label": "altın 60g getiri < +1.0σ VE COT managed money net > +1.0σ",
+   "mu": 2.0609,
+   "v": 3.4828,
+   "n": 53.34,
+   "trust": 0.3606,
+   "field_k": 23.84,
+   "born_index": 1353
+  }
+ ]
+}

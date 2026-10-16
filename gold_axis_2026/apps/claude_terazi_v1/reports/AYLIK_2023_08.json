@@ -1,0 +1,166 @@
+{
+ "month": "2023-08",
+ "days": 23,
+ "gold_change_pct": -0.5,
+ "nav_start": 100.0,
+ "nav_end": 100.0,
+ "month_ret_pct": 0.0,
+ "position_end": "NAKİT",
+ "trades": [],
+ "mean_E": null,
+ "mean_U": null,
+ "days_without_opinion": 23,
+ "wrong_days_vs_ideal": 8,
+ "trading_days_in_month": 23,
+ "rule_base_size": 8,
+ "rules_born": [
+  {
+   "label": "altın 20g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 1.011,
+   "support": 228.7,
+   "residual_mean": 0.858
+  },
+  {
+   "label": "altın 20g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.945,
+   "support": 257.9,
+   "residual_mean": 0.846
+  },
+  {
+   "label": "10Y reel faiz 5g değişim < +0.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.941,
+   "support": 210.4,
+   "residual_mean": 0.852
+  }
+ ],
+ "rules_died": [
+  {
+   "label": "200g ortalamaya uzaklık < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ",
+   "trust": -0.146,
+   "field_k": 25.5,
+   "lifetime_days": 131
+  }
+ ],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     1.0
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +1.0σ VE COT managed money net < -0.5σ",
+   "mu": 0.854,
+   "v": 2.7269,
+   "n": 56.98,
+   "trust": 0.1152,
+   "field_k": 13.23,
+   "born_index": 815
+  },
+  {
+   "gates": [
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.8456,
+   "v": 2.6422,
+   "n": 46.84,
+   "trust": 0.1027,
+   "field_k": 10.82,
+   "born_index": 815
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.5
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "altın 60g getiri < +1.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.9356,
+   "v": 2.5565,
+   "n": 40.49,
+   "trust": -0.0465,
+   "field_k": 3.22,
+   "born_index": 902
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     1.0
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "altın 60g getiri < +1.0σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.9355,
+   "v": 2.5661,
+   "n": 36.24,
+   "trust": -0.0444,
+   "field_k": 3.15,
+   "born_index": 902
+  },
+  {
+   "gates": [
+    [
+     3,
+     -1,
+     0.5
+    ],
+    [
+     8,
+     -1,
+     0.5
+    ],
+    [
+     14,
+     -1,
+     -0.5
+    ]
+   ],
+   "label": "altın 60g getiri < +0.5σ VE 10Y reel faiz 20g değişim < +0.5σ VE COT managed money net < -0.5σ",
+   "mu": 0.9265,
+   "v": 2.61,
+   "n": 30.79,
+   "trust": -0.0393,
+   "field_k": 2.97,
+   "born_index": 902
+  }
+ ]
+}
