@@ -300,3 +300,21 @@ test("Integrated long action is queued and fills next completed observation even
  assert.equal(third.at,"2023-01-19T20:30:00.000Z");
  assert.equal(critic.summary(s).liveTradeAuthorized,false);
 });
+
+test("M3 gated expert updates ONLY after maturity of as-of 14/56d labels",()=>{
+ const long=require("./adaptive_long_cycle_s3"),s=long.create();
+ let dates=[];
+ for(let i=0;i<142;i++){
+  const d=new Date(Date.parse("2023-01-02T00:00:00Z")+i*86400000);
+  if(d.getUTCDay()>0&&d.getUTCDay()<6)dates.push(d.toISOString().slice(0,10));
+ }
+ for(const [i,day] of dates.entries()){
+  long.observe(s,{session:day,sourceId:src,price:1800*Math.exp(.002*i),
+   availableAt:day+"T22:00:00Z",direction:1});
+  if(day<"2023-02-27")assert.equal(s.gatedExperts[56].n,0);
+ }
+ assert.ok(s.gatedExperts[14].n>=4);
+ assert.ok(s.gatedExperts[56].n>=1);
+ assert.ok(s.gatedExperts[56].w.some(w=>w!==0));
+ assert.ok(long.restore(JSON.parse(JSON.stringify(s))).version===long.VERSION);
+});

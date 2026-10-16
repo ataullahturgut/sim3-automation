@@ -10,11 +10,20 @@
 const VERSION="KAVIS_M3_M4_LONG_CYCLE_RESEARCH_V1_20261016";
 const DAY=86400000,FEE=.008,HORIZONS=[14,56];
 const clone=x=>JSON.parse(JSON.stringify(x));
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const xs=g=>[1,g.trend,g.stress,clamp(g.drawdown/10,0,1)];
+const dot=(w,x)=>w.reduce((sum,v,i)=>sum+v*x[i],0);
 const finite=n=>typeof n==="number"&&Number.isFinite(n);
 function stamp(date){const v=Date.parse(date+"T22:00:00Z");if(!Number.isFinite(v)||!(/^\d{4}-\d{2}-\d{2}$/.test(date)))throw Error("LONG_BAD_DATE");return v;}
 function plus(t,n){return new Date(t+n*DAY).toISOString().slice(0,10);}
 function create(){return {version:VERSION,last:null,pending:[],originDates:{14:null,56:null},
-  cohorts:{},expertLoss:{global:{14:{n:0,ema:0},56:{n:0,ema:0}},state:{14:{n:0,ema:0},56:{n:0,ema:0}}},
+  cohorts:{},expertLoss:{
+   global:{14:{n:0,ema:0},56:{n:0,ema:0}},
+   state:{14:{n:0,ema:0},56:{n:0,ema:0}},
+   gated:{14:{n:0,ema:0},56:{n:0,ema:0}}},
+  gatedExperts:{
+   14:{w:[0,0,0,0],g2:[1,1,1,1],n:0},
+   56:{w:[0,0,0,0],g2:[1,1,1,1],n:0}},
   gated:{trend:0,stress:0,peak:0,drawdown:0},audit:{sessions:0,origin14:0,origin56:0,
     mature14:0,mature56:0,censored:0,missedUp:0,avoidedLoss:0,
     falseHold:0,validPredictions:0}};}
@@ -29,19 +38,33 @@ function estimate(s,state,h){
 }
 function combine(s,state,h){
  const g=estimate(s,"ALL",h),a=estimate(s,state,h),
-   ge=s.expertLoss.global[h],se=s.expertLoss.state[h];
- // The conditional expert requires at least 3 strictly disjoint training
- // labels. Reliability weights use ONLY matured forecast errors.
+   ge=s.expertLoss.global[h],se=s.expertLoss.state[h],
+   learnt=s.gatedExperts[h],trained=learnt.n>=3,
+   gatedPrediction=trained?dot(learnt.w,xs(s.gated)):null;
  const eligible=a.effectiveN>=3;
  if(g.effectiveN<3)return {ready:false,horizonDays:h,global:g,conditional:a,
-   meanNetPct:null,stderrPct:null,conditionalWeight:0};
- const wG=eligible?1/(1+Math.sqrt(Math.max(.1,ge.ema))):1,wS=eligible?
-   1/(1+Math.sqrt(Math.max(.1,se.ema))):0,ratio=wS/(wG+wS);
+   gatedPrediction,meanNetPct:null,stderrPct:null,conditionalWeight:0,
+   gatedWeight:0};
+ const wg=1/(1+Math.sqrt(Math.max(.1,ge.ema))),
+   ws=eligible?1/(1+Math.sqrt(Math.max(.1,se.ema))):0,
+   we=trained?1/(1+Math.sqrt(Math.max(.1,s.expertLoss.gated[h].ema))):0,
+   den=wg+ws+we,conditionalWeight=ws/den,gatedWeight=we/den;
  return {ready:true,horizonDays:h,global:g,conditional:a,
-   meanNetPct:g.mean*(1-ratio)+(eligible?a.mean:0)*ratio,
-   stderrPct:g.stderr*(1-ratio)+(eligible?a.stderr:0)*ratio,
-   conditionalWeight:ratio,
+   gatedPrediction,meanNetPct:g.mean*(wg/den)+(eligible?a.mean:0)*conditionalWeight+
+     (trained?gatedPrediction:0)*gatedWeight,
+   stderrPct:g.stderr*(1-gatedWeight),
+   conditionalWeight,gatedWeight,
    note:"OVERLAPPING_LABELS_LONG_HORIZON_SHADOW"};
+}
+function updateGated(s,h,features,realizedNet){
+ const a=s.gatedExperts[h],pred=dot(a.w,features),
+   err=clamp(realizedNet-pred,-25,25);
+ for(let i=0;i<features.length;i++){
+   const grad=features[i],scale=1/Math.sqrt(a.g2[i]);
+   a.w[i]=clamp(a.w[i]+.14*err*grad*scale,-40,40);
+   a.g2[i]+=grad*grad;
+ }
+ a.n++;
 }
 function predict(s,state){
  if(s.version!==VERSION)throw Error("LONG_VERSION");
@@ -96,7 +119,9 @@ function observe(s,{session,sourceId,price,phase,direction=0,availableAt,
   if(p.forecast){
    feedback(s,"global",p.h,p.forecast.global.mean,net);
    feedback(s,"state",p.h,p.forecast.conditional.mean,net);
+   feedback(s,"gated",p.h,p.forecast.gatedPrediction,net);
   }
+  updateGated(s,p.h,p.originFeatures,net);
   if(p.h===14)s.audit.mature14++;else s.audit.mature56++;
   if(p.shadowHolding==="CASH"&&p.shadowProposal!=="BUY"){
    if(net>0)s.audit.missedUp++;else s.audit.avoidedLoss++;
@@ -123,7 +148,8 @@ function observe(s,{session,sourceId,price,phase,direction=0,availableAt,
   if(prev!==null&&t-prev<minGap)continue;
   const f=snapshot.byHorizon.find(v=>v.horizonDays===h);
   s.pending.push({state,h,price,sourceId,originTs:t,
-    due:plus(t,h),forecast:f,shadowHolding,shadowProposal});
+    due:plus(t,h),forecast:f,originFeatures:xs(s.gated),
+    shadowHolding,shadowProposal});
   s.originDates[h]=t;
   if(h===14)s.audit.origin14++;else s.audit.origin56++;
  }
@@ -150,6 +176,8 @@ function action(s,holding,{minGlobalEffective=3}={}){
 }
 function summary(s){return {version:VERSION,trainedOn:"COMPLETED_SESSIONS_ONLY",
   audit:clone(s.audit),gated:clone(s.gated),expertLoss:clone(s.expertLoss),
+  gatedExperts:Object.fromEntries(Object.entries(s.gatedExperts).map(([k,v])=>[k,
+    {n:v.n,weights:v.w}])),
   cohorts:Object.fromEntries(Object.entries(s.cohorts).map(([k,v])=>[k,
    {n:v.n,effectiveN:v.independentN,meanNetPct:v.mean,
     lastMaturedAt:v.lastMaturedAt}])),
@@ -157,6 +185,6 @@ function summary(s){return {version:VERSION,trainedOn:"COMPLETED_SESSIONS_ONLY",
   scienceGate:"NOT_PROVEN_NO_TRUE_BLIND_OR_BANK_EXECUTION"};}
 function restore(v){const s=clone(v);
  if(s.version!==VERSION||!Array.isArray(s.pending)||!s.cohorts||!s.audit||
-    !s.expertLoss||!s.gated)throw Error("LONG_BAD_CHECKPOINT");
+    !s.expertLoss||!s.gated||!s.gatedExperts)throw Error("LONG_BAD_CHECKPOINT");
  return s;}
 module.exports={VERSION,HORIZONS,create,observe,predict,action,summary,restore};
