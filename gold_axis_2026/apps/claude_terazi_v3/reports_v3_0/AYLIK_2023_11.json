@@ -1,0 +1,181 @@
+{
+ "month": "2023-11",
+ "days": 22,
+ "gold_change_pct": 2.44,
+ "nav_start": 100.685,
+ "nav_end": 102.0573,
+ "month_ret_pct": 1.36,
+ "position_end": "ALTIN",
+ "phase_days_rising": 22,
+ "break_days": 0,
+ "position_matches_phase": "22/22",
+ "mean_P": 0.462,
+ "mean_Q": 0.047,
+ "exit_threshold": 0.1353,
+ "macro_confirm_days": 9,
+ "trades": [],
+ "entry_base_size": 58,
+ "exit_base_size": 46,
+ "entry_rules_born": [
+  {
+   "label": "altın 5g getiri > -1.5σ VE altın 20g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ",
+   "p_rising": 0.527,
+   "support": 409.5,
+   "residual_mean": 0.249,
+   "evidence_z": 10.05,
+   "birth_credibility": 0.9,
+   "bar": 3.6
+  },
+  {
+   "label": "altın 5g getiri > -0.5σ VE altın 20g getiri > -1.5σ VE 10Y reel faiz 20g değişim < +1.5σ",
+   "p_rising": 0.491,
+   "support": 483.8,
+   "residual_mean": 0.226,
+   "evidence_z": 10.03,
+   "birth_credibility": 0.9,
+   "bar": 3.6
+  },
+  {
+   "label": "altın 20g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ VE dolar endeksi 20g değişim < +1.5σ",
+   "p_rising": 0.532,
+   "support": 407.5,
+   "residual_mean": 0.247,
+   "evidence_z": 9.97,
+   "birth_credibility": 0.9,
+   "bar": 3.6
+  }
+ ],
+ "entry_rules_died": [],
+ "exit_rules_born": [
+  {
+   "label": "altın 1g getiri < -1.0σ VE altın 20g getiri > -1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "p_break": 0.126,
+   "support": 123.0,
+   "residual_mean": 0.093,
+   "evidence_z": 3.73,
+   "birth_credibility": 0.219,
+   "bar": 3.51
+  },
+  {
+   "label": "altın 1g getiri < -1.0σ VE altın 20g getiri > -0.5σ VE petrol 20g < +1.5σ",
+   "p_break": 0.124,
+   "support": 97.3,
+   "residual_mean": 0.108,
+   "evidence_z": 3.71,
+   "birth_credibility": 0.202,
+   "bar": 3.51
+  },
+  {
+   "label": "altın 1g getiri < -1.0σ VE altın 20g getiri > -1.0σ VE son NFP'den beri gün < +1.5σ",
+   "p_break": 0.107,
+   "support": 126.5,
+   "residual_mean": 0.091,
+   "evidence_z": 3.71,
+   "birth_credibility": 0.201,
+   "bar": 3.51
+  }
+ ],
+ "exit_rules_died": [],
+ "strongest_exit_rules": [
+  {
+   "gates": [
+    [
+     0,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "altın 1g getiri > -1.5σ",
+   "p_break": 0.0401,
+   "n": 178.41,
+   "trust": 0.8164,
+   "field_k": 178.08,
+   "born_index": 41,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 1.7595506844787004e+16
+  },
+  {
+   "gates": [
+    [
+     0,
+     1,
+     -1.5
+    ],
+    [
+     15,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 1g getiri > -1.5σ VE COT MM 4 hafta değişim < +1.5σ",
+   "p_break": 0.0361,
+   "n": 148.99,
+   "trust": 0.7827,
+   "field_k": 106.78,
+   "born_index": 731,
+   "birth_credibility": -0.4,
+   "birth_evidence_z": 2.823
+  },
+  {
+   "gates": [
+    [
+     0,
+     1,
+     -1.5
+    ],
+    [
+     2,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "altın 1g getiri > -1.5σ VE altın 20g getiri < +0.0σ",
+   "p_break": 0.034,
+   "n": 98.0,
+   "trust": 0.7407,
+   "field_k": 67.85,
+   "born_index": 731,
+   "birth_credibility": -0.4,
+   "birth_evidence_z": 2.693
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "altın 5g getiri > -1.5σ",
+   "p_break": 0.0428,
+   "n": 176.95,
+   "trust": 0.6602,
+   "field_k": 176.62,
+   "born_index": 41,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 1.7595506844787004e+16
+  },
+  {
+   "gates": [
+    [
+     0,
+     1,
+     -1.5
+    ],
+    [
+     2,
+     -1,
+     0.5
+    ]
+   ],
+   "label": "altın 1g getiri > -1.5σ VE altın 20g getiri < +0.5σ",
+   "p_break": 0.0378,
+   "n": 124.7,
+   "trust": 0.6479,
+   "field_k": 87.15,
+   "born_index": 731,
+   "birth_credibility": -0.4,
+   "birth_evidence_z": 2.709
+  }
+ ]
+}

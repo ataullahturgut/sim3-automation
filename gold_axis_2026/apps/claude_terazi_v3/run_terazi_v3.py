@@ -31,7 +31,7 @@ def warmup_base_rate(brk, conf, warm_end_idx):
     return float(np.mean(vals)), len(vals)
 
 
-def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_mult=T3.EXIT_MULT, write=True):
+def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_lam=T3.EXIT_LAM, write=True):
     rows = S.load_rows(dev_only=True)
     raw, macro = S.build_states(rows)
     Z, std = S.standardize(raw)
@@ -42,7 +42,7 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_mult=T3.EXIT_MULT,
     warm_end_idx = max(i for i, r in enumerate(rows) if r["date"] <= WARM_END)
     p0, n_p0 = warmup_base_rate(brk, bconf, warm_end_idx)
 
-    net = T3.TeraziV3(p0, exit_mult)
+    net = T3.TeraziV3(p0, exit_lam)
     learned_lab, learned_brk = set(), set()
     if write:
         os.makedirs(os.path.join(outdir, "reports"), exist_ok=True)
@@ -79,13 +79,14 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_mult=T3.EXIT_MULT,
                                 P=None if info["P"] is None else round(info["P"], 3),
                                 Q=None if info["Q"] is None else round(info["Q"], 3),
                                 UQ=None if info["UQ"] is None else round(info["UQ"], 3),
-                                thr=round(info["thr"], 4), macro=info["macro"],
+                                zq=None if info["zq"] is None else round(info["zq"], 3), lam=info["lam"], macro=info["macro"],
                                 rules=info["exit_top"] if info["reason"].startswith("hızlı") else info["entry_top"]))
             rec = dict(date=str(r["date"]), gold=round(r["p06"], 2), pos=pos,
                        P=None if info["P"] is None else round(info["P"], 3),
                        U=None if info["U"] is None else round(info["U"], 3),
                        Q=None if info["Q"] is None else round(info["Q"], 3),
                        UQ=None if info["UQ"] is None else round(info["UQ"], 3),
+                       zq=None if info["zq"] is None else round(info["zq"], 3),
                        macro=info["macro"], phase=lab[i], brk=brk[i])
             days.append(rec); daily.append(rec)
             nav_hist.append((i, cash + units * r["bid"] * (1 - S.FEE), pos))
@@ -121,7 +122,7 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_mult=T3.EXIT_MULT,
             if any(x["P"] is not None for x in days) else None,
             mean_Q=round(float(np.mean([x["Q"] for x in days if x["Q"] is not None])), 3)
             if any(x["Q"] is not None for x in days) else None,
-            exit_threshold=round(net.exit_mult * net.p0, 4),
+            exit_lambda=net.exit_lam, base_rate=round(net.p0, 4),
             macro_confirm_days=sum(1 for x in days if x["macro"]),
             trades=mtr,
             entry_base_size=len(net.entry.rules), exit_base_size=len(net.exitb.rules),
@@ -134,14 +135,14 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_mult=T3.EXIT_MULT,
         L = [f"# TERAZİ v3 (iki kanal) — {mo}", "",
              f"Altın %{rep['gold_change_pct']}; NAV {rep['nav_start']} → {rep['nav_end']} (%{rep['month_ret_pct']}); ay sonu {rep['position_end']}.",
              f"Gerçek evre: {rep['phase_days_rising']}/{rep['days']} gün yükselme; kırılma penceresi {rep['break_days']} gün. Pozisyon evreyle uyuştu: {rep['position_matches_phase']}.",
-             f"Yavaş kanal ortalama P={rep['mean_P']}; hızlı kanal ortalama Q={rep['mean_Q']} (eşik {rep['exit_threshold']}); makro onaylı gün {rep['macro_confirm_days']}/{rep['days']}.",
+             f"Yavaş kanal ortalama P={rep['mean_P']}; hızlı kanal ortalama Q={rep['mean_Q']} (z-testi λ={rep['exit_lambda']}, taban oran {rep['base_rate']}); makro onaylı gün {rep['macro_confirm_days']}/{rep['days']}.",
              f"Kural tabanları: giriş {rep['entry_base_size']}, çıkış {rep['exit_base_size']}.", ""]
         if mtr:
             L.append("## İşlemler")
             for t in mtr:
                 extra = ""
                 if t["action"] == "SAT" and t.get("Q") is not None:
-                    extra = f", Q(kırılma)={t['Q']}, belirsizlik={t['UQ']}, eşik={t['thr']}, makro={t['macro']}"
+                    extra = f", Q(kırılma)={t['Q']}, belirsizlik={t['UQ']}, z={t['zq']} (λ={t['lam']}), makro={t['macro']}"
                 L.append(f"- {t['date']} **{t['action']}** @ {t['price']} — {t['reason']}{extra}")
                 for lb, mu, wt in (t.get("rules") or []):
                     L.append(f"    - {lb} → {mu} (güven {wt})")
@@ -162,7 +163,7 @@ def marathon(outdir, theta=T3.THETA, m_break=T3.M_BREAK, exit_mult=T3.EXIT_MULT,
     return dict(rows=rows, raw=raw, Z=Z, std=std, net=net, i0=i0, p0=p0, n_p0=n_p0,
                 nav_hist=nav_hist, gross_hist=gross_hist, trades=trades, reports=reports,
                 lab=lab, conf=conf, brk=brk, bconf=bconf, tops=tops, daily=daily,
-                theta=theta, m_break=m_break, exit_mult=exit_mult)
+                theta=theta, m_break=m_break, exit_lam=exit_lam)
 
 
 def gate_census(rules):
@@ -181,7 +182,7 @@ def main():
     rows, nav = A["rows"], A["nav_hist"]
     i0 = A["i0"]
     print(f"taban oran p0 = {A['p0']:.4f}  ({A['n_p0']} ısıtma etiketinden)")
-    print(f"çıkış eşiği = {A['exit_mult']}×p0 = {A['exit_mult'] * A['p0']:.4f}")
+    print(f"çıkış testi: (Q−p0)/U_Q > {A['exit_lam']}")
     net_final = nav[-1][1]
     gross_final = A["gross_hist"][-1][1]
     print(f"\nv3 net NAV  {net_final:.2f}   brüt {gross_final:.2f}   işlem {len(A['trades'])}")
@@ -197,7 +198,7 @@ def main():
     s15 = 100 * (cnt.get("g_r1", 0) + cnt.get("g_r5", 0)) / tot
     print(f"\n  H1a g_r1 payı       = %{s1:.2f}   (hedef ≥ %5;   v2: %0,60)  → {'TUTTU' if s1 >= 5 else 'TUTMADI'}")
     print(f"  H1b g_r1+g_r5 payı  = %{s15:.2f}   (hedef ≥ %30;  v2: %16,17) → {'TUTTU' if s15 >= 30 else 'TUTMADI'}")
-    json.dump(dict(p0=A["p0"], n_p0=A["n_p0"], exit_threshold=A["exit_mult"] * A["p0"],
+    json.dump(dict(p0=A["p0"], n_p0=A["n_p0"], exit_lambda=A["exit_lam"],
                    net_nav=round(net_final, 4), gross_nav=round(gross_final, 4),
                    max_drawdown_pct=round(mdd([v for _, v, _ in nav]), 2),
                    trades=A["trades"], gate_census=cnt, gate_total=tot,
@@ -205,7 +206,7 @@ def main():
                    exit_rules=[R.to_dict() for R in sorted(A["net"].exitb.rules, key=lambda x: -x.weight)],
                    entry_rules=[R.to_dict() for R in sorted(A["net"].entry.rules, key=lambda x: -x.weight)],
                    standardizer=A["std"].state() if hasattr(A["std"], "state") else None,
-                   constants=dict(theta=A["theta"], m_break=A["m_break"], exit_mult=A["exit_mult"],
+                   constants=dict(theta=A["theta"], m_break=A["m_break"], exit_lam=A["exit_lam"],
                                   lam=T3.LAM, gate_s=T3.GATE_S, rho=T3.RHO, fee=S.FEE)),
               open(os.path.join(outdir, "TERAZI_V3_DONDURULMUS_MODEL.json"), "w"),
               indent=1, ensure_ascii=False, default=str)

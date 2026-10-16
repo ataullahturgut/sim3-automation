@@ -32,7 +32,11 @@ FEE = S.FEE
 
 # --- v3'ün ön kayıtta dondurulmuş yeni sabitleri ---
 M_BREAK = 5          # kırılma penceresi: düşen bacağın ilk m günü
-EXIT_MULT = 2.0      # çıkış eşiği = EXIT_MULT × taban oran (taranmadı; beyan edildi)
+# Çıkış testi: (Q − p0)/U_Q > LAM. Bu, v2'nin (P − 0,5)/U > LAM kuralının referansı
+# taban orana taşınmış halidir; yeni parametre yoktur, LAM v2'den devralınır.
+# Ek-2 (TERAZI_V3_ON_KAYIT_EKI_OLCEK_HATASI.md): ön kayıttaki "Q − λU > 2·p0" yazımı bir
+# ölçek hatasıydı — nadir olayda U_Q ≈ 0,85·Q olduğu için test ulaşılamaz hale geliyordu.
+EXIT_LAM = LAM
 
 
 def break_labels(P, theta=THETA, m=M_BREAK):
@@ -255,10 +259,10 @@ def macro_confirms(mrow):
 class TeraziV3:
     """Giriş: v2 nesnesi aynen. Çıkış: hızlı kırılma kanalı VEYA v2'nin yavaş kanalı."""
 
-    def __init__(self, p0, exit_mult=EXIT_MULT):
+    def __init__(self, p0, exit_lam=EXIT_LAM):
         self.entry = T2.TeraziV2()          # giriş kanalı — v2 koduyla birebir aynı
         self.exitb = BreakBase(p0)
-        self.exit_mult = float(exit_mult)
+        self.exit_lam = float(exit_lam)
 
     @property
     def p0(self):
@@ -268,9 +272,12 @@ class TeraziV3:
         """Dönüş: (karar, bilgi_sözlüğü)."""
         de = self.entry.decide(z)
         dx = self.exitb.decide(z)
+        zq = None
+        if dx is not None and dx["U"] > 0:
+            zq = (dx["Q"] - self.p0) / dx["U"]      # v2'nin z-testi, referans p0
         info = dict(P=None if de is None else de["P"], U=None if de is None else de["U"],
                     Q=None if dx is None else dx["Q"], UQ=None if dx is None else dx["U"],
-                    thr=self.exit_mult * self.p0, macro=macro_confirms(mrow),
+                    zq=zq, lam=self.exit_lam, macro=macro_confirms(mrow),
                     entry_top=None if de is None else de["top"],
                     exit_top=None if dx is None else dx["top"], reason=None)
         if pos == 0:
@@ -279,7 +286,7 @@ class TeraziV3:
                 return "AL", info
             return "HOLD", info
         # pozisyondayız: hızlı kanal önce sınanır
-        if dx is not None and info["macro"] and dx["Q"] - LAM * dx["U"] > info["thr"]:
+        if zq is not None and info["macro"] and zq > self.exit_lam:
             info["reason"] = "hızlı kanal: bacak kırıldı + makro onayı"
             return "SAT", info
         if de is not None and de["P"] + LAM * de["U"] < 0.5:
