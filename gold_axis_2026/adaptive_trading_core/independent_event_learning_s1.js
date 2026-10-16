@@ -100,6 +100,14 @@ function run(raw,{mode="DISCOVERY_FULL_ARCHIVE",proof="RETROSPECTIVE_UNVERIFIED_
     if(!validate(row)){missing.push(row.release_utc);continue;}
     evidence.push(row);
   }
+  // Defensive second check: controls may NEVER come from within ±24h
+  // of ANY macro release, including another family or an incomplete wave.
+  const releaseTimes=[...seen].map(clock);
+  for(const controls of controlByRelease.values())for(const c of controls){
+    const at=clock(c.anchor_utc);
+    if(releaseTimes.some(t=>Math.abs(at-t)<=24*3600000))
+      throw Error("EVENT_CONTAMINATED_NEGATIVE_CONTROL");
+  }
   evidence.sort((a,b)=>clock(a.anchor_utc)-clock(b.anchor_utc));
   const past=[],scored=[],eventsAnalysis=[];
   let last=-Infinity;
