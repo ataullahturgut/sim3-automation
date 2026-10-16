@@ -144,7 +144,7 @@ function forward(a,opts={}){
   mature(s,a,i);s.totalBarObservations++;
   const beforeWeights=s.heads.map(h=>h.w.slice());
   const sc=x?score(s,x):{ready:false,edge:0,risk:0,predicts:[]};
-  const day=localTr(row.t).slice(0,10);
+  const day=localTr(row.t-BAR_MS).slice(0,10);
   const stat=daily[day]??={observations:0,scoreReady:0,targets:0,actions:0,
    startWeights:s.heads.map(h=>h.w.slice()),endWeights:null,mae:null,
    endNAV:100,position:"CASH",exposures:0};
@@ -155,7 +155,9 @@ function forward(a,opts={}){
   const canAct=bankWindow(row.t)&&
    i+1<a.length&&a[i+1].t-row.t===BAR_MS&&
    bankWindow(a[i+1].t)&&row.t<END&&sc.ready;
-  if(canAct&&firstEligibleOpen===null)firstEligibleOpen=a[i+1].open;
+  if(firstEligibleOpen===null&&bankWindow(row.t)&&
+    i+1<a.length&&a[i+1].t-row.t===BAR_MS&&bankWindow(a[i+1].t))
+    firstEligibleOpen=a[i+1].open;
   if(canAct&&i-s.lastTradeIndex>=16){
     if(s.pos==="CASH"&&sc.edge-sc.risk>100*(-Math.log(1-FEE)*2))
       action="BUY";
