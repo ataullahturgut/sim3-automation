@@ -155,8 +155,10 @@ test("Quote-only price integrity and missing terminal quote cannot be manufactur
   valid_quotes:91,terminal_bar_valid:true,
   full_n:undefined,last_native_minute_bars:undefined};
  assert.equal(life.observe(s,newSource).phase,"REJECTED_SESSION");
- assert.equal(life.observe(s,{...newSource,session:d[1],
-  valid_quotes:92,terminal_bar_valid:false}).phase,"REJECTED_SESSION");
+ assert.equal(life.observe(s,{...session(d[1],1800),
+  sessionEvidence:"BIDASK_M15_RECONSTRUCTED_NOT_M1",
+  valid_quotes:92,terminal_bar_valid:false,
+  full_n:undefined,last_native_minute_bars:undefined}).phase,"REJECTED_SESSION");
  assert.equal(s.eligibleSessions,0);
  assert.equal(s.rejectedSessions,2);
 });
