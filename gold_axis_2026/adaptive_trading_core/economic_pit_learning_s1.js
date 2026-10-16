@@ -73,23 +73,80 @@ function atDecision(asof,releases,scales,eventSource){
   }
   return {features,quarantined,admitted,decisionOnly:true};
 }
+
+/**
+ * RESEARCH ONLY: archived INITIAL official actual and dated pre-release consensus
+ * with a conservative post-embargo availability assumption.
+ * This does NOT certify the first tick seen by a real trader.
+ * Do not carry these checkpoints into STRICT_WALK_FORWARD.
+ */
+function researchReconstructedAtDecision(asof,releases,scales,eventSource,
+  {assumedAccessDelayMinutes=60}={}){
+  if(!Number.isInteger(assumedAccessDelayMinutes)||
+     assumedAccessDelayMinutes<60||assumedAccessDelayMinutes>240)
+     throw Error("UNSAFE_RESEARCH_ACCESS_DELAY");
+  const now=stamp(asof),features={},admitted=[],quarantined=[],seen=new Set();
+  for(const r of releases){
+    const rt=stamp(r.scheduledUtc);
+    if(rt>now||now-rt>=4*3600000)continue;
+    const k=r.scheduledUtc+"/"+r.type;
+    if(seen.has(k))throw Error("DUPLICATE_MACRO_COMPONENT");
+    seen.add(k);
+    let why=null;
+    if(!TYPES.has(r.type)||!finite(r.actual)||!finite(r.consensus)||
+       !finite(scales[r.type])||scales[r.type]<=0||
+       Math.abs((r.actual-r.consensus)/scales[r.type])>5)
+       why="RESEARCH_MACRO_OR_SCALE_INVALID";
+    else if(r.officialInitialActual!==r.actual||r.actualEdition!=="OFFICIAL_FIRST_EDITION"||
+      !/^https:\/\/www\.bls\.gov\/news\.release\/archives\/(empsit|cpi)_\d{8}\.htm$/.test(r.actualSourceUrl||""))
+       why="OFFICIAL_INITIAL_ACTUAL_PROVENANCE_MISSING";
+    else if(r.consensusEdition!=="DATED_PRE_RELEASE_PUBLICATION"||
+      !r.consensusSourceUrl||!r.consensusPublishedAt||
+      stamp(r.consensusPublishedAt)>=rt)
+       why="PRE_RELEASE_CONSENSUS_NOT_DATED";
+    else if(now<rt+assumedAccessDelayMinutes*60000)
+       why="CONSERVATIVE_ACCESS_DELAY_NOT_ELAPSED";
+    if(why){quarantined.push({type:r.type,reason:why});continue;}
+    const name=r.type.toLowerCase()+"_surprise_z";
+    if(name in features)throw Error("DUPLICATE_ADMITTED_FEATURE_WAVE");
+    features[name]={
+      value:(r.actual-r.consensus)/scales[r.type],kind:"EVENT",source:eventSource,
+      observedAt:iso(rt),availableAt:iso(rt+assumedAccessDelayMinutes*60000),
+      firstprintVerified:false,researchOnly:true,
+      researchReleaseConfidence:"OFFICIAL_INITIAL_ACTUAL_PRE_RELEASE_DATED_CONSENSUS",
+      assumedAccessDelayMinutes
+    };
+    admitted.push({type:r.type,asof,sourceReferences:[r.actualSourceUrl,r.consensusSourceUrl],
+      certification:"RECONSTRUCTED_NOT_FIRST_ACCESS_VERIFIED",
+      normalizedSurprise:features[name].value});
+  }
+  return {features,admitted,quarantined,mode:"DISCOVERY_FULL_ARCHIVE",
+    canTrade:false,strictWalkForwardAdmissible:false};
+}
+
 /** Identical S1 CORE states/configuration except admissible economic fields.
  * Compare subsequent matured 4h outcomes; never inspect outcomes in matching.
  * Historical data are retrospective: comparison is not causal or blind OOS.
  */
 function pairedReplay({marketRows,releases,scales,featureNames,sourceRegistry,
-  eventSource,anchorMinutes=240,horizons=[240],maxRules=16,noveltyDistance=1.25}){
+  eventSource,anchorMinutes=240,horizons=[240],maxRules=16,noveltyDistance=1.25,
+  learningMode="STRICT_WALK_FORWARD",assumedAccessDelayMinutes=60}){
   if(!Array.isArray(marketRows)||!marketRows.length)throw Error("MARKET_ROWS_REQUIRED");
+  if(!["STRICT_WALK_FORWARD","DISCOVERY_FULL_ARCHIVE"].includes(learningMode))
+    throw Error("UNKNOWN_ABLATION_MODE");
+  const requiredEvidence=learningMode==="STRICT_WALK_FORWARD"?
+    "VERIFIED_PIT":"RECONSTRUCTED_RELEASE_RESEARCH";
   if(!sourceRegistry?.[eventSource]||sourceRegistry[eventSource].kind!=="EVENT"||
-     sourceRegistry[eventSource].evidenceStatus!=="VERIFIED_PIT")
+     sourceRegistry[eventSource].evidenceStatus!==requiredEvidence)
     throw Error("EVENT_SOURCE_REGISTRY_NOT_VERIFIED");
   const baseNames=featureNames.filter(x=>!x.endsWith("_surprise_z"));
   if(baseNames.length<2)throw Error("BASE_FEATURES_REQUIRED");
   const names=[...new Set([...baseNames,...[...TYPES].map(x=>x.toLowerCase()+"_surprise_z")])];
-  const options={featureNames:names,horizons,sourceRegistry,anchorMinutes,maxRules,noveltyDistance};
+  const options={featureNames:names,horizons,sourceRegistry,anchorMinutes,maxRules,noveltyDistance,learningMode};
   const withEvents=core.create(options),withoutEvents=core.create(options);
   const pending=[],stats={compared:0,withBrier:0,withoutBrier:0,
-    admissibleDecisionAnchors:0,quarantined:0,admitted:0,correctWith:0,correctWithout:0};
+    admissibleDecisionAnchors:0,quarantined:0,admitted:0,correctWith:0,correctWithout:0,
+    eventCompared:0,eventWithBrier:0,eventWithoutBrier:0,eventCorrectWith:0,eventCorrectWithout:0};
   let previous=-Infinity;
   for(const ob of marketRows){
     const t=stamp(ob.asof);
@@ -106,8 +163,18 @@ function pairedReplay({marketRows,releases,scales,featureNames,sourceRegistry,
       stats.withBrier+=(p.withP-y)**2;stats.withoutBrier+=(p.withoutP-y)**2;
       stats.correctWith+=((p.withP>=.5?1:0)===y)?1:0;
       stats.correctWithout+=((p.withoutP>=.5?1:0)===y)?1:0;
+      if(p.hadEvent){
+        stats.eventCompared++;
+        stats.eventWithBrier+=(p.withP-y)**2;
+        stats.eventWithoutBrier+=(p.withoutP-y)**2;
+        stats.eventCorrectWith+=((p.withP>=.5?1:0)===y)?1:0;
+        stats.eventCorrectWithout+=((p.withoutP>=.5?1:0)===y)?1:0;
+      }
     }
-    const evidence=atDecision(ob.asof,releases,scales,eventSource);
+    const evidence=learningMode==="STRICT_WALK_FORWARD"?
+      atDecision(ob.asof,releases,scales,eventSource):
+      researchReconstructedAtDecision(ob.asof,releases,scales,eventSource,
+        {assumedAccessDelayMinutes});
     stats.admitted+=evidence.admitted.length;
     stats.quarantined+=evidence.quarantined.length;
     const marketFeatures=ob.features||{};
@@ -122,14 +189,21 @@ function pairedReplay({marketRows,releases,scales,featureNames,sourceRegistry,
       const get=r=>r.forecastAtDecision.byHorizon.find(z=>z.horizonMinutes===horizons[0]);
       const x=get(a),y=get(b);
       pending.push({due:t+horizons[0]*60000,price:ob.price,
-        withP:x?.ready?x.upFraction:null,withoutP:y?.ready?y.upFraction:null});
+        withP:x?.ready?x.upFraction:null,withoutP:y?.ready?y.upFraction:null,
+        hadEvent:evidence.admitted.length>0});
     }
   }
   return {experiment:"S1_PIT_ADMITTED_ECONOMIC_FEATURE_ABLATION",policy:"NO_TRADING",
-    status:stats.admitted?"RESEARCH_COMPARISON_NOT_CAUSAL":"NO_CERTIFIED_EVENT_EVIDENCE",
-    ...stats,withBrier:stats.compared?stats.withBrier/stats.compared:null,
+    learningMode,assumedAccessDelayMinutes:learningMode==="DISCOVERY_FULL_ARCHIVE"?
+      assumedAccessDelayMinutes:null,
+    status:learningMode==="DISCOVERY_FULL_ARCHIVE"?
+      "RECONSTRUCTED_RESEARCH_ONLY_NO_TRADING":
+      stats.admitted?"PIT_RESEARCH_COMPARISON_NOT_CAUSAL":"NO_CERTIFIED_EVENT_EVIDENCE",
+    ...stats,eventWithBrier:stats.eventCompared?stats.eventWithBrier/stats.eventCompared:null,
+    eventWithoutBrier:stats.eventCompared?stats.eventWithoutBrier/stats.eventCompared:null,
+    withBrier:stats.compared?stats.withBrier/stats.compared:null,
     withoutBrier:stats.compared?stats.withoutBrier/stats.compared:null,
     learnedWith:core.rules(withEvents),learnedWithout:core.rules(withoutEvents),
     checkpointWith:core.checkpoint(withEvents),checkpointWithout:core.checkpoint(withoutEvents)};
 }
-module.exports={atDecision,pairedReplay,reason};
+module.exports={atDecision,researchReconstructedAtDecision,pairedReplay,reason};
