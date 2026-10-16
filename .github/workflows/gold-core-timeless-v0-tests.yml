@@ -107,3 +107,11 @@ jobs:
           node --check replay_position_value_s3.js
           node --check replay_position_value_s3.test.js
           node --test replay_position_value_s3.test.js
+
+      - name: M4/M5 all-archive matured session-memory replay contract
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check adaptive_position_memory_s3.js
+          node --check replay_slow_position_memory_s3.js
+          node --check replay_slow_position_memory_s3.test.js
+          node --test replay_slow_position_memory_s3.test.js
