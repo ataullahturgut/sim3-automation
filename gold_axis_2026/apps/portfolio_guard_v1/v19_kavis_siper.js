@@ -126,7 +126,15 @@ function signal(s,ob){
  const budgetAtRisk=tail.ready&&adverse&&
    projected>=config.maxDrawdownPct-config.stopBufferPct&&
    tail.upper>config.maxTailLossPct;
- const guardHot=config.useRiskPolicy&&(hardLoss||budgetAtRisk);
+ // Path-dependent drawdown is a constraint while GOLD is carried.
+ // Once CASH, wealth cannot rebound without buying again: keeping
+ // the old drawdown as a permanent ENTRY ban creates a mathematical
+ // absorbing-state deadlock. CASH uses *prospective regime risk* and
+ // independently observed recovery, NOT its historical underwater NAV.
+ const exitGuard= config.useRiskPolicy&&p==="GOLD"&&(hardLoss||budgetAtRisk);
+ const entryGuard=config.useRiskPolicy&&p==="CASH"&&
+   which==="STRESS"&&adverse&&tail.ready&&
+   tail.upper>config.maxTailLossPct;
  // Compute base advice in a cloned state first. Rejected inputs
  // do not partially mutate the parent learning engine.
  const fork=Core.restore(Core.save(s.core));
@@ -135,14 +143,14 @@ function signal(s,ob){
  if(config.useRiskPolicy){
   if(p==="GOLD"){
    riskEdge+=adjustedRisk;
-   if(guardHot){proposed="SELL";reason=hardLoss?"DRAW_DOWN_GUARD":"TAIL_BUDGET_GUARD";}
+   if(exitGuard){proposed="SELL";reason=hardLoss?"DRAW_DOWN_GUARD":"TAIL_BUDGET_GUARD";}
    else if(base.readiness){
      proposed=riskEdge>0?"SELL":"WAIT";
      reason=proposed==="SELL"?"RISK_ADJUSTED_EXIT":"RISK_ADJUSTED_HOLD";
    }
   }else{
    riskEdge-=adjustedRisk;
-   if(guardHot){proposed="WAIT";reason="RISK_BUDGET_BLOCK";}
+   if(entryGuard){proposed="WAIT";reason="RISK_BUDGET_BLOCK";}
    else if(s.risk.afterForcedExit&&!recovery){proposed="WAIT";reason="RECOVERY_NOT_CONFIRMED";}
    else if(s.risk.afterForcedExit&&s.risk.recoveryCount<config.recoveryObservations){
      proposed="WAIT";reason="RECOVERY_OBSERVATIONS";
@@ -165,7 +173,8 @@ function signal(s,ob){
     proposed==="WAIT"?p:p==="CASH"?"GOLD":"CASH",
   baseAdvantage:base.actionGap,riskAdjustedAdvantage:riskEdge,
   tailEstimate:tail,drawdownPct:dd,projectedOneIntervalLossPct:projected,
-  hardLoss,guardHot,learnedIntervals:s.core.learned,
+  hardLoss,guardHot:p==="GOLD"?exitGuard:entryGuard,
+  exitGuard,entryGuard,learnedIntervals:s.core.learned,
   ordersSent:0,noLiveOrders:true,notValidatedFinancialForecast:true};
 }
 function appendLoss(a,v,maxLen){
