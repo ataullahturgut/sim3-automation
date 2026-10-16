@@ -1,0 +1,3 @@
+Kaynak: dal research-gold-v20-r2-real-jan2023-20261016, commit 5237bb2629b4f337aca4f48b0c4bcaa156da2917
+ab05c83c7dcbd743e09367092fb09a4c710dee4c CPI_NFP_FOMC
+fed0a3e5ea79d991c6453321dcedb14af12ff2a1 96_EVENT_REGISTER
