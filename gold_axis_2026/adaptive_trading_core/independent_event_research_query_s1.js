@@ -1,8 +1,10 @@
 "use strict";
 /**
  * S1 archive discovery, retrospective macro ledger (NOT true PIT).
- * Emit derived-return SQL for user's READ-ONLY Neon. Never publish licensed
- * prices, or claim January-2023 STRICT_WALK_FORWARD success.
+ * Emit READ-ONLY private SQL for event, controls and completed XAU bars.
+ * Result contains TRANSIENT licensed anchor/due prices for S1 maturity;
+ * NEVER publish, log, or commit result rows. No certified firstprint or
+ * January-2023 STRICT_WALK_FORWARD success.
  * node independent_event_research_query_s1.js private_macro_ledger.csv
  */
 const fs=require("node:fs");
