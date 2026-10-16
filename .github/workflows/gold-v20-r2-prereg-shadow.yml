@@ -1,0 +1,56 @@
+name: Gold V20 R2 pre-registered shadow gate
+on:
+  push:
+    branches: ['research-gold-v20-r2-*']
+  pull_request:
+    branches: ['research-gold-v20-audit-repair-20261016']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  R2-prereg-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Node syntax validation
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v20_atlas_r2_shadow.js
+          node --check v20_atlas_r2_shadow.test.js
+          node --check v20_r2_48_postfreeze_fictional.js
+          node --check v20_r2_128_dev_worlds.js
+      - name: New R2 contract adversarial tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: node --test v20_atlas_r2_shadow.test.js
+      - name: Preserve frozen V15-V20 repaired unit invariants
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: npm run test:kavis-research
+      - name: Pre-registered 128 exposed worlds with opt-in risk comparison
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v20_r2_128_dev_worlds.js > v20_r2_128_dev_results.json
+          node -e "const x=require('./v20_r2_128_dev_results.json'); console.log(JSON.stringify({status:x.contract,results:x.summary,limit15:x.user15Subset,risks:x.lowQuality},null,2))"
+      - name: 48 post-freeze new fictional stress worlds without retuning
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v20_r2_48_postfreeze_fictional.js > v20_r2_48_postfreeze_results.json
+          node -e "const x=require('./v20_r2_48_postfreeze_results.json');console.log(JSON.stringify({contract:x.contract,summary:x.summary,byKind:x.byKind},null,2))"
+      - name: Confirm simulation-only research
+        run: |
+          if grep -E 'loadFullRows|v13_sentez_run|2026_FEB_SEP|function placeOrder' gold_axis_2026/apps/portfolio_guard_v1/v20_atlas_r2_shadow.js; then
+            echo "Historical dataset or real trading API unexpectedly linked"
+            exit 1
+          fi
+      - name: Store actual R2 simulation outcomes including failed cases
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v20-R2-exposed-128-worlds
+          path: |
+            gold_axis_2026/apps/portfolio_guard_v1/v20_r2_128_dev_results.json
+            gold_axis_2026/apps/portfolio_guard_v1/v20_r2_48_postfreeze_results.json
+          if-no-files-found: ignore
