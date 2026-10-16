@@ -93,7 +93,8 @@ function observe(s,bar){
   sourceId:bar.priceSource,
   fast:{phase:p.phase,direction:p.direction},
   slow:hist&&hist.source===bar.priceSource&&
-   Date.parse(hist.observedAt)<=t&&t-Date.parse(hist.observedAt)<=4*86400000?
+   Date.parse(hist.observedAt)<=t&&t-Date.parse(hist.observedAt)<=4*86400000&&
+   !["WARMUP","REJECTED_SESSION","GAP"].includes(hist.phase)?
     {phase:hist.phase,direction:hist.direction}:null});
  s.audit.observed++;
  if(Object.keys(fs).length>=2)s.audit.contextReady++;

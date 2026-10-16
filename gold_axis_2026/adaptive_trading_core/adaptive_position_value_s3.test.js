@@ -92,3 +92,25 @@ test("S3 runs inside existing S1+S2 single-core bridge with no live trade",()=>{
  const old=bridge.checkpoint(s),restored=bridge.restore(old);
  assert.deepEqual(bridge.summary(s),bridge.summary(restored));
 });
+
+test("An untrained S2 slow WARMUP does not veto fast-only research; FAST WARMUP still vetoes",()=>{
+ const warm=critic.context({fast:{phase:"CONTINUE",direction:1},
+  slow:{phase:"WARMUP",direction:0}});
+ assert.equal(warm,"NO_SLOW|TREND:UP");
+ assert.equal(critic.context({fast:{phase:"WARMUP",direction:0},
+  slow:{phase:"CONTINUE",direction:1}}),"TREND:UP|UNREADY:NONE");
+ const s=critic.create({sourceRegistry:reg,minUpdates:16});
+ for(let i=0;i<40;i++)critic.observe(s,{...tick(i,1800),slow:{phase:"WARMUP",direction:0}});
+ assert.equal(critic.summary(s).audit.decisionsByReason.FAST_PHASE_NOT_READY||0,0);
+ assert.ok(critic.summary(s).audit.proposed>0);
+ assert.equal(critic.summary(s).liveTradeAuthorized,false);
+});
+test("Decision abstention reasons are recorded without lowering support or adding trade authority",()=>{
+ const s=critic.create({sourceRegistry:reg});
+ const a=critic.observe(s,{...tick(0),slow:{phase:"WARMUP",direction:0}});
+ assert.equal(a.researchDecisionReason,"INCOMPLETE_BAR_OR_GAP");
+ const b=critic.observe(s,{...tick(1),fast:{phase:"WARMUP",direction:0}});
+ assert.equal(b.researchDecisionReason,"FAST_PHASE_NOT_READY");
+ assert.equal(b.action,null);assert.equal(b.tradeAllowed,false);
+ assert.equal(s.audit.decisionsByReason.FAST_PHASE_NOT_READY,1);
+});

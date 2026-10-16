@@ -20,3 +20,8 @@ Aynı S1+S2+S3 tek CORE bir arada, 2023 Ocak `gold_research_evduka_xau15m_bidask
 - Sonuç: **S3 modelinin bu ilk veri penceresinde kârlı fırsatı yakalayabildiği gösterilemedi**. Sonuç üzerine alpha yaratmak için eşik düşürülmedi, geçmişe göre optimize edilmedi.
 - Tek kaynağa ait retrospektif fiyatlar 2026'da kurtarıldı; kaynak bankaya ait değil, ilk erişim kanıtı yok. Bu **S3 mühendislik smoke**, manifestteki Ocak 2023 **STRICT S4** değildir ve kör OOS sayılmaz.
 - Yeniden üretilebilir runner: `replay_position_value_s3.js` (özel M15 ve slow JSON'unu yerelde kullanır; sadece toplu sonuç/hash basar). Ham fiyatlar ve önceden eğitilmiş kârlı model GitHub'da mevcut değildir.
+
+## 24. Ocak 2023 tanısında belirlenen yapısal karar engeli
+- Yeniden koşulan 1.920 M15 gözlemde **1.768** karar fast hazır olsa dahi `slow:WARMUP` bilgisinin `UNREADY` olarak birleşmesi yüzünden bloke edildi. Bu bir gelecek fiyat/sinyal değil, *olmayan yavaş verinin eksik işlenmesi* problemiydi. İlk 46 değerlendirilebilir nokta yalnız **17 Ocak** ve tamamı KEEP oldu; `Q(CASH,SWITCH)-Q(CASH,KEEP)` yaklaşık **−0,00696 ile −0,00957** (log ölçekte), yani 0,8% tek yön maliyeti 15dk sonuçla aşamıyordu.
+- S3 `context()`, yavaş WARMUP/REJECTED/GAP için **NO_SLOW** ile saf hızlı durumu korur. Gerçek fast WARMUP hala **UNREADY** ve bloke. minUpdates=32 ve %0,8 maliyet **değişmedi**. Karar gerekçeleri `decisionsByReason` olarak ayrı sayılır.
+- Bu düzeltme **kârlılığı garanti etmez**; bankadaki komisyonu karşılayacak günlerce taşınacak pozisyonun değeri henüz temel S3 TD hedefinde yeterince temsil edilmiyor. Günlük/haftalık ufuklu olgun ödül deneyi, Jan 2023 kararını geriye dönük optimize etmeden ayrı ablation ile yapılmalıdır.

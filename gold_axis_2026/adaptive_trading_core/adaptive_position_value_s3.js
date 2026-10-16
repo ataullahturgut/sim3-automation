@@ -29,7 +29,8 @@ function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
  return {version:VERSION,mode:learningMode,registry:clone(sourceRegistry),
   config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates},
   q:{},last:null,audit:{bars:0,updates:0,gaps:0,sourceBreaks:0,
-   proposed:0,abstained:0,shadowTrades:0},
+   proposed:0,abstained:0,shadowTrades:0,
+   decisionsByReason:{}},
   paper:{enabled:!!shadowEnabled,valid:true,invalidReason:null,
    cash:100,goldOunces:0,holding:"CASH",firstPrice:null,lastPrice:null,
    buyHoldOunces:0,equityPeak:100,maxDrawdownPct:0,
@@ -45,8 +46,11 @@ function bucket(phase,dir){
 function context({fast,slow}={}){
  if(!fast||typeof fast!=="object")throw Error("S3_PHASE_INPUT_REQUIRED");
  // No date/event ID, no future label and no manual direction=BUY rule.
- const f=bucket(fast.phase,fast.direction),l=slow?
-  bucket(slow.phase,slow.direction):"NO_SLOW";
+ const f=bucket(fast.phase,fast.direction);
+ // Slow WARMUP is missing evidence, NOT a bearish/neutral regime and NOT
+ // grounds to block an otherwise qualified fast-only research decision.
+ const slowReady=slow&&!["WARMUP","REJECTED_SESSION","GAP"].includes(slow.phase);
+ const l=slowReady?bucket(slow.phase,slow.direction):"NO_SLOW";
  return l+"|"+f;
 }
 function record(s,k){return s.q[k]??(s.q[k]={value:0,visits:0,meanTdSquare:0});}
@@ -127,12 +131,19 @@ function observe(s,o){
   sw.visits>=s.config.minUpdates);
  const ready=contiguous&&enough&&s.paper.valid&&
   !c.includes("UNREADY");
- let proposed="ABSTAIN";
- if(ready){
+ let proposed="ABSTAIN",reason;
+ if(!contiguous)reason="INCOMPLETE_BAR_OR_GAP";
+ else if(c.includes("UNREADY"))reason="FAST_PHASE_NOT_READY";
+ else if(!s.paper.valid)reason="SOURCE_PRICE_NOT_COMPARABLE";
+ else if(!enough)reason="ACTION_VALUE_SUPPORT_INSUFFICIENT";
+ else{
   proposed=sw.value>keep.value?
    (h==="CASH"?"BUY":"SELL"):"KEEP";
+  reason=proposed==="KEEP"?"LEARNED_KEEP_GREATER_OR_EQUAL":"LEARNED_SWITCH_GREATER";
   s.audit.proposed++;
- }else s.audit.abstained++;
+ }
+ if(proposed==="ABSTAIN")s.audit.abstained++;
+ s.audit.decisionsByReason[reason]=(s.audit.decisionsByReason[reason]||0)+1;
  // Shadow simulation is optional and NEVER changes the real portfolio.
  if(s.paper.enabled&&ready&&proposed!=="KEEP")paperTrade(s,proposed,o.price);
  s.paper.lastPrice=o.price;
@@ -146,6 +157,7 @@ function observe(s,o){
  return {at:o.asof,context:c,holding:h,proposedResearchAction:proposed,
   qKeep:enough?keep.value:null,qSwitch:enough?sw.value:null,
   updateCount:s.audit.updates,readyForResearchComparison:ready,
+  researchDecisionReason:reason,
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
 }
 function summary(s){
