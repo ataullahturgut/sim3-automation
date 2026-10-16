@@ -163,16 +163,33 @@ test("Multi-session policy cannot buy from immature or reconstructed lookahead l
  assert.equal(critic.summary(s).liveTradeAuthorized,false);
 });
 
-test("S3 multi-session shadow cannot execute research switches outside TR 09–17",()=>{
+test("No invented bank-hour gate: researched BUY may occur at any completed quote time",()=>{
  const s=critic.create({sourceRegistry:reg,positionResearchMode:"MULTI_SESSION_RESEARCH",
   shadowEnabled:true,minUpdates:16});
- // 03 Jan 10:00 UTC=13:00 TR, after 28 bars reaches 17:00+.
- for(let i=0;i<38;i++){
-  const out=critic.observe(s,tick(i,1800));
-  if(new Date(out.at).getUTCHours()>=14&&out.readyForResearchComparison)
-   assert.equal(out.proposedResearchAction,"ABSTAIN");
- }
- assert.equal(critic.summary(s).audit.shadowTrades,0);
+ const m=require("./adaptive_position_memory_s3");
+ // Thirteen observed eligible sessions generate at least eight independent-
+ // in-time (but overlapping) five-session matured research labels.
+ const days=["2023-01-02","2023-01-03","2023-01-04","2023-01-05",
+  "2023-01-06","2023-01-09","2023-01-10","2023-01-11","2023-01-12",
+  "2023-01-13","2023-01-16","2023-01-17","2023-01-18"];
+ for(let i=0;i<days.length;i++)m.completed(s.sessionMemory,{
+  session:days[i],sourceId:src,phase:"CONTINUE",direction:1,
+  price:1800*Math.pow(1.02,i),availableAt:days[i]+"T22:00:00Z"});
+ assert.equal(m.forecast(s.sessionMemory,"TREND:UP").byHorizon[2].ready,true);
+ const c="NO_SLOW|TREND:UP";
+ for(const a of ["KEEP","SWITCH"])s.q[c+"#CASH#"+a]={value:0,visits:40,meanTdSquare:0};
+ // 20:00 UTC = 23:00 Türkiye, previously blocked by an unrequested gate.
+ const p={...tick(0,2000),asof:"2023-01-19T20:00:00.000Z",
+  priceAvailableAt:"2023-01-19T20:00:00.000Z",slow:{phase:"WARMUP",direction:0}};
+ const first=critic.observe(s,p);
+ assert.equal(first.proposedResearchAction,"ABSTAIN"); // no preceding completed bar
+ const second=critic.observe(s,{...p,asof:"2023-01-19T20:15:00.000Z",
+  priceAvailableAt:"2023-01-19T20:15:00.000Z",price:2000.1});
+ assert.equal(second.multiSessionResearch.quoteAccepted,true);
+ assert.equal(second.multiSessionResearch.executionVenueCertified,false);
+ assert.equal(second.proposedResearchAction,"BUY");
+ assert.equal(s.audit.shadowTrades,1);
+ assert.equal(critic.summary(s).liveTradeAuthorized,false);
 });
 
 test("Economic M2 evidence enters same CORE and S3 only with registered firstprint inputs",()=>{

@@ -174,14 +174,12 @@ function observe(s,o){
  // It is never a live signal. Baseline 15m Q remains separately testable.
  const sessionState=s.sessionMemory.last?.state??"NO_SLOW:NONE";
  const longValue=memory.forecast(s.sessionMemory,sessionState);
- const trHour=(new Date(t).getUTCHours()+3)%24+
-  new Date(t).getUTCMinutes()/60; // Europe/Istanbul since 2016: UTC+03
- const trWeekday=new Date(t+3*3600000).getUTCDay();
- const bankWindow=trWeekday>=1&&trWeekday<=5&&trHour>=9&&trHour<=17;
+ // Never impose an invented BANK_HOUR trading gate. All accepted,
+ // time-stamped market observations may be evaluated in research.
+ // Actual executable bank quote/venue availability remains unverified.
  const longFive=longValue.byHorizon.find(x=>x.sessions===5);
  if(s.config.positionResearchMode==="MULTI_SESSION_RESEARCH"){
-   if(!bankWindow){proposed="ABSTAIN";reason="BANK_WINDOW_CLOSED_RESEARCH";}
-   else if(!ready){/* Keep strict fast/evidence gate, no fallback. */}
+   if(!ready){/* Keep strict fast/evidence gate, no fallback. */}
    else{
      s.audit.multiSessionResearchEvaluations++;
      if(!longFive.ready){proposed="ABSTAIN";reason="MATURED_SESSION_SUPPORT_INSUFFICIENT";}
@@ -201,7 +199,7 @@ function observe(s,o){
  else s.audit.proposed++;
  s.audit.decisionsByReason[reason]=(s.audit.decisionsByReason[reason]||0)+1;
  // Shadow simulation is optional and NEVER changes the real portfolio.
- if(s.paper.enabled&&ready&&bankWindow&&proposed!=="KEEP")
+ if(s.paper.enabled&&ready&&proposed!=="KEEP")
   paperTrade(s,proposed,o.price);
  s.paper.lastPrice=o.price;
  if(s.paper.valid){
@@ -218,7 +216,8 @@ function observe(s,o){
   s1ResearchEvidence:s.lastS1Evidence?{provenance:s.lastS1Evidence.provenance,
     byHorizon:s.lastS1Evidence.byHorizon}:null,
   multiSessionResearch:{state:sessionState,fiveSession:longFive,
-     policyMode:s.config.positionResearchMode,bankWindow},
+     policyMode:s.config.positionResearchMode,
+     quoteAccepted:true,executionVenueCertified:false},
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
 }
 function summary(s){
