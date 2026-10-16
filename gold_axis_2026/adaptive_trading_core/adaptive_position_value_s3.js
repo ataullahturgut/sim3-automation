@@ -29,7 +29,8 @@ function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
  if(!["DISCOVERY_FULL_ARCHIVE","STRICT_WALK_FORWARD"].includes(learningMode))
   throw Error("S3_BAD_LEARNING_MODE");
  if(!Number.isInteger(minUpdates)||minUpdates<16)throw Error("S3_MIN_SUPPORT");
- if(!["LEGACY_M15","MULTI_SESSION_RESEARCH","INTEGRATED_LONG_RESEARCH"].includes(positionResearchMode))
+ if(!["LEGACY_M15","MULTI_SESSION_RESEARCH","INTEGRATED_LONG_RESEARCH",
+  "OPPORTUNITY_MATURED_RESEARCH"].includes(positionResearchMode))
   throw Error("S3_POSITION_POLICY_MODE_INVALID");
  return {version:VERSION,mode:learningMode,registry:clone(sourceRegistry),
   config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates,positionResearchMode},
@@ -154,7 +155,7 @@ function observe(s,o){
  }
  // Research execution must use a price OBSERVED AFTER the signal.
  // No assumed bank business hours; cancel stale orders across gaps / feeds.
- if(s.config.positionResearchMode==="INTEGRATED_LONG_RESEARCH"&&
+ if(["INTEGRATED_LONG_RESEARCH","OPPORTUNITY_MATURED_RESEARCH"].includes(s.config.positionResearchMode)&&
     s.paper.pendingOrder){
    const order=s.paper.pendingOrder;s.paper.pendingOrder=null;
    if(contiguous&&s.paper.valid&&s.paper.enabled&&order.sourceId===o.sourceId
@@ -228,11 +229,32 @@ function observe(s,o){
      reason=longResearch.reason;
    }
  }
+ // Optional same-CORE fee-net opportunity evidence ablation.
+ // This DOES NOT certify net liquidation value or use future labels.
+ if(s.config.positionResearchMode==="OPPORTUNITY_MATURED_RESEARCH"){
+  const f=opportunityResearch.forecast;
+  if(!contiguous||!s.paper.valid||c.includes("UNREADY")){
+   proposed="ABSTAIN";reason="OPPORTUNITY_SOURCE_OR_PHASE_NOT_READY";
+  }else if(!opportunityResearch.candidate){
+   proposed="KEEP";reason="OPPORTUNITY_NO_NEW_EPISODE";
+  }else if(h==="CASH"&&o.fast.direction===1){
+   proposed=f.learnedResearchPreference==="GOLD_ENTRY_CANDIDATE"?"BUY":"KEEP";
+   reason=proposed==="BUY"?"OPPORTUNITY_MATURED_NET_UPSIDE":
+     "OPPORTUNITY_NO_SUPPORTED_NET_ENTRY";
+  }else if(h==="GOLD"&&o.fast.direction===-1){
+   const downside=f.byHorizon.filter(x=>
+    [5,10].includes(x.horizonSessions)&&x.supportReady&&
+    x.selected.meanNetLogPct+x.selected.stderrPct<0);
+   proposed=downside.length?"SELL":"KEEP";
+   reason=proposed==="SELL"?"OPPORTUNITY_MATURED_DOWNSIDE_PROXY":
+    "OPPORTUNITY_NO_CONFIRMED_EXIT";
+  }else {proposed="KEEP";reason="OPPORTUNITY_MAINTAIN_POSITION";}
+ }
  if(proposed==="ABSTAIN")s.audit.abstained++;
  else s.audit.proposed++;
  s.audit.decisionsByReason[reason]=(s.audit.decisionsByReason[reason]||0)+1;
  // Shadow simulation is optional and NEVER changes the real portfolio.
- if(s.config.positionResearchMode==="INTEGRATED_LONG_RESEARCH"){
+ if(["INTEGRATED_LONG_RESEARCH","OPPORTUNITY_MATURED_RESEARCH"].includes(s.config.positionResearchMode)){
    if(s.paper.enabled&&proposed!=="ABSTAIN"&&proposed!=="KEEP"&&
        s.paper.pendingOrder===null&&s.paper.valid){
      s.paper.pendingOrder={side:proposed,issuedAt:t,sourceId:o.sourceId};
