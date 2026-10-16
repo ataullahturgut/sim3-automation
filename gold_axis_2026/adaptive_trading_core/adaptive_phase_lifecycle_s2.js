@@ -3,12 +3,13 @@
  * GOLD-ADAPTIVE-MODEL-APP-01 / S2: causal price-episode lifecycle component
  * for the SAME adaptive CORE pipeline, not a separate trade strategy.
  * This pilot is research-only. All features derive from completed M15 bars.
- * A gap censors the active episode and outstanding 4h predictions.
+ * A gap censors the active episode and all unknown multi-horizon outcomes.
  * Hazard reference episodes enter training only AFTER their end is observable.
  * Structural phase definitions are hypotheses, not discovered causes/alpha.
  */
 const VERSION="KAVIS_S2_CAUSAL_EPISODE_PILOT_20261016";
 const STEP=15*60000,HOUR=60*60000;
+const DEFAULT_HORIZONS=[240,1440,4320,10080,20160]; // 4h, 1d, 3d, 1w, 2w
 const STATES=["NEUTRAL","START","CONTINUE","PULLBACK","END","REENTRY","WARMUP","GAP"];
 const finite=x=>typeof x==="number"&&Number.isFinite(x);
 const iso=t=>new Date(t).toISOString();
@@ -33,17 +34,24 @@ function create(options={}){
    throw Error("S2_BAD_SOURCE_REGISTRY");
  }
  const anchors=o.anchorMinutes??240,horizon=o.horizonMinutes??240,minReady=o.minReady??12;
- if(anchors!==240||horizon!==240||!Number.isInteger(minReady)||minReady<5)
+ const horizons=o.horizonsMinutes??DEFAULT_HORIZONS;
+ if(anchors!==240||horizon!==240||!Number.isInteger(minReady)||minReady<5||
+    !Array.isArray(horizons)||!horizons.includes(240)||
+    horizons.some((h,i)=>!Number.isInteger(h)||h<240||h>20160||
+      (i>0&&h<=horizons[i-1])) )
   throw Error("S2_UNREGISTERED_HORIZON_OR_SUPPORT");
  return {version:VERSION,learningMode,registry:copy(registry),
   config:{lookbackBars:16,entryZ:1.25,exitZ:0.2,
    pullbackNorm:0.7,anchorMinutes:anchors,horizonMinutes:horizon,
-   minReady},lastAt:null,lastPrice:null,lastSource:null,window:[],lastAnchor:null,
-  active:null,nextEpisodeId:1,completed:[],censored:0,
+   minReady,horizonsMinutes:horizons.slice()},lastAt:null,lastPrice:null,lastSource:null,window:[],lastAnchor:null,
+  active:null,nextEpisodeId:1,completed:[],censoredEpisodes:[],censored:0,
   endedAt:{},censoredAt:{},pending:[],observations:0,
   scores:{issued:0,ready:0,scored:0,scoredYear:{},brier:0,brierBaseline:0,
    correct:0,correctBaseline:0,censoredPredictions:0,
-   perEpisode:{}} ,
+   perEpisode:{},byHorizon:Object.fromEntries(horizons.map(h=>[h,{
+    issued:0,ready:0,scored:0,censored:0,positive:0,negative:0,
+    correct:0,baselineCorrect:0,brier:0,brierBaseline:0,byYear:{},perEpisode:{}
+   }]))},
   phaseCounts:Object.fromEntries(STATES.map(k=>[k,0])),
   transitionCounts:{},completedDurationsMinutes:[],episodeAudit:[]};
 }
