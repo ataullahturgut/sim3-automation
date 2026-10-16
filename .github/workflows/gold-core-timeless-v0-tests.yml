@@ -122,3 +122,9 @@ jobs:
           node --check adaptive_long_cycle_s3.js
           node --check replay_s3_monthly_challengers.js
           node --test replay_s3_monthly_challengers.test.js
+
+      - name: M4 Jan 2023 pretrained-state continuity contract
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check replay_pretrained_jan2023_s3.js
+          node --test replay_pretrained_jan2023_s3.test.js
