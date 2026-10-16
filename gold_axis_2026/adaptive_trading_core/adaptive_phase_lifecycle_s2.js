@@ -43,7 +43,7 @@ function create(options={}){
   endedAt:{},censoredAt:{},pending:[],observations:0,
   scores:{issued:0,ready:0,scored:0,scoredYear:{},brier:0,brierBaseline:0,
    correct:0,correctBaseline:0,censoredPredictions:0,
-   episodesUsedForModel:0},
+   perEpisode:{}} ,
   phaseCounts:Object.fromEntries(STATES.map(k=>[k,0])),
   transitionCounts:{},completedDurationsMinutes:[],episodeAudit:[]};
 }
@@ -113,6 +113,9 @@ function mature(s,t){
    const z=s.scores;
    z.scored++;z.brier+=Math.pow(q.modelP-label,2);
    z.brierBaseline+=Math.pow(q.baselineP-label,2);
+   const diff=Math.pow(q.baselineP-label,2)-Math.pow(q.modelP-label,2);
+   const cluster=z.perEpisode[q.episodeId]??{n:0,delta:0};
+   cluster.n++;cluster.delta+=diff;z.perEpisode[q.episodeId]=cluster;
    z.correct+=Number((q.modelP>=.5)===Boolean(label));
    z.correctBaseline+=Number((q.baselineP>=.5)===Boolean(label));
    const year=String(new Date(q.due).getUTCFullYear());
@@ -223,6 +226,25 @@ function observe(s,ob){
  s.observations++;s.phaseCounts[phase]++;
  return out;
 }
+function intervalByEpisode(clusters){
+ const a=Object.values(clusters);
+ if(a.length<20)return {episodes:a.length,ci95:null,method:"TOO_FEW_EPISODES"};
+ const totalN=a.reduce((z,x)=>z+x.n,0),totalD=a.reduce((z,x)=>z+x.delta,0);
+ let seed=21061923;
+ const rand=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
+ const draws=[];
+ for(let k=0;k<1000;k++){
+  let n=0,d=0;
+  for(let j=0;j<a.length;j++){
+   const x=a[Math.floor(rand()*a.length)];n+=x.n;d+=x.delta;
+  }
+  draws.push(d/n);
+ }
+ draws.sort((x,y)=>x-y);
+ return {episodes:a.length,meanImprovement:totalD/totalN,
+  ci95:[draws[24],draws[974]],
+  method:"COMPLETED_AND_OPEN_EPISODE_CLUSTER_BOOTSTRAP_1000_RETROSPECTIVE"};
+}
 function summary(s){
  const k=s.scores,aggregate=k.scored?{
   scored:k.scored,correct:k.correct,baselineCorrect:k.correctBaseline,
@@ -242,7 +264,8 @@ function summary(s){
   episodeDurationHours:{p25:percentile(.25)/60||null,
     median:percentile(.50)/60||null,p75:percentile(.75)/60||null},
   prediction:{...aggregate,byYear,issued:k.issued,ready:k.ready,
-   censored:k.censoredPredictions},
+   censored:k.censoredPredictions,
+   episodeClusterImprovement:intervalByEpisode(k.perEpisode)},
   financialTrades:0,profitabilityClaim:false};
 }
 function checkpoint(s){return copy(s);}
@@ -251,6 +274,7 @@ function restore(s){
  if(v.version!==VERSION||!Array.isArray(v.completed)||!Array.isArray(v.pending)||
    !Array.isArray(v.window)||!v.registry||!v.config)throw Error("S2_BAD_CHECKPOINT");
  if(v.window.length>17)throw Error("S2_INVALID_CHECKPOINT_WINDOW");
+ if(!v.scores.perEpisode)v.scores.perEpisode={};
  if(v.lastSource===undefined)v.lastSource=null;
  return v;
 }
