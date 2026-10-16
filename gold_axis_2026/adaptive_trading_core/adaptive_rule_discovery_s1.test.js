@@ -185,3 +185,47 @@ test("Noise-free identical outcomes across contradictory features do NOT cause f
  assert.equal(s.audit.ruleSplit,0);
  assert.equal(s.rules.length,1);
 });
+
+
+test("Within-rule local mature-only evidence can distinguish opposite economic reactions without hindsight or manual sign",()=>{
+ const opts={featureNames:["prior_gold","after_gold","nfp_surprise_z"],
+   horizons:[240],anchorMinutes:240,noveltyDistance:1.25,maxRules:8,
+   sourceRegistry:{EVENT_SYNTHETIC:{kind:"BOTH",evidenceStatus:"VERIFIED_PIT"}}};
+ const baseline=core.create({...opts,forecastMethod:"PROTOTYPE"});
+ const local=core.create({...opts,forecastMethod:"LOCAL_MATURED_EXAMPLES"});
+ const a=Date.parse("2023-01-02T12:00:00Z");
+ const m=(t,value,kind)=>({kind,value,observedAt:iso(t),availableAt:iso(t),
+   source:"EVENT_SYNTHETIC",firstprintVerified:true,firstPublishedAt:iso(t)});
+ const features=(t,sign)=>({prior_gold:m(t,0,"MARKET"),after_gold:m(t,0,"MARKET"),
+   nfp_surprise_z:m(t,sign,"EVENT")});
+ let p=1800,previous=null;
+ for(let i=0;i<29;i++){
+   const t=a+i*step,sign=i%2===0?-.4:.4;
+   if(previous!==null)p*=Math.exp((previous<0?.7:-.7)/100);
+   const observation={asof:iso(t),barStartedAt:iso(t-15*60000),
+     barMinutes:15,price:p,priceAvailableAt:iso(t),
+     priceSource:"EVENT_SYNTHETIC",features:features(t,sign)};
+   const x=core.observe(baseline,observation);
+   const y=core.observe(local,observation);
+   assert.equal(x.action,null);assert.equal(y.action,null);
+   previous=sign;
+ }
+ assert.equal(core.rules(local).length,1);
+ assert.equal(core.rules(local)[0].outcomes[240].n,28); // label i=28 remains pending
+ const t=a+29*step;
+ const forecast=(model,sign)=>core.forecast(model,{asof:iso(t),
+   features:features(t,sign)}).byHorizon[0].upFraction;
+ assert.equal(forecast(baseline,-.4),forecast(baseline,.4));
+ assert.ok(forecast(local,-.4)>.65);
+ assert.ok(forecast(local,.4)<.35);
+ assert.equal(local.config.forecastMethod,"LOCAL_MATURED_EXAMPLES");
+ assert.deepEqual(core.checkpoint(core.restore(core.checkpoint(local))),core.checkpoint(local));
+});
+test("Conditional mode cannot be enabled by an unknown method or fake late outcome",()=>{
+ assert.throws(()=>initial({forecastMethod:"OPTIMUM_FUTURE_ORACLE"}),/FORECAST_METHOD_INVALID/);
+ const s=initial({forecastMethod:"LOCAL_MATURED_EXAMPLES",horizons:[240]});
+ core.observe(s,ob(start,1800,-1,1));
+ const f=core.forecast(s,{asof:iso(start),features:ob(start,1800,-1,1).features});
+ assert.equal(f.byHorizon[0].ready,false);
+ assert.equal(core.rules(s)[0].outcomes[240].n,0);
+});
