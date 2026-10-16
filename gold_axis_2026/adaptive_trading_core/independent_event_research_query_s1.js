@@ -7,7 +7,7 @@
  */
 const fs=require("node:fs");
 const csv=require("./economic_evidence_s1").csv;
-const TZ=/^\d{4}-\d\d-\d\d[T ]\d\d:\d\d:\d\d(?:Z|[+-]\d\d(?::?\d\d)?)$/;
+const TZ=/^\d{4}-\d\d-\d\d[T ]\d\d:\d\d:\d\d(?:\.\d{1,3})?(?:Z|[+-]\d\d(?::?\d\d)?)$/;
 function buildSql(ledger){
  const gr=new Map();
  for(const r of csv(ledger)){
