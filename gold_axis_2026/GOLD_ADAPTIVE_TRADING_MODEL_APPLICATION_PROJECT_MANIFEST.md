@@ -223,3 +223,15 @@ Mevcut OLAY-02/ÖĞREN-03'ten kaynakları **read-only** al; Ocak 2023'ün fiyat 
 **Negatif bilimsel sonuç:** 70 olgunlaşmış 4s yön karşılaştırmasında S1 `31/70`, önceki olgun veriyle hesaplanan sabit UP taban oranı `35/70`; Brier `0.271422` vs `0.256330` (S1 **daha kötü**). Sırf `noveltyDistance` değiştirmek aynı ayda 1/2/8 kural üretir, bağımsız kalibrasyon verisi olmadan sonuç optimize etmek yasak. **`MODEL_GATE=FAIL`**, `S1_SCIENCE_GATE=FAIL`, `S2/S3/S4=NOT_STARTED`, `TRAINED_2023_2025=false`, `APP_GATE=NOT_APPLICABLE`.
 
 **Zorunlu sonraki adım değişmiyor:** Aynı S1 ekonometrik kural motorunda OLAY-02/ÖĞREN-03 read-only ve ilk-baskı kaynaklarını gerçek-time ekon kanıtlara bağla; CME sürekli sözleşme ileri bilgi riski, gümüş serisi eksikleri, kontrol-vakalar ve yapısal kuralın genellemesi doğrulanmadan yeni sürüm/dal/ay/AL-SAT politikası ve ekran açma. Araştırma performansı yatırım tavsiyesi değildir.
+
+---
+
+## 12. S1 ekonomik kanıt/karşıt örnek giriş katmanı — 16 Ekim 2026
+
+**Belge:** [Ocak 2023 OLAY–ÖĞREN ekonomik kanıt ve negatif kontrol denetimi](adaptive_trading_core/JAN2023_ECONOMIC_EVIDENCE_AND_CONTROLS_AUDIT_20261016.md). **Kod:** [economic_evidence_s1.js](adaptive_trading_core/economic_evidence_s1.js) ve [testleri](adaptive_trading_core/economic_evidence_s1.test.js).
+
+OLAY-02/ÖĞREN-03 orijinal kaynakları **read-only** kullanılarak 7 aile, 12 ORG, 38 derin vaka hipotezi ve Ocak 2023'teki 4 makro kayıt/2 ortak yayın anı ekonomik bilgi kaydı oluşturuldu. İlk gerçek haber yayınını sertifikalayan tarihli kayıt yok: 38 vaka 0 sertifika, 2 makro küme `firstprintVerified=false`. **Hiçbiri onaylı S1 haber veya AL/SAT girdisine dönüştürülmedi.**
+
+102 piyasa gözleminden, 2 açıklama için aynı-UTC saatli/daha önce bilinen piyasa durumlarına göre kontrol eşleştirmesi yapıldı; 68 olaysız kontrolün 33'ü UP, 35'i UP dışı. 6 Ocak olay sonrası 4s +%0,3486 ve kontrol ortalaması +%0,2437; 12 Ocak +%0,4711 ve kontrol ortalaması +%0,2473. Her iki seçilmiş kontrol grubu da pozitif olduğundan **ekonomik haberin altın yükselişine neden olduğuna veya kuralın bağımsız öngörü sağladığına kanıt yoktur**. Bu yalnız retrospektif olay-kontrol araştırmasıdır; causal signal veya öğrenilmiş net işlem politikası değildir.
+
+**Model durum kilidi:** `ECONOMIC_EVIDENCE_RESEARCH_LINK=YES`, `CERTIFIED_PIT_EVENT_SIGNAL=NO`, `MODEL_GATE=FAIL`, `S2/S3=NOT_STARTED`, `UYGULAMA=UNCHANGED`; ekonomik araştırma için ayrı branch/model/sinyal kapısı açılmadı. Başka aya atlama yok. Bir sonraki gereklilik ilk baskı ve vintage ile doğrulanmış ekonomik veri + çapraz-piyasa saat kanıtı, ardından yalnız eğitimin izinli saatinde S1 kural öğrenimine giriş ve karşıt/olaysız kontrollere karşı bağımsız denetim.
