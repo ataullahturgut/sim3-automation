@@ -314,6 +314,26 @@ function summary(s){
  for(const [y,v]of Object.entries(k.scoredYear))
   byYear[y]={n:v.n,correct:v.modelCorrect,baselineCorrect:v.baseCorrect,
    brier:v.modelBrier/v.n,baselineBrier:v.baseBrier/v.n};
+ const horizonStats={};
+ for(const h of s.config.horizonsMinutes){
+  const z=k.byHorizon[h],years={};
+  for(const [y,v] of Object.entries(z.byYear))
+   years[y]={n:v.n,positive:v.positive,negative:v.negative,
+    brier:v.n?v.brier/v.n:null,baselineBrier:v.n?v.baseBrier/v.n:null,
+    correct:v.modelCorrect,baselineCorrect:v.baseCorrect};
+  horizonStats[h]={horizonMinutes:h,issued:z.issued,ready:z.ready,
+   scored:z.scored,knownEnd:z.positive,verifiedSurvival:z.negative,
+   censored:z.censored,
+   brier:z.scored?z.brier/z.scored:null,
+   baselineBrier:z.scored?z.brierBaseline/z.scored:null,
+   correct:z.correct,baselineCorrect:z.baselineCorrect,
+   estimable:z.positive>=12&&z.negative>=12,
+   // 1w/2w observations may be one-sided due to weekend/source gaps:
+   // no gate PASS or alpha claim without both outcome classes.
+   scienceWarning:z.positive<12||z.negative<12?
+     "ONE_SIDED_OR_SPARSE_HORIZON_UNESTIMABLE":"RESEARCH_ONLY_NOT_BLIND_OOS",
+   byYear:years,episodeClusterImprovement:intervalByEpisode(z.perEpisode)};
+ }
  const completed=s.completedDurationsMinutes.slice().sort((a,b)=>a-b);
  const percentile=q=>completed.length?completed[Math.floor(q*(completed.length-1))]:null;
  return {version:VERSION,learningMode:s.learningMode,
@@ -326,6 +346,7 @@ function summary(s){
   prediction:{...aggregate,byYear,issued:k.issued,ready:k.ready,
    censored:k.censoredPredictions,
    episodeClusterImprovement:intervalByEpisode(k.perEpisode)},
+  continuationAndEndByHorizon:horizonStats,
   financialTrades:0,profitabilityClaim:false};
 }
 function checkpoint(s){return copy(s);}
@@ -335,6 +356,9 @@ function restore(s){
    !Array.isArray(v.window)||!v.registry||!v.config)throw Error("S2_BAD_CHECKPOINT");
  if(v.window.length>17)throw Error("S2_INVALID_CHECKPOINT_WINDOW");
  if(!v.scores.perEpisode)v.scores.perEpisode={};
+ if(!Array.isArray(v.config.horizonsMinutes)||!v.config.horizonsMinutes.includes(240)||
+   !v.scores.byHorizon||!Array.isArray(v.censoredEpisodes))
+  throw Error("S2_MULTIHORIZON_CHECKPOINT_INCOMPATIBLE");
  if(v.lastSource===undefined)v.lastSource=null;
  return v;
 }
@@ -347,4 +371,4 @@ function closeAtEndOfSample(s){
  }
  s.pending=[];
 }
-module.exports={VERSION,create,observe,summary,checkpoint,restore,closeAtEndOfSample};
+module.exports={VERSION,DEFAULT_HORIZONS,create,observe,summary,checkpoint,restore,closeAtEndOfSample};
