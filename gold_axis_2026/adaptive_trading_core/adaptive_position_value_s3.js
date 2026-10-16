@@ -11,6 +11,7 @@
  * No intraday bank quotation verification and no margin/leverage.
  */
 const memory=require("./adaptive_position_memory_s3");
+const longCycle=require("./adaptive_long_cycle_s3");
 const VERSION="KAVIS_S3_POSITION_VALUE_CRITIC_20261016";
 const FEE_PER_LEG=0.008, STEP=15*60*1000;
 const HOLDINGS=["CASH","GOLD"],ACTIONS=["KEEP","SWITCH"];
@@ -27,17 +28,19 @@ function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
  if(!["DISCOVERY_FULL_ARCHIVE","STRICT_WALK_FORWARD"].includes(learningMode))
   throw Error("S3_BAD_LEARNING_MODE");
  if(!Number.isInteger(minUpdates)||minUpdates<16)throw Error("S3_MIN_SUPPORT");
- if(!["LEGACY_M15","MULTI_SESSION_RESEARCH"].includes(positionResearchMode))
+ if(!["LEGACY_M15","MULTI_SESSION_RESEARCH","INTEGRATED_LONG_RESEARCH"].includes(positionResearchMode))
   throw Error("S3_POSITION_POLICY_MODE_INVALID");
  return {version:VERSION,mode:learningMode,registry:clone(sourceRegistry),
   config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates,positionResearchMode},
-  sessionMemory:memory.create(),lastS1Evidence:null,
+  sessionMemory:memory.create(),longCycle:longCycle.create(),lastS1Evidence:null,
   q:{},last:null,audit:{bars:0,updates:0,gaps:0,sourceBreaks:0,
    proposed:0,abstained:0,shadowTrades:0,
    decisionsByReason:{},s1ResearchForecastReceived:0,
+   queuedOrders:0,executedNextBar:0,canceledOrders:0,longModeEvaluations:0,
    economicRulesCertifiedAtDecision:0,multiSessionResearchEvaluations:0},
   paper:{enabled:!!shadowEnabled,valid:true,invalidReason:null,
-   cash:100,goldOunces:0,holding:"CASH",firstPrice:null,lastPrice:null,
+   cash:100,goldOunces:0,holding:"CASH",pendingOrder:null,
+   firstPrice:null,lastPrice:null,
    buyHoldOunces:0,equityPeak:100,maxDrawdownPct:0,
    buyCount:0,sellCount:0,fees:0}};
 }
@@ -147,6 +150,16 @@ function observe(s,o){
   }
   if(contiguous)update(s,s.last.context,c,o.price/s.last.price);
  }
+ // Research execution must use a price OBSERVED AFTER the signal.
+ // No assumed bank business hours; cancel stale orders across gaps / feeds.
+ if(s.config.positionResearchMode==="INTEGRATED_LONG_RESEARCH"&&
+    s.paper.pendingOrder){
+   const order=s.paper.pendingOrder;s.paper.pendingOrder=null;
+   if(contiguous&&s.paper.valid&&s.paper.enabled&&order.sourceId===o.sourceId
+      &&order.issuedAt<t){
+     paperTrade(s,order.side,o.price);s.audit.executedNextBar++;
+   }else s.audit.canceledOrders++;
+ }
  s.audit.bars++;
  if(s.paper.firstPrice===null){
   s.paper.firstPrice=o.price;
@@ -195,12 +208,31 @@ function observe(s,o){
      }
    }
  }
+ let longResearch=null;
+ if(s.config.positionResearchMode==="INTEGRATED_LONG_RESEARCH"){
+   s.audit.longModeEvaluations++;
+   longResearch=longCycle.action(s.longCycle,s.paper.holding);
+   if(!contiguous||!s.paper.valid||c.includes("UNREADY")){
+     proposed="ABSTAIN";
+     reason=!contiguous?"LONG_BAR_GAP":!s.paper.valid?
+      "LONG_UNCOMPARABLE_SOURCE":"LONG_FAST_PHASE_NOT_READY";
+   }else{
+     proposed=longResearch.action;
+     reason=longResearch.reason;
+   }
+ }
  if(proposed==="ABSTAIN")s.audit.abstained++;
  else s.audit.proposed++;
  s.audit.decisionsByReason[reason]=(s.audit.decisionsByReason[reason]||0)+1;
  // Shadow simulation is optional and NEVER changes the real portfolio.
- if(s.paper.enabled&&ready&&proposed!=="KEEP")
-  paperTrade(s,proposed,o.price);
+ if(s.config.positionResearchMode==="INTEGRATED_LONG_RESEARCH"){
+   if(s.paper.enabled&&proposed!=="ABSTAIN"&&proposed!=="KEEP"&&
+       s.paper.pendingOrder===null&&s.paper.valid){
+     s.paper.pendingOrder={side:proposed,issuedAt:t,sourceId:o.sourceId};
+     s.audit.queuedOrders++;
+   }
+ }else if(s.paper.enabled&&ready&&proposed!=="KEEP")
+   paperTrade(s,proposed,o.price);
  s.paper.lastPrice=o.price;
  if(s.paper.valid){
   const net=paperNet(s,o.price);
@@ -209,6 +241,7 @@ function observe(s,o){
    100*(1-net/s.paper.equityPeak));
  }
  s.last={t,price:o.price,context:c,sourceId:o.sourceId};
+ s.lastProposedResearchAction=proposed;
  return {at:o.asof,context:c,holding:h,proposedResearchAction:proposed,
   qKeep:enough?keep.value:null,qSwitch:enough?sw.value:null,
   updateCount:s.audit.updates,readyForResearchComparison:ready,
@@ -218,6 +251,9 @@ function observe(s,o){
   multiSessionResearch:{state:sessionState,fiveSession:longFive,
      policyMode:s.config.positionResearchMode,
      quoteAccepted:true,executionVenueCertified:false},
+  longCycleResearch:longResearch,
+  nextObservedBarResearchOrder:s.paper.pendingOrder?
+   clone(s.paper.pendingOrder):null,
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
 }
 function summary(s){
@@ -238,6 +274,7 @@ function summary(s){
     maxDrawdownPct:s.paper.enabled&&s.paper.valid?s.paper.maxDrawdownPct:null,
     feeUsdShadow:s.paper.enabled?s.paper.fees:null
   },positionMemory:memory.summary(s.sessionMemory),
+   longCycleMemory:longCycle.summary(s.longCycle),
    lastS1Evidence:s.lastS1Evidence?clone(s.lastS1Evidence):null,
    scienceGate:"NOT_PROVEN",liveTradeAuthorized:false,
   limitations:["RECONSTRUCTED_MID_NOT_BANK_EXECUTION_QUOTES",
@@ -247,15 +284,21 @@ function summary(s){
 function checkpoint(s){return clone(s);}
 function restore(data){
  const s=clone(data);
- if(s.version!==VERSION||!s.q||!s.paper||!s.registry||!s.audit||!s.sessionMemory)
+ if(s.version!==VERSION||!s.q||!s.paper||!s.registry||!s.audit||
+    !s.sessionMemory||!s.longCycle)
   throw Error("S3_BAD_CHECKPOINT");
  s.sessionMemory=memory.restore(s.sessionMemory);
+ s.longCycle=longCycle.restore(s.longCycle);
  return s;
 }
 function observeCompletedSession(s,session){
  if(s.version!==VERSION)throw Error("S3_BAD_CHECKPOINT_VERSION");
  if(!s.registry[session.sourceId])throw Error("S3_UNREGISTERED_SESSION_SOURCE");
- return memory.completed(s.sessionMemory,session);
+ const updated=memory.completed(s.sessionMemory,session);
+ const outcome=longCycle.observe(s.longCycle,{...session,
+    shadowHolding:s.paper.holding,
+    shadowProposal:s.lastProposedResearchAction??"KEEP"});
+ return {...updated,longCycle:outcome};
 }
 module.exports={VERSION,FEE_PER_LEG,create,observe,observeCompletedSession,
  summary,checkpoint,restore,

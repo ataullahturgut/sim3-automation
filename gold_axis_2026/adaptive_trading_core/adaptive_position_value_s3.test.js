@@ -230,3 +230,74 @@ test("Retrospective economic source is rejected in strict mode without claiming 
     firstprintVerified:false}}}),/EVENT_SOURCE_NOT_PIT_VERIFIED/);
  assert.equal(s.s3.audit.s1ResearchForecastReceived,0);
 });
+
+test("Integrated long learner only matures 14 and 56 calendar-day labels after their deadlines",()=>{
+ const long=require("./adaptive_long_cycle_s3"),s=long.create();
+ const dates=[];for(let i=0;i<95;i++){
+  const d=new Date(Date.parse("2023-01-02T00:00:00Z")+i*86400000);
+  if(d.getUTCDay()>=1&&d.getUTCDay()<=5)dates.push(d.toISOString().slice(0,10));
+ }
+ let matureBefore=false,first56Date=null;
+ for(const [i,day] of dates.entries()){
+  long.observe(s,{session:day,sourceId:src,price:1800*Math.pow(1.002,i),
+   direction:1,phase:"CONTINUE",availableAt:day+"T22:00:00Z"});
+  if(Date.parse(day+"T00:00:00Z")<Date.parse("2023-02-27T00:00:00Z")
+    &&s.audit.mature56>0)matureBefore=true;
+  if(s.audit.mature56>0&&!first56Date)first56Date=day;
+ }
+ assert.equal(matureBefore,false);
+ assert.ok(first56Date>="2023-02-27");
+ assert.ok(s.audit.mature14>=3);
+ assert.ok(s.audit.mature56>=1);
+ assert.ok(s.audit.missedUp>0);
+ const cp=long.restore(JSON.parse(JSON.stringify(s)));
+ assert.deepEqual(cp,s);
+ const f=long.predict(cp,cp.last.state);
+ assert.equal(f.provenance,"MATURED_PRIOR_SESSIONS_NOT_CAUSAL_MACRO");
+});
+test("Long forecasts are invariant to prices after the evaluation timestamp",()=>{
+ const long=require("./adaptive_long_cycle_s3");
+ const run=(outlier)=>{const s=long.create();const arr=[];
+  for(let i=0;i<130;i++){
+   const d=new Date(Date.parse("2023-01-02T00:00:00Z")+i*86400000);
+   if(d.getUTCDay()===0||d.getUTCDay()===6)continue;
+   const day=d.toISOString().slice(0,10);
+   const px=i<90?1800*Math.exp(i*.001):(outlier?8000:1800)*Math.exp(i*.001);
+   long.observe(s,{session:day,sourceId:src,price:px,
+    direction:1,availableAt:day+"T22:00:00Z"});
+   if(i===88)return {prediction:long.action(s,"CASH"),cp:JSON.stringify(s)};
+  }
+ };
+ const left=run(false),right=run(true);
+ assert.deepEqual(left,right);
+});
+test("Integrated long action is queued and fills next completed observation even after 17:00",()=>{
+ const long=require("./adaptive_long_cycle_s3");
+ const s=critic.create({sourceRegistry:reg,
+  positionResearchMode:"INTEGRATED_LONG_RESEARCH",shadowEnabled:true,minUpdates:16});
+ // Provide an as-of pretrained synthetic long-memory snapshot using only
+ // completed sessions before the first test bar, not an arbitrary BUY rule.
+ const dates=[];for(let i=0;i<210;i++){
+  const d=new Date(Date.parse("2022-01-03T00:00:00Z")+i*86400000);
+  if(d.getUTCDay()>0&&d.getUTCDay()<6)dates.push(d.toISOString().slice(0,10));
+ }
+ for(const [i,day] of dates.entries())long.observe(s.longCycle,{
+  session:day,sourceId:src,price:1800*Math.exp(i*.004),
+  direction:1,availableAt:day+"T22:00:00Z"});
+ const base=Date.parse("2023-01-19T20:00:00Z");
+ const p=(n)=>({...tick(0,2200),asof:new Date(base+900000*n).toISOString(),
+   priceAvailableAt:new Date(base+900000*n).toISOString(),price:2200+2*n});
+ const first=critic.observe(s,p(0));
+ assert.equal(first.proposedResearchAction,"ABSTAIN");
+ const second=critic.observe(s,p(1));
+ assert.equal(second.action,null);
+ assert.equal(second.tradeAllowed,false);
+ if(second.proposedResearchAction==="BUY"){
+  assert.equal(s.paper.holding,"CASH");
+  const third=critic.observe(s,p(2));
+  assert.equal(s.paper.holding,"GOLD");
+  assert.equal(s.audit.executedNextBar,1);
+  assert.equal(third.at,"2023-01-19T20:30:00.000Z");
+ }
+ assert.equal(critic.summary(s).liveTradeAuthorized,false);
+});
