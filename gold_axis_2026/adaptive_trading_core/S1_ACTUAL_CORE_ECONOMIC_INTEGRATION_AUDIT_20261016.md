@@ -79,3 +79,27 @@ Yalnız makro yayınları için önceki CORE'a göre Brier iyileşmesi ortalamas
 **Sonraki gerçek eksik:** aynı ekonomik açıklama ailesindeki UP/DOWN çelişkisinin, haber öncesi dolar/faiz/gümüş, pozisyon stresi, ilk tepkide liderlik ve farklı hareket rejimleriyle ilişkisini *origin-safe* şekilde yeterli bağımsız örnekte çözmek. Yalnız başına 28 istihdam / 28 CPI gözleminden oluşan iki ortalama, bitmiş adaptif ekonomik kural modeli değildir. CME SI/NQ/ZN/CL saatlik kaynakları bulundu, ama continuous futures roll ve exact 2023 observed-at henüz doğrulanmadığından bu deneyde sessizce eklenmedi.
 
 **Deney özeti:** WORKSTREAM=MODEL | STAGE=S1 | INPUT=69 yayın / 57 tam / 164 olaysız CORE anchor / 221 matured | OUTCOME=ASL CORE öğrenme kanıtı var, ekonomik üstünlük yok | SCIENCE=FAIL | NEXT=kanıt sınıflı çapraz piyasalar + içsel koşullu ayrıştırma, bağımsız karşıt-vaka doğrulama.
+
+
+## 5. Çapraz piyasa eklemesi: aynı CORE üzerinde ayrıca yürütülen kanıt-dereceli duyarlılık
+
+2023–2025 Neon CME sürekli vadeli saatlik serileri SI (gümüş), NQ (Nasdaq), ZN (10Y tahvil vadeli) ve CL (petrol) için bulundu. As-of piyasa özellikleri, **tamamlanmış** 1h barın bitişi haber sonrası 60dk XAU karar çıpasından **önce veya eşit** ve en fazla **75 dakika eskiyse** kabul edildi; ardışık H1 bar başlangıçları tam 1 saat ayrılmak zorunda. Hiçbir eksik bar sıfırla doldurulmadı.
+
+**Gerçek makro olaylarındaki kapsama:** 57 olayı kapsayan NQ **57/57**, CL **57/57**, ZN **51/57**, SI **10/57**. Çok eksik SI güvenilir bir zorunlu açıklayıcı alan yapılamaz.
+
+**Ek deney:** `independent_event_research_query_s1.js --cross-assets` opsiyonu ve `replay_macro_waves_in_existing_core_s1.js ... --cross-assets` opsiyonu yalnız research-only koşuda CME H1 sinyalini iki CORE koluna **birlikte** ekler. Aynı baz hareketi, aynı ekonomik etkinlik ve kontroller korunur, yeni algoritma/model branşı oluşturulmaz. CME continuous future verisinin contract roll ve 2023 ilk-provider-availability sertifikası bulunmadığı için **STRICT_WALK_FORWARD başarı iddiası yasak**.
+
+| CROSS-MARKET yapılandırmasında ölçüm | Ekonomi dahil CORE | Yalnız piyasa CORE |
+|---|---:|---:|
+| İki kolda karşılaştırılabilir tüm tahmin | 194 | 194 |
+| Doğru yön | 99/194 | 99/194 |
+| Brier hatası | **0,256040** | **0,251404** |
+| Bağımsız makro yayın tahminleri | 38 | 38 |
+| Ekonomik olay doğru yön | 19/38 | 17/38 |
+| Makro yayın Brier hatası | **0,266061** | **0,251126** |
+
+Makro yayım bazlı açıklayıcı bootstrap Brier iyileşmesi **−0,014935**, %95 **[−0,042748; +0,009971]**; hem sıfırı kapsar hem işaret olarak ekonomik-on modeli olumsuzdur. İlk XAU-only koşusu ve bu yeni koşu **196 vs 194 / 40 vs 38 farklı değerlendirilebilir örnek** içerdiği için çapraz piyasanın bağımsız iyileşmesi/kötüleşmesi hakkında doğrudan tek sayı karşılaştırması yapılamaz. Makro sürpriz özelliklerinin ek faydası her yapılandırmada, aynı gözlem kümesindeki aynı CORE'un sürprizsiz koluyla kıyaslandı.
+
+**Bilimsel karar değişmedi:** İstihdam/CPI dönemlerinde karşıt UP/DOWN sonuçlarını genelleyen ve olasılık kalitesini doğrulayan ekonomik karar kuralı hâlâ gösterilemedi. CME eklemek tek başına başarı getirmedi. Görülmüş retrospektif performansa göre sonradan tek yapılandırmayı seçip kör OOS saymak yasak.
+
+**Ek üç test:** Tamamlanmış CME H1 yanında missing SI'nin gerçekten eksik kalması, gelecekte/eskimiş CME barının karantinaya alınması, SQL'in yayın kararından sonraki barı kullanmaması. İlgili bütün matematiksel S1/core testleri **44/44** izole JS harnessinde PASS; GitHub Actions sonucu ayrıca teyit gerektirir. MODEL_GATE=FAIL.
