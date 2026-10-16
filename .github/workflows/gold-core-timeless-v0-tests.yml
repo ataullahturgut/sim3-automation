@@ -82,3 +82,13 @@ jobs:
           node --check replay_phase_lifecycle_s2.js
           node --check adaptive_phase_lifecycle_s2.test.js
           node --test adaptive_phase_lifecycle_s2.test.js
+
+
+      - name: S2 slow session/trend lifecycle and same-core future-data guard tests
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check adaptive_slow_lifecycle_s2.js
+          node --check replay_slow_lifecycle_s2.js
+          node --check adaptive_market_core_s1_s2.js
+          node --check adaptive_slow_lifecycle_s2.test.js
+          node --test adaptive_slow_lifecycle_s2.test.js
