@@ -1,0 +1,53 @@
+name: KAVIS CORE — JAN 2023 only macro-math causal research
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  january-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and no-future-macro / single-month contracts
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check kavis_core_timeless_v0.js
+          node --check v23_jan2023_core_walk.js
+          node --test kavis_core_timeless_v0.test.js v23_jan2023_core_walk.test.js
+      - name: Run JANUARY 2023 ONLY first macro-aware continuous 15-minute walk
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          mkdir -p /tmp/kavis_core_month/2023-01
+          node v23_jan2023_core_walk.js ../../adaptive_volatility_learning/months/2023-01/JAN_2023_EVENT_DNA_ASOF_V2_PANEL_20261015.csv ../../GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv /tmp/kavis_core_month/2023-01/ | tee /tmp/kavis_core_month/2023-01/RESEARCH_SUMMARY.json
+      - name: Verify mathematical learning and monthly reports, no future results
+        run: |
+          node - <<'NODE'
+          const fs=require('fs'),p='/tmp/kavis_core_month/2023-01/';
+          for(const k of ['MATH_AUDIT.json','CORE_CHECKPOINT.json','EVENT_ECONOMICS.jsonl','DECISIONS.json','MONTH_REPORT.md'])
+            if(!fs.existsSync(p+k))throw Error('NO_MONTHLY_REPORT_'+k);
+          const m=JSON.parse(fs.readFileSync(p+'MATH_AUDIT.json')),
+            cp=JSON.parse(fs.readFileSync(p+'CORE_CHECKPOINT.json'));
+          console.log(JSON.stringify({month:m.scope,rows:m.bars,events:m.releaseRecords,bankChecks:m.acceptedBankChecks,
+             learned:m.maturedEconomicOutcomeLabels,updates:m.changedMathematicalUpdates,trades:m.trades,
+             net:m.finalNetUSD,cash:m.cashBaselineUSD,passive:m.passiveBuyHoldNetUSD,
+             dd:m.maxDDPct,headStats:m.headStats,episodeTop:m.significantExpostMovements},null,2));
+          if(m.scope!=='2023-01_ONLY'||m.firstBar.slice(0,7)!=='2023-01'||
+              m.lastBar.slice(0,7)!=='2023-01'||m.bars<1700)throw Error('WRONG_PERIOD');
+          if(m.releaseRecords!==4||m.maturedEconomicOutcomeLabels<100||m.changedMathematicalUpdates<100)
+            throw Error('MODEL_NOT_LEARNING_EVENT_AND_PRICE');
+          if(cp.lastTime> Date.parse('2023-02-01T00:00:00Z'))throw Error('FEBRUARY_DATA_LEAK');
+          if(m.costPctPerLeg!==.8||m.acceptedBankChecks<200)throw Error('WRONG_FEE_OR_TRADE_WINDOW');
+          NODE
+      - name: Preserve durable research artifacts, untrained later periods
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kavis-core-v0-JAN-2023-only-month-checkpoint-and-math-report
+          path: /tmp/kavis_core_month/2023-01/
+          if-no-files-found: ignore
