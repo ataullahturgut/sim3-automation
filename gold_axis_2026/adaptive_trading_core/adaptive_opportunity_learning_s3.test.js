@@ -65,3 +65,43 @@ test("S3 emits discovery candidate without authorizing or placing an order",()=>
  const cp=s3.restore(s3.checkpoint(state));
  assert.equal(cp.opportunity.pending.length,3);
 });
+
+test("opt-in S3 opportunity ablation BUY is executed only on subsequent completed bar",()=>{
+ const sid="SYNTHETIC",reg={[sid]:{kind:"MARKET",evidenceStatus:"SYNTHETIC_ONLY"}};
+ const s=s3.create({sourceRegistry:reg,shadowEnabled:true,
+  positionResearchMode:"OPPORTUNITY_MATURED_RESEARCH"});
+ s.opportunity.cohorts["FAST:TREND:UP#20"]={
+  n:20,mean:4,m2:0,independentN:10,independentMean:4,independentM2:0,
+  lastIndependentIndex:0,up:20,down:0,lastMaturedAt:"2022-12-31"};
+ const bar=(time,price,phase,dir)=>s3.observe(s,{
+  asof:time,priceAvailableAt:time,barMinutes:15,price,
+  sourceId:sid,fast:{phase,direction:dir}});
+ bar("2023-01-06T16:45:00Z",1860,"NEUTRAL",0);
+ const signal=bar("2023-01-06T17:00:00Z",1863,"START",1);
+ assert.equal(signal.proposedResearchAction,"BUY");
+ assert.equal(s.paper.buyCount,0);
+ assert.equal(signal.action,null);
+ assert.equal(signal.tradeAllowed,false);
+ const next=bar("2023-01-06T17:15:00Z",1865,"CONTINUE",1);
+ assert.equal(s.paper.buyCount,1);
+ assert.equal(s.paper.holding,"GOLD");
+ assert.equal(next.tradeAllowed,false);
+});
+test("opt-in S3 opportunity ablation rejects confident-negative 5/10 and uncertain 20-session return",()=>{
+ const sid="SYNTHETIC",reg={[sid]:{kind:"MARKET",evidenceStatus:"SYNTHETIC_ONLY"}};
+ const s=s3.create({sourceRegistry:reg,shadowEnabled:true,
+  positionResearchMode:"OPPORTUNITY_MATURED_RESEARCH"});
+ for(const [h,mean,m2] of [[5,-1,3],[10,-.5,6],[20,.6,90]]){
+  s.opportunity.cohorts["FAST:TREND:UP#"+h]={
+   n:30,mean,m2,independentN:10,independentMean:mean,independentM2:m2,
+   lastIndependentIndex:0,up:12,down:18,lastMaturedAt:"2022-12-31"};
+ }
+ const bar=(time,price,phase,dir)=>s3.observe(s,{
+  asof:time,priceAvailableAt:time,barMinutes:15,price,
+  sourceId:sid,fast:{phase,direction:dir}});
+ bar("2023-01-06T16:45:00Z",1860,"NEUTRAL",0);
+ const signal=bar("2023-01-06T17:00:00Z",1863,"START",1);
+ assert.equal(signal.proposedResearchAction,"KEEP");
+ assert.equal(signal.researchDecisionReason,"OPPORTUNITY_NO_SUPPORTED_NET_ENTRY");
+ assert.equal(s.paper.buyCount,0);
+});
