@@ -1,0 +1,170 @@
+{
+ "result": {
+  "period": "month",
+  "k": 3,
+  "net_nav": 107.98,
+  "gross_nav": 116.32,
+  "trades": 10,
+  "max_dd": 13.32,
+  "passive": 230.82,
+  "ceiling": 267.02,
+  "agree_pct": 35.7,
+  "jan2023_in_pct": 100.0,
+  "in_gold_pct": 35.7,
+  "in_gold_on_target_cash_pct": 50.0,
+  "base_rate": 0.3305
+ },
+ "criteria": {
+  "G1": false,
+  "G2": true,
+  "G3": false,
+  "G5": true,
+  "G6": false
+ },
+ "legs": [
+  {
+   "al": "2023-01-03",
+   "sat": "2023-01-26",
+   "gun": 17,
+   "icinde": 17,
+   "oran": 1.0,
+   "gecikmeli_net": 2.12
+  },
+  {
+   "al": "2023-02-27",
+   "sat": "2023-05-05",
+   "gun": 48,
+   "icinde": 48,
+   "oran": 1.0,
+   "gecikmeli_net": 8.83
+  },
+  {
+   "al": "2023-06-30",
+   "sat": "2023-07-20",
+   "gun": 14,
+   "icinde": 14,
+   "oran": 1.0,
+   "gecikmeli_net": 0.22
+  },
+  {
+   "al": "2023-10-05",
+   "sat": "2023-12-28",
+   "gun": 59,
+   "icinde": 6,
+   "oran": 0.1,
+   "gecikmeli_net": 9.06
+  },
+  {
+   "al": "2024-02-14",
+   "sat": "2024-04-12",
+   "gun": 41,
+   "icinde": 0,
+   "oran": 0.0,
+   "gecikmeli_net": 16.55
+  },
+  {
+   "al": "2024-05-01",
+   "sat": "2024-05-20",
+   "gun": 13,
+   "icinde": 0,
+   "oran": 0.0,
+   "gecikmeli_net": 0.18
+  },
+  {
+   "al": "2024-06-10",
+   "sat": "2024-10-30",
+   "gun": 102,
+   "icinde": 86,
+   "oran": 0.84,
+   "gecikmeli_net": 16.14
+  },
+  {
+   "al": "2024-11-14",
+   "sat": "2025-04-22",
+   "gun": 110,
+   "icinde": 0,
+   "oran": 0.0,
+   "gecikmeli_net": 23.77
+  },
+  {
+   "al": "2025-05-15",
+   "sat": "2025-12-26",
+   "gun": 160,
+   "icinde": 0,
+   "oran": 0.0,
+   "gecikmeli_net": 30.97
+  }
+ ],
+ "trades": [
+  {
+   "date": "2023-01-03",
+   "action": "AL",
+   "price": 1836.33,
+   "P": 0.433,
+   "z": 0.663
+  },
+  {
+   "date": "2023-08-18",
+   "action": "SAT",
+   "price": 1891.9,
+   "P": 0.272,
+   "z": -0.61
+  },
+  {
+   "date": "2023-08-31",
+   "action": "AL",
+   "price": 1944.62,
+   "P": 0.456,
+   "z": 0.629
+  },
+  {
+   "date": "2023-09-22",
+   "action": "SAT",
+   "price": 1926.63,
+   "P": 0.271,
+   "z": -0.554
+  },
+  {
+   "date": "2023-10-25",
+   "action": "AL",
+   "price": 1971.6,
+   "P": 0.427,
+   "z": 0.657
+  },
+  {
+   "date": "2023-11-02",
+   "action": "SAT",
+   "price": 1986.71,
+   "P": 0.246,
+   "z": -0.72
+  },
+  {
+   "date": "2024-06-04",
+   "action": "AL",
+   "price": 2333.66,
+   "P": 0.397,
+   "z": 0.608
+  },
+  {
+   "date": "2024-07-25",
+   "action": "SAT",
+   "price": 2374.56,
+   "P": 0.289,
+   "z": -0.7
+  },
+  {
+   "date": "2024-08-16",
+   "action": "AL",
+   "price": 2462.64,
+   "P": 0.392,
+   "z": 0.516
+  },
+  {
+   "date": "2024-11-01",
+   "action": "SAT",
+   "price": 2753.34,
+   "P": 0.295,
+   "z": -0.54
+  }
+ ]
+}
