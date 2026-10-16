@@ -33,7 +33,8 @@ function config(o={}){
    useRiskPolicy:o.useRiskPolicy??true,
    riskAdvisorMinLabels:o.riskAdvisorMinLabels??16,
    advisorDecay:o.advisorDecay??.94,
-   advisorConfidence:o.advisorConfidence??.35
+   advisorConfidence:o.advisorConfidence??1.64,
+   enforceEntryRiskBudget:o.enforceEntryRiskBudget??false
  };
  if(!finite(c.initialCapital)||c.initialCapital<=0||c.initialCapital>1e12||
     c.maxDrawdownPct!==null&&(!finite(c.maxDrawdownPct)||c.maxDrawdownPct<=1||c.maxDrawdownPct>=90)||
@@ -51,7 +52,7 @@ function config(o={}){
     !Number.isInteger(c.riskAdvisorMinLabels)||c.riskAdvisorMinLabels<8||
     c.riskAdvisorMinLabels>500||!finite(c.advisorDecay)||c.advisorDecay<.7||
     c.advisorDecay>=1||!finite(c.advisorConfidence)||c.advisorConfidence<0||
-    c.advisorConfidence>3)
+    c.advisorConfidence>4||typeof c.enforceEntryRiskBudget!=="boolean")
      throw Error("V19_INVALID_RISK_GOALS");
  return c;
 }
@@ -70,7 +71,7 @@ function create(options={}){
   pendingContext:null,
   audit:{forcedExits:0,blockedEntries:0,riskAbstains:0,
     normalDecisions:0,postCrashGapWarnings:0,regimeReturnLabels:0,
-    unobservedGapLabels:0,
+    unobservedGapLabels:0,prospectiveEntryBlocks:0,drawdownRiskAlerts:0,
     advisorConsidered:0,advisorActivated:0,advisorRejected:0,advisorMatured:0}
  };
 }
@@ -112,12 +113,21 @@ function estimate(s,regime){
  return {ready:true,regime,n:samples.length,conditional:useLocal,
     cvar:t.cvar,upper,mean:t.mean,vol:t.vol};
 }
+function effectiveN(n,decay){
+ if(!n)return 0;
+ const r=Math.pow(decay,n);
+ return ((1+decay)/(1-decay))*((1-r)/(1+r));
+}
 function advisoryConfidence(s,regime){
- const z=s.risk.advisor[regime],c=s.config;
+ const z=s.risk.advisor[regime],c=s.config,ess=effectiveN(z.n,c.advisorDecay);
+ const correction=z.n?1-Math.pow(c.advisorDecay,z.n):1;
+ const unbiased=z.n?z.mean/correction:0;
  const uncertainty=c.advisorConfidence*Math.sqrt(Math.max(.01,z.var))/
-   Math.sqrt(Math.max(1,z.n));
- const lower=z.mean-uncertainty;
- return {observations:z.n,advantage:z.mean,lowerConfidence:lower,
+   Math.sqrt(Math.max(1,ess));
+ const lower=unbiased-uncertainty;
+ // Conservative empirical screen, NOT calibrated confidence interval.
+ return {observations:z.n,effectiveObservations:ess,
+   advantage:unbiased,lowerConfidence:lower,
    verified:z.n>=c.riskAdvisorMinLabels&&lower>0,
    positive:z.positive,negative:z.negative};
 }
@@ -199,7 +209,8 @@ function signal(s,ob){
  }
  const rawRiskAdvice=proposed,rawRiskReason=reason;
  const advisor=advisoryConfidence(s,which);
- const criticalBudget=p==="GOLD"&&hardLoss&&config.maxDrawdownPct!==null;
+ // Loss already realized is NOT evidence of profitable liquidation.
+ const criticalBudget=false;
  const disagreement=rawRiskAdvice!==base.action;
  if(config.useRiskPolicy&&disagreement){
   s.audit.advisorConsidered++;
@@ -211,6 +222,19 @@ function signal(s,ob){
  if(proposed!=="WAIT"&&!base.readiness&&!criticalBudget){
     proposed="WAIT";reason="LEARNER_NOT_READY";
   }
+ // Ex-ante constraint is opt-in and only evaluated with matured labels.
+ const floor=config.maxDrawdownPct===null?null:
+   s.portfolio.peak*(1-config.maxDrawdownPct/100);
+ const prospectiveNAV=tail.ready?s.portfolio.nav*
+   Math.exp(-Math.max(0,tail.upper)/100):null;
+ const projectedEntryViolation=floor!==null&&prospectiveNAV!==null&&
+   prospectiveNAV<floor;
+ if(config.enforceEntryRiskBudget&&p==="CASH"&&
+    proposed==="BUY"&&projectedEntryViolation){
+   proposed="WAIT";reason="EX_ANTE_ENTRY_BUDGET";
+   s.audit.prospectiveEntryBlocks++;
+ }
+ if(p==="GOLD"&&(hardLoss||budgetAtRisk))s.audit.drawdownRiskAlerts++;
  const choice=proposed==="WAIT"?"KEEP":"SWITCH";
  fork.pending.choice=choice;
  fork.pending.reason=reason;
@@ -231,6 +255,7 @@ function signal(s,ob){
   tailEstimate:tail,drawdownPct:dd,projectedOneIntervalLossPct:projected,
   hardLoss,guardHot:p==="GOLD"?exitGuard:entryGuard,
   exitGuard,entryGuard,advisorEvidence:advisor,
+   projectedEntryViolation,manualRiskReview:hardLoss||budgetAtRisk,
   riskAdvisorAction:rawRiskAdvice,riskAdvisorReason:rawRiskReason,
   advisorApplied:proposed!==base.action,
   learnedIntervals:s.core.learned,
