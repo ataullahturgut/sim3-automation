@@ -113,20 +113,29 @@ function observe(s,o){
  if(s.mode==="STRICT_WALK_FORWARD"&&s.registry[o.sourceId].evidenceStatus!=="VERIFIED_PIT"&&
   s.registry[o.sourceId].evidenceStatus!=="SYNTHETIC_ONLY")
   throw Error("S3_RECONSTRUCTED_PRICE_NOT_STRICT_PIT");
- const c=context({fast:o.fast,slow:o.slow});
+ let c=context({fast:o.fast,slow:o.slow});
  // A genuine S1 forecast (not manually recoded direction). Retain evidence,
  // do not promote research-only predictions to certified macro alpha.
  if(o.s1Evidence!==undefined){
   const e=o.s1Evidence;
   if(!e||e.asof!==o.asof||!Array.isArray(e.byHorizon)||
-     !["MARKET_ONLY_UNVALIDATED","RESEARCH_MACRO_UNVERIFIED","VERIFIED_PIT"].includes(e.provenance)||
+     !["MARKET_ONLY_UNVALIDATED","RESEARCH_MACRO_UNVERIFIED",
+       "VERIFIED_PIT_BUT_ALPHA_NOT_PROVEN"].includes(e.provenance)||
      e.byHorizon.some(x=>!Number.isInteger(x.horizonMinutes)||
        (x.ready&&(!finite(x.expectedLogPct)||!Number.isInteger(x.effectiveN)&&
                  !(finite(x.effectiveN)&&x.effectiveN>=0)))))
     throw Error("S3_INVALID_S1_EVIDENCE");
   s.lastS1Evidence=clone(e);
   s.audit.s1ResearchForecastReceived++;
-  if(e.provenance==="VERIFIED_PIT")s.audit.economicRulesCertifiedAtDecision++;
+  // Firstprint evidence certification is not economic-ALPHA certification.
+  if(e.provenance!=="MARKET_ONLY_UNVALIDATED"){
+   s.audit.researchEconomicContexts=(s.audit.researchEconomicContexts||0)+1;
+   const pred=e.byHorizon.find(x=>x.horizonMinutes===240&&x.ready&&
+      finite(x.expectedLogPct)&&finite(x.effectiveN)&&x.effectiveN>=8);
+   // This is a learnt STATE descriptor (never an explicit BUY rule).
+   // An unsupported economic rule gets its own UNKNOWN slot.
+   c+="|S1_ECON:"+(pred?(pred.expectedLogPct>0?"UP":"DOWN"):"UNREADY");
+  }
  }
  let contiguous=false;
  if(s.last){

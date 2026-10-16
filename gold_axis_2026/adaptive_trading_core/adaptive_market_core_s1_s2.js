@@ -12,13 +12,14 @@ const slow=require("./adaptive_slow_lifecycle_s2");
 const s3=require("./adaptive_position_value_s3");
 const VERSION="GOLD_ADAPTIVE_S1_S2_SLOW_S3_RESEARCH_BRIDGE_20261016";
 const SCHEMA=["phase_trend_z","phase_retracement_norm","phase_direction","phase_age_norm",
- "slow_trend_z","slow_direction","slow_age_norm","slow_end_5session"];
+ "slow_trend_z","slow_direction","slow_age_norm","slow_end_5session",
+ "nfp_surprise_z","ahe_surprise_z","unemployment_surprise_z","cpi_surprise_z"];
 const cp=x=>JSON.parse(JSON.stringify(x));
 const iso=x=>new Date(x).toISOString();
 const clip=x=>Math.max(-5,Math.min(5,x));
 function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_ASOF",
  learningMode="DISCOVERY_FULL_ARCHIVE",shadowResearch=false,
- positionResearchMode="LEGACY_M15"}={}){
+ positionResearchMode="LEGACY_M15",economicSources={}}={}){
  if(typeof sourceId!=="string"||!sourceId)
   throw Error("MODEL_SOURCE_ID_REQUIRED");
  if(!["RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","SYNTHETIC_ONLY"].includes(sourceEvidence))
@@ -29,9 +30,18 @@ function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_AS
   throw Error("MODEL_SOURCE_ALLOWLIST_INVALID");
  const sourceRegistry=Object.fromEntries(known.map(id=>[id,
    {kind:"MARKET",evidenceStatus:sourceEvidence}]));
+ // Economic evidence must be separately registered and survives S1's strict
+ // vintage/firstprint validation. Never treat a MARKET source as EVENT.
+ if(!economicSources||typeof economicSources!=="object"||Array.isArray(economicSources)||
+   Object.keys(economicSources).some(id=>!id||id in sourceRegistry||
+    economicSources[id]?.kind!=="EVENT"||
+    !["VERIFIED_PIT","RECONSTRUCTED_RELEASE_RESEARCH"].includes(
+      economicSources[id]?.evidenceStatus)))
+   throw Error("MODEL_ECONOMIC_SOURCE_REGISTRY_INVALID");
+ const s1Registry={...sourceRegistry,...cp(economicSources)};
  return {version:VERSION,sourceId,allowedSources:known.slice(),
   mode:learningMode,
-  s1:s1.create({learningMode,featureNames:SCHEMA,sourceRegistry,
+  s1:s1.create({learningMode,featureNames:SCHEMA,sourceRegistry:s1Registry,
    horizons:[240],anchorMinutes:240,maxRules:16}),
   s2:s2.create({learningMode,sourceRegistry}),
   slow:slow.create({sourceRegistry}),
@@ -39,6 +49,7 @@ function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_AS
     positionResearchMode}),lastSlow:null,
   audit:{observed:0,contextReady:0,phaseTransitions:0,slowAccepted:0,slowRejected:0}};
 }
+function learningModeOf(s){return s.mode;}
 function features(p,t,id){
  if(p.trendZ===null||p.phase==="WARMUP"||p.phase==="GAP")return {};
  const market=value=>({value:clip(value),kind:"MARKET",source:id,
@@ -92,6 +103,16 @@ function observe(s,bar){
    slow_age_norm:market(hist.age/10)});
   if(hist.pEnd5!==null)fs.slow_end_5session=market(hist.pEnd5);
  }
+ // No macro feature is synthesized from a headline or later known outcome.
+ // Each explicit numerical release input must pass S1's source / vintage gate.
+ if(bar.economicFeatures!==undefined){
+  if(!bar.economicFeatures||typeof bar.economicFeatures!=="object"||
+     Array.isArray(bar.economicFeatures)||Object.keys(bar.economicFeatures).some(
+      name=>!["nfp_surprise_z","ahe_surprise_z","unemployment_surprise_z",
+       "cpi_surprise_z"].includes(name)))
+    throw Error("MODEL_ECONOMIC_FEATURE_SCHEMA_INVALID");
+  Object.assign(fs,bar.economicFeatures);
+ }
  const q=s1.observe(s.s1,{...bar,features:fs});
  const v=s3.observe(s.s3,{asof:bar.asof,price:bar.price,
   priceAvailableAt:bar.priceAvailableAt,barMinutes:bar.barMinutes,
@@ -101,7 +122,11 @@ function observe(s,bar){
    Date.parse(hist.observedAt)<=t&&t-Date.parse(hist.observedAt)<=4*86400000&&
    !["WARMUP","REJECTED_SESSION","GAP"].includes(hist.phase)?
     {phase:hist.phase,direction:hist.direction}:null,
-  s1Evidence:{asof:bar.asof,provenance:"MARKET_ONLY_UNVALIDATED",
+   s1Evidence:{asof:bar.asof,provenance:
+    bar.economicFeatures&&Object.keys(bar.economicFeatures).length?
+     (learningModeOf(s)==="STRICT_WALK_FORWARD"?
+       "VERIFIED_PIT_BUT_ALPHA_NOT_PROVEN":"RESEARCH_MACRO_UNVERIFIED"):
+     "MARKET_ONLY_UNVALIDATED",
    byHorizon:(q.forecastAtDecision?.byHorizon??[]).map(x=>({
     horizonMinutes:x.horizonMinutes,ready:x.ready,
     expectedLogPct:x.expectedLogPct,effectiveN:x.effectiveN}))}});

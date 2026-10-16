@@ -174,3 +174,39 @@ test("S3 multi-session shadow cannot execute research switches outside TR 09–1
  }
  assert.equal(critic.summary(s).audit.shadowTrades,0);
 });
+
+test("Economic M2 evidence enters same CORE and S3 only with registered firstprint inputs",()=>{
+ const s=bridge.create({sourceId:src,sourceEvidence:"SYNTHETIC_ONLY",
+  learningMode:"STRICT_WALK_FORWARD",economicSources:{
+    OFFICIAL_EVENT_TEST:{kind:"EVENT",evidenceStatus:"VERIFIED_PIT"}}});
+ const t=start,asof=new Date(t).toISOString();
+ const event=(availableAt,source="OFFICIAL_EVENT_TEST")=>({
+   value:.55,kind:"EVENT",source,observedAt:asof,availableAt,
+   firstPublishedAt:asof,firstprintVerified:true});
+ const accepted=bridge.observe(s,{...m15(0,1800),economicFeatures:{
+  cpi_surprise_z:event(asof)}});
+ assert.equal(accepted.positionResearch.s1ResearchEvidence.provenance,
+   "VERIFIED_PIT_BUT_ALPHA_NOT_PROVEN");
+ assert.equal(s.s3.audit.researchEconomicContexts,1);
+ assert.equal(s.s3.audit.economicRulesCertifiedAtDecision,0);
+ assert.ok(s.s1.rules.some(rule=>"cpi_surprise_z" in rule.center));
+ assert.equal(accepted.tradeAllowed,false);
+ const t1=new Date(start+STEP).toISOString();
+ assert.throws(()=>bridge.observe(s,{...m15(1,1800),economicFeatures:{
+  cpi_surprise_z:event(new Date(start+2*STEP).toISOString())}}),
+  /FUTURE_OR_REVERSED_FEATURE/);
+ assert.throws(()=>bridge.observe(s,{...m15(1,1800),economicFeatures:{
+  cpi_surprise_z:event(t1,"UNREGISTERED_EVENT")}}),
+  /UNREGISTERED_FEATURE_SOURCE/);
+});
+test("Retrospective economic source is rejected in strict mode without claiming it was PIT",()=>{
+ const s=bridge.create({sourceId:src,sourceEvidence:"SYNTHETIC_ONLY",
+  learningMode:"STRICT_WALK_FORWARD",economicSources:{
+   OLD_LEDGER:{kind:"EVENT",evidenceStatus:"RECONSTRUCTED_RELEASE_RESEARCH"}}});
+ const time=new Date(start).toISOString();
+ assert.throws(()=>bridge.observe(s,{...m15(0,1800),economicFeatures:{
+  nfp_surprise_z:{value:1,kind:"EVENT",source:"OLD_LEDGER",
+    observedAt:time,availableAt:time,firstPublishedAt:time,
+    firstprintVerified:false}}}),/EVENT_SOURCE_NOT_PIT_VERIFIED/);
+ assert.equal(s.s3.audit.s1ResearchForecastReceived,0);
+});
