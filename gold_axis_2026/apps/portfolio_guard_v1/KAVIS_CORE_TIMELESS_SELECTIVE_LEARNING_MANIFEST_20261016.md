@@ -1,5 +1,6 @@
 # KAVİS CORE — TARİHTEN BAĞIMSIZ EKONOMİK DENEYİM ÖĞRENME MİMARİSİ
-**Dondurulmuş tasarım ve araştırma protokolü (2026-10-16)**
+
+> **YETKİ SINIRI / 16 EKİM 2026:** Bu dosya, 16 Ekim tarihli **araştırma amaçlı teknik KAVİS V0 taslağıdır**; matematiksel çekirdeğin tam olarak öğrenildiği veya onaylandığı anlamına gelmez. Yeni MODEL ve UYGULAMA iş paketlerinin **tek bağlayıcı proje manifesti** [GOLD_ADAPTIVE_TRADING_MODEL_APPLICATION_PROJECT_MANIFEST.md](../../GOLD_ADAPTIVE_TRADING_MODEL_APPLICATION_PROJECT_MANIFEST.md) dosyasıdır. Uygulama ayrıdır; OLAY-02/ÖĞREN-03 yalnız bilgi kaynağıdır; Ocak 2023 MODEL_GATE geçilmeden başka aya/model mimarisine/UI geliştirmesine geçilmez.\n\n**Dondurulmuş tasarım ve araştırma protokolü (2026-10-16)**
 
 ## 0. Kullanıcının bağlayıcı amacı
 - **Model kurallarının içinde takvim tarihi, yıl veya olay ID'si AL/SAT etkisi yaratan özellik OLMAYACAK.** Tarihler yalnız veri erişilebilirlik damgası, yürüyüş saati, aylık rapor dosyası ve dönem sınırıdır. Tüm öğrenilmiş bilgilerin asıl biçimi tarih içermeyen genel ekonomik DURUM→TETİK→AKTARIM→TEPKİ→BİTİŞ / yeniden giriş bilgisidir.
