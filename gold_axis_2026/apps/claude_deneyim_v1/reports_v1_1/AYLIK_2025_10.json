@@ -1,0 +1,361 @@
+{
+ "month": "2025-10",
+ "days": 23,
+ "gold": {
+  "start_prev_close": 3869.82,
+  "end": 4005.16,
+  "change_pct": 3.5,
+  "high": 4366.09,
+  "low": 3855.21
+ },
+ "ideal": {
+  "month_log_return_pct": 16.06,
+  "gold_days_share": 0.565,
+  "legs": [
+   {
+    "entry": "2025-08-20",
+    "entry_price": 3325.39,
+    "exit": "2025-10-17",
+    "exit_price": 4347.42,
+    "net_pct": 28.65
+   },
+   {
+    "entry": "2025-10-28",
+    "entry_price": 3897.84,
+    "exit": "2025-10-29",
+    "exit_price": 4016.7,
+    "net_pct": 1.41
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 189.1503,
+  "nav_end": 198.7727,
+  "month_ret_pct": 5.09,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.527,
+  "capture_of_ideal": 0.3,
+  "mean_Er": 0.602,
+  "mean_Pdown": 0.341
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 10,
+  "wrong_day_share": 0.435
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2025-08-20",
+    "exit": "2025-10-17",
+    "net_pct": 28.65,
+    "state_at_entry": [
+     [
+      "200g ortalamaya uzaklık",
+      2.12
+     ],
+     [
+      "altın 20g getiri",
+      1.96
+     ],
+     [
+      "altın 60g getiri",
+      1.93
+     ],
+     [
+      "son NFP sürprizi",
+      -1.25
+     ],
+     [
+      "60g zirveye uzaklık",
+      1.19
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      4.05
+     ],
+     [
+      "GVZ 5g değişim",
+      3.44
+     ],
+     [
+      "altın 5g getiri",
+      3.07
+     ],
+     [
+      "GVZ düzeyi",
+      2.81
+     ],
+     [
+      "gümüş 5g",
+      2.74
+     ]
+    ]
+   },
+   {
+    "entry": "2025-10-28",
+    "exit": "2025-10-29",
+    "net_pct": 1.41,
+    "state_at_entry": [
+     [
+      "altın 5g getiri",
+      -4.0
+     ],
+     [
+      "GVZ 5g değişim",
+      -4.0
+     ],
+     [
+      "altın 20g oynaklık",
+      3.24
+     ],
+     [
+      "altın 1g getiri",
+      -2.93
+     ],
+     [
+      "son NFP'den beri gün",
+      2.93
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      2.77
+     ],
+     [
+      "altın 5g getiri",
+      1.93
+     ],
+     [
+      "gümüş 5g",
+      1.42
+     ],
+     [
+      "GVZ 5g değişim",
+      0.65
+     ],
+     [
+      "Nasdaq 5g",
+      0.41
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2025-10-17",
+    "end": "2025-10-27",
+    "gold_move_pct": -4.58,
+    "state_at_start": [
+     [
+      "altın 5g getiri",
+      4.0
+     ],
+     [
+      "altın 20g getiri",
+      4.0
+     ],
+     [
+      "GVZ düzeyi",
+      4.0
+     ],
+     [
+      "GVZ 5g değişim",
+      4.0
+     ],
+     [
+      "altın 1g getiri",
+      3.81
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "GVZ 5g değişim",
+      -7.78
+     ],
+     [
+      "altın 5g getiri",
+      -5.9
+     ],
+     [
+      "altın 1g getiri",
+      -4.5
+     ],
+     [
+      "gümüş 5g",
+      -4.35
+     ],
+     [
+      "son CPI'dan beri gün",
+      -3.61
+     ]
+    ]
+   },
+   {
+    "start": "2025-10-29",
+    "end": "2025-10-31",
+    "gold_move_pct": 2.86,
+    "state_at_start": [
+     [
+      "GVZ 5g değişim",
+      -3.35
+     ],
+     [
+      "altın 20g oynaklık",
+      3.22
+     ],
+     [
+      "son NFP'den beri gün",
+      2.91
+     ],
+     [
+      "GVZ düzeyi",
+      2.47
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      2.1
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "son FOMC'den beri gün",
+      -2.95
+     ],
+     [
+      "GVZ 5g değişim",
+      2.27
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      1.92
+     ],
+     [
+      "petrol 5g",
+      -1.26
+     ],
+     [
+      "altın 1g getiri",
+      1.15
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "CPI",
+    "utc": "2025-10-24T12:30",
+    "surprise": -0.10000000000000003,
+    "gold_post60": 1.288581,
+    "gold_post240": 1.826842
+   }
+  ],
+  "cot_mm_change": 0.0,
+  "real_rate_20d_change_start_end": [
+   -0.020000000000000018,
+   0.010000000000000009
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_037",
+    "dir": "UP",
+    "move_pct": "32.998457",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "ETF/CTA/OTC/metal akışı ve çokgünlü talep",
+    "start": "2025-07-30",
+    "end": "2025-10-20"
+   },
+   {
+    "key": "SWING_V1_038",
+    "dir": "DOWN",
+    "move_pct": "-9.784683",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "Pozisyonun aşırı uzaması ve geri dönüşü",
+    "start": "2025-10-20",
+    "end": "2025-10-29"
+   },
+   {
+    "key": "SWING_V1_039",
+    "dir": "UP",
+    "move_pct": "6.755117",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2025-10-29",
+    "end": "2025-11-12"
+   },
+   {
+    "key": "C_CORR_048",
+    "dir": "UP",
+    "move_pct": "8.826702",
+    "cls": "TİCARET_TARİFE_POLİTİKASI",
+    "mech": "ETF/CTA/OTC/metal akışı ve çokgünlü talep",
+    "start": "2025-10-01",
+    "end": "2025-10-20"
+   },
+   {
+    "key": "C_CORR_049",
+    "dir": "DOWN",
+    "move_pct": "8.580293",
+    "cls": "İÇSEL_POZİSYON_DÖNÜŞÜ",
+    "mech": "Pozisyonun aşırı uzaması ve geri dönüşü",
+    "start": "2025-10-17",
+    "end": "2025-10-29"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 732,
+  "ideal_gold_share": 0.592,
+  "alpha_analog": 0.569,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1487
+   ],
+   [
+    "g_r1",
+    0.1345
+   ],
+   [
+    "si_r5",
+    0.124
+   ],
+   [
+    "g_dd60",
+    0.064
+   ],
+   [
+    "gvz_d5",
+    0.0516
+   ],
+   [
+    "cl_r20",
+    0.0512
+   ],
+   [
+    "nq_r20",
+    0.0355
+   ],
+   [
+    "zn_r5",
+    0.0329
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.381,
+   "faiz (reel ve nominal)": 0.049,
+   "dolar": 0.029,
+   "altın oynaklığı": 0.078,
+   "spekülatif pozisyon (COT)": 0.036,
+   "makro veri sürprizi/takvim": 0.092,
+   "hisse/tahvil/petrol/gümüş": 0.269,
+   "olay izi (şok)": 0.066
+  }
+ }
+}

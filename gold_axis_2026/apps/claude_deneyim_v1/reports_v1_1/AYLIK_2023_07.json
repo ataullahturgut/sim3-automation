@@ -1,0 +1,243 @@
+{
+ "month": "2023-07",
+ "days": 21,
+ "gold": {
+  "start_prev_close": 1907.22,
+  "end": 1955.19,
+  "change_pct": 2.51,
+  "high": 1980.88,
+  "low": 1914.4
+ },
+ "ideal": {
+  "month_log_return_pct": 4.1,
+  "gold_days_share": 0.619,
+  "legs": [
+   {
+    "entry": "2023-06-30",
+    "entry_price": 1902.17,
+    "exit": "2023-07-20",
+    "exit_price": 1981.49,
+    "net_pct": 2.51
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 94.2681,
+  "nav_end": 96.8257,
+  "month_ret_pct": 2.71,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.254,
+  "capture_of_ideal": 0.7,
+  "mean_Er": 0.386,
+  "mean_Pdown": 0.389
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 8,
+  "wrong_day_share": 0.381
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2023-06-30",
+    "exit": "2023-07-20",
+    "net_pct": 2.51,
+    "state_at_entry": [
+     [
+      "GVZ düzeyi",
+      -2.23
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -2.17
+     ],
+     [
+      "son NFP'den beri gün",
+      1.75
+     ],
+     [
+      "altın 20g oynaklık",
+      -1.14
+     ],
+     [
+      "2Y faiz 20g değişim",
+      0.99
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "son NFP'den beri gün",
+      -2.1
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      -1.99
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      -1.99
+     ],
+     [
+      "gümüş 20g",
+      1.72
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      1.54
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2023-07-20",
+    "end": "2023-07-31",
+    "gold_move_pct": -1.22,
+    "state_at_start": [
+     [
+      "sonraki FOMC'ye gün",
+      -3.19
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      -1.99
+     ],
+     [
+      "GVZ düzeyi",
+      -1.77
+     ],
+     [
+      "gümüş 20g",
+      1.72
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      1.54
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "sonraki FOMC'ye gün",
+      3.06
+     ],
+     [
+      "son FOMC'den beri gün",
+      -2.42
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      2.36
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      -1.54
+     ],
+     [
+      "gümüş 5g",
+      -1.39
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2023-07-07T12:30",
+    "surprise": -16.0,
+    "gold_post60": 0.003383,
+    "gold_post240": 0.391701
+   },
+   {
+    "kind": "CPI",
+    "utc": "2023-07-12T12:30",
+    "surprise": -0.09999999999999998,
+    "gold_post60": 0.821817,
+    "gold_post240": 1.192686
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2023-07-26T18:00",
+    "surprise": null,
+    "gold_post60": 0.389939,
+    "gold_post240": null
+   }
+  ],
+  "cot_mm_change": 0.0656,
+  "real_rate_20d_change_start_end": [
+   0.19999999999999996,
+   -0.010000000000000009
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_005",
+    "dir": "UP",
+    "move_pct": "3.751586",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-06-28",
+    "end": "2023-07-18"
+   },
+   {
+    "key": "SWING_V1_006",
+    "dir": "DOWN",
+    "move_pct": "-8.020636",
+    "cls": "DİĞER_BİLEŞİK_EKONOMİK_BİLGİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-07-18",
+    "end": "2023-10-05"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 149,
+  "ideal_gold_share": 0.45,
+  "alpha_analog": 0.555,
+  "th_in": 0.7,
+  "th_out": 0.5,
+  "top_weights": [
+   [
+    "g_r5",
+    0.0965
+   ],
+   [
+    "cot_mm",
+    0.0805
+   ],
+   [
+    "fomc_to",
+    0.0714
+   ],
+   [
+    "g_r20",
+    0.0657
+   ],
+   [
+    "g_r1",
+    0.0558
+   ],
+   [
+    "rr_d5",
+    0.0479
+   ],
+   [
+    "y2_d20",
+    0.0453
+   ],
+   [
+    "cl_r5",
+    0.0393
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.289,
+   "faiz (reel ve nominal)": 0.141,
+   "dolar": 0.003,
+   "altın oynaklığı": 0.044,
+   "spekülatif pozisyon (COT)": 0.098,
+   "makro veri sürprizi/takvim": 0.196,
+   "hisse/tahvil/petrol/gümüş": 0.198,
+   "olay izi (şok)": 0.032
+  }
+ }
+}

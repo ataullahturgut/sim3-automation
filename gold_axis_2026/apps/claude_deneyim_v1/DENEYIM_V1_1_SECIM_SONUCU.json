@@ -1,0 +1,115 @@
+{
+ "candidates": {
+  "C0": {
+   "nav_2023_2024": 118.4848,
+   "ret_2025_pct": 64.62,
+   "nav_final": 195.0522,
+   "maxdd_2023_2024": 10.33,
+   "maxdd_all": 10.36,
+   "trades": 5,
+   "trade_list": [
+    {
+     "date": "2023-02-01",
+     "action": "AL",
+     "price": 1925.96,
+     "p": 0.66,
+     "Er": null,
+     "Pdown": null
+    },
+    {
+     "date": "2023-03-01",
+     "action": "SAT",
+     "price": 1835.72,
+     "p": 0.138,
+     "Er": null,
+     "Pdown": null
+    },
+    {
+     "date": "2023-03-14",
+     "action": "AL",
+     "price": 1904.6,
+     "p": 0.679,
+     "Er": null,
+     "Pdown": null
+    },
+    {
+     "date": "2023-04-03",
+     "action": "SAT",
+     "price": 1965.62,
+     "p": 0.22,
+     "Er": null,
+     "Pdown": null
+    },
+    {
+     "date": "2023-12-04",
+     "action": "AL",
+     "price": 2069.99,
+     "p": 0.794,
+     "Er": null,
+     "Pdown": null
+    }
+   ]
+  },
+  "C1": {
+   "nav_2023_2024": 129.687,
+   "ret_2025_pct": 64.62,
+   "nav_final": 213.4935,
+   "maxdd_2023_2024": 10.79,
+   "maxdd_all": 10.79,
+   "trades": 1,
+   "trade_list": [
+    {
+     "date": "2023-04-24",
+     "action": "AL",
+     "price": 1985.33,
+     "p": 0.464,
+     "Er": 0.887,
+     "Pdown": 0.356
+    }
+   ]
+  },
+  "C2": {
+   "nav_2023_2024": 94.468,
+   "ret_2025_pct": 64.62,
+   "nav_final": 155.5152,
+   "maxdd_2023_2024": 7.71,
+   "maxdd_all": 10.36,
+   "trades": 3,
+   "trade_list": [
+    {
+     "date": "2023-02-01",
+     "action": "AL",
+     "price": 1925.96,
+     "p": 0.66,
+     "Er": 0.155,
+     "Pdown": 0.0
+    },
+    {
+     "date": "2023-03-01",
+     "action": "SAT",
+     "price": 1835.72,
+     "p": 0.138,
+     "Er": -0.49,
+     "Pdown": 0.628
+    },
+    {
+     "date": "2024-11-14",
+     "action": "AL",
+     "price": 2556.39,
+     "p": 0.24,
+     "Er": 0.727,
+     "Pdown": 0.295
+    }
+   ]
+  }
+ },
+ "selected": "C1",
+ "reverted_by_2025_check": false,
+ "first_pick": "C1",
+ "passive": {
+  "nav_2023_2024": 140.2098,
+  "nav_final": 230.8164,
+  "maxdd_all": 10.79
+ },
+ "ideal_final_nav": 580.5736
+}

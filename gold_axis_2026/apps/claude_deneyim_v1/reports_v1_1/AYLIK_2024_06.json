@@ -1,0 +1,310 @@
+{
+ "month": "2024-06",
+ "days": 20,
+ "gold": {
+  "start_prev_close": 2342.51,
+  "end": 2325.81,
+  "change_pct": -0.71,
+  "high": 2376.03,
+  "low": 2295.77
+ },
+ "ideal": {
+  "month_log_return_pct": 3.12,
+  "gold_days_share": 0.45,
+  "legs": [
+   {
+    "entry": "2024-06-10",
+    "entry_price": 2292.89,
+    "exit": "2024-06-21",
+    "exit_price": 2365.28,
+    "net_pct": 1.51
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 116.1419,
+  "nav_end": 115.4222,
+  "month_ret_pct": -0.62,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.421,
+  "capture_of_ideal": -0.2,
+  "mean_Er": 0.528,
+  "mean_Pdown": 0.365
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 11,
+  "wrong_day_share": 0.55
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2024-06-10",
+    "exit": "2024-06-21",
+    "net_pct": 1.51,
+    "state_at_entry": [
+     [
+      "altın 1g getiri",
+      -3.62
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -2.35
+     ],
+     [
+      "COT managed money net",
+      1.71
+     ],
+     [
+      "altın 20g oynaklık",
+      1.56
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      -1.55
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      4.66
+     ],
+     [
+      "son FOMC'den beri gün",
+      -2.27
+     ],
+     [
+      "gümüş 5g",
+      2.15
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      1.99
+     ],
+     [
+      "son CPI'dan beri gün",
+      -1.87
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2024-06-03",
+    "end": "2024-06-07",
+    "gold_move_pct": 0.17,
+    "state_at_start": [
+     [
+      "altın/gümüş oranı 20g değişim",
+      -2.44
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -2.01
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.62
+     ],
+     [
+      "son NFP'den beri gün",
+      1.62
+     ],
+     [
+      "son NFP sürprizi",
+      -1.59
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "10Y reel faiz 5g değişim",
+      -2.11
+     ],
+     [
+      "10Y tahvil vadeli 5g",
+      1.85
+     ],
+     [
+      "Nasdaq 5g",
+      1.83
+     ],
+     [
+      "2Y faiz 5g değişim",
+      -1.42
+     ],
+     [
+      "altın 1g getiri",
+      1.35
+     ]
+    ]
+   },
+   {
+    "start": "2024-06-21",
+    "end": "2024-06-28",
+    "gold_move_pct": -0.2,
+    "state_at_start": [
+     [
+      "COT managed money net",
+      2.17
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.68
+     ],
+     [
+      "gümüş 5g",
+      1.54
+     ],
+     [
+      "COT MM 4 hafta değişim",
+      1.51
+     ],
+     [
+      "son FOMC'den beri gün",
+      -1.05
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "gümüş 5g",
+      -2.5
+     ],
+     [
+      "altın 5g getiri",
+      -1.85
+     ],
+     [
+      "altın/gümüş oranı 20g değişim",
+      1.31
+     ],
+     [
+      "GVZ 5g değişim",
+      -1.3
+     ],
+     [
+      "gümüş 20g",
+      -1.2
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2024-06-07T12:30",
+    "surprise": 90.0,
+    "gold_post60": -0.36572,
+    "gold_post240": -0.971102
+   },
+   {
+    "kind": "CPI",
+    "utc": "2024-06-12T12:30",
+    "surprise": -0.1,
+    "gold_post60": 1.081236,
+    "gold_post240": 0.853889
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2024-06-12T18:00",
+    "surprise": null,
+    "gold_post60": -0.536908,
+    "gold_post240": null
+   }
+  ],
+  "cot_mm_change": 0.0816,
+  "real_rate_20d_change_start_end": [
+   -0.020000000000000018,
+   -0.18999999999999995
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_016",
+    "dir": "DOWN",
+    "move_pct": "-5.458903",
+    "cls": "ALTIN_FİZİKİ_RESERVE_TALEP",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2024-05-20",
+    "end": "2024-06-07"
+   },
+   {
+    "key": "SWING_V1_017",
+    "dir": "UP",
+    "move_pct": "7.632614",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2024-06-07",
+    "end": "2024-07-16"
+   },
+   {
+    "key": "C_CORR_017",
+    "dir": "DOWN",
+    "move_pct": "3.592117",
+    "cls": "ALTIN_FİZİKİ_RESERVE_TALEP",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2024-06-07",
+    "end": "2024-06-07"
+   },
+   {
+    "key": "C_CORR_018",
+    "dir": "DOWN",
+    "move_pct": "3.019736",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Baskın mekanizma bilinmiyor",
+    "start": "2024-06-13",
+    "end": "2024-06-13"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 385,
+  "ideal_gold_share": 0.506,
+  "alpha_analog": 0.59,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1172
+   ],
+   [
+    "si_r5",
+    0.0908
+   ],
+   [
+    "g_r1",
+    0.0702
+   ],
+   [
+    "g_dd60",
+    0.0506
+   ],
+   [
+    "nfp_surp",
+    0.0471
+   ],
+   [
+    "gvz_d5",
+    0.0427
+   ],
+   [
+    "cl_r5",
+    0.0413
+   ],
+   [
+    "rr_d5",
+    0.04
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.329,
+   "faiz (reel ve nominal)": 0.062,
+   "dolar": 0.012,
+   "altın oynaklığı": 0.076,
+   "spekülatif pozisyon (COT)": 0.037,
+   "makro veri sürprizi/takvim": 0.133,
+   "hisse/tahvil/petrol/gümüş": 0.277,
+   "olay izi (şok)": 0.075
+  }
+ }
+}

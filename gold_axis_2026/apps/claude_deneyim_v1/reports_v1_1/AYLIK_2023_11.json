@@ -1,0 +1,292 @@
+{
+ "month": "2023-11",
+ "days": 22,
+ "gold": {
+  "start_prev_close": 1993.13,
+  "end": 2041.68,
+  "change_pct": 2.44,
+  "high": 2046.07,
+  "low": 1939.14
+ },
+ "ideal": {
+  "month_log_return_pct": 5.34,
+  "gold_days_share": 0.545,
+  "legs": [
+   {
+    "entry": "2023-11-13",
+    "entry_price": 1936.8,
+    "exit": "2023-11-29",
+    "exit_price": 2042.65,
+    "net_pct": 3.78
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 98.9774,
+  "nav_end": 101.1355,
+  "month_ret_pct": 2.18,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.49,
+  "capture_of_ideal": 0.4,
+  "mean_Er": -0.075,
+  "mean_Pdown": 0.406
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 10,
+  "wrong_day_share": 0.455
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2023-11-13",
+    "exit": "2023-11-29",
+    "net_pct": 3.78,
+    "state_at_entry": [
+     [
+      "COT MM 4 hafta değişim",
+      2.85
+     ],
+     [
+      "son CPI'dan beri gün",
+      1.81
+     ],
+     [
+      "son CPI sürprizi",
+      1.61
+     ],
+     [
+      "petrol 20g",
+      -1.31
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.23
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      2.55
+     ],
+     [
+      "son CPI sürprizi",
+      -2.35
+     ],
+     [
+      "COT MM 4 hafta değişim",
+      -2.29
+     ],
+     [
+      "altın 5g getiri",
+      2.12
+     ],
+     [
+      "son CPI'dan beri gün",
+      -1.88
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2023-11-01",
+    "end": "2023-11-10",
+    "gold_move_pct": -2.13,
+    "state_at_start": [
+     [
+      "sonraki FOMC'ye gün",
+      -3.03
+     ],
+     [
+      "altın 20g getiri",
+      1.97
+     ],
+     [
+      "son CPI sürprizi",
+      1.88
+     ],
+     [
+      "son NFP sürprizi",
+      1.4
+     ],
+     [
+      "son FOMC'den beri gün",
+      1.33
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "son NFP sürprizi",
+      -2.53
+     ],
+     [
+      "son FOMC'den beri gün",
+      -2.34
+     ],
+     [
+      "son NFP'den beri gün",
+      -2.12
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      1.97
+     ],
+     [
+      "COT MM 4 hafta değişim",
+      1.72
+     ]
+    ]
+   },
+   {
+    "start": "2023-11-29",
+    "end": "2023-11-30",
+    "gold_move_pct": 1.24,
+    "state_at_start": [
+     [
+      "sonraki FOMC'ye gün",
+      -2.14
+     ],
+     [
+      "Nasdaq 20g",
+      1.68
+     ],
+     [
+      "altın 1g getiri",
+      1.55
+     ],
+     [
+      "dolar endeksi 20g değişim",
+      -1.46
+     ],
+     [
+      "60g zirveye uzaklık",
+      1.39
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "altın 1g getiri",
+      -1.81
+     ],
+     [
+      "petrol 5g",
+      0.89
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      -0.74
+     ],
+     [
+      "Nasdaq 20g",
+      -0.54
+     ],
+     [
+      "2Y faiz 5g değişim",
+      -0.41
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "FOMC",
+    "utc": "2023-11-01T18:00",
+    "surprise": null,
+    "gold_post60": -0.152289,
+    "gold_post240": null
+   },
+   {
+    "kind": "NFP",
+    "utc": "2023-11-03T12:30",
+    "surprise": -30.0,
+    "gold_post60": -0.001257,
+    "gold_post240": 0.06056
+   },
+   {
+    "kind": "CPI",
+    "utc": "2023-11-14T13:30",
+    "surprise": -0.1,
+    "gold_post60": 0.719244,
+    "gold_post240": 0.902261
+   }
+  ],
+  "cot_mm_change": 0.0354,
+  "real_rate_20d_change_start_end": [
+   0.10000000000000009,
+   -0.33999999999999986
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_008",
+    "dir": "DOWN",
+    "move_pct": "-3.387824",
+    "cls": "JEOPOLİTİK_GÜVENLİK",
+    "mech": "Güvenli liman risk primi oluşması/çözülmesi",
+    "start": "2023-10-27",
+    "end": "2023-11-10"
+   },
+   {
+    "key": "SWING_V1_009",
+    "dir": "UP",
+    "move_pct": "6.889178",
+    "cls": "MAKRO_FAİZ_BEKLENTİSİ",
+    "mech": "Nominal/reel faiz–dolar–Fed patikası",
+    "start": "2023-11-10",
+    "end": "2023-12-01"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 237,
+  "ideal_gold_share": 0.443,
+  "alpha_analog": 0.508,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1205
+   ],
+   [
+    "si_r5",
+    0.0805
+   ],
+   [
+    "cl_r20",
+    0.0777
+   ],
+   [
+    "g_r1",
+    0.0762
+   ],
+   [
+    "cot_mm",
+    0.0692
+   ],
+   [
+    "fomc_to",
+    0.0602
+   ],
+   [
+    "gvz_lvl",
+    0.0485
+   ],
+   [
+    "g_dd60",
+    0.038
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.327,
+   "faiz (reel ve nominal)": 0.084,
+   "dolar": 0.0,
+   "altın oynaklığı": 0.081,
+   "spekülatif pozisyon (COT)": 0.07,
+   "makro veri sürprizi/takvim": 0.174,
+   "hisse/tahvil/petrol/gümüş": 0.226,
+   "olay izi (şok)": 0.039
+  }
+ }
+}

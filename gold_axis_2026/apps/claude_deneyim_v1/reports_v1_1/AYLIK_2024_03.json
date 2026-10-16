@@ -1,0 +1,243 @@
+{
+ "month": "2024-03",
+ "days": 20,
+ "gold": {
+  "start_prev_close": 2035.72,
+  "end": 2197.34,
+  "change_pct": 7.94,
+  "high": 2205.03,
+  "low": 2045.13
+ },
+ "ideal": {
+  "month_log_return_pct": 7.76,
+  "gold_days_share": 0.7,
+  "legs": [
+   {
+    "entry": "2024-02-14",
+    "entry_price": 1988.69,
+    "exit": "2024-03-21",
+    "exit_price": 2201.45,
+    "net_pct": 8.93
+   }
+  ]
+ },
+ "model": {
+  "nav_start": 100.974,
+  "nav_end": 108.7812,
+  "month_ret_pct": 7.73,
+  "trades": [],
+  "position_end": "ALTIN",
+  "mean_p": 0.451,
+  "capture_of_ideal": 1.0,
+  "mean_Er": -0.027,
+  "mean_Pdown": 0.408
+ },
+ "errors": {
+  "missed_gold_days": 0,
+  "false_gold_days": 6,
+  "wrong_day_share": 0.3
+ },
+ "why": {
+  "ideal_legs_drivers": [
+   {
+    "entry": "2024-02-14",
+    "exit": "2024-03-21",
+    "net_pct": 8.93,
+    "state_at_entry": [
+     [
+      "GVZ düzeyi",
+      -1.9
+     ],
+     [
+      "son makro yayına altın tepkisi",
+      -1.75
+     ],
+     [
+      "sonraki FOMC'ye gün",
+      -1.65
+     ],
+     [
+      "son NFP sürprizi",
+      1.59
+     ],
+     [
+      "son NFP'den beri gün",
+      1.29
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "COT MM 4 hafta değişim",
+      3.1
+     ],
+     [
+      "altın 20g getiri",
+      2.23
+     ],
+     [
+      "son FOMC'den beri gün",
+      -2.16
+     ],
+     [
+      "gümüş 20g",
+      2.02
+     ],
+     [
+      "altın 1g getiri",
+      1.8
+     ]
+    ]
+   }
+  ],
+  "ideal_cash_spells": [
+   {
+    "start": "2024-03-21",
+    "end": "2024-03-28",
+    "gold_move_pct": 1.77,
+    "state_at_start": [
+     [
+      "COT MM 4 hafta değişim",
+      2.99
+     ],
+     [
+      "gümüş 20g",
+      2.31
+     ],
+     [
+      "altın 1g getiri",
+      2.26
+     ],
+     [
+      "altın 20g getiri",
+      1.98
+     ],
+     [
+      "200g ortalamaya uzaklık",
+      1.94
+     ]
+    ],
+    "biggest_changes": [
+     [
+      "gümüş 5g",
+      -1.69
+     ],
+     [
+      "10Y reel faiz 5g değişim",
+      -1.64
+     ],
+     [
+      "altın 1g getiri",
+      -1.32
+     ],
+     [
+      "2Y faiz 5g değişim",
+      -1.19
+     ],
+     [
+      "petrol 5g",
+      -0.98
+     ]
+    ]
+   }
+  ],
+  "macro_releases": [
+   {
+    "kind": "NFP",
+    "utc": "2024-03-08T13:30",
+    "surprise": 77.0,
+    "gold_post60": 0.219175,
+    "gold_post240": 1.29559
+   },
+   {
+    "kind": "CPI",
+    "utc": "2024-03-12T12:30",
+    "surprise": 0.0,
+    "gold_post60": -0.259509,
+    "gold_post240": -0.362115
+   },
+   {
+    "kind": "FOMC",
+    "utc": "2024-03-20T18:00",
+    "surprise": null,
+    "gold_post60": 1.129844,
+    "gold_post240": null
+   }
+  ],
+  "cot_mm_change": 0.1444,
+  "real_rate_20d_change_start_end": [
+   0.20999999999999996,
+   -0.07000000000000006
+  ],
+  "event_register_hypotheses_hindsight": [
+   {
+    "key": "SWING_V1_013",
+    "dir": "UP",
+    "move_pct": "19.984039",
+    "cls": "ALTIN_FİZİKİ_RESERVE_TALEP",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2024-02-14",
+    "end": "2024-04-19"
+   },
+   {
+    "key": "C_CORR_011",
+    "dir": "UP",
+    "move_pct": "5.668888",
+    "cls": "ALTIN_FİZİKİ_RESERVE_TALEP",
+    "mech": "Merkez bankası, fiziki altın ve EFP kanalı",
+    "start": "2024-03-04",
+    "end": "2024-03-11"
+   }
+  ]
+ },
+ "learning_after_month": {
+  "memory_days": 320,
+  "ideal_gold_share": 0.484,
+  "alpha_analog": 0.54,
+  "th_in": 0.7,
+  "th_out": 0.1,
+  "top_weights": [
+   [
+    "g_r5",
+    0.1163
+   ],
+   [
+    "si_r5",
+    0.1043
+   ],
+   [
+    "g_r1",
+    0.0758
+   ],
+   [
+    "cot_mm",
+    0.0631
+   ],
+   [
+    "cl_r20",
+    0.0466
+   ],
+   [
+    "fomc_since",
+    0.0424
+   ],
+   [
+    "nfp_surp",
+    0.0419
+   ],
+   [
+    "fomc_to",
+    0.0407
+   ]
+  ],
+  "group_weights": {
+   "altın fiyat yapısı": 0.286,
+   "faiz (reel ve nominal)": 0.036,
+   "dolar": 0.003,
+   "altın oynaklığı": 0.069,
+   "spekülatif pozisyon (COT)": 0.07,
+   "makro veri sürprizi/takvim": 0.204,
+   "hisse/tahvil/petrol/gümüş": 0.285,
+   "olay izi (şok)": 0.046
+  }
+ }
+}
