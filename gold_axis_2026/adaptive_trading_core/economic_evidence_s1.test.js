@@ -38,6 +38,7 @@ test("Same-clock pre-outcome comparator has opposite evidence and no feature lea
  assert.ok(v.events[0].matchedControls.some(q=>q.next4hLogPct>0));
  assert.ok(v.events[0].matchedControls.some(q=>q.next4hLogPct<0));
  assert.equal(v.eventFeaturesFedIntoCore,0);
+ assert.ok(v.sameClockControl4h.up+v.sameClockControl4h.nonUp>=2);
  assert.equal(v.outcomesUsedToFormMatch,false);
  assert.equal(v.events[0].causalStatus,"UNVERIFIED_MATCHED_OBSERVATIONAL_EVIDENCE");
 });
@@ -47,7 +48,7 @@ test("A case archive is research context only and never feeds hindsight labels a
  const d="case_id,primary_plot_candidate_id,secondary_plot_candidate_id,source_support_grade,firstprint_utc\nSWING_V1_001,ORG01,ORG09,HYPOTHESIS,UNKNOWN\n";
  const a=e.readArchive("# OLAY-02\n",q,d);
  assert.equal(a.caseCount,1);
- assert.equal(a.pitProvenCases,0);
+ assert.equal(a.pitCertifiedCases,0);
  assert.equal(a.cases[0].permissibleAsTradingInput,false);
  assert.equal(a.cases[0].candidateOrg,"ORG01");
 });
