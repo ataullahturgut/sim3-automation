@@ -89,7 +89,7 @@ function closeSession(s,o){
   }
   if(s.sessionIndex-p.startIndex<p.h){keep.push(p);continue;}
   const net=100*(Math.log(o.price/p.price)+2*Math.log(1-FEE));
-  for(const key of p.keys)update(s,key,p.h,net,p.startIndex,p.anchorDay);
+  for(const key of p.keys)update(s,key,p.h,net,p.startIndex,label);
   s.audit.matured++;
  }
  s.pending=keep;s.lastSession=label;s.lastSource=o.sourceId;
