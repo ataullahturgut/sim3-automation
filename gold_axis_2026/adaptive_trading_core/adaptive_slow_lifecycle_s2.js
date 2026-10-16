@@ -38,17 +38,21 @@ function create({sourceRegistry,minReady=8}={}){
   nextEpisodeId:1,complete:[],censored:[],endedAt:{},censoredAt:{},
   pending:[],transitions:{},phases:Object.fromEntries(PHASES.map(x=>[x,0])),
   eligibleSessions:0,rejectedSessions:0,minorDegradedSessions:0,
+  quoteOnlyResearchSessions:0,
   sessionBreaks:0,sourceBreaks:0,
   stats:Object.fromEntries(HORIZONS.map(h=>[h,{issued:0,ready:0,scored:0,
    end:0,continue:0,censored:0,brier:0,baselineBrier:0,correct:0,
    baselineCorrect:0,byYear:{},byEpisode:{}}]))};
 }
 function validate(s,r){
+ const quoteOnly=r?.sessionEvidence==="BIDASK_M15_RECONSTRUCTED_NOT_M1";
  if(!r||!r.session||!r.source_id||!finite(r.close_price)||r.close_price<=0||
-  !Number.isInteger(r.n)||!Number.isInteger(r.full_n)||
-  !finite(r.max_gap_minutes)||!r.first_bar||!r.last_bar||
-  !Number.isInteger(r.last_native_minute_bars))
+  !Number.isInteger(r.n)||!finite(r.max_gap_minutes)||!r.first_bar||!r.last_bar||
+  (quoteOnly?(!Number.isInteger(r.valid_quotes)||typeof r.terminal_bar_valid!=="boolean"):
+    (!Number.isInteger(r.full_n)||!Number.isInteger(r.last_native_minute_bars))))
   throw Error("S2S_INCOMPLETE_SESSION_RECORD");
+ if(r.sessionEvidence!==undefined&&!quoteOnly&&r.sessionEvidence!=="NATIVE_M1_AGGREGATED")
+  throw Error("S2S_UNSUPPORTED_SESSION_EVIDENCE");
  const label=r.session;
  if(!/^\d{4}-\d\d-\d\d$/.test(label))throw Error("S2S_INVALID_SESSION");
  const end=Date.parse(label+"T22:00:00Z"),first=parse(r.first_bar),last=parse(r.last_bar);
@@ -64,7 +68,9 @@ function validate(s,r){
  // Daily endpoint quality: allow ≤2 isolated degraded intraday M15 bars,
  // but NEVER a partial terminal bar, absent 5+ hours, or a stale session close.
  // Research quality grade remains IMPERFECT_SESSION, not full PIT quality.
- const valid=r.n>=80&&r.full_n>=r.n-2&&r.last_native_minute_bars===15&&
+ const valid=r.n>=80&&
+  (quoteOnly?(r.valid_quotes===r.n&&r.terminal_bar_valid===true):
+    (r.full_n>=r.n-2&&r.last_native_minute_bars===15))&&
   r.max_gap_minutes<=90&&(end-(last+15*60000))<=90*60000 &&
   (first>=end-24*3600000)&&
   (first<=end-20*3600000);
@@ -163,7 +169,9 @@ function observe(s,r){
  }
  s.lastSession=v.label;s.lastSource=r.source_id;
  s.sessionIndex++;s.eligibleSessions++;
- if(r.full_n!==r.n)s.minorDegradedSessions++;
+ if(r.sessionEvidence==="BIDASK_M15_RECONSTRUCTED_NOT_M1")
+  s.quoteOnlyResearchSessions++;
+ else if(r.full_n!==r.n)s.minorDegradedSessions++;
  s.window.push(r.close_price);if(s.window.length>11)s.window.shift();
  const z=zscore(s.window);
  let phase="WARMUP";
@@ -248,6 +256,7 @@ function summary(s){
   sessionConvention:"UTC22_CLOSE_FIXED_RESEARCH_NO_EXCHANGE_SETTLEMENT_CERT",
   completedSessions:s.eligibleSessions,rejectedSessions:s.rejectedSessions,
   minorDegradedSessions:s.minorDegradedSessions,
+  quoteOnlyResearchSessions:s.quoteOnlyResearchSessions,
   completeEpisodes:s.complete.length,censoredEpisodes:s.censored.length,
   calendarBreaks:s.sessionBreaks,sourceBreaks:s.sourceBreaks,
   medianEpisodeSessions:median,phases:copy(s.phases),
@@ -256,6 +265,7 @@ function summary(s){
    "HOLIDAYS_WITHOUT_OFFICIAL_CALENDAR_CENSORED",
    "UTC22_RESEARCH_CUTOFF_NOT_OFFICIAL_SETTLEMENT",
    "UP_TO_TWO_PARTIAL_INTRADAY_M15_BARS_ALLOW_RESEARCH_ONLY",
+   "QUOTE_ONLY_SESSIONS_HAVE_NO_NATIVE_M1_COMPLETENESS_CERTIFICATION",
    "MONTH_YEAR_EXPERIMENTS_ARE_RETROSPECTIVE_NOT_BLIND_OOS"]};
 }
 function checkpoint(s){return copy(s);}

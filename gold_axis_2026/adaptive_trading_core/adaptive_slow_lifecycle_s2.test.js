@@ -136,3 +136,27 @@ test("Daily long-horizon checkpoint can be restored identically and unknown-hori
  assert.throws(()=>life.observe(s,{...session(d.at(-1),1850),
   availableAt:"2027-01-01T00:00:00Z"}),/S2S_NONMONOTONIC_SESSION/);
 });
+
+test("2020-2025 recovered bid/ask M15 may enter only as quote-only research evidence",()=>{
+ const s=life.create({sourceRegistry:reg}),d=days(2);
+ const original=session(d[0],1800),r={...original,
+  sessionEvidence:"BIDASK_M15_RECONSTRUCTED_NOT_M1",
+  valid_quotes:92,terminal_bar_valid:true,
+  full_n:undefined,last_native_minute_bars:undefined};
+ assert.notEqual(life.observe(s,r).phase,"REJECTED_SESSION");
+ assert.equal(life.summary(s).quoteOnlyResearchSessions,1);
+ assert.equal(life.summary(s).scienceGate,"NOT_PROVEN");
+ assert.ok(life.summary(s).knownLimitations.some(x=>x.includes("NO_NATIVE_M1")));
+});
+test("Quote-only price integrity and missing terminal quote cannot be manufactured",()=>{
+ const d=days(3),s=life.create({sourceRegistry:reg});
+ const original=session(d[0],1800),newSource={...original,
+  sessionEvidence:"BIDASK_M15_RECONSTRUCTED_NOT_M1",
+  valid_quotes:91,terminal_bar_valid:true,
+  full_n:undefined,last_native_minute_bars:undefined};
+ assert.equal(life.observe(s,newSource).phase,"REJECTED_SESSION");
+ assert.equal(life.observe(s,{...newSource,session:d[1],
+  valid_quotes:92,terminal_bar_valid:false}).phase,"REJECTED_SESSION");
+ assert.equal(s.eligibleSessions,0);
+ assert.equal(s.rejectedSessions,2);
+});

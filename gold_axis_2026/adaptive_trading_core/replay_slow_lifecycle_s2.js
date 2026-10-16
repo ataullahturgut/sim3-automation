@@ -17,7 +17,9 @@ function replay(rows,{attachSameCore=false}={}){
   if(raw.session<=previous)throw Error("S2S_UNORDERED_OR_DUPLICATE_SESSION");
   previous=raw.session;
   const r={...raw,n:Number(raw.n),full_n:Number(raw.full_n),
-   last_native_minute_bars:Number(raw.last_native_minute_bars),
+   last_native_minute_bars:raw.last_native_minute_bars===undefined?null:
+     Number(raw.last_native_minute_bars),
+   valid_quotes:raw.valid_quotes===undefined?null:Number(raw.valid_quotes),
    max_gap_minutes:Number(raw.max_gap_minutes),
    close_price:Number(raw.close_price)};
   if(mdl)bridge.observeSlowSession(mdl,r);
