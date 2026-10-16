@@ -166,15 +166,27 @@ function observe(s,o){
  // It is never a live signal. Baseline 15m Q remains separately testable.
  const sessionState=s.sessionMemory.last?.state??"NO_SLOW:NONE";
  const longValue=memory.forecast(s.sessionMemory,sessionState);
+ const trHour=(new Date(t).getUTCHours()+3)%24+
+  new Date(t).getUTCMinutes()/60; // Europe/Istanbul since 2016: UTC+03
+ const trWeekday=new Date(t+3*3600000).getUTCDay();
+ const bankWindow=trWeekday>=1&&trWeekday<=5&&trHour>=9&&trHour<=17;
  const longFive=longValue.byHorizon.find(x=>x.sessions===5);
- if(s.config.positionResearchMode==="MULTI_SESSION_RESEARCH"&&ready){
-   s.audit.multiSessionResearchEvaluations++;
-   if(longFive.ready&&longFive.conservativeLowerPct>0&&h==="CASH"){
-     proposed="BUY";reason="MATURED_5_SESSION_NET_ADVANTAGE_RESEARCH";
-   }else if(longFive.ready&&longFive.netGoldVsCashLogPct<=0&&h==="CASH"){
-     proposed="KEEP";reason="MATURED_5_SESSION_NET_DISADVANTAGE";
-   }else if(!longFive.ready){
-     proposed="ABSTAIN";reason="MATURED_SESSION_SUPPORT_INSUFFICIENT";
+ if(s.config.positionResearchMode==="MULTI_SESSION_RESEARCH"){
+   if(!bankWindow){proposed="ABSTAIN";reason="BANK_WINDOW_CLOSED_RESEARCH";}
+   else if(!ready){/* Keep strict fast/evidence gate, no fallback. */}
+   else{
+     s.audit.multiSessionResearchEvaluations++;
+     if(!longFive.ready){proposed="ABSTAIN";reason="MATURED_SESSION_SUPPORT_INSUFFICIENT";}
+     else if(h==="CASH"){
+       proposed=longFive.conservativeLowerPct>0?"BUY":"KEEP";
+       reason=proposed==="BUY"?"MATURED_5_SESSION_NET_ADVANTAGE_RESEARCH":
+         "MATURED_5_SESSION_NOT_CONVINCING";
+     }else{
+       proposed=longFive.netGoldVsCashLogPct<0&&
+        longFive.netGoldVsCashLogPct+1.96*longFive.stderrPct<0?"SELL":"KEEP";
+       reason=proposed==="SELL"?"MATURED_5_SESSION_NET_DISADVANTAGE_RESEARCH":
+        "MATURED_5_SESSION_HOLD_OR_UNCERTAIN";
+     }
    }
  }
  if(proposed==="ABSTAIN")s.audit.abstained++;
@@ -196,7 +208,7 @@ function observe(s,o){
   s1ResearchEvidence:s.lastS1Evidence?{provenance:s.lastS1Evidence.provenance,
     byHorizon:s.lastS1Evidence.byHorizon}:null,
   multiSessionResearch:{state:sessionState,fiveSession:longFive,
-     policyMode:s.config.positionResearchMode},
+     policyMode:s.config.positionResearchMode,bankWindow},
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
 }
 function summary(s){

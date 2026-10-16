@@ -139,7 +139,7 @@ test("Missing completed weekday censors outstanding multi-session labels",()=>{
    price:1800,availableAt:day+"T22:00:00Z"});
  assert.equal(s.audit.brokenSessions,1);
  assert.equal(s.audit.maturedLabels,1);
- assert.equal(s.audit.censoredLabels,8); // first two sessions: 3+4 pending after one horizon matures
+ assert.equal(s.audit.censoredLabels,7); // first 1-session label matured; seven remaining must be censored
  assert.equal(s.cohorts["TREND:UP#3"],undefined);
 });
 test("S3 receives actual completed S1 research forecast but never calls it economic PIT",()=>{
@@ -161,4 +161,16 @@ test("Multi-session policy cannot buy from immature or reconstructed lookahead l
  }
  assert.equal(critic.summary(s).audit.shadowTrades,0);
  assert.equal(critic.summary(s).liveTradeAuthorized,false);
+});
+
+test("S3 multi-session shadow cannot execute research switches outside TR 09–17",()=>{
+ const s=critic.create({sourceRegistry:reg,positionResearchMode:"MULTI_SESSION_RESEARCH",
+  shadowEnabled:true,minUpdates:16});
+ // 03 Jan 10:00 UTC=13:00 TR, after 28 bars reaches 17:00+.
+ for(let i=0;i<38;i++){
+  const out=critic.observe(s,tick(i,1800));
+  if(new Date(out.at).getUTCHours()>=14&&out.readyForResearchComparison)
+   assert.equal(out.proposedResearchAction,"ABSTAIN");
+ }
+ assert.equal(critic.summary(s).audit.shadowTrades,0);
 });
