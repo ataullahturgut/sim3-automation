@@ -113,3 +113,23 @@ test("single bank-leg fee still unchanged in both estimators' counterfactuals",(
  A.ok(Math.abs(x.GOLD_KEEP-100*Math.log(1.02))<1e-8);
  A.ok(Math.abs(x.GOLD_SWITCH-100*Math.log(.992))<1e-8);
 });
+
+test("Regime EWMA forgets old average after many as-of observations",()=>{
+ const m=M.create({regimeMemory:.90});
+ let pos="CASH",scoreEarly=0,scoreLate=0;
+ for(let i=0;i<180;i++){
+  const direction=i<80?1.5:-1.5;
+  const z=M.signal(m,obs(i,pos,direction));
+  if(i===80)scoreEarly=z.regimeSurprise;
+  if(i===150)scoreLate=z.regimeSurprise;
+  pos=fill(m,i,100*Math.exp(.01*Math.min(i,80)-.01*Math.max(0,i-80))).fill.positionAfter;
+ }
+ A.ok(scoreEarly>scoreLate,scoreEarly+" should exceed "+scoreLate);
+});
+test("Forgetting-rate config is explicit and not learnable calendar ID",()=>{
+ const m=M.create();
+ A.ok(m.config.gradientMemory>0&&m.config.gradientMemory<1);
+ A.ok(m.config.regimeMemory>0&&m.config.regimeMemory<1);
+ A.throws(()=>M.create({gradientMemory:1}),/BAD_FORGETTING/);
+ A.throws(()=>M.create({regimeMemory:0}),/BAD_FORGETTING/);
+});
