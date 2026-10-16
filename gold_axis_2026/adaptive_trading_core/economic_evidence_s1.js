@@ -62,7 +62,8 @@ function readArchive(olayText,ogrenText,deepCsv){
   });
   return {familyVocabulary:families,orgVocabulary:orgr,
     caseCount:cases.length,
-    pitProvenCases:cases.filter(c=>c.firstprint!=="UNKNOWN"&&c.firstprint!=="").length,
+    firstprintClaimedCases:cases.filter(c=>c.firstprint!=="UNKNOWN"&&c.firstprint!=="").length,
+    pitCertifiedCases:0, // Even a dated retrospectively entered source isn't proof of live first-print
     cases,ontologyStatus:"RESEARCH_HYPOTHESES_NOT_CAUSAL_RULES"};
 }
 function readReleaseClusters(macroCsv,start,end){
@@ -146,7 +147,12 @@ function pairControls(marketRows,macroClusters,{exposureMinutes=240,blackoutMinu
       causalStatus:"UNVERIFIED_MATCHED_OBSERVATIONAL_EVIDENCE",
       admission:"QUARANTINED_FROM_ASOF_TRADING_FEATURES"};
   });
-  return {events,controlsTotal:control.length,uniqueMatchedControls:usedControls.size,
+  const signCount=a=>({up:a.filter(c=>c.outcome4hLogPct>0).length,
+    nonUp:a.filter(c=>c.outcome4hLogPct<=0).length});
+  return {events,controlsTotal:control.length,
+    allNoEventControls4h:signCount(control),
+    sameClockControl4h:signCount(control.filter(q=>candidate.some(v=>v.hourUtc===q.hourUtc))),
+    uniqueMatchedControls:usedControls.size,
     outcomesUsedToFormMatch:false,eventFeaturesFedIntoCore:0,
     comparisonMethod:"SAME_UTC_HOUR_NEAREST_PRE_OUTCOME_MARKET_CONTEXT",
     claim:"RETROSPECTIVE_NEGATIVE_CONTROLS_NOT_CAUSAL_IDENTIFICATION"};
