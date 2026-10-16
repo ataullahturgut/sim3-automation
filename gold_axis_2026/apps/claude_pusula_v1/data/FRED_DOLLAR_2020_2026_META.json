@@ -1,0 +1,12 @@
+{
+ "DTWEXBGS": {
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTWEXBGS&cosd=2020-01-01&coed=2026-10-15",
+  "rows": 1694,
+  "sha256": "a58f3a9b8005fc5f07a693bb291125262c1f3375a382fc35abce3e14b7100fb0"
+ },
+ "DEXUSEU": {
+  "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXUSEU&cosd=2020-01-01&coed=2026-10-15",
+  "rows": 1694,
+  "sha256": "1c08d4e2910f968283ad35f8db407e1702e339443310b4179dd05e5ed7330ddf"
+ }
+}
