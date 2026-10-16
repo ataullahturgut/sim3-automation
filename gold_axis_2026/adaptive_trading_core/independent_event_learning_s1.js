@@ -147,6 +147,9 @@ function run(raw,{mode="DISCOVERY_FULL_ARCHIVE",proof="RETROSPECTIVE_UNVERIFIED_
     // Each later release is days away; still enforce the due timestamp in history.
     past.push(e);
   }
+  const chosenControls=evidence.flatMap(e=>(controlByRelease.get(e.release_utc)||[])
+    .map(c=>c.anchor_utc));
+  const uniqueControls=new Set(chosenControls).size;
   const getScore=a=>({count:a.length,
     correctMarket:a.reduce((s,z)=>s+z.correctMarket,0),
     correctEconomic:a.reduce((s,z)=>s+z.correctEco,0),
@@ -169,6 +172,9 @@ function run(raw,{mode="DISCOVERY_FULL_ARCHIVE",proof="RETROSPECTIVE_UNVERIFIED_
     outputAuthority:"DESCRIPTIVE_LEARNED_HYPOTHESIS_ONLY_NO_TRADE",
     candidateReleaseWaves:seen.size,completeWaves:evidence.length,
     rejectedIncompleteWaves:missing.length,
+    matchedControlAssignments:chosenControls.length,
+    uniqueMatchedControlAnchors:uniqueControls,
+    reusedControlAssignments:chosenControls.length-uniqueControls,
     descriptors:{employment:descript("EMP"),inflation:descript("CPI")},
     predictive:{all:getScore(scored),
       byYear:Object.fromEntries([2023,2024,2025].map(y=>[y,getScore(scored.filter(z=>z.year===y))])),
