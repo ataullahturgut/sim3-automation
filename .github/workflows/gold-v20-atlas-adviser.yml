@@ -1,0 +1,48 @@
+name: Gold V20 ATLAS Adaptive Expert Scientific Gate
+on:
+  push:
+    branches:
+      - 'research-gold-v20-*'
+  pull_request:
+    branches:
+      - 'research-gold-v19-siper-robust-policy-20261016'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  atlas-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse verified V20 mathematical controller
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check v20_kavis_atlas.js
+          node --check v20_kavis_atlas.test.js
+          node --check v20_128_adaptive_expert_scenarios.js
+      - name: V18 V19 V20 all causal research tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --test v18_kavis_adversarial.test.js v19_kavis_siper.test.js v20_kavis_atlas.test.js
+      - name: 128 synthetic hard worlds and exact V18 no-shield ablation
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v20_128_adaptive_expert_scenarios.js > v20_128_fictional_results.json
+          node -e "const x=require('./v20_128_fictional_results.json');console.log(JSON.stringify({researchOnly:x.kind,summary:x.summary,regimes:x.regimes,negativeCases:x.rows.filter(z=>z.delta<0).sort((a,b)=>a.delta-b.delta).slice(0,10).map(z=>({mode:z.mode,seed:z.seed,fee:z.fee,baseline:z.v18.capital,new:z.v19.capital,delta:z.delta,DD:z.v19.maxDrawdown}))},null,2))"
+      - name: No historical XAU source or live orders
+        run: |
+          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|loadFullRows|2026_FEB_SEP|function placeOrder' gold_axis_2026/apps/portfolio_guard_v1/v20_kavis_atlas.js gold_axis_2026/apps/portfolio_guard_v1/v20_kavis_atlas.test.js gold_axis_2026/apps/portfolio_guard_v1/v20_128_adaptive_expert_scenarios.js; then
+            echo "Forbidden historical gold or live-order code"
+            exit 1
+          fi
+      - name: Retain success and failure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v20-atlas-128-adversarial-worlds
+          path: gold_axis_2026/apps/portfolio_guard_v1/v20_128_fictional_results.json
+          if-no-files-found: ignore
