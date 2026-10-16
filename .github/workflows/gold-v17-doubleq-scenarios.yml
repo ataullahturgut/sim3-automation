@@ -32,9 +32,14 @@ jobs:
         run: |
           node v17_fictional_scenarios.js > v17_synthetic_scenarios.json
           node -e "const z=require('./v17_synthetic_scenarios.json'); console.log(JSON.stringify({status:z.status,models:z.rows.map(r=>({world:r.scenario,model:r.model,capital:r.capital,hold:r.hold,trades:r.trades,maxDD:r.peakDrawdownPct,moves:r.moves.slice(0,9)}))},null,2))"
+      - name: Locked V17 on 16 further unoptimized FICTIONAL seeds
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v17_unseen_fictional_stress.js > v17_unseen_fictional_results.json
+          node -e "const r=require('./v17_unseen_fictional_results.json'); console.log(JSON.stringify({contract:r.contract,summary:r.summary,worlds:r.worlds.map(z=>({seed:z.seed,V16:z.v16.capital,V17:z.v17.capital,passive:z.passive,delta:z.delta}))},null,2))"
       - name: Prohibit historical price sources
         run: |
-          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|loadFullRows|OLAY_02_96_' gold_axis_2026/apps/portfolio_guard_v1/v17_kavis_olay_doubleq.js gold_axis_2026/apps/portfolio_guard_v1/v17_kavis_olay_doubleq.test.js gold_axis_2026/apps/portfolio_guard_v1/v17_fictional_scenarios.js; then
+          if grep -E 'v13_sentez_run|v14_karar_run|v8_regret_engine|loadFullRows|OLAY_02_96_' gold_axis_2026/apps/portfolio_guard_v1/v17_kavis_olay_doubleq.js gold_axis_2026/apps/portfolio_guard_v1/v17_kavis_olay_doubleq.test.js gold_axis_2026/apps/portfolio_guard_v1/v17_fictional_scenarios.js gold_axis_2026/apps/portfolio_guard_v1/v17_unseen_fictional_stress.js; then
             echo "V17 phase must not access historical gold price datasets"
             exit 1
           fi
@@ -42,5 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v17-five-fictional-worlds
-          path: gold_axis_2026/apps/portfolio_guard_v1/v17_synthetic_scenarios.json
+          path: |
+            gold_axis_2026/apps/portfolio_guard_v1/v17_synthetic_scenarios.json
+            gold_axis_2026/apps/portfolio_guard_v1/v17_unseen_fictional_results.json
           if-no-files-found: error
