@@ -40,6 +40,8 @@ EXIT_LAM = LAM
 # Ek-5 (TERAZI_V3_4_ON_KAYIT_NADIR_OLAY_GUVENI.md): "sign" = v3.3 (günlük işaret uyumu),
 # "skill" = v3.4 (taban orana göre kalibre log-olabilirlik becerisi). Varsayılan v3.3.
 TRUST_MODE = "sign"
+# Ek-6 (v3.5): kırılma kanalında aday olamayacak özellikler. Varsayılan boş (v3.3/v3.4).
+EXIT_EXCLUDE = ()
 
 
 def break_labels(P, theta=THETA, m=M_BREAK):
@@ -202,6 +204,8 @@ class BreakBase:
         have = {R.gates for R in self.rules}
         cands = []
         for j in range(Zm.shape[1]):
+            if S.FEATURES[j] in EXIT_EXCLUDE:
+                continue
             grid = (0.5,) if S.FEATURES[j] in S.BINARY else GRID
             for d_ in (1, -1):
                 for c in grid:
@@ -212,7 +216,7 @@ class BreakBase:
                 continue
             used = {g[0] for g in R.gates}
             for j in range(Zm.shape[1]):
-                if j in used:
+                if j in used or S.FEATURES[j] in EXIT_EXCLUDE:
                     continue
                 grid = (0.5,) if S.FEATURES[j] in S.BINARY else GRID
                 for d_ in (1, -1):

@@ -18,3 +18,11 @@ yani satış koşulu sağlandı. Satışı **makro onayı** engelledi (o gün re
 
 Ancak aynı değişiklik tüm dönemde 9 satış üretti; 9'unun 9'u daha pahalıya geri alındı
 (−%0,85 ile −%5,86). Mayıs 2024'ten sonra işlem yok. **v3.4 başarısız (S2, S4).**
+
+## v3.5 (ön kayıt eki 6, `59451bf`): COT kırılma kanalından çıkarıldı
+`KOSU_v3_5.txt`, `TERAZI_V3_5_*.json`. Net NAV **205,54**, 13 işlem, düşüş %11,47.
+S0 (3 Oca–2 Şub satış yok) **GEÇMEDİ**: Ocak'ta 4 satış (6, 18, 27, 31 Ocak), hepsi 1–3 gün
+içinde daha pahalıya geri alındı. S1 geçti (6 Şubat'ta 1.878'den satış), S2 geçmedi, S3, S4 geçti.
+2024'te satış yok. COT'u çıkarmak 2024 kayıplarını giderdi ama Ocak 2023 dalgalanmasını artırdı:
+kırılma kanalı Ocak'taki küçük geri çekilmeleri (−0,5σ…−1σ) ve 3 Şubat düşüşünü (−1,97σ)
+mevcut değişkenlerle ayırt edemiyor. Ayar taraması yapılmadı.
