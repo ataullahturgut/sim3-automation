@@ -39,3 +39,5 @@ jobs:
           node --check adaptive_rule_discovery_s1.js
           node --check adaptive_rule_discovery_s1.test.js
           node --test adaptive_rule_discovery_s1.test.js
+          node --check replay_reconstructed_jan2023_s1.js
+          node --test replay_reconstructed_jan2023_s1.test.js
