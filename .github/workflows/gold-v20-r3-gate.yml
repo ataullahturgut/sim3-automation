@@ -21,6 +21,7 @@ jobs:
         run: |
           node --check v20_atlas_r3_gate.js
           node --check v20_atlas_r3_gate.test.js
+          node --check v20_r3_500_null_calibration.js
       - name: Execute new R3 prereg contract
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: node --test v20_atlas_r3_gate.test.js
@@ -29,6 +30,18 @@ jobs:
         run: |
           node --test v20_atlas_r2_shadow.test.js
           npm run test:kavis-research
+      - name: 500 null paths prereg threshold calibration
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node v20_r3_500_null_calibration.js > r3_calibration_500_results.json
+          node -e "const a=require('./r3_calibration_500_results.json');console.log(JSON.stringify({kind:a.kind,threshold:a.threshold,passes:a.calibrationPassed,opens:a.nullPairOpens,max:a.maxOfMax,min:a.minOfMax,worlds:a.worldCount},null,2));if(!a.calibrationPassed)process.exitCode=1"
       - name: Check for prohibited live trade connection
         run: |
           if grep -E 'function liveOrder|function placeOrder|2026_FEB_SEP|loadFullRows' gold_axis_2026/apps/portfolio_guard_v1/v20_atlas_r3_gate.js; then exit 1; fi
+      - name: Preserve calibration seed results (never optimize on evaluation)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-500-null-calibration
+          path: gold_axis_2026/apps/portfolio_guard_v1/r3_calibration_500_results.json
+          if-no-files-found: ignore
