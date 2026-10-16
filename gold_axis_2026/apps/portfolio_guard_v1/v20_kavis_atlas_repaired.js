@@ -1,6 +1,6 @@
 "use strict";
 /**
- * V19 KAVIS-SIPER: robust-goal sequential action controller.
+ * V20 KAVIS-ATLAS AUDIT REPAIR: robust-goal sequential action controller.
  * V18 Double-Q is the ONLY learned expected-value policy.
  * This module adds an as-of, path-dependent goal/risk supervisor:
  *  (1) trusted input / safe execution
@@ -53,7 +53,7 @@ function config(o={}){
     c.riskAdvisorMinLabels>500||!finite(c.advisorDecay)||c.advisorDecay<.7||
     c.advisorDecay>=1||!finite(c.advisorConfidence)||c.advisorConfidence<0||
     c.advisorConfidence>4||typeof c.enforceEntryRiskBudget!=="boolean")
-     throw Error("V19_INVALID_RISK_GOALS");
+     throw Error("V20_AUDIT_INVALID_RISK_GOALS");
  return c;
 }
 function create(options={}){
@@ -80,9 +80,9 @@ function create(options={}){
 function bucket(ob){
  const m=ob.market;
  if(!m||!finite(m.r4)||!finite(m.r1)||!finite(m.r3))
-   throw Error("V19_BAD_MARKET_REGIME");
+   throw Error("V20_AUDIT_BAD_MARKET_REGIME");
  const events=ob.events??[];
- if(!Array.isArray(events))throw Error("V19_BAD_EVENT_ARRAY");
+ if(!Array.isArray(events))throw Error("V20_AUDIT_BAD_EVENT_ARRAY");
  if(m.r4< -1.5|| (finite(m.rv)&&m.rv>3)||
     (finite(m.dd)&&m.dd< -5)||
     events.some(e=>e?.family==="G05"||e?.family==="G06"))
@@ -185,10 +185,10 @@ function independentRiskAdvice(position,regime,fallback){
  return fallback;
 }
 function signal(s,ob){
- if(!s||s.version!==VERSION)throw Error("V19_INCOMPATIBLE_STATE");
+ if(!s||s.version!==VERSION)throw Error("V20_AUDIT_INCOMPATIBLE_STATE");
  if(!ob||ob.position!==s.portfolio.position)
-  throw Error("V19_POSITION_DISAGREEMENT");
- if(s.pendingContext!==null)throw Error("V19_PENDING_SIGNAL");
+  throw Error("V20_AUDIT_POSITION_DISAGREEMENT");
+ if(s.pendingContext!==null)throw Error("V20_AUDIT_PENDING_SIGNAL");
  const which=bucket(ob),tail=estimate(s,which),
    dd=s.portfolio.drawdownPct,config=s.config,p=ob.position;
  // Risk calculations inspect only completed, accepted checkpoint labels.
@@ -257,7 +257,7 @@ function signal(s,ob){
    Math.exp(-Math.max(0,tail.upper)/100):null;
  const projectedEntryViolation=floor!==null&&prospectiveNAV!==null&&
    prospectiveNAV<floor;
- if(config.enforceEntryRiskBudget&&p==="CASH"&&
+ if(config.useRiskPolicy&&config.enforceEntryRiskBudget&&p==="CASH"&&
     proposed==="BUY"&&projectedEntryViolation){
    proposed="WAIT";reason="EX_ANTE_ENTRY_BUDGET";
    s.audit.prospectiveEntryBlocks++;
@@ -293,10 +293,10 @@ function appendLoss(a,v,maxLen){
  a.push(v);if(a.length>maxLen)a.shift();
 }
 function quote(s,o){
- if(!s||s.version!==VERSION)throw Error("V19_INCOMPATIBLE_STATE");
+ if(!s||s.version!==VERSION)throw Error("V20_AUDIT_INCOMPATIBLE_STATE");
  if(!s.pendingContext){
   const result=Core.quote(s.core,o);
-  if(result.fill)throw Error("V19_UNEXPECTED_UNSUPERVISED_FILL");
+  if(result.fill)throw Error("V20_AUDIT_UNEXPECTED_UNSUPERVISED_FILL");
   return {base:result,fill:null,portfolio:quoteState(s),ordersSent:0};
  }
  // V18 enforces datetime/fee/extreme-quote corroboration.
@@ -309,7 +309,7 @@ function quote(s,o){
  const context=s.pendingContext,p=s.portfolio,c=s.config,r=s.risk;
  const entryPrice=o.price,f=result.fill,fee=f.feeLegIfSwitched;
  if(!finite(entryPrice)||entryPrice<=0||!finite(fee)||fee<0||fee>=.1)
-  throw Error("V19_BAD_VERIFIED_FILL");
+  throw Error("V20_AUDIT_BAD_VERIFIED_FILL");
  // Advisor's unrealized one-step comparison is updated only when the
  // NEXT valid bank price is observed, never from future prices in signal.
  if(r.lastFill&&result.update?.accepted===true)
@@ -333,18 +333,18 @@ function quote(s,o){
   if(loss>c.maxTailLossPct)r.tailMisses++;
  }
  if(f.suggestedAction==="BUY"){
-  if(p.position!=="CASH")throw Error("V19_DOUBLE_BUY");
+  if(p.position!=="CASH")throw Error("V20_AUDIT_DOUBLE_BUY");
   const spend=p.cash;
   p.units=spend*(1-fee)/entryPrice;p.cash=0;
   p.feeDollars+=spend*fee;p.trades++;
  }else if(f.suggestedAction==="SELL"){
-  if(p.position!=="GOLD")throw Error("V19_DOUBLE_SELL");
+  if(p.position!=="GOLD")throw Error("V20_AUDIT_DOUBLE_SELL");
   const proceeds=p.units*entryPrice;
   p.cash=proceeds*(1-fee);p.units=0;
   p.feeDollars+=proceeds*fee;p.trades++;
  }
  p.position=f.positionAfter;
- if(p.position!==s.core.virtualPosition)throw Error("V19_POSITION_SYNC_FAILURE");
+ if(p.position!==s.core.virtualPosition)throw Error("V20_AUDIT_POSITION_SYNC_FAILURE");
  const markFee=s.core.feeKnowledge.lastKnown;
  p.nav=p.cash+p.units*entryPrice*(1-markFee);
  p.peak=Math.max(p.peak,p.nav);
@@ -385,7 +385,7 @@ function validLastFill(v){
 }
 function restore(payload){
  const raw=typeof payload==="string"?JSON.parse(payload):payload;
- if(!raw||raw.version!==VERSION)throw Error("V19_BAD_CHECKPOINT_VERSION");
+ if(!raw||raw.version!==VERSION)throw Error("V20_AUDIT_BAD_CHECKPOINT_VERSION");
  const s=deep(raw);s.config=config(s.config);
  s.core=Core.restore(s.core);
  const p=s.portfolio,r=s.risk;
@@ -420,7 +420,7 @@ function restore(payload){
     typeof r.afterForcedExit!=="boolean"||
     (s.pendingContext!==null&&!["CASH","GOLD"].includes(s.pendingContext.position))||
     (!!s.pendingContext)!=(!!s.core.pending))
-    throw Error("V19_CORRUPT_PORTFOLIO_OR_RISK");
+    throw Error("V20_AUDIT_CORRUPT_PORTFOLIO_OR_RISK");
  return s;
 }
 module.exports={VERSION,create,signal,quote,save,restore,riskTail,estimate};
