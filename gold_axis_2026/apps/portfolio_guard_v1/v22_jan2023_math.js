@@ -22,7 +22,9 @@ function parseCsv(s){
 }
 function contig(a,start,end){
  if(start<0||end>=a.length||start>end)return false;
- return a[end].t-a[start].t===(end-start)*BAR_MS;
+ for(let k=start+1;k<=end;k++)
+  if(a[k].t-a[k-1].t!==BAR_MS)return false;
+ return true;
 }
 function vector(a,i){
  if(i<64||!contig(a,i-64,i))return null;
@@ -137,7 +139,7 @@ function forward(a,opts={}){
   throw Error("V22_UNSORTED_OR_DUPLICATE");
  if(a.some(z=>z.t<START||z.t>=END+BAR_MS))
   throw Error("V22_OUTSIDE_JAN_2023");
- const s=create(),daily={},eligible=[],firstEligibleOpen=null;
+ const s=create(),daily={},eligible=[];let firstEligibleOpen=null;
  for(let i=0;i<a.length;i++){
   const row=a[i],x=vector(a,i);
   // Only mature predictions from earlier observations once outcome is known.
