@@ -58,7 +58,9 @@ def _fomc():
     ds = ["2023-02-01", "2023-03-22", "2023-05-03", "2023-06-14", "2023-07-26", "2023-09-20", "2023-11-01", "2023-12-13",
           "2024-01-31", "2024-03-20", "2024-05-01", "2024-06-12", "2024-07-31", "2024-09-18", "2024-11-07", "2024-12-18",
           "2025-01-29", "2025-03-19", "2025-05-07", "2025-06-18", "2025-07-30", "2025-09-17", "2025-10-29", "2025-12-10",
-          "2026-01-28"]
+          "2026-01-28",
+          # 2026 takvimi: federalreserve.gov/monetarypolicy/fomccalendars.htm (2026-10-17'de doğrulandı)
+          "2026-03-18", "2026-04-29", "2026-06-17", "2026-07-29", "2026-09-16", "2026-10-28", "2026-12-09"]
     out = []
     for s in ds:
         d = date.fromisoformat(s)
@@ -146,8 +148,15 @@ def load_cot():
 def build_states(rows):
     """Ham durum değişkenleri (standardize edilmemiş); her biri karar anında bilinir."""
     rr = _series(os.path.join(ROOT, "GOLD_EXECUTION_DFII10_FREE_CANDIDATE_2020_20261007.csv"))
-    y2 = _series(os.path.join(ROOT, "GOLD_DGS2_RAW_2022_2025.csv"))
-    gvz = _series(os.path.join(ROOT, "GOLD_GVZCLS_RAW_2021_2025.csv"))
+    # 2026 uzatması: aynı seriler, GOLD_EXECUTION_*_FREE_CANDIDATE_2020_20261007.csv dosyalarından
+    # YALNIZ 2025-12-31 sonrası günler eklenir; ortak günlerde iki kaynak birebir aynı
+    # (DGS2 757/757, GVZ 1257/1257 gün, 2026-10-17'de doğrulandı). 2025 ve öncesi değişmez.
+    y2 = _series(os.path.join(ROOT, "GOLD_DGS2_RAW_2022_2025.csv")) + [
+        x for x in _series(os.path.join(ROOT, "GOLD_EXECUTION_DGS2_FREE_CANDIDATE_2020_20261007.csv"))
+        if x[0] > date(2025, 12, 31)]
+    gvz = _series(os.path.join(ROOT, "GOLD_GVZCLS_RAW_2021_2025.csv")) + [
+        x for x in _series(os.path.join(ROOT, "GOLD_EXECUTION_GVZ_FREE_CANDIDATE_2020_20261007.csv"))
+        if x[0] > date(2025, 12, 31)]
     usd = _series(DOLLAR, col="DTWEXBGS")
     cot = load_cot()
     macro = load_macro()
