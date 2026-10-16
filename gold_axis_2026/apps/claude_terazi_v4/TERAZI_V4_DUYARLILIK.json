@@ -1,0 +1,46 @@
+[
+ {
+  "thr": 2.0,
+  "net": 116.85,
+  "gross": 157.88,
+  "trades": 38,
+  "mdd": 24.88,
+  "target_nav": 520.64,
+  "target_legs": 26,
+  "p0": 0.4308,
+  "agree": 49.9
+ },
+ {
+  "thr": 2.4,
+  "net": 129.08,
+  "gross": 163.07,
+  "trades": 29,
+  "mdd": 18.87,
+  "target_nav": 498.43,
+  "target_legs": 24,
+  "p0": 0.4023,
+  "agree": 49.4
+ },
+ {
+  "thr": 3.0,
+  "net": 129.11,
+  "gross": 158.04,
+  "trades": 23,
+  "mdd": 16.72,
+  "target_nav": 448.13,
+  "target_legs": 20,
+  "p0": 0.3571,
+  "agree": 44.4
+ },
+ {
+  "thr": 5.0,
+  "net": 148.17,
+  "gross": 165.95,
+  "trades": 15,
+  "mdd": 18.28,
+  "target_nav": 370.01,
+  "target_legs": 15,
+  "p0": 0.2555,
+  "agree": 42.8
+ }
+]

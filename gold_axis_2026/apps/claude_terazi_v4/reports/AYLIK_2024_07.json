@@ -1,0 +1,245 @@
+{
+ "month": "2024-07",
+ "days": 23,
+ "gold_change_pct": 3.96,
+ "nav_start": 86.3727,
+ "nav_end": 86.1015,
+ "month_ret_pct": -0.31,
+ "position_end": "NAKİT",
+ "target_days_in": 12,
+ "target_known": 23,
+ "position_matches_target": "14/23",
+ "mean_P": 0.348,
+ "mean_U": 0.131,
+ "base_rate": 0.3483,
+ "days_without_opinion": 0,
+ "labels_learned_total": 1183,
+ "trades": [
+  {
+   "date": "2024-07-08",
+   "action": "AL",
+   "price": 2373.07,
+   "P": 0.441,
+   "U": 0.155,
+   "rules": [
+    [
+     "altın 1g getiri > -1.5σ VE altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -1.0σ",
+     0.542,
+     0.9
+    ],
+    [
+     "altın 1g getiri > -1.5σ VE altın 5g getiri > +0.5σ VE dolar endeksi 20g değişim < +1.0σ",
+     0.552,
+     0.9
+    ],
+    [
+     "altın 1g getiri > -1.0σ VE altın 5g getiri > +0.5σ VE dolar endeksi 20g değişim < +1.0σ",
+     0.558,
+     0.9
+    ],
+    [
+     "altın 1g getiri > -1.5σ VE altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ",
+     0.551,
+     0.37
+    ]
+   ]
+  },
+  {
+   "date": "2024-07-23",
+   "action": "SAT",
+   "price": 2403.93,
+   "P": 0.246,
+   "U": 0.096,
+   "rules": [
+    [
+     "altın 1g getiri < +1.5σ VE altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.5σ",
+     0.206,
+     0.94
+    ],
+    [
+     "altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.5σ VE petrol 20g > -1.5σ",
+     0.197,
+     0.94
+    ],
+    [
+     "altın 5g getiri < +0.0σ VE altın 20g getiri < +1.5σ VE 60g zirveye uzaklık < +1.5σ",
+     0.202,
+     0.94
+    ],
+    [
+     "altın 1g getiri < +1.0σ VE altın 5g getiri < +0.0σ",
+     0.217,
+     0.63
+    ]
+   ]
+  }
+ ],
+ "rule_base_size": 60,
+ "rules_born": [
+  {
+   "label": "altın 1g getiri > -1.0σ VE altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ",
+   "p_in": 0.568,
+   "support": 255.7,
+   "residual_mean": 0.131,
+   "evidence_z": 4.31,
+   "birth_credibility": 0.606,
+   "bar": 3.6
+  },
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ VE dolar endeksi 20g değişim < +1.5σ",
+   "p_in": 0.551,
+   "support": 268.8,
+   "residual_mean": 0.126,
+   "evidence_z": 4.26,
+   "birth_credibility": 0.574,
+   "bar": 3.6
+  },
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ VE GVZ düzeyi > -1.5σ",
+   "p_in": 0.571,
+   "support": 247.8,
+   "residual_mean": 0.131,
+   "evidence_z": 4.23,
+   "birth_credibility": 0.556,
+   "bar": 3.6
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     0,
+     -1,
+     1.5
+    ],
+    [
+     1,
+     -1,
+     0.0
+    ],
+    [
+     5,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 1g getiri < +1.5σ VE altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.5σ",
+   "p_rising": 0.2261,
+   "n": 78.13,
+   "trust": 0.6868,
+   "field_k": 16.14,
+   "born_index": 1139,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.536
+  },
+  {
+   "gates": [
+    [
+     1,
+     -1,
+     0.0
+    ],
+    [
+     2,
+     -1,
+     1.5
+    ],
+    [
+     5,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri < +0.0σ VE altın 20g getiri < +1.5σ VE 60g zirveye uzaklık < +1.5σ",
+   "p_rising": 0.2264,
+   "n": 75.51,
+   "trust": 0.6718,
+   "field_k": 16.52,
+   "born_index": 1139,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.543
+  },
+  {
+   "gates": [
+    [
+     1,
+     -1,
+     0.0
+    ],
+    [
+     5,
+     -1,
+     1.5
+    ],
+    [
+     27,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.5σ VE petrol 20g > -1.5σ",
+   "p_rising": 0.2233,
+   "n": 77.34,
+   "trust": 0.6573,
+   "field_k": 16.62,
+   "born_index": 1139,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.527
+  },
+  {
+   "gates": [
+    [
+     0,
+     1,
+     -1.5
+    ],
+    [
+     1,
+     1,
+     0.5
+    ],
+    [
+     5,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "altın 1g getiri > -1.5σ VE altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -1.0σ",
+   "p_rising": 0.5554,
+   "n": 63.18,
+   "trust": 0.6522,
+   "field_k": 8.0,
+   "born_index": 1159,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.227
+  },
+  {
+   "gates": [
+    [
+     0,
+     1,
+     -1.0
+    ],
+    [
+     1,
+     1,
+     0.5
+    ],
+    [
+     11,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "altın 1g getiri > -1.0σ VE altın 5g getiri > +0.5σ VE dolar endeksi 20g değişim < +1.0σ",
+   "p_rising": 0.5587,
+   "n": 48.58,
+   "trust": 0.632,
+   "field_k": 5.5,
+   "born_index": 1159,
+   "birth_credibility": 0.895,
+   "birth_evidence_z": 5.079
+  }
+ ]
+}

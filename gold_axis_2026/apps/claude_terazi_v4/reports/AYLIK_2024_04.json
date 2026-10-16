@@ -1,0 +1,230 @@
+{
+ "month": "2024-04",
+ "days": 22,
+ "gold_change_pct": 5.72,
+ "nav_start": 96.2829,
+ "nav_end": 96.6641,
+ "month_ret_pct": 0.4,
+ "position_end": "NAKİT",
+ "target_days_in": 9,
+ "target_known": 20,
+ "position_matches_target": "13/20",
+ "mean_P": 0.393,
+ "mean_U": 0.116,
+ "base_rate": 0.3453,
+ "days_without_opinion": 0,
+ "labels_learned_total": 1115,
+ "trades": [
+  {
+   "date": "2024-04-01",
+   "action": "AL",
+   "price": 2257.47,
+   "P": 0.468,
+   "U": 0.11,
+   "rules": [
+    [
+     "altın 5g getiri > +0.5σ",
+     0.516,
+     0.79
+    ],
+    [
+     "altın 1g getiri > -1.5σ VE altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ",
+     0.542,
+     0.57
+    ],
+    [
+     "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ",
+     0.535,
+     0.88
+    ],
+    [
+     "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -1.0σ VE GVZ düzeyi > -1.5σ",
+     0.571,
+     0.44
+    ]
+   ]
+  },
+  {
+   "date": "2024-04-23",
+   "action": "SAT",
+   "price": 2303.11,
+   "P": 0.245,
+   "U": 0.083,
+   "rules": [
+    [
+     "altın 1g getiri < +1.0σ VE altın 5g getiri < +0.0σ",
+     0.209,
+     0.7
+    ],
+    [
+     "altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.5σ",
+     0.206,
+     0.74
+    ],
+    [
+     "altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.0σ",
+     0.196,
+     0.77
+    ],
+    [
+     "altın 5g getiri < -0.5σ",
+     0.199,
+     0.56
+    ]
+   ]
+  }
+ ],
+ "rule_base_size": 60,
+ "rules_born": [
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -1.0σ",
+   "p_in": 0.555,
+   "support": 308.9,
+   "residual_mean": 0.114,
+   "evidence_z": 4.18,
+   "birth_credibility": 0.541,
+   "bar": 3.58
+  },
+  {
+   "label": "altın 5g getiri > +0.5σ VE dolar endeksi 20g değişim < +1.0σ",
+   "p_in": 0.575,
+   "support": 294.4,
+   "residual_mean": 0.116,
+   "evidence_z": 4.13,
+   "birth_credibility": 0.505,
+   "bar": 3.58
+  },
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ",
+   "p_in": 0.562,
+   "support": 274.5,
+   "residual_mean": 0.12,
+   "evidence_z": 4.13,
+   "birth_credibility": 0.504,
+   "bar": 3.58
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     1,
+     -1,
+     0.0
+    ],
+    [
+     5,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.0σ",
+   "p_rising": 0.1965,
+   "n": 69.16,
+   "trust": 0.7504,
+   "field_k": 19.13,
+   "born_index": 1031,
+   "birth_credibility": 0.853,
+   "birth_evidence_z": 4.73
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     0.5
+    ],
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.5566,
+   "n": 55.68,
+   "trust": 0.7167,
+   "field_k": 5.53,
+   "born_index": 1094,
+   "birth_credibility": 0.877,
+   "birth_evidence_z": 4.906
+  },
+  {
+   "gates": [
+    [
+     1,
+     -1,
+     0.0
+    ],
+    [
+     5,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri < +0.0σ VE 60g zirveye uzaklık < +1.5σ",
+   "p_rising": 0.2069,
+   "n": 81.05,
+   "trust": 0.7129,
+   "field_k": 24.04,
+   "born_index": 1031,
+   "birth_credibility": 0.861,
+   "birth_evidence_z": 4.759
+  },
+  {
+   "gates": [
+    [
+     0,
+     -1,
+     1.0
+    ],
+    [
+     1,
+     -1,
+     0.0
+    ]
+   ],
+   "label": "altın 1g getiri < +1.0σ VE altın 5g getiri < +0.0σ",
+   "p_rising": 0.2096,
+   "n": 79.69,
+   "trust": 0.6849,
+   "field_k": 24.45,
+   "born_index": 1031,
+   "birth_credibility": 0.851,
+   "birth_evidence_z": 4.722
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     1.0
+    ],
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri > +1.0σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.6183,
+   "n": 35.66,
+   "trust": 0.6291,
+   "field_k": 4.39,
+   "born_index": 1094,
+   "birth_credibility": 0.662,
+   "birth_evidence_z": 4.339
+  }
+ ]
+}

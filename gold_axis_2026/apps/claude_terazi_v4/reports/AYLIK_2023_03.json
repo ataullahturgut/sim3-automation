@@ -1,0 +1,216 @@
+{
+ "month": "2023-03",
+ "days": 23,
+ "gold_change_pct": 9.13,
+ "nav_start": 93.1094,
+ "nav_end": 95.0129,
+ "month_ret_pct": 2.04,
+ "position_end": "ALTIN",
+ "target_days_in": 8,
+ "target_known": 18,
+ "position_matches_target": "9/18",
+ "mean_P": 0.387,
+ "mean_U": 0.099,
+ "base_rate": 0.3453,
+ "days_without_opinion": 0,
+ "labels_learned_total": 834,
+ "trades": [
+  {
+   "date": "2023-03-14",
+   "action": "AL",
+   "price": 1904.6,
+   "P": 0.417,
+   "U": 0.095,
+   "rules": [
+    [
+     "altın 5g getiri > -1.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ",
+     0.412,
+     0.87
+    ],
+    [
+     "altın 5g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +0.5σ",
+     0.447,
+     0.91
+    ],
+    [
+     "altın 5g getiri > +0.0σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ",
+     0.486,
+     0.88
+    ],
+    [
+     "altın 5g getiri > +0.0σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.0σ",
+     0.485,
+     0.87
+    ]
+   ]
+  }
+ ],
+ "rule_base_size": 60,
+ "rules_born": [
+  {
+   "label": "altın 5g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ",
+   "p_in": 0.43,
+   "support": 355.5,
+   "residual_mean": 0.125,
+   "evidence_z": 4.9,
+   "birth_credibility": 0.9,
+   "bar": 3.35
+  },
+  {
+   "label": "altın 5g getiri > +0.0σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +0.5σ",
+   "p_in": 0.466,
+   "support": 243.5,
+   "residual_mean": 0.153,
+   "evidence_z": 4.86,
+   "birth_credibility": 0.9,
+   "bar": 3.35
+  },
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +0.5σ",
+   "p_in": 0.502,
+   "support": 163.6,
+   "residual_mean": 0.178,
+   "evidence_z": 4.46,
+   "birth_credibility": 0.806,
+   "bar": 3.35
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     6,
+     1,
+     -1.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık > -0.5σ VE 200g ortalamaya uzaklık > -1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "p_rising": 0.3368,
+   "n": 61.25,
+   "trust": 0.9056,
+   "field_k": 3.21,
+   "born_index": 774,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.797
+  },
+  {
+   "gates": [
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "p_rising": 0.3243,
+   "n": 70.7,
+   "trust": 0.905,
+   "field_k": 3.07,
+   "born_index": 774,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.798
+  },
+  {
+   "gates": [
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.0
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.0σ VE sonraki FOMC'ye gün > -1.5σ",
+   "p_rising": 0.3252,
+   "n": 68.48,
+   "trust": 0.904,
+   "field_k": 2.85,
+   "born_index": 774,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.812
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     -0.5
+    ],
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ]
+   ],
+   "label": "altın 5g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ",
+   "p_rising": 0.4301,
+   "n": 90.77,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 838,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 4.898
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     0.0
+    ],
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     0.5
+    ]
+   ],
+   "label": "altın 5g getiri > +0.0σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +0.5σ",
+   "p_rising": 0.4662,
+   "n": 65.11,
+   "trust": 0.9,
+   "field_k": 0.0,
+   "born_index": 838,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 4.857
+  }
+ ]
+}

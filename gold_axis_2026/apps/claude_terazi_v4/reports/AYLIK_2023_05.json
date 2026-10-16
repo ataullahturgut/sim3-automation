@@ -1,0 +1,181 @@
+{
+ "month": "2023-05",
+ "days": 23,
+ "gold_change_pct": -1.03,
+ "nav_start": 96.1811,
+ "nav_end": 94.0618,
+ "month_ret_pct": -2.2,
+ "position_end": "ALTIN",
+ "target_days_in": 0,
+ "target_known": 5,
+ "position_matches_target": "0/5",
+ "mean_P": 0.375,
+ "mean_U": 0.108,
+ "base_rate": 0.3476,
+ "days_without_opinion": 0,
+ "labels_learned_total": 863,
+ "trades": [],
+ "rule_base_size": 60,
+ "rules_born": [
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -1.0σ",
+   "p_in": 0.485,
+   "support": 225.1,
+   "residual_mean": 0.144,
+   "evidence_z": 4.35,
+   "birth_credibility": 0.734,
+   "bar": 3.41
+  },
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -1.5σ",
+   "p_in": 0.475,
+   "support": 245.2,
+   "residual_mean": 0.135,
+   "evidence_z": 4.3,
+   "birth_credibility": 0.711,
+   "bar": 3.41
+  },
+  {
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -0.5σ",
+   "p_in": 0.498,
+   "support": 196.2,
+   "residual_mean": 0.153,
+   "evidence_z": 4.28,
+   "birth_credibility": 0.698,
+   "bar": 3.41
+  }
+ ],
+ "rules_died": [],
+ "strongest_rules": [
+  {
+   "gates": [
+    [
+     1,
+     1,
+     -0.5
+    ],
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.0
+    ]
+   ],
+   "label": "altın 5g getiri > -0.5σ VE 60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.0σ",
+   "p_rising": 0.437,
+   "n": 88.13,
+   "trust": 0.788,
+   "field_k": 2.45,
+   "born_index": 857,
+   "birth_credibility": 0.736,
+   "birth_evidence_z": 4.288
+  },
+  {
+   "gates": [
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.0
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.0σ VE sonraki FOMC'ye gün > -1.5σ",
+   "p_rising": 0.3316,
+   "n": 61.47,
+   "trust": 0.7697,
+   "field_k": 4.72,
+   "born_index": 774,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.812
+  },
+  {
+   "gates": [
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     14,
+     -1,
+     1.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık > -0.5σ VE COT managed money net < +1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "p_rising": 0.3307,
+   "n": 63.82,
+   "trust": 0.7592,
+   "field_k": 5.34,
+   "born_index": 774,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.798
+  },
+  {
+   "gates": [
+    [
+     5,
+     1,
+     -0.5
+    ],
+    [
+     6,
+     1,
+     -1.5
+    ],
+    [
+     21,
+     1,
+     -1.5
+    ]
+   ],
+   "label": "60g zirveye uzaklık > -0.5σ VE 200g ortalamaya uzaklık > -1.5σ VE sonraki FOMC'ye gün > -1.5σ",
+   "p_rising": 0.3433,
+   "n": 56.02,
+   "trust": 0.7521,
+   "field_k": 5.83,
+   "born_index": 774,
+   "birth_credibility": 0.9,
+   "birth_evidence_z": 5.797
+  },
+  {
+   "gates": [
+    [
+     1,
+     1,
+     0.5
+    ],
+    [
+     5,
+     1,
+     -1.0
+    ]
+   ],
+   "label": "altın 5g getiri > +0.5σ VE 60g zirveye uzaklık > -1.0σ",
+   "p_rising": 0.4853,
+   "n": 59.88,
+   "trust": 0.7342,
+   "field_k": 0.0,
+   "born_index": 880,
+   "birth_credibility": 0.734,
+   "birth_evidence_z": 4.349
+  }
+ ]
+}
