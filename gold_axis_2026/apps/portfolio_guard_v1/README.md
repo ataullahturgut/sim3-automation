@@ -185,3 +185,21 @@ Kaynak: `macro_v6_portfolio.js`, `macro_v6_portfolio.test.js`, `V6_CROSS_ASSET_E
 **Güvenilirlik sınırı:** ORG etiketleri araştırmacı hipotezidir, doğrulanmış ekonomiden öğrenilmiş sinyal değildir. S1 UP gün sonu +4 saat, gerçek fiyat aynı gün seans ilk-son olduğundan isabet karşılaştırması yapılamaz. Olaydan sonra araştırma koşullu S1 henüz UNREADY; ekonomik ilk yayın erişimi PIT doğrulanmadı. S2 uzun bitiş olasılıkları güvenilir hazır değil. S3 KEEP, **canlı AL/SAT veya gerçek banka hesap sonucu değildir**. Eski 2026 V1/V2/V3 ve diğer deneyler değiştirilmedi.
 
 **Teknik kontrol:** `node --test model_2023_daily_view.test.js`; ayrıca [2023 uygulama uçtan-uca GitHub CI](https://github.com/ataullahturgut/sim3-automation/actions/workflows/gold-2023-core-daily-app-tests.yml) kaynak ve ekran bağlantılarını, localhost GET yanıtlarını ve eski V1 regresyonunu denetler.
+
+
+## 17 Ekim 2026 — Ocak 2023 tarihsel seçmeci veri/olay yürüyüşü (gerçek CORE arşiv deneyi)
+
+**Uygulama:** Sol menüden **▶ Ocak 2023 · Canlandırılmış yürüyüş** bölümüne girin. `1 Ocak'tan başlat` / `Sonraki gün` / `Ayın tamamını göster` düğmeleri veya gün kaydırıcısı ile 31 takvim gününü inceleyin. Henüz ilerlenmemiş günün sonucu tablodan gizlenir. Bu sayfa çalışma anında özel veritabanına erişmez: GitHub Actions'ta gerçek arşiv üzerinden üretilmiş, **doğrulanmış salt-okunur agregayı** adım adım gösterir.
+
+**Bu turda gerçekten yapılan:**
+- Tek orijinal `adaptive_market_core_s1_s2.js` CORE, 2022 Ekim–Aralık 5.865 M15 veriyle ön-öğrenim; 2023 Ocak arşivinde 1.920 tamamlanmış M15 gözlem.
+- `live_cadence_gate_v1.evaluate` her Ocak M15 gözleminde bir kez çağrıldı (1.920 kabul / 1.920 gerçek CORE `observe` çağrısı). 2023'te fiyatların yazılıma ulaşmasına ilişkin gerçek log bulunmadığından **bar kapanışı +15 saniye gecikme sadece arşiv canlandırması varsayımıdır**, tarihsel veri hızı testi değildir.
+- 6 Ocak NFP/AHE/UNEMP ve 12 Ocak CPI ortak yayım zamanları toplam **iki bağımsız arşiv olay dalgası** olarak izlenip PIT ilk baskı ve konsensüs kanıtı olmadığından karantinaya alındı; S1'in gerçek ekonomik özelliklerine eklenmedi. Arşivde ek olarak adlandırılmış 4/5/18/26/27/31 Ocak olay notları **geriye dönük araştırma hipotezi**, sistemin gerçekten tespit ettiği canlı ekonomik tetik değildir.
+- **3 adet** ardışık 15dk XAU MID fiyat hareketi önceden belirlenmiş salt-gözlem `>=0,5%` eşiğiyle işaretlendi (**6 Ocak'ta iki, 12 Ocak'ta bir**). Gözlem = ekonomik nedensellik / ORG kuralı / işlem önerisi değildir; eşik January sonuçlarından optimize edilmedi.
+- Tüm dönem S3 `KEEP CASH` araştırma tavsiyesi; model `action:null,tradeAllowed:false`. **0 gerçek AL/SAT**, `shadowResearch=false`. Testin teknik başarıyla tamamlanması kârlı ekonomi odaklı model başarısını kanıtlamaz.
+
+**S1 kolları neden farklı olabilir?** Önceki `JAN_2023_INTEGRATED...` raporu doğrulanmamış geriye dönük ekonomi verilerine araştırma kipinde varsayımsal +60 dakika gecikme ile erişmişti. Yeni seçmeci koşuda her iki yayın ilk-baskı kanıtı olmadığı için sayısal ekonomi içeriği engellendi ve sadece PRICE-only S1 öğrenimi kullanıldı; bu nedenle 2023 Ocak sonu piyasaya ait kural sayısı önceki 5 yerine burada **3** olabilir. Bu bir algoritma regresyonu iddiası değil **kanıt politikası farkıdır**.
+
+**Dosyalar:** `../../adaptive_trading_core/replay_jan2023_selective_cadence_walk.js` (gerçek kronolojik koşucu), `data/JAN_2023_SELECTIVE_CADENCE_REAL_CORE_AGGREGATES_20261017.json` (kullanıcıya gösterilebilir özet; ham ticari quote yok), `model_2023_selective_view.js`, `model_2023_selective_view.test.js`. Salt-okunur endpoint `GET /api/model/2023/january/selective-walk` ve [gerçek özel veri CI koşusu](https://github.com/ataullahturgut/sim3-automation/actions/runs/39058523336). [Uygulama denetim testleri](https://github.com/ataullahturgut/sim3-automation/actions/workflows/gold-2023-core-daily-app-tests.yml).
+
+**Bilimsel sonuç:** Veri kontrol ve arayüz tekrarlanabilir şekilde çalışıyor. **Ekonomik öğrenme, olayın sebep olduğu gerçek AL/SAT kararları, gerçek 2023 canlı erişim gecikmesi, ilk-haber PIT, banka gerçek BID/ASK ve kârlı işlem doğrulanmadı.** Bu test, ancak ekonomik neden→S1→S2→S3 kararı ve sonraki bağımsız dönem değerlendirmesi kurulursa geliştirilebilir.
