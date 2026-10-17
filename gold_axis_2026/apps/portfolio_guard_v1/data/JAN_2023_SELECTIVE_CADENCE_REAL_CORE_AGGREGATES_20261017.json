@@ -1,0 +1,913 @@
+{
+  "coreSourceVersion": "GOLD_ADAPTIVE_S1_S2_SLOW_S3_RESEARCH_BRIDGE_20261016",
+  "end": {
+    "anchors": 462,
+    "learnedRules": 3,
+    "matureLabels": 443,
+    "observations": 7785
+  },
+  "eventDetectionType": "ARCHIVE_REPLAY_NO_LIVE_NEWS_FEED",
+  "firstPrintMacroVerified": false,
+  "goldBankExecution": false,
+  "macroAccessTime": "ASSUMED_RELEASE_PLUS_60_MINUTES_NOT_FIRSTPRINT_VERIFIED",
+  "marketPriceType": "RECONSTRUCTED_BID_ASK_MID_NOT_BANK",
+  "mode": "CHRONOLOGICAL_ARCHIVE_REPLAY_NOT_REAL_TIME",
+  "modelCore": "adaptive_market_core_s1_s2.js",
+  "noFuturePriceAtDecision": true,
+  "observed": {
+    "acceptedTradeActions": 0,
+    "actualBankTrades": 0,
+    "daySessions": 21,
+    "gateCalls": 1920,
+    "hoursWithoutBarModelInvocation": "NO_TICKS_EMULATED",
+    "janM15": 1920,
+    "macroPITFeaturesAccepted": 0,
+    "modelCalls": 1920,
+    "priceWatch15mEvents": 3,
+    "retrospectiveMacroQuarantined": 2,
+    "retrospectiveMacroWaves": 2,
+    "slowSessionCallbacks": 85
+  },
+  "prior": {
+    "bars": 5865,
+    "maturedLabels": 344,
+    "rules": 3
+  },
+  "quoteReceiptTime": "ASSUMED_BAR_CLOSE_PLUS_15_SECONDS_NOT_OBSERVED",
+  "sourceId": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "tradeAllowed": false,
+  "version": "GOLD_JAN2023_SELECTIVE_M1_S1_S2_S3_WALK_V1_20261017",
+  "sourceWorkflowRun": "https://github.com/ataullahturgut/sim3-automation/actions/runs/39058523336",
+  "days": [
+    {
+      "barCount": 0,
+      "date": "2023-01-01",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-02",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-03",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.6688,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-03T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0162,
+          "n": 124.7896,
+          "pUpPct": 52.0601,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.0101
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-04",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.8683,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": "G01-mixed · JOLTS ve Fed tutanakları",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-04T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0167,
+          "n": 127.8656,
+          "pUpPct": 52.5266,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.7301
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-05",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -1.2039,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": "ORG02? · ADP",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-05T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0096,
+          "n": 123.2184,
+          "pUpPct": 52.3355,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": -0.2065
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-06",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 1,
+      "eventNotes": [
+        {
+          "assumedResearchAvailableUTC": "2023-01-06T14:30:00.000Z",
+          "evidenceStatus": "RECONSTRUCTED_POST_RELEASE_UNVERIFIED",
+          "kind": "RETROSPECTIVE_MACRO_WAVE_NOT_PIT",
+          "note": "Haber/sürpriz ilk baskı ve konsensüs vintage doğrulanmadığı için S1'e sertifikalı ekonomik özellik verilmedi.",
+          "scheduledReleaseUTC": "2023-01-06T13:30:00.000Z"
+        }
+      ],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 1.8418,
+      "priceChangeWatchCount": 2,
+      "ruleCandidate": "ORG01 / ORG02? · NFP + AHE + UNEMP",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-06T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0171,
+          "n": 134.1918,
+          "pUpPct": 51.8658,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "PULLBACK",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.8505
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-07",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-08",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-09",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.1734,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-09T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0148,
+          "n": 127.226,
+          "pUpPct": 52.229,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": -0.0665
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-10",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.3311,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-10T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.018,
+          "n": 138.6153,
+          "pUpPct": 51.8542,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.6886
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-11",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -0.0618,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-11T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0173,
+          "n": 133.9378,
+          "pUpPct": 52.6058,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.3442
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-12",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 1,
+      "eventNotes": [
+        {
+          "assumedResearchAvailableUTC": "2023-01-12T14:30:00.000Z",
+          "evidenceStatus": "RECONSTRUCTED_POST_RELEASE_UNVERIFIED",
+          "kind": "RETROSPECTIVE_MACRO_WAVE_NOT_PIT",
+          "note": "Haber/sürpriz ilk baskı ve konsensüs vintage doğrulanmadığı için S1'e sertifikalı ekonomik özellik verilmedi.",
+          "scheduledReleaseUTC": "2023-01-12T13:30:00.000Z"
+        }
+      ],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 1.0523,
+      "priceChangeWatchCount": 1,
+      "ruleCandidate": "ORG01? · CPI",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-12T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0186,
+          "n": 132.1262,
+          "pUpPct": 53.1459,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "END",
+          "slowPhase": "WARMUP",
+          "trendZ": -0.107
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-13",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 1.2562,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-13T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0232,
+          "n": 141.867,
+          "pUpPct": 53.0665,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.6987
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-14",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-15",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 76,
+      "date": "2023-01-16",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 76,
+      "observedSessionReturnPct": -0.2801,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-16T18:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0217,
+          "n": 137.0529,
+          "pUpPct": 53.2207,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.1807
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-17",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -0.3979,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-17T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0218,
+          "n": 139.5457,
+          "pUpPct": 52.883,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": null,
+          "trendZ": 0.3291
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-18",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -0.2235,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": "ORG01? · ÜFE + perakende satış",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-18T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0222,
+          "n": 135.5501,
+          "pUpPct": 53.3425,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": -0.3568
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-19",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 1.4572,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-19T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0263,
+          "n": 153.6855,
+          "pUpPct": 53.1002,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": 1.4918
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-20",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -0.3369,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-20T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0269,
+          "n": 148.5137,
+          "pUpPct": 53.5671,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "PULLBACK",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.2496
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-21",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-22",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-23",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.2888,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-23T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0284,
+          "n": 158.6841,
+          "pUpPct": 53.1557,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": 1.5341
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-24",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.3146,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-24T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0283,
+          "n": 159.4871,
+          "pUpPct": 53.2528,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": 1.375
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-25",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.4757,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-25T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0288,
+          "n": 163.3609,
+          "pUpPct": 53.4549,
+          "ready": true
+        },
+        "s2": {
+          "direction": 1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": 1.6828
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-26",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -0.96,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": "ORG02? · GSYH",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-26T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.026,
+          "n": 152.7603,
+          "pUpPct": 53.5813,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": 0.5085
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-27",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -0.0881,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": "G01-mixed · PCE",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-27T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0267,
+          "n": 148.5638,
+          "pUpPct": 54.193,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": -0.1414
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-28",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 0,
+      "date": "2023-01-29",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": false,
+      "m1Accepted": 0,
+      "observedSessionReturnPct": null,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": null
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-30",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": -0.2265,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": null,
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-30T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0251,
+          "n": 139.8159,
+          "pUpPct": 54.6922,
+          "ready": true
+        },
+        "s2": {
+          "direction": -1,
+          "phase": "CONTINUE",
+          "slowPhase": "WARMUP",
+          "trendZ": -0.3692
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    },
+    {
+      "barCount": 92,
+      "date": "2023-01-31",
+      "economicFeaturesPITAccepted": 0,
+      "eventCandidateCount": 0,
+      "eventNotes": [],
+      "hasSession": true,
+      "m1Accepted": 92,
+      "observedSessionReturnPct": 0.2792,
+      "priceChangeWatchCount": 0,
+      "ruleCandidate": "G01-mixed · ECI/Fed beklentisi",
+      "ruleEvidence": "RETROSPECTIVE_RESEARCH_HYPOTHESIS_NOT_MODEL_SIGNAL",
+      "snapshot": {
+        "at": "2023-01-31T22:00:00.000Z",
+        "s1": {
+          "expectedLogPct": 0.0264,
+          "n": 147.9586,
+          "pUpPct": 54.0773,
+          "ready": true
+        },
+        "s2": {
+          "direction": 0,
+          "phase": "NEUTRAL",
+          "slowPhase": "WARMUP",
+          "trendZ": -0.5366
+        },
+        "s3": {
+          "actualAction": null,
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "researchAction": "KEEP",
+          "tradeAllowed": false
+        }
+      }
+    }
+  ]
+}
