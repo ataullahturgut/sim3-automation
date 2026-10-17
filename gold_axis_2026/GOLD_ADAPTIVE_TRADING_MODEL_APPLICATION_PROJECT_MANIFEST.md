@@ -479,3 +479,25 @@ Mevcut S3 modeline yeni bir uygulama veya dal açmadan `adaptive_long_cycle_s3.j
 **Henüz kapatılmamış bilimsel eksikler:** 2023–2025 gerçek ekonomik koşullu S3 eğitim checkpoint'i; piyasa-eşleştirilmiş `economic on/off` 5/10/20 seans net-servet ablasyonu; çıkarılmış yatırım kurallarının bağımsız dönem sınaması; gerçek ilk yayın/ön-konsensüs PIT sertifikası; reel USD/faiz/metal ve gerçek banka kotasyonu; normal düzeltme ile büyük şoku istatistiksel ayırma. Bu kısımlar yokken yeni S3'e “öğrenilmiş ekonomik kârlı al-sat stratejisi” demek **yasaktır**.
 
 **Kontrat:** Aynı proje/CORE; yeni model aileleri açma, başarısız S1 ekonomik bulgularını örtme, tarihi kural girdisi yapma, 2026 Ocak başarılı SAT vakasını eğitim verisiymiş gibi anlık kör sonuca taşıma, teknik test PASS ile yatırım getiri PASS'ı karıştırma.
+
+---
+
+## 2026-10-17 — KULLANICI BAĞLAYICI DÜZELTMESİ: OLAY-DNA TEMELLİ TARİHSİZ KURAL ÖĞRENİMİ (ÖNCELİKLİ)
+
+**Asıl model işi takvim yılına, 5/10/20 seanslık döneme veya sadece altın fiyat fazına göre sinyal üretmek DEĞİLDİR.** Kullanıcının hedefi; OLAY-02 + ÖĞREN-03'ten ekonomik davranış mekanizmasını koşullu, tarih ve olay ID'sinden bağımsız **öğrenilmiş kural tabanına** dönüştürmek ve koşullar tekrar oluştuğunda altının olası yönünü, tersine dönüşünü ve pozisyon değerini değerlendirmektir.
+
+**Bir öğrenilmiş kuralın zorunlu şeması:**
+1. **ÖN DURUM:** Faiz, USD, likidite, hisse/risk iştahı, değerli metaller ve altının dönemin fiyat rejimindeki *o anda bilinen* durumları; eksikler görünür.
+2. **TETİKLEYİCİ / OLAY DNA'sı:** NFP/CPI/Fed/jeopolitik/likidite/pozisyon çözülmesi vb. ekonomik anlamdaki sınıfı ve ölçülebilir büyüklüğü. Sınıf etiketi tek başına AL/SAT işareti değildir.
+3. **AKTARIM:** Olayın dolar/faiz/Nasdaq/diğer metallerde o anda gözlenen ortak veya ayrışan tepkisi.
+4. **HAREKET / REJİM:** Altında olası **UP / DOWN / kararsız**, devam/düzeltme/dönüş ve geçersizleşme kanıtı. Beklenen büyüklük / gelişim hızı sonuç öğreniminde ölçülür fakat tarih, takvim yılı veya önceden sabit 5/10/20-seans ufku *kuralın kimliği* olamaz.
+5. **KANIT:** Bağımsız olumlu/olumsuz ve olaysız örnek sayıları, koşullu etki dağılımı, yanlışlandığı ortam, belirsizlik, veri kökeni. ÖĞREN-03'te yazılı hipotez, otomatik öğrenilmiş / doğrulanmış kural DEĞİLDİR.
+6. **KARAR DEĞERİ:** CASH/GOLD mevcut pozisyonunda %0,8 her bacak maliyetiyle AL / TUT / SAT / yeniden giriş beklenen net farkı; gereksiz işlem ve kaçırılan trend birlikte puanlanır.
+
+**Tarihsiz öğrenmenin gerçek anlamı:** Örneğin "güçlü istihdam + dolar ve faiz birlikte güçleniyor + satış baskısı" koşulu 2023 veya 2026 fark etmeksizin aynı aday ekonomik davranış kuralını tetikler; 2026'daki vaka DNA dersleri 2023 retrospektif deneyinin *araştırma başlangıç sözlüğünde* kullanılabilir, fakat bu koşu kesinlikle kör tarihsel performans sayılamaz. Kural, geçmişteki tikel vaka tarihiyle eşleştirme değildir. Yayın/erişim saati ve sonucun hangi zamanda olgunlaştığı yalnız bilgi sızıntısı engellemek için gereklidir.
+
+**Mevcut kodun somut sınırı:** `adaptive_conditional_position_s3.js` şu an `MKT:phase:direction|ECO:EMP/CPI:surprise:sign` gibi dar prototipleri ve sonuç ölçümünde 5/10/20 seansı kullanıyor. Bu **olay DNA zinciri keşfi / ORG01–ORG12 ekonomik neden–aktarim mekanizması / tarih bağımsız tam kural tabanı değildir**. `replay_conditional_pretrained_2023_2025.js` ile başlatılan 2020–2022 fiyat ön-eğitimi ve 2023–2025 retrospektif ECONOMIC_ON/OFF yalnız mühendislik/karşılaştırma tanısıdır; **kullanıcının hedeflediği tarihsiz ekonomik mekanizma öğreniminin kabul testi olarak kullanılamaz**. Bu deney olumlu finansal sonuç bulsa dahi model otomatik onaylanmaz.
+
+**Düzeltilmiş geliştirme önceliği:** M2'de olayın ön-durum → tetik → çapraz piyasa aktarımı → altın yön/evre koşullu bağını, olumlu/ters/olaysız gerçek gözlemlerden matematiksel olarak keşfet; mekanizma prototiplerini ayır/birleştir/zayıflat. M3 ekonomik kuralın hareketin devam ve bozulma göstergelerini ölçsün. M4 net servet farkına bağlasın. M5 tüm kural açıklamasını, destek-karşıt örnekleri, ağırlık ve geçersizleşmeleri kalıcı taşısın. Teknik test veya fiyat-only başarısı, ekonomik kural keşfi kanıtı değildir.
+
+**Normatif kilit:** `EVENT_DNA_FIRST=TRUE`, `DATE_AS_RULE_INPUT=FORBIDDEN`, `FIXED_HORIZON_AS_RULE_ID=FORBIDDEN`, `RESEARCH_AFTER_THE_FACT=LABELED`, `S1_ORG_MACRO_TO_S3_VALUE=NOT_YET_PROVEN`, `SCIENCE_GATE=FAIL`. 
