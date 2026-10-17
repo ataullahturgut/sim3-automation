@@ -60,3 +60,28 @@ test("research non-execution, checkpoint restore and no event carry on market-on
  const y=obs(s,"2023-01-06T17:15:00Z",1901,null);
  assert.equal(y.eventPresent,false);assert.equal(y.actionCandidate,"KEEP");
 });
+
+test("existing S3 CORE queues conditional research BUY and only fills next completed M15",()=>{
+ const critic=require("./adaptive_position_value_s3");
+ const reg={[sid]:{kind:"MARKET",evidenceStatus:"SYNTHETIC_ONLY"}};
+ const s=critic.create({sourceRegistry:reg,shadowEnabled:true,
+  positionResearchMode:"CONDITIONAL_ECONOMIC_RESEARCH"});
+ const id="MKT:START:UP|ECO:EMP:nfp_surprise_z:POS|BUY#5";
+ s.conditional.cohorts[id]={n:50,mean:4,m2:15,independentN:10,
+  independentMean:4,independentM2:9,lastOriginIndex:0,lastMaturedAt:"2022-12-30"};
+ const mark=(time,price,phase,eco)=>critic.observe(s,{
+  asof:time,priceAvailableAt:time,barMinutes:15,price,sourceId:sid,
+  fast:{phase,direction:phase==="NEUTRAL"?0:1},slow:null,
+  s1Evidence:{asof:time,provenance:eco?"RESEARCH_MACRO_UNVERIFIED":
+   "MARKET_ONLY_UNVALIDATED",economicState:eco?ev.economicState:null,byHorizon:[]}});
+ mark("2023-01-06T16:45:00Z",1860,"NEUTRAL",false);
+ const signal=mark("2023-01-06T17:00:00Z",1863,"START",true);
+ assert.equal(signal.proposedResearchAction,"BUY");
+ assert.equal(signal.conditionalResearch.best.source,"CONDITIONAL_ECONOMIC");
+ assert.equal(signal.tradeAllowed,false);
+ assert.equal(s.paper.buyCount,0);
+ mark("2023-01-06T17:15:00Z",1864,"CONTINUE",false);
+ assert.equal(s.paper.buyCount,1);
+ assert.equal(s.paper.holding,"GOLD");
+ assert.equal(critic.summary(s).liveTradeAuthorized,false);
+});
