@@ -15,6 +15,7 @@
    <p class="sidekicker">PORTFÖY KORUMA LABORATUVARI</p>
    <nav aria-label="Bölümler">
     <a href="#overview" class="active">◉ &nbsp; Genel görünüm</a>
+    <a href="#model2023">▤ &nbsp; 2023 · Ekonomik kural / S1 / S2</a>
     <a href="#history">▤ &nbsp; Karar geçmişi</a>
     <a href="#audit">⌑ &nbsp; Veri ve model denetimi</a>
     <a href="#v2audit">◈ &nbsp; Algoritma V2 denetimi</a>
@@ -56,6 +57,45 @@
        <button id="runMonth" type="button">Ayı Çalıştır</button>
      </div>
      <p class="monthstatus" id="monthStatus" role="status">Ocak 2026 referansı gösteriliyor. Şubat'ı seçip Ayı Çalıştır'a basabilirsin.</p>
+   </section>
+   <section id="model2023" class="section model23-section" aria-labelledby="model23Title">
+    <div class="sectionhead">
+     <div class="eyebrow">GOLD-ADAPTIVE-MODEL-APP-01 / MODEL ÇIKTISI</div>
+     <h2 id="model23Title">2023 · Ekonomik kural ve S1 / S2 günlüğü</h2>
+     <p>Ocak ve Şubat'ın gerçek matematiksel CORE raporları. Ekonomik kural <strong>adayı</strong> araştırma eşleşmesidir; S1 ve S2 modelin hesapladığı göstergelerdir.</p>
+    </div>
+    <div class="model23-controls">
+     <div><label for="model23Month">İncelenecek ay</label>
+      <select id="model23Month" aria-label="2023 model inceleme ayı">
+       <option value="2023-01">Ocak 2023</option>
+       <option value="2023-02">Şubat 2023 · Ocak bilgisi devredildi</option>
+      </select>
+     </div>
+     <div><label for="model23Filter">Gösterilecek günler</label>
+      <select id="model23Filter" aria-label="Ekonomik kural adayına göre süz">
+       <option value="all">Tüm takvim günleri</option>
+       <option value="candidate">Ekonomik kural adayı olanlar</option>
+       <option value="observed">İşlem seansı olanlar</option>
+      </select>
+     </div>
+    </div>
+    <p class="notice model23-notice"><strong>Araştırma verisi — yatırım tavsiyesi değil.</strong> S1 UP, o günün sonunda <strong>sonraki 4 saat</strong> için fiyat-temelli olasılıktır. “Gerçek hareket” aynı günün geçmiş seans değişimidir; aynı tahminin sonucu değildir. ORG etiketleri ekonomik nedensellik kanıtı değildir.</p>
+    <p id="model23Status" role="status" class="monthstatus">Ocak 2023 sonuçları yükleniyor…</p>
+    <div class="model23-stats" aria-label="2023 model özeti">
+     <article class="model23-stat"><span>Ay başındaki S1 piyasa kuralı</span><strong id="model23Rules">—</strong><small>Ekonomik ORG kuralı değildir</small></article>
+     <article class="model23-stat"><span>Olgun 4 saatlik sonuç</span><strong id="model23Labels">—</strong><small>Ay başındaki öğrenme</small></article>
+     <article class="model23-stat"><span>Ekonomik kural adaylı gün</span><strong id="model23Events">—</strong><small>Araştırma eşleşmesi</small></article>
+     <article class="model23-stat"><span>Onaylı AL / SAT</span><strong id="model23Trades">—</strong><small>İşlem yetkisi kapalı</small></article>
+    </div>
+    <div class="panel">
+     <div class="paneltitle"><h3>Gün gün model çıktısı</h3><span id="model23RowsLabel">Veriler yükleniyor…</span></div>
+     <div class="tablewrap" id="model23Rows">Kaynak kontrol ediliyor…</div>
+    </div>
+    <div class="panel model23-detail-panel">
+     <div class="paneltitle"><h3>Seçilen günün ayrıntıları</h3><span id="model23DetailDate">Gün seçin</span></div>
+     <div id="model23Detail">Tablodan bir gün seçerek ekonomik olay ve S1/S2 ayrıntılarını görebilirsiniz.</div>
+    </div>
+    <p class="model23-source" id="model23Source">Kaynak: CORE denetim kayıtları. Ham fiyatlar bu ekrana aktarılmamıştır.</p>
    </section>
    <section id="overview" class="section">
     <div class="sectionhead"><h2>Strateji karşılaştırması</h2><p>Veri, kurallar ve komisyon oranı kilitli. Modu değiştirmek sadece aynı veri üzerindeki farklı sabit stratejiyi görüntüler.</p></div>
