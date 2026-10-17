@@ -172,3 +172,16 @@ GitHub Desktop'ta **Fetch origin → Pull origin** yap, eski sunucuyu kapatıp `
 **Yatırım algoritması olarak KABUL EDİLMEDİ**. Ekonomik değişkenlerin uzun dönemde gerçek ek karar getirisi yok; 2026 sonuçları geliştirme öncesi görülmüştü (kör doğrulama değil). Gerçek banka alış-satış kotasyonu/spreadi bulunmuyor. Yalnız alış %0,8 ve satış %0,8 komisyon proxy olarak kullanıldı.
 
 Kaynak: `macro_v6_portfolio.js`, `macro_v6_portfolio.test.js`, `V6_CROSS_ASSET_EVIDENCE_PROTOCOL_20261015.md`, `V6_ECONOMIC_MACRO_PORTFOLIO_FINAL_AUDIT_20261015.md`, `data/CME_3H_ASOF_2023_2024_V6.csv`, `data/CME_3H_ASOF_2025_2026_V6.csv`. Komut isteyen denetçiler için: `npm test`, `npm run verify-macro-v6-portfolio`; sunucuda salt okunur `GET /api/algorithm/v6/portfolio`.
+
+
+## 17 Ekim 2026 — 2023 ekonomik kural + S1 / S2 / S3 günlük inceleme ekranı
+
+**Uygulamada kullanma:** Bu özellik `research-gold-core-timeless-selective-learning-20261016` GitHub dalında geliştirildi. Yerel bilgisayarda bu dalın son sürümünü çekip uygulamayı yeniden açın (Windows'ta `BASLAT.bat` veya `npm start`). Tarayıcıda `http://127.0.0.1:8787` adresinde sol menüden **2023 · Ekonomik kural / S1 / S2** bölümünü açın. Üstteki **2026 Ayı Çalıştır** kutusu farklı, eski deneyindir; bu araştırma ekranında onu kullanmayın. Menü küçük ekranda kaydırılabilir; bölüm sayfanın başına da eklendi.
+
+**Eklenenler:** Ocak / Şubat 2023 ay seçimi, tüm gün / kural adayı / işlem seansı filtresi, gün gün araştırma aday ORG etiketi, S1 +4 saatlik UP olasılığı ve beklenen log hareket, S2 hızlı evre/yön/trend z, Şubat uzun S2 evresi, mevcut CORE S3 KEEP CASH araştırma kararı, aynı gün gerçekleşmiş altın seans hareketi, tıklanan günün ayrıntıları, 6/12 Ocak ve 3/14 Şubat için **ilk ekonomik araştırma gözlemi**. Önceki ayın öğrenmesi korunarak yapılan iki **başarılı matematiksel CORE** koşusunun raporları aynen kullanılır.
+
+**Kaynak ve yöntem:** `../../adaptive_trading_core/JAN_2023_INTEGRATED_S1_S2_S3_REAL_DAILY_RESULTS_20261017.md` ve `FEB_2023_INTEGRATED_S1_S2_S3_REAL_DAILY_RESULTS_20261017.md`. Uygulama `model_2023_daily_view.js` üzerinden yalnız bu iki raporu okur ve doğrular; yeni fiyat, işlem, ORG kuralı veya simüle performans üretmez. Salt okunur API `GET /api/model/2023/daily?month=2023-01` veya `2023-02`. Desteklenmeyen aylar 400, eksik/bozuk kaynak 503 döner. Ham lisanslı 15 dakika fiyatlar uygulamaya veya GitHub'a kopyalanmadı.
+
+**Güvenilirlik sınırı:** ORG etiketleri araştırmacı hipotezidir, doğrulanmış ekonomiden öğrenilmiş sinyal değildir. S1 UP gün sonu +4 saat, gerçek fiyat aynı gün seans ilk-son olduğundan isabet karşılaştırması yapılamaz. Olaydan sonra araştırma koşullu S1 henüz UNREADY; ekonomik ilk yayın erişimi PIT doğrulanmadı. S2 uzun bitiş olasılıkları güvenilir hazır değil. S3 KEEP, **canlı AL/SAT veya gerçek banka hesap sonucu değildir**. Eski 2026 V1/V2/V3 ve diğer deneyler değiştirilmedi.
+
+**Teknik kontrol:** `node --test model_2023_daily_view.test.js`; ayrıca [2023 uygulama uçtan-uca GitHub CI](https://github.com/ataullahturgut/sim3-automation/actions/workflows/gold-2023-core-daily-app-tests.yml) kaynak ve ekran bağlantılarını, localhost GET yanıtlarını ve eski V1 regresyonunu denetler.
