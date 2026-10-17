@@ -1156,3 +1156,117 @@ $("model23Rows").addEventListener("click",function(e){
  model23SelectedDate=date;model23Rows();model23Detail();
 });
 loadModel23();
+
+
+/* Jan 2023: actual CORE replay through M1 operational cadence validation.
+ * This is a scrubbed, immutable research aggregate, NOT a live market feed.
+ */
+let selective23=null,selective23Index=0;
+function selective23N(v,digits=2){
+ return typeof v==="number"&&Number.isFinite(v)?
+  new Intl.NumberFormat("tr-TR",{minimumFractionDigits:digits,maximumFractionDigits:digits}).format(v):"—";
+}
+function selective23Phase(v){
+ return ({START:"Başlangıç",CONTINUE:"Devam",PULLBACK:"Düzeltme",
+  REENTRY:"Yeniden giriş",END:"Bitiş",NEUTRAL:"Nötr",
+  WARMUP:"Hazırlık",UNREADY:"Hazır değil"})[v]||"—";
+}
+function selective23Date(d){return d.date.slice(8,10)+" Ocak 2023";}
+function selective23Draw(){
+ if(!selective23)return;
+ const days=selective23.days.slice(0,selective23Index+1);
+ const d=days.at(-1),s=d.snapshot;
+ const n=(a,key)=>a.reduce((x,y)=>x+(y[key]||0),0);
+ $("selective23Bars").textContent=n(days,"m1Accepted");
+ $("selective23Events").textContent=n(days,"eventCandidateCount");
+ $("selective23Watches").textContent=n(days,"priceChangeWatchCount");
+ $("selective23Trades").textContent="0";
+ $("selective23DaySlider").value=String(selective23Index+1);
+ $("selective23ProgressLabel").textContent=selective23Date(d)+" · "+(selective23Index+1)+"/31";
+ $("selective23Count").textContent=days.length+" takvim günü, "+days.filter(x=>x.hasSession).length+" fiyat seansı";
+ $("selective23Next").disabled=selective23Index>=30;
+ const s1=s?.s1,s2=s?.s2,s3=s?.s3;
+ let headline=d.eventCandidateCount?"Arşivde ekonomik açıklama adayı":
+  d.priceChangeWatchCount?"Fiyat hareketi izleme işareti":"Yeni doğrulanmış ekonomik açıklama yok";
+ let details=s?
+  '<div class="selective23-current-grid">'+
+  '<article><span>S1 · +4 saat UP</span><strong>'+ (s1.ready?selective23N(s1.pUpPct)+"%":"Hazır değil")+
+    '</strong><small>Tamamlanan seansın son gözlemi · fiyat temelli</small></article>'+
+  '<article><span>S2 · hızlı evre</span><strong>'+escapeText(selective23Phase(s2.phase))+
+    (s2.direction===1?" ↑":s2.direction===-1?" ↓":"")+
+    '</strong><small>Trend z: '+selective23N(s2.trendZ)+'</small></article>'+
+  '<article><span>S2 · uzun</span><strong>'+escapeText(selective23Phase(s2.slowPhase))+
+    '</strong><small>Kalan hareket süresi kalibre değil</small></article>'+
+  '<article><span>S3 · araştırma</span><strong>NAKİT KORU</strong>'+
+    '<small>Gerekçe: '+escapeText(s3.reason)+'. Banka emri yok.</small></article>'+
+  '</div>': '<p>Bu tarih için tamamlanmış fiyat seansı yok; fiyat veya AL/SAT sinyali uydurulmadı.</p>';
+ if(d.eventNotes.length){
+  details+='<div class="selective23-research-note"><strong>Ekonomik yayın denetimi:</strong> '+
+   d.eventNotes.map(x=>escapeText(x.scheduledReleaseUTC.slice(11,16))+
+    ' UTC · varsayılan erişim '+escapeText(x.assumedResearchAvailableUTC.slice(11,16))+
+    ' UTC · ilk yayın ve beklenti vintage kanıtı olmadığından koşullu S1 özelliği engellendi.')
+   .join(" ")+'</div>';
+ }
+ if(d.priceChangeWatchCount)details+='<p class="selective23-watch">O gün '+d.priceChangeWatchCount+
+   ' adet ardışık 15dk fiyat hareketi ≥%0,5 işareti görüldü. Bu bir ekonomik neden veya AL/SAT sinyali değildir.</p>';
+ if(d.ruleCandidate)details+='<p><strong>Geriye dönük ekonomik kural adayı:</strong> '+
+   escapeText(d.ruleCandidate)+' <small>(sonradan eklenmiş araştırma notu; o anda doğrulanmış otomatik tetik değil)</small></p>';
+ $("selective23Current").innerHTML='<h3>'+escapeText(selective23Date(d))+
+  ' · '+escapeText(headline)+'</h3>'+details+
+  (d.hasSession?'<p class="selective23-sessionret">O günün gerçekleşmiş fiyat hareketi: <strong>'+
+   (d.observedSessionReturnPct>0?"+":"")+selective23N(d.observedSessionReturnPct,3)+'%</strong> (aynı seans; S1 tahmininin hedefi değildir)</p>':"");
+ const rows=days.map(row=>{
+  const z=row.snapshot,m=row.ruleCandidate||"—";
+  const ret=row.hasSession?(row.observedSessionReturnPct>=0?"+":"")+
+   selective23N(row.observedSessionReturnPct,3)+"%":"—";
+  const sl=z?.s2,cellV=val=>cell(escapeText(val));
+  return '<tr class="'+(row.date===d.date?"model23-selected":row.eventCandidateCount?"model23-highlight":"")+'">'+
+   cellV(row.date)+cellV(row.barCount)+cellV(row.eventCandidateCount)+
+   cellV(row.priceChangeWatchCount)+cellV(m)+
+   cellV(z?.s1?.ready?selective23N(z.s1.pUpPct)+"%":"—")+
+   cellV(sl?selective23Phase(sl.phase)+(sl.direction===1?" / ↑":sl.direction===-1?" / ↓":""):"—")+
+   cellV(z?"NAKİT KORU":"—")+cellV(ret)+"</tr>";
+ });
+ $("selective23Table").innerHTML=table(
+  ["Gün","M15","Olay kanıt kontrolü","Fiyat izleme","Ekonomik araştırma adayı","S1 UP","S2 evre","S3 araştırma","Gün içi altın"],
+  rows);
+ $("selective23Status").textContent=(selective23Index===30?
+  "Ocak 2023 arşiv yürüyüşü tamamlandı. ":"Gün gün ilerliyorsunuz. ")+
+  "CORE yalnız tamamlanmış M15 kayıtlarını kullandı. Arşiv haberleri PIT-sertifikalı değil; ekonomi sinyali olarak kullanılmadı.";
+}
+async function selective23Load(){
+ try{
+  const r=await fetch("/api/model/2023/january/selective-walk",{cache:"no-store"});
+  if(!r.ok)throw Error("HTTP "+r.status);
+  const x=await r.json();
+  if(x.version!=="GOLD_JAN2023_SELECTIVE_M1_S1_S2_S3_WALK_V1_20261017"||
+    x.days?.length!==31||x.tradeAllowed!==false||x.firstPrintMacroVerified!==false||
+    x.observed?.gateCalls!==1920||x.observed?.modelCalls!==1920||
+    x.observed?.macroPITFeaturesAccepted!==0)
+   throw Error("CORE kaynak/kanıt sözleşmesi tutarsız");
+  selective23=x;selective23Index=0;
+  $("selective23Source").innerHTML="Kaynak: <a target='_blank' rel='noopener noreferrer' href='"+
+   escapeText(x.sourceWorkflowRun)+"'>Ocak 2023 gerçek CORE yürüyüşünün başarılı GitHub çalışması</a>. "+
+   escapeText(x.prior.bars)+" M15 önceki öğrenme, 1.920 Ocak fiyat kontrolü, yalnız 2 geriye dönük makro adayı. "+
+   "Ne gerçek 2023 canlı fiyat erişim kayıtları ne de sertifikalı haber ilk baskıları mevcuttur.";
+  selective23Draw();
+ }catch(e){
+  $("selective23Status").textContent="Ocak 2023 yürüyüşü gösterilemedi: "+
+   e.message+". Eksik kayıt yerine sentetik sinyal üretmiyoruz.";
+  $("selective23Current").textContent="Kaynak hatası.";
+  $("selective23Table").textContent="—";
+ }
+}
+$("selective23Restart").addEventListener("click",()=>{
+ if(selective23){selective23Index=0;selective23Draw();}
+});
+$("selective23Next").addEventListener("click",()=>{
+ if(selective23&&selective23Index<30){selective23Index++;selective23Draw();}
+});
+$("selective23All").addEventListener("click",()=>{
+ if(selective23){selective23Index=30;selective23Draw();}
+});
+$("selective23DaySlider").addEventListener("input",e=>{
+ if(selective23){selective23Index=Math.max(0,Math.min(30,Number(e.target.value)-1));selective23Draw();}
+});
+selective23Load();
