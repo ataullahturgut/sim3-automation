@@ -30,6 +30,8 @@ test("economic not invented from invalid or market-only provenance",()=>{
 });
 test("learned economic advantage only with sufficient independent support",()=>{
  const s=m.create(),id="MKT:START:UP|ECO:EMP:nfp_surprise_z:POS|BUY#5";
+ s.cohorts["MKT:START:UP|BUY#5"]={n:50,mean:-1,m2:50,independentN:10,
+  independentMean:-1,independentM2:9,lastOriginIndex:0,lastMaturedAt:"2022-12-30"};
  s.cohorts[id]={n:50,mean:4,m2:15,independentN:10,independentMean:4,
   independentM2:9,lastOriginIndex:0,lastMaturedAt:"2022-12-30"};
  let x=m.score(s,{phase:"START",direction:1},ev,"CASH");
@@ -67,6 +69,9 @@ test("existing S3 CORE queues conditional research BUY and only fills next compl
  const s=critic.create({sourceRegistry:reg,shadowEnabled:true,
   positionResearchMode:"CONDITIONAL_ECONOMIC_RESEARCH"});
  const id="MKT:START:UP|ECO:EMP:nfp_surprise_z:POS|BUY#5";
+ s.conditional.cohorts["MKT:START:UP|BUY#5"]={n:50,mean:-1,m2:50,
+  independentN:10,independentMean:-1,independentM2:9,
+  lastOriginIndex:0,lastMaturedAt:"2022-12-30"};
  s.conditional.cohorts[id]={n:50,mean:4,m2:15,independentN:10,
   independentMean:4,independentM2:9,lastOriginIndex:0,lastMaturedAt:"2022-12-30"};
  const mark=(time,price,phase,eco)=>critic.observe(s,{
