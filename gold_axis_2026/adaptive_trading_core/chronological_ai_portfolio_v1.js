@@ -98,7 +98,7 @@ function executePending(s,p,bid,ask,at,arm){
  p.pending=null;
 }
 function onBar(s,{barStart,asof,bid,ask,snapshot,modelAction=null}){
- const start=stamp(barStart),t=stamp(asof);
+ const start=stamp(barStart),t=stamp(asof),lastObservedBarStart=s.lastBarStart;
  if(s.version!==VERSION||t!==start+900000||t<=s.lastBarTime||
     start<=s.lastBarStart||!(bid>0)||!(ask>=bid))
   throw Error("BAR_CHRONOLOGY_OR_QUOTE");
@@ -134,8 +134,7 @@ function onBar(s,{barStart,asof,bid,ask,snapshot,modelAction=null}){
   ["START","REENTRY","END"].includes(phase);
  s.prevPhase=phase;s.prevDirection=direction;
  const prev=s.latestSnapshot;
- const shock=prev&&start-s.lastBarStart===0 ? false :
-  prev&&start-stamp(prev.barStart)===900000&&
+ const shock=prev&&start-lastObservedBarStart===900000&&
   Math.abs(100*((bid+ask)/(prev.bid+prev.ask)-1))>=0.5;
  s.latestSnapshot={barStart:iso(start),bid,ask};
  const wantsAttention=newly.length||firstDaily||shock||
