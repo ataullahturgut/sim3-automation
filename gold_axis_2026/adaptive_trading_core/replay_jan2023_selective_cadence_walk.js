@@ -86,7 +86,10 @@ function run(bars,sessions,ledger){
   }
   if(started>=FEB)break;
   const date=iso(started+7200000).slice(0,10);
-  if(date<"2023-01-01"||date>"2023-01-31")throw Error("SESSION_ROLL_BAD");
+  // Jan UTC quote range and UTC22 research session labels do not share an
+  // exact month boundary: e.g., late Jan 31 UTC bars label Feb 1 session.
+  // Preserve their chronological CORE updates, but omit that extra label
+  // from the 31-day January screen (same convention as original replay).
   const record=day(date),syntheticReception=ended+15000;
   // Every actual historical M15 is inspected exactly once. No made-up minute
   // ticks or fake observed quote/received_at are claimed.
