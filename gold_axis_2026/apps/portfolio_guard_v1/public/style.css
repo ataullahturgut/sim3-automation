@@ -101,3 +101,33 @@
 @media(max-width:1150px){.selective23-current-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:850px){.selective23-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.selective23-kpis article{padding:13px}.selective23-kpis strong{font-size:25px}.selective23-current{padding:12px}.selective23-current-grid{grid-template-columns:1fr}}
+
+
+/* 2023 Jan-Feb GPT mechanism paper-only chronology */
+.ai23-section{border-top:1px solid #32475a;padding-top:25px;scroll-margin-top:20px}
+.ai23-stats,.ai23-comparisons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:15px 0}
+.ai23-stats article,.ai23-comparisons article{border:1px solid #38536b;background:#15293a;border-radius:10px;padding:15px;min-width:0}
+.ai23-stats article span,.ai23-comparisons article span{display:block;font-size:12px;color:#a3b9cb;min-height:31px}
+.ai23-stats article strong,.ai23-comparisons article strong{display:block;font-size:25px;margin:9px 0;color:#f1d9a2;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.ai23-stats article small,.ai23-comparisons article small{display:block;color:#97acbe;font-size:12px;line-height:1.5}
+.ai23-comparisons{grid-template-columns:repeat(5,minmax(0,1fr))}
+.ai23-comparisons article strong{font-size:18px}
+.ai23-notation{color:#a1b1bf;line-height:1.65;display:block;margin:10px 0}
+.ai23-controls{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px}
+.ai23-controls button{background:#263b50;color:#f3f2ee;border:1px solid #5d758c;padding:11px 14px;border-radius:8px;cursor:pointer}
+.ai23-controls button:nth-child(2){background:#d0b17d;color:#172537;font-weight:700}
+.ai23-controls button:disabled{opacity:.55;cursor:not-allowed}
+.ai23-controls button:not(:disabled):hover{filter:brightness(1.18)}
+.ai23-section label{display:block;color:#b3c2d1;font-size:12px;font-weight:650}
+#ai23Slider{width:100%;accent-color:#d2b481;margin:15px 0 22px}
+.ai23-current{background:#152a3b;border:1px solid #3b5267;padding:16px;border-radius:9px;line-height:1.65}
+.ai23-current h3{color:#f0d6a1;margin:0 0 15px}
+.ai23-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ai23-metrics article{padding:12px;border-radius:8px;border:1px solid #3a5268;background:#172737;min-width:0}
+.ai23-metrics article span,.ai23-metrics article small{display:block;font-size:12px;color:#a4b5c5}
+.ai23-metrics article strong{display:block;font-size:16px;color:#edf0f3;margin:7px 0;overflow-wrap:anywhere}
+.ai23-caution{background:#342b21;border:1px solid #655038;color:#eddec7;border-radius:8px;padding:10px 12px;margin:13px 0}
+#ai23Table table{min-width:980px}
+@media(max-width:1170px){.ai23-comparisons{grid-template-columns:repeat(3,minmax(0,1fr))}.ai23-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:780px){.ai23-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ai23-comparisons{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.ai23-metrics{grid-template-columns:1fr}.ai23-current{padding:12px}.ai23-comparisons article strong{font-size:16px}}
