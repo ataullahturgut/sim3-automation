@@ -1,0 +1,26 @@
+name: GOLD MODEL M1 - hybrid evidence and decision cadence contract
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+    paths:
+      - '.github/workflows/gold-m1-live-cadence-contract-tests.yml'
+      - 'gold_axis_2026/adaptive_trading_core/live_cadence_gate_v1.js'
+      - 'gold_axis_2026/adaptive_trading_core/live_cadence_gate_v1.test.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cadence-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run no-lookahead and no-trade cadence unit tests
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check live_cadence_gate_v1.js
+          node --check live_cadence_gate_v1.test.js
+          node --test live_cadence_gate_v1.test.js
