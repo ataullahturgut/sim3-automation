@@ -14,6 +14,7 @@ const learnedStateV2=require("./monthly_learning_v2").createJanuaryLearningRecor
 const febRunner=require("./monthly_runner"); // real February 2026 replay computed on demand
 const model2023=require("./model_2023_daily_view"); // existing 2023 mathematical CORE reports, never recalculated in UI
 const jan2023Selective=require("./model_2023_selective_view"); // immutable real gated M15 replay aggregate
+const janFebAI=require("./model_2023_ai_shadow_view"); // immutable Jan-Feb 2023 AI handoff real CORE research
 function small(v) {
  const x=snapshots.scenarios[v];
  return {
@@ -50,6 +51,14 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/model/2023/jan-feb-ai-shadow"){
+  try{
+   return respond(res,200,JSON.stringify(janFebAI.read()));
+  }catch(err){
+   console.error("Jan-Feb AI handoff aggregate validation:",err.message);
+   return respond(res,503,JSON.stringify({error:"JAN_FEB_AI_HANDOFF_SOURCE_INVALID"}));
+  }
+ }
  if(route==="/api/model/2023/january/selective-walk"){
   try {
    return respond(res,200,JSON.stringify(jan2023Selective.read()));
