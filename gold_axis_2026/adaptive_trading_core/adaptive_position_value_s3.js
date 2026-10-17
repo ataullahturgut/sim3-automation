@@ -13,6 +13,7 @@
 const memory=require("./adaptive_position_memory_s3");
 const longCycle=require("./adaptive_long_cycle_s3");
 const opportunity=require("./adaptive_opportunity_learning_s3");
+const conditional=require("./adaptive_conditional_position_s3");
 const VERSION="KAVIS_S3_POSITION_VALUE_CRITIC_R2_20261016";
 const FEE_PER_LEG=0.008, STEP=15*60*1000;
 const HOLDINGS=["CASH","GOLD"],ACTIONS=["KEEP","SWITCH"];
@@ -30,12 +31,12 @@ function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
   throw Error("S3_BAD_LEARNING_MODE");
  if(!Number.isInteger(minUpdates)||minUpdates<16)throw Error("S3_MIN_SUPPORT");
  if(!["LEGACY_M15","MULTI_SESSION_RESEARCH","INTEGRATED_LONG_RESEARCH",
-  "OPPORTUNITY_MATURED_RESEARCH"].includes(positionResearchMode))
+  "OPPORTUNITY_MATURED_RESEARCH","CONDITIONAL_ECONOMIC_RESEARCH"].includes(positionResearchMode))
   throw Error("S3_POSITION_POLICY_MODE_INVALID");
  return {version:VERSION,mode:learningMode,registry:clone(sourceRegistry),
   config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates,positionResearchMode},
   sessionMemory:memory.create(),longCycle:longCycle.create(),
-   opportunity:opportunity.create(),lastS1Evidence:null,
+   opportunity:opportunity.create(),conditional:conditional.create(),lastS1Evidence:null,
   q:{},last:null,audit:{bars:0,updates:0,gaps:0,sourceBreaks:0,
    proposed:0,abstained:0,shadowTrades:0,
    decisionsByReason:{},s1ResearchForecastReceived:0,
@@ -155,7 +156,7 @@ function observe(s,o){
  }
  // Research execution must use a price OBSERVED AFTER the signal.
  // No assumed bank business hours; cancel stale orders across gaps / feeds.
- if(["INTEGRATED_LONG_RESEARCH","OPPORTUNITY_MATURED_RESEARCH"].includes(s.config.positionResearchMode)&&
+ if(["INTEGRATED_LONG_RESEARCH","OPPORTUNITY_MATURED_RESEARCH","CONDITIONAL_ECONOMIC_RESEARCH"].includes(s.config.positionResearchMode)&&
     s.paper.pendingOrder){
    const order=s.paper.pendingOrder;s.paper.pendingOrder=null;
    if(contiguous&&s.paper.valid&&s.paper.enabled&&order.sourceId===o.sourceId
@@ -172,6 +173,8 @@ function observe(s,o){
     at:o.asof,price:o.price,sourceId:o.sourceId,fast:o.fast,slow:o.slow,
     s1Evidence:o.s1Evidence});
  const h=s.paper.holding;
+ const conditionalResearch=conditional.observe(s.conditional,{at:o.asof,price:o.price,
+   sourceId:o.sourceId,fast:o.fast,s1Evidence:o.s1Evidence,holding:h});
  const keep=s.q[key(c,h,"KEEP")],sw=s.q[key(c,h,"SWITCH")];
  // Correlated M15 updates are NOT independent episodes or a science PASS.
  const enough=!!(keep&&sw&&keep.visits>=s.config.minUpdates&&
@@ -250,11 +253,20 @@ function observe(s,o){
     "OPPORTUNITY_NO_CONFIRMED_EXIT";
   }else {proposed="KEEP";reason="OPPORTUNITY_MAINTAIN_POSITION";}
  }
+ if(s.config.positionResearchMode==="CONDITIONAL_ECONOMIC_RESEARCH"){
+  if(!contiguous||!s.paper.valid||c.includes("UNREADY")){
+   proposed="ABSTAIN";reason=!contiguous?"CONDITIONAL_BAR_GAP":
+     !s.paper.valid?"CONDITIONAL_SOURCE_INVALID":"CONDITIONAL_PHASE_UNREADY";
+  }else{
+   proposed=conditionalResearch.actionCandidate;
+   reason=conditionalResearch.reason;
+  }
+ }
  if(proposed==="ABSTAIN")s.audit.abstained++;
  else s.audit.proposed++;
  s.audit.decisionsByReason[reason]=(s.audit.decisionsByReason[reason]||0)+1;
  // Shadow simulation is optional and NEVER changes the real portfolio.
- if(["INTEGRATED_LONG_RESEARCH","OPPORTUNITY_MATURED_RESEARCH"].includes(s.config.positionResearchMode)){
+ if(["INTEGRATED_LONG_RESEARCH","OPPORTUNITY_MATURED_RESEARCH","CONDITIONAL_ECONOMIC_RESEARCH"].includes(s.config.positionResearchMode)){
    if(s.paper.enabled&&proposed!=="ABSTAIN"&&proposed!=="KEEP"&&
        s.paper.pendingOrder===null&&s.paper.valid){
      s.paper.pendingOrder={side:proposed,issuedAt:t,sourceId:o.sourceId};
@@ -280,7 +292,7 @@ function observe(s,o){
   multiSessionResearch:{state:sessionState,fiveSession:longFive,
      policyMode:s.config.positionResearchMode,
      quoteAccepted:true,executionVenueCertified:false},
-  longCycleResearch:longResearch,opportunityResearch,
+  longCycleResearch:longResearch,opportunityResearch,conditionalResearch,
   nextObservedBarResearchOrder:s.paper.pendingOrder?
    clone(s.paper.pendingOrder):null,
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
@@ -304,6 +316,7 @@ function summary(s){
     feeUsdShadow:s.paper.enabled?s.paper.fees:null
   },positionMemory:memory.summary(s.sessionMemory),
    opportunityMemory:opportunity.summary(s.opportunity),
+   conditionalPositionMemory:conditional.summary(s.conditional),
    longCycleMemory:longCycle.summary(s.longCycle),
    lastS1Evidence:s.lastS1Evidence?clone(s.lastS1Evidence):null,
    scienceGate:"NOT_PROVEN",liveTradeAuthorized:false,
@@ -321,6 +334,7 @@ function restore(data){
  s.longCycle=longCycle.restore(s.longCycle);
  // Legacy checkpoints have no opportunity state; never invent previous learning.
  s.opportunity=s.opportunity?opportunity.restore(s.opportunity):opportunity.create();
+ s.conditional=s.conditional?conditional.restore(s.conditional):conditional.create();
  return s;
 }
 function observeCompletedSession(s,session){
@@ -330,10 +344,14 @@ function observeCompletedSession(s,session){
  const opportunityUpdate=opportunity.closeSession(s.opportunity,{
   session:session.session,sourceId:session.sourceId,price:session.price,
   availableAt:session.availableAt});
+ const conditionalUpdate=conditional.completedSession(s.conditional,{
+   session:session.session,sourceId:session.sourceId,price:session.price,
+   availableAt:session.availableAt});
  const outcome=longCycle.observe(s.longCycle,{...session,
     shadowHolding:s.paper.holding,
     shadowProposal:s.lastProposedResearchAction??"KEEP"});
- return {...updated,longCycle:outcome,opportunity:opportunityUpdate};
+ return {...updated,longCycle:outcome,opportunity:opportunityUpdate,
+   conditional:conditionalUpdate};
 }
 module.exports={VERSION,FEE_PER_LEG,create,observe,observeCompletedSession,
  summary,checkpoint,restore,
