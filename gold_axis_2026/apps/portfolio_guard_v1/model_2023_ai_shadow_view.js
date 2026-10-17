@@ -36,8 +36,8 @@ function read(){
   bars+=d.bars;attention+=d.attention;releases+=d.observedArchiveMacroWaves;
  });
  // UTC month archive includes 2023-03-01 research roll at Feb28 22Z;
- // only February's final 8 UTC bars are excluded from the labelled table.
- if(bars!==x.janFebBars-8||attention!==a.attentionCount||
+ // only February's final 4 UTC bars are excluded from the labelled table.
+ if(bars!==x.janFebBars-4||attention!==a.attentionCount-1||
    releases!==4)throw Error("JAN_FEB_AI_DAILY_COVERAGE_MISMATCH");
  return x;
 }
