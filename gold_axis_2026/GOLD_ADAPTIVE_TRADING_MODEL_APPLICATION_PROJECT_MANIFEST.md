@@ -501,3 +501,26 @@ Mevcut S3 modeline yeni bir uygulama veya dal açmadan `adaptive_long_cycle_s3.j
 **Düzeltilmiş geliştirme önceliği:** M2'de olayın ön-durum → tetik → çapraz piyasa aktarımı → altın yön/evre koşullu bağını, olumlu/ters/olaysız gerçek gözlemlerden matematiksel olarak keşfet; mekanizma prototiplerini ayır/birleştir/zayıflat. M3 ekonomik kuralın hareketin devam ve bozulma göstergelerini ölçsün. M4 net servet farkına bağlasın. M5 tüm kural açıklamasını, destek-karşıt örnekleri, ağırlık ve geçersizleşmeleri kalıcı taşısın. Teknik test veya fiyat-only başarısı, ekonomik kural keşfi kanıtı değildir.
 
 **Normatif kilit:** `EVENT_DNA_FIRST=TRUE`, `DATE_AS_RULE_INPUT=FORBIDDEN`, `FIXED_HORIZON_AS_RULE_ID=FORBIDDEN`, `RESEARCH_AFTER_THE_FACT=LABELED`, `S1_ORG_MACRO_TO_S3_VALUE=NOT_YET_PROVEN`, `SCIENCE_GATE=FAIL`. 
+
+
+---
+
+## 2026-10-17 — CANLI VERİ FREKANSI VE OLAY TETİKLEMELİ DEĞERLENDİRME KARARI v1.0
+
+**WORKSTREAM=MODEL/M1 | SCOPE=OPERATIONAL_CADENCE_NOT_ALPHA | LIVE_DATA=NOT_CONNECTED | ENGINE=UNCHANGED | SCIENCE_GATE=FAIL | TRADE_ALLOWED=FALSE**
+
+Kullanıcının “en uygun, artı/eksi tartarak frekans belirleme” talebi üzerine **hibrit veri/karar zamanlaması** seçildi. [Ayrıntılı mimari, alternatifler, resmî veri yayın zamanları ve kabul kapıları](adaptive_trading_core/LIVE_DATA_AND_DECISION_CADENCE_CONTRACT_20261017.md) ve [salt-okunur kaynak/zaman kalite kapısı](adaptive_trading_core/live_cadence_gate_v1.js) içinde.
+
+**Karar:**
+1. **Piyasa quote:** yetkili push/feed tercih; açık piyasada 30 sn watchdog ve 120 sn stale eşiği *ilk operasyon testi hedefi*. Streaming yoksa sağlayıcı limitlerine uygun 30–60sn polling. Eksik/eski quote sahte canlı fiyat değildir. Kendi banka bid/ask farklılığı ayrı korunur.
+2. **Çapraz piyasalar:** kaynağa göre akış veya 1–5 dakika; eski veriye `UNKNOWN` maskesi. Veri izleme hızı **AL/SAT hızı değildir**.
+3. **Ekonomik haber:** resmî takvim önceden; planlı açıklama yakınında lisanslı sağlayıcının izin verdiği 15–60sn kontrol / push; sürpriz haber için push tercih, fallback 2–5dk polling; mevcut sağlayıcı bilinmediğinden gecikme garantisi YOK. `event_time, first_available_at, received_at, revision_id, consensus_vintage` olmadan ekonomik alpha sertifikası yok.
+4. **S1/S2_FAST/S3 mevcut CORE:** sadece **gerçekten tamamlanmış 15 dakikalık bar** geldikçe çağrılır; S1'nin iç 240 dakika anchor ve 240 dakika tahmin ufku korunur, **15 dakikada yeni bağımsız S1 öngörüsü üretildiği iddia edilemez**. S2 fast durum güncelleme M15; S3 araştırma CASH/GOLD avantaj kontrolü M15, gerçek emir YOK.
+5. **Haber geldiği anda:** ekonomik kanıt/risk yeniden kontrol edilir ve ekrana `EVENT_PENDING` yansır; yeni tamamlanmamış fiyatla S1/S2/S3 emir simülasyonu veya gelecek bar uydurma YOK. İlk uygun kapanmış M15'te ekonomik fiyat aktarımı değerlendirilsin. M1 erken uyarı ayrı gelecekteki araştırma adayıdır.
+6. **S2_SLOW:** her tamamlanmış, kalite geçerli günlük oturumda bir kez. Mevcut `UTC22` yalnız araştırma konvansiyonu; canlı sistem resmî settlement ve DST kanıtı olmadan bu saati evrensel fiyat kapanışı sayamaz.
+7. **Olgunlaşma / kayıt:** sonuç yalnız ufku tamamlanınca öğrenmeye girer; her olay/bar/karar ayrı as-of audit, idempotency, en geç saatlik araştırma checkpoint hedefi, veri kesintisinde backfill ve gecikmiş kayıt için **retrospektif işlem yok**.
+8. **Maliyet:** %0,8 alış + %0,8 satış → yaklaşık **%1,6194** yalnız bu masrafları karşılayan fiyat artışı; ek banka spread/slippage dahil değil. Her kontrol yeni işlem değildir. Banka saati kısıtı hiç konulmaz; kapanan piyasa, veri/ticaret erişimi yoksa yeni emir önerisi bloke edilir.
+
+**Bu turda gerçekten yapılan:** [9 kaynak/gelecek-bilgisi/süreklilik/kapanış testini içeren kalite kapısı](adaptive_trading_core/live_cadence_gate_v1.test.js), [GitHub Actions PASS](https://github.com/ataullahturgut/sim3-automation/actions/runs/39054978704), mimari sözleşme. **Bu kapı tek başına hiçbir fiyat veya haberi çekmez; canlı feed bağlanmadı, daemon/cron deploy edilmedi, CORE'un öğrenme matematiği veya 2023 geçmiş sonuçları değiştirilmedi, ekranın canlı veri gösterimi açılmadı.**
+
+**Bir sonraki zorunlu iş:** Lisanslı XAU ask/bid sağlayıcısı + haber/calendar sağlayıcısının somut API ve kullanım koşullarını doğrula; ilk erişim/güncellik telemetrisini küçük salt-okunur shadow pilotta ölç; zaman ve kaynak kalitesi ispatlanmadan ekonomik ORG→S1→S2→S3 otomatik gerçek AL/SAT kararı açma.
