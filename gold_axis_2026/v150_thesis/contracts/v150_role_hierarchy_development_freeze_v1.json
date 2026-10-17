@@ -1,0 +1,74 @@
+{
+  "contract_id": "GOLD_CONTROL_V150_ROLE_HIERARCHY_DEVELOPMENT_FREEZE_V1",
+  "frozen_on": "2026-09-12",
+  "status": "FROZEN_BEFORE_V150_DEVELOPMENT_RUN",
+  "authority_parent": "GOLD_CONTROL_PROJECT_MANIFEST_V1.49",
+  "evidence_class": "RETROSPECTIVE_DEVELOPMENT_ONLY_NOT_PROSPECTIVE_NOT_PROMOTION",
+  "outer_lock": {
+    "forbidden_for_design_or_scoring": ["2025-01-01", "2026-09-12"],
+    "rule": "No V1.50 feature, model, threshold, gating, calibration, or selection decision may read 2025-2026 outcome labels. The already-visible V1.49 outer is immutable and is not reused as a V1.50 test set."
+  },
+  "general_direction": {
+    "origin": "exact Twelve Data XAU/USD 1min 16:59 America/New_York observation; decision time NY17 after that completed bar",
+    "development_data": ["2023-01-01", "2024-12-31"],
+    "selection_window_end": "2024-06-30",
+    "development_lock_window": ["2024-07-01", "2024-12-31"],
+    "targets": ["NEXT_NY17_1D", "NEXT_NY17_3D"],
+    "minimum_training_origins": 60,
+    "feature_blocks": {
+      "G0_GOLD": ["gold_ret_lag1", "gold_ret_lag2", "gold_ret_lag3", "gold_mom3", "gold_mom5", "gold_mom10", "gold_mom20", "gold_rv5", "gold_rv10", "gold_rv20"],
+      "G1_ROLE_CONTEXT": ["FAST frozen SMA20 plus two-completed-origin persistence", "SLOW completed-week close/SMA4 plus two-completed-week persistence", "MONTHLY_DIRECTION_3M last three completed monthly returns"],
+      "G2_RATES_FX_PIT": ["DGS10_ALFRED_PIT_ME", "DFF_ALFRED_PIT_ME", "DEXCHUS_ALFRED_PIT_ME"],
+      "G3_EQUITY_LAG1_RECONSTRUCTION": ["NASDAQ100_FRED", "SP500_FRED", "DJIA_FRED"],
+      "G4_PRECIOUS_LAG1_RECONSTRUCTION": ["XAG_STAKTRAKR_RESEARCH_DAILY_R1", "XPT_STAKTRAKR_RESEARCH_DAILY_R1", "XPD_STAKTRAKR_RESEARCH_DAILY_R1"]
+    },
+    "source_semantics": {
+      "G2_RATES_FX_PIT": "available_as_of <= origin is mandatory and is promotion-eligible only if lineage checks pass",
+      "G3_EQUITY_LAG1_RECONSTRUCTION": "historical economic-date reconstruction only; one-origin lag mandatory; current backfill retrieval timestamps do not prove historical PIT availability",
+      "G4_PRECIOUS_LAG1_RECONSTRUCTION": "historical research reconstruction only; one-origin lag mandatory; not promotion-eligible without prospective source clock proof"
+    },
+    "candidate_feature_sets": ["G0", "G0_G1", "G0_G1_G2", "G0_G1_G3", "G0_G1_G4", "G0_G1_G2_G3_G4"],
+    "candidate_models": ["LOGISTIC_RIDGE_C0.1", "LOGISTIC_RIDGE_C1.0", "HIST_GRADIENT_BOOST_DEPTH2"],
+    "missingness": "Train-only median imputation with missingness indicators for logistic models; native/matched missing handling for tree model. No full-block complete-case deletion.",
+    "selection": "For each horizon, select feature-set/model pair using only sequential predictions whose origins are on or before 2024-06-30. Primary selection metric Brier score; log loss is tie-breaker.",
+    "selective_prediction": {
+      "threshold_candidates_abs_p_minus_half": [0.0, 0.05, 0.1, 0.15, 0.2],
+      "selection_rule": "Use only selection-window predictions. Choose the threshold with highest directional accuracy subject to coverage >= 0.35 and accepted_n >= 20; break ties by higher coverage then lower threshold.",
+      "interpretation": "NO_SIGNAL is allowed when the frozen threshold is not met."
+    },
+    "development_lock_gates_for_prospective_shadow_eligibility": {
+      "brier_gain_vs_p50_min": 0.005,
+      "log_loss_not_worse_than_p50": true,
+      "selective_accuracy_min": 0.60,
+      "selective_coverage_min": 0.30,
+      "selective_accepted_n_min": 20
+    }
+  },
+  "event_direction": {
+    "role": "Sparse event-time specialist; never merged onto the unconditional NY17 evaluation clock",
+    "development_data": ["2023-01-01", "2024-12-31"],
+    "macro_series": ["MACRO_EVENT_V3_EMPLOYMENT_SCORE", "MACRO_EVENT_V3_INFLATION_SCORE", "MACRO_EVENT_V3_FOMC_SCORE"],
+    "score_direction": "sign(score) is the gold-oriented expected initial reaction direction; zero score is NO_SIGNAL",
+    "targets": ["R5", "R15", "R30", "EVENT_TO_NEXT_NY17"],
+    "strong_state_rule": "Existing frozen metadata state only; no new threshold is chosen from V1.50 outcomes",
+    "market_shock_role": "MARKET_SHOCK_CHALLENGER_V3 is confirmation/context only, not an unconditional 1D/3D vote",
+    "continuation_rule": "Initial reaction and post-shock continuation/reversal are separate targets and must never be relabelled as the same task"
+  },
+  "role_hierarchy": [
+    "VW_MIDAS_MSVR_SUCCESSOR_V1 -> monthly price-level expert (unchanged)",
+    "MONTHLY_DIRECTION_3M -> strategic direction prior",
+    "FAST/SLOW/BOCPD -> regime/context, not equal votes",
+    "MACRO_EVENT -> sparse event direction specialist",
+    "MARKET_SHOCK_V3 -> event confirmation gate",
+    "EMERGENCY_LEVEL/EMERGENCY_REVERSAL -> displacement/reversal context",
+    "GVZ_RISK -> risk/confidence context"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "promotion_from_this_run": "FORBIDDEN",
+    "allowed_outcome": "development evidence may only nominate a frozen prospective shadow candidate"
+  }
+}
