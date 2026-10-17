@@ -203,3 +203,21 @@ Kaynak: `macro_v6_portfolio.js`, `macro_v6_portfolio.test.js`, `V6_CROSS_ASSET_E
 **Dosyalar:** `../../adaptive_trading_core/replay_jan2023_selective_cadence_walk.js` (gerçek kronolojik koşucu), `data/JAN_2023_SELECTIVE_CADENCE_REAL_CORE_AGGREGATES_20261017.json` (kullanıcıya gösterilebilir özet; ham ticari quote yok), `model_2023_selective_view.js`, `model_2023_selective_view.test.js`. Salt-okunur endpoint `GET /api/model/2023/january/selective-walk` ve [gerçek özel veri CI koşusu](https://github.com/ataullahturgut/sim3-automation/actions/runs/39058523336). [Uygulama denetim testleri](https://github.com/ataullahturgut/sim3-automation/actions/workflows/gold-2023-core-daily-app-tests.yml).
 
 **Bilimsel sonuç:** Veri kontrol ve arayüz tekrarlanabilir şekilde çalışıyor. **Ekonomik öğrenme, olayın sebep olduğu gerçek AL/SAT kararları, gerçek 2023 canlı erişim gecikmesi, ilk-haber PIT, banka gerçek BID/ASK ve kârlı işlem doğrulanmadı.** Bu test, ancak ekonomik neden→S1→S2→S3 kararı ve sonraki bağımsız dönem değerlendirmesi kurulursa geliştirilebilir.
+
+
+## 17 Ekim 2026 — Ocak–Şubat 2023 AI yorumcu + mekanizma hafızası kronolojik deney v1
+
+**Açılış:** GitHub Desktop üzerinden `research-gold-core-timeless-selective-learning-20261016` dalını güncelleyin, yerel `BASLAT.bat` ile uygulamayı açın, `http://127.0.0.1:8787` sayfasında sol menüden **⌁ Ocak–Şubat 2023 · AI mekanizma deneyi** seçin. `1 Ocak'a dön`, `Sonraki gün` ve `28 Şubat'a git` ile 59 günü tek tek inceleyebilirsiniz. Satırlarda M15 fiyat kaydı, AI inceleme tetik adedi, ekonominin geriye dönük aday etiketleri, gün sonu S1/S2/S3 ve gerçekleşmiş **aynı seans** fiyat hareketi var.
+
+**Matematiksel çekirdek değişmedi.** 2022 son çeyrek 5.865 tarihsel M15 ile ön öğrenme; Ocak–Şubat 3.750 gerçek vendor BID/ASK M15, dört ekonomik açıklama arşiv dalgası, 156 ekonomik olay/gün başlangıcı/evre/fiyat AI tetik adayı. Hesaplanan maliyetli benchmark: 100 USD CASH; eski model 100 USD CASH; ilk Ocak vendor ASK'ten alıp Şubat son vendor BID'ten varsayımsal tasfiye eden AL-TUT 98,26375 USD. Ham vendor fiyatlar uygulama reposuna commit edilmedi.
+
+**Sınır:** 156 tetik **156 gerçekleşmiş GPT yorumu değildir**. GPT sağlayıcısı ve GPT gerçek tarihli cevap JSON'ları henüz entegre edilmemiştir; otomatik GPT kararı AL/SAT yok, AI/HİBRİT performansı hesaplanmış veya başarılıymış gibi gösterilmez. İlk-baskı ekonomi PIT teyidi ve ticari banka kotasyonu yok. `SHADOW_ONLY` ve `SCIENCE_GATE=FAIL`.
+
+**Kanıt:**
+- [M15 replay PASS (özel kaynak kontrolü)](https://github.com/ataullahturgut/sim3-automation/actions/runs/39064426333)
+- [Uygulama REST ve ekran birim testleri PASS](https://github.com/ataullahturgut/sim3-automation/actions/runs/39064742109)
+- [Model, GPT karar sözleşmesi ve devam planı](../../adaptive_trading_core/GPT_ECONOMIC_MECHANISM_HANDOFF_CONTRACT_20261017.md)
+- [Karar ve shadow portfolio modülü](../../adaptive_trading_core/chronological_ai_portfolio_v1.js)
+- Uygulama salt-okunur API: `GET /api/model/2023/jan-feb-ai-shadow`
+
+**Sonraki somut kapı:** Sadece o ana kadar bilinen kanıtlardan oluşan dondurulmuş AI istemlerini gerçek GPT'ye sunmak, `responseId`/zaman/karşıt kanıt/net avantaj içeren yanıtları arşiv araştırma olarak işaretleyerek ayrı karar dosyasına yazmak. Ardından **aynı** 3.750 M15 üzerinde üç shadow portföyü kıyaslamak. AI henüz çalışmadıysa 100 USD nakitte duran kolun sıfır getirisini finansal başarısı diye sunma.
