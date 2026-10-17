@@ -56,8 +56,8 @@ function parseEventNotes(text,month){
  return out;
 }
 function readMonth(monthId){
+ if(!Object.prototype.hasOwnProperty.call(MONTHS,monthId))throw Error("MONTH_NOT_AVAILABLE");
  const month=MONTHS[monthId];
- if(!month)throw Error("MONTH_NOT_AVAILABLE");
  const sourcePath=path.join(MODEL,month.filename);
  const text=fs.readFileSync(sourcePath,"utf8");
  const lines=text.split(/\r?\n/).filter(line=>/^\| 2023-\d\d-\d\d \|/.test(line));
