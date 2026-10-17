@@ -1,0 +1,69 @@
+name: GOLD MODEL - JAN 2023 real S1 S2 S3 daily economic audit
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+    paths:
+      - '.github/workflows/gold-jan2023-economic-s1-s2-daily-audit.yml'
+      - 'gold_axis_2026/adaptive_trading_core/replay_jan2023_integrated_s1_s2_s3_daily.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  january-daily-real-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check original S1/S2/S3 modules and January runner
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check replay_jan2023_integrated_s1_s2_s3_daily.js
+          node --check adaptive_market_core_s1_s2.js
+          node --check adaptive_rule_discovery_s1.js
+          node --check adaptive_phase_lifecycle_s2.js
+          node --test adaptive_conditional_position_s3.test.js
+      - name: Export 2022 Oct-Dec pretraining and Jan 2023 real quotes read-only
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "Missing DB connection - no synthetic fallback" && exit 1)
+          python -m pip -q install 'psycopg[binary]>=3.2,<4'
+          mkdir -p /tmp/model-private-jan2023
+          python export_private_evduka_for_conditional_replay.py /tmp/model-private-jan2023 2022-10-01 2023-02-01
+      - name: Execute existing CORE, record daily decisions and mathematical evidence
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --max-old-space-size=4096 replay_jan2023_integrated_s1_s2_s3_daily.js \
+            /tmp/model-private-jan2023/PRIVATE_EV_XAU_M15.json \
+            /tmp/model-private-jan2023/PRIVATE_EV_SLOW.json \
+            ../GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv \
+            > /tmp/model-private-jan2023/DAILY_S1_S2_S3_RESULT.json
+      - name: Print safe concise daily evidence for user audit
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/model-private-jan2023/DAILY_S1_S2_S3_RESULT.json'))
+          print('PRETRAIN='+json.dumps({'bars':x['trainBars'],'context':x['pretrain']['s1'],
+            'macroWaves':x['observedMacroWaves'],'janBars':x['januaryBars']},sort_keys=True))
+          for r in x['rows']:
+            z=r.get('dayEndMetrics') or {}
+            print('JAN_DAILY='+json.dumps({'date':r['date'],'bars':r.get('bars',0),
+              'sessionPct':r.get('actualSessionFirstToLastPct'),
+              'economic':(r.get('ruleHypothesis') or {}).get('hypothesis'),
+              'event':(r.get('ruleHypothesis') or {}).get('trigger'),
+              'S1':z.get('s1'),'S2':z.get('s2'),'S3':z.get('s3'),
+              'eventSnapshot':r.get('sameDayEconomicSnapshot')},
+              separators=(',',':'),ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-jan-2023-integrated-s1-s2-s3-daily-aggregate-only
+          path: /tmp/model-private-jan2023/DAILY_S1_S2_S3_RESULT.json
+          retention-days: 14
