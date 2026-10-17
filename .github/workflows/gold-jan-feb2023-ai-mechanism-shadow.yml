@@ -1,0 +1,70 @@
+name: GOLD Jan-Feb 2023 AI mechanism handoff & real CORE shadow
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+    paths:
+      - '.github/workflows/gold-jan-feb2023-ai-mechanism-shadow.yml'
+      - 'gold_axis_2026/adaptive_trading_core/chronological_ai_portfolio_v1*'
+      - 'gold_axis_2026/adaptive_trading_core/replay_2023_mechanism_ai_shadow_v1.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chronological-ai-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test chronological decision and paper execution guards
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check chronological_ai_portfolio_v1.js
+          node --check replay_2023_mechanism_ai_shadow_v1.js
+          node --test chronological_ai_portfolio_v1.test.js live_cadence_gate_v1.test.js
+      - name: Read-only export 2022 Q4 to Feb 2023 actual archive quotes
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "No private data connection; no synthetic fallback" && exit 1)
+          python -m pip -q install 'psycopg[binary]>=3.2,<4'
+          mkdir -p /tmp/gold-ai-mechanism-shadow
+          python export_private_evduka_for_conditional_replay.py /tmp/gold-ai-mechanism-shadow 2022-10-01 2023-03-01
+      - name: Jan-Feb real as-of replay with honest GPT NOT CONNECTED status
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --max-old-space-size=4096 replay_2023_mechanism_ai_shadow_v1.js \
+            /tmp/gold-ai-mechanism-shadow/PRIVATE_EV_XAU_M15.json \
+            /tmp/gold-ai-mechanism-shadow/PRIVATE_EV_SLOW.json \
+            ../GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv \
+            > /tmp/gold-ai-mechanism-shadow/JAN_FEB_2023_AI_SHADOW.json
+      - name: Emit small verifiable metadata plus each day for app
+        run: |
+          python - <<'PY'
+          import json
+          p='/tmp/gold-ai-mechanism-shadow/JAN_FEB_2023_AI_SHADOW.json'
+          x=json.load(open(p))
+          print('AI_SHADOW_META='+json.dumps({
+            'version':x['version'],'pretrain':x['pretrain'],
+            'janFebBars':x['janFebBars'],'coreCalls':x['coreCalls'],
+            'gateCalls':x['gateCalls'],'researchReleases':x['researchReleases'],
+            'aiProviderConnected':x['aiProviderConnected'],
+            'aiSubmitted':x['aiSubmitted'],'aiNote':x['aiNote'],
+            'portfolioSummary':{k:v for k,v in x['portfolioAudit'].items()
+             if k not in ('attention','decisions','events')},
+            'mainScientificGate':x['mainScientificGate']
+          },separators=(',',':'),ensure_ascii=False))
+          for d in x['dates']:
+            print('AI_SHADOW_DAY='+json.dumps(d,separators=(',',':'),ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-jan-feb-2023-chronological-ai-handoff-audit
+          path: /tmp/gold-ai-mechanism-shadow/JAN_FEB_2023_AI_SHADOW.json
+          retention-days: 14
