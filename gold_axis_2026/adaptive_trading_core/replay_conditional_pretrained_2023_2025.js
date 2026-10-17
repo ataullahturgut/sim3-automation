@@ -148,7 +148,7 @@ function run(bars,sessions,ledgerText){
   assumedEconomicAvailabilityMinutes:60,priceProvenance:"EV_DUKA_RECONSTRUCTED_VENDOR_BIDASK",
   executionPrice:"MID_PROXY_ONLY_NOT_BANK_BIDASK",feePerLeg:FEE,
   tradeAllowed:false,scientificGate:"NOT_PROVEN",blindOOS:false,
-  2023to2025PassiveGoldNetUSD:100*(1-FEE)**2*evalLast.price/evalFirst.price,
+  passiveGoldNet2023to2025USD:100*(1-FEE)**2*evalLast.price/evalFirst.price,
   pretrain,yearlySnapshots:evaluatedByYear,models:final,
   incrementalEconomicEndWealthUsd:final.ECONOMIC_ON.endNetUsd-final.MARKET_ONLY.endNetUsd};
 }
