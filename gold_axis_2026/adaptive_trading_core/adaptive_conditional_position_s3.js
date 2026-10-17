@@ -55,10 +55,17 @@ function score(s,fast,e,holding){
  const candidates=HORIZONS.map(h=>{
   const base=get(s,m+"|"+side,h),conditional=get(s,ek?ek+"|"+side:null,h);
   const ready=x=>x&&x.effectiveN>=s.config.minIndependent&&x.stderrPct!==null;
-  const selected=ready(conditional)?conditional:ready(base)?base:null;
+  // Economic cohort nests inside the market cohort. Require a conservative
+  // incremental edge proxy before crediting the event, not merely profit.
+  // Covariance is unknown: this guardrail is NOT a calibrated confidence interval.
+  const incrementalMargin=ready(conditional)&&ready(base)?
+    conditional.meanNetPct-base.meanNetPct-
+      1.96*Math.hypot(conditional.stderrPct,base.stderrPct):null;
+  const selected=incrementalMargin!==null&&incrementalMargin>0?conditional:
+    ready(base)?base:null;
   const bound=selected?selected.meanNetPct-1.96*selected.stderrPct:null;
   return {horizonSessions:h,market:base,economic:conditional,
-    selected,source:selected?.key.includes("|ECO:")?"CONDITIONAL_ECONOMIC":
+    incrementalMarginPct:incrementalMargin,selected,source:selected?.key.includes("|ECO:")?"CONDITIONAL_ECONOMIC":
       selected?"MARKET_FALLBACK":"INSUFFICIENT_EVIDENCE",lowerBoundPct:bound};
  });
  // Multiple horizons are hypotheses, not independent votes. Never sum profits.
