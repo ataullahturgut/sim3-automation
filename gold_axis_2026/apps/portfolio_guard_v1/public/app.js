@@ -1270,3 +1270,118 @@ $("selective23DaySlider").addEventListener("input",e=>{
  if(selective23){selective23Index=Math.max(0,Math.min(30,Number(e.target.value)-1));selective23Draw();}
 });
 selective23Load();
+
+
+
+/* Jan-Feb2023 real chronological GOLD CORE + AI evidence handoff dashboard.
+ * This view must NOT manufacture GPT decisions or imply bank execution.
+ */
+let ai23=null,ai23Day=0;
+const ai23Fmt=(v,dp=2)=>typeof v==="number"&&Number.isFinite(v)?
+ new Intl.NumberFormat("tr-TR",{minimumFractionDigits:dp,maximumFractionDigits:dp}).format(v):"—";
+function ai23Phase(p){
+ return ({START:"BAŞLANGIÇ",CONTINUE:"DEVAM",PULLBACK:"DÜZELTME",
+ END:"BİTİŞ",REENTRY:"YENİDEN GİRİŞ",NEUTRAL:"NÖTR",
+ WARMUP:"ISINMA",GAP:"VERİ BOŞLUĞU"})[p]||"—";
+}
+function ai23Render(){
+ if(!ai23)return;
+ const days=ai23.dates.slice(0,ai23Day+1),d=days.at(-1),sum=ai23.portfolioAudit;
+ const cumulative=(k)=>days.reduce((v,x)=>v+(x[k]||0),0);
+ $("ai23Bars").textContent=ai23Fmt(cumulative("bars"),0);
+ $("ai23Attention").textContent=ai23Fmt(cumulative("attention"),0);
+ $("ai23Macro").textContent=ai23Fmt(cumulative("observedArchiveMacroWaves"),0);
+ $("ai23GPT").textContent=ai23Fmt(sum.aiUsed,0);
+ $("ai23Slider").value=String(ai23Day+1);
+ $("ai23Next").disabled=ai23Day===58;
+ $("ai23Progress").textContent=d.date+" · "+(ai23Day+1)+"/59";
+ $("ai23Count").textContent=days.length+" takvim günü";
+ const portRows=[
+  {title:"Mevcut S1–S2–S3",usd:sum.arms.CORE.finalLiquidatableUSD,desc:"CORE araştırma konumu: NAKİT"},
+  {title:"AI yorumcu",usd:null,desc:"GPT kararı henüz gelmedi; kâr puanı hesaplanmadı"},
+  {title:"Hibrit",usd:null,desc:"Gerçek AI kararı ve ekonomik doğrulama bekliyor"},
+  {title:"Sadece NAKİT",usd:sum.reference.cashUSD,desc:"Karşılaştırma kıstası"},
+  {title:"Altın AL ve TUT",usd:sum.reference.buyHoldLiquidatableUSD,desc:"Vendor ASK/BID ve iki yönlü %0,8 ücret ile kıyas"}
+ ];
+ $("ai23Portfolio").innerHTML=portRows.map(x=>
+  '<article><span>'+escapeText(x.title)+'</span><strong>'+
+  (x.usd===null?"VERİ YOK":ai23Fmt(x.usd)+" $")+
+  '</strong><small>'+escapeText(x.desc)+'</small></article>').join("");
+ const s=d.core,notes=[];
+ if(d.knownEconomicResearchCandidate)notes.push(
+  '<p><b>Ekonomik araştırma notu:</b> '+
+  escapeText(d.knownEconomicResearchCandidate)+
+  '<br><small>Bu başlık geriye dönük adaydır; haber o anda doğrulanmış ve GPT tarafından yorumlanmış sayılmaz.</small></p>');
+ if(d.observedArchiveMacroWaves)notes.push(
+  '<p class="ai23-caution"><strong>'+d.observedArchiveMacroWaves+
+  ' arşiv ekonomik yayın dalgası:</strong> ilk-baskı ve konsensüs vintage kanıtı bulunmadığı için karantinada. S1 ekonomik tahminine zorla sokulmadı.</p>');
+ const att=Object.entries(d.attentionReasons||{}).map(([k,v])=>{
+  const names={DAY_OPEN:"Gün değerlendirmesi",EVENT:"Ekonomik olay incelemesi",
+   PHASE_CHANGE:"Hareket evresi değişimi",PRICE_WATCH:"Fiyat hareketi uyarısı"};
+  return escapeText(names[k]||k)+" ×"+v;
+ }).join(" · ");
+ const dir=s?.s2?.direction===1?" ↑":s?.s2?.direction===-1?" ↓":"";
+ let content=s?
+  '<div class="ai23-metrics"><article><span>S1 · UP (+4s)</span><strong>'+
+  (s.s1.ready?ai23Fmt(s.s1.pUpPct)+"%":"HAZIR DEĞİL")+'</strong>'+
+  '<small>Fiyat ağırlıklı; ekonomik ORG doğrulanmadı</small></article>'+
+  '<article><span>S2 · fiyat evresi</span><strong>'+escapeText(ai23Phase(s.s2.phase)+dir)+
+  '</strong><small>Trend z: '+ai23Fmt(s.s2.trendZ)+'</small></article>'+
+  '<article><span>S3 · matematiksel model</span><strong>NAKİT KORU</strong>'+
+  '<small>'+escapeText(s.s3.reason)+"</small></article>"+
+  '<article><span>GPT · ekonomik yorum</span><strong>BEKLENİYOR</strong>'+
+  '<small>Gerçek GPT yanıtı yok · uydurulmuş işlem yok</small></article></div>':
+  '<p>Bu tarihte tamamlanmış fiyat seansı yok. Önceki ekonomik olay ve portföy hafızası korunur; yeni tahmin veya fiyat üretilmez.</p>';
+ content+=notes.join("");
+ if(d.attention)content+='<p><strong>AI inceleme adayları:</strong> '+d.attention+
+  ' · '+att+'</p>';
+ if(d.hasSession)content+='<p>Bu seansın **sonradan ölçülen** altın getirisi: <strong>'+
+  (d.observedSessionReturnPct>0?"+":"")+ai23Fmt(d.observedSessionReturnPct,3)+
+  '%</strong>. Bu getiri karar öncesi GPT girdisi değildir.</p>';
+ content+='<p class="ai23-caution"><strong>Deney modu:</strong> GPT ekonomik açıklama ve karşıt kanıt içeren gerekçeli yanıt göndermediği sürece AI ve hibrit araştırma emirleri üretilmeyecek.</p>';
+ $("ai23Current").innerHTML='<h3>'+escapeText(d.date)+" · o ana kadar modelin kayıtları</h3>"+content;
+ $("ai23Table").innerHTML=table(
+  ["Gün","M15","AI kontrol","Ekonomik aday","S1 UP","S2","S3","GPT","Altın seans"],
+  days.map(x=>{
+   const z=x.core,macro=x.knownEconomicResearchCandidate||"—";
+   return "<tr>"+cell(escapeText(x.date))+cell(x.bars)+cell(x.attention)+
+    cell(escapeText(macro))+cell(z?.s1?.ready?ai23Fmt(z.s1.pUpPct)+"%":"—")+
+    cell(z?escapeText(ai23Phase(z.s2.phase)):"—")+
+    cell(z?"NAKİT KORU":"—")+cell("YOK")+
+    cell(x.hasSession?(x.observedSessionReturnPct>0?"+":"")+
+     ai23Fmt(x.observedSessionReturnPct,3)+"%":"—")+"</tr>";
+  }));
+ $("ai23Status").textContent="İşlenen "+ai23Fmt(cumulative("bars"),0)+
+  " M15 bar · "+cumulative("attention")+" AI inceleme adayı · "+
+  cumulative("observedArchiveMacroWaves")+" arşiv ekonomik açıklama dalgası. "+
+  "AI/Hibrit kararları hazır değil; ekranda görülen gerçekleşmiş seans getirileri geçmiş test sonuçlarıdır.";
+}
+async function ai23Load(){
+ try{
+  const response=await fetch("/api/model/2023/jan-feb-ai-shadow",{cache:"no-store"});
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const x=await response.json();
+  if(x.version!=="GOLD_2023_JAN_FEB_ACTUAL_CORE_WITH_GPT_HANDOFF_V1_20261017"||
+   x.dates?.length!==59||x.aiProviderConnected!==false||
+   x.portfolioAudit?.aiUsed!==0||x.portfolioAudit?.bankTradeAuthorized!==false||
+   x.mainScientificGate!=="FAIL_NOT_BLIND_OOS")
+    throw Error("AI/GOLD araştırma kaynak veya kanıt sözleşmesi uyuşmuyor");
+  ai23=x;ai23Day=0;ai23Render();
+  $("ai23Source").innerHTML="Kaynak: <a target='_blank' rel='noopener noreferrer' href='"+
+   escapeText(x.sourceRun)+"'>2023 Ocak–Şubat gerçek fiyat yürüyüşü ve test kaydı</a>. "+
+   "2022 Q4 "+x.pretrain.bars+" ön öğrenme barı; "+
+   x.janFebBars+" tarihsel Ocak–Şubat barı; "+
+   "ekonomik haber ilk-baskı kanıtı ve 2023'e ait GPT yanıtı mevcut değil.";
+ }catch(e){
+  $("ai23Status").textContent="AI deney verisi doğrulanamadı: "+e.message;
+  $("ai23Current").textContent="Eksik kayıttan yapay zekâ kararı üretilemez.";
+  $("ai23Portfolio").textContent="—";$("ai23Table").textContent="—";
+ }
+}
+$("ai23Start").addEventListener("click",()=>{if(ai23){ai23Day=0;ai23Render();}});
+$("ai23Next").addEventListener("click",()=>{if(ai23&&ai23Day<58){ai23Day++;ai23Render();}});
+$("ai23End").addEventListener("click",()=>{if(ai23){ai23Day=58;ai23Render();}});
+$("ai23Slider").addEventListener("input",v=>{
+ if(ai23){ai23Day=Math.max(0,Math.min(58,Number(v.target.value)-1));ai23Render();}
+});
+ai23Load();
