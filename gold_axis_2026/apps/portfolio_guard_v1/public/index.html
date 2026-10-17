@@ -16,6 +16,7 @@
    <nav aria-label="Bölümler">
     <a href="#overview" class="active">◉ &nbsp; Genel görünüm</a>
     <a href="#model2023">▤ &nbsp; 2023 · Ekonomik kural / S1 / S2</a>
+    <a href="#selective2023">▶ &nbsp; Ocak 2023 · Canlandırılmış yürüyüş</a>
     <a href="#history">▤ &nbsp; Karar geçmişi</a>
     <a href="#audit">⌑ &nbsp; Veri ve model denetimi</a>
     <a href="#v2audit">◈ &nbsp; Algoritma V2 denetimi</a>
@@ -96,6 +97,40 @@
      <div id="model23Detail">Tablodan bir gün seçerek ekonomik olay ve S1/S2 ayrıntılarını görebilirsiniz.</div>
     </div>
     <p class="model23-source" id="model23Source">Kaynak: CORE denetim kayıtları. Ham fiyatlar bu ekrana aktarılmamıştır.</p>
+   </section>
+   <section class="section selective23-section" id="selective2023" aria-labelledby="selective23Title">
+    <div class="sectionhead">
+     <div class="eyebrow">MODEL + UYGULAMA · ZAMAN SIRALI GERÇEK ARŞİV TESTİ</div>
+     <h2 id="selective23Title">Ocak 2023 · Seçmeci veri ve olay yürüyüşü</h2>
+     <p>Gerçek tarihsel M15 kayıtlarıyla aynı S1–S2–S3 CORE çalıştırıldı. Fiyat kontrolü 15 dakikada bir, ekonomik olay incelemesi yalnız mevcut olay adaylarında. Gün gün ilerleyerek modelin ne bildiğini görün.</p>
+    </div>
+    <p class="notice">Bu <strong>geriye dönük, kronolojik araştırma canlandırmasıdır</strong>; 2023'te çalışmış gerçek canlı haber/quote akışı değildir. Fiyatın yazılıma ulaşmasında +15 saniye, geriye dönük haberin ulaşmasında +60 dakika <strong>varsayılmıştır</strong>. Makro ilk-baskı ve konsensüs doğrulanamadığından <strong>ekonomik özellikler S1'e kesin veri olarak sokulmadı</strong>. Gösterilen ORG etiketleri sonradan yapılmış araştırma notudur.</p>
+    <div class="selective23-kpis">
+     <article><span>Fiyat kontrolü · M15</span><strong id="selective23Bars">—</strong><small>Fiyat verisi kaynağından sırayla</small></article>
+     <article><span>Ayrıca incelenen haber</span><strong id="selective23Events">—</strong><small>Retrospektif, ilk-yayın kanıtı yok</small></article>
+     <article><span>Sert fiyat hareketi</span><strong id="selective23Watches">—</strong><small>Tek M15'te ≥%0,5 · yalnız izleme işareti</small></article>
+     <article><span>Onaylı model işlemi</span><strong id="selective23Trades">—</strong><small>S3 araştırma; banka emri yok</small></article>
+    </div>
+    <div class="panel">
+     <div class="paneltitle">
+      <h3>Canlandırma kontrolü</h3>
+      <span id="selective23ProgressLabel">Veriler yükleniyor…</span>
+     </div>
+     <div class="selective23-controls">
+      <button type="button" id="selective23Restart">1 Ocak'tan başlat</button>
+      <button type="button" id="selective23Next">Sonraki gün →</button>
+      <button type="button" id="selective23All">Ayın tamamını göster</button>
+     </div>
+     <label for="selective23DaySlider">Gün seçimi</label>
+     <input type="range" id="selective23DaySlider" min="1" max="31" step="1" value="1" aria-label="Ocak 2023 yürüyüş günü">
+     <p id="selective23Status" role="status" class="monthstatus">Kronolojik model kayıtları yükleniyor…</p>
+     <div class="selective23-current" id="selective23Current">Gün seçtiğinizde o ana kadar bilinen model durumu gösterilecek.</div>
+    </div>
+    <div class="panel">
+     <div class="paneltitle"><h3>İlerlenen günlerin karar defteri</h3><span id="selective23Count">—</span></div>
+     <div class="tablewrap" id="selective23Table">Veriler denetleniyor…</div>
+    </div>
+    <p class="model23-source" id="selective23Source">Kaynak: 17 Ekim 2026 tarihli CORE ve veri kalite kapısı araştırma koşusu.</p>
    </section>
    <section id="overview" class="section">
     <div class="sectionhead"><h2>Strateji karşılaştırması</h2><p>Veri, kurallar ve komisyon oranı kilitli. Modu değiştirmek sadece aynı veri üzerindeki farklı sabit stratejiyi görüntüler.</p></div>
