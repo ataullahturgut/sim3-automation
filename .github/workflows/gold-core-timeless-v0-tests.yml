@@ -101,6 +101,13 @@ jobs:
           node --check adaptive_market_core_s1_s2.js
           node --test adaptive_position_value_s3.test.js
 
+      - name: S3 conditional economic position-value learning and evidence isolation
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check adaptive_conditional_position_s3.js
+          node --check adaptive_conditional_position_s3.test.js
+          node --test adaptive_conditional_position_s3.test.js
+
       - name: S3 historical private replay contract without bank execution or private data
         working-directory: gold_axis_2026/adaptive_trading_core
         run: |
