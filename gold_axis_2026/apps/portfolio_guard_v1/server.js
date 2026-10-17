@@ -12,6 +12,7 @@ const snapshots=engine.runAll(); // load + verify Git blob SHA + regression test
 const scientificV2=require("./event_audit_v2").runAudit(); // read-only, independent shadow diagnostics
 const learnedStateV2=require("./monthly_learning_v2").createJanuaryLearningRecord(); // forward-only feedback gate
 const febRunner=require("./monthly_runner"); // real February 2026 replay computed on demand
+const model2023=require("./model_2023_daily_view"); // existing 2023 mathematical CORE reports, never recalculated in UI
 function small(v) {
  const x=snapshots.scenarios[v];
  return {
@@ -48,6 +49,18 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/model/2023/daily"){
+  const month=url.searchParams.get("month");
+  if(!Object.prototype.hasOwnProperty.call(model2023.MONTHS,month))
+   return respond(res,400,JSON.stringify({error:"UNSUPPORTED_MODEL_2023_MONTH",
+      allowed:Object.keys(model2023.MONTHS)}));
+  try {
+   return respond(res,200,JSON.stringify(model2023.readMonth(month)));
+  }catch(err){
+   console.error("2023 model report unavailable:",err.message);
+   return respond(res,503,JSON.stringify({error:"MODEL_2023_SOURCE_VALIDATION_FAILED"}));
+  }
+ }
  if(route==="/api/algorithm/v13/sentez"){
   const study=require("./v13_sentez_run").audit();
   return respond(res,200,JSON.stringify(study));
