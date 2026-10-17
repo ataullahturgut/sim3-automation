@@ -524,3 +524,23 @@ Kullanıcının “en uygun, artı/eksi tartarak frekans belirleme” talebi üz
 **Bu turda gerçekten yapılan:** [9 kaynak/gelecek-bilgisi/süreklilik/kapanış testini içeren kalite kapısı](adaptive_trading_core/live_cadence_gate_v1.test.js), [GitHub Actions PASS](https://github.com/ataullahturgut/sim3-automation/actions/runs/39054978704), mimari sözleşme. **Bu kapı tek başına hiçbir fiyat veya haberi çekmez; canlı feed bağlanmadı, daemon/cron deploy edilmedi, CORE'un öğrenme matematiği veya 2023 geçmiş sonuçları değiştirilmedi, ekranın canlı veri gösterimi açılmadı.**
 
 **Bir sonraki zorunlu iş:** Lisanslı XAU ask/bid sağlayıcısı + haber/calendar sağlayıcısının somut API ve kullanım koşullarını doğrula; ilk erişim/güncellik telemetrisini küçük salt-okunur shadow pilotta ölç; zaman ve kaynak kalitesi ispatlanmadan ekonomik ORG→S1→S2→S3 otomatik gerçek AL/SAT kararı açma.
+
+
+---
+
+## 2026-10-17 — OCak–Şubat 2023 AI olay hafızası + kronolojik üç kol gölge deney v1
+
+**WORKSTREAM=MODEL+APP_ADAPTER | TRACK=GOLD-ADAPTIVE-MODEL-APP-01 | NO_NEW_MODEL_FAMILY=true | CORE_UNMODIFIED=true | SCIENCE_GATE=FAIL | REAL_TRADE=false**
+
+Kullanıcı onayıyla olayın ilk koşulu → açıklama → fiyat aktarımı → devam/düzeltme → geçersizleşme hafızasını taşıyan ve GPT yorumunun maliyetli CASH/GOLD matematiksel politikasıyla karşılaştırılmasını sağlayan **deneyin ilk mühendislik aşaması** kuruldu. [Tam karar protokolü, GPT şeması, sınırlamalar ve başarısızlık kapıları](adaptive_trading_core/GPT_ECONOMIC_MECHANISM_HANDOFF_CONTRACT_20261017.md).
+
+**Yeni, gerçekten oluşturulmuş bileşenler:**
+- `chronological_ai_portfolio_v1.js`: G01/ORG adaylarının ilk erişim/provenance durumunu ve aktif mekanizma hafızasını saklama, M15 veya olay/evre/gün açılışı AI çağrı tetikleme, GPT gerçek yanıt yoksa boş kalma, cevap kabulüne kaynak/zaman/maliyet/karşıt kanıt filtreleri, CORE/AI/HİBRİT ayrı gölge portföyleri, en erken **sonraki tamamlanmış M15 kapanış** vendor BID/ASK vekil fiyatı + her ayak %0,8 ücret, CASH/AL-TUT kıyası, SHA zincir audit. Banka emri YOK.
+- `replay_2023_mechanism_ai_shadow_v1.js`: 2022 Q4 fiyat eğitimi taşınarak 2023 Ocak–Şubat gerçek vendor fiyatlarının kronolojik tek CORE yürüyüşü; yalnız araştırma tarihi/kaynak olarak görülen 4 ekonomik dalga **firstprint onaysız → quarantine**; ilave manuel aday başlıklarının otomatik piyasa kararı olduğu iddia edilmez.
+- `chronological_ai_portfolio_v1.test.js` ve [özel gerçek veri + test iş akışı](https://github.com/ataullahturgut/sim3-automation/actions/runs/39064426333) PASS.
+- APP: `apps/portfolio_guard_v1/data/JAN_FEB_2023_AI_SHADOW_CHRONOLOGICAL_20261017.json`, `model_2023_ai_shadow_view.js`, `model_2023_ai_shadow_view.test.js`, `GET /api/model/2023/jan-feb-ai-shadow`, `public/index.html` → `Ocak–Şubat 2023 · AI mekanizma deneyi` gün ilerleticisi.
+
+**Gerçek ilk koşu:** 2022 Q4 5.865 kaynaklı M15, Ocak–Şubat **3.750 gerçek M15**, CORE çağrı **3.750**, M1 gate **3.750**, makro 6/12 Ocak + 3/14 Şubat = **4** retrospektif ve ilk-baskı teyitsiz ekonomik dalga; **156** AI inceleme tetik noktası, **0 GPT gerçek yorum/yanıtı**, **0 gerçek/matematiksel banka BUY/SELL**. CORE araştırma 100 USD CASH. Nakit kıyas 100 USD; en erken Ocak kaynak ASK alışından Şubat sonunda BID satış kıyası, ücret dahil **98,26375 USD**. AI ve HİBRİT armlarında GPT yanıtı olmadığından kâr performansı ilan edilemez; yazılımda 100 USD CASH durmaları iyi karar verdikleri anlamına gelmez.
+
+**Bilim kapısı:** `M1_CHRONOLOGY_ENGINEERING=TESTED`, `S1_S2_S3_EXISTING_CORE_UNCHANGED`, `GPT_GENUINE_INFERENCE=NOT_CONNECTED`, `FIRSTPRINT_MACRO_PIT=UNVERIFIED`, `AI/HYBRID_ALPHA=NOT_TESTED`, `CAUSE_TO_NET_POSITION_VALUE=NOT_PROVEN`, `LIVE_DATA=NOT_CONNECTED`, `SCIENCE_GATE=FAIL`. Önce gerçek GPT ekonomik analizi girdisini yalnız as-of kanıtla yapılandırıp anahtar/sürüm/kaynak düzeyinde dondurmak; ardından gölge kararlarını yeni/görülmemiş veya kör dönemde doğrulamak gerekir. Geriye dönük GPT zihinsel tarih bilgisi nedeniyle 2023 simülasyonunu kör başarı olarak etiketleme. Saat kısıtı banka saatine göre değil piyasa/veri kullanılabilirliğine göre.
+
