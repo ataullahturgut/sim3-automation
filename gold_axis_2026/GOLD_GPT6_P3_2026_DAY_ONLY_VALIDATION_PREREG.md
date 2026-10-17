@@ -1,0 +1,14 @@
+# GPT-6 P3 2026 DAY-only exploratory transport — pre-specified **before 2026 scored extraction**
+Date 2026-10-13. User asks numerical 2026 HAR500-EVENT. Earlier PR #96 P3 empirical study (2020–25) did NOT test 2026 and originally overexcluded direct 2026 data through a **BUG** interpreting `m1_matched != 1` as unmatched. Source's `m1_matched=15` on **all 17,184 2026 M15 bars**, i.e. full 15 M1 records in each 15m bar. No claim of 2026 fully certifying historical as-of vendor receipts: source vintage retrieved 2026-10-08/11.
+
+## Data acceptance and exact 2026 restriction
+Neon `gold_research_dukascopy_2026_direct_m1_m15_bidask_v2` **2026-01-01 to 2026-10-07**, 0 crossed bid/ask, M1 matched 15/15. 178 **strict complete DAY 09:00–16:45 Europe/Istanbul**, 31 observed contiguous 15m M15 bars. Target `rv=sum(log(mid-close_i/mid-close_prev)^2)` for 30 consecutive returns, no future-window features.
+Issue 08:45 TRT, last known historical data up to earlier complete session. 2026 2020–25 EV source is DIFFERENT VENDOR and source-vintage; append across vendors only for clearly marked *provisional stress*; not production.
+OVN M15 2026: 65 continuous bars for 133 nights, not prior EV source's exact **61 bars with one 75-minute maintenance closure**. The RV target would otherwise differ: **2026 OVN BLOCKED** until same comparable source protocol; do not compute misleading 2026 OVN.
+
+## Frozen carry-forward algorithm from completed P3, NO tuning
+For each 2026 DAY, concatenate historical 2020–25 complete DAY `GOLD_GPT6_P3_TRAINING_SOURCE_RV_EVENTS.csv` and 2026 strict complete DAY; feature lagged y=log RV; lag1, mean lag5, mean lag22; latest 500 **matured** train examples with own 22-lag available; ridge alpha10 standardized training, intercept unpenalized. Same original P3 comparator `ROLL500` without event. `ROLL500_EVENT` adds one CPI/NFP event-day indicator. Primary QLIKE vs original P3 strong `PERSIST5`; secondary log MSE and 2026 event-non-event split. No coefficients frozen across 2025 because P3 rolling retraining design.
+US CPI/NFP date from `MACRO_CPI_ACTUAL_FIRST_PRINT`/`MACRO_NFP_ACTUAL_FIRST_PRINT` historical 2026 records, **not independently certified ex-ante scheduling** at 08:45TR, so `EVENT` 2026 is exploratory calendar-surrogate (not PIT certified). Retrospective 2026 explored generally; not untouched OOS. Do not tune threshold, window or model after score. Report QLIKE + event window N, coverage, whether beats Persist5 and ROLL500, and comparison with 2023–25; NEVER present QLIKE as directional accuracy or price-level error.
+
+## Outcome governance
+If DAY 2026 supports HAR improvement numerically it remains independent exploratory, not promotion until available-at-issue calendar vintage/vendor equivalence and fully prospective tests. Existing P3 #96 remains closed original; separate source-aligned 2026 report only. No Neon writes, no canonical edits or paid services.

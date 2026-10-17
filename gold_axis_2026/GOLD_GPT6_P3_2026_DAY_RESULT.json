@@ -1,0 +1,139 @@
+{
+  "scope": "2026 DAY 09:00-16:45 TRT ONLY, direct Dukascopy M1matched 15 of 15, EV 2020-25 historical warmup (different vendor)",
+  "prereg_commit": "01aa6b86fd852c6daedc6117a26914dc6ac3a2ce",
+  "status": "EXPLORATORY_NOT_PIT_VALIDATED",
+  "num_history_days": 1547,
+  "num_2026_complete_days": 177,
+  "metrics": {
+    "n": 177,
+    "events": 15,
+    "period": [
+      "2026-01-02",
+      "2026-10-07"
+    ],
+    "qlike": {
+      "PERSIST5": 0.36693572183977097,
+      "CLIM60": 0.6770970078987892,
+      "ROLL500": 0.3767167728946464,
+      "ROLL500_EVENT": 0.3714273732032124
+    },
+    "logmse": {
+      "PERSIST5": 0.5143592116037103,
+      "CLIM60": 0.6343525623616761,
+      "ROLL500": 0.4775805266179619,
+      "ROLL500_EVENT": 0.4745562453563902
+    }
+  },
+  "macro_2026_events": [
+    "2026-01-09",
+    "2026-01-13",
+    "2026-02-11",
+    "2026-02-13",
+    "2026-03-06",
+    "2026-03-11",
+    "2026-04-03",
+    "2026-04-10",
+    "2026-05-08",
+    "2026-05-12",
+    "2026-06-05",
+    "2026-06-10",
+    "2026-07-02",
+    "2026-07-14",
+    "2026-08-07",
+    "2026-08-12",
+    "2026-09-04"
+  ],
+  "notes": "2026 M15 source historical as-of October 2026; 2026 OVN incompatible with historic 75-min closure RV target and not tested.",
+  "bootstrap_3month": {
+    "draws": 10000,
+    "seed": 20261013,
+    "method": "resample groups of 3 consecutive calendar months (overlap), reweight all rows; 9.5 months only",
+    "persist5_minus_event": {
+      "ci95": [
+        -0.027399515739367063,
+        0.0320578783136253
+      ],
+      "bootstrap_prob_LESSEQUAL0": 0.289
+    },
+    "har500_minus_event": {
+      "ci95": [
+        -0.021001255628474734,
+        0.03577204861987507
+      ],
+      "bootstrap_prob_LESSEQUAL0": 0.2848
+    }
+  },
+  "by_calendar_month": [
+    {
+      "month": "2026-01",
+      "n": 18,
+      "event": 2,
+      "persist5": 0.9040623779510987,
+      "har_event": 1.0872348231614402
+    },
+    {
+      "month": "2026-02",
+      "n": 15,
+      "event": 1,
+      "persist5": 0.5962125947987157,
+      "har_event": 0.594241080247618
+    },
+    {
+      "month": "2026-03",
+      "n": 14,
+      "event": 2,
+      "persist5": 0.34618463766982827,
+      "har_event": 0.295121704949255
+    },
+    {
+      "month": "2026-04",
+      "n": 21,
+      "event": 1,
+      "persist5": 0.2817623175528439,
+      "har_event": 0.31880129933967194
+    },
+    {
+      "month": "2026-05",
+      "n": 21,
+      "event": 2,
+      "persist5": 0.17287799740444224,
+      "har_event": 0.17130326840376434
+    },
+    {
+      "month": "2026-06",
+      "n": 22,
+      "event": 2,
+      "persist5": 0.2857632749797929,
+      "har_event": 0.25892937937537136
+    },
+    {
+      "month": "2026-07",
+      "n": 21,
+      "event": 2,
+      "persist5": 0.3077466092295394,
+      "har_event": 0.2838710243988411
+    },
+    {
+      "month": "2026-08",
+      "n": 21,
+      "event": 2,
+      "persist5": 0.2987433193128849,
+      "har_event": 0.24286935395475587
+    },
+    {
+      "month": "2026-09",
+      "n": 19,
+      "event": 1,
+      "persist5": 0.2978080349713523,
+      "har_event": 0.2747850563722902
+    },
+    {
+      "month": "2026-10",
+      "n": 5,
+      "event": 0,
+      "persist5": 0.13116925713126273,
+      "har_event": 0.17119837633788673
+    }
+  ],
+  "verdict": "2026_DAY_P3_NO_PROMOTION_FAILS_PRIMARY_QLIKE_VS_PERSIST5"
+}
