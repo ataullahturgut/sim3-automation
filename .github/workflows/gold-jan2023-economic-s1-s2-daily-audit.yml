@@ -52,6 +52,16 @@ jobs:
           x=json.load(open('/tmp/model-private-jan2023/DAILY_S1_S2_S3_RESULT.json'))
           print('PRETRAIN='+json.dumps({'bars':x['trainBars'],'context':x['pretrain']['s1'],
             'macroWaves':x['observedMacroWaves'],'janBars':x['januaryBars']},sort_keys=True))
+          s=x['finalSummary']
+          print('JAN_FINAL_MODEL='+json.dumps({
+            's1':s['ruleDiscovery'],'coreAudit':s['audit'],
+            's2Fast':{'phaseCounts':s['lifecycle'].get('phaseCounts'),
+                'continuation':s['lifecycle'].get('continuationAndEndByHorizon')},
+            's2Slow':s['slowLifecycle'],
+            's3':{'portfolio':s['positionResearch']['portfolio'],
+                  'conditional':s['positionResearch']['conditionalPositionMemory'],
+                  'decisionsByReason':s['positionResearch']['audit']['decisionsByReason']}
+          },sort_keys=True))
           for r in x['rows']:
             z=r.get('dayEndMetrics') or {}
             print('JAN_DAILY='+json.dumps({'date':r['date'],'bars':r.get('bars',0),
