@@ -57,7 +57,8 @@ function replay(bars,slow,{trainingCutoff=CUTOFF,modes=MODES}={}){
      positionResearchMode:mode,shadowResearch:false})]));
  let slowIndex=0,first=null,last=null;
  const evalCounts=Object.fromEntries(modes.map(m=>[m,{}])),trades=[];
- const before={},monthly=[],lastEvalMonth=null;
+ const before={},monthly=[];
+  let lastEvalMonth=null;
  let trained=0,evaluated=0;
  function processBar(r,isTraining){
   const t=Date.parse(r.bar_start_utc),end=t+900000,at=new Date(end).toISOString(),price=barPrice(r);
