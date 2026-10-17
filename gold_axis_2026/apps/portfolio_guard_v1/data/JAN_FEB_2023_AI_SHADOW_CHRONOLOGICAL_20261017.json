@@ -1,0 +1,1720 @@
+{
+  "version": "GOLD_2023_JAN_FEB_ACTUAL_CORE_WITH_GPT_HANDOFF_V1_20261017",
+  "mode": "CHRONOLOGICAL_RECONSTRUCTED_ARCHIVE_RESEARCH",
+  "sourceRun": "https://github.com/ataullahturgut/sim3-automation/actions/runs/39064426333",
+  "sourceId": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "pretrain": {
+    "start": "2022-10-01",
+    "end": "2022-12-31",
+    "bars": 5865,
+    "ruleCount": 3,
+    "maturedLabels": 344
+  },
+  "janFebBars": 3750,
+  "coreCalls": 3750,
+  "gateCalls": 3750,
+  "researchReleases": [
+    "2023-01-06T13:30:00.000Z",
+    "2023-01-12T13:30:00.000Z",
+    "2023-02-03T13:30:00.000Z",
+    "2023-02-14T13:30:00.000Z"
+  ],
+  "aiProviderConnected": false,
+  "aiSubmitted": 0,
+  "aiNote": "NO_AI_PROVIDER_OR_GPT_DECISIONS; DO_NOT_INTERPRET_AI_PORTFOLIO_AS_PERFORMANCE",
+  "portfolioAudit": {
+    "version": "GOLD_AI_EVENT_MECHANISM_SHADOW_V1_20261017",
+    "evalStart": "2023-01-01T00:00:00Z",
+    "evalEnd": "2023-03-01T00:15:00Z",
+    "asof": "2023-03-01T00:00:00.000Z",
+    "source": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+    "feePerLeg": 0.008,
+    "priceBasis": "VENDOR_BID_ASK_RECONSTRUCTED_PLUS_FEE",
+    "blindOOS": false,
+    "originalPITEventVerified": false,
+    "modelScienceAccepted": false,
+    "bankTradeAuthorized": false,
+    "gptRuntimeConnected": false,
+    "aiResultsGrounded": false,
+    "aiStatus": "GPT_NOT_SUPPLIED_NO_AI_PORTFOLIO_PERFORMANCE_CLAIM",
+    "inputAICount": 0,
+    "aiUsed": 0,
+    "attentionCount": 156,
+    "activeEventCount": 4,
+    "quarantinedEconomicEvents": 4,
+    "modelApprovedTrades": 0,
+    "observations": 3750,
+    "reference": {
+      "cashUSD": 100,
+      "buyHoldLiquidatableUSD": 98.26375
+    },
+    "arms": {
+      "CORE": {
+        "finalLiquidatableUSD": 100,
+        "pnlPct": 0,
+        "maxDrawdownPct": 0,
+        "holding": "CASH",
+        "transactions": [],
+        "pendingNotFilled": false
+      },
+      "AI": {
+        "finalLiquidatableUSD": 100,
+        "pnlPct": 0,
+        "maxDrawdownPct": 0,
+        "holding": "CASH",
+        "transactions": [],
+        "pendingNotFilled": false
+      },
+      "HYBRID": {
+        "finalLiquidatableUSD": 100,
+        "pnlPct": 0,
+        "maxDrawdownPct": 0,
+        "holding": "CASH",
+        "transactions": [],
+        "pendingNotFilled": false
+      }
+    },
+    "auditHash": "GENESIS"
+  },
+  "mainScientificGate": "FAIL_NOT_BLIND_OOS",
+  "dates": [
+    {
+      "date": "2023-01-01",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-02",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-03",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 5,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 4
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.0601,
+          "expectedLogPct": 0.0162,
+          "effectiveN": 124.7896
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 0.0101
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.6688,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-04",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": "JOLTS/Fed minutes — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.5266,
+          "expectedLogPct": 0.0167,
+          "effectiveN": 127.8656
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.7301
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.8683,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-05",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": "ADP — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.3355,
+          "expectedLogPct": 0.0096,
+          "effectiveN": 123.2184
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.2065
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -1.2039,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-06",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 6,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2,
+        "PRICE_WATCH": 2,
+        "EVENT": 1
+      },
+      "knownEconomicResearchCandidate": "NFP/AHE/UNEMP — RECONSTRUCTED_MACRO",
+      "observedArchiveMacroWaves": 1,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 51.8658,
+          "expectedLogPct": 0.0171,
+          "effectiveN": 134.1918
+        },
+        "s2": {
+          "phase": "PULLBACK",
+          "direction": 1,
+          "trendZ": 0.8505
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 1.8418,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-07",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-08",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-09",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.229,
+          "expectedLogPct": 0.0148,
+          "effectiveN": 127.226
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.0665
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.1734,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-10",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 2,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 1
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 51.8542,
+          "expectedLogPct": 0.018,
+          "effectiveN": 138.6153
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 0.6886
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.3311,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-11",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.6058,
+          "expectedLogPct": 0.0173,
+          "effectiveN": 133.9378
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.3442
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.0618,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-12",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 6,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 4,
+        "PRICE_WATCH": 1,
+        "EVENT": 1
+      },
+      "knownEconomicResearchCandidate": "CPI — RECONSTRUCTED_MACRO",
+      "observedArchiveMacroWaves": 1,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.1459,
+          "expectedLogPct": 0.0186,
+          "effectiveN": 132.1262
+        },
+        "s2": {
+          "phase": "END",
+          "direction": 0,
+          "trendZ": -0.107
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 1.0523,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-13",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.0665,
+          "expectedLogPct": 0.0232,
+          "effectiveN": 141.867
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 0.6987
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 1.2562,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-14",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-15",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-16",
+      "hasSession": true,
+      "bars": 76,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.2207,
+          "expectedLogPct": 0.0217,
+          "effectiveN": 137.0529
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.1807
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.2801,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-17",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.883,
+          "expectedLogPct": 0.0218,
+          "effectiveN": 139.5457
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.3291
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.3979,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-18",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 5,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 4
+      },
+      "knownEconomicResearchCandidate": "PPI/retail — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.3425,
+          "expectedLogPct": 0.0222,
+          "effectiveN": 135.5501
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.3568
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.2235,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-19",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.1002,
+          "expectedLogPct": 0.0263,
+          "effectiveN": 153.6855
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.4918
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 1.4572,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-20",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.5671,
+          "expectedLogPct": 0.0269,
+          "effectiveN": 148.5137
+        },
+        "s2": {
+          "phase": "PULLBACK",
+          "direction": 1,
+          "trendZ": 0.2496
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.3369,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-21",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-22",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-23",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 5,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 4
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.1557,
+          "expectedLogPct": 0.0284,
+          "effectiveN": 158.6841
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.5341
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.2888,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-24",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.2528,
+          "expectedLogPct": 0.0283,
+          "effectiveN": 159.4871
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.375
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.3146,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-25",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.4549,
+          "expectedLogPct": 0.0288,
+          "effectiveN": 163.3609
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.6828
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.4757,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-26",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": "GDP — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.5813,
+          "expectedLogPct": 0.026,
+          "effectiveN": 152.7603
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.5085
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.96,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-27",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": "PCE — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 54.193,
+          "expectedLogPct": 0.0267,
+          "effectiveN": 148.5638
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.1414
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.0881,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-28",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-29",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-30",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 54.6922,
+          "expectedLogPct": 0.0251,
+          "effectiveN": 139.8159
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -0.3692
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.2265,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-01-31",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": "ECI/Fed — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 54.0773,
+          "expectedLogPct": 0.0264,
+          "effectiveN": 147.9586
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.5366
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.2792,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-01",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 1,
+        "PRICE_WATCH": 1
+      },
+      "knownEconomicResearchCandidate": "Fed — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.481,
+          "expectedLogPct": 0.0243,
+          "effectiveN": 166.4318
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.4691
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 1.1956,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-02",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 1,
+        "PRICE_WATCH": 1
+      },
+      "knownEconomicResearchCandidate": "ECB/BoE/Fed repricing — RETROSPECTIVE_NAME_ONLY",
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 54.1114,
+          "expectedLogPct": 0.015,
+          "effectiveN": 153.1991
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": 0.0634
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -2.2222,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-03",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 5,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2,
+        "PRICE_WATCH": 1,
+        "EVENT": 1
+      },
+      "knownEconomicResearchCandidate": "NFP/AHE/UNEMP — RECONSTRUCTED_MACRO",
+      "observedArchiveMacroWaves": 1,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.9134,
+          "expectedLogPct": 0.0085,
+          "effectiveN": 159.1269
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.4892
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -2.4692,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-04",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-05",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-06",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.0932,
+          "expectedLogPct": 0.0102,
+          "effectiveN": 157.903
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.3228
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.0094,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-07",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.2164,
+          "expectedLogPct": 0.0095,
+          "effectiveN": 154.2613
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.8208
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.2904,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-08",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 53.2839,
+          "expectedLogPct": 0.0113,
+          "effectiveN": 159.5785
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.0646
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.1698,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-09",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 54.004,
+          "expectedLogPct": 0.0063,
+          "effectiveN": 151.0898
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.3281
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.7455,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-10",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.4222,
+          "expectedLogPct": 0.0102,
+          "effectiveN": 171.1817
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.0384
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.1724,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-11",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-12",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-13",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.2843,
+          "expectedLogPct": 0.0073,
+          "effectiveN": 167.5839
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.4469
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.5926,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-14",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 5,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3,
+        "EVENT": 1,
+        "PRICE_WATCH": 1
+      },
+      "knownEconomicResearchCandidate": "CPI — RECONSTRUCTED_MACRO",
+      "observedArchiveMacroWaves": 1,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.1163,
+          "expectedLogPct": 0.007,
+          "effectiveN": 170.9747
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.8014
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.0281,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-15",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 51.8539,
+          "expectedLogPct": 0.0043,
+          "effectiveN": 170.4632
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.2824
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.9805,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-16",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 51.8743,
+          "expectedLogPct": 0.0034,
+          "effectiveN": 164.8244
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.135
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.0512,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-17",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 51.5344,
+          "expectedLogPct": 0.0046,
+          "effectiveN": 174.8385
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 0.4923
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.3855,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-18",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-19",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-20",
+      "hasSession": true,
+      "bars": 82,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.1817,
+          "expectedLogPct": 0.0012,
+          "effectiveN": 167.0943
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -0.9054
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.0293,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-21",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 51.6671,
+          "expectedLogPct": 0.0036,
+          "effectiveN": 177.8255
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.4649
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.3902,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-22",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 52.856,
+          "expectedLogPct": -0.0041,
+          "effectiveN": 157.7974
+        },
+        "s2": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -2.0095
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.5365,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-23",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 50.9293,
+          "expectedLogPct": 0.0035,
+          "effectiveN": 187.4715
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.2421
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.2062,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-24",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 3,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 2
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 50.2426,
+          "expectedLogPct": 0.0015,
+          "effectiveN": 190.152
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.3777
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": -0.6332,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-25",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-26",
+      "hasSession": false,
+      "bars": 0,
+      "attention": 0,
+      "attentionReasons": {},
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": null,
+      "observedSessionReturnPct": null,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-27",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 5,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 4
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 50.7288,
+          "expectedLogPct": -0.0004,
+          "effectiveN": 182.9532
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.6081
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.2336,
+      "decisions": [],
+      "shadowExecutions": []
+    },
+    {
+      "date": "2023-02-28",
+      "hasSession": true,
+      "bars": 92,
+      "attention": 4,
+      "attentionReasons": {
+        "DAY_OPEN": 1,
+        "PHASE_CHANGE": 3
+      },
+      "knownEconomicResearchCandidate": null,
+      "observedArchiveMacroWaves": 0,
+      "core": {
+        "s1": {
+          "ready": true,
+          "pUpPct": 50.5982,
+          "expectedLogPct": 0.001,
+          "effectiveN": 183.6408
+        },
+        "s2": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.7117
+        },
+        "s3": {
+          "researchAction": "KEEP",
+          "reason": "NO_SUPPORTED_MARKET_NET_ADVANTAGE",
+          "actualAction": null,
+          "tradeAllowed": false
+        }
+      },
+      "observedSessionReturnPct": 0.5249,
+      "decisions": [],
+      "shadowExecutions": []
+    }
+  ]
+}
