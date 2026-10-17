@@ -19,7 +19,9 @@ const stamp=x=>{
   throw Error("GPT_PROTOCOL_OFFSET_AWARE_TIMESTAMP_REQUIRED");
  return n;
 };
-const dayAt=x=>iso(stamp(x)+2*3600e3).slice(0,10);
+// Research day labels derive from the 15m bar START, not bar END:
+// the final bar ending at 22:00Z still belongs to the departing session.
+const dayAt=x=>iso(stamp(x)-900000+2*3600e3).slice(0,10);
 const sha=o=>crypto.createHash("sha256").update(JSON.stringify(o)).digest("hex");
 function portfolio(){
  return {cash:100,ounces:0,holding:"CASH",pending:null,transactions:[],
