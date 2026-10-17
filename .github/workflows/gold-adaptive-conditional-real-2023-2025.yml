@@ -1,0 +1,67 @@
+name: GOLD adaptive CORE - pretrained same-source economic ablation 2023-2025
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+    paths:
+      - 'gold_axis_2026/adaptive_trading_core/export_private_evduka_for_conditional_replay.py'
+      - 'gold_axis_2026/adaptive_trading_core/replay_conditional_pretrained_2023_2025.js'
+      - '.github/workflows/gold-adaptive-conditional-real-2023-2025.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-retrospective:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate code and economic evidence tests
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          python -m py_compile export_private_evduka_for_conditional_replay.py
+          node --check replay_conditional_pretrained_2023_2025.js
+          node --test adaptive_conditional_position_s3.test.js replay_conditional_position_s3.test.js
+      - name: Read PRIVATE 2020-2025 actual same-source vendor quotes (READ ONLY)
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "Neon secret unavailable; no simulated results" && exit 1)
+          python -m pip -q install 'psycopg[binary]>=3.2,<4'
+          mkdir -p /tmp/gold-adaptive-private
+          python export_private_evduka_for_conditional_replay.py /tmp/gold-adaptive-private
+      - name: Pretrain existing mathematical CORE in 2020-22, replay 2023-25
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --max-old-space-size=5000 replay_conditional_pretrained_2023_2025.js \
+            /tmp/gold-adaptive-private/PRIVATE_EV_XAU_M15.json \
+            /tmp/gold-adaptive-private/PRIVATE_EV_SLOW.json \
+            ../GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv \
+            > /tmp/gold-adaptive-private/RESULT_SUMMARY.json
+      - name: Publish only aggregate results (no licensed market quotes)
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/gold-adaptive-private/RESULT_SUMMARY.json'))
+          out={k:x[k] for k in ('evaluation','pretrain','trainBars','testBars',
+             'macroWavesFromRetrospectiveLedger','macroWavesEncountered',
+             '2023to2025PassiveGoldNetUSD','incrementalEconomicEndWealthUsd')}
+          out['yearlySnapshots']=x['yearlySnapshots']
+          out['models']={k:{f:v[f] for f in ('endNetUsd','holding','buyCount','sellCount',
+                'maxDrawdownPct','conditionalAudit','totalTradeLog','tradeExamples')}
+                for k,v in x['models'].items()}
+          print('REAL_RETROSPECTIVE_SHADOW_RESULT='+json.dumps(out,sort_keys=True))
+          PY
+      - name: Upload safe summary only
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-core-economic-2023-2025-aggregates-research-only
+          path: /tmp/gold-adaptive-private/RESULT_SUMMARY.json
+          if-no-files-found: error
+          retention-days: 14
