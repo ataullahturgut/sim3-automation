@@ -5,6 +5,9 @@ on:
     paths:
       - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_daily_view.js'
       - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_daily_view.test.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_ai_shadow_view.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_ai_shadow_view.test.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/data/JAN_FEB_2023_AI_SHADOW_CHRONOLOGICAL_20261017.json'
       - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_selective_view.js'
       - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_selective_view.test.js'
       - 'gold_axis_2026/apps/portfolio_guard_v1/data/JAN_2023_SELECTIVE_CADENCE_REAL_CORE_AGGREGATES_20261017.json'
@@ -29,9 +32,10 @@ jobs:
         run: |
           node --check model_2023_daily_view.js
           node --check model_2023_selective_view.js
+          node --check model_2023_ai_shadow_view.js
           node --check public/app.js
           node --check server.js
-          node --test model_2023_daily_view.test.js model_2023_selective_view.test.js
+          node --test model_2023_daily_view.test.js model_2023_selective_view.test.js model_2023_ai_shadow_view.test.js
       - name: App endpoint and existing frozen portfolio regression
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: |
@@ -64,6 +68,15 @@ jobs:
               assert.equal(walk.tradeAllowed,false);
               assert.equal(walk.days.length,31);
               console.log('2023 Jan gate replay endpoint PASS');
+              const aiResponse=await fetch(url+'/api/model/2023/jan-feb-ai-shadow');
+              assert.equal(aiResponse.status,200);
+              const ai=await aiResponse.json();
+              assert.equal(ai.dates.length,59);
+              assert.equal(ai.janFebBars,3750);
+              assert.equal(ai.portfolioAudit.aiUsed,0);
+              assert.equal(ai.portfolioAudit.quarantinedEconomicEvents,4);
+              assert.equal(ai.portfolioAudit.bankTradeAuthorized,false);
+              console.log('2023 Jan-Feb AI protocol research endpoint PASS');
               const invalid=await fetch(url+'/api/model/2023/daily?month=2023-03');
               assert.equal(invalid.status,400);
               const page=await fetch(url+'/');
@@ -71,12 +84,14 @@ jobs:
               const html=await page.text();
               assert.match(html,/id="model2023"/);
               assert.match(html,/id="selective2023"/);
+              assert.match(html,/id="ai2023"/);
               assert.match(html,/id="selective23Next"/);
               const client=await fetch(url+'/app.js');
               assert.equal(client.status,200);
               const appJS=await client.text();
               assert.match(appJS,/loadModel23/);
               assert.match(appJS,/selective23Load/);
+              assert.match(appJS,/ai23Load/);
             }finally{await new Promise(ok=>server.close(ok))}
           })().catch(e=>{console.error(e);process.exitCode=1});
           NODE
