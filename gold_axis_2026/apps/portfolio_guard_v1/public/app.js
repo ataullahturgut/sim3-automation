@@ -1002,3 +1002,157 @@ async function runV13Sentez(){
 }
 $("runV13Sentez").addEventListener("click",runV13Sentez);
 
+
+
+/* Existing MODEL research outputs — January / February 2023 daily explorer.
+ * Deliberately separate from frozen 2026 V1 and 2023 legacy V13 workflows.
+ */
+let model23=null,model23SelectedDate=null;
+const model23Numeric=new Intl.NumberFormat("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const model23Four=new Intl.NumberFormat("tr-TR",{minimumFractionDigits:3,maximumFractionDigits:4});
+function model23Value(v,suffix=""){
+ return typeof v==="number"&&Number.isFinite(v)?model23Numeric.format(v)+suffix:"Veri yok";
+}
+function model23Direction(v){return v==="UP"?"Yukarı":v==="DOWN"?"Aşağı":"Yön belirsiz";}
+function model23Phase(v){
+ return ({START:"Başlangıç",CONTINUE:"Devam",PULLBACK:"Düzeltme",
+  END:"Bitiş",REENTRY:"Yeniden giriş",NEUTRAL:"Nötr",
+  WARMUP:"Öğrenme aşaması",UNREADY:"Hazır değil"})[v]||"Veri yok";
+}
+function model23DayLabel(date){return date.slice(8,10)+"."+date.slice(5,7)+"."+date.slice(0,4);}
+function model23Percent(v){
+ if(typeof v!=="number")return "—";
+ return (v>0?"+":"")+model23Numeric.format(v)+"%";
+}
+function model23Rows(){
+ if(!model23)return;
+ const filter=$("model23Filter").value;
+ const days=model23.days.filter(function(d){
+  return filter==="all"||filter==="candidate"&&d.hasSession&&d.ruleCandidate||
+   filter==="observed"&&d.hasSession;
+ });
+ $("model23RowsLabel").textContent=days.length+" gün / "+model23.days.length+" takvim günü";
+ const lines=days.map(function(d){
+  const phase=d.hasSession?model23Phase(d.s2.fastPhase):"İşlem seansı yok";
+  const side=d.s2.fastDirection?model23Direction(d.s2.fastDirection):"";
+  const cls=d.date===model23SelectedDate?"model23-selected":d.ruleCandidate?"model23-highlight":"";
+  const econ=d.ruleCandidate?
+   '<span class="model23-hypo">'+escapeText(d.ruleCandidate)+'</span><small>Doğrulanmamış araştırma adayı</small>':
+   '<span class="muted">—</span>';
+  const actual=d.hasSession?
+   '<b class="'+(d.observedSessionReturnPct>=0?"positive":"negative")+'">'+
+    model23Percent(d.observedSessionReturnPct)+'</b>':"—";
+  return '<tr class="'+cls+'">'+
+   cell('<button type="button" class="model23-day" data-model23-date="'+escapeText(d.date)+'">'+
+    escapeText(model23DayLabel(d.date))+'</button>')+
+   cell(econ)+
+   cell(d.hasSession?model23Value(d.s1.pUpPct,"%"):"—")+
+   cell(d.hasSession?model23Four.format(d.s1.expectedLogPct)+"%":"—")+
+   cell(escapeText(phase)+(side?"<small>"+escapeText(side)+"</small>":""))+
+   cell(d.hasSession?model23Value(d.s2.trendZ):"—")+
+   cell(d.hasSession?"<span class='model23-decision'>NAKİT KORU</span>":"—")+
+   cell(actual)+"</tr>";
+ });
+ $("model23Rows").innerHTML=table([
+  "Tarih","Ekonomik kural adayı","S1 UP · +4 saat",
+  "S1 beklenen log%","S2 evre / yön","S2 trend z","S3 araştırma","Altın · aynı seans"
+ ],lines);
+}
+function model23Detail(){
+ const d=model23?.days.find(x=>x.date===model23SelectedDate);
+ if(!d){$("model23Detail").textContent="Gün seçin.";return;}
+ $("model23DetailDate").textContent=model23DayLabel(d.date);
+ if(!d.hasSession){
+  $("model23Detail").innerHTML='<p class="notice">Bu tarihle etiketlenen araştırma seansında fiyat kaydı yok. S1, S2 veya S3 sinyali üretilmiş gibi gösterilmez.</p>';
+  return;
+ }
+ const detailed=[
+  {title:"Ekonomik kural adayı",value:d.ruleCandidate||"Eşleşme yok",
+   info:"OLAY-02 / ÖĞREN-03 araştırma teşhisi; öğrenilmiş kesin ekonomik kural değil."},
+  {title:"S1 · UP olasılığı (+4 saat)",value:model23Value(d.s1.pUpPct,"%"),
+   info:"Gün sonu itibarıyla sonraki 4 saat. Piyasa-temelli; ekonomik alpha kanıtı değil."},
+  {title:"S1 · beklenen log getiri (+4 saat)",
+   value:model23Four.format(d.s1.expectedLogPct)+"%",
+   info:"Tüm işlem maliyetleri sonrası AL getirisi veya günlük getiri değildir."},
+  {title:"S2 · hızlı hareket evresi",value:model23Phase(d.s2.fastPhase)+
+   (d.s2.fastDirection?" / "+model23Direction(d.s2.fastDirection):""),
+   info:"Tamamlanmış 15 dakikalık fiyatlar üzerinden; trend z="+model23Value(d.s2.trendZ)+"."},
+  {title:"S2 · uzun evre",value:model23Phase(d.s2.slowPhase),
+   info:"Uzun hareket bitiş olasılığı bu raporda kalibre edilmiş olarak hazır değil."},
+  {title:"S3 · araştırma sonucu",value:"NAKİT KORU",
+   info:"Model KEEP verdi. Onaylı AL/SAT emri, gölge portföy işlemi veya ekonomik neden ispatı yok."},
+  {title:"Altının o seanstaki gerçekleşen hareketi",value:model23Percent(d.observedSessionReturnPct),
+   info:"Aynı günün ilk–son fiyatı; S1'in ileri 4 saat tahminiyle karşılaştırmayın."}
+ ];
+ let html='<div class="model23-detail-grid">'+detailed.map(function(k){
+  return '<article class="model23-detail-card"><span>'+escapeText(k.title)+'</span>'+
+   '<strong>'+escapeText(k.value)+'</strong><small>'+escapeText(k.info)+'</small></article>';
+ }).join("")+'</div>';
+ if(d.economicRelease){
+  const e=d.economicRelease;
+  const date=new Intl.DateTimeFormat("tr-TR",{timeZone:"Europe/Istanbul",
+   year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}).format(new Date(e.at));
+  html+='<div class="model23-release"><h3>Ekonomik açıklama sonrası ilk araştırma gözlemi</h3>'+
+   '<p>Türkiye saati: <strong>'+escapeText(date)+'</strong> (ilk yayın doğrulanmadı, varsayılan +60 dk gecikme).</p>'+
+   '<p><strong>Ekonomiye özgü S1:</strong> Hazır değil. '+
+   '<strong>S2:</strong> '+escapeText(model23Phase(e.s2Phase))+
+   (e.s2Direction?" / "+escapeText(model23Direction(e.s2Direction)):"")+
+   ', trend z: '+model23Value(e.s2TrendZ)+
+   '. <strong>S3:</strong> NAKİT KORU.</p>'+
+   '<small>Bu gözlem gün sonu ölçümünden farklı saattedir. Sonradan oluşan fiyatı bu anın bilgisi saymıyoruz.</small></div>';
+ }
+ $("model23Detail").innerHTML=html;
+}
+function renderModel23(){
+ if(!model23)return;
+ $("model23Rules").textContent=model23.startingLearnedMarketRules;
+ $("model23Labels").textContent=model23.startingMaturedFourHourLabels;
+ $("model23Events").textContent=model23.ruleCandidateDays;
+ $("model23Trades").textContent="0";
+ $("model23Status").textContent=model23.label+" · "+model23.sessionDays+
+  " fiyat seansı · "+model23.monthM15Bars+" adet 15 dakikalık fiyat kaydı · S3 işlem önerisi: NAKİT KORU.";
+ $("model23Source").innerHTML="Kaynak: <a href='"+escapeText(model23.sourceRun)+
+  "' target='_blank' rel='noopener noreferrer'>"+escapeText(model23.label)+
+  " CORE GitHub test kaydı</a>. "+model23.trainingM15Bars+
+  " geçmiş fiyat barıyla öğrenilmiş; Şubat'ta Ocak hafızası korunmuştur. Bu veriler banka BID/ASK değil; araştırma amaçlı yeniden oluşturulmuş MID kotasyonlarıdır.";
+ model23Rows();
+ model23Detail();
+}
+async function loadModel23(){
+ const month=$("model23Month").value;
+ model23=null;model23SelectedDate=null;
+ $("model23Rows").textContent="Günlük veriler kontrol ediliyor…";
+ $("model23Detail").textContent="Seçilen gün yükleniyor…";
+ $("model23Status").textContent=month+" kayıtları yükleniyor…";
+ try{
+  const res=await fetch("/api/model/2023/daily?month="+encodeURIComponent(month),{cache:"no-store"});
+  if(!res.ok)throw Error("Kaynak doğrulama veya API hatası: "+res.status);
+  const result=await res.json();
+  if(result.version!=="GOLD_MODEL_2023_DAILY_READONLY_VIEW_V1_20261017"||
+     result.month!==month||result.bankTradeAuthorized!==false||
+     result.actualEconomicRuleLearningVerified!==false||!Array.isArray(result.days)||
+     result.days.length!==(month==="2023-01"?31:28))
+   throw Error("2023 model rapor sözleşmesi uyuşmuyor");
+  model23=result;
+  model23SelectedDate=result.days.find(d=>d.hasSession&&d.ruleCandidate)?.date||
+    result.days.find(d=>d.hasSession)?.date;
+  renderModel23();
+ }catch(err){
+  $("model23Status").textContent="2023 raporu gösterilemiyor: "+err.message+
+   ". Bu ekran eksik değeri tahmin ederek doldurmaz.";
+  $("model23Rows").textContent="Kaynak hatası nedeniyle günlük metrikler görüntülenemedi.";
+  $("model23Detail").textContent="—";
+ }
+}
+$("model23Month").addEventListener("change",loadModel23);
+$("model23Filter").addEventListener("change",function(){
+ if(model23){model23Rows();}
+});
+$("model23Rows").addEventListener("click",function(e){
+ const button=e.target.closest("button[data-model23-date]");
+ if(!button||!model23)return;
+ const date=button.getAttribute("data-model23-date");
+ if(!model23.days.some(d=>d.date===date))return;
+ model23SelectedDate=date;model23Rows();model23Detail();
+});
+loadModel23();
