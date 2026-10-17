@@ -66,6 +66,7 @@ function run(bars,sessions,ledger){
  for(const r of bars){
   const started=Date.parse(r.bar_start_utc),ended=started+900000;
   if(started<=prevTime||r.source_id!==source)throw Error("UNSORTED_OR_SOURCE_CHANGED");
+  const previousBarStart=prevTime;
   prevTime=started;
   const price=(Number(r.bid_close)+Number(r.ask_close))/2;
   if(!(price>0)||Number(r.ask_close)<Number(r.bid_close))throw Error("BAD_RECONSTRUCTED_QUOTE");
@@ -130,7 +131,8 @@ function run(bars,sessions,ledger){
   // Mechanical no-future, no-economic-causality statistical watch. A fixed
   // 0.5%-per-M15 threshold is a descriptive attention flag, never a learned
   // macro rule, a BUY signal, or a parameter optimized on this January.
-  if(lastPrice!==null&&Math.abs(100*(price/lastPrice-1))>=0.5)
+  if(lastPrice!==null&&started-previousBarStart===900000&&
+     Math.abs(100*(price/lastPrice-1))>=0.5)
     record.priceChangeWatchCount++;
   if(["START","END","REENTRY"].includes(obs.lifecycle.phase))
     record.fastTransitions++; // observation count, not unique transitions
