@@ -59,6 +59,18 @@ function features(p,t,id){
   phase_direction:market(p.direction),
   phase_age_norm:market(p.episodeAgeMinutes/240)};
 }
+/** Only S1-admitted economic observations can condition S3.
+ * Dominant normalized surprise is a partition key, never a directional order.
+ */
+function observedEconomicState(fs){
+ const names=["nfp_surprise_z","ahe_surprise_z","unemployment_surprise_z",
+   "cpi_surprise_z"].filter(k=>fs[k]&&typeof fs[k].value==="number");
+ if(!names.length)return null;
+ const dominant=names.sort((a,b)=>Math.abs(fs[b].value)-Math.abs(fs[a].value))[0];
+ const z=fs[dominant].value;
+ return {family:dominant==="cpi_surprise_z"?"CPI":"EMP",dominant,
+   sign:z>0?"POS":z<0?"NEG":"ZERO",magnitude:Math.abs(z)};
+}
 /** Commit a daily feature ONLY after UTC 22:00 session has closed.
  * Calling late never rewrites any already-issued S1 forecast.
  */
@@ -127,6 +139,7 @@ function observe(s,bar){
      (learningModeOf(s)==="STRICT_WALK_FORWARD"?
        "VERIFIED_PIT_BUT_ALPHA_NOT_PROVEN":"RESEARCH_MACRO_UNVERIFIED"):
      "MARKET_ONLY_UNVALIDATED",
+   economicState:observedEconomicState(fs),
    byHorizon:(q.forecastAtDecision?.byHorizon??[]).map(x=>({
     horizonMinutes:x.horizonMinutes,ready:x.ready,
     expectedLogPct:x.expectedLogPct,effectiveN:x.effectiveN}))}});
