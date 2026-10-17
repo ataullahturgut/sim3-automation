@@ -1,0 +1,59 @@
+name: GOLD MODEL - Jan 2023 selective cadence real CORE walk
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+    paths:
+      - '.github/workflows/gold-jan2023-selective-cadence-core-replay.yml'
+      - 'gold_axis_2026/adaptive_trading_core/replay_jan2023_selective_cadence_walk.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  jan2023-selective-cadence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check original CORE, cadence gate and replay syntax
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --check replay_jan2023_selective_cadence_walk.js
+          node --check adaptive_market_core_s1_s2.js
+          node --test live_cadence_gate_v1.test.js
+      - name: Export only original database M15 source in ephemeral CI workspace
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "Missing private DB connection - no synthetic price fallback" && exit 1)
+          python -m pip -q install 'psycopg[binary]>=3.2,<4'
+          mkdir -p /tmp/private-selective-jan2023
+          python export_private_evduka_for_conditional_replay.py /tmp/private-selective-jan2023 2022-10-01 2023-02-01
+      - name: Execute chronological gated actual S1 S2 S3 with historical quote source
+        working-directory: gold_axis_2026/adaptive_trading_core
+        run: |
+          node --max-old-space-size=4096 replay_jan2023_selective_cadence_walk.js \
+            /tmp/private-selective-jan2023/PRIVATE_EV_XAU_M15.json \
+            /tmp/private-selective-jan2023/PRIVATE_EV_SLOW.json \
+            ../GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv \
+            > /tmp/private-selective-jan2023/SELECTIVE_JAN2023_AGGREGATE.json
+      - name: Print aggregated safe evidence for APP transfer
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/private-selective-jan2023/SELECTIVE_JAN2023_AGGREGATE.json'))
+          print('SELECTIVE_REPLAY_META='+json.dumps({k:v for k,v in d.items() if k!='days'},sort_keys=True,separators=(',',':')))
+          for row in d['days']:
+            print('SELECTIVE_REPLAY_DAY='+json.dumps(row,sort_keys=True,separators=(',',':')))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-jan2023-selective-cadence-aggregate-only
+          path: /tmp/private-selective-jan2023/SELECTIVE_JAN2023_AGGREGATE.json
+          retention-days: 14
