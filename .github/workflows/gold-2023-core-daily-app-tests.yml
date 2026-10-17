@@ -1,0 +1,63 @@
+name: GOLD application - 2023 economic rule S1 S2 daily viewer
+on:
+  push:
+    branches: ['research-gold-core-timeless-selective-learning-*']
+    paths:
+      - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_daily_view.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_daily_view.test.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/server.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/public/**'
+      - 'gold_axis_2026/adaptive_trading_core/*2023_INTEGRATED_S1_S2_S3_REAL_DAILY_RESULTS*'
+      - '.github/workflows/gold-2023-core-daily-app-tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ui-and-data-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax and actual archived CORE daily report tests
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --check model_2023_daily_view.js
+          node --check public/app.js
+          node --check server.js
+          node --test model_2023_daily_view.test.js
+      - name: App endpoint and existing frozen portfolio regression
+        working-directory: gold_axis_2026/apps/portfolio_guard_v1
+        run: |
+          node --test test.js
+          node - <<'NODE'
+          const http=require('node:http');
+          const assert=require('node:assert/strict');
+          const {requestHandler}=require('./server.js');
+          (async()=>{
+            const server=http.createServer(requestHandler);
+            await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
+            const url='http://127.0.0.1:'+server.address().port;
+            try{
+              for(const [month,n] of [['2023-01',31],['2023-02',28]]){
+                const response=await fetch(url+'/api/model/2023/daily?month='+month);
+                assert.equal(response.status,200);
+                const data=await response.json();
+                assert.equal(data.days.length,n);
+                assert.equal(data.bankTradeAuthorized,false);
+                assert.equal(data.actualEconomicRuleLearningVerified,false);
+                console.log(month+' API PASS, '+data.sessionDays+' trading sessions');
+              }
+              const invalid=await fetch(url+'/api/model/2023/daily?month=2023-03');
+              assert.equal(invalid.status,400);
+              const page=await fetch(url+'/');
+              assert.equal(page.status,200);
+              assert.match(await page.text(),/id="model2023"/);
+              const client=await fetch(url+'/app.js');
+              assert.equal(client.status,200);
+              assert.match(await client.text(),/loadModel23/);
+            }finally{await new Promise(ok=>server.close(ok))}
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          NODE
