@@ -254,7 +254,10 @@ function observe(s,o){
   }else {proposed="KEEP";reason="OPPORTUNITY_MAINTAIN_POSITION";}
  }
  if(s.config.positionResearchMode==="CONDITIONAL_ECONOMIC_RESEARCH"){
-  if(!contiguous||!s.paper.valid||c.includes("UNREADY")){
+  // An S1 4h alpha forecast may be UNREADY while a separately matured
+  // conditional 5/10/20-session S3 cohort is available. Do not veto it.
+  const fastUnready=!["START","CONTINUE","PULLBACK","END","REENTRY","NEUTRAL"].includes(o.fast.phase);
+  if(!contiguous||!s.paper.valid||fastUnready){
    proposed="ABSTAIN";reason=!contiguous?"CONDITIONAL_BAR_GAP":
      !s.paper.valid?"CONDITIONAL_SOURCE_INVALID":"CONDITIONAL_PHASE_UNREADY";
   }else{
