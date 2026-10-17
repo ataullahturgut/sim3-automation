@@ -13,6 +13,7 @@ const scientificV2=require("./event_audit_v2").runAudit(); // read-only, indepen
 const learnedStateV2=require("./monthly_learning_v2").createJanuaryLearningRecord(); // forward-only feedback gate
 const febRunner=require("./monthly_runner"); // real February 2026 replay computed on demand
 const model2023=require("./model_2023_daily_view"); // existing 2023 mathematical CORE reports, never recalculated in UI
+const jan2023Selective=require("./model_2023_selective_view"); // immutable real gated M15 replay aggregate
 function small(v) {
  const x=snapshots.scenarios[v];
  return {
@@ -49,6 +50,14 @@ function requestHandler(req,res) {
  if(req.method!=="GET"&&req.method!=="HEAD")return respond(res,405,JSON.stringify({error:"READ_ONLY_GET_ONLY"}));
  const url=new URL(req.url,"http://localhost");
  const route=url.pathname;
+ if(route==="/api/model/2023/january/selective-walk"){
+  try {
+   return respond(res,200,JSON.stringify(jan2023Selective.read()));
+  }catch(err){
+   console.error("Jan 2023 selective replay aggregate invalid:",err.message);
+   return respond(res,503,JSON.stringify({error:"JAN2023_SELECTIVE_REPLAY_SOURCE_INVALID"}));
+  }
+ }
  if(route==="/api/model/2023/daily"){
   const month=url.searchParams.get("month");
   if(!Object.prototype.hasOwnProperty.call(model2023.MONTHS,month))
