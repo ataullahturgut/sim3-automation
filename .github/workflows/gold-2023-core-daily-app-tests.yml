@@ -5,6 +5,9 @@ on:
     paths:
       - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_daily_view.js'
       - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_daily_view.test.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_selective_view.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/model_2023_selective_view.test.js'
+      - 'gold_axis_2026/apps/portfolio_guard_v1/data/JAN_2023_SELECTIVE_CADENCE_REAL_CORE_AGGREGATES_20261017.json'
       - 'gold_axis_2026/apps/portfolio_guard_v1/server.js'
       - 'gold_axis_2026/apps/portfolio_guard_v1/public/**'
       - 'gold_axis_2026/adaptive_trading_core/*2023_INTEGRATED_S1_S2_S3_REAL_DAILY_RESULTS*'
@@ -25,9 +28,10 @@ jobs:
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: |
           node --check model_2023_daily_view.js
+          node --check model_2023_selective_view.js
           node --check public/app.js
           node --check server.js
-          node --test model_2023_daily_view.test.js
+          node --test model_2023_daily_view.test.js model_2023_selective_view.test.js
       - name: App endpoint and existing frozen portfolio regression
         working-directory: gold_axis_2026/apps/portfolio_guard_v1
         run: |
@@ -50,14 +54,29 @@ jobs:
                 assert.equal(data.actualEconomicRuleLearningVerified,false);
                 console.log(month+' API PASS, '+data.sessionDays+' trading sessions');
               }
+              const actual=await fetch(url+'/api/model/2023/january/selective-walk');
+              assert.equal(actual.status,200);
+              const walk=await actual.json();
+              assert.equal(walk.observed.gateCalls,1920);
+              assert.equal(walk.observed.modelCalls,1920);
+              assert.equal(walk.observed.retrospectiveMacroQuarantined,2);
+              assert.equal(walk.observed.macroPITFeaturesAccepted,0);
+              assert.equal(walk.tradeAllowed,false);
+              assert.equal(walk.days.length,31);
+              console.log('2023 Jan gate replay endpoint PASS');
               const invalid=await fetch(url+'/api/model/2023/daily?month=2023-03');
               assert.equal(invalid.status,400);
               const page=await fetch(url+'/');
               assert.equal(page.status,200);
-              assert.match(await page.text(),/id="model2023"/);
+              const html=await page.text();
+              assert.match(html,/id="model2023"/);
+              assert.match(html,/id="selective2023"/);
+              assert.match(html,/id="selective23Next"/);
               const client=await fetch(url+'/app.js');
               assert.equal(client.status,200);
-              assert.match(await client.text(),/loadModel23/);
+              const appJS=await client.text();
+              assert.match(appJS,/loadModel23/);
+              assert.match(appJS,/selective23Load/);
             }finally{await new Promise(ok=>server.close(ok))}
           })().catch(e=>{console.error(e);process.exitCode=1});
           NODE
