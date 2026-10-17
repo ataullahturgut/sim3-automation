@@ -51,7 +51,7 @@ jobs:
           x=json.load(open('/tmp/gold-adaptive-private/RESULT_SUMMARY.json'))
           out={k:x[k] for k in ('evaluation','pretrain','trainBars','testBars',
              'macroWavesFromRetrospectiveLedger','macroWavesEncountered',
-             '2023to2025PassiveGoldNetUSD','incrementalEconomicEndWealthUsd')}
+             'passiveGoldNet2023to2025USD','incrementalEconomicEndWealthUsd')}
           out['yearlySnapshots']=x['yearlySnapshots']
           out['models']={k:{f:v[f] for f in ('endNetUsd','holding','buyCount','sellCount',
                 'maxDrawdownPct','conditionalAudit','totalTradeLog','tradeExamples')}
