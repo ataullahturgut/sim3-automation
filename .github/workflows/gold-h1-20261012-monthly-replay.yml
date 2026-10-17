@@ -1,0 +1,20 @@
+name: Gold H1 monthly research reproducibility
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "gold_axis_2026/GOLD_H1_20261012_*"
+      - "gold_axis_2026/tools/gold_h1_20261012_monthly_incremental_replay.py"
+      - ".github/workflows/gold-h1-20261012-monthly-replay.yml"
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python3 -m pip install "numpy>=1.24,<3"
+      - run: python3 gold_axis_2026/tools/gold_h1_20261012_monthly_incremental_replay.py
