@@ -7,7 +7,7 @@ from psycopg.rows import dict_row
 UTC=timezone.utc
 SOURCE="EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1"
 def fmt(t): return t.astimezone(UTC).isoformat(timespec="seconds").replace("+00:00","Z")
-def main(directory):
+def main(directory,start_date="2020-01-01",end_date="2026-01-01"):
     os.makedirs(directory,exist_ok=True)
     url=os.environ.get("NEON_DATABASE_URL")
     if not url: raise RuntimeError("NEON_DATABASE_URL_SECRET_MISSING")
@@ -22,9 +22,9 @@ def main(directory):
         cur.execute("""SELECT source_id,bar_start_utc,bid_close,ask_close
                   FROM gold_research_evduka_xau15m_bidask_candidate
                   WHERE source_id=%s
-                    AND bar_start_utc>='2020-01-01T00:00:00Z'
-                    AND bar_start_utc<'2026-01-01T00:00:00Z'
-                  ORDER BY bar_start_utc""",(SOURCE,))
+                    AND bar_start_utc >= %s::timestamptz
+                    AND bar_start_utc < %s::timestamptz
+                  ORDER BY bar_start_utc""",(SOURCE,start_date+"T00:00:00Z",end_date+"T00:00:00Z"))
         with open(bars_path,"w",encoding="utf8") as f:
           f.write("[")
           for r in cur:
@@ -64,5 +64,5 @@ def main(directory):
       "years":sorted(set(str(d)[:4] for d in days)),
       "privacy":"EPHEMERAL_ONLY_NO_PUBLIC_RAW_DATA"},sort_keys=True))
 if __name__=="__main__":
-    if len(sys.argv)!=2:raise SystemExit("usage: python export... DIR")
-    main(sys.argv[1])
+    if len(sys.argv) not in (2,4):raise SystemExit("usage: python export... DIR [START_DATE END_DATE]")
+    main(sys.argv[1],*(sys.argv[2:] if len(sys.argv)==4 else []))
