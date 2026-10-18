@@ -1,0 +1,502 @@
+{
+  "schema": "ETKI05_ECONOMIC_CONDITION_LABEL_REGISTRY_V1",
+  "version": "2026-10-18",
+  "project": "GOLD-ADAPTIVE-MODEL-APP-01",
+  "user_intent": "Economic condition item labels and their combinations, NOT a new market prediction algorithm; outcome lookup is separate",
+  "status": "HYPOTHESIS_LIBRARY_NOT_TRADE_RULE",
+  "science_gate": "FAIL",
+  "live_prediction": false,
+  "algorithm_core_changed": false,
+  "definitions": {
+    "source": "gold_axis_2026/OLAY_02_85_MAKRO_YENI_DNA_TEPKI_PLASEBO_20261014.csv",
+    "label_scope": "economic conditions; K01 etc inputs, not outcomes",
+    "outcome_scope": "XAU direction/size/time/path observed after source's event timestamp; never use outcomes for asof inputs",
+    "surprise_definition": "first-release actual vs pre-release market consensus; NOT high/low absolute macro levels",
+    "prior_release_context": "latest other-kind release strictly earlier than trigger, no more than 45 days old, does not pretend simultaneous release",
+    "unverified_first_print": "actual/consensus historical archive vintage has not been independently certified; labels are retrospective research only",
+    "separation_of_roles": "K condition labels independent of legacy ETKI-05 E01-E05 mechanism-family names and OGREN-03 ORG01-ORG12",
+    "risk_of_selection": "condition combinations examined after outcomes; no independent blinded test or calibrated probabilities",
+    "banks_fee": "0.8% each side; lookup does not authorize trade",
+    "magnitude_threshold": "1% in 4 hours illustrative; NOT learned regime-scaled definition of LARGE"
+  },
+  "labels": [
+    {
+      "id": "K01",
+      "key": "CPI_ABOVE_CONSENSUS",
+      "title": "Enflasyon beklentiden yüksek",
+      "kind": "CPI",
+      "predicate": "macro_actual > macro_consensus",
+      "availability": "On CPI first release if actual+pre-release consensus verified",
+      "usable_now": "RETROSPECTIVE_PROXY"
+    },
+    {
+      "id": "K02",
+      "key": "CPI_BELOW_CONSENSUS",
+      "title": "Enflasyon beklentiden düşük",
+      "kind": "CPI",
+      "predicate": "macro_actual < macro_consensus",
+      "availability": "On CPI first release if actual+pre-release consensus verified",
+      "usable_now": "RETROSPECTIVE_PROXY"
+    },
+    {
+      "id": "K03",
+      "key": "NFP_ABOVE_CONSENSUS",
+      "title": "İstihdam beklentiden güçlü",
+      "kind": "NFP",
+      "predicate": "macro_actual > macro_consensus",
+      "availability": "On NFP first release if actual+pre-release consensus verified",
+      "usable_now": "RETROSPECTIVE_PROXY"
+    },
+    {
+      "id": "K04",
+      "key": "NFP_BELOW_CONSENSUS",
+      "title": "İstihdam beklentiden zayıf",
+      "kind": "NFP",
+      "predicate": "macro_actual < macro_consensus",
+      "availability": "On NFP first release if actual+pre-release consensus verified",
+      "usable_now": "RETROSPECTIVE_PROXY"
+    },
+    {
+      "id": "K05",
+      "key": "CPI_EQUALS_CONSENSUS",
+      "title": "Enflasyon beklentiye eşit",
+      "kind": "CPI",
+      "predicate": "macro_actual equals macro_consensus within confirmed publication precision",
+      "availability": "On CPI first release",
+      "usable_now": "RETROSPECTIVE_PROXY"
+    },
+    {
+      "id": "K06",
+      "key": "WAGES_ABOVE_CONSENSUS",
+      "title": "Ücret artışı beklentiden yüksek",
+      "kind": "NFP",
+      "predicate": "original AHE actual above frozen consensus",
+      "availability": "First-print and consensus-vintage required",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K07",
+      "key": "UNEMP_ABOVE_CONSENSUS",
+      "title": "İşsizlik oranı beklentiden yüksek",
+      "kind": "NFP",
+      "predicate": "original unemployment actual above frozen consensus",
+      "availability": "First-print and consensus-vintage required",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K08",
+      "key": "USD_STRENGTHENS",
+      "title": "Dolar güçleniyor",
+      "kind": "MARKET",
+      "predicate": "synchronous USD measure change > pre-registered threshold",
+      "availability": "quote timestamp at/before decision",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K09",
+      "key": "USD_WEAKENS",
+      "title": "Dolar zayıflıyor",
+      "kind": "MARKET",
+      "predicate": "synchronous USD measure change < pre-registered threshold",
+      "availability": "quote timestamp at/before decision",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K10",
+      "key": "REAL_YIELD_RISES",
+      "title": "ABD reel faiz yükseliyor",
+      "kind": "MARKET",
+      "predicate": "synchronous US real yield response positive",
+      "availability": "source verified event-time",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K11",
+      "key": "REAL_YIELD_FALLS",
+      "title": "ABD reel faiz düşüyor",
+      "kind": "MARKET",
+      "predicate": "synchronous US real yield response negative",
+      "availability": "source verified event-time",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K12",
+      "key": "RISK_STRESS_RISES",
+      "title": "Finansal stres / riskten kaçış artıyor",
+      "kind": "MACRO_MARKET",
+      "predicate": "independently observed financing/spread/risk metrics above predefined boundary",
+      "availability": "first-print or synchronously available metrics",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K13",
+      "key": "POSITION_UNWINDING",
+      "title": "Pozisyon çözülmesi / teminat satışları",
+      "kind": "POSITION",
+      "predicate": "verified asof liquidation, positioning or margin evidence",
+      "availability": "original public timing must be documented",
+      "usable_now": "NOT_MEASURED"
+    },
+    {
+      "id": "K14",
+      "key": "GOLD_PRE_EVENT_UP",
+      "title": "Altın açıklama öncesi dört saatte yükseliyor",
+      "kind": "MARKET",
+      "predicate": "17 contiguous completed M15 mid-price bars strictly before release, return>0",
+      "availability": "already-closed pre-event bars only",
+      "usable_now": "OBSERVATIONAL_PRICE_SOURCE"
+    },
+    {
+      "id": "K15",
+      "key": "GOLD_PRE_EVENT_DOWN",
+      "title": "Altın açıklama öncesi dört saatte düşüyor",
+      "kind": "MARKET",
+      "predicate": "17 contiguous completed M15 mid-price bars strictly before release, return<0",
+      "availability": "already-closed pre-event bars only",
+      "usable_now": "OBSERVATIONAL_PRICE_SOURCE"
+    }
+  ],
+  "counts": {
+    "macro_releases_total": 85,
+    "cpi_nfp": 69,
+    "valid4hour": 68,
+    "prior_context_available": 66,
+    "unmatched_context": 3
+  },
+  "single_labels": [
+    {
+      "tag": "K01",
+      "n": 8,
+      "up": 3,
+      "down": 5,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 2,
+      "ids": [
+        "CPI_2023-10-12",
+        "CPI_2023-12-12",
+        "CPI_2024-01-11",
+        "CPI_2024-02-13",
+        "CPI_2024-04-10",
+        "CPI_2024-10-10",
+        "CPI_2025-02-12",
+        "CPI_2025-09-11"
+      ]
+    },
+    {
+      "tag": "K02",
+      "n": 13,
+      "up": 11,
+      "down": 2,
+      "at_least_plus1pct": 5,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "CPI_2023-01-12",
+        "CPI_2023-04-12",
+        "CPI_2023-06-13",
+        "CPI_2023-07-12",
+        "CPI_2023-11-14",
+        "CPI_2024-05-15",
+        "CPI_2024-06-12",
+        "CPI_2024-07-11",
+        "CPI_2025-03-12",
+        "CPI_2025-04-10",
+        "CPI_2025-05-13",
+        "CPI_2025-06-11",
+        "CPI_2025-10-24"
+      ]
+    },
+    {
+      "tag": "K03",
+      "n": 23,
+      "up": 10,
+      "down": 13,
+      "at_least_plus1pct": 4,
+      "at_most_minus1pct": 5,
+      "ids": [
+        "NFP_2023-01-06",
+        "NFP_2023-02-03",
+        "NFP_2023-03-10",
+        "NFP_2023-05-05",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2023-12-08",
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-03-08",
+        "NFP_2024-04-05",
+        "NFP_2024-06-07",
+        "NFP_2024-07-05",
+        "NFP_2024-10-04",
+        "NFP_2024-12-06",
+        "NFP_2025-01-10",
+        "NFP_2025-04-04",
+        "NFP_2025-05-02",
+        "NFP_2025-06-06",
+        "NFP_2025-07-03",
+        "NFP_2025-11-20",
+        "NFP_2025-12-16"
+      ]
+    },
+    {
+      "tag": "K04",
+      "n": 11,
+      "up": 6,
+      "down": 5,
+      "at_least_plus1pct": 2,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "NFP_2023-07-07",
+        "NFP_2023-08-04",
+        "NFP_2023-11-03",
+        "NFP_2024-05-03",
+        "NFP_2024-08-02",
+        "NFP_2024-09-06",
+        "NFP_2024-11-01",
+        "NFP_2025-02-07",
+        "NFP_2025-03-07",
+        "NFP_2025-08-01",
+        "NFP_2025-09-05"
+      ]
+    },
+    {
+      "tag": "K05",
+      "n": 13,
+      "up": 3,
+      "down": 10,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 2,
+      "ids": [
+        "CPI_2023-02-14",
+        "CPI_2023-03-14",
+        "CPI_2023-05-10",
+        "CPI_2023-08-10",
+        "CPI_2023-09-13",
+        "CPI_2024-03-12",
+        "CPI_2024-08-14",
+        "CPI_2024-09-11",
+        "CPI_2024-11-13",
+        "CPI_2024-12-11",
+        "CPI_2025-01-15",
+        "CPI_2025-07-15",
+        "CPI_2025-08-12"
+      ]
+    }
+  ],
+  "condition_combinations": [
+    {
+      "current": "K01",
+      "previous_release_context": "K03",
+      "n": 6,
+      "up": 1,
+      "down": 5,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 2,
+      "ids": [
+        "CPI_2023-10-12",
+        "CPI_2023-12-12",
+        "CPI_2024-01-11",
+        "CPI_2024-02-13",
+        "CPI_2024-04-10",
+        "CPI_2024-10-10"
+      ]
+    },
+    {
+      "current": "K01",
+      "previous_release_context": "K04",
+      "n": 2,
+      "up": 2,
+      "down": 0,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "CPI_2025-02-12",
+        "CPI_2025-09-11"
+      ]
+    },
+    {
+      "current": "K02",
+      "previous_release_context": "K03",
+      "n": 7,
+      "up": 5,
+      "down": 2,
+      "at_least_plus1pct": 2,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "CPI_2023-01-12",
+        "CPI_2023-06-13",
+        "CPI_2024-06-12",
+        "CPI_2024-07-11",
+        "CPI_2025-04-10",
+        "CPI_2025-05-13",
+        "CPI_2025-06-11"
+      ]
+    },
+    {
+      "current": "K02",
+      "previous_release_context": "K04",
+      "n": 5,
+      "up": 5,
+      "down": 0,
+      "at_least_plus1pct": 2,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "CPI_2023-04-12",
+        "CPI_2023-07-12",
+        "CPI_2023-11-14",
+        "CPI_2024-05-15",
+        "CPI_2025-03-12"
+      ]
+    },
+    {
+      "current": "K03",
+      "previous_release_context": "K01",
+      "n": 3,
+      "up": 2,
+      "down": 1,
+      "at_least_plus1pct": 1,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-03-08"
+      ]
+    },
+    {
+      "current": "K03",
+      "previous_release_context": "K02",
+      "n": 10,
+      "up": 1,
+      "down": 9,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 4,
+      "ids": [
+        "NFP_2023-02-03",
+        "NFP_2023-05-05",
+        "NFP_2023-12-08",
+        "NFP_2024-06-07",
+        "NFP_2024-07-05",
+        "NFP_2025-04-04",
+        "NFP_2025-05-02",
+        "NFP_2025-06-06",
+        "NFP_2025-07-03",
+        "NFP_2025-11-20"
+      ]
+    },
+    {
+      "current": "K03",
+      "previous_release_context": "K05",
+      "n": 8,
+      "up": 5,
+      "down": 3,
+      "at_least_plus1pct": 2,
+      "at_most_minus1pct": 1,
+      "ids": [
+        "NFP_2023-03-10",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2024-04-05",
+        "NFP_2024-10-04",
+        "NFP_2024-12-06",
+        "NFP_2025-01-10"
+      ]
+    },
+    {
+      "current": "K04",
+      "previous_release_context": "K01",
+      "n": 4,
+      "up": 2,
+      "down": 2,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "NFP_2023-11-03",
+        "NFP_2024-05-03",
+        "NFP_2024-11-01",
+        "NFP_2025-03-07"
+      ]
+    },
+    {
+      "current": "K04",
+      "previous_release_context": "K02",
+      "n": 3,
+      "up": 2,
+      "down": 1,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "NFP_2023-07-07",
+        "NFP_2023-08-04",
+        "NFP_2024-08-02"
+      ]
+    },
+    {
+      "current": "K04",
+      "previous_release_context": "K05",
+      "n": 4,
+      "up": 2,
+      "down": 2,
+      "at_least_plus1pct": 2,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "NFP_2024-09-06",
+        "NFP_2025-02-07",
+        "NFP_2025-08-01",
+        "NFP_2025-09-05"
+      ]
+    },
+    {
+      "current": "K05",
+      "previous_release_context": "K03",
+      "n": 8,
+      "up": 2,
+      "down": 6,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 0,
+      "ids": [
+        "CPI_2023-02-14",
+        "CPI_2023-03-14",
+        "CPI_2023-05-10",
+        "CPI_2023-09-13",
+        "CPI_2024-03-12",
+        "CPI_2024-12-11",
+        "CPI_2025-01-15",
+        "CPI_2025-07-15"
+      ]
+    },
+    {
+      "current": "K05",
+      "previous_release_context": "K04",
+      "n": 5,
+      "up": 1,
+      "down": 4,
+      "at_least_plus1pct": 0,
+      "at_most_minus1pct": 2,
+      "ids": [
+        "CPI_2023-08-10",
+        "CPI_2024-08-14",
+        "CPI_2024-09-11",
+        "CPI_2024-11-13",
+        "CPI_2025-08-12"
+      ]
+    }
+  ],
+  "non_joined_not_usable": [
+    "K06",
+    "K07",
+    "K08",
+    "K09",
+    "K10",
+    "K11",
+    "K12",
+    "K13"
+  ],
+  "future_testing": [
+    "add original consensus-vintage/firstprint verification",
+    "source-synchronized USD and US yields",
+    "test each K-combination with true untouched newer events",
+    "use per-horizon volatility-normalized size and negative controls",
+    "do not insert 2026 future knowledge into 2023 blind walk-forward"
+  ]
+}
