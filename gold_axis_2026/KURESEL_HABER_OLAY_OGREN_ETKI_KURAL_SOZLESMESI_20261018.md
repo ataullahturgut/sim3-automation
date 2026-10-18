@@ -67,10 +67,21 @@ Bu gösterim **gerçek haber kanıtlarını internetten canlı çekme** veya **e
 
 ## 6. Çalıştırılmış test ve iş sınırları
 
-- [35 temel + 5 çoklu madde = 40 otomatik test](adaptive_trading_core/test_event_news_condition_router_v1.js): **40/40 PASS**; kaynak ve alan adı, ülke uyumu, gelecek haber reddi, konsensüs tarihi, açıklama vs yönlendirme, Çin/Avrupa/Hindistan/Japonya/UN olayı, yanlış WGC/CFTC zaman ataması, kopya haber, çapraz-rakip ORG ve çakışma grubu.
+- [35 temel + 5 çoklu madde + 4 önceki haber bağlamı = 44 otomatik test](adaptive_trading_core/test_event_news_condition_router_v1.js): **44/44 PASS**; kaynak ve alan adı, ülke uyumu, gelecek haber reddi, konsensüs tarihi, açıklama vs yönlendirme, Çin/Avrupa/Hindistan/Japonya/UN olayı, yanlış WGC/CFTC zaman ataması, kopya haber, çapraz-rakip ORG ve çakışma grubu.
 - Kod `route(news,{asof,registry})`, `routeMany(news,{asof,registry})` dönüyor; **fiyat tahmini veya işlem üretmiyor**, ağdan haber otomatik indirmiyor. Özellik girişi dışarıdan kontrollü olay nesnesi olarak sağlanıyor.
 - `FIRSTPRINT_ATTESTED_NOT_CAUSAL` yalnız önceden insan tarafından doğrulanmış kaynak ilk basım belgesiyle mümkün; programın tek başına web URL'si varsa gerçek neden bulduğu iddia edilmez.
 - Gerçek kaynak elde etme/firstprint-arşivleme iş akışı, CPI/NFP 2023 beklenti sağlayıcısının tarihi, o ana kadar yayımlanan açıklama/metin parçaları, OLAY-02'nin 96 kanıt davasındaki 0/96 başlatıcı kanıt açığı hâlâ açık.
 - **S1/S2/S3 ve bankanın %0,8/ayak işlem modeli** değiştirilmedi. Testten kâr, doğru tahmin veya yeni işlem sonucu üretilmedi. Altın USD/TRY/gram net değeri ayrı varlık/kur kanalı olarak modellenmelidir.
 
-**Durum kodları:** `RULE_REGISTRY_DEFINED=YES`, `GLOBAL_PUBLISHERS=32`, `K_LABELS=48`, `CROSS_CONDITION_RULES=14`, `ORG01_12_COVERED=YES`, `INTEGRITY_TESTS=40_PASS`, `HISTORICAL_2023_NEWS_ROUTING_RUN=YES`, `LIVE_NEWS_INGESTION=NO`, `PIT_ASOF_CERTIFIED=NO`, `S1_S2_S3_INTEGRATED=NO`, `LEARNED_DIRECTION_ALPHA=NO`, `TRADE_ALLOWED=FALSE`.
+**Durum kodları:** `RULE_REGISTRY_DEFINED=YES`, `GLOBAL_PUBLISHERS=32`, `K_LABELS=48`, `CROSS_CONDITION_RULES=14`, `ORG01_12_COVERED=YES`, `INTEGRITY_TESTS=44_PASS`, `HISTORICAL_2023_NEWS_ROUTING_RUN=YES`, `LIVE_NEWS_INGESTION=NO`, `PIT_ASOF_CERTIFIED=NO`, `S1_S2_S3_INTEGRATED=NO`, `LEARNED_DIRECTION_ALPHA=NO`, `TRADE_ALLOWED=FALSE`.
+
+
+## 7. Önceki ekonomik haber bağlamı ayrı bir zaman kuralıdır
+
+**Aynı haber veya çakışan dört saat içindeki K koşullarının `CR01–CR14` bileşimleri ile, ayın önceki günündeki bir başka açıklamanın bağlamı aynı değildir.** Eski ETKİ-05 araştırmasının **45 gün** penceresini yalnız **geçici araştırma sözleşmesi** olarak koruduk; etkisi 45 gün sürer veya ekonomik mekanizması 45 gün etkin kalır demiyoruz.
+
+`priorContexts` modülü **6 adet `CTX01–CTX06` şart sorgusu** içeriyor: örneğin **CTX01 = bugünkü K03 güçlü istihdam + geçmişte bilinebilir en son başka tür makro haberde K02 düşük CPI**. Önceki haberin `detectedAt` tarihi yeni haberin tespitinden sonra ise **bağlam geçmişe taşınmaz**; süre 45 günü aşıyorsa eşleşme yok. Bu eşleşme **şimdiki aynı olay değildir, nedensellik veya gold-DOWN değildir**. CTX01, CTX02 ve gecikmeli/future veri testleri yapıldı; ek 4 test PASS.
+
+Sık aranan **12 Ocak CPI → 3 Şubat NFP** bağlantısı yalnız orijinal ilk-baskı ve beklenti bilgisi gerçekten karşılanıyorsa sıkı olay yönlendiricisinde etkin olur. Güncel tarihsel kaynakların konsensüs-vintage kanıtı eksik olduğu için 2023 gösteriminde **CTX01'i 2023'te gerçekten üretilmiş sinyal diye göstermiyoruz**; bağımsız üretilmiş etiketli sentetik test zincirinde doğru çalıştığı teyit edildi.
+
+Güncel sonuç: **48 K maddesi + 14 eşzamanlı CR kuralı + 6 öncül-haber CTX kuralı = 20 bileşim sorgusu**. **44/44 kod testi PASS**, gelecekteki S1/S2/S3 maliyetli işlem tahmini ve gerçek içerik toplama henüz yapılmadı.
