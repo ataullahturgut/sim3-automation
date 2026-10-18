@@ -63,7 +63,7 @@ function runAll(){
   assert.throws(()=>buildNews([{...macro(18),kind:"UNKNOWN"}],[]));
  });
  test("Within-price-month news outside +/-24h is not a chronological match",()=>{
-  const r=audit({bars:bars(),macro:[macro(1)]});
+  const r=audit({bars:bars(140,120),macro:[macro(1)]});
   assert.equal(r.alertRecords[0].closest_macro_before,null);
  });
  return {passed:n,tests:names};
