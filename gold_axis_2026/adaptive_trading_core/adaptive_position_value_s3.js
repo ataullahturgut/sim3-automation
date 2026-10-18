@@ -37,11 +37,13 @@ function create({sourceRegistry,learningMode="DISCOVERY_FULL_ARCHIVE",
   config:{feePerLeg:FEE_PER_LEG,gamma:0.998,minUpdates,positionResearchMode},
   sessionMemory:memory.create(),longCycle:longCycle.create(),
    opportunity:opportunity.create(),conditional:conditional.create(),lastS1Evidence:null,
+  lastDownsideResearch:null,
   q:{},last:null,audit:{bars:0,updates:0,gaps:0,sourceBreaks:0,
    proposed:0,abstained:0,shadowTrades:0,
    decisionsByReason:{},s1ResearchForecastReceived:0,
    queuedOrders:0,executedNextBar:0,canceledOrders:0,longModeEvaluations:0,
-   economicRulesCertifiedAtDecision:0,multiSessionResearchEvaluations:0},
+   economicRulesCertifiedAtDecision:0,multiSessionResearchEvaluations:0,
+   downsideResearchFrames:0,downsideEarlyAlerts:0},
   paper:{enabled:!!shadowEnabled,valid:true,invalidReason:null,
    cash:100,goldOunces:0,holding:"CASH",pendingOrder:null,
    firstPrice:null,lastPrice:null,
@@ -121,6 +123,20 @@ function observe(s,o){
   s.registry[o.sourceId].evidenceStatus!=="SYNTHETIC_ONLY")
   throw Error("S3_RECONSTRUCTED_PRICE_NOT_STRICT_PIT");
  let c=context({fast:o.fast,slow:o.slow});
+ if(o.downsideEvidence!==undefined){
+  const d=o.downsideEvidence;
+  if(!d||d.asof!==o.asof||
+    !["NO_ALERT","WARMUP","EARLY_WEAKNESS","CONFIRMED_FALL"].includes(d.phase)||
+    !Array.isArray(d.linkedNewsIds)||!Number.isInteger(d.firstprintNewsCount)||
+    d.firstprintNewsCount<0||d.causalAttribution!=="UNPROVEN"||
+    (d.firstPriceWeaknessAt!==null&&ms(d.firstPriceWeaknessAt)>t))
+    throw Error("S3_BAD_DOWNSIDE_RESEARCH_PROVENANCE");
+  s.lastDownsideResearch=clone(d);
+  s.audit.downsideResearchFrames=(s.audit.downsideResearchFrames||0)+1;
+  if(["EARLY_WEAKNESS","CONFIRMED_FALL"].includes(d.phase))
+   s.audit.downsideEarlyAlerts=(s.audit.downsideEarlyAlerts||0)+1;
+  // No change to Q state or BUY/SELL. Review is not a trading command.
+ }
  // A genuine S1 forecast (not manually recoded direction). Retain evidence,
  // do not promote research-only predictions to certified macro alpha.
  if(o.s1Evidence!==undefined){
@@ -296,6 +312,13 @@ function observe(s,o){
      policyMode:s.config.positionResearchMode,
      quoteAccepted:true,executionVenueCertified:false},
   longCycleResearch:longResearch,opportunityResearch,conditionalResearch,
+  downsideResearch:s.lastDownsideResearch?{
+    phase:s.lastDownsideResearch.phase,
+    firstPriceWeaknessAt:s.lastDownsideResearch.firstPriceWeaknessAt,
+    linkedNewsIds:s.lastDownsideResearch.linkedNewsIds,
+    positionReview:s.lastDownsideResearch.phase==="CONFIRMED_FALL"?
+      "REVIEW_EXISTING_GOLD_EXPOSURE_NO_ORDER":"NO_DOWNSIDE_REVIEW",
+    tradeAllowed:false}:null,
   nextObservedBarResearchOrder:s.paper.pendingOrder?
    clone(s.paper.pendingOrder):null,
   action:null,tradeAllowed:false,scienceGate:"NOT_PROVEN"};
