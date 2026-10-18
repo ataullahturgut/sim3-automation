@@ -62,6 +62,32 @@ const byTag={
  K47:[["ORG02","COMPETING"],["ORG01","COMPETING"]],
  K48:[["ORG01","COMPETING"],["ORG02","COMPETING"]]
 };
+/** Transparent conjunctive economic condition patterns. NOT trade/risk rules. */
+const CONDITION_PATTERNS=[
+ {id:"CR01",all:["K02","K17"],name:"Headline and core disinflation surprise",orgs:["ORG01"],rivals:["ORG02"]},
+ {id:"CR02",all:["K03","K06"],name:"Payroll and wage hawkish combination",orgs:["ORG02"],rivals:["ORG01"]},
+ {id:"CR03",all:["K03","K18"],name:"Payroll strong but wage surprise soft",orgs:["ORG01","ORG02"],rivals:[]},
+ {id:"CR04",all:["K03","K07"],name:"Payroll strong but unemployment higher",orgs:["ORG01","ORG02"],rivals:[]},
+ {id:"CR05",all:["K03","K06","K19"],name:"Strong payroll wage and low unemployment",orgs:["ORG02"],rivals:["ORG01"]},
+ {id:"CR06",all:["K20","K08"],name:"Hawkish rate surprise and USD rise",orgs:["ORG02"],rivals:["ORG01"]},
+ {id:"CR07",all:["K21","K09"],name:"Dovish rate surprise and USD weakness",orgs:["ORG01"],rivals:["ORG02"]},
+ {id:"CR08",all:["K29","K37"],name:"Geopolitical escalation plus energy disruption",orgs:["ORG04","ORG02"],rivals:["ORG08"]},
+ {id:"CR09",all:["K31","K13"],name:"Funding stress plus independently verified liquidations",orgs:["ORG12"],rivals:["ORG03"]},
+ {id:"CR10",all:["K27","K31"],name:"Trade shock plus funding stress",orgs:["ORG06","ORG08"],rivals:["ORG07"]},
+ {id:"CR11",all:["K25","K03"],name:"Gold reserve buying report and strong employment surprise",orgs:["ORG11","ORG02"],rivals:["ORG09"]},
+ {id:"CR12",all:["K36","K13"],name:"Gold ETF outflow and independent position unwinding",orgs:["ORG10"],rivals:["ORG12"]},
+ {id:"CR13",all:["K23","K10"],name:"Hawkish guidance and rising US real yields",orgs:["ORG02"],rivals:["ORG01"]},
+ {id:"CR14",all:["K39","K40"],name:"Central-bank decision followed by press conference; surprise unscored",orgs:["ORG01","ORG02"],rivals:[]}
+];
+function matchPatterns(tags){
+ const t=new Set(tags);
+ return CONDITION_PATTERNS.filter(rule=>rule.all.every(k=>t.has(k))).map(rule=>({
+  id:rule.id,name:rule.name,matched:rule.all,
+  candidateOrgs:rule.orgs,rivals:rule.rivals,
+  authority:"RESEARCH_COMBINATION_ONLY",learnedProbability:null,
+  priceMagnitude:"UNKNOWN",xauDirection:"UNKNOWN",tradeAllowed:false
+ }));
+}
 function route(news,{asof,registry}){
  if(!news||typeof news!=="object"||!registry||!Array.isArray(registry.sources))
   throw Error("NEWS_ROUTE_CONTRACT_INVALID");
@@ -185,8 +211,9 @@ function route(news,{asof,registry}){
   seen.get(key).triggerTags.push(id);
  }
  const orgs=[...seen.values()].map(x=>({...x,confidence:"UNVALIDATED_HYPOTHESIS"}));
+ const matchedPatterns=matchPatterns(conditions);
  const conflicting=orgs.some(x=>x.org==="ORG01")&&orgs.some(x=>x.org==="ORG02");
- return {...empty,status:conditionStatus,conditions,unknown,candidateOrgs:orgs,
+ return {...empty,status:conditionStatus,conditions,unknown,candidateOrgs:orgs,matchedPatterns,
   hasCompetingRateChannels:conflicting,firstprintAttested:firstprint,
   firstprintScope:"source provenance only; not proof gold transmission",
   countAsIndependentPriceCause:false};
@@ -214,10 +241,11 @@ function routeMany(news,{asof,registry,overlapMinutes=240}){
  return {version:VERSION,asof,events:outputs,
   overlappingEpisodes:episodes.map(({firstEventMs,lastEventMs,...e})=>({
    ...e,firstEventTime:new Date(firstEventMs).toISOString(),lastEventTime:new Date(lastEventMs).toISOString(),
+   matchedPatterns:matchPatterns(e.conditions),
    causalAttribution:"UNVERIFIED_OVERLAPPING_INFORMATION"})),
   audit:{total:outputs.length,visible:visible.length,pending:outputs.length-visible.length,
    withConditions:visible.filter(x=>x.conditions.length).length,
    firstprintAttested:visible.filter(x=>x.firstprintAttested).length,
    tradeSignals:0},tradeAllowed:false};
 }
-module.exports={VERSION,route,routeMany};
+module.exports={VERSION,route,routeMany,CONDITION_PATTERNS,matchPatterns};
