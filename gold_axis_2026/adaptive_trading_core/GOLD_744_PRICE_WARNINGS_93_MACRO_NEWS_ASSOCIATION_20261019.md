@@ -59,3 +59,20 @@ Haber evreni: Neon `gold_research_r72_claude_macro_analogs_v1`, 2023–2025 **93
 [**Tek SELECT ile alarm alarm 744 satırın tamamını yeniden üreten SQL**](adaptive_trading_core/gold_744_down_alert_vs_macro_clock_v1.sql) GitHub'da yer alır: `alarm_utc,macro_before_4h,macro_before_24h,macro_before_72h,macro_after_24h_FUTURE_LABEL_ONLY, new_4pct_fall_in_next_480_observed_M15_FUTURE_LABEL_ONLY`. Neon sorgu sonuçları 744 alarm ve 6 gap alert doğruladı; 93 macro event tür kontrolü ve 24/4/72 saat agregasyonları da veritabanı üzerinde çalıştırıldı.
 
 Bu ilk tablolarda **CANLI haber API/otomatik Reuters ingest yok**, **ilk haber 2023–2025 tüm olaylar seviyesinde kaynak sertifikasyonu eksik**, **S1/S2/S3 emir modeli değiştirilmedi**, **gerçek AL/SAT veya banka maliyeti sonrası getiri başarısı yok**. Bir sonraki bilim adımı haber evrenine ekonomik olayların gerçek ilk yayım zamanı (tarife, savaş, CME, merkez bankası altın akımı) ile negatif/pozitif/olaysız matched kontrolleri eklemek, ardından 2023–2025 geçmişten geleceğe öğrenmede **yalnız yeni görülen** bilgileri kullanmaktır.
+
+
+## 6. Önce makro haber, sonra alarm ve ardından ≥%4 düşüş: eşleşen altı örnek
+
+Bu tablo yukarıdaki **6/109** sonucun açılımıdır. UTC; sonuç alarm fiyatına göre **ilerleyen 480 gözlenmiş M15 bar içinde görülen en kötü ara getiri**, bacağın nihai ticari getirisi değildir.
+
+| Makro açıklama (UTC) | İlk fiyat alarmı (UTC) | Haber türü | Sonraki en sert gerileme |
+|---|---|---|---:|
+| 2023-02-01 19:00 | 2023-02-02 13:45 | FOMC | −%4,455 |
+| 2024-11-07 19:00 | 2024-11-08 03:30 | FOMC | −%5,640 |
+| 2024-12-11 13:30 | 2024-12-12 03:15 | CPI | −%4,483 |
+| 2024-12-11 13:30 | 2024-12-12 11:15 | CPI | −%4,538 |
+| 2025-05-07 18:00 | 2025-05-08 04:30 | FOMC | −%7,759 |
+| 2025-10-24 12:30 | 2025-10-24 17:30 | CPI | −%5,430 |
+
+**Aynı 11 Aralık 2024 CPI iki ayrı alarmda görünüyor**: 6 kayıt altı farklı ekonomik şok değildir. Bir makro zaman referansından daha sonra birden fazla fiyat alarmı doğabilir. Haberle zaman yakınlığı fiyatın o haber nedeniyle düştüğünü ispatlamaz; özellikle ABD faiz/dolar ve diğer eşzamanlı kanallar eksiktir.
+
