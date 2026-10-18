@@ -1,0 +1,78 @@
+name: Gold Control Emergency Reversal Volnorm V3 Formation
+
+on:
+  push:
+    branches: [gold-emergency-reversal-volnorm-v1]
+    paths:
+      - 'gold_axis_2026/tools/emergency_reversal_volnorm_successor_v1.py'
+      - 'gold_axis_2026/tools/emergency_reversal_volnorm_successor_v3.py'
+      - 'gold_axis_2026/tools/run_emergency_reversal_volnorm_v3_formation.py'
+      - 'gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v1.py'
+      - 'gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v3.py'
+      - 'gold_axis_2026/GOLD_CONTROL_EMERGENCY_REVERSAL_VOLNORM_SUCCESSOR_V3_PREREG_2026-09-15.md'
+      - '.github/workflows/gold-control-emergency-reversal-volnorm-v3-formation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  formation-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted dependencies
+        run: pip install numpy pandas requests pytest
+      - name: Run frozen core and V3 governance tests
+        run: |
+          pytest -q \
+            gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v1.py \
+            gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v3.py
+      - name: Prove pre-2025 weekday formation boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/tools/run_emergency_reversal_volnorm_v3_formation.py').read_text()
+          assert 'FORMATION_YEARS = (2022, 2023, 2024)' in p
+          assert 'FORMATION_WEEKEND_FAIL' in p
+          assert '2025_NOT_READ' in p
+          print('V3 pre-2025 weekday boundary PASS')
+          PY
+      - name: Run V3 formation only
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          python gold_axis_2026/tools/run_emergency_reversal_volnorm_v3_formation.py \
+            --output-dir /tmp/emergency-reversal-volnorm-v3-formation
+      - name: Verify formation gates
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/emergency-reversal-volnorm-v3-formation/formation_summary.json'))
+          assert p['model_id'] == 'EMERGENCY_REVERSAL_VOLNORM_SUCCESSOR_V3'
+          assert p['status'] == 'FORMATION_PASS_2025_NOT_READ'
+          assert p['future_2025_observations_consumed'] == 0
+          assert p['weekend_rows_consumed'] == 0
+          assert p['config']['selected_hour'] == 14
+          assert p['config']['weekday_filter'] == 'MONDAY_FRIDAY_ONLY'
+          assert p['reversal_alerts'] >= 3
+          assert p['alert_rate'] < 0.20
+          for y in ('2022','2023','2024'):
+              row=p['source']['coverage'][y]
+              assert row['ratio'] >= 0.95
+              assert row['selected'] <= row['calendar_weekdays']
+          assert p['production_write'] == 'NONE'
+          print(p)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emergency-reversal-volnorm-v3-formation
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/emergency-reversal-volnorm-v3-formation/

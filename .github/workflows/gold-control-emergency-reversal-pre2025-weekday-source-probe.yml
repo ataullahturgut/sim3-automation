@@ -1,0 +1,46 @@
+name: Gold Control Emergency Reversal Pre-2025 Weekday Source Probe
+
+on:
+  push:
+    branches: [gold-emergency-reversal-volnorm-v1]
+    paths:
+      - 'gold_axis_2026/tools/probe_emergency_reversal_pre2025_hourly_source_weekdays.py'
+      - '.github/workflows/gold-control-emergency-reversal-pre2025-weekday-source-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  weekday-source-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted dependencies
+        run: pip install pandas requests numpy
+      - name: Prove pre-2025 boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/tools/probe_emergency_reversal_pre2025_hourly_source_weekdays.py').read_text()
+          assert 'YEARS = (2022, 2023, 2024)' in p
+          assert "ts.dayofweek >= 5" in p
+          print('weekday-only pre-2025 boundary PASS')
+          PY
+      - name: Run weekday-only source probe
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          python gold_axis_2026/tools/probe_emergency_reversal_pre2025_hourly_source_weekdays.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emergency-reversal-pre2025-weekday-source-probe
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/emergency-reversal-pre2025-weekday-source-probe/

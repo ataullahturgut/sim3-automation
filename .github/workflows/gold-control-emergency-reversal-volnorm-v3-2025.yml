@@ -1,0 +1,103 @@
+name: Gold Control Emergency Reversal Volnorm V3 2025
+
+on:
+  push:
+    branches: [gold-emergency-reversal-volnorm-v1]
+    paths:
+      - 'gold_axis_2026/tools/emergency_reversal_volnorm_successor_v1.py'
+      - 'gold_axis_2026/tools/emergency_reversal_volnorm_successor_v3.py'
+      - 'gold_axis_2026/tools/run_emergency_reversal_volnorm_v3_2025_engine.py'
+      - 'gold_axis_2026/tools/overlay_emergency_reversal_volnorm_v3_2025_volatility.py'
+      - 'gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v1.py'
+      - 'gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v3.py'
+      - 'gold_axis_2026/GOLD_CONTROL_EMERGENCY_REVERSAL_VOLNORM_V3_FORMATION_FREEZE_2026-09-15.md'
+      - '.github/workflows/gold-control-emergency-reversal-volnorm-v3-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  corrected-frozen-2025-challenge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted dependencies
+        run: pip install numpy pandas requests pytest
+      - name: Re-run frozen core and V3 tests
+        run: |
+          pytest -q \
+            gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v1.py \
+            gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v3.py
+      - name: Verify frozen V3 hash and engine/overlay separation
+        run: |
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'gold_axis_2026/tools')
+          import emergency_reversal_volnorm_successor_v3 as m
+          assert m.config_sha() == 'fdb2c6238fc194afd9c5a253ae232790bdde5b6faa49cbcd96811972d5a83a84'
+          assert m.implementation_hash() == '4adcec3043b141babd38a7bef9ed854f3fdb868bd84a88a32e835fa1e6921cbd'
+          engine=Path('gold_axis_2026/tools/run_emergency_reversal_volnorm_v3_2025_engine.py').read_text()
+          assert '2025-02-10' not in engine
+          assert 'EVENTS =' not in engine
+          assert 'ENGINE_WEEKEND_SOURCE_FAIL' in engine
+          overlay=Path('gold_axis_2026/tools/overlay_emergency_reversal_volnorm_v3_2025_volatility.py').read_text()
+          assert overlay.count('(\"2025-') == 19
+          print('V3 frozen hash + engine/overlay separation PASS')
+          PY
+      - name: Stage 1 — generate complete weekday-only 2025 engine timeline
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          python gold_axis_2026/tools/run_emergency_reversal_volnorm_v3_2025_engine.py \
+            --output-dir /tmp/emergency-reversal-volnorm-v3-2025
+      - name: Freeze and verify corrected engine-first output
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/emergency-reversal-volnorm-v3-2025/engine_2025_summary.json'))
+          assert p['model_id'] == 'EMERGENCY_REVERSAL_VOLNORM_SUCCESSOR_V3'
+          assert p['stage'] == 'ENGINE_FIRST_2025_FULL_WEEKDAY_TIMELINE'
+          assert p['volatility_inventory_loaded'] is False
+          assert p['config_sha256'] == 'fdb2c6238fc194afd9c5a253ae232790bdde5b6faa49cbcd96811972d5a83a84'
+          assert p['implementation_sha256'] == '4adcec3043b141babd38a7bef9ed854f3fdb868bd84a88a32e835fa1e6921cbd'
+          cov=p['source_2025_coverage']
+          assert cov['calendar_weekdays'] == 261
+          assert cov['selected'] <= cov['calendar_weekdays']
+          assert cov['ratio'] >= 0.95
+          assert p['engine_rows_2025'] == cov['selected']
+          assert p['weekend_engine_rows_2025'] == 0
+          assert p['production_write'] == 'NONE'
+          print(p)
+          PY
+      - name: Stage 2 — overlay independent frozen 19-event volatility inventory
+        run: |
+          python gold_axis_2026/tools/overlay_emergency_reversal_volnorm_v3_2025_volatility.py \
+            --input-dir /tmp/emergency-reversal-volnorm-v3-2025
+      - name: Verify overlay preserves frozen engine output
+        run: |
+          python - <<'PY'
+          import json
+          e=json.load(open('/tmp/emergency-reversal-volnorm-v3-2025/engine_2025_summary.json'))
+          o=json.load(open('/tmp/emergency-reversal-volnorm-v3-2025/volatility_overlay.json'))
+          s=o['summary']
+          assert s['frozen_volatility_events'] == 19
+          assert s['engine_timeline_sha256'] == e['timeline_sha256']
+          assert s['engine_alerts_2025'] == len(o['alert_overlay'])
+          assert len(o['event_overlay']) == 19
+          assert s['production_write'] == 'NONE'
+          print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emergency-reversal-volnorm-v3-2025
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/emergency-reversal-volnorm-v3-2025/
