@@ -1,0 +1,222 @@
+{
+  "schema": "ETKI05_2023_JAN_FEB_ECONOMIC_K_TAG_READONLY_OVERLAY_V1",
+  "date": "2026-10-18",
+  "scope": "EXAMPLE_SIMULATION_NOT_INTEGRATED_ALGORITHM",
+  "source": "GitHub ETKI K library + independent 85 macro release study + existing jan-feb 2023 core daily snapshot + Neon R72 2023 macro fields; pre4 price strictly completed prior M15 from Neon; all checked current turn",
+  "researchOnly": true,
+  "caseNote": "The similar-case match counts are extracted ex-post from 2023-2025 and include example months themselves. This is NOT a 2023-available forecast or untouched OOS performance. Authentic source firstprint and market consensus vintage unverified.",
+  "temporalInfo": "Release event tags can be known only after original actuals become available; 15min/4h observed returns cannot be inputs at release; S1/S2/S3 daily values represent session end, not values at release.",
+  "currentCoreModified": false,
+  "currentTradeCount": 0,
+  "realGptComments": 0,
+  "unknownMarketTags": [
+    "K08",
+    "K09",
+    "K10",
+    "K11",
+    "K12",
+    "K13"
+  ],
+  "days": [
+    {
+      "date": "2023-01-06",
+      "release_id": "NFP_2023-01-06",
+      "release_trt": "16:30",
+      "triggerTags": [
+        "K03",
+        "K18",
+        "K19"
+      ],
+      "priorTags": [],
+      "pricePriorTag": "K14",
+      "pricePre4Pct": 0.07652,
+      "likelihoodBasis": "single K03 only",
+      "similarCases": 23,
+      "simUp": 10,
+      "simDown": 13,
+      "simLargeUp": 4,
+      "simLargeDown": 5,
+      "qualitative": "MIXED_EMPLOYMENT_WITH_SOFT_WAGES",
+      "caption": "Employment above consensus, hourly pay below consensus, unemployment below consensus. Opposing hawkish and dovish components.",
+      "existingCoreEndOfSession": {
+        "s1FourHourPUpPct": 51.8658,
+        "s2EndPhase": "PULLBACK",
+        "s2EndDirection": 1,
+        "s3ResearchAction": "KEEP",
+        "s3TradeAllowed": false,
+        "actualAction": null,
+        "sessionReturnPct": 1.8418
+      },
+      "observedLater4hPct": 1.39144,
+      "observed15minPct": 0.6439,
+      "expostOnly": true
+    },
+    {
+      "date": "2023-01-12",
+      "release_id": "CPI_2023-01-12",
+      "release_trt": "16:30",
+      "triggerTags": [
+        "K02"
+      ],
+      "unknownOrEqual": [
+        "Core CPI surprise=0, no K16/K17"
+      ],
+      "priorTags": [
+        "K03"
+      ],
+      "pricePriorTag": "K14",
+      "pricePre4Pct": 0.32059,
+      "likelihoodBasis": "K02 now + most recent opposite-kind release K03 (6 days old)",
+      "similarCases": 7,
+      "simUp": 5,
+      "simDown": 2,
+      "simLargeUp": 2,
+      "simLargeDown": 0,
+      "qualitative": "TENTATIVE_UP_FROM_ARCHIVE_NOT_PREDICTION",
+      "caption": "Headline CPI below consensus; prior Jan 6 NFP stronger than consensus.",
+      "existingCoreEndOfSession": {
+        "s1FourHourPUpPct": 53.1459,
+        "s2EndPhase": "END",
+        "s2EndDirection": 0,
+        "s3ResearchAction": "KEEP",
+        "s3TradeAllowed": false,
+        "actualAction": null,
+        "sessionReturnPct": 1.0523
+      },
+      "observedLater4hPct": 0.45094,
+      "observed15minPct": 0.24978,
+      "expostOnly": true
+    },
+    {
+      "date": "2023-02-01",
+      "release_id": "FOMC_2023-02-01",
+      "release_trt": "22:00",
+      "triggerTags": [],
+      "priorTags": [],
+      "pricePriorTag": "K15",
+      "pricePre4Pct": -0.13268,
+      "likelihoodBasis": "no validated FOMC K-tag yet",
+      "similarCases": 0,
+      "simUp": null,
+      "simDown": null,
+      "simLargeUp": null,
+      "simLargeDown": null,
+      "qualitative": "UNCLASSIFIED_FOMC_CONDITION",
+      "caption": "FOMC event exists, but K01-K19 has no FOMC decision/speech surprise tag.",
+      "existingCoreEndOfSession": {
+        "s1FourHourPUpPct": 53.481,
+        "s2EndPhase": "CONTINUE",
+        "s2EndDirection": 1,
+        "s3ResearchAction": "KEEP",
+        "s3TradeAllowed": false,
+        "actualAction": null,
+        "sessionReturnPct": 1.1956
+      },
+      "observedLater4hPct": null,
+      "observed15minPct": -0.01271,
+      "expostOnly": true
+    },
+    {
+      "date": "2023-02-02",
+      "release_id": null,
+      "release_trt": null,
+      "triggerTags": [],
+      "priorTags": [],
+      "pricePriorTag": null,
+      "pricePre4Pct": null,
+      "likelihoodBasis": "no validated same-day inflation/NFP tags; ECB/BoE/Fed named only retrospectively",
+      "similarCases": 0,
+      "simUp": null,
+      "simDown": null,
+      "simLargeUp": null,
+      "simLargeDown": null,
+      "qualitative": "PRICE_S2_DOWN_ECONOMIC_LABEL_MISSING",
+      "caption": "S2 end-of-day CONTINUE/DOWN but no proven K macro-release label; S3 stays cash.",
+      "existingCoreEndOfSession": {
+        "s1FourHourPUpPct": 54.1114,
+        "s2EndPhase": "CONTINUE",
+        "s2EndDirection": -1,
+        "s3ResearchAction": "KEEP",
+        "s3TradeAllowed": false,
+        "actualAction": null,
+        "sessionReturnPct": -2.2222
+      },
+      "observedLater4hPct": null,
+      "observed15minPct": null,
+      "expostOnly": true
+    },
+    {
+      "date": "2023-02-03",
+      "release_id": "NFP_2023-02-03",
+      "release_trt": "16:30",
+      "triggerTags": [
+        "K03",
+        "K19"
+      ],
+      "unknownOrEqual": [
+        "Wage surprise=0, neither K06 nor K18"
+      ],
+      "priorTags": [
+        "K02"
+      ],
+      "pricePriorTag": "K14",
+      "pricePre4Pct": 0.07839,
+      "likelihoodBasis": "K03 now + most recent opposite-kind release K02 (Jan12, 22 days old)",
+      "similarCases": 10,
+      "simUp": 1,
+      "simDown": 9,
+      "simLargeUp": 0,
+      "simLargeDown": 4,
+      "qualitative": "RETROSPECTIVE_DOWN_TENDENCY_NOT_TRADE",
+      "caption": "Employment 332k above consensus and unemployment 0.2pp below; average hourly earnings at consensus. Jan12 CPI below consensus.",
+      "existingCoreEndOfSession": {
+        "s1FourHourPUpPct": 52.9134,
+        "s2EndPhase": "NEUTRAL",
+        "s2EndDirection": 0,
+        "s3ResearchAction": "KEEP",
+        "s3TradeAllowed": false,
+        "actualAction": null,
+        "sessionReturnPct": -2.4692
+      },
+      "observedLater4hPct": -2.61085,
+      "observed15minPct": -1.34853,
+      "expostOnly": true
+    },
+    {
+      "date": "2023-02-14",
+      "release_id": "CPI_2023-02-14",
+      "release_trt": "16:30",
+      "triggerTags": [
+        "K05"
+      ],
+      "unknownOrEqual": [
+        "Core CPI surprise=0, no K16/K17"
+      ],
+      "priorTags": [
+        "K03"
+      ],
+      "pricePriorTag": "K15",
+      "pricePre4Pct": -0.09246,
+      "likelihoodBasis": "K05 now + prior most recent opposite-kind NFP K03 (Feb3, 11 days old)",
+      "similarCases": 8,
+      "simUp": 2,
+      "simDown": 6,
+      "simLargeUp": 0,
+      "simLargeDown": 0,
+      "qualitative": "RETROSPECTIVE_DOWN_LEAN_NOT_TRADE",
+      "caption": "Headline CPI at consensus; core CPI also at consensus. Previous NFP above consensus.",
+      "existingCoreEndOfSession": {
+        "s1FourHourPUpPct": 52.1163,
+        "s2EndPhase": "NEUTRAL",
+        "s2EndDirection": 0,
+        "s3ResearchAction": "KEEP",
+        "s3TradeAllowed": false,
+        "actualAction": null,
+        "sessionReturnPct": 0.0281
+      },
+      "observedLater4hPct": -0.69334,
+      "observed15minPct": 0.0634,
+      "expostOnly": true
+    }
+  ]
+}
