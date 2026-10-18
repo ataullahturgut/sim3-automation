@@ -165,6 +165,27 @@ function integrate({news,registry,mechanismLibrary,asof,completedBars=[],marketE
   return {...e,market,mechanisms,decisionEligible:false,action:null,
    outcomeInterpretation:"OBSERVATIONAL_NOT_CAUSALLY_ATTRIBUTED"};
  });
+ // Research feature frames are exposed for time-ordered training experiments only.
+ // They are NOT fitted S1 weights, S2 state changes, or S3 orders.
+ const eventFeatureFrames=events.filter(e=>e.status!=="PENDING_FIRST_ACCESS").map(e=>({
+  eventId:e.id,decisionAsOf:asof,firstDetectedAt:e.detectedAt,
+  source:e.source,jurisdiction:e.jurisdiction,eventKind:e.eventKind,
+  economicKTags:e.conditions.slice(),
+  sameReleaseConditionPatterns:(e.matchedPatterns??[]).map(x=>x.id),
+  priorMacroPatterns:routed.priorEconomicContexts.filter(x=>x.id===e.id)
+   .flatMap(x=>x.matchedPatterns.map(p=>p.id)),
+  candidateORGs:e.mechanisms.map(m=>({org:m.org,evidenceStatus:m.status,
+    independentMediatorIds:m.supportingIndependentSignals,
+    rivalMediatorIds:m.competingIndependentSignals})),
+  priceSinceEventPctObserved:e.market?.priceSinceAnnouncementPct??null,
+  priceSinceDetectionPctObserved:e.market?.priceSinceDetectionPct??null,
+  priceResponseInterpretable:e.market?.priceResponseInterpretable??false,
+  firstprintAttested:e.firstprintAttested===true,
+  strictMacroConsensusReady:e.firstprintAttested===true&&e.unknown.length===0,
+  economicDecisionFeatureCertified:false, // source+mediator+validated outcome gates missing
+  containsFutureReturnLabels:false,forwardDirectionPrediction:null,
+  forwardMagnitudePrediction:null,tradeAllowed:false
+ }));
  const episodes=routed.overlappingEpisodes.map(group=>{
   const children=events.filter(x=>group.ids.includes(x.id));
   const orgs=[...new Set(children.flatMap(x=>x.mechanisms.map(m=>m.org)))];
@@ -176,6 +197,7 @@ function integrate({news,registry,mechanismLibrary,asof,completedBars=[],marketE
   version:"GLOBAL_GOLD_NEWS_MECHANISM_INTEGRATOR_V1_20261018",
   asof,globalMarket:global,events,overlappingEpisodes:episodes,
   priorEconomicContexts:routed.priorEconomicContexts,
+  eventFeatureFrames,
   audit:{...routed.audit,candidateOrgs:[...new Set(events.flatMap(e=>e.mechanisms.map(m=>m.org)))].length,
    independentMechanismConfirmations:0,trainedDirectionalRules:0,
    coreS1S2S3Executions:0,bankOrders:0},
