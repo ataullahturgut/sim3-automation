@@ -613,3 +613,18 @@ Kullanıcı onayıyla olayın ilk koşulu → açıklama → fiyat aktarımı �
 **TAM TASARIM / sınama sözleşmesi:** [EVENT_ANCHORED_DUAL_CLOCK_METRICS_DESIGN_20261018.md](adaptive_trading_core/EVENT_ANCHORED_DUAL_CLOCK_METRICS_DESIGN_20261018.md).
 
 **Gelecek kabul kapısı:** A=eski core, B=naif full reset, C=global + event-relative çift saat; aynı fiyat/veri as-of koşullarıyla olaylı/olaysız/no-event ve Jan-Feb 2023 olay yürüyüşleri; yenileri yalnız olgunlaşmış geçmiş kanıtıyla eğit; Brier direction, hareket şiddeti, ek ekonomik değer, S3 banka maliyetli shadow kıyas. 2024–25 sonuçlarını geçmiş 2023 blind ilk öğrenimiymiş gibi gösterme. **Henüz uygulama/test yapılmadı.**
+
+
+---
+
+## 2026-10-18 — Ocak–Şubat 2023 çift saat GERÇEK fiyat ölçüm deneyi (A/B/C)
+
+**MODEL WORKSTREAM · İŞLEM YETKİSİ YOK · Mevcut S1/S2/S3 kod ve checkpoint korundu.**
+
+Kullanıcının olay-tespitinden itibaren ayrı S1/S2/S3 hesaplanması fikrinin **ilk gerçek fiyat-metrik gölge testi** yürütüldü: 2023 Ocak–Şubat'tan Neon `gold_research_evduka_xau15m_bidask_candidate` **3750 M15** bar; 6 Ocak NFP, 12 Ocak CPI, 3 Şubat NFP, 14 Şubat CPI **4 tarihli K-ekonomik olay proxy'si**. 1 Şubat FOMC ve 2 Şubat ECB/BoE/Fed ekonomik olay K etiketi orijinal ilk-baskı mekanizması doğrulanmadığından ekonomik hesap yapılarak ileriye taşınmadı. Olay dışındaki **3686 bar** mevcut global normal ölçümde kalır.
+
+**A eski Global:** S2 fiyat/phase/4h trend kodu korunur. Bağımsız karşılaştırma `adaptive_phase_lifecycle_s2.js` gerçek `observe` koduyla **3750/3750 aynı fast phase, direction, trendZ** PASS. **B naif kısa pencere sıfırlama:** ilk 4 saatte tam 17 fiyatlık pencere oluşmadığından 4 olayın tamamında `WARMUP`; ekonomik hareketi kaçırma riski. **C önerilen çift saat:** A bozulmadan *başlangıç olay öncesi son tamamlanmış M15 fiyatına göre kümülatif* ayrıca fiyat ve oynaklık ölçüsü. 3 Şubat NFP'den 1s sonra **A=NEUTRAL**, C olay etkisi **−%1,731**; ilk 4s **−%2,611**. Diğer dört olayın +1s C sonuçları: 6 Ocak **+%0,542**, 12 Ocak **+%0,257**, 14 Şubat **−%0,600**.
+
+**Yalnız sonraki 60 dakika yönü (dört olayın açıklama+60dakika anından):** A **0 doğru / 1 yanlış / 3 çekimser**, B **0 / 0 / 4**, C kümülatif olay-yönü **2 / 2 / 0**. Dolayısıyla **C olaydan beri hareketi ölçüyor fakat daha iyi ileri yön/şiddet ÖNGÖRDÜĞÜ kanıtlanmıyor**; ilk 15m şok sonrası kalan hareket çoğu zaman farklıdır. Gerçek S1 forecaster veya S3 ekonomiye duyarlı trade replay yapılmış değildir. Önceden var olan Jan-Feb S3 geçerli gerçek trade = 0, CASH=100 USD.
+
+**Yürütülebilir test**: [experimental_event_clock_janfeb2023_replay_v1.js](adaptive_trading_core/experimental_event_clock_janfeb2023_replay_v1.js), [64 as-of bar ve karşılaştırma metrikleri JSON](adaptive_trading_core/EVENT_DUAL_CLOCK_JANFEB_2023_MEASURED_RESULTS_20261018.json), [denetim raporu](adaptive_trading_core/EVENT_DUAL_CLOCK_JANFEB_2023_COMPARATIVE_REPORT_20261018.md). İlk-baskı haber/consensus vintage **UNVERIFIED**; ekonomik yayımlanma saati eşitliği araştırma varsayımıdır. 2024–25 outcome bilgi 2023 kararlarına sokulmadı. `EVENT_CLOCK_PRICE_METRIC_TEST=PASS`, `REAL_CORE_EVENT_INTEGRATION=NOT_IMPLEMENTED`, `C_ALPHA_OUTPERFORMANCE=NOT_PROVEN`, `SCIENCE_GATE=FAIL`.
