@@ -57,7 +57,10 @@ const byTag={
  K39:[["ORG01","COMPETING"],["ORG02","COMPETING"]],
  K40:[["ORG01","COMPETING"],["ORG02","COMPETING"]],
  K41:[["ORG02","TRANSMISSION"]],K42:[["ORG01","TRANSMISSION"]],
- K43:[["ORG02","TRANSMISSION"]],K44:[["ORG01","TRANSMISSION"]]
+ K43:[["ORG02","TRANSMISSION"]],K44:[["ORG01","TRANSMISSION"]],
+ K45:[["ORG02","TRANSMISSION"]],K46:[["ORG01","TRANSMISSION"]],
+ K47:[["ORG02","COMPETING"],["ORG01","COMPETING"]],
+ K48:[["ORG01","COMPETING"],["ORG02","COMPETING"]]
 };
 function route(news,{asof,registry}){
  if(!news||typeof news!=="object"||!registry||!Array.isArray(registry.sources))
@@ -109,6 +112,11 @@ function route(news,{asof,registry}){
   case "EMPLOYMENT":
    if(news.jurisdiction==="US")throw Error("US_EMPLOYMENT_EXPECT_NFP");
    compare("employment","K43","K44",null);break;
+  case "PCE":
+   if(news.jurisdiction!=="US")throw Error("PCE_JURISDICTION_REQUIRES_US");
+   compare("headline","K45","K46",null);break;
+  case "GDP":
+   compare("growth","K47","K48",null);break;
   case "CB_DECISION":{
    const d=news.data?.rate;
    if(d&&isnum(d.actual)&&isnum(d.consensus)&&d.consensusVerified===true&&
@@ -189,7 +197,8 @@ function routeMany(news,{asof,registry,overlapMinutes=240}){
  const ids=new Set();for(const x of news){if(ids.has(x.id))throw Error("DUPLICATE_NEWS_EVENT_ID");ids.add(x.id);}
  const outputs=news.map(x=>route(x,{asof,registry}));
  const visible=outputs.filter(x=>x.status!=="PENDING_FIRST_ACCESS")
-  .sort((a,b)=>ms(a.detectedAt,"detectedAt")-ms(b.detectedAt,"detectedAt"));
+  .sort((a,b)=>ms(a.eventTime,"eventTime")-ms(b.eventTime,"eventTime")||
+    ms(a.detectedAt,"detectedAt")-ms(b.detectedAt,"detectedAt"));
  const episodes=[];
  for(const e of visible){
   const t=ms(e.eventTime,"eventTime");
