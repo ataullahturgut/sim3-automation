@@ -1,6 +1,6 @@
 {
   "schema": "ETKI05_ECONOMIC_CONDITION_LABEL_REGISTRY_V1",
-  "version": "2026-10-18-v1.1",
+  "version": "2026-10-18-v1.2",
   "project": "GOLD-ADAPTIVE-MODEL-APP-01",
   "user_intent": "Economic condition item labels and their combinations, NOT a new market prediction algorithm; outcome lookup is separate",
   "status": "HYPOTHESIS_LIBRARY_NOT_TRADE_RULE",
@@ -198,6 +198,231 @@
       "usable_now": "RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED",
       "archived_field": "s_un",
       "archive_source": "gold_research_r72_claude_macro_analogs_v1"
+    },
+    {
+      "id": "K20",
+      "key": "CB_RATE_ABOVE_PRE_DECISION_EXPECTATION",
+      "title": "Merkez bankası faiz kararı beklentiden daha sıkı",
+      "kind": "CB_DECISION",
+      "predicate": "Requires actual and frozen pre-decision consensus; rate hike alone insufficient",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K21",
+      "key": "CB_RATE_BELOW_PRE_DECISION_EXPECTATION",
+      "title": "Merkez bankası faiz kararı beklentiden daha gevşek",
+      "kind": "CB_DECISION",
+      "predicate": "Requires actual and frozen pre-decision consensus; rate cut alone insufficient",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K22",
+      "key": "CB_RATE_MATCHES_EXPECTATION",
+      "title": "Merkez bankası faiz kararı beklentiyle aynı",
+      "kind": "CB_DECISION",
+      "predicate": "Requires independently documented prior consensus",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K23",
+      "key": "CB_GUIDANCE_MORE_HAWKISH_THAN_EXPECTED",
+      "title": "Yönlendirme beklenenden daha şahin",
+      "kind": "CB_GUIDANCE",
+      "predicate": "Official first-access section/transcript and documented prior expected language; no keyword-only inferred tone",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K24",
+      "key": "CB_GUIDANCE_MORE_DOVISH_THAN_EXPECTED",
+      "title": "Yönlendirme beklenenden daha güvercin",
+      "kind": "CB_GUIDANCE",
+      "predicate": "As above; text must demonstrably shift expectation",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K25",
+      "key": "OFFICIAL_GOLD_RESERVE_NET_BUY",
+      "title": "Merkez bankası altın rezerv artışı doğrulandı",
+      "kind": "CB_RESERVE",
+      "predicate": "Report period and publication available_at must be separate; don't backdate to transaction",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K26",
+      "key": "OFFICIAL_GOLD_RESERVE_NET_SELL",
+      "title": "Merkez bankası altın rezerv azalışı doğrulandı",
+      "kind": "CB_RESERVE",
+      "predicate": "Report period and publication available_at must be separate",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K27",
+      "key": "TRADE_SANCTIONS_TARIFFS_ESCALATE",
+      "title": "Yeni tarife / yaptırım / ticaret kısıtlaması",
+      "kind": "TRADE_POLICY",
+      "predicate": "New enforceable measure verified against preceding state; rumored proposal is unverified",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K28",
+      "key": "TRADE_RESTRICTIONS_EASE",
+      "title": "Tarife / yaptırım / ticaret kısıtlaması gevşiyor",
+      "kind": "TRADE_POLICY",
+      "predicate": "Verified withdrawal / relaxation / agreement effective details",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K29",
+      "key": "GEOPOLITICAL_SECURITY_ESCALATION",
+      "title": "Jeopolitik ve güvenlik riski artıyor",
+      "kind": "GEOPOLITICS",
+      "predicate": "Primary governmental event or independently corroborated factual timestamp, not mere market price rise",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K30",
+      "key": "GEOPOLITICAL_SECURITY_DEESCALATION",
+      "title": "Jeopolitik gerilim doğrulanmış biçimde hafifliyor",
+      "kind": "GEOPOLITICS",
+      "predicate": "Verified ceasefire / agreement action; rhetoric alone is not enforcement",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K31",
+      "key": "FUNDING_LIQUIDITY_STRESS_WORSENS",
+      "title": "Fonlama ve likidite baskısı kötüleşiyor",
+      "kind": "FUNDING",
+      "predicate": "Independent spread, facility, collateral evidence asof; gold selloff alone not proof",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K32",
+      "key": "FUNDING_LIQUIDITY_STRESS_EASES",
+      "title": "Fonlama ve likidite baskısı azalıyor",
+      "kind": "FUNDING",
+      "predicate": "Verified time-aligned funding / liquidity metrics",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K33",
+      "key": "PHYSICAL_GOLD_DEMAND_INCREASES",
+      "title": "Fizikî altın talebi artıyor",
+      "kind": "PHYSICAL_GOLD",
+      "predicate": "Volume/premium with first publication time; local price effects and FX separated",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K34",
+      "key": "PHYSICAL_GOLD_DEMAND_DECREASES",
+      "title": "Fizikî altın talebi azalıyor",
+      "kind": "PHYSICAL_GOLD",
+      "predicate": "As above; reported lag is not event firstprint",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K35",
+      "key": "GOLD_ETF_NET_INFLOW",
+      "title": "Altın ETF'lerine net giriş",
+      "kind": "ETF_FLOW",
+      "predicate": "Fund holdings/flows timestamped at publication, not report's reference close",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K36",
+      "key": "GOLD_ETF_NET_OUTFLOW",
+      "title": "Altın ETF'lerinden net çıkış",
+      "kind": "ETF_FLOW",
+      "predicate": "As above, never infer liquidation only from price down",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K37",
+      "key": "ENERGY_SUPPLY_DISRUPTION",
+      "title": "Enerji arzında doğrulanmış kesinti",
+      "kind": "ENERGY",
+      "predicate": "Official operator or corroborated timestamp; inflation channel and safe haven can oppose",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K38",
+      "key": "ENERGY_SUPPLY_RECOVERY",
+      "title": "Enerji arzındaki kesinti hafifliyor",
+      "kind": "ENERGY",
+      "predicate": "Verified actual restoration, not rumor",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K39",
+      "key": "CENTRAL_BANK_DECISION_ANNOUNCED_UNSCORED",
+      "title": "Merkez bankası faiz kararı var ama sürpriz derecesi bilinmiyor",
+      "kind": "CB_DECISION",
+      "predicate": "Source exists; missing prior expectation means NO hawkish/dovish rule",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K40",
+      "key": "CENTRAL_BANK_PRESSER_STARTED_UNSCORED",
+      "title": "Merkez bankası basın toplantısı başladı ama içerik sürprizi bilinmiyor",
+      "kind": "CB_PRESSER",
+      "predicate": "Opening time is not time of every future sentence",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K41",
+      "key": "NON_US_CPI_ABOVE_CONSENSUS",
+      "title": "ABD dışı enflasyon beklentiden yüksek",
+      "kind": "CPI",
+      "predicate": "Target jurisdiction must not be US; firstprint and consensus required",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K42",
+      "key": "NON_US_CPI_BELOW_CONSENSUS",
+      "title": "ABD dışı enflasyon beklentiden düşük",
+      "kind": "CPI",
+      "predicate": "Target jurisdiction must not be US; firstprint and consensus required",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K43",
+      "key": "NON_US_EMPLOYMENT_ABOVE_CONSENSUS",
+      "title": "ABD dışı istihdam beklentiden güçlü",
+      "kind": "EMPLOYMENT",
+      "predicate": "GDP/geography specific units not mapped to US NFP labels",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K44",
+      "key": "NON_US_EMPLOYMENT_BELOW_CONSENSUS",
+      "title": "ABD dışı istihdam beklentiden zayıf",
+      "kind": "EMPLOYMENT",
+      "predicate": "Country-specific labor methodology and original consensus required",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
     }
   ],
   "counts": {
@@ -640,5 +865,15 @@
       "largeUp": 2,
       "largeDown": 1
     }
-  ]
+  ],
+  "global_event_rules": {
+    "scope": "WORLDWIDE_NOT_US_ONLY",
+    "new_tags_from": "K20",
+    "old_tags_preserved": true,
+    "new_tags_count": 25,
+    "warning": "Official release happened does not imply hawkish, bearish gold or alpha. Directional claims require as-of economic surprise and cross-market validation.",
+    "source_registry": "OLAY_02_KURESEL_HABER_KAYNAK_KURALLARI_V1_20261018.json",
+    "engine": "adaptive_trading_core/event_news_condition_router_v1.js",
+    "rule_engine_purpose": "event/label/ORG candidates only, NO direct S1 S2 S3 order or alpha"
+  }
 }
