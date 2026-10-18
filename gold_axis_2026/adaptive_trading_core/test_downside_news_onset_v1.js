@@ -120,6 +120,34 @@ function testAll(){
   assert.equal(recovered.downside.audit.bars,0);
   assert.equal(recovered.downsideEnabled,false);
  });
+
+ test("late news after a previous session downside is not mislabeled as first",()=>{
+  const s=model(),src=SOURCE;let price=2000;
+  for(let i=0;i<34;i++){
+   price*=i<23?1.0001:.997;
+   core.observe(s,bar(i,price));
+  }
+  assert.ok(s.downside.previousEpisodeOnsetAt!==null);
+  // Elapsed gap causes M15 window reset, but previous real downside remains known.
+  const prev=bar(40,price,[news("AFTER_GAP",40)]);
+  const result=core.observe(s,prev);
+  assert.equal(result.downsideResearch.newsNewlyObserved[0].role,
+    "AFTER_PREVIOUS_PRICE_WEAKNESS_ACCELERANT_CANDIDATE");
+  assert.equal(result.downsideResearch.newsNewlyObserved[0].chronologyRole,
+    "AFTER_PREVIOUS_PRICE_WEAKNESS_PRIOR_SESSION");
+  assert.equal(result.downsideResearch.linkedNewsBeforeObservedWeakness.length,0);
+  assert.equal(result.tradeAllowed,false);
+ });
+ test("bearish gap-open price jump is recorded, not treated as continuous fifteen-minute bar",()=>{
+  const s=model();let price=2000;
+  for(let i=0;i<20;i++)core.observe(s,bar(i,price));
+  const g=core.observe(s,bar(25,price*.987));
+  assert.equal(g.downsideResearch.phase,"GAP_OPEN_DOWN_DISLOCATION");
+  assert.equal(g.downsideResearch.gapOpenDislocation,true);
+  assert.equal(g.positionResearch.downsideResearch.positionReview,
+    "REVIEW_EXISTING_GOLD_EXPOSURE_NO_ORDER");
+  assert.equal(g.positionResearch.tradeAllowed,false);
+ });
  return {passed:n,names:checks};
 }
 module.exports={testAll};
