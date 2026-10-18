@@ -13,7 +13,8 @@ const profiles={
  PBOC:["CN","https://www.pbc.gov.cn/"],
  RBI:["IN","https://www.rbi.org.in/"],
  REUTERS:["GLOBAL","https://www.reuters.com/"],
- UN:["GLOBAL","https://www.un.org/"]
+ UN:["GLOBAL","https://www.un.org/"],
+ US_WHITE_HOUSE:["US","https://www.whitehouse.gov/"]
 };
 function f(id,publisher,eventKind,time=T,extra={}){
  const [jurisdiction,sourceUrl]=profiles[publisher];
