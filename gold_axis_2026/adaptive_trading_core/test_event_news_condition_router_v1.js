@@ -152,6 +152,27 @@ function testAll(){
    evidenceAvailableAt:T,factualEvidenceVerified:true,sourceEvidenceId:"un_primary_statement_001"}});
   const r=route(e);assert.deepEqual(r.conditions,["K29"]);
   assert.ok(r.candidateOrgs.some(x=>x.org==="ORG04"));assert.equal(r.xauPrediction,"NOT_ESTIMATED");});
+
+ test("K02+K17 triggers AND pattern CR01, but no invented price direction",()=>{
+  const n=f("soft","BLS","CPI",T,{data:{headline:v(.1,.3,T),core:v(.1,.2,T)}});
+  const o=route(n);assert.deepEqual(o.conditions,["K02","K17"]);
+  assert.ok(o.matchedPatterns.some(q=>q.id==="CR01"&&q.xauDirection==="UNKNOWN"));});
+ test("strong payroll with weak wages matches competing CR03",()=>{
+  const n=f("jobs","BLS","NFP",T,{data:{employment:v(300,200,T),wages:v(.2,.3,T)}});
+  const o=route(n);assert.ok(o.matchedPatterns.some(q=>q.id==="CR03"));
+  assert.equal(o.xauPrediction,"NOT_ESTIMATED");});
+ test("strong payroll wages and falling unemployment matches CR02 AND CR05",()=>{
+  const n=f("jobs3","BLS","NFP",T,{data:{employment:v(300,200,T),wages:v(.4,.3,T),unemployment:v(3.4,3.5,T)}});
+  const p=route(n).matchedPatterns.map(x=>x.id);
+  assert.ok(p.includes("CR02"));assert.ok(p.includes("CR05"));});
+ test("February 2 ECB decision and press conference overlap forms CR14",()=>{
+  const n=[f("ecbA","ECB","CB_DECISION",T),f("ecbB","ECB","CB_PRESSER","2023-02-02T13:45:00Z")];
+  const o=router.routeMany(n,{asof:"2023-02-03T15:00:00Z",registry});
+  assert.equal(o.overlappingEpisodes.length,1);
+  assert.ok(o.overlappingEpisodes[0].matchedPatterns.some(x=>x.id==="CR14"));});
+ test("news class alone never matches pattern requiring independent USD or yield",()=>{
+  const n=f("hawk","ECB","CB_DECISION",T,{data:{rate:v(3.5,3.25,T)}});
+  assert.equal(route(n).matchedPatterns.some(x=>x.id==="CR06"),false);});
  return {passed,report};
 }
 module.exports={testAll};
