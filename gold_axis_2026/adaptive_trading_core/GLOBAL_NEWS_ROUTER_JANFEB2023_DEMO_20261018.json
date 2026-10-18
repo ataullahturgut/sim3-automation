@@ -1,6 +1,6 @@
 {
   "schema": "GLOBAL_NEWS_RULES_2023_JAN_FEB_READONLY_DEMO_20261018",
-  "disclaimer": "No archive firstprint/consensus-vintage verified. Publisher and scheduled UTC are historical research proxies. Macro tags in retrospectiveArchiveLabelsNotRouted are previously observed research hypotheses, not output of this strict rule router.",
+  "disclaimer": "No archive firstprint/consensus-vintage verified. Publisher and scheduled UTC are historical research proxies. Macro tags in retrospectiveArchiveLabelsNotRouted are previously observed research hypotheses, not output of this strict rule router. Event cluster now includes checked AND-patterns, which are research hypotheses, not causal price predictions.",
   "inputs": [
     {
       "id": "2023-01-06_BLS_NFP",
@@ -112,6 +112,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": false,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -138,6 +139,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": false,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -182,6 +184,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": true,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -226,6 +229,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": true,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -270,6 +274,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": true,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -314,6 +319,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": true,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -341,6 +347,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": false,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -367,6 +374,7 @@
         "xauPrediction": "NOT_ESTIMATED",
         "action": null,
         "tradeAllowed": false,
+        "matchedPatterns": [],
         "hasCompetingRateChannels": false,
         "firstprintAttested": false,
         "firstprintScope": "source provenance only; not proof gold transmission",
@@ -384,6 +392,7 @@
         "conditions": [],
         "firstEventTime": "2023-01-06T13:30:00.000Z",
         "lastEventTime": "2023-01-06T13:30:00.000Z",
+        "matchedPatterns": [],
         "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
       },
       {
@@ -396,6 +405,7 @@
         "conditions": [],
         "firstEventTime": "2023-01-12T13:30:00.000Z",
         "lastEventTime": "2023-01-12T13:30:00.000Z",
+        "matchedPatterns": [],
         "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
       },
       {
@@ -410,6 +420,7 @@
         ],
         "firstEventTime": "2023-02-01T19:00:00.000Z",
         "lastEventTime": "2023-02-01T19:00:00.000Z",
+        "matchedPatterns": [],
         "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
       },
       {
@@ -428,6 +439,26 @@
         ],
         "firstEventTime": "2023-02-02T12:00:00.000Z",
         "lastEventTime": "2023-02-02T13:45:00.000Z",
+        "matchedPatterns": [
+          {
+            "id": "CR14",
+            "name": "Central-bank decision followed by press conference; surprise unscored",
+            "matched": [
+              "K39",
+              "K40"
+            ],
+            "candidateOrgs": [
+              "ORG01",
+              "ORG02"
+            ],
+            "rivals": [],
+            "authority": "RESEARCH_COMBINATION_ONLY",
+            "learnedProbability": null,
+            "priceMagnitude": "UNKNOWN",
+            "xauDirection": "UNKNOWN",
+            "tradeAllowed": false
+          }
+        ],
         "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
       },
       {
@@ -440,6 +471,7 @@
         "conditions": [],
         "firstEventTime": "2023-02-03T13:30:00.000Z",
         "lastEventTime": "2023-02-03T13:30:00.000Z",
+        "matchedPatterns": [],
         "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
       },
       {
@@ -452,6 +484,7 @@
         "conditions": [],
         "firstEventTime": "2023-02-14T13:30:00.000Z",
         "lastEventTime": "2023-02-14T13:30:00.000Z",
+        "matchedPatterns": [],
         "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
       }
     ],
@@ -471,5 +504,204 @@
     "2023-02-02_ECB_PRESSER": "K40 press event start does not include future statements, so K23/K24 not produced.",
     "2023-02-03_BLS_NFP": "Retro archive K03/K19 is not admitted to strict engine until original pre-release consensus and actual vintage are documented."
   },
-  "status": "EXECUTED_WITH_HISTORICAL_PROXY_INPUTS_READONLY_NO_TRADE"
+  "status": "EXECUTED_WITH_HISTORICAL_PROXY_INPUTS_READONLY_NO_TRADE",
+  "patternsDefined": [
+    {
+      "id": "CR01",
+      "name": "Headline and core disinflation surprise",
+      "all": [
+        "K02",
+        "K17"
+      ],
+      "orgs": [
+        "ORG01"
+      ],
+      "rivals": [
+        "ORG02"
+      ]
+    },
+    {
+      "id": "CR02",
+      "name": "Payroll and wage hawkish combination",
+      "all": [
+        "K03",
+        "K06"
+      ],
+      "orgs": [
+        "ORG02"
+      ],
+      "rivals": [
+        "ORG01"
+      ]
+    },
+    {
+      "id": "CR03",
+      "name": "Payroll strong but wage surprise soft",
+      "all": [
+        "K03",
+        "K18"
+      ],
+      "orgs": [
+        "ORG01",
+        "ORG02"
+      ],
+      "rivals": []
+    },
+    {
+      "id": "CR04",
+      "name": "Payroll strong but unemployment higher",
+      "all": [
+        "K03",
+        "K07"
+      ],
+      "orgs": [
+        "ORG01",
+        "ORG02"
+      ],
+      "rivals": []
+    },
+    {
+      "id": "CR05",
+      "name": "Strong payroll wage and low unemployment",
+      "all": [
+        "K03",
+        "K06",
+        "K19"
+      ],
+      "orgs": [
+        "ORG02"
+      ],
+      "rivals": [
+        "ORG01"
+      ]
+    },
+    {
+      "id": "CR06",
+      "name": "Hawkish rate surprise and USD rise",
+      "all": [
+        "K20",
+        "K08"
+      ],
+      "orgs": [
+        "ORG02"
+      ],
+      "rivals": [
+        "ORG01"
+      ]
+    },
+    {
+      "id": "CR07",
+      "name": "Dovish rate surprise and USD weakness",
+      "all": [
+        "K21",
+        "K09"
+      ],
+      "orgs": [
+        "ORG01"
+      ],
+      "rivals": [
+        "ORG02"
+      ]
+    },
+    {
+      "id": "CR08",
+      "name": "Geopolitical escalation plus energy disruption",
+      "all": [
+        "K29",
+        "K37"
+      ],
+      "orgs": [
+        "ORG04",
+        "ORG02"
+      ],
+      "rivals": [
+        "ORG08"
+      ]
+    },
+    {
+      "id": "CR09",
+      "name": "Funding stress plus independently verified liquidations",
+      "all": [
+        "K31",
+        "K13"
+      ],
+      "orgs": [
+        "ORG12"
+      ],
+      "rivals": [
+        "ORG03"
+      ]
+    },
+    {
+      "id": "CR10",
+      "name": "Trade shock plus funding stress",
+      "all": [
+        "K27",
+        "K31"
+      ],
+      "orgs": [
+        "ORG06",
+        "ORG08"
+      ],
+      "rivals": [
+        "ORG07"
+      ]
+    },
+    {
+      "id": "CR11",
+      "name": "Gold reserve buying report and strong employment surprise",
+      "all": [
+        "K25",
+        "K03"
+      ],
+      "orgs": [
+        "ORG11",
+        "ORG02"
+      ],
+      "rivals": [
+        "ORG09"
+      ]
+    },
+    {
+      "id": "CR12",
+      "name": "Gold ETF outflow and independent position unwinding",
+      "all": [
+        "K36",
+        "K13"
+      ],
+      "orgs": [
+        "ORG10"
+      ],
+      "rivals": [
+        "ORG12"
+      ]
+    },
+    {
+      "id": "CR13",
+      "name": "Hawkish guidance and rising US real yields",
+      "all": [
+        "K23",
+        "K10"
+      ],
+      "orgs": [
+        "ORG02"
+      ],
+      "rivals": [
+        "ORG01"
+      ]
+    },
+    {
+      "id": "CR14",
+      "name": "Central-bank decision followed by press conference; surprise unscored",
+      "all": [
+        "K39",
+        "K40"
+      ],
+      "orgs": [
+        "ORG01",
+        "ORG02"
+      ],
+      "rivals": []
+    }
+  ]
 }
