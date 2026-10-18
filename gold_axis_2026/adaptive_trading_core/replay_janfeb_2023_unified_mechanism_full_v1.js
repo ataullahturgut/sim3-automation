@@ -111,7 +111,7 @@ function execute({bars,news,registry,mechanismLibrary,researchProxyTags={}}){
     decisionsByReason:a.positionResearch.audit.decisionsByReason},
     activeResearchMode:"CONDITIONAL_ECONOMIC_RESEARCH",
     cashPortfolioFinalUsd:100,passiveGoldLiquidatableFinalUsd:rnd(100*(last/first)*(.992**2),5)},
-  comparison:{2022PretrainingUsed:false,S1_2023_FreshStart:true,
+  comparison:{prior2022PretrainingUsed:false,S1_2023_FreshStart:true,
     economic2023FirstprintAccepted:false,liveEconomicFeaturesInjected:false}
  };
  const scored=newsTimeline.flatMap(n=>n.checkpoints.map(q=>({...q,id:n.id}))).filter(x=>x.horizonMinutesSinceRelease===60);
