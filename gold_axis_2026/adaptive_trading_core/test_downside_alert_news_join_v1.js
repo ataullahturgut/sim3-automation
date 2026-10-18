@@ -66,6 +66,14 @@ function runAll(){
   const r=audit({bars:bars(140,120),macro:[macro(1)]});
   assert.equal(r.alertRecords[0].closest_macro_before,null);
  });
+ test("Exact official release at completed bar close is unresolved, not news-first",()=>{
+  const r=audit({bars:bars(),macro:[macro(20)]});
+  const a=r.alertRecords[0];
+  assert.equal(a.macro_chronology_group,"COINCIDENT_RELEASE_BAR_CLOSE_UNRESOLVED");
+  assert.equal(a.closest_macro_before,null);
+  assert.equal(a.coincident_macro_at_price_bar_close[0].id,"NFP_MOCK");
+  assert.equal(r.alertCounts.alertsAtMacroExactBarCloseUnresolved,1);
+ });
  return {passed:n,tests:names};
 }
 module.exports={runAll};
