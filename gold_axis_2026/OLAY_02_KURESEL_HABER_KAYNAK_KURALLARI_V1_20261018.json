@@ -1,0 +1,330 @@
+{
+  "schema": "OLAY02_GLOBAL_NEWS_AUTHORITY_REGISTRY_V1",
+  "date": "2026-10-18",
+  "project": "GOLD-ADAPTIVE-MODEL-APP-01",
+  "status": "RESEARCH_SOURCE_ALLOWLIST_NOT_A_LIVE_FEED",
+  "boundary": "News originates with official issuer, region is origin of event, market venue where gold trades is another dimension. Government military statements require separately curated exact official URL and immutable proof; not auto-primary as generic GOVERNMENT.",
+  "sources": [
+    {
+      "id": "FED",
+      "jurisdiction": "US",
+      "region": "US",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "federalreserve.gov"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_PRESSER",
+        "CB_GUIDANCE"
+      ],
+      "landingPage": "https://www.federalreserve.gov/newsevents/pressreleases.htm"
+    },
+    {
+      "id": "BLS",
+      "jurisdiction": "US",
+      "region": "US",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "bls.gov"
+      ],
+      "eventKinds": [
+        "CPI",
+        "NFP",
+        "EMPLOYMENT"
+      ],
+      "landingPage": "https://www.bls.gov/bls/newsrels.htm"
+    },
+    {
+      "id": "BEA",
+      "jurisdiction": "US",
+      "region": "US",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "bea.gov"
+      ],
+      "eventKinds": [
+        "CPI",
+        "GDP",
+        "PHYSICAL_GOLD"
+      ],
+      "landingPage": "https://www.bea.gov/news"
+    },
+    {
+      "id": "US_TREASURY",
+      "jurisdiction": "US",
+      "region": "US",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "home.treasury.gov",
+        "treasury.gov"
+      ],
+      "eventKinds": [
+        "TRADE_POLICY",
+        "FUNDING"
+      ],
+      "landingPage": "https://home.treasury.gov/news/press-releases"
+    },
+    {
+      "id": "CFTC",
+      "jurisdiction": "US",
+      "region": "US",
+      "role": "LAGGED_POSITION_REPORT",
+      "domains": [
+        "cftc.gov"
+      ],
+      "eventKinds": [
+        "FUNDING",
+        "ETF_FLOW",
+        "POSITION"
+      ],
+      "landingPage": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm"
+    },
+    {
+      "id": "CME",
+      "jurisdiction": "US",
+      "region": "GLOBAL",
+      "role": "MARKET_OBSERVATION",
+      "domains": [
+        "cmegroup.com"
+      ],
+      "eventKinds": [
+        "MARKET"
+      ],
+      "landingPage": "https://www.cmegroup.com/markets/metals/precious/gold.html"
+    },
+    {
+      "id": "ECB",
+      "jurisdiction": "EU",
+      "region": "EU",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "ecb.europa.eu"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_PRESSER",
+        "CB_GUIDANCE"
+      ],
+      "landingPage": "https://www.ecb.europa.eu/press/govcdec/mopo/html/index.en.html"
+    },
+    {
+      "id": "EUROSTAT",
+      "jurisdiction": "EU",
+      "region": "EU",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "ec.europa.eu"
+      ],
+      "eventKinds": [
+        "CPI",
+        "EMPLOYMENT"
+      ],
+      "landingPage": "https://ec.europa.eu/eurostat"
+    },
+    {
+      "id": "BOE",
+      "jurisdiction": "UK",
+      "region": "UK",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "bankofengland.co.uk"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_PRESSER",
+        "CB_GUIDANCE"
+      ],
+      "landingPage": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes"
+    },
+    {
+      "id": "ONS",
+      "jurisdiction": "UK",
+      "region": "UK",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "ons.gov.uk"
+      ],
+      "eventKinds": [
+        "CPI",
+        "EMPLOYMENT"
+      ],
+      "landingPage": "https://www.ons.gov.uk/"
+    },
+    {
+      "id": "PBOC",
+      "jurisdiction": "CN",
+      "region": "CN",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "pbc.gov.cn"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_RESERVE",
+        "CB_GUIDANCE"
+      ],
+      "landingPage": "https://www.pbc.gov.cn/"
+    },
+    {
+      "id": "CN_NBS",
+      "jurisdiction": "CN",
+      "region": "CN",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "stats.gov.cn"
+      ],
+      "eventKinds": [
+        "CPI",
+        "EMPLOYMENT"
+      ],
+      "landingPage": "https://www.stats.gov.cn/english/"
+    },
+    {
+      "id": "SGE",
+      "jurisdiction": "CN",
+      "region": "CN",
+      "role": "MARKET_OBSERVATION",
+      "domains": [
+        "sge.com.cn"
+      ],
+      "eventKinds": [
+        "PHYSICAL_GOLD"
+      ],
+      "landingPage": "https://www.sge.com.cn/"
+    },
+    {
+      "id": "RBI",
+      "jurisdiction": "IN",
+      "region": "IN",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "rbi.org.in"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_RESERVE"
+      ],
+      "landingPage": "https://www.rbi.org.in/"
+    },
+    {
+      "id": "INDIA_FINANCE",
+      "jurisdiction": "IN",
+      "region": "IN",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "finmin.gov.in"
+      ],
+      "eventKinds": [
+        "TRADE_POLICY",
+        "PHYSICAL_GOLD"
+      ],
+      "landingPage": "https://finmin.gov.in/"
+    },
+    {
+      "id": "WGC",
+      "jurisdiction": "GLOBAL",
+      "region": "GLOBAL",
+      "role": "LAGGED_AGGREGATE_REPORT",
+      "domains": [
+        "gold.org"
+      ],
+      "eventKinds": [
+        "CB_RESERVE",
+        "PHYSICAL_GOLD",
+        "ETF_FLOW"
+      ],
+      "landingPage": "https://www.gold.org/goldhub/data/gold-reserves-by-country"
+    },
+    {
+      "id": "IMF",
+      "jurisdiction": "GLOBAL",
+      "region": "GLOBAL",
+      "role": "LAGGED_AGGREGATE_REPORT",
+      "domains": [
+        "imf.org"
+      ],
+      "eventKinds": [
+        "CB_RESERVE"
+      ],
+      "landingPage": "https://data.imf.org/"
+    },
+    {
+      "id": "LBMA",
+      "jurisdiction": "UK",
+      "region": "GLOBAL",
+      "role": "MARKET_OBSERVATION",
+      "domains": [
+        "lbma.org.uk"
+      ],
+      "eventKinds": [
+        "MARKET",
+        "PHYSICAL_GOLD"
+      ],
+      "landingPage": "https://www.lbma.org.uk/"
+    },
+    {
+      "id": "REUTERS",
+      "jurisdiction": "GLOBAL",
+      "region": "GLOBAL",
+      "role": "SECONDARY_NEWS",
+      "domains": [
+        "reuters.com"
+      ],
+      "eventKinds": [
+        "GEOPOLITICS",
+        "TRADE_POLICY",
+        "ENERGY",
+        "FUNDING",
+        "CB_GUIDANCE"
+      ],
+      "landingPage": "https://www.reuters.com/"
+    },
+    {
+      "id": "AP",
+      "jurisdiction": "GLOBAL",
+      "region": "GLOBAL",
+      "role": "SECONDARY_NEWS",
+      "domains": [
+        "apnews.com"
+      ],
+      "eventKinds": [
+        "GEOPOLITICS",
+        "TRADE_POLICY",
+        "ENERGY",
+        "FUNDING"
+      ],
+      "landingPage": "https://apnews.com/"
+    }
+  ],
+  "regions": {
+    "US": "United States",
+    "EU": "Euro Area/ECB",
+    "UK": "United Kingdom",
+    "CN": "China",
+    "IN": "India",
+    "GLOBAL": "multi-region; not proof of origin location",
+    "OTHER": "not yet curated"
+  },
+  "classification": {
+    "strictIssuerDomainCheck": "Exact host or a subdomain of listed issuer domain. Other domains rejected, not silently trusted.",
+    "primaryAccess": "Official publisher and archived firstprint/availability timestamp with human-reviewed proof",
+    "lagWarning": "IMF/WGC reserve report observation-period is NOT publication-time news; CFTC Tuesday snapshot is NOT Tuesday publication; future rows cannot be assigned to a past decision",
+    "secondarySource": "Reuters/AP useful context but secondary article timestamp NOT automatic proof of primary event's exact firstprint",
+    "confidence": "source allowed is not evidence validated; original content+version+availability must be independently confirmed",
+    "eventOverlap": "same policy event, followup presser and contemporaneous BoE must preserve separate article IDs and timestamps, and overlapping effects are not independent causal return observations"
+  },
+  "observability": {
+    "USD": "NOT_MEASURED",
+    "US_REAL_YIELD": "NOT_MEASURED",
+    "XAU_SPOT": "Neon M15 proxy historically available",
+    "ETF_CFTC": "PUBLICATION_LAG_MUST_BE_RESPECTED"
+  },
+  "citations": [
+    "https://www.federalreserve.gov/newsevents/pressreleases.htm",
+    "https://www.ecb.europa.eu/press/govcdec/mopo/html/index.en.html",
+    "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
+    "https://www.gold.org/goldhub/data/gold-reserves-by-country",
+    "https://www.gold.org/goldhub/data/gold-demand-by-country"
+  ]
+}
