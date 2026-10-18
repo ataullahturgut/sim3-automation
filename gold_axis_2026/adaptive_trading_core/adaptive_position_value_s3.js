@@ -126,7 +126,7 @@ function observe(s,o){
  if(o.downsideEvidence!==undefined){
   const d=o.downsideEvidence;
   if(!d||d.asof!==o.asof||
-    !["NO_ALERT","WARMUP","EARLY_WEAKNESS","CONFIRMED_FALL"].includes(d.phase)||
+    !["NO_ALERT","WARMUP","EARLY_WEAKNESS","CONFIRMED_FALL","GAP_OPEN_DOWN_DISLOCATION"].includes(d.phase)||
     !Array.isArray(d.linkedNewsIds)||!Number.isInteger(d.firstprintNewsCount)||
     d.firstprintNewsCount<0||d.causalAttribution!=="UNPROVEN"||
     (d.firstPriceWeaknessAt!==null&&ms(d.firstPriceWeaknessAt)>t))
@@ -316,7 +316,7 @@ function observe(s,o){
     phase:s.lastDownsideResearch.phase,
     firstPriceWeaknessAt:s.lastDownsideResearch.firstPriceWeaknessAt,
     linkedNewsIds:s.lastDownsideResearch.linkedNewsIds,
-    positionReview:s.lastDownsideResearch.phase==="CONFIRMED_FALL"?
+    positionReview:["CONFIRMED_FALL","GAP_OPEN_DOWN_DISLOCATION"].includes(s.lastDownsideResearch.phase)?
       "REVIEW_EXISTING_GOLD_EXPOSURE_NO_ORDER":"NO_DOWNSIDE_REVIEW",
     tradeAllowed:false}:null,
   nextObservedBarResearchOrder:s.paper.pendingOrder?
