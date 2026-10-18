@@ -1,0 +1,562 @@
+{
+  "schema": "DOWN_744_MACRO_NEWS_AND_17_BIG_DROPS_COHORT_LINK_V1",
+  "dataDate": "2026-10-19",
+  "eventKinds": [
+    "CPI",
+    "NFP",
+    "FOMC"
+  ],
+  "releaseStats": {
+    "CPI": {
+      "calendarEvents": 34,
+      "withAlert4h": 21,
+      "withAlert24h": 26,
+      "after4Count": 23
+    },
+    "NFP": {
+      "calendarEvents": 35,
+      "withAlert4h": 21,
+      "withAlert24h": 22,
+      "after4Count": 25
+    },
+    "FOMC": {
+      "calendarEvents": 16,
+      "withAlert4h": 6,
+      "withAlert24h": 15,
+      "after4Count": 6
+    }
+  },
+  "cohort": [
+    {
+      "id": "SWING_V1_002",
+      "start": "2023-02-01",
+      "fullExpostDropPct": -7.147197,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2023-01-31T06:15:00.000Z",
+      "knownScheduledMacroInRange": [
+        {
+          "id": "FOMC_2023-02-01",
+          "at": "2023-02-01T19:00:00.000Z",
+          "post4Alerts": []
+        }
+      ],
+      "nearAlertsWithPrevious24hMacro": 1,
+      "nearAlertsWithFollowing24hMacro": 2,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_004",
+      "start": "2023-05-04",
+      "fullExpostDropPct": -6.959525,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2023-05-04T02:15:00.000Z",
+      "knownScheduledMacroInRange": [
+        {
+          "id": "FOMC_2023-05-03",
+          "at": "2023-05-03T18:00:00.000Z",
+          "post4Alerts": []
+        },
+        {
+          "id": "NFP_2023-05-05",
+          "at": "2023-05-05T12:30:00.000Z",
+          "post4Alerts": []
+        }
+      ],
+      "nearAlertsWithPrevious24hMacro": 2,
+      "nearAlertsWithFollowing24hMacro": 2,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_006",
+      "start": "2023-07-18",
+      "fullExpostDropPct": -8.020636,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2023-07-17T13:00:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_010",
+      "start": "2023-12-01",
+      "fullExpostDropPct": -4.463277,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 2,
+      "firstAlertUtc": "2023-11-30T14:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 1,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_012",
+      "start": "2023-12-27",
+      "fullExpostDropPct": -4.112955,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2023-12-28T08:30:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 1,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_014",
+      "start": "2024-04-19",
+      "fullExpostDropPct": -4.378754,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2024-04-18T13:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_016",
+      "start": "2024-05-20",
+      "fullExpostDropPct": -5.458903,
+      "group": "E",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2024-05-20T06:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 4,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_018",
+      "start": "2024-07-16",
+      "fullExpostDropPct": -4.222006,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2024-07-15T17:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 4,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_020",
+      "start": "2024-10-30",
+      "fullExpostDropPct": -8.048451,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2024-10-31T12:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 1,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_024",
+      "start": "2024-12-11",
+      "fullExpostDropPct": -4.897744,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2024-12-11T04:45:00.000Z",
+      "knownScheduledMacroInRange": [
+        {
+          "id": "CPI_2024-12-11",
+          "at": "2024-12-11T13:30:00.000Z",
+          "post4Alerts": []
+        }
+      ],
+      "nearAlertsWithPrevious24hMacro": 2,
+      "nearAlertsWithFollowing24hMacro": 1,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_028",
+      "start": "2025-04-02",
+      "fullExpostDropPct": -4.776625,
+      "group": "D",
+      "alertCountPivotMinus1ToPlus2": 5,
+      "firstAlertUtc": "2025-04-01T06:15:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 5,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_030",
+      "start": "2025-04-21",
+      "fullExpostDropPct": -5.41054,
+      "group": "C",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2025-04-21T17:15:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_032",
+      "start": "2025-05-06",
+      "fullExpostDropPct": -7.410996,
+      "group": "C",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2025-05-06T03:00:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_034",
+      "start": "2025-06-13",
+      "fullExpostDropPct": -4.610566,
+      "group": "C",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2025-06-12T07:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 1,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 4,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_036",
+      "start": "2025-07-22",
+      "fullExpostDropPct": -4.545362,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 2,
+      "firstAlertUtc": "2025-07-22T07:30:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 2,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_038",
+      "start": "2025-10-20",
+      "fullExpostDropPct": -9.784683,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2025-10-20T06:00:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_042",
+      "start": "2025-12-26",
+      "fullExpostDropPct": -4.729564,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2025-12-26T17:30:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 1,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    }
+  ],
+  "cohortCounts": {
+    "allDownLegs": 17,
+    "atLeastOneAlertNear": 17,
+    "atLeastOneScheduledMacroWithinStartWindow": 3,
+    "atLeastOneDateOnlyDocNearAlerts": 13
+  },
+  "danger": "Do not infer first-news caused first-fall: macro scheduled publication is not firstprint certified, 17 cases were selected ex post; news coverage is incomplete and macro timing coincidence is not a causal proof.",
+  "perCase": [
+    {
+      "id": "SWING_V1_002",
+      "start": "2023-02-01",
+      "fullExpostDropPct": -7.147197,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2023-01-31T06:15:00.000Z",
+      "knownScheduledMacroInRange": [
+        {
+          "id": "FOMC_2023-02-01",
+          "at": "2023-02-01T19:00:00.000Z",
+          "post4Alerts": []
+        }
+      ],
+      "nearAlertsWithPrevious24hMacro": 1,
+      "nearAlertsWithFollowing24hMacro": 2,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_004",
+      "start": "2023-05-04",
+      "fullExpostDropPct": -6.959525,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2023-05-04T02:15:00.000Z",
+      "knownScheduledMacroInRange": [
+        {
+          "id": "FOMC_2023-05-03",
+          "at": "2023-05-03T18:00:00.000Z",
+          "post4Alerts": []
+        },
+        {
+          "id": "NFP_2023-05-05",
+          "at": "2023-05-05T12:30:00.000Z",
+          "post4Alerts": []
+        }
+      ],
+      "nearAlertsWithPrevious24hMacro": 2,
+      "nearAlertsWithFollowing24hMacro": 2,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_006",
+      "start": "2023-07-18",
+      "fullExpostDropPct": -8.020636,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2023-07-17T13:00:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_010",
+      "start": "2023-12-01",
+      "fullExpostDropPct": -4.463277,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 2,
+      "firstAlertUtc": "2023-11-30T14:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 1,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_012",
+      "start": "2023-12-27",
+      "fullExpostDropPct": -4.112955,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2023-12-28T08:30:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 1,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_014",
+      "start": "2024-04-19",
+      "fullExpostDropPct": -4.378754,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2024-04-18T13:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_016",
+      "start": "2024-05-20",
+      "fullExpostDropPct": -5.458903,
+      "group": "E",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2024-05-20T06:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 4,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_018",
+      "start": "2024-07-16",
+      "fullExpostDropPct": -4.222006,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2024-07-15T17:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 4,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_020",
+      "start": "2024-10-30",
+      "fullExpostDropPct": -8.048451,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2024-10-31T12:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 1,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_024",
+      "start": "2024-12-11",
+      "fullExpostDropPct": -4.897744,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2024-12-11T04:45:00.000Z",
+      "knownScheduledMacroInRange": [
+        {
+          "id": "CPI_2024-12-11",
+          "at": "2024-12-11T13:30:00.000Z",
+          "post4Alerts": []
+        }
+      ],
+      "nearAlertsWithPrevious24hMacro": 2,
+      "nearAlertsWithFollowing24hMacro": 1,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_028",
+      "start": "2025-04-02",
+      "fullExpostDropPct": -4.776625,
+      "group": "D",
+      "alertCountPivotMinus1ToPlus2": 5,
+      "firstAlertUtc": "2025-04-01T06:15:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 5,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_030",
+      "start": "2025-04-21",
+      "fullExpostDropPct": -5.41054,
+      "group": "C",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2025-04-21T17:15:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_032",
+      "start": "2025-05-06",
+      "fullExpostDropPct": -7.410996,
+      "group": "C",
+      "alertCountPivotMinus1ToPlus2": 3,
+      "firstAlertUtc": "2025-05-06T03:00:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 3,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_034",
+      "start": "2025-06-13",
+      "fullExpostDropPct": -4.610566,
+      "group": "C",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2025-06-12T07:45:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 1,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 4,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_036",
+      "start": "2025-07-22",
+      "fullExpostDropPct": -4.545362,
+      "group": "A",
+      "alertCountPivotMinus1ToPlus2": 2,
+      "firstAlertUtc": "2025-07-22T07:30:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 2,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_038",
+      "start": "2025-10-20",
+      "fullExpostDropPct": -9.784683,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 4,
+      "firstAlertUtc": "2025-10-20T06:00:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 0,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    },
+    {
+      "id": "SWING_V1_042",
+      "start": "2025-12-26",
+      "fullExpostDropPct": -4.729564,
+      "group": "B",
+      "alertCountPivotMinus1ToPlus2": 1,
+      "firstAlertUtc": "2025-12-26T17:30:00.000Z",
+      "knownScheduledMacroInRange": [],
+      "nearAlertsWithPrevious24hMacro": 0,
+      "nearAlertsWithFollowing24hMacro": 0,
+      "nearAlertsWithAnySelectedDateOnlyContext": 1,
+      "knownCauseFirstPriceImpulse": false,
+      "warning": "A retrospective pivot +/- 24/48 hours is NOT a prediction lead time."
+    }
+  ]
+}
