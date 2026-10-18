@@ -1,6 +1,6 @@
 {
   "schema": "ETKI05_ECONOMIC_CONDITION_LABEL_REGISTRY_V1",
-  "version": "2026-10-18",
+  "version": "2026-10-18-v1.1",
   "project": "GOLD-ADAPTIVE-MODEL-APP-01",
   "user_intent": "Economic condition item labels and their combinations, NOT a new market prediction algorithm; outcome lookup is separate",
   "status": "HYPOTHESIS_LIBRARY_NOT_TRADE_RULE",
@@ -72,7 +72,9 @@
       "kind": "NFP",
       "predicate": "original AHE actual above frozen consensus",
       "availability": "First-print and consensus-vintage required",
-      "usable_now": "NOT_MEASURED"
+      "usable_now": "RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED",
+      "archived_field": "s_ahe",
+      "archive_source": "gold_research_r72_claude_macro_analogs_v1"
     },
     {
       "id": "K07",
@@ -81,7 +83,9 @@
       "kind": "NFP",
       "predicate": "original unemployment actual above frozen consensus",
       "availability": "First-print and consensus-vintage required",
-      "usable_now": "NOT_MEASURED"
+      "usable_now": "RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED",
+      "archived_field": "s_un",
+      "archive_source": "gold_research_r72_claude_macro_analogs_v1"
     },
     {
       "id": "K08",
@@ -154,6 +158,46 @@
       "predicate": "17 contiguous completed M15 mid-price bars strictly before release, return<0",
       "availability": "already-closed pre-event bars only",
       "usable_now": "OBSERVATIONAL_PRICE_SOURCE"
+    },
+    {
+      "id": "K16",
+      "key": "CORE_CPI_ABOVE_CONSENSUS",
+      "title": "Çekirdek enflasyon beklentiden yüksek",
+      "kind": "CPI",
+      "predicate": "s_ccpi>0; first-print core CPI actual above original consensus, rounding aware",
+      "usable_now": "RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED",
+      "archived_field": "s_ccpi",
+      "archive_source": "gold_research_r72_claude_macro_analogs_v1"
+    },
+    {
+      "id": "K17",
+      "key": "CORE_CPI_BELOW_CONSENSUS",
+      "title": "Çekirdek enflasyon beklentiden düşük",
+      "kind": "CPI",
+      "predicate": "s_ccpi<0; first-print core CPI actual below original consensus, rounding aware",
+      "usable_now": "RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED",
+      "archived_field": "s_ccpi",
+      "archive_source": "gold_research_r72_claude_macro_analogs_v1"
+    },
+    {
+      "id": "K18",
+      "key": "WAGES_BELOW_CONSENSUS",
+      "title": "Ücret artışı beklentiden düşük",
+      "kind": "NFP",
+      "predicate": "s_ahe<0; first-print average hourly earnings actual below original consensus",
+      "usable_now": "RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED",
+      "archived_field": "s_ahe",
+      "archive_source": "gold_research_r72_claude_macro_analogs_v1"
+    },
+    {
+      "id": "K19",
+      "key": "UNEMP_BELOW_CONSENSUS",
+      "title": "İşsizlik oranı beklentiden düşük",
+      "kind": "NFP",
+      "predicate": "s_un<0; first-print unemployment rate actual below original consensus",
+      "usable_now": "RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED",
+      "archived_field": "s_un",
+      "archive_source": "gold_research_r72_claude_macro_analogs_v1"
     }
   ],
   "counts": {
@@ -483,8 +527,6 @@
     }
   ],
   "non_joined_not_usable": [
-    "K06",
-    "K07",
     "K08",
     "K09",
     "K10",
@@ -498,5 +540,105 @@
     "test each K-combination with true untouched newer events",
     "use per-horizon volatility-normalized size and negative controls",
     "do not insert 2026 future knowledge into 2023 blind walk-forward"
+  ],
+  "additional_source_evidence": {
+    "archive": "2023-2025 ONLY",
+    "Neon": "gold_research_r72_claude_macro_analogs_v1",
+    "join": "ts and etype exact to 85 macro csv: 69 matched CPI/NFP, 68 have valid 4h XAU result",
+    "studyMarkdown": "ETKI_05_EKONOMIK_KOSUL_BIRLESIMI_ARASTIRMA_20261018.md",
+    "studyJson": "ETKI_05_EKONOMIK_KOSUL_BIRLESIMI_V2_20261018.json",
+    "critical_scope": "K06/K07/K16-K19 are research-proxy archived surprises, not independently authenticated live availability or bank trading signal"
+  },
+  "same_release_combo_examples": [
+    {
+      "conditions": [
+        "K02",
+        "K17"
+      ],
+      "n": 9,
+      "up": 8,
+      "down": 1,
+      "largeUp": 4,
+      "largeDown": 0
+    },
+    {
+      "conditions": [
+        "K01",
+        "K16"
+      ],
+      "n": 4,
+      "up": 2,
+      "down": 2,
+      "largeUp": 0,
+      "largeDown": 1
+    },
+    {
+      "conditions": [
+        "K03",
+        "K06"
+      ],
+      "n": 8,
+      "up": 2,
+      "down": 6,
+      "largeUp": 0,
+      "largeDown": 2
+    },
+    {
+      "conditions": [
+        "K03",
+        "K18"
+      ],
+      "n": 10,
+      "up": 5,
+      "down": 5,
+      "largeUp": 3,
+      "largeDown": 1
+    },
+    {
+      "conditions": [
+        "K03",
+        "K07"
+      ],
+      "n": 10,
+      "up": 5,
+      "down": 5,
+      "largeUp": 2,
+      "largeDown": 2
+    },
+    {
+      "conditions": [
+        "K03",
+        "K19"
+      ],
+      "n": 10,
+      "up": 4,
+      "down": 6,
+      "largeUp": 2,
+      "largeDown": 2
+    },
+    {
+      "conditions": [
+        "K03",
+        "K06",
+        "K19"
+      ],
+      "n": 5,
+      "up": 1,
+      "down": 4,
+      "largeUp": 0,
+      "largeDown": 1
+    },
+    {
+      "conditions": [
+        "K03",
+        "K18",
+        "K07"
+      ],
+      "n": 7,
+      "up": 4,
+      "down": 3,
+      "largeUp": 2,
+      "largeDown": 1
+    }
   ]
 }
