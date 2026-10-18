@@ -1,0 +1,774 @@
+{
+  "schema": "ETKI05_MULTICONDITION_ECONOMIC_LABEL_STUDY_V2",
+  "date": "2026-10-18",
+  "scope": "2023-2025 only; no 2020-2022 training, 2026 not accessed",
+  "sourceNeonTable": "gold_research_r72_claude_macro_analogs_v1",
+  "sourceOfficialRelease": "OLAY_02_85_MAKRO_YENI_DNA_TEPKI_PLASEBO_20261014.csv",
+  "join": "Exact ts+etype; macro surprise consistency verified",
+  "counts": {
+    "r72": 93,
+    "joined": 69,
+    "valid4h": 68,
+    "nfp": 34,
+    "cpi": 34,
+    "excluded": [
+      "2023-04-07 NFP: macro-study source lacks valid 4-hour gold price (Good Friday market gap)"
+    ]
+  },
+  "labelSemantics": {
+    "s_ahe": "average hourly earnings actual minus pre-release consensus in percentage points; source vintage unverified",
+    "s_un": "unemployment actual minus pre-release consensus in percentage points; POS indicates higher unemployment (usually dovish)",
+    "s_ccpi": "core CPI monthly actual minus pre-release consensus in percentage points; source vintage unverified",
+    "ret240": "archived 4h post-release XAU mid percent; not bank execution",
+    "outcomeMagnitudeThreshold": "abs(ret240)>=1% exploratory / not volatility normalized",
+    "sourceCaution": "R72 internally combines archived macro-surprise estimates and gold prices without verified original consensus vintage. Selected BLS 2023 originals corroborate macro actual, NOT consensus."
+  },
+  "stats": {
+    "headlineCpiHigher": {
+      "n": 8,
+      "up": 3,
+      "down": 5,
+      "largeUp": 0,
+      "largeDown": 2,
+      "meanPct": -0.3463,
+      "byYear": {
+        "2023": {
+          "n": 2,
+          "up": 0,
+          "down": 2
+        },
+        "2024": {
+          "n": 4,
+          "up": 1,
+          "down": 3
+        },
+        "2025": {
+          "n": 2,
+          "up": 2,
+          "down": 0
+        }
+      },
+      "exampleIds": [
+        "CPI_2023-10-12",
+        "CPI_2023-12-12",
+        "CPI_2024-01-11",
+        "CPI_2024-02-13",
+        "CPI_2024-04-10",
+        "CPI_2024-10-10",
+        "CPI_2025-02-12",
+        "CPI_2025-09-11"
+      ]
+    },
+    "headlineCpiLower": {
+      "n": 13,
+      "up": 11,
+      "down": 2,
+      "largeUp": 5,
+      "largeDown": 0,
+      "meanPct": 0.6976,
+      "byYear": {
+        "2023": {
+          "n": 5,
+          "up": 4,
+          "down": 1
+        },
+        "2024": {
+          "n": 3,
+          "up": 3,
+          "down": 0
+        },
+        "2025": {
+          "n": 5,
+          "up": 4,
+          "down": 1
+        }
+      },
+      "exampleIds": [
+        "CPI_2023-01-12",
+        "CPI_2023-04-12",
+        "CPI_2023-06-13",
+        "CPI_2023-07-12",
+        "CPI_2023-11-14",
+        "CPI_2024-05-15",
+        "CPI_2024-06-12",
+        "CPI_2024-07-11",
+        "CPI_2025-03-12",
+        "CPI_2025-04-10",
+        "CPI_2025-05-13",
+        "CPI_2025-06-11",
+        "CPI_2025-10-24"
+      ]
+    },
+    "coreCpiHigher": {
+      "n": 8,
+      "up": 2,
+      "down": 6,
+      "largeUp": 0,
+      "largeDown": 1,
+      "meanPct": -0.1952,
+      "byYear": {
+        "2023": {
+          "n": 2,
+          "up": 0,
+          "down": 2
+        },
+        "2024": {
+          "n": 5,
+          "up": 1,
+          "down": 4
+        },
+        "2025": {
+          "n": 1,
+          "up": 1,
+          "down": 0
+        }
+      },
+      "exampleIds": [
+        "CPI_2023-03-14",
+        "CPI_2023-09-13",
+        "CPI_2024-02-13",
+        "CPI_2024-03-12",
+        "CPI_2024-04-10",
+        "CPI_2024-09-11",
+        "CPI_2024-10-10",
+        "CPI_2025-02-12"
+      ]
+    },
+    "coreCpiLower": {
+      "n": 11,
+      "up": 9,
+      "down": 2,
+      "largeUp": 4,
+      "largeDown": 0,
+      "meanPct": 0.6975,
+      "byYear": {
+        "2023": {
+          "n": 2,
+          "up": 2,
+          "down": 0
+        },
+        "2024": {
+          "n": 2,
+          "up": 2,
+          "down": 0
+        },
+        "2025": {
+          "n": 7,
+          "up": 5,
+          "down": 2
+        }
+      },
+      "exampleIds": [
+        "CPI_2023-07-12",
+        "CPI_2023-11-14",
+        "CPI_2024-06-12",
+        "CPI_2024-07-11",
+        "CPI_2025-01-15",
+        "CPI_2025-03-12",
+        "CPI_2025-04-10",
+        "CPI_2025-05-13",
+        "CPI_2025-06-11",
+        "CPI_2025-07-15",
+        "CPI_2025-10-24"
+      ]
+    },
+    "bothHeadlineAndCoreLower": {
+      "n": 9,
+      "up": 8,
+      "down": 1,
+      "largeUp": 4,
+      "largeDown": 0,
+      "meanPct": 0.9191,
+      "byYear": {
+        "2023": {
+          "n": 2,
+          "up": 2,
+          "down": 0
+        },
+        "2024": {
+          "n": 2,
+          "up": 2,
+          "down": 0
+        },
+        "2025": {
+          "n": 5,
+          "up": 4,
+          "down": 1
+        }
+      },
+      "exampleIds": [
+        "CPI_2023-07-12",
+        "CPI_2023-11-14",
+        "CPI_2024-06-12",
+        "CPI_2024-07-11",
+        "CPI_2025-03-12",
+        "CPI_2025-04-10",
+        "CPI_2025-05-13",
+        "CPI_2025-06-11",
+        "CPI_2025-10-24"
+      ]
+    },
+    "bothHeadlineAndCoreHigher": {
+      "n": 4,
+      "up": 2,
+      "down": 2,
+      "largeUp": 0,
+      "largeDown": 1,
+      "meanPct": -0.2172,
+      "byYear": {
+        "2023": {
+          "n": 0,
+          "up": 0,
+          "down": 0
+        },
+        "2024": {
+          "n": 3,
+          "up": 1,
+          "down": 2
+        },
+        "2025": {
+          "n": 1,
+          "up": 1,
+          "down": 0
+        }
+      },
+      "exampleIds": [
+        "CPI_2024-02-13",
+        "CPI_2024-04-10",
+        "CPI_2024-10-10",
+        "CPI_2025-02-12"
+      ]
+    },
+    "headCpiNeutralCoreHigher": {
+      "n": 4,
+      "up": 0,
+      "down": 4,
+      "largeUp": 0,
+      "largeDown": 0,
+      "meanPct": -0.1731,
+      "byYear": {
+        "2023": {
+          "n": 2,
+          "up": 0,
+          "down": 2
+        },
+        "2024": {
+          "n": 2,
+          "up": 0,
+          "down": 2
+        },
+        "2025": {
+          "n": 0,
+          "up": 0,
+          "down": 0
+        }
+      },
+      "exampleIds": [
+        "CPI_2023-03-14",
+        "CPI_2023-09-13",
+        "CPI_2024-03-12",
+        "CPI_2024-09-11"
+      ]
+    },
+    "nfpHigher": {
+      "n": 23,
+      "up": 10,
+      "down": 13,
+      "largeUp": 4,
+      "largeDown": 5,
+      "meanPct": -0.2739,
+      "byYear": {
+        "2023": {
+          "n": 8,
+          "up": 3,
+          "down": 5
+        },
+        "2024": {
+          "n": 8,
+          "up": 5,
+          "down": 3
+        },
+        "2025": {
+          "n": 7,
+          "up": 2,
+          "down": 5
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-01-06",
+        "NFP_2023-02-03",
+        "NFP_2023-03-10",
+        "NFP_2023-05-05",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2023-12-08",
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-03-08",
+        "NFP_2024-04-05",
+        "NFP_2024-06-07",
+        "NFP_2024-07-05",
+        "NFP_2024-10-04",
+        "NFP_2024-12-06",
+        "NFP_2025-01-10",
+        "NFP_2025-04-04",
+        "NFP_2025-05-02",
+        "NFP_2025-06-06",
+        "NFP_2025-07-03",
+        "NFP_2025-11-20",
+        "NFP_2025-12-16"
+      ]
+    },
+    "aheHigher": {
+      "n": 13,
+      "up": 4,
+      "down": 9,
+      "largeUp": 0,
+      "largeDown": 2,
+      "meanPct": -0.4553,
+      "byYear": {
+        "2023": {
+          "n": 4,
+          "up": 2,
+          "down": 2
+        },
+        "2024": {
+          "n": 7,
+          "up": 2,
+          "down": 5
+        },
+        "2025": {
+          "n": 2,
+          "up": 0,
+          "down": 2
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-05-05",
+        "NFP_2023-07-07",
+        "NFP_2023-08-04",
+        "NFP_2023-12-08",
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-06-07",
+        "NFP_2024-09-06",
+        "NFP_2024-10-04",
+        "NFP_2024-11-01",
+        "NFP_2024-12-06",
+        "NFP_2025-02-07",
+        "NFP_2025-06-06"
+      ]
+    },
+    "aheLower": {
+      "n": 13,
+      "up": 7,
+      "down": 6,
+      "largeUp": 3,
+      "largeDown": 1,
+      "meanPct": 0.0424,
+      "byYear": {
+        "2023": {
+          "n": 6,
+          "up": 4,
+          "down": 2
+        },
+        "2024": {
+          "n": 3,
+          "up": 2,
+          "down": 1
+        },
+        "2025": {
+          "n": 4,
+          "up": 1,
+          "down": 3
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-01-06",
+        "NFP_2023-03-10",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2023-11-03",
+        "NFP_2024-03-08",
+        "NFP_2024-05-03",
+        "NFP_2024-08-02",
+        "NFP_2025-05-02",
+        "NFP_2025-07-03",
+        "NFP_2025-11-20",
+        "NFP_2025-12-16"
+      ]
+    },
+    "unemploymentHigher": {
+      "n": 14,
+      "up": 7,
+      "down": 7,
+      "largeUp": 2,
+      "largeDown": 2,
+      "meanPct": -0.1343,
+      "byYear": {
+        "2023": {
+          "n": 5,
+          "up": 3,
+          "down": 2
+        },
+        "2024": {
+          "n": 5,
+          "up": 3,
+          "down": 2
+        },
+        "2025": {
+          "n": 4,
+          "up": 1,
+          "down": 3
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-03-10",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2023-11-03",
+        "NFP_2024-03-08",
+        "NFP_2024-05-03",
+        "NFP_2024-06-07",
+        "NFP_2024-07-05",
+        "NFP_2024-08-02",
+        "NFP_2025-03-07",
+        "NFP_2025-04-04",
+        "NFP_2025-11-20",
+        "NFP_2025-12-16"
+      ]
+    },
+    "unemploymentLower": {
+      "n": 12,
+      "up": 5,
+      "down": 7,
+      "largeUp": 2,
+      "largeDown": 2,
+      "meanPct": -0.2652,
+      "byYear": {
+        "2023": {
+          "n": 5,
+          "up": 2,
+          "down": 3
+        },
+        "2024": {
+          "n": 4,
+          "up": 2,
+          "down": 2
+        },
+        "2025": {
+          "n": 3,
+          "up": 1,
+          "down": 2
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-01-06",
+        "NFP_2023-02-03",
+        "NFP_2023-05-05",
+        "NFP_2023-08-04",
+        "NFP_2023-12-08",
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-04-05",
+        "NFP_2024-10-04",
+        "NFP_2025-01-10",
+        "NFP_2025-02-07",
+        "NFP_2025-07-03"
+      ]
+    },
+    "nfpHigherAheHigher": {
+      "n": 8,
+      "up": 2,
+      "down": 6,
+      "largeUp": 0,
+      "largeDown": 2,
+      "meanPct": -0.6858,
+      "byYear": {
+        "2023": {
+          "n": 2,
+          "up": 0,
+          "down": 2
+        },
+        "2024": {
+          "n": 5,
+          "up": 2,
+          "down": 3
+        },
+        "2025": {
+          "n": 1,
+          "up": 0,
+          "down": 1
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-05-05",
+        "NFP_2023-12-08",
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-06-07",
+        "NFP_2024-10-04",
+        "NFP_2024-12-06",
+        "NFP_2025-06-06"
+      ]
+    },
+    "nfpHigherAheLower": {
+      "n": 10,
+      "up": 5,
+      "down": 5,
+      "largeUp": 3,
+      "largeDown": 1,
+      "meanPct": 0.1279,
+      "byYear": {
+        "2023": {
+          "n": 5,
+          "up": 3,
+          "down": 2
+        },
+        "2024": {
+          "n": 1,
+          "up": 1,
+          "down": 0
+        },
+        "2025": {
+          "n": 4,
+          "up": 1,
+          "down": 3
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-01-06",
+        "NFP_2023-03-10",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2024-03-08",
+        "NFP_2025-05-02",
+        "NFP_2025-07-03",
+        "NFP_2025-11-20",
+        "NFP_2025-12-16"
+      ]
+    },
+    "nfpHigherUnemploymentHigher": {
+      "n": 10,
+      "up": 5,
+      "down": 5,
+      "largeUp": 2,
+      "largeDown": 2,
+      "meanPct": -0.1029,
+      "byYear": {
+        "2023": {
+          "n": 4,
+          "up": 2,
+          "down": 2
+        },
+        "2024": {
+          "n": 3,
+          "up": 2,
+          "down": 1
+        },
+        "2025": {
+          "n": 3,
+          "up": 1,
+          "down": 2
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-03-10",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2024-03-08",
+        "NFP_2024-06-07",
+        "NFP_2024-07-05",
+        "NFP_2025-04-04",
+        "NFP_2025-11-20",
+        "NFP_2025-12-16"
+      ]
+    },
+    "nfpHigherUnemploymentLower": {
+      "n": 10,
+      "up": 4,
+      "down": 6,
+      "largeUp": 2,
+      "largeDown": 2,
+      "meanPct": -0.3508,
+      "byYear": {
+        "2023": {
+          "n": 4,
+          "up": 1,
+          "down": 3
+        },
+        "2024": {
+          "n": 4,
+          "up": 2,
+          "down": 2
+        },
+        "2025": {
+          "n": 2,
+          "up": 1,
+          "down": 1
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-01-06",
+        "NFP_2023-02-03",
+        "NFP_2023-05-05",
+        "NFP_2023-12-08",
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-04-05",
+        "NFP_2024-10-04",
+        "NFP_2025-01-10",
+        "NFP_2025-07-03"
+      ]
+    },
+    "tripleNfpHigherAheHigherUnemploymentLower": {
+      "n": 5,
+      "up": 1,
+      "down": 4,
+      "largeUp": 0,
+      "largeDown": 1,
+      "meanPct": -0.7083,
+      "byYear": {
+        "2023": {
+          "n": 2,
+          "up": 0,
+          "down": 2
+        },
+        "2024": {
+          "n": 3,
+          "up": 1,
+          "down": 2
+        },
+        "2025": {
+          "n": 0,
+          "up": 0,
+          "down": 0
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-05-05",
+        "NFP_2023-12-08",
+        "NFP_2024-01-05",
+        "NFP_2024-02-02",
+        "NFP_2024-10-04"
+      ]
+    },
+    "tripleNfpHigherAheLowerUnemploymentHigher": {
+      "n": 7,
+      "up": 4,
+      "down": 3,
+      "largeUp": 2,
+      "largeDown": 1,
+      "meanPct": 0.1876,
+      "byYear": {
+        "2023": {
+          "n": 4,
+          "up": 2,
+          "down": 2
+        },
+        "2024": {
+          "n": 1,
+          "up": 1,
+          "down": 0
+        },
+        "2025": {
+          "n": 2,
+          "up": 1,
+          "down": 1
+        }
+      },
+      "exampleIds": [
+        "NFP_2023-03-10",
+        "NFP_2023-06-02",
+        "NFP_2023-09-01",
+        "NFP_2023-10-06",
+        "NFP_2024-03-08",
+        "NFP_2025-11-20",
+        "NFP_2025-12-16"
+      ]
+    }
+  },
+  "tests": {
+    "up": {
+      "kind": {
+        "brier": 0.2924,
+        "unseen": 0,
+        "byKind": {
+          "CPI": 0.3325,
+          "NFP": 0.2559
+        }
+      },
+      "headline": {
+        "brier": 0.2907,
+        "unseen": 0,
+        "byKind": {
+          "CPI": 0.3342,
+          "NFP": 0.2511
+        }
+      },
+      "pair": {
+        "brier": 0.2767,
+        "unseen": 5,
+        "byKind": {
+          "CPI": 0.2868,
+          "NFP": 0.2676
+        }
+      },
+      "triple": {
+        "brier": 0.305,
+        "unseen": 6,
+        "byKind": {
+          "CPI": 0.2868,
+          "NFP": 0.3216
+        }
+      }
+    },
+    "largeMagnitude": {
+      "kind": {
+        "brier": 0.2039,
+        "unseen": 0,
+        "byKind": {
+          "CPI": 0.1716,
+          "NFP": 0.2333
+        }
+      },
+      "headline": {
+        "brier": 0.2323,
+        "unseen": 0,
+        "byKind": {
+          "CPI": 0.1669,
+          "NFP": 0.2918
+        }
+      },
+      "pair": {
+        "brier": 0.2703,
+        "unseen": 5,
+        "byKind": {
+          "CPI": 0.2211,
+          "NFP": 0.315
+        }
+      },
+      "triple": {
+        "brier": 0.2796,
+        "unseen": 6,
+        "byKind": {
+          "CPI": 0.2211,
+          "NFP": 0.3327
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Same outcomes reused in historical hypotheses; model-family selection retrospective, 2025 test is temporal sensitivity not blind.",
+    "18 exploratory groups and multiple comparisons; high hit rates on tiny samples can happen by chance.",
+    "CPI and NFP groups selected only from known scheduled macro days; not full market frequency.",
+    "Previous work's E01-E05 economic process families are not these K-condition labels.",
+    "No direct USD/TIPS/real yield synchronicity; no confirmed firstprint-vintage; no S3 connection.",
+    "r72 r240 proxy cross-checked against independent repo 85 macro csv; 68 source keys match and headline surprise values match; per-event price-return source differs marginally."
+  ]
+}
