@@ -128,6 +128,22 @@ function testAll(){
   assert.equal(s.S2Shadow.status,"GLOBAL_BASELINE_PLUS_EVENT_MEASUREMENT_ONLY");
   assert.equal(s.S3Shadow.netExpectedBenefit,null);
   assert.equal(s.audit.trainedDirectionalRules,0);});
+ test("feature frame contains dated K/ORG but no forward unknown labels",()=>{
+  const s=run(report());
+  assert.equal(s.eventFeatureFrames.length,1);
+  const f=s.eventFeatureFrames[0];
+  assert.deepEqual(f.economicKTags,["K39"]);
+  assert.equal(f.containsFutureReturnLabels,false);
+  assert.equal(f.forwardDirectionPrediction,null);
+  assert.equal(f.economicDecisionFeatureCertified,false);
+  assert.equal(f.tradeAllowed,false);});
+ test("stale event observation scope cannot become a long swing attributed to a single news",()=>{
+  const news=report("OLD",{eventTime:"2023-01-12T13:15:00Z",
+    publishedAt:"2023-01-12T13:15:00Z",availableAt:"2023-01-12T13:15:00Z",
+    detectedAt:"2023-01-12T13:15:00Z"});
+  const s=run(news,{asof:"2023-02-02T15:00:00Z"});
+  assert.equal(s.events[0].market.priceSinceAnnouncementPct,null);
+  assert.equal(s.events[0].market.observationWindowExpired,true);});
  return {count:n,checks:results};
 }
 module.exports={testAll};
