@@ -72,15 +72,17 @@ function audit({bars,macro,stories=[]}){
  if(!Array.isArray(bars)||!Array.isArray(macro)||!Array.isArray(stories))fail("INVALID_DATA");
  const {price,alerts,gapAlerts,stateAudit}=sampleAlerts(bars);
  const {releases,dated}=buildNews(macro,stories);
- const groups={PRE_0_4H:[],PRE_4_24H:[],POST_0_4H:[],POST_4_24H:[],NO_HOURLY_MACRO_WITHIN_24H:[]};
+ const groups={PRE_0_4H:[],PRE_4_24H:[],COINCIDENT_RELEASE_BAR_CLOSE_UNRESOLVED:[],POST_0_4H:[],POST_4_24H:[],NO_HOURLY_MACRO_WITHIN_24H:[]};
  for(const a of alerts){
-  const before=releases.filter(r=>r.at<=a.time_utc && a.time_utc-r.at<=24*H);
+  const before=releases.filter(r=>r.at<a.time_utc && a.time_utc-r.at<=24*H);
+  const coincide=releases.filter(r=>r.at===a.time_utc);
   const after=releases.filter(r=>r.at>a.time_utc && r.at-a.time_utc<=24*H);
   const nearBefore=before.length?before[before.length-1]:null;
   const nearAfter=after.length?after[0]:null;
   const preLag=nearBefore?(a.time_utc-nearBefore.at)/H:null;
   const postLag=nearAfter?(nearAfter.at-a.time_utc)/H:null;
-  const role=preLag!==null?(preLag<=4?"PRE_0_4H":"PRE_4_24H"):
+  const role=coincide.length?"COINCIDENT_RELEASE_BAR_CLOSE_UNRESOLVED":
+   preLag!==null?(preLag<=4?"PRE_0_4H":"PRE_4_24H"):
    postLag!==null?(postLag<=4?"POST_0_4H":"POST_4_24H"):
    "NO_HOURLY_MACRO_WITHIN_24H";
   const day=new Date(a.time_utc).toISOString().slice(0,10),dayN=dt(day+"T00:00:00Z");
@@ -90,6 +92,7 @@ function audit({bars,macro,stories=[]}){
        dt(s.newsDate+"T00:00:00Z")>dayN?"AFTER_ALERT_CALENDAR_DAY":
        "SAME_CALENDAR_DAY_ORDER_UNKNOWN",
       firstprintTimeKnown:false}));
+  a.coincident_macro_at_price_bar_close=coincide.map(x=>({id:x.id,kind:x.kind,time_utc:x.time_utc}));
   a.closest_macro_before=nearBefore?{id:nearBefore.id,kind:nearBefore.kind,
    release_at:nearBefore.time_utc,lag_hours:+preLag.toFixed(2)}:null;
   a.closest_macro_after=nearAfter?{id:nearAfter.id,kind:nearAfter.kind,
@@ -118,11 +121,13 @@ function audit({bars,macro,stories=[]}){
   dateOnlyStoryWithin3d:alerts.filter(e=>new Date(e.time_utc).getUTCFullYear()===y&&
    e.other_news_date_only.length>0).length}]));
  const events=releases.map(r=>{
-  const next4=alerts.filter(a=>a.time_utc>=r.at&&a.time_utc<=r.at+4*H);
-  const next24=alerts.filter(a=>a.time_utc>=r.at&&a.time_utc<=r.at+24*H);
+  const next4=alerts.filter(a=>a.time_utc>r.at&&a.time_utc<=r.at+4*H);
+  const coincident=alerts.filter(a=>a.time_utc===r.at);
+  const next24=alerts.filter(a=>a.time_utc>r.at&&a.time_utc<=r.at+24*H);
   const before4=alerts.filter(a=>a.time_utc<r.at&&a.time_utc>=r.at-4*H);
   return {id:r.id,kind:r.kind,release_utc:r.time_utc,original_firstprint_certified:false,
    alerts_pre4h:before4.map(a=>a.alert_id),
+   alerts_at_exact_release_close_UNRESOLVED:coincident.map(a=>a.alert_id),
    alerts_post4h:next4.map(a=>a.alert_id),
    alerts_post24h:next24.map(a=>a.alert_id),
    earliest_post4h_hours:next4.length?+((next4[0].time_utc-r.at)/H).toFixed(2):null,
@@ -147,8 +152,9 @@ function audit({bars,macro,stories=[]}){
   alertCounts:{bars:price.length,marketOnlyAlertTotal:alerts.length,gapOpen:gapAlerts.length,
    alertsWithMacroBefore24h:alertsNewsBefore.length,
    alertsWithMacroAfter24h:alertsNewsAfter.length,
-   alertsWithAnyMacroWithin24h:alerts.filter(a=>a.closest_macro_before||a.closest_macro_after).length,
-   alertsNoMacroWithin24h:alerts.filter(a=>!a.closest_macro_before&&!a.closest_macro_after).length,
+   alertsWithAnyMacroWithin24h:alerts.filter(a=>a.closest_macro_before||a.closest_macro_after||a.coincident_macro_at_price_bar_close.length).length,
+   alertsAtMacroExactBarCloseUnresolved:alerts.filter(a=>a.coincident_macro_at_price_bar_close.length).length,
+   alertsNoMacroWithin24h:alerts.filter(a=>!a.closest_macro_before&&!a.closest_macro_after&&!a.coincident_macro_at_price_bar_close.length).length,
    alarmsWithSelectedHeadlineWithin3calendarDays:knownDayCases.length},
   alertsByYear,
   chronologyGroups:groupStats,
