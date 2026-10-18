@@ -12,18 +12,21 @@
 
 | Bir fiyat uyarısının kayıtlı CPI/NFP/FOMC açıklamasına göre zamanı | Uyarı | Yaklaşık sonraki 5×96 M15 bar içinde en az %4 yeni düşüş |
 |---|---:|---:|
-| **Açıklama önce:** 0–4 saat önce açıklama yayımlanmış | **54** | **0/54 = %0,00** |
+| **Açıklama önce:** 0–4 saat önce açıklama yayımlanmış | **52** | **0/52 = %0,00** |
 | **Açıklama önce:** 4–24 saat önce açıklama yayımlanmış | **41** | **5/41 = %12,20** |
+| **Alarm ile haber aynı bar kapanışında:** sıralama belirsiz | **2** | **0/2 = %0,00** |
 | **Alarm önce:** 0–4 saat sonra açıklama yayımlanacak | **13** | **1/13 = %7,69** |
 | **Alarm önce:** 4–24 saat sonra açıklama yayımlanacak | **50** | **5/50 = %10,00** |
 | **Takvimde eşleşme yok:** ±24 saat içinde bu üç tür açıklama yok | **586** | **46/579 = %7,94** |
 | **TOPLAM** | **744** | **57/737 = %7,73** |
 
-**Önemli:** Bir uyarının hem öncesinde hem sonrasında yayın bulunursa tabloya yalnız **önceki en yakın** habere göre tek kategoriyle girer. Ham eşleşme sayısı: **95 uyarı** gerideki 24 saatte makro yayına yakın; **68 uyarı** ilerideki 24 saatte makro yayına yakın; çift eşleşmeler giderildiğinde **158 benzersiz alarm** en az bir makroyla ±24 saat yakın, **586 benzersiz alarm** bu dar takvimde hiç eşleşmedi.
+**Aynı bar kapanışında haber:** 2024-05-03 istihdam ve 2024-05-15 CPI açıklamalarında iki fiyat barı, haberin yayımlandığı dakikada kapanmıştır. Fiyat barının içerdiği işlemler açıklamadan **önce** gerçekleşmiş olabileceğinden “haberden sonra” sayılmadı; zaman sırası **belirsiz** olarak ayrıldı.
+
+**Önemli:** Bir uyarının hem öncesinde hem sonrasında yayın bulunursa tabloya yalnız **önceki en yakın** habere göre tek kategoriyle girer. Ham eşleşme sayısı: **93 uyarı** gerideki 24 saatte makro yayına yakın; **68 uyarı** ilerideki 24 saatte makro yayına yakın; çift eşleşmeler giderildiğinde **158 benzersiz alarm** en az bir makroyla ±24 saat yakın, **586 benzersiz alarm** bu dar takvimde hiç eşleşmedi.
 
 **Gelecek sonuç etiketi:** Uyarı anından sonraki **480 kaydedilmiş 15dk barı** içinde görülen **en kötü ilave fiyat getirisi ≤−%4**. Bu yaklaşık beş normal işlem seansı kadar *fiyat gözlemi*, gerçek 5 takvim günü veya sürekli açık bir piyasa değildir; seans/hafta sonu boşlukları bu ufku uzatabilir. 7 alarmın gelecekte 480 bar verisi tamamlanmadığından sonuç **bilinmiyor**, başarısız kabul edilmedi. Alarm geçmiş verilerden; sonuç yalnız daha sonraki bilimsel değerlendirmeden elde edildi, işlem anı girdisi değildir.
 
-**Net yorum:** Makro açıklamadan sonraki ilk dört saatte **54 fiyat zayıflama** gözlendi. **Hiçbirinin ardından** bu ölçüm ufkunda yeni bir %4'ten büyük fiyat düşüşü görülmedi. İstatistiksel neden-sonuç veya evrensel sonuç çıkarılmaz; türlere, katılım oranlarına ve 2025 veri eksiklerine göre uygun örnekleme yapılmadı. **Makroya yakın fiyat alarmı, otomatik çok günlük büyük düşüş alarmı değildir.**
+**Net yorum:** Makro açıklamadan sonraki ilk dört saatte **52 fiyat zayıflama** gözlendi. **Hiçbirinin ardından** bu ölçüm ufkunda yeni bir %4'ten büyük fiyat düşüşü görülmedi. İstatistiksel neden-sonuç veya evrensel sonuç çıkarılmaz; türlere, katılım oranlarına ve 2025 veri eksiklerine göre uygun örnekleme yapılmadı. **Makroya yakın fiyat alarmı, otomatik çok günlük büyük düşüş alarmı değildir.**
 
 ## 2) Haber türü: hangi sınıf fiyat uyarısı ile daha çok eşleşiyor?
 
@@ -41,7 +44,7 @@ Bu sayı, CPI/NFP haberlerinin ilk birkaç saatlik **fiyat dalgalanmasıyla zama
 | Yıl | Fiyat alarmı | Öncesindeki 24 saatte CPI/NFP/FOMC | Sonrasındaki 24 saatte CPI/NFP/FOMC |
 |---|---:|---:|---:|
 | 2023 | **219** | **33** | **19** |
-| 2024 | **237** | **44** | **22** |
+| 2024 | **237** | **42** | **22** |
 | 2025 | **288** | **18** | **27** |
 
 **Veri evreni farkı:** 2023 ve 2024 için takvimde **32'şer** makro yayın; 2025 için ise **yalnız 21** yayın vardı. Dolayısıyla 2025'te daha çok “makroya bağlanamayan alarm” görmemiz, diğer ekonomik haberlerin etkisiz olduğunu **göstermez**; takvim yetersizdir.
@@ -77,6 +80,6 @@ Büyük düşüşlerin ne kadarını ilk haberin yakaladığını öğrenmek iç
 - [744 alarm + 85 makro yayın + 17 tarihli haber — makine JSON](adaptive_trading_core/GOLD_2023_2025_744_FIYAT_UYARISI_85_MAKRO_HABER_ESLESME_20261019.json)
 - [Makro ve 17 büyük düşüş kırılımları](adaptive_trading_core/GOLD_744_UYARI_17_BUYUK_DUSUS_MAKRO_TUR_ESLESMESI_20261019.json)
 - [Reprodüksiyon kodu](adaptive_trading_core/downside_alert_news_join_v1.js)
-- [9/9 zaman-vintage ve lookahead koruma testi](adaptive_trading_core/test_downside_alert_news_join_v1.js)
+- [10/10 zaman-vintage ve lookahead koruma testi](adaptive_trading_core/test_downside_alert_news_join_v1.js)
 
 **Durum:** \`744_ALERTS_MATCHED=YES\`; \`AVAILABLE_CALENDAR_85_RELEASES=YES\`; \`DATE_ONLY_CASE_CONTEXT_17=YES\`; \`MARKET_DATA_BARS_70915=YES\`; \`FIRSTPRINT_CERTIFIED=0\`; \`ALL_WORLD_NEWS_CAPTURED=NO\`; \`ECONOMIC_CAUSAL_ALPHA=NOT_PROVEN\`; \`S3_BANK_TRADES=0\`.
