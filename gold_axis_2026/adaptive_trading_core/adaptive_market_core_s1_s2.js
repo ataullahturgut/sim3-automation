@@ -22,7 +22,7 @@ const clip=x=>Math.max(-5,Math.min(5,x));
 function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_ASOF",
  learningMode="DISCOVERY_FULL_ARCHIVE",shadowResearch=false,
  positionResearchMode="LEGACY_M15",economicSources={},
- downsideEnabled=true,downsideNewsRegistry=null}={}){
+ downsideEnabled=false,downsideNewsRegistry=null}={}){
  if(typeof sourceId!=="string"||!sourceId)
   throw Error("MODEL_SOURCE_ID_REQUIRED");
  if(!["RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","SYNTHETIC_ONLY"].includes(sourceEvidence))
@@ -175,7 +175,8 @@ function summary(s){
  return {version:VERSION,mode:s.mode,
   lifecycle:s2.summary(s.s2),slowLifecycle:slow.summary(s.slow),
   positionResearch:s3.summary(s.s3),
-  downsideResearch:s.downside?{enabled:s.downsideEnabled,audit:cp(s.downside.audit),
+  downsideResearch:s.downside?{monitorActive:true,
+   s1FeatureInjectionEnabled:s.downsideEnabled,audit:cp(s.downside.audit),
    lastOnset:s.downside.onsetAt===null?null:iso(s.downside.onsetAt),
    lastNews:s.downside.latestNews}:null,ruleDiscovery:{
    observations:s.s1.audit.observations,anchors:s.s1.audit.anchors,
