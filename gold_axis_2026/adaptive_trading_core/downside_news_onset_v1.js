@@ -135,11 +135,11 @@ function observe(s,bar){
  if(gapDrop){m.phase="GAP_OPEN_DOWN_DISLOCATION";m.drawdown=round(-100*Math.log(bar.price/s.lastPrice));
   m.reference=round(s.lastPrice);m.ready=false;}
  let newOnset=false,newsLinked=null;
+ const existingEarlier=priorWasAcrossGap;
  if((m.ready&&m.drawdown>=.5||gapDrop)&&s.onsetAt===null){
   s.onsetAt=t;s.onsetReference=m.reference;newOnset=true;
   if(!existingEarlier){s.previousEpisodeOnsetAt=t;s.previousEpisodeReference=m.reference;}
   // Only firstprint verified, not retroactively ingested earlier news.
-  const existingEarlier=priorWasAcrossGap;
   const eligible=s.pendingBeforeFall.filter(n=>!existingEarlier&&
    t-ms(n.detectedAt,"detect")<=72*HOUR&&
    s.lastAt!==null&&ms(n.detectedAt,"detect")<=s.lastAt);
