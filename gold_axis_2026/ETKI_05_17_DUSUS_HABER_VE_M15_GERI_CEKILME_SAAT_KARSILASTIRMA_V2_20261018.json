@@ -32,8 +32,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_004",
@@ -57,8 +58,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_006",
@@ -82,8 +84,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_010",
@@ -107,8 +110,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_012",
@@ -132,8 +136,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_014",
@@ -157,8 +162,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_016",
@@ -182,8 +188,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_018",
@@ -207,8 +214,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_020",
@@ -232,8 +240,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_024",
@@ -257,8 +266,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_028",
@@ -282,8 +292,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_030",
@@ -307,8 +318,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_032",
@@ -332,8 +344,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_034",
@@ -357,8 +370,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_036",
@@ -382,8 +396,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_038",
@@ -407,8 +422,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     },
     {
       "id": "SWING_V1_042",
@@ -432,8 +448,9 @@
       "newsOriginalFirstAvailableUtcCertified": false,
       "priceFirstBearishImpulseCertified": false,
       "observedExPostThreshold": true,
-      "newsCausedInitialFall": false,
-      "evidenceGrade": "H0_TIMING_COMPARISON"
+      "newsCausedInitialFall": null,
+      "evidenceGrade": "H0_TIMING_COMPARISON",
+      "newsInitialFallCausality": "UNVERIFIED_NOT_DISPROVEN"
     }
   ],
   "qa": {
@@ -441,5 +458,6 @@
     "reportedBeforePriceThresholdNotEqualToCausality": true,
     "priorDocumentaryCount": "2-before/4-same/11-after from older selected article set is nonexhaustive and changed with newly discovered May 6, July 22, Jun 13, etc."
   },
-  "highlight": "Apr 2 2025 tariff announcement follows 1% morning threshold by around 19h45 and first gold response up; Oct 2024 election after Oct31 first reversal; June13 2025 conflict immediate gold up; May22 2024 Fed minutes after May20 first fall; CME Dec26 official notice before Dec29 >1% down but release hour uncertified"
+  "highlight": "Apr 2 2025 tariff announcement follows 1% morning threshold by around 19h45 and first gold response up; Oct 2024 election after Oct31 first reversal; June13 2025 conflict immediate gold up; May22 2024 Fed minutes after May20 first fall; CME Dec26 official notice before Dec29 >1% down but release hour uncertified",
+  "note": "Zero certified does NOT establish that the news caused no falls; causal flag null. Half/one percent thresholds from running prior-day price max are retrospective reversal diagnostics, NOT first down tick or earliest news."
 }
