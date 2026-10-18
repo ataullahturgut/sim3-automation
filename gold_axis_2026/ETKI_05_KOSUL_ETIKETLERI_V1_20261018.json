@@ -1,6 +1,6 @@
 {
   "schema": "ETKI05_ECONOMIC_CONDITION_LABEL_REGISTRY_V1",
-  "version": "2026-10-18-v1.2",
+  "version": "2026-10-18-v1.3",
   "project": "GOLD-ADAPTIVE-MODEL-APP-01",
   "user_intent": "Economic condition item labels and their combinations, NOT a new market prediction algorithm; outcome lookup is separate",
   "status": "HYPOTHESIS_LIBRARY_NOT_TRADE_RULE",
@@ -423,6 +423,42 @@
       "predicate": "Country-specific labor methodology and original consensus required",
       "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
       "availability": "Requires original publisher, first_available_at, event typed data, independent contrast and external as-of validation"
+    },
+    {
+      "id": "K45",
+      "key": "PCE_ABOVE_CONSENSUS",
+      "title": "ABD PCE enflasyonu beklentiden yüksek",
+      "kind": "PCE",
+      "predicate": "First-print actual vs pre-announcement market consensus; full units and prior vintage required",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Original issuer release and timestamped forecast required"
+    },
+    {
+      "id": "K46",
+      "key": "PCE_BELOW_CONSENSUS",
+      "title": "ABD PCE enflasyonu beklentiden düşük",
+      "kind": "PCE",
+      "predicate": "First-print actual vs pre-announcement market consensus; full units and prior vintage required",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Original issuer release and timestamped forecast required"
+    },
+    {
+      "id": "K47",
+      "key": "GDP_ABOVE_CONSENSUS",
+      "title": "Büyüme (GSYH) beklentiden yüksek",
+      "kind": "GDP",
+      "predicate": "First-print actual vs pre-announcement market consensus; full units and prior vintage required",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Original issuer release and timestamped forecast required"
+    },
+    {
+      "id": "K48",
+      "key": "GDP_BELOW_CONSENSUS",
+      "title": "Büyüme (GSYH) beklentiden düşük",
+      "kind": "GDP",
+      "predicate": "First-print actual vs pre-announcement market consensus; full units and prior vintage required",
+      "usable_now": "RULE_DEFINED_INPUT_NOT_YET_MEASURED",
+      "availability": "Original issuer release and timestamped forecast required"
     }
   ],
   "counts": {
@@ -870,7 +906,7 @@
     "scope": "WORLDWIDE_NOT_US_ONLY",
     "new_tags_from": "K20",
     "old_tags_preserved": true,
-    "new_tags_count": 25,
+    "new_tags_count": 29,
     "warning": "Official release happened does not imply hawkish, bearish gold or alpha. Directional claims require as-of economic surprise and cross-market validation.",
     "source_registry": "OLAY_02_KURESEL_HABER_KAYNAK_KURALLARI_V1_20261018.json",
     "engine": "adaptive_trading_core/event_news_condition_router_v1.js",
