@@ -1,32 +1,38 @@
 {
-  "forecast_rows": 0,
+  "forecast_rows": 1,
   "freeze_timestamp_utc": "2026-10-02 19:10:36+00:00",
   "frozen_reproduction_audit": {
-    "max_abs_diff_path": 2.220446049250313e-15,
-    "max_abs_diff_structural": 2.6645352591003757e-15,
+    "max_abs_diff_path": 1.5787371410169726e-13,
+    "max_abs_diff_structural": 2.4424906541753444e-15,
     "pass": true,
     "september_rows": 19
   },
   "identity": "AURORA_H3_V1_PROSPECTIVE",
-  "integrity_audit_rows": 0,
+  "integrity_audit_rows": 13,
   "integrity_gate_version": "GOLD_H3_DATA_INTEGRITY_GATE_V1",
   "integrity_quarantine_rows": 0,
-  "latest_forecast": null,
-  "live_stak_ref": "54fdf1c8d39b7b6c7b874d0f30f784296e886044",
+  "latest_forecast": {
+    "active_expert": "PATH_GLOBAL",
+    "direction": "DOWN",
+    "feature_cutoff_date": "2026-10-16",
+    "p_aurora": 0.4354449026784281,
+    "settlement_status": "PENDING"
+  },
+  "live_stak_ref": "02964d0324dde362099976c867f5077a369acaa5",
   "metrics": {
     "n": 0
   },
-  "missed_origins": 0,
-  "pending_rows": 0,
-  "postfreeze_daily_price_rows": 0,
+  "missed_origins": 10,
+  "pending_rows": 1,
+  "postfreeze_daily_price_rows": 13,
   "settled_rows": 0,
   "status": "ACTIVE",
   "this_run_changes": {
     "built_frozen_expert_matrix": false,
     "built_frozen_price_snapshot": false,
     "integrity_quarantined_now": 0,
-    "new_forecasts": 0,
-    "new_price_rows": 0,
+    "new_forecasts": 1,
+    "new_price_rows": 13,
     "new_settlements": 0
   }
 }
