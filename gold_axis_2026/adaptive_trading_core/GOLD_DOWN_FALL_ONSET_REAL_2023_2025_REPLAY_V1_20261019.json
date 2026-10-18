@@ -1,0 +1,244 @@
+{
+  "schema": "GOLD_DOWN_FALL_ONSET_REAL_2023_2025_REPLAY_V1",
+  "asof": "2026-10-19",
+  "bars": 70915,
+  "sample": "2023-2025 all available 15m XAUUSD BIDASK midpoint, no 2022 training",
+  "threeYears": {
+    "2023": 23544,
+    "2024": 23733,
+    "2025": 23638
+  },
+  "alerts": 744,
+  "gapOpenAlerts": 6,
+  "priceReversals": {
+    "newPriceWeakness": 744,
+    "newsCount": 0,
+    "gaps": 775
+  },
+  "earlyPivotWithinMinus1Plus2Days": 17,
+  "all17SelectedDowns": [
+    {
+      "id": "SWING_V1_002",
+      "start": "2023-02-01",
+      "fullLegPct": -7.147197,
+      "group": "A",
+      "earlyAlertCount": 3,
+      "firstNearPivotAt": "2023-01-31T06:15:00.000Z",
+      "firstAfterPivotAt": "2023-02-01T17:15:00.000Z",
+      "firstHoursAfterPivot": 17.25,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_004",
+      "start": "2023-05-04",
+      "fullLegPct": -6.959525,
+      "group": "A",
+      "earlyAlertCount": 3,
+      "firstNearPivotAt": "2023-05-04T02:15:00.000Z",
+      "firstAfterPivotAt": "2023-05-04T02:15:00.000Z",
+      "firstHoursAfterPivot": 2.25,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_006",
+      "start": "2023-07-18",
+      "fullLegPct": -8.020636,
+      "group": "A",
+      "earlyAlertCount": 1,
+      "firstNearPivotAt": "2023-07-17T13:00:00.000Z",
+      "firstAfterPivotAt": "2023-07-20T12:45:00.000Z",
+      "firstHoursAfterPivot": 60.75,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_010",
+      "start": "2023-12-01",
+      "fullLegPct": -4.463277,
+      "group": "B",
+      "earlyAlertCount": 2,
+      "firstNearPivotAt": "2023-11-30T14:45:00.000Z",
+      "firstAfterPivotAt": "2023-12-01T12:00:00.000Z",
+      "firstHoursAfterPivot": 12,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_012",
+      "start": "2023-12-27",
+      "fullLegPct": -4.112955,
+      "group": "A",
+      "earlyAlertCount": 1,
+      "firstNearPivotAt": "2023-12-28T08:30:00.000Z",
+      "firstAfterPivotAt": "2023-12-28T08:30:00.000Z",
+      "firstHoursAfterPivot": 32.5,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_014",
+      "start": "2024-04-19",
+      "fullLegPct": -4.378754,
+      "group": "B",
+      "earlyAlertCount": 3,
+      "firstNearPivotAt": "2024-04-18T13:45:00.000Z",
+      "firstAfterPivotAt": "2024-04-19T02:45:00.000Z",
+      "firstHoursAfterPivot": 2.75,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_016",
+      "start": "2024-05-20",
+      "fullLegPct": -5.458903,
+      "group": "E",
+      "earlyAlertCount": 4,
+      "firstNearPivotAt": "2024-05-20T06:45:00.000Z",
+      "firstAfterPivotAt": "2024-05-20T06:45:00.000Z",
+      "firstHoursAfterPivot": 6.75,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_018",
+      "start": "2024-07-16",
+      "fullLegPct": -4.222006,
+      "group": "B",
+      "earlyAlertCount": 4,
+      "firstNearPivotAt": "2024-07-15T17:45:00.000Z",
+      "firstAfterPivotAt": "2024-07-17T03:30:00.000Z",
+      "firstHoursAfterPivot": 27.5,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_020",
+      "start": "2024-10-30",
+      "fullLegPct": -8.048451,
+      "group": "A",
+      "earlyAlertCount": 1,
+      "firstNearPivotAt": "2024-10-31T12:45:00.000Z",
+      "firstAfterPivotAt": "2024-10-31T12:45:00.000Z",
+      "firstHoursAfterPivot": 36.75,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_024",
+      "start": "2024-12-11",
+      "fullLegPct": -4.897744,
+      "group": "A",
+      "earlyAlertCount": 3,
+      "firstNearPivotAt": "2024-12-11T04:45:00.000Z",
+      "firstAfterPivotAt": "2024-12-11T04:45:00.000Z",
+      "firstHoursAfterPivot": 4.75,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_028",
+      "start": "2025-04-02",
+      "fullLegPct": -4.776625,
+      "group": "D",
+      "earlyAlertCount": 5,
+      "firstNearPivotAt": "2025-04-01T06:15:00.000Z",
+      "firstAfterPivotAt": "2025-04-02T05:00:00.000Z",
+      "firstHoursAfterPivot": 5,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_030",
+      "start": "2025-04-21",
+      "fullLegPct": -5.41054,
+      "group": "C",
+      "earlyAlertCount": 3,
+      "firstNearPivotAt": "2025-04-21T17:15:00.000Z",
+      "firstAfterPivotAt": "2025-04-21T17:15:00.000Z",
+      "firstHoursAfterPivot": 17.25,
+      "gapDownAlertsNearPivot": 1
+    },
+    {
+      "id": "SWING_V1_032",
+      "start": "2025-05-06",
+      "fullLegPct": -7.410996,
+      "group": "C",
+      "earlyAlertCount": 3,
+      "firstNearPivotAt": "2025-05-06T03:00:00.000Z",
+      "firstAfterPivotAt": "2025-05-06T03:00:00.000Z",
+      "firstHoursAfterPivot": 3,
+      "gapDownAlertsNearPivot": 1
+    },
+    {
+      "id": "SWING_V1_034",
+      "start": "2025-06-13",
+      "fullLegPct": -4.610566,
+      "group": "C",
+      "earlyAlertCount": 4,
+      "firstNearPivotAt": "2025-06-12T07:45:00.000Z",
+      "firstAfterPivotAt": "2025-06-13T05:30:00.000Z",
+      "firstHoursAfterPivot": 5.5,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_036",
+      "start": "2025-07-22",
+      "fullLegPct": -4.545362,
+      "group": "A",
+      "earlyAlertCount": 2,
+      "firstNearPivotAt": "2025-07-22T07:30:00.000Z",
+      "firstAfterPivotAt": "2025-07-22T07:30:00.000Z",
+      "firstHoursAfterPivot": 7.5,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_038",
+      "start": "2025-10-20",
+      "fullLegPct": -9.784683,
+      "group": "B",
+      "earlyAlertCount": 4,
+      "firstNearPivotAt": "2025-10-20T06:00:00.000Z",
+      "firstAfterPivotAt": "2025-10-20T06:00:00.000Z",
+      "firstHoursAfterPivot": 6,
+      "gapDownAlertsNearPivot": 0
+    },
+    {
+      "id": "SWING_V1_042",
+      "start": "2025-12-26",
+      "fullLegPct": -4.729564,
+      "group": "B",
+      "earlyAlertCount": 1,
+      "firstNearPivotAt": "2025-12-26T17:30:00.000Z",
+      "firstAfterPivotAt": "2025-12-26T17:30:00.000Z",
+      "firstHoursAfterPivot": 17.5,
+      "gapDownAlertsNearPivot": 0
+    }
+  ],
+  "forwardRiskResearch": {
+    "alerts5Sessions": {
+      "n": 737,
+      "nFutureDropAtLeast4": 57,
+      "ratePct": 7.73,
+      "medianWorstNext": -1.051
+    },
+    "anchors5Sessions": {
+      "n": 4397,
+      "nFutureDropAtLeast4": 199,
+      "ratePct": 4.53,
+      "medianWorstNext": -0.967
+    },
+    "alerts20Sessions": {
+      "n": 717,
+      "nFutureDropAtLeast4": 121,
+      "ratePct": 16.88,
+      "medianWorstNext": -1.878
+    },
+    "anchors20Sessions": {
+      "n": 4307,
+      "nFutureDropAtLeast4": 674,
+      "ratePct": 15.65,
+      "medianWorstNext": -1.79
+    }
+  },
+  "notes": [
+    "No real external news added; 0 verified firstprint timestamp in this market-only replay; this tests only observable price branch.",
+    "A risk alert is a 0.5 percent drawdown from previous 96 contiguous M15 closes, NOT a prediction or SELL.",
+    "5 and 20 session outcome scan uses 96*session count of observed vendor bars; this can include holiday gaps and does not represent independent trading sessions exactly.",
+    "Matched baseline uses every 16th bar (4h fixed clock), not randomized controls, many windows overlap.",
+    "Forward labels were calculated only AFTER all alert times frozen; never injected into live S1/S2/S3.",
+    "A +/-48h around an EXPOST price swing pivot is descriptive and allows after-onset alerts; it is NOT genuinely early detection or test of alpha.",
+    "No trades or certified causal first-news labels."
+  ],
+  "noTrading": true
+}
