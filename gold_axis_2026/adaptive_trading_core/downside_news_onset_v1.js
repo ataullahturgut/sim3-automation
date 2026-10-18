@@ -80,16 +80,20 @@ function observe(s,bar){
  if(s.lastAt!==null&&!contiguous){
   s.audit.gaps++;s.window=[];s.onsetAt=null;
   s.onsetReference=null;s.lastPhase="GAP";
-  s.pendingBeforeFall=[];
+  // Time itself advances through weekends, but no price bars are interpolated.
+  // Retain prior verified releases as context within the 72h research window;
+  // they never become a fabricated continuous price signal.
  }
  // Classify relative to PRICE INFORMATION KNOWN BEFORE this bar closed.
  const priorOnset=s.onsetAt,seenNow=[];
  for(const n of currentNews){
   const result=newsRouter.route(n,{asof:bar.asof,registry:s.registry});
-  const pub=ms(n.publishedAt,"publishedAt"),detect=ms(n.detectedAt,"detectedAt");
+  const detect=ms(n.detectedAt,"detectedAt");
   const firstprint=result.firstprintAttested===true;
   const lagged= s.lastAt!==null && detect<=s.lastAt;
   let role;
+  const chronologyRole=priorOnset===null?"NOT_YET_WEAK":
+   detect<=priorOnset+STEP?"SAME_BAR_OR_EARLIER_UNRESOLVED":"AFTER_PRICE_WEAKNESS";
   if(lagged||!firstprint)role="UNVERIFIED_OR_LATE_CONTEXT";
   else if(priorOnset===null)role="BEFORE_FIRST_OBSERVED_WEAKNESS";
   else if(detect<=priorOnset+STEP)role="SAME_BAR_UNRESOLVED";
@@ -99,7 +103,7 @@ function observe(s,bar){
    observedAt:bar.asof,eventTime:n.eventTime,
    conditions:result.conditions,candidateOrgs:result.candidateOrgs.map(z=>z.org),
    firstprintAttested:firstprint,availableFirstAt:n.availableAt,
-   role,causalEvidence:"NOT_ESTABLISHED"};
+   role,chronologyRole,causalEvidence:"NOT_ESTABLISHED"};
   s.seen[n.id]=true;s.latestNews=rec;s.newsHistory.push(rec);
   if(s.newsHistory.length>80)s.newsHistory.shift();
   if(role==="BEFORE_FIRST_OBSERVED_WEAKNESS")
@@ -114,9 +118,15 @@ function observe(s,bar){
  // G causal price clock; drawdown from at most 96 completed consecutive bars.
  s.window.push(bar.price);
  if(s.window.length>96)s.window.shift();
- const m=sample(s,t),before=s.lastPhase;
+ const m=sample(s,t);
+ // A severe price discontinuity at the first quote after a gap is observable,
+ // but is NOT a measured continuous drawdown from unobserved weekend bars.
+ const gapDrop=!contiguous&&s.audit.bars>0&&s.lastPrice!==null&&
+  Math.log(bar.price/s.lastPrice)<=Math.log(.995);
+ if(gapDrop){m.phase="GAP_OPEN_DOWN_DISLOCATION";m.drawdown=round(-100*Math.log(bar.price/s.lastPrice));
+  m.reference=round(s.lastPrice);m.ready=false;}
  let newOnset=false,newsLinked=null;
- if(m.ready&&m.drawdown>=.5&&s.onsetAt===null){
+ if((m.ready&&m.drawdown>=.5||gapDrop)&&s.onsetAt===null){
   s.onsetAt=t;s.onsetReference=m.reference;newOnset=true;
   // Only firstprint verified, not retroactively ingested earlier news.
   const eligible=s.pendingBeforeFall.filter(n=>t-ms(n.detectedAt,"detect")<=72*HOUR&&
@@ -146,6 +156,7 @@ function observe(s,bar){
    down_negative_share:Math.min(5,m.negativeShare),down_rally_exhaustion:Math.min(5,m.exhaustion)},
   drawdownPct:m.drawdown,marketReference:m.reference,
   latestNews:s.latestNews,newsNewlyObserved:seenNow,
+  gapOpenDislocation:gapDrop,
   state:"OBSERVATIONAL_WARNING_NOT_PREDICTION",
   probabilityOfFurtherFall:null,remainingFallPct:null,
   causalAttribution:"UNPROVEN",action:null,tradeAllowed:false};
