@@ -1,0 +1,2175 @@
+{
+  "schema": "JAN_FEB_2023_THREE_ARM_EVENT_METRIC_AUDIT_V1",
+  "date": "2026-10-18",
+  "scope": "REAL_M15_INPUT_OBSERVATIONAL_METRICS_NOT_MODEL_TRADES",
+  "source": "Neon gold_research_evduka_xau15m_bidask_candidate; gold_axis_2026/adaptive_trading_core/experimental_event_clock_janfeb2023_replay_v1.js",
+  "priceQuery": "SELECT bar_start_utc,bid_close,ask_close FROM gold_research_evduka_xau15m_bidask_candidate WHERE bar_start_utc >= '2023-01-01' AND bar_start_utc < '2023-03-01' ORDER BY bar_start_utc",
+  "priceInput": "XAU bid/ask vendor mid proxy, each 15-minute bar's close",
+  "timestampContract": "bar_start_utc + 15min is asof; event-firstpost 15m at release+15min. Release availability assumed equal to announced release UTC, unverified asof vintage.",
+  "comparisonArms": {
+    "A": "Unchanged FAST S2 17-bar phase price logic",
+    "B": "Same FAST S2 math but last 17-bar short trend window reset at recognized release; not resetting historic learned risk memory",
+    "C": "A unchanged + cumulative separate event-price-path metric from last completed bar before release, normalized by release-pre-window volatility"
+  },
+  "verifiedAgainstOriginalS2": {
+    "coreCode": "adaptive_phase_lifecycle_s2.js",
+    "comparedBars": 3750,
+    "phaseMismatches": 0,
+    "directionMismatches": 0,
+    "trendZMismatches": 0,
+    "toleranceTrendZ": 0.0001,
+    "method": "Ran actual original S2.observe vs research A clone for all 3750 vendor mid completed M15 bars"
+  },
+  "independence": "Event cohort only 4 scheduled macro examples. No new predictive model trained. C's eventDirection is realized cumulative event impulse, not an economically justified forecast; near release its uncalibrated z-score is unreliable.",
+  "lookaheadGuard": "Forward 60/240-min targets stored as evaluation labels only; no forward metrics used by A/B/C. Macro tags retrospectively reconstructed and first available vintage not verified.",
+  "tradeAuthorized": false,
+  "coreRewired": false,
+  "originalS1ForecastRun": false,
+  "originalS3PositionRun": false,
+  "audit": {
+    "bars": 3750,
+    "quietBars": 3686,
+    "eventBars": 64,
+    "firstEvents": 4,
+    "A": {
+      "starts": 89,
+      "ends": 72,
+      "gaps": 41
+    },
+    "B": {
+      "starts": 89,
+      "ends": 71,
+      "gaps": 41,
+      "resets": 4
+    }
+  },
+  "events": [
+    {
+      "id": "NFP_2023-01-06",
+      "release": "2023-01-06T13:30:00Z",
+      "conditions": [
+        "K03",
+        "K18",
+        "K19"
+      ],
+      "firstPriceBefore": 1835.97,
+      "pre4hVol": 0.0027836449823310963
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "release": "2023-01-12T13:30:00Z",
+      "conditions": [
+        "K02"
+      ],
+      "firstPriceBefore": 1887.3200000000002,
+      "pre4hVol": 0.0025683983151016834
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "release": "2023-02-03T13:30:00Z",
+      "conditions": [
+        "K03",
+        "K19"
+      ],
+      "firstPriceBefore": 1913.81,
+      "pre4hVol": 0.0027218481179668197
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "release": "2023-02-14T13:30:00Z",
+      "conditions": [
+        "K05"
+      ],
+      "firstPriceBefore": 1860.5149999999999,
+      "pre4hVol": 0.0028064713819155843
+    }
+  ],
+  "scoresNext60": {
+    "15": {
+      "A": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 1,
+        "abstain": 3
+      },
+      "B": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 0,
+        "abstain": 4
+      },
+      "eventOnlyC": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 0,
+        "abstain": 4
+      }
+    },
+    "30": {
+      "A": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 1,
+        "abstain": 3
+      },
+      "B": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 0,
+        "abstain": 4
+      },
+      "eventOnlyC": {
+        "n": 4,
+        "correct": 1,
+        "wrong": 2,
+        "abstain": 1
+      }
+    },
+    "60": {
+      "A": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 1,
+        "abstain": 3
+      },
+      "B": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 0,
+        "abstain": 4
+      },
+      "eventOnlyC": {
+        "n": 4,
+        "correct": 2,
+        "wrong": 2,
+        "abstain": 0
+      }
+    },
+    "120": {
+      "A": {
+        "n": 4,
+        "correct": 1,
+        "wrong": 0,
+        "abstain": 3
+      },
+      "B": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 0,
+        "abstain": 4
+      },
+      "eventOnlyC": {
+        "n": 4,
+        "correct": 2,
+        "wrong": 0,
+        "abstain": 2
+      }
+    },
+    "240": {
+      "A": {
+        "n": 4,
+        "correct": 2,
+        "wrong": 0,
+        "abstain": 2
+      },
+      "B": {
+        "n": 4,
+        "correct": 0,
+        "wrong": 0,
+        "abstain": 4
+      },
+      "eventOnlyC": {
+        "n": 4,
+        "correct": 2,
+        "wrong": 2,
+        "abstain": 0
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 15,
+      "at": "2023-01-06T13:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.03782,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.03782,
+          "ready": true
+        },
+        "eventPct": 0.6439,
+        "eventVolZ": 9.2527,
+        "eventDirection": 1,
+        "eventReady": false
+      },
+      "future60Pct": -0.33256,
+      "future240Pct": 0.76795
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 30,
+      "at": "2023-01-06T14:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.21196,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.21196,
+          "ready": true
+        },
+        "eventPct": 0.85852,
+        "eventVolZ": 8.7233,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": -0.43702,
+      "future240Pct": 0.56971
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 45,
+      "at": "2023-01-06T14:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.81304,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.81304,
+          "ready": true
+        },
+        "eventPct": 0.6144,
+        "eventVolZ": 5.0973,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.62034,
+      "future240Pct": 0.85758
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 60,
+      "at": "2023-01-06T14:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.79617,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.79617,
+          "ready": true
+        },
+        "eventPct": 0.54211,
+        "eventVolZ": 3.895,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.63586,
+      "future240Pct": 0.99131
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 75,
+      "at": "2023-01-06T14:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.32138,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.32138,
+          "ready": true
+        },
+        "eventPct": 0.31134,
+        "eventVolZ": 2.0008,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 1.07178,
+      "future240Pct": 1.37992
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 90,
+      "at": "2023-01-06T15:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.47442,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.47442,
+          "ready": true
+        },
+        "eventPct": 0.4215,
+        "eventVolZ": 2.4727,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 1.00673,
+      "future240Pct": 1.34711
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 105,
+      "at": "2023-01-06T15:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.00071,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.00071,
+          "ready": true
+        },
+        "eventPct": 1.23474,
+        "eventVolZ": 6.7061,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.18355,
+      "future240Pct": 0.54323
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 120,
+      "at": "2023-01-06T15:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.85441,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.85441,
+          "ready": true
+        },
+        "eventPct": 1.17797,
+        "eventVolZ": 5.9846,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.14738,
+      "future240Pct": 0.5687
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 135,
+      "at": "2023-01-06T15:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.13266,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.13266,
+          "ready": true
+        },
+        "eventPct": 1.38311,
+        "eventVolZ": 6.625,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": -0.03842,
+      "future240Pct": 0.42161
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 150,
+      "at": "2023-01-06T16:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.20997,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.20997,
+          "ready": true
+        },
+        "eventPct": 1.42823,
+        "eventVolZ": 6.49,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.05932,
+      "future240Pct": 0.35001
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 165,
+      "at": "2023-01-06T16:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.21611,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.21611,
+          "ready": true
+        },
+        "eventPct": 1.41829,
+        "eventVolZ": 6.1449,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.05717,
+      "future240Pct": 0.32784
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 180,
+      "at": "2023-01-06T16:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.09851,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.09851,
+          "ready": true
+        },
+        "eventPct": 1.32535,
+        "eventVolZ": 5.4978,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.06609,
+      "future240Pct": 0.43818
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 195,
+      "at": "2023-01-06T16:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 1.14457,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 1.14457,
+          "ready": true
+        },
+        "eventPct": 1.3447,
+        "eventVolZ": 5.3592,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.06715,
+      "future240Pct": 0.3752
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 210,
+      "at": "2023-01-06T17:00:00.000Z",
+      "A": {
+        "phase": "START",
+        "direction": 1,
+        "trendZ": 1.26371,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "START",
+          "direction": 1,
+          "trendZ": 1.26371,
+          "ready": true
+        },
+        "eventPct": 1.48754,
+        "eventVolZ": 5.7128,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": -0.05932,
+      "future240Pct": 0.18202
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 225,
+      "at": "2023-01-06T17:15:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": 1,
+        "trendZ": 1.20309,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.20309,
+          "ready": true
+        },
+        "eventPct": 1.47547,
+        "eventVolZ": 5.4743,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": -0.00349,
+      "future240Pct": 0.17374
+    },
+    {
+      "id": "NFP_2023-01-06",
+      "elapsedMinutes": 240,
+      "at": "2023-01-06T17:30:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": 1,
+        "trendZ": 1.20368,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.20368,
+          "ready": true
+        },
+        "eventPct": 1.39144,
+        "eventVolZ": 4.9986,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.14197,
+      "future240Pct": 0.23901
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 15,
+      "at": "2023-01-12T13:45:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": 1,
+        "trendZ": 1.09202,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.09202,
+          "ready": true
+        },
+        "eventPct": 0.24978,
+        "eventVolZ": 3.89,
+        "eventDirection": 1,
+        "eventReady": false
+      },
+      "future60Pct": -0.3497,
+      "future240Pct": 0.25864
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 30,
+      "at": "2023-01-12T14:00:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": 1,
+        "trendZ": 1.52731,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": 1,
+          "trendZ": 1.52731,
+          "ready": true
+        },
+        "eventPct": 0.65645,
+        "eventVolZ": 7.2291,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": -0.91322,
+      "future240Pct": -0.10428
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 45,
+      "at": "2023-01-12T14:15:00.000Z",
+      "A": {
+        "phase": "PULLBACK",
+        "direction": 1,
+        "trendZ": 0.46492,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "PULLBACK",
+          "direction": 1,
+          "trendZ": 0.46492,
+          "ready": true
+        },
+        "eventPct": 0.13158,
+        "eventVolZ": 1.1831,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": -0.1875,
+      "future240Pct": 0.44219
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 60,
+      "at": "2023-01-12T14:30:00.000Z",
+      "A": {
+        "phase": "REENTRY",
+        "direction": 1,
+        "trendZ": 0.61634,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "REENTRY",
+          "direction": 1,
+          "trendZ": 0.61634,
+          "ready": true
+        },
+        "eventPct": 0.25744,
+        "eventVolZ": 2.0047,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": -0.26115,
+      "future240Pct": 0.18111
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 75,
+      "at": "2023-01-12T14:45:00.000Z",
+      "A": {
+        "phase": "PULLBACK",
+        "direction": 1,
+        "trendZ": 0.11594,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "PULLBACK",
+          "direction": 1,
+          "trendZ": 0.11594,
+          "ready": true
+        },
+        "eventPct": -0.09993,
+        "eventVolZ": -0.696,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.10681,
+      "future240Pct": 0.65947
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 90,
+      "at": "2023-01-12T15:00:00.000Z",
+      "A": {
+        "phase": "END",
+        "direction": 0,
+        "trendZ": -0.11884,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "END",
+          "direction": 0,
+          "trendZ": -0.11884,
+          "ready": true
+        },
+        "eventPct": -0.25678,
+        "eventVolZ": -1.6326,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": 0.34231,
+      "future240Pct": 0.87242
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 105,
+      "at": "2023-01-12T15:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.0302,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.0302,
+          "ready": true
+        },
+        "eventPct": -0.05592,
+        "eventVolZ": -0.3291,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.26922,
+      "future240Pct": 0.62363
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 120,
+      "at": "2023-01-12T15:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.11755,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.11755,
+          "ready": true
+        },
+        "eventPct": -0.00371,
+        "eventVolZ": -0.0204,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.27436,
+      "future240Pct": 0.5008
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 135,
+      "at": "2023-01-12T15:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.09292,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.09292,
+          "ready": true
+        },
+        "eventPct": 0.00689,
+        "eventVolZ": 0.0358,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.26033,
+      "future240Pct": 0.49943
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 150,
+      "at": "2023-01-12T16:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.22866,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.22866,
+          "ready": true
+        },
+        "eventPct": 0.08553,
+        "eventVolZ": 0.4212,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.19463,
+      "future240Pct": 0.47243
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 165,
+      "at": "2023-01-12T16:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.34897,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.34897,
+          "ready": true
+        },
+        "eventPct": 0.2133,
+        "eventVolZ": 1.0016,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.13737,
+      "future240Pct": 0.18488
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 180,
+      "at": "2023-01-12T16:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.23911,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.23911,
+          "ready": true
+        },
+        "eventPct": 0.27065,
+        "eventVolZ": 1.2168,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.18029,
+      "future240Pct": 0.20772
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 195,
+      "at": "2023-01-12T16:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.33772,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.33772,
+          "ready": true
+        },
+        "eventPct": 0.26722,
+        "eventVolZ": 1.1542,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.2412,
+      "future240Pct": 0.24252
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 210,
+      "at": "2023-01-12T17:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.3155,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.3155,
+          "ready": true
+        },
+        "eventPct": 0.28016,
+        "eventVolZ": 1.1661,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.272,
+      "future240Pct": 0.30809
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 225,
+      "at": "2023-01-12T17:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.33382,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.33382,
+          "ready": true
+        },
+        "eventPct": 0.35068,
+        "eventVolZ": 1.4101,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": 0.22309,
+      "future240Pct": 0.27418
+    },
+    {
+      "id": "CPI_2023-01-12",
+      "elapsedMinutes": 240,
+      "at": "2023-01-12T17:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.51878,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.51878,
+          "ready": true
+        },
+        "eventPct": 0.45095,
+        "eventVolZ": 1.7557,
+        "eventDirection": 1,
+        "eventReady": true
+      },
+      "future60Pct": -0.0124,
+      "future240Pct": 0.10676
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 15,
+      "at": "2023-02-03T13:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.99203,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.99203,
+          "ready": true
+        },
+        "eventPct": -1.34853,
+        "eventVolZ": -19.8178,
+        "eventDirection": -1,
+        "eventReady": false
+      },
+      "future60Pct": -0.22056,
+      "future240Pct": -1.16422
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 30,
+      "at": "2023-02-03T14:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -1.01295,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.01295,
+          "ready": true
+        },
+        "eventPct": -1.41925,
+        "eventVolZ": -14.7483,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.21806,
+      "future240Pct": -1.24551
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 45,
+      "at": "2023-02-03T14:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -1.06183,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.06183,
+          "ready": true
+        },
+        "eventPct": -1.60014,
+        "eventVolZ": -13.5767,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.37955,
+      "future240Pct": -1.15267
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 60,
+      "at": "2023-02-03T14:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -1.10265,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.10265,
+          "ready": true
+        },
+        "eventPct": -1.73137,
+        "eventVolZ": -12.722,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.28137,
+      "future240Pct": -0.93419
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 75,
+      "at": "2023-02-03T14:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -1.00865,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.00865,
+          "ready": true
+        },
+        "eventPct": -1.56909,
+        "eventVolZ": -10.3124,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.37304,
+      "future240Pct": -1.08414
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 90,
+      "at": "2023-02-03T15:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -1.10426,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.10426,
+          "ready": true
+        },
+        "eventPct": -1.63732,
+        "eventVolZ": -9.8232,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.51013,
+      "future240Pct": -0.93197
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 105,
+      "at": "2023-02-03T15:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -1.24615,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.24615,
+          "ready": true
+        },
+        "eventPct": -1.97969,
+        "eventVolZ": -10.9963,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.3112,
+      "future240Pct": -0.62311
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 120,
+      "at": "2023-02-03T15:30:00.000Z",
+      "A": {
+        "phase": "START",
+        "direction": -1,
+        "trendZ": -1.3378,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "START",
+          "direction": -1,
+          "trendZ": -1.3378,
+          "ready": true
+        },
+        "eventPct": -2.01274,
+        "eventVolZ": -10.4578,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.50563,
+      "future240Pct": -0.59703
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 135,
+      "at": "2023-02-03T15:45:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.28763,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.28763,
+          "ready": true
+        },
+        "eventPct": -1.94213,
+        "eventVolZ": -9.5138,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.50688,
+      "future240Pct": -0.60894
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 150,
+      "at": "2023-02-03T16:00:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.51761,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.51761,
+          "ready": true
+        },
+        "eventPct": -2.14745,
+        "eventVolZ": -9.9797,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.25176,
+      "future240Pct": -0.39316
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 165,
+      "at": "2023-02-03T16:15:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.63833,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.63833,
+          "ready": true
+        },
+        "eventPct": -2.2909,
+        "eventVolZ": -10.1509,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.30252,
+      "future240Pct": -0.26124
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 180,
+      "at": "2023-02-03T16:30:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.77815,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.77815,
+          "ready": true
+        },
+        "eventPct": -2.51837,
+        "eventVolZ": -10.6838,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.09248,
+      "future240Pct": -0.00911
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 195,
+      "at": "2023-02-03T16:45:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.74585,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.74585,
+          "ready": true
+        },
+        "eventPct": -2.449,
+        "eventVolZ": -9.9819,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.06374,
+      "future240Pct": -0.10152
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 210,
+      "at": "2023-02-03T17:00:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.68741,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.68741,
+          "ready": true
+        },
+        "eventPct": -2.39922,
+        "eventVolZ": -9.4233,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.26555,
+      "future240Pct": -0.19527
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 225,
+      "at": "2023-02-03T17:15:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.79337,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.79337,
+          "ready": true
+        },
+        "eventPct": -2.59342,
+        "eventVolZ": -9.8406,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.15939,
+      "future240Pct": 0.01903
+    },
+    {
+      "id": "NFP_2023-02-03",
+      "elapsedMinutes": 240,
+      "at": "2023-02-03T17:30:00.000Z",
+      "A": {
+        "phase": "CONTINUE",
+        "direction": -1,
+        "trendZ": -1.76523,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "CONTINUE",
+          "direction": -1,
+          "trendZ": -1.76523,
+          "ready": true
+        },
+        "eventPct": -2.61085,
+        "eventVolZ": -9.5922,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.05472,
+      "future240Pct": 0.0764
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 15,
+      "at": "2023-02-14T13:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.2588,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.2588,
+          "ready": true
+        },
+        "eventPct": 0.0634,
+        "eventVolZ": 0.9037,
+        "eventDirection": 0,
+        "eventReady": false
+      },
+      "future60Pct": -0.73076,
+      "future240Pct": -0.77514
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 30,
+      "at": "2023-02-14T14:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.02359,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.02359,
+          "ready": true
+        },
+        "eventPct": 0.11066,
+        "eventVolZ": 1.1153,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": -0.33801,
+      "future240Pct": -0.68635
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 45,
+      "at": "2023-02-14T14:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.37085,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.37085,
+          "ready": true
+        },
+        "eventPct": -0.08092,
+        "eventVolZ": -0.6659,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": 0.30615,
+      "future240Pct": -0.29171
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 60,
+      "at": "2023-02-14T14:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.97486,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.97486,
+          "ready": true
+        },
+        "eventPct": -0.59975,
+        "eventVolZ": -4.274,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": 0.50833,
+      "future240Pct": 0.28725
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 75,
+      "at": "2023-02-14T14:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -1.02462,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -1.02462,
+          "ready": true
+        },
+        "eventPct": -0.66736,
+        "eventVolZ": -4.2538,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": 0.3775,
+      "future240Pct": 0.36834
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 90,
+      "at": "2023-02-14T15:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.20866,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.20866,
+          "ready": true
+        },
+        "eventPct": -0.22735,
+        "eventVolZ": -1.3229,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.21032,
+      "future240Pct": -0.14232
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 105,
+      "at": "2023-02-14T15:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.40805,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.40805,
+          "ready": true
+        },
+        "eventPct": 0.22522,
+        "eventVolZ": 1.2133,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": -0.79361,
+      "future240Pct": -0.68691
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 120,
+      "at": "2023-02-14T15:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": 0.13132,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": 0.13132,
+          "ready": true
+        },
+        "eventPct": -0.09141,
+        "eventVolZ": -0.4606,
+        "eventDirection": 0,
+        "eventReady": true
+      },
+      "future60Pct": -0.59218,
+      "future240Pct": -0.31656
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 135,
+      "at": "2023-02-14T15:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.04045,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.04045,
+          "ready": true
+        },
+        "eventPct": -0.28986,
+        "eventVolZ": -1.3771,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.40537,
+      "future240Pct": 0.01267
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 150,
+      "at": "2023-02-14T16:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.2769,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.2769,
+          "ready": true
+        },
+        "eventPct": -0.43766,
+        "eventVolZ": -1.9726,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.14803,
+      "future240Pct": 0.16937
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 165,
+      "at": "2023-02-14T16:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.42479,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.42479,
+          "ready": true
+        },
+        "eventPct": -0.56839,
+        "eventVolZ": -2.4426,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.00973,
+      "future240Pct": 0.27638
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 180,
+      "at": "2023-02-14T16:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.66056,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.66056,
+          "ready": true
+        },
+        "eventPct": -0.68359,
+        "eventVolZ": -2.8126,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.00974,
+      "future240Pct": 0.39697
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 195,
+      "at": "2023-02-14T16:45:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.59692,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.59692,
+          "ready": true
+        },
+        "eventPct": -0.69523,
+        "eventVolZ": -2.7483,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": -0.01651,
+      "future240Pct": 0.41885
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 210,
+      "at": "2023-02-14T17:00:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.58647,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.58647,
+          "ready": true
+        },
+        "eventPct": -0.58569,
+        "eventVolZ": -2.231,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": 0.01,
+      "future240Pct": 0.34353
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 225,
+      "at": "2023-02-14T17:15:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.49276,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.49276,
+          "ready": true
+        },
+        "eventPct": -0.57812,
+        "eventVolZ": -2.1275,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": 0.20549,
+      "future240Pct": 0.26508
+    },
+    {
+      "id": "CPI_2023-02-14",
+      "elapsedMinutes": 240,
+      "at": "2023-02-14T17:30:00.000Z",
+      "A": {
+        "phase": "NEUTRAL",
+        "direction": 0,
+        "trendZ": -0.71801,
+        "ready": true
+      },
+      "B": {
+        "phase": "WARMUP",
+        "direction": 0,
+        "trendZ": null,
+        "ready": false
+      },
+      "C": {
+        "global": {
+          "phase": "NEUTRAL",
+          "direction": 0,
+          "trendZ": -0.71801,
+          "ready": true
+        },
+        "eventPct": -0.69334,
+        "eventVolZ": -2.4705,
+        "eventDirection": -1,
+        "eventReady": true
+      },
+      "future60Pct": 0.38084,
+      "future240Pct": 0.38353
+    }
+  ]
+}
