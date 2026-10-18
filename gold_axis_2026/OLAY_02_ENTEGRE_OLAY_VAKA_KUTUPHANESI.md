@@ -433,3 +433,9 @@ Bu tablo yalnız giriş kapısı. **Her kimliğe tıklandığında haberlerin ya
 ## Genel Büyük Yükseliş/Düşüş Haber-Mekanizma Tarama Kaydı — 18 Ekim 2026
 
 2023–2025 **96 fiyat/olay kaydı**, 42 uzun swing ve 54 kısa fiyat düzeltmesi olarak araştırıldı. 42 uzun bacağın 25'i mutlak %5 ve 8'i mutlak %10 veya üzerindedir. Tüm ekonomik başlangıç haberlerinde ilk-baskı ve nedensellik doğrulaması **0/96**; bütün eşleşmeler hipotez. [Genel büyük hareket kaynak araştırması](ETKI_05_GENEL_BUYUK_YUKSELIS_DUSUS_NEDEN_ETKI_ARASTIRMASI_20261018.md) ve [12 ORG ekonomik şart kural matrisi](ETKI_05_GENEL_BUYUK_HAREKET_MEKANIZMA_KURAL_MATRISI_20261018.json) üzerinden 96 fiyat vakanın tetik/aktarım/kuvvetlendirici/karşıt kontrolleri incelenir. Tarihli sonuç ve birincil haber kanıtları OLAY-02 içinde kalır. Haber olmadığı halde büyük hareket ve haber olup küçük hareket gerçekleşen karşı örnekler zorunlu kontrol grubudur.
+
+---
+
+## 2026-10-18 — Birleşik OLAY/ETKİ/ÖĞREN çalışan araştırma motoru
+
+OLAY-02, [Birleşik Ekonomik Etki Mekanizması V1](GOLD_BIRLESIK_EKONOMIK_ETKI_MEKANIZMASI_V1_20261018.md) ve [çalışır haber–mekanizma entegratörü](adaptive_trading_core/economic_mechanism_integrator_v1.js) için tarihlenmiş haber/ilk bilgi otoritesi olarak kalır. Bu modül 32 resmî/ikincil kaynak sicilini, K01–K48 ekonomik koşullarını, CR/CTX birleşimlerini ve 12 ORG aday mekanizmayı tarihli fiyat referansıyla birleştirir. Ekonomik ilk haberi kanıtlanmamış 96 vakaya kesin neden bağlanmaz; OLAY-02'nin var olan tarihli kanıtları bozulmadı. 65/65 teknik kural/entegrasyon testi başarılı; gerçek maliyetli AL/SAT ile ilgisi henüz yok.
