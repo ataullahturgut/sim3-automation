@@ -44,9 +44,8 @@
         "bea.gov"
       ],
       "eventKinds": [
-        "CPI",
         "GDP",
-        "PHYSICAL_GOLD"
+        "PCE"
       ],
       "landingPage": "https://www.bea.gov/news"
     },
@@ -295,6 +294,171 @@
         "FUNDING"
       ],
       "landingPage": "https://apnews.com/"
+    },
+    {
+      "id": "US_WHITE_HOUSE",
+      "jurisdiction": "US",
+      "region": "US",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "whitehouse.gov"
+      ],
+      "eventKinds": [
+        "TRADE_POLICY",
+        "GEOPOLITICS"
+      ],
+      "landingPage": "https://www.whitehouse.gov/"
+    },
+    {
+      "id": "USTR",
+      "jurisdiction": "US",
+      "region": "US",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "ustr.gov"
+      ],
+      "eventKinds": [
+        "TRADE_POLICY"
+      ],
+      "landingPage": "https://ustr.gov/"
+    },
+    {
+      "id": "EIA",
+      "jurisdiction": "US",
+      "region": "GLOBAL",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "eia.gov"
+      ],
+      "eventKinds": [
+        "ENERGY"
+      ],
+      "landingPage": "https://www.eia.gov/"
+    },
+    {
+      "id": "EU_COUNCIL",
+      "jurisdiction": "EU",
+      "region": "EU",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "consilium.europa.eu"
+      ],
+      "eventKinds": [
+        "TRADE_POLICY",
+        "GEOPOLITICS"
+      ],
+      "landingPage": "https://www.consilium.europa.eu/en/press/press-releases/"
+    },
+    {
+      "id": "EU_COMMISSION",
+      "jurisdiction": "EU",
+      "region": "EU",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "ec.europa.eu"
+      ],
+      "eventKinds": [
+        "TRADE_POLICY"
+      ],
+      "landingPage": "https://commission.europa.eu/"
+    },
+    {
+      "id": "CH_MOFCOM",
+      "jurisdiction": "CN",
+      "region": "CN",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "mofcom.gov.cn"
+      ],
+      "eventKinds": [
+        "TRADE_POLICY",
+        "PHYSICAL_GOLD"
+      ],
+      "landingPage": "https://english.mofcom.gov.cn/"
+    },
+    {
+      "id": "BOJ",
+      "jurisdiction": "JP",
+      "region": "JP",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "boj.or.jp"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_PRESSER",
+        "CB_GUIDANCE"
+      ],
+      "landingPage": "https://www.boj.or.jp/en/"
+    },
+    {
+      "id": "SNB",
+      "jurisdiction": "CH",
+      "region": "CH",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "snb.ch"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_GUIDANCE",
+        "CB_RESERVE"
+      ],
+      "landingPage": "https://www.snb.ch/en"
+    },
+    {
+      "id": "CBRT",
+      "jurisdiction": "TR",
+      "region": "TR",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "tcmb.gov.tr"
+      ],
+      "eventKinds": [
+        "CB_DECISION",
+        "CB_RESERVE",
+        "CB_GUIDANCE"
+      ],
+      "landingPage": "https://www.tcmb.gov.tr/"
+    },
+    {
+      "id": "UN",
+      "jurisdiction": "GLOBAL",
+      "region": "GLOBAL",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "un.org"
+      ],
+      "eventKinds": [
+        "GEOPOLITICS"
+      ],
+      "landingPage": "https://www.un.org/"
+    },
+    {
+      "id": "NATO",
+      "jurisdiction": "GLOBAL",
+      "region": "GLOBAL",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "nato.int"
+      ],
+      "eventKinds": [
+        "GEOPOLITICS"
+      ],
+      "landingPage": "https://www.nato.int/"
+    },
+    {
+      "id": "OPEC",
+      "jurisdiction": "GLOBAL",
+      "region": "GLOBAL",
+      "role": "PRIMARY_RELEASE",
+      "domains": [
+        "opec.org"
+      ],
+      "eventKinds": [
+        "ENERGY"
+      ],
+      "landingPage": "https://www.opec.org/"
     }
   ],
   "regions": {
@@ -304,7 +468,10 @@
     "CN": "China",
     "IN": "India",
     "GLOBAL": "multi-region; not proof of origin location",
-    "OTHER": "not yet curated"
+    "OTHER": "not yet curated",
+    "JP": "Japan",
+    "CH": "Switzerland",
+    "TR": "Türkiye (XAUUSD vs USDTRY separate)"
   },
   "classification": {
     "strictIssuerDomainCheck": "Exact host or a subdomain of listed issuer domain. Other domains rejected, not silently trusted.",
@@ -312,7 +479,8 @@
     "lagWarning": "IMF/WGC reserve report observation-period is NOT publication-time news; CFTC Tuesday snapshot is NOT Tuesday publication; future rows cannot be assigned to a past decision",
     "secondarySource": "Reuters/AP useful context but secondary article timestamp NOT automatic proof of primary event's exact firstprint",
     "confidence": "source allowed is not evidence validated; original content+version+availability must be independently confirmed",
-    "eventOverlap": "same policy event, followup presser and contemporaneous BoE must preserve separate article IDs and timestamps, and overlapping effects are not independent causal return observations"
+    "eventOverlap": "same policy event, followup presser and contemporaneous BoE must preserve separate article IDs and timestamps, and overlapping effects are not independent causal return observations",
+    "global_geopolitics": "Original UN/NATO/foreign ministries may establish event facts; they cannot by themselves prove gold causality. A location field identifies the affected geography independently of news issuer."
   },
   "observability": {
     "USD": "NOT_MEASURED",
@@ -326,5 +494,6 @@
     "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
     "https://www.gold.org/goldhub/data/gold-reserves-by-country",
     "https://www.gold.org/goldhub/data/gold-demand-by-country"
-  ]
+  ],
+  "version": "2026-10-18-v1.1"
 }
