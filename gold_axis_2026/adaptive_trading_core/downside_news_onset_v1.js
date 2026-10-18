@@ -19,7 +19,9 @@ function create({registry=null,sourceId=null}={}){
  if(registry!==null&&(!registry||!Array.isArray(registry.sources)))
   throw Error("DOWN_NEWS_REGISTRY_INVALID");
  return {version:VERSION,registry,sourceId,lastAt:null,lastPrice:null,
-  window:[],onsetAt:null,onsetReference:null,lastPhase:"WARMUP",seen:{},
+  window:[],onsetAt:null,onsetReference:null,
+  previousEpisodeOnsetAt:null,previousEpisodeReference:null,
+  lastPhase:"WARMUP",seen:{},
   latestNews:null,newsHistory:[],pendingBeforeFall:[],
   audit:{bars:0,gaps:0,newsReceived:0,newsFirstprintAttested:0,
    priceOnlyStarts:0,firstNewsBeforeOnsetCandidates:0,
@@ -85,7 +87,10 @@ function observe(s,bar){
   // they never become a fabricated continuous price signal.
  }
  // Classify relative to PRICE INFORMATION KNOWN BEFORE this bar closed.
- const priorOnset=s.onsetAt,seenNow=[];
+ const priorOnset=s.onsetAt??(s.previousEpisodeOnsetAt!==null&&
+  t-s.previousEpisodeOnsetAt<=72*HOUR?s.previousEpisodeOnsetAt:null);
+ const priorWasAcrossGap=s.onsetAt===null&&priorOnset!==null;
+ const seenNow=[];
  for(const n of currentNews){
   const result=newsRouter.route(n,{asof:bar.asof,registry:s.registry});
   const detect=ms(n.detectedAt,"detectedAt");
@@ -93,9 +98,11 @@ function observe(s,bar){
   const lagged= s.lastAt!==null && detect<=s.lastAt;
   let role;
   const chronologyRole=priorOnset===null?"NOT_YET_WEAK":
+   priorWasAcrossGap?"AFTER_PREVIOUS_PRICE_WEAKNESS_PRIOR_SESSION":
    detect<=priorOnset+STEP?"SAME_BAR_OR_EARLIER_UNRESOLVED":"AFTER_PRICE_WEAKNESS";
   if(lagged||!firstprint)role="UNVERIFIED_OR_LATE_CONTEXT";
   else if(priorOnset===null)role="BEFORE_FIRST_OBSERVED_WEAKNESS";
+  else if(priorWasAcrossGap)role="AFTER_PREVIOUS_PRICE_WEAKNESS_ACCELERANT_CANDIDATE";
   else if(detect<=priorOnset+STEP)role="SAME_BAR_UNRESOLVED";
   else role="AFTER_PRICE_WEAKNESS_ACCELERANT_CANDIDATE";
   if(result.status==="SECONDARY_OR_LAGGED_CONTEXT_ONLY")role="POSTHOC_OR_SECONDARY_REPORT";
@@ -109,7 +116,9 @@ function observe(s,bar){
   if(role==="BEFORE_FIRST_OBSERVED_WEAKNESS")
    s.pendingBeforeFall.push(rec);
   if(firstprint)s.audit.newsFirstprintAttested++;
-  if(role==="AFTER_PRICE_WEAKNESS_ACCELERANT_CANDIDATE")s.audit.newsAfterOnset++;
+  if(["AFTER_PRICE_WEAKNESS_ACCELERANT_CANDIDATE",
+      "AFTER_PREVIOUS_PRICE_WEAKNESS_ACCELERANT_CANDIDATE"].includes(role))
+    s.audit.newsAfterOnset++;
   if(role==="SAME_BAR_UNRESOLVED")s.audit.coincidentUnresolved++;
   if(role==="UNVERIFIED_OR_LATE_CONTEXT"||role==="POSTHOC_OR_SECONDARY_REPORT")
    s.audit.posthocOrUnverified++;
@@ -128,8 +137,11 @@ function observe(s,bar){
  let newOnset=false,newsLinked=null;
  if((m.ready&&m.drawdown>=.5||gapDrop)&&s.onsetAt===null){
   s.onsetAt=t;s.onsetReference=m.reference;newOnset=true;
+  if(!existingEarlier){s.previousEpisodeOnsetAt=t;s.previousEpisodeReference=m.reference;}
   // Only firstprint verified, not retroactively ingested earlier news.
-  const eligible=s.pendingBeforeFall.filter(n=>t-ms(n.detectedAt,"detect")<=72*HOUR&&
+  const existingEarlier=priorWasAcrossGap;
+  const eligible=s.pendingBeforeFall.filter(n=>!existingEarlier&&
+   t-ms(n.detectedAt,"detect")<=72*HOUR&&
    s.lastAt!==null&&ms(n.detectedAt,"detect")<=s.lastAt);
   // Multiple overlapping headlines: retain all, never attribute total move.
   newsLinked=eligible.map(n=>n.id);
@@ -141,6 +153,12 @@ function observe(s,bar){
    }
   }
   s.pendingBeforeFall=[];
+ }
+ if(s.previousEpisodeOnsetAt!==null&&
+   (t-s.previousEpisodeOnsetAt>72*HOUR||
+    (s.previousEpisodeReference!==null&&
+      bar.price>=s.previousEpisodeReference*.998))){
+   s.previousEpisodeOnsetAt=null;s.previousEpisodeReference=null;
  }
  if(m.ready&&m.drawdown<.20&&s.onsetAt!==null){
   s.onsetAt=null;s.onsetReference=null;s.pendingBeforeFall=[];
