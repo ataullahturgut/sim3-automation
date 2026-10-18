@@ -544,3 +544,21 @@ Kullanıcı onayıyla olayın ilk koşulu → açıklama → fiyat aktarımı �
 
 **Bilim kapısı:** `M1_CHRONOLOGY_ENGINEERING=TESTED`, `S1_S2_S3_EXISTING_CORE_UNCHANGED`, `GPT_GENUINE_INFERENCE=NOT_CONNECTED`, `FIRSTPRINT_MACRO_PIT=UNVERIFIED`, `AI/HYBRID_ALPHA=NOT_TESTED`, `CAUSE_TO_NET_POSITION_VALUE=NOT_PROVEN`, `LIVE_DATA=NOT_CONNECTED`, `SCIENCE_GATE=FAIL`. Önce gerçek GPT ekonomik analizi girdisini yalnız as-of kanıtla yapılandırıp anahtar/sürüm/kaynak düzeyinde dondurmak; ardından gölge kararlarını yeni/görülmemiş veya kör dönemde doğrulamak gerekir. Geriye dönük GPT zihinsel tarih bilgisi nedeniyle 2023 simülasyonunu kör başarı olarak etiketleme. Saat kısıtı banka saatine göre değil piyasa/veri kullanılabilirliğine göre.
 
+
+---
+
+## 2026-10-18 — ETKİ-05 ayrı koşullu ekonomik fiyat-etkisi araştırma katmanı
+
+**WORKSTREAM=MODEL_RESEARCH | SCOPE=ETKI_LIBRARY_NOT_NEW_TRADING_MODEL | CORE_UNMODIFIED=true | OLAY_02_UNMODIFIED=true | OGREN_03_UNMODIFIED=true | SCIENCE_GATE=FAIL | TRADE_ALLOWED=false**
+
+**Kullanıcı bağlayıcı amaç düzeltmesi:** Küçük UP/DOWN hareketlerinde işlem açmak değil; **hangi ekonomik önkoşul + sürpriz + çapraz piyasa aktarımı + karşıt mekanizma altında küçük / orta / büyük UP veya DOWN gerçekleşebileceğini**, ayrıca hareketin hızlanma, sönme, terslenme ve süre davranışını öğrenmek. ÖĞREN-03 zamandan bağımsız olay-neden DNA'sı olarak kalır; OLAY-02 tarihli haber/fiyat/kanıt otoritesi olarak kalır. **ETKİ-05** bunların üstüne ayrı koşullu **fiyat etkisi** araştırma katmanıdır. Doğrudan banka AL/SAT veya GPT karar yetkisi yok.
+
+**Gerçek kayıtlar:** [Grup mimarisi ve ilk denetim](ETKI_05_EKONOMIK_ETKI_GRUPLARI_ILK_DENETIM_20261018.md); [koşullu fiyat etkisi ve karşıt-vaka sayısal analiz](ETKI_05_KOSULLU_ETKI_VE_KARSIT_VAKA_DENETIMI_20261018.md); [makine-okunur, kanıt kilitli etki hipotez sicili](ETKI_05_MECHANISM_IMPACT_HYPOTHESES_V1_20261018.json).
+
+**Araştırma sonucu:** 38 ayrıntılı vaka birincil hipotezi **5 ekonomik grup + 1 karma/belirsiz yönlendiriciye** eşlendi: E01 faiz/USD (ORG01/02, **15**), E02 risk primi (ORG03–07, **13**), E03 talep birikimi (ORG09, **3**), E04 likidite/zorunlu satış (ORG08/12, **3**), E05 doygunluk/pozisyon çözülmesi (ORG10, **3**), EX mekanizma çatışması (ORG11, **1**). Bu sayılar doğrulanmış ekonomik neden veya bağımsız 38 olay değildir; eski V2 kimlikleri C_CORR'ye numara sırasıyla bağlanmaz. 96 OLAY-02 kaydında **84 benzersiz checkpoint / 12 mükerrer** bulunur; fiyat başlatıcı ekonomik haber firstprint kanıtı **0/96**.
+
+**Etki koşulları ilk kontrolü:** 85 tarihli CPI/NFP/FOMC release; 84 olayda açıklama öncesi 17 tamamlanmış M15 bar ile dört saatlik fiyat önkoşulu doğrulandı. CPI negatif sürpriz sonrası 4 saatte 11/13 UP (5'i >=%1 UP), CPI pozitif sürpriz sonrası 5/8 DOWN (2'si <=−%1 DOWN). Pozitif NFP istihdam sürprizi ise 13/23 DOWN, **10/23 UP**: tek başına büyük düşüş kuralı değil. Aynı ilk 15–60 dakika davranışında 20 tersine dönme / 19 büyüme / 13 sönme / 32 benzer büyüklük / 1 eksik görüldü; hepsi **ex-post fiyat sonucudur**. FOMC dört saat sonuçları eksik.
+
+**Şiddet tahmini bilimsel ret:** Başlangıç amaçlı mutlak 4 saat %1 eşiği **öğrenilmiş normalleştirilmiş SMALL/LARGE kalibrasyonu değil**. 2025 ileri-yıl 21 CPI/NFP kaydında yalnız makro türüne göre büyük hareket Brier **0,20392**, tür+sürpriz ile **0,23232** (daha kötü). Yön Brier **0,29237 → 0,29067** iyileşme çok sınırlı. Dolayısıyla "makro şartlarda büyük hareket güvenilir öğrenildi" **HAYIR**; olay-DNA gerçek-time ilk yayın, faiz/USD/metaller eşzamanlı teyidi, normal oynaklığa göre ölçek ve bağımsız negatif kontrol olmadan ETKİ-05'in bir hücresi S3 işlem kuralına taşınamaz.
+
+**Sonraki kabul kapısı:** 38 tarihli örgü–96 güncel kontrol güvenli eşlemesini tamamla; 85 release için ilk-baskı/vintage ve USD/reel faiz/metaller senkronizasyonu; E02–E05 için olay saatli rakip/olaysız örnek topla; SMALL/MEDIUM/LARGE yön/ölçek/ufuk modelini donmuş parametreyle görülmemiş dönemlerde test et. ÖĞREN-03'e büyüklük sonucu yazma; ETKİ-05'te kanıt yoksa `UNKNOWN` bırak.
