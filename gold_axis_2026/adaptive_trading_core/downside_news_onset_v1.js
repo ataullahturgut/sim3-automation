@@ -104,8 +104,7 @@ function observe(s,bar){
   if(s.newsHistory.length>80)s.newsHistory.shift();
   if(role==="BEFORE_FIRST_OBSERVED_WEAKNESS")
    s.pendingBeforeFall.push(rec);
-  if(role==="BEFORE_FIRST_OBSERVED_WEAKNESS"||role==="AFTER_PRICE_WEAKNESS_ACCELERANT_CANDIDATE")
-   s.audit.newsFirstprintAttested++;
+  if(firstprint)s.audit.newsFirstprintAttested++;
   if(role==="AFTER_PRICE_WEAKNESS_ACCELERANT_CANDIDATE")s.audit.newsAfterOnset++;
   if(role==="SAME_BAR_UNRESOLVED")s.audit.coincidentUnresolved++;
   if(role==="UNVERIFIED_OR_LATE_CONTEXT"||role==="POSTHOC_OR_SECONDARY_REPORT")
@@ -121,11 +120,16 @@ function observe(s,bar){
   s.onsetAt=t;s.onsetReference=m.reference;newOnset=true;
   // Only firstprint verified, not retroactively ingested earlier news.
   const eligible=s.pendingBeforeFall.filter(n=>t-ms(n.detectedAt,"detect")<=72*HOUR&&
-   t>=ms(n.detectedAt,"detect"));
+   s.lastAt!==null&&ms(n.detectedAt,"detect")<=s.lastAt);
   // Multiple overlapping headlines: retain all, never attribute total move.
   newsLinked=eligible.map(n=>n.id);
   if(eligible.length)s.audit.firstNewsBeforeOnsetCandidates++;
   else s.audit.priceOnlyStarts++;
+  if(currentNews.length)for(const rec of seenNow){
+   if(rec.role==="BEFORE_FIRST_OBSERVED_WEAKNESS"){
+    rec.role="SAME_BAR_UNRESOLVED";s.audit.coincidentUnresolved++;
+   }
+  }
   s.pendingBeforeFall=[];
  }
  if(m.ready&&m.drawdown<.20&&s.onsetAt!==null){
