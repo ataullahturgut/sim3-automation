@@ -89,7 +89,10 @@ function marketEpisode(news,allBars,asof){
  const last=allBars.length?allBars[allBars.length-1]:null;
  const preValid=before!==null&&eventT-before.t<=STEP;
  const detectValid=detectionBase!==null&&detect-detectionBase.t<=STEP;
- const priceOk=last!==null&&preValid&&last.t>eventT;
+ // A fixed observation-horizon cap is NOT an economic mechanism lifetime.
+ // Stop interpreting large multi-week price drift as the price response of one news.
+ const inObservationWindow=last!==null&&last.t-eventT<=MAX_EVENT_HOURS*3600000;
+ const priceOk=last!==null&&preValid&&last.t>eventT&&inObservationWindow;
  const eventSlice=priceOk?allBars.filter(x=>x.t>=before.t&&x.t<=last.t):[];
  let gaps=0;
  for(let i=1;i<eventSlice.length;i++)if(eventSlice[i].t-eventSlice[i-1].t!==STEP)gaps++;
@@ -112,7 +115,8 @@ function marketEpisode(news,allBars,asof){
   priceSinceAnnouncementPct:priceSinceNews,first15mResponsePct:ret15,
   priceSinceDetectionPct:sinceDetection,preEventVolatility4hPct:round(preVol),
   directionOfObservedResponse:priceSinceNews===null?"UNKNOWN":priceSinceNews>0?"OBSERVED_UP":priceSinceNews<0?"OBSERVED_DOWN":"OBSERVED_FLAT",
-  priceResponseInterpretable:priceOk&&gaps===0&&last.t-eventT<=MAX_EVENT_HOURS*3600000,
+  priceResponseInterpretable:priceOk&&gaps===0,
+  observationWindowExpired:last!==null&&last.t-eventT>MAX_EVENT_HOURS*3600000,
   warning:"OBSERVED_PRICE_PATH_NOT_CAUSAL_EFFECT_OR_FUTURE_RETURN"
  };
 }
