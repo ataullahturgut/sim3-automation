@@ -1,0 +1,20 @@
+name: Gold H3A session M15 HAR RV reproducibility
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "gold_axis_2026/GOLD_H3A_20261012_*"
+      - "gold_axis_2026/tools/gold_h3a_20261012_rv_replay.py"
+      - ".github/workflows/gold-h3a-20261012-rv-replay.yml"
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python3 -m pip install "numpy>=1.24,<3"
+      - run: python3 gold_axis_2026/tools/gold_h3a_20261012_rv_replay.py

@@ -1,0 +1,245 @@
+{
+  "experiment": "H3A_M15_HAR_RV",
+  "prereg_sha": "60ebc23040646f96be383b61d35d71a26d4f4fb4",
+  "source_window_counts": {
+    "DAY": 1547,
+    "OVN": 1193
+  },
+  "source_vendor": "EVTradingLabs Dukascopy derivative M15 2020-2025",
+  "outcome": "observed contiguous-bar intrawindow 15-min RV excluding planned 75-min overnight quote break",
+  "periods": {
+    "DAY": {
+      "2023": {
+        "n": 256,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.2386942813753664,
+            "logmse": 0.3995548203242293
+          },
+          "CLIM60": {
+            "qlike": 0.2865716289615478,
+            "logmse": 0.4500682866318412
+          },
+          "PERSIST1": {
+            "qlike": 0.4014788591862456,
+            "logmse": 0.6753129553676804
+          },
+          "PERSIST5": {
+            "qlike": 0.27931126731844,
+            "logmse": 0.4130736093333537
+          }
+        }
+      },
+      "2024": {
+        "n": 259,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.2680610353478849,
+            "logmse": 0.3991009114023061
+          },
+          "CLIM60": {
+            "qlike": 0.30151761598205723,
+            "logmse": 0.45335950837619204
+          },
+          "PERSIST1": {
+            "qlike": 0.4343902542451049,
+            "logmse": 0.6793089982621722
+          },
+          "PERSIST5": {
+            "qlike": 0.3171384028854318,
+            "logmse": 0.4495758605261577
+          }
+        }
+      },
+      "2025": {
+        "n": 258,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.2895255929307267,
+            "logmse": 0.409184558956052
+          },
+          "CLIM60": {
+            "qlike": 0.48801770663932414,
+            "logmse": 0.6584178624356473
+          },
+          "PERSIST1": {
+            "qlike": 0.3574751082875607,
+            "logmse": 0.5906407413488909
+          },
+          "PERSIST5": {
+            "qlike": 0.2679515170274825,
+            "logmse": 0.4100708171341884
+          }
+        }
+      },
+      "DEV": {
+        "n": 515,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.2534631925964971,
+            "logmse": 0.39932654379844695
+          },
+          "CLIM60": {
+            "qlike": 0.294088154472833,
+            "logmse": 0.4517234835867668
+          },
+          "PERSIST1": {
+            "qlike": 0.41803041514788536,
+            "logmse": 0.6773226157748125
+          },
+          "PERSIST5": {
+            "qlike": 0.29833501122494666,
+            "logmse": 0.43143105216623967
+          }
+        }
+      }
+    },
+    "OVN": {
+      "2023": {
+        "n": 198,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.19782362756626085,
+            "logmse": 0.3399687923469598
+          },
+          "CLIM60": {
+            "qlike": 0.2569335192398244,
+            "logmse": 0.423898496422642
+          },
+          "PERSIST1": {
+            "qlike": 0.3201665296742389,
+            "logmse": 0.5519670693312797
+          },
+          "PERSIST5": {
+            "qlike": 0.21707851718747054,
+            "logmse": 0.3561629914899247
+          }
+        }
+      },
+      "2024": {
+        "n": 197,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.22519980906723291,
+            "logmse": 0.3407384963564879
+          },
+          "CLIM60": {
+            "qlike": 0.2983170627814714,
+            "logmse": 0.4344549450442991
+          },
+          "PERSIST1": {
+            "qlike": 0.3525892690758682,
+            "logmse": 0.5035391229513841
+          },
+          "PERSIST5": {
+            "qlike": 0.24197584996248145,
+            "logmse": 0.37090216688196453
+          }
+        }
+      },
+      "2025": {
+        "n": 198,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.24909300217698427,
+            "logmse": 0.36493152294407405
+          },
+          "CLIM60": {
+            "qlike": 0.6284195524598378,
+            "logmse": 0.761477133223634
+          },
+          "PERSIST1": {
+            "qlike": 0.2538864296655507,
+            "logmse": 0.4673343208598725
+          },
+          "PERSIST5": {
+            "qlike": 0.20600641799401476,
+            "logmse": 0.3498919169280574
+          }
+        }
+      },
+      "DEV": {
+        "n": 395,
+        "metrics": {
+          "HAR": {
+            "qlike": 0.211477064922442,
+            "logmse": 0.3403526700428508
+          },
+          "CLIM60": {
+            "qlike": 0.2775729067783169,
+            "logmse": 0.42916335814027856
+          },
+          "PERSIST1": {
+            "qlike": 0.33633685793277296,
+            "logmse": 0.5278143973392811
+          },
+          "PERSIST5": {
+            "qlike": 0.22949566796386833,
+            "logmse": 0.36351392200190374
+          }
+        }
+      }
+    }
+  },
+  "bootstraps": {
+    "DAY": {
+      "CLIM60": {
+        "ci95": [
+          -0.0038626336083338627,
+          0.1014816556578621
+        ],
+        "Pr_improvement_le_zero": 0.0377
+      },
+      "PERSIST1": {
+        "ci95": [
+          0.11212677417578222,
+          0.22658455849507497
+        ],
+        "Pr_improvement_le_zero": 0
+      },
+      "PERSIST5": {
+        "ci95": [
+          0.023231065620291088,
+          0.06746402898969815
+        ],
+        "Pr_improvement_le_zero": 0
+      }
+    },
+    "OVN": {
+      "CLIM60": {
+        "ci95": [
+          0.008871023767695657,
+          0.14776171361377513
+        ],
+        "Pr_improvement_le_zero": 0.0071
+      },
+      "PERSIST1": {
+        "ci95": [
+          0.07709525166789281,
+          0.16711361224588295
+        ],
+        "Pr_improvement_le_zero": 0
+      },
+      "PERSIST5": {
+        "ci95": [
+          0.007706642979838079,
+          0.030729734727811393
+        ],
+        "Pr_improvement_le_zero": 0.001
+      }
+    }
+  },
+  "verdict": "REJECT_NO_PROMOTION",
+  "gates": {
+    "DAY": {
+      "beats_every_baseline_both_DEV_years": true,
+      "block_CI_positive": false,
+      "opened_2025_not_reversed": false
+    },
+    "OVN": {
+      "beats_every_baseline_both_DEV_years": true,
+      "block_CI_positive": true,
+      "opened_2025_not_reversed": false
+    }
+  }
+}
