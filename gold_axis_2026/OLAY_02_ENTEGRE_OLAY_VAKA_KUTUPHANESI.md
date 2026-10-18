@@ -427,3 +427,9 @@ Bu tablo yalnız giriş kapısı. **Her kimliğe tıklandığında haberlerin ya
 ## Küresel haber kaynak kayıt standardı — yeni kural arayüzü
 
 **OLAY-02'nin tarihli haber kaynağı sözleşmesi** genişletildi: [resmî ve ikincil haber kaynakları; 32 kurum](OLAY_02_KURESEL_HABER_KAYNAK_KURALLARI_V1_20261018.json), [tüm haber–öğren–etki kuralları ve denetimi](KURESEL_HABER_OLAY_OGREN_ETKI_KURAL_SOZLESMESI_20261018.md). Haber için yayıncı, menşei, olay coğrafyası, kaynağın resmî/ikincil/rapor türü, gerçek ilk yayın ve kaynak erişim saati, yayın öncesi beklenti, rakip haberler ve eşzamanlı fiyat/FX/faiz kanıtı ayrı tutulur. İlgili kod yalnız araştırma etiketi üretir; gerçek ilk kaynak ve nedensellik kontrolünden geçmeden bir olaya kesin fiyat yönü atamaz. Özellikle ECB/BoE/Fed gibi merkez bankası kararları, CPI/NFP olmayan günlerde de izlenecek; birden fazla örtüşen olayın getirisi üç bağımsız şok sayılmayacaktır.
+
+---
+
+## Genel Büyük Yükseliş/Düşüş Haber-Mekanizma Tarama Kaydı — 18 Ekim 2026
+
+2023–2025 **96 fiyat/olay kaydı**, 42 uzun swing ve 54 kısa fiyat düzeltmesi olarak araştırıldı. 42 uzun bacağın 25'i mutlak %5 ve 8'i mutlak %10 veya üzerindedir. Tüm ekonomik başlangıç haberlerinde ilk-baskı ve nedensellik doğrulaması **0/96**; bütün eşleşmeler hipotez. [Genel büyük hareket kaynak araştırması](ETKI_05_GENEL_BUYUK_YUKSELIS_DUSUS_NEDEN_ETKI_ARASTIRMASI_20261018.md) ve [12 ORG ekonomik şart kural matrisi](ETKI_05_GENEL_BUYUK_HAREKET_MEKANIZMA_KURAL_MATRISI_20261018.json) üzerinden 96 fiyat vakanın tetik/aktarım/kuvvetlendirici/karşıt kontrolleri incelenir. Tarihli sonuç ve birincil haber kanıtları OLAY-02 içinde kalır. Haber olmadığı halde büyük hareket ve haber olup küçük hareket gerçekleşen karşı örnekler zorunlu kontrol grubudur.
