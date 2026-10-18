@@ -1,0 +1,1266 @@
+{
+  "schema": "ETKI05_GENERAL_LARGE_MOVE_NEWS_MECHANISM_MATRIX_V1",
+  "date": "2026-10-18",
+  "project": "GOLD-ADAPTIVE-MODEL-APP-01",
+  "scope": "GENERAL GOLD XAUUSD LARGE RISES AND FALLS 2023-2025; NOT Jan-Feb only",
+  "relation": "OLAY-02 is event/price+news evidence, OGREN-03 is 12 general dynamic economic mechanism hypotheses, ETKI-05 is conditional economic response and counterfactual tests; S1/S2/S3 decision stays separate",
+  "authority": "RESEARCH_MECHANISM_HYPOTHESES_NOT_CAUSAL_ESTIMATES",
+  "population": {
+    "priceRecords": 96,
+    "distinctLongSelectedLegs": 42,
+    "shortCorrections": 54,
+    "deepExplanations": 38,
+    "largeLegsAbsGte5pct": 25,
+    "longLegsAbsGte10pct": 8,
+    "longUp": 21,
+    "longDown": 21,
+    "confirmedEventFirstNewsInPriceInitialization": 0,
+    "independentlyConfirmedCausalContributions": 0,
+    "sourceCandidateFamilyLabelsMayOverlap": {
+      "G01": 38,
+      "G05": 6,
+      "G03": 15,
+      "G07": 14,
+      "G06": 13,
+      "G04": 15,
+      "G02": 21
+    },
+    "note": "The 42 long-selected legs and 54 corrections overlap; selected price-leg thresholds are NOT ex ante probabilities of event occurrence; some V2 deep IDs intentionally do not join numeric C_CORR IDs."
+  },
+  "driverFramework": {
+    "WGC_4": {
+      "ECONOMIC_EXPANSION": "Physical/industrial and savings demand",
+      "RISK_UNCERTAINTY": "Safe-haven, geopolitics, policy and credit stress",
+      "OPPORTUNITY_COST": "Real/nominal rates and FX especially USD",
+      "MOMENTUM": "Futures/ETF/options flows, short cover, profit taking"
+    },
+    "externalStudies": [
+      "https://www.gold.org/goldhub/research/gold-mid-year-outlook-2026",
+      "https://www.gold.org/goldhub/gold-focus/2023/10/you-asked-we-answered-whats-impact-of-geopolitics-on-gold",
+      "https://www.gold.org/goldhub/gold-focus/2024/03/you-asked-we-answered-whats-behind-golds-march-rally",
+      "https://www.gold.org/goldhub/research/gold-market-commentary-may-2025"
+    ],
+    "note": "WGC GRAM mostly weekly/monthly regression factor attributions, NOT independently proven intraday first-news triggers."
+  },
+  "mechanisms": [
+    {
+      "org": "ORG01",
+      "name": "Faiz/dolar fırsat maliyetinin gevşemesi",
+      "family": [
+        "G01"
+      ],
+      "driver": [
+        "OPPORTUNITY_COST"
+      ],
+      "trigger": "Büyüme, ücret, enflasyon veya merkez bankası patikası beklentiden güvercinleşir",
+      "preconditions": [
+        "Gelecekteki reel getiri/fonlama seviyesi",
+        "USD hassasiyeti",
+        "önceden fiyatlanmış Fed/ECB/BoE beklentisi"
+      ],
+      "requiredTransmission": [
+        "Orijinal ekonomik sürpriz ve beklenti vintage",
+        "Olaydan sonra aynı-UTC gerçek ABD reel/nominal faiz düşüşü",
+        "DXY veya güvenilir USD ölçümünün zayıflaması ya da ayrışmanın açıklanması"
+      ],
+      "expected": "UP_CANDIDATE_IF_REAL_YIELD_OR_USD_FALL",
+      "amplifier": [
+        "ETF/CTA/COMEX alım",
+        "önceden güçlü altın korunma talebi"
+      ],
+      "counter": [
+        "Faiz ve USD yükselirken yalnız altın artıyorsa G04/G03 alternatifini koru",
+        "Düşük CPI zaten fiyatlandıysa zayıf yeni bilgi",
+        "Yüksek politika faizi sadece seviye; sürpriz değil"
+      ],
+      "flip": "Açıklama sonra fiyat terslenmesi; faiz ve USD şahin yeniden fiyatlama",
+      "rule": "İlk haber + beklenenden daha gevşek politika PATİKASI + düşen USD/real-yield teyidi → yukarı şok HİPOTEZİ; bütün parça kanıtları yoksa UNKNOWN",
+      "evidence": {
+        "deepCases": 6,
+        "directLongCases": 3,
+        "sourceIds": [
+          "SWING_V1_001",
+          "SWING_V1_005",
+          "SWING_V1_017",
+          "MOVE_V2_C001",
+          "MOVE_V2_C007",
+          "MOVE_V2_C052"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_001",
+            "direction": "UP",
+            "goldLegPct": 6.04208,
+            "start": "2023-01-03",
+            "end": "2023-02-01",
+            "documentaryReason": "USD/yield easing and gold-specific demand versus white-metal weakness",
+            "counterevidence": "METAL_DECOUPLING_EQUITY_UP",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_005",
+            "direction": "UP",
+            "goldLegPct": 3.751586,
+            "start": "2023-06-28",
+            "end": "2023-07-18",
+            "documentaryReason": "Weaker USD and futures longs accompany gold gains while ETF holdings fall",
+            "counterevidence": "ETF_FLOW_CONTRADICTION",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_017",
+            "direction": "UP",
+            "goldLegPct": 7.632614,
+            "start": "2024-06-07",
+            "end": "2024-07-16",
+            "documentaryReason": "Falling yields/USD and rate-cut expectations accompany gold gains",
+            "counterevidence": "PLATINUM_NOT_ALIGNED",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_001",
+            "counterevidence": "METAL_DECOUPLING_EQUITY_UP"
+          },
+          {
+            "id": "SWING_V1_005",
+            "counterevidence": "ETF_FLOW_CONTRADICTION"
+          },
+          {
+            "id": "SWING_V1_017",
+            "counterevidence": "PLATINUM_NOT_ALIGNED"
+          },
+          {
+            "id": "MOVE_V2_C001",
+            "counterevidence": "MIXED_WHITE_METALS"
+          },
+          {
+            "id": "MOVE_V2_C007",
+            "counterevidence": "MIXED_WHITE_METALS"
+          },
+          {
+            "id": "MOVE_V2_C052",
+            "counterevidence": "HOLIDAY_METALS_MISSING"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG02",
+      "name": "Faiz/dolar fırsat maliyetinin sertleşmesi",
+      "family": [
+        "G01"
+      ],
+      "driver": [
+        "OPPORTUNITY_COST"
+      ],
+      "trigger": "Güçlü istihdam/ücret, sıcak enflasyon veya beklenenden şahin merkez bankası iletişimi",
+      "preconditions": [
+        "Fed/ECB/BoE önceden beklenen karar/mesaj",
+        "risk primi ve USD/real yield baz durumu"
+      ],
+      "requiredTransmission": [
+        "Haber ilk kaynak/sürpriz öncesi beklenti",
+        "Eşzamanlı ABD tahvil reel/nominal faiz artışı",
+        "USD yükselişi ve diğer kanalları ayırıcı fiyat verisi"
+      ],
+      "expected": "DOWN_CANDIDATE_IF_REAL_YIELD_AND_USD_RISE",
+      "amplifier": [
+        "COMEX/ETF pozisyon azaltımı",
+        "önceki aşırı uzun birikim"
+      ],
+      "counter": [
+        "Jeopolitik risk ve fizikî talep altını destekliyorsa tek yön bekleme",
+        "Tahvil getirisi yükselmiyorsa şahin etki teyitsiz",
+        "Güçlü istihdam zayıf ücret nedeniyle farklılaşabilir"
+      ],
+      "flip": "Sonraki Fed patikasının değişmesi veya USD/real-yield tepkisinin geri alınması",
+      "rule": "İlk haber + şahin sürpriz + olay-sonrası USD/real-yield↑ → DOWN hipotezi; ticari/jeopolitik destek varsa MULTICAUSAL",
+      "evidence": {
+        "deepCases": 9,
+        "directLongCases": 4,
+        "sourceIds": [
+          "SWING_V1_002",
+          "SWING_V1_004",
+          "SWING_V1_006",
+          "SWING_V1_036",
+          "MOVE_V2_C002",
+          "MOVE_V2_C005",
+          "MOVE_V2_C016",
+          "MOVE_V2_C029",
+          "MOVE_V2_C050"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_002",
+            "direction": "DOWN",
+            "goldLegPct": -7.147197,
+            "start": "2023-02-01",
+            "end": "2023-02-24",
+            "documentaryReason": "Strong jobs and rates/USD rise; equities and metals weaken together",
+            "counterevidence": "BROAD_MARKET_WEAKNESS",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_004",
+            "direction": "DOWN",
+            "goldLegPct": -6.959525,
+            "start": "2023-05-04",
+            "end": "2023-06-28",
+            "documentaryReason": "Rising real yields/USD press precious metals despite positive equities",
+            "counterevidence": "EQUITY_UP_METALS_DOWN",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_006",
+            "direction": "DOWN",
+            "goldLegPct": -8.020636,
+            "start": "2023-07-18",
+            "end": "2023-10-05",
+            "documentaryReason": "Higher yields/USD and financial outflows coincide with extended gold weakness",
+            "counterevidence": "MONTHLY_VINTAGE_NOT_EVENT_ONSET",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_036",
+            "direction": "DOWN",
+            "goldLegPct": -4.545362,
+            "start": "2025-07-22",
+            "end": "2025-07-30",
+            "documentaryReason": "Stronger USD and opportunity cost accompany gold/metal down while equities gain",
+            "counterevidence": "EQUITY_UP_METALS_DOWN",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_002",
+            "counterevidence": "BROAD_MARKET_WEAKNESS"
+          },
+          {
+            "id": "SWING_V1_004",
+            "counterevidence": "EQUITY_UP_METALS_DOWN"
+          },
+          {
+            "id": "SWING_V1_006",
+            "counterevidence": "MONTHLY_VINTAGE_NOT_EVENT_ONSET"
+          },
+          {
+            "id": "SWING_V1_036",
+            "counterevidence": "EQUITY_UP_METALS_DOWN"
+          },
+          {
+            "id": "MOVE_V2_C002",
+            "counterevidence": "NOT_PRE_RELEASE_SIGNAL"
+          },
+          {
+            "id": "MOVE_V2_C005",
+            "counterevidence": "EXPOST_MONTHLY_REPORT"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG03",
+      "name": "Bankacılık stresinde sığınak ile faiz gevşemesi",
+      "family": [
+        "G05",
+        "G01"
+      ],
+      "driver": [
+        "RISK_UNCERTAINTY",
+        "OPPORTUNITY_COST"
+      ],
+      "trigger": "Banka iflası, mevduat kaçışı, kredi ve fonlama şoku",
+      "preconditions": [
+        "Sistemin önceden kredi likidite kırılganlığı",
+        "beklenen merkez bankası likidite müdahalesi"
+      ],
+      "requiredTransmission": [
+        "Banka ilk olay açıklaması ve likidite/finansman kanıtı",
+        "Faiz indirimi beklentisi, USD ve bono fiyatı eşzamanlılığı",
+        "Altın/diğer güvenli limanlar ve risk varlıkları arasında ayırıcı tepki"
+      ],
+      "expected": "UP_IF_SAFE_HAVEN_AND_EASING_DOMINATE_ELSE_MIXED",
+      "amplifier": [
+        "ETF/korunma alımları",
+        "kredi teminat baskısı"
+      ],
+      "counter": [
+        "Genel nakde hücum altını da satıyor olabilir (ORG12)",
+        "Birkaç aylık ralli tek banka iflasının etkisi sayılamaz"
+      ],
+      "flip": "Fonlama güveni onarılırsa güvenli liman primi çözülür, risk-on görünür",
+      "rule": "Banka risk şoku → HAVEN vs CASH_SELL iki dal; USD/yield ve likidite kanıtı olmadığı sürece yön belirsiz",
+      "evidence": {
+        "deepCases": 3,
+        "directLongCases": 1,
+        "sourceIds": [
+          "SWING_V1_003",
+          "MOVE_V2_C003",
+          "MOVE_V2_C004"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_003",
+            "direction": "UP",
+            "goldLegPct": 13.199859,
+            "start": "2023-02-24",
+            "end": "2023-05-04",
+            "documentaryReason": "Bank failure and haven flows interact with expected rate relief",
+            "counterevidence": "LONG_LEG_CONTAINS_MORE_THAN_BANK_STRESS",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_003",
+            "counterevidence": "LONG_LEG_CONTAINS_MORE_THAN_BANK_STRESS"
+          },
+          {
+            "id": "MOVE_V2_C003",
+            "counterevidence": "BROAD_RISK_OFF_NOT_UNANIMOUS"
+          },
+          {
+            "id": "MOVE_V2_C004",
+            "counterevidence": "NO_IN_WINDOW_FIRSTPRINT"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG04",
+      "name": "Jeopolitik risk primi oluşumu",
+      "family": [
+        "G03"
+      ],
+      "driver": [
+        "RISK_UNCERTAINTY"
+      ],
+      "trigger": "Savaş, saldırı, yaptırım/güvenlik riskinin doğrulanmış tırmanması",
+      "preconditions": [
+        "Önceden fiyatlanmış risk primi",
+        "çatışma tırmanma potansiyeli",
+        "enerji arzına maruziyet"
+      ],
+      "requiredTransmission": [
+        "Birincil ya da güçlü bağımsız kaynak ve ilk erişim",
+        "Risk ölçümleri, altın/enerji/hisse/FX aynı zaman damgaları",
+        "GPR güncel yayımlanma/ölçüm gecikmesi korunmalı"
+      ],
+      "expected": "UP_SAFE_HAVEN_CANDIDATE_OR_DOWN_IF_ENERGY_RATE_DOMINATES",
+      "amplifier": [
+        "ETF/opsiyon korunması",
+        "short-covering"
+      ],
+      "counter": [
+        "Enerji kaynaklı enflasyon/faiz yukarı kanalı altını baskılayabilir",
+        "Habere tepki zaten fiyatlandıysa ilkimpulse görünmez",
+        "Kâr alma fiyatı ters çevirebilir"
+      ],
+      "flip": "Ateşkes/gerilim azalması ve GPR/risk pozisyon çözülmesi (ORG05)",
+      "rule": "Doğrulanmış jeopolitik tırmanma + risk korunma alımı teyidi → UP adayı; petrol/faiz etkisi ile RIVAL ORG02 her zaman test edilir",
+      "evidence": {
+        "deepCases": 1,
+        "directLongCases": 0,
+        "sourceIds": [
+          "MOVE_V2_C006"
+        ],
+        "directLongExamples": [],
+        "counterCases": [
+          {
+            "id": "MOVE_V2_C006",
+            "counterevidence": "SHORT_COVERING_UNVERIFIED_INTRADAY"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG05",
+      "name": "Jeopolitik risk priminin geri alınması",
+      "family": [
+        "G03"
+      ],
+      "driver": [
+        "RISK_UNCERTAINTY",
+        "MOMENTUM"
+      ],
+      "trigger": "Ateşkes, anlaşma, askeri riskin doğrulanmış azalması",
+      "preconditions": [
+        "Yükselmiş önceki koruma primi ve risk fonu pozisyonları"
+      ],
+      "requiredTransmission": [
+        "Gerilimi azaltan ilk resmî ve bağımsız kaynak",
+        "Hisse/risk-on ve altın/hedge göstergelerinin eşzamanlılığı",
+        "Faiz/USD değişimine karşı ayırıcı kanıt"
+      ],
+      "expected": "DOWN_IF_PREEXISTING_SAFE_HAVEN_PREMIUM_UNWINDS",
+      "amplifier": [
+        "korunma kapatılması",
+        "vadeli uzun pozisyon çözülmesi"
+      ],
+      "counter": [
+        "USD zayıflığı veya yeni risk altını desteklemeyi sürdürebilir",
+        "Diğer metal ve hisse davranışı tek sebebi doğrulamaz"
+      ],
+      "flip": "Yeniden çatışma veya koruma talebinin geri dönmesi",
+      "rule": "Gerilim azalması + önceden oluşan kanıtlı risk primi + çözülme akışı → DOWN adayı; prim yoksa zayıf",
+      "evidence": {
+        "deepCases": 1,
+        "directLongCases": 1,
+        "sourceIds": [
+          "SWING_V1_034"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_034",
+            "direction": "DOWN",
+            "goldLegPct": -4.610566,
+            "start": "2025-06-13",
+            "end": "2025-06-27",
+            "documentaryReason": "Geopolitical tension easing and shifting risk appetite coincide with gold falling while equities rise",
+            "counterevidence": "OTHER_METALS_UP",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_034",
+            "counterevidence": "OTHER_METALS_UP"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG06",
+      "name": "Tarife ve ekonomi politikası belirsizliğinin birikmesi",
+      "family": [
+        "G02"
+      ],
+      "driver": [
+        "RISK_UNCERTAINTY",
+        "OPPORTUNITY_COST"
+      ],
+      "trigger": "Tarife, yaptırım, ticaret müzakeresinde kopuş ve politika belirsizliği",
+      "preconditions": [
+        "Önceden karşılıklı ticaret riskleri",
+        "büyüme/enflasyon duyarlılığı",
+        "likidite"
+      ],
+      "requiredTransmission": [
+        "Orijinal yasa/karar/açıklama ve beklenmeyen içerik",
+        "Risk primi, DXY, ABD faizleri ve hisseler eşzamanlı",
+        "ETF/futures/physically confirmed if amplifier claim"
+      ],
+      "expected": "UP_HAVEN_IF_RISK_DEMAND_EXCEEDS_STAGFLATION_RATE_OR_LIQUIDITY_SELL",
+      "amplifier": [
+        "güvenli liman korunma talebi",
+        "ETF/CTA alımları"
+      ],
+      "counter": [
+        "Enflasyon beklentisi/yield yükselirse baskı oluşturabilir",
+        "Sistemik likidite satışı önce DOWN (ORG08)",
+        "Açıklanan tarife önceden biliniyorsa sürpriz değil"
+      ],
+      "flip": "Tarifelerin hafifletilmesi (ORG07) veya teminat likidite şoku (ORG08)",
+      "rule": "Ticaret şoku + riskten kaçış + doğrulanmış altın demand tepkisi → UP adayı; USD/yield ve nakit satışı rakip",
+      "evidence": {
+        "deepCases": 7,
+        "directLongCases": 3,
+        "sourceIds": [
+          "SWING_V1_031",
+          "SWING_V1_033",
+          "SWING_V1_035",
+          "MOVE_V2_C030",
+          "MOVE_V2_C031",
+          "MOVE_V2_C032",
+          "MOVE_V2_C040"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_031",
+            "direction": "UP",
+            "goldLegPct": 5.948176,
+            "start": "2025-05-01",
+            "end": "2025-05-06",
+            "documentaryReason": "Trade/policy uncertainty accompanies short gold rebound",
+            "counterevidence": "EQUITIES_NEAR_FLAT_NOT_GLOBAL_HAVEN",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_033",
+            "direction": "UP",
+            "goldLegPct": 8.03015,
+            "start": "2025-05-14",
+            "end": "2025-06-13",
+            "documentaryReason": "Trade/fiscal uncertainty precedes later separate geopolitical information",
+            "counterevidence": "LAST_DAY_GEOPOLITIC_NOT_INITIAL_TRIGGER",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_035",
+            "direction": "UP",
+            "goldLegPct": 4.795238,
+            "start": "2025-06-27",
+            "end": "2025-07-22",
+            "documentaryReason": "Policy uncertainty and flow demand coexist in a broad multi-asset rally",
+            "counterevidence": "BROAD_RALLY_NOT_SPECIFIC_HAVEN",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_031",
+            "counterevidence": "EQUITIES_NEAR_FLAT_NOT_GLOBAL_HAVEN"
+          },
+          {
+            "id": "SWING_V1_033",
+            "counterevidence": "LAST_DAY_GEOPOLITIC_NOT_INITIAL_TRIGGER"
+          },
+          {
+            "id": "SWING_V1_035",
+            "counterevidence": "BROAD_RALLY_NOT_SPECIFIC_HAVEN"
+          },
+          {
+            "id": "MOVE_V2_C030",
+            "counterevidence": "EFP_PHYSICAL_TRANSFER_ALTERNATIVE"
+          },
+          {
+            "id": "MOVE_V2_C031",
+            "counterevidence": "POST_REPORT_NOT_FIRSTPRINT"
+          },
+          {
+            "id": "MOVE_V2_C032",
+            "counterevidence": "FIRSTPRINT_NOT_INDEPENDENTLY_VERIFIED"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG07",
+      "name": "Ticaret anlaşması sonrası riskten kaçış priminin çözülmesi",
+      "family": [
+        "G02"
+      ],
+      "driver": [
+        "RISK_UNCERTAINTY",
+        "MOMENTUM"
+      ],
+      "trigger": "Tarifede karşılıklı indirim, anlaşma, erteleme veya uzlaşma",
+      "preconditions": [
+        "Önceden belirsizlik birikimi/hedge pozisyonları"
+      ],
+      "requiredTransmission": [
+        "Resmi anlaşma metni, ilk erişim, önceki tarife politikası",
+        "Hisselerde risk-on ve hedge çözülmesini gösteren ayrı fiyat/akım",
+        "DXY/yield benzer saatleri"
+      ],
+      "expected": "DOWN_IF_RISK_PREMIUM_UNWIND_PREVAILS",
+      "amplifier": [
+        "hedge satışları",
+        "birikmiş uzun altın çözülmesi"
+      ],
+      "counter": [
+        "Yeni enflasyon/büyüme şoku faiz gevşetiyorsa altın düşmeyebilir",
+        "Anlaşma söylentisinin kendisi kesin politika değildir"
+      ],
+      "flip": "Anlaşmanın çökmesi, yeni tarife belirsizliği",
+      "rule": "Gerçek anlaşma + risk priminin önceden varlığı + risk-on transferi → DOWN adayı; piyasa asof teyidi gerekir",
+      "evidence": {
+        "deepCases": 1,
+        "directLongCases": 1,
+        "sourceIds": [
+          "SWING_V1_032"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_032",
+            "direction": "DOWN",
+            "goldLegPct": -7.410996,
+            "start": "2025-05-06",
+            "end": "2025-05-14",
+            "documentaryReason": "Trade agreement de-escalation and firmer USD coincide with gold decline and equities gaining",
+            "counterevidence": "RISK_PREMIUM_UNWIND_VERSUS_MACRO",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_032",
+            "counterevidence": "RISK_PREMIUM_UNWIND_VERSUS_MACRO"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG08",
+      "name": "Ticaret/finansal şokta önce tasfiye sonra koruma",
+      "family": [
+        "G02",
+        "G05"
+      ],
+      "driver": [
+        "RISK_UNCERTAINTY",
+        "MOMENTUM"
+      ],
+      "trigger": "Makro/ticari şokla likidite ve teminat talebinin eşzamanlı artması",
+      "preconditions": [
+        "Yüklü pozisyon ve marjin riski",
+        "sıkışmış piyasa derinliği"
+      ],
+      "requiredTransmission": [
+        "Doğrulanmış haber ve fonlama/teminat bağımsız veri",
+        "İlk fazda altın dahil geniş satım / nakit talebi",
+        "İkinci fazda fonlama rahatlaması ile korunmaya geçiş"
+      ],
+      "expected": "FIRST_DOWN_THEN_POSSIBLE_UP",
+      "amplifier": [
+        "stop-loss zinciri",
+        "cash/margin liquidations"
+      ],
+      "counter": [
+        "Sadece fiyatın V şekli zorunlu satış ispatı değildir",
+        "Resmi fonlama kanıtı yoksa ORG08 adaydır"
+      ],
+      "flip": "Kısa fonlama geri gelir; risk primi hâlâ yüksektir, altın rebound adayı",
+      "rule": "Doğrulanmış makro risk + fonlama satışı → erken DOWN; fonlama toparlanıp hedge talebi geri gelirse sonraki UP; farklı olay saati tutulur",
+      "evidence": {
+        "deepCases": 2,
+        "directLongCases": 0,
+        "sourceIds": [
+          "MOVE_V2_C033",
+          "MOVE_V2_C034"
+        ],
+        "directLongExamples": [],
+        "counterCases": [
+          {
+            "id": "MOVE_V2_C033",
+            "counterevidence": "MARGIN_OR_FORCED_SALES_NOT_VERIFIED"
+          },
+          {
+            "id": "MOVE_V2_C034",
+            "counterevidence": "MIXED_PHASE_ENDPOINT_NOT_MONOTONIC"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG09",
+      "name": "Fizikî/finansal altın talebinin gecikmeli hızlanması",
+      "family": [
+        "G04"
+      ],
+      "driver": [
+        "ECONOMIC_EXPANSION",
+        "MOMENTUM"
+      ],
+      "trigger": "Merkez bankası rezerv/OTC fiziki alım eğilimi veya bilinebilir ETF/COMEX talep artışı",
+      "preconditions": [
+        "Uzun vadeli rezerv tahsisi",
+        "yatırımcı pozisyon/maliyet",
+        "talep arz durumu"
+      ],
+      "requiredTransmission": [
+        "Birincil PBoC/WGC/fund holdings yayım tarihi ve gözlem dönemi farkı",
+        "Fizikî prim, OTC, ETF veya COMEX uygun anlık göstergeler",
+        "Beklentiden farklı altın talebi; diğer metal ayrışmasının açıklanması"
+      ],
+      "expected": "UP_IF_SUSTAINED_NET_DEMAND_WITH_NO_STRONGER_OPPORTUNITY_COST",
+      "amplifier": [
+        "trend followers",
+        "options hedging"
+      ],
+      "counter": [
+        "WGC/ETF/CFTC raporları çoğu kez fiyat hareketinden sonra yayınlanır",
+        "Altın yukarı ama beyaz metaller/ETF aşağı ise başka kanallar olabilir",
+        "Yüksek talep uzun vadeli olabilir, ilk 15dk haber şoku değildir"
+      ],
+      "flip": "Flow zayıflaması ve aşırı pozisyon çözülmesi (ORG10)",
+      "rule": "Zaman-doğru resmî demand sürprizi + bağımsız talep/akış + süreklilik → yavaş UP adayı; geçmişte gerçekleşen alımı haber saati gibi kullanma",
+      "evidence": {
+        "deepCases": 3,
+        "directLongCases": 2,
+        "sourceIds": [
+          "SWING_V1_013",
+          "SWING_V1_015",
+          "MOVE_V2_C051"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_013",
+            "direction": "UP",
+            "goldLegPct": 19.984039,
+            "start": "2024-02-14",
+            "end": "2024-04-19",
+            "documentaryReason": "Gold physical/OTC/options demand and soft activity data act together",
+            "counterevidence": "EQUITIES_DOWN_WHILE_METALS_UP",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_015",
+            "direction": "UP",
+            "goldLegPct": 6.141055,
+            "start": "2024-04-30",
+            "end": "2024-05-20",
+            "documentaryReason": "ETF and futures long accumulation with precious-metal price gains",
+            "counterevidence": "GRAM_UNEXPLAINED_RESIDUAL",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_013",
+            "counterevidence": "EQUITIES_DOWN_WHILE_METALS_UP"
+          },
+          {
+            "id": "SWING_V1_015",
+            "counterevidence": "GRAM_UNEXPLAINED_RESIDUAL"
+          },
+          {
+            "id": "MOVE_V2_C051",
+            "counterevidence": "POST_PUBLISHED_ETF_ONLY"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG10",
+      "name": "Aşırı pozisyonlanma sonrası kâr alma ve çözülme",
+      "family": [
+        "G06"
+      ],
+      "driver": [
+        "MOMENTUM"
+      ],
+      "trigger": "Yükseliş sonrası alım sıkışması, stop tetik veya pozisyon azaltma",
+      "preconditions": [
+        "Önceki güçlü altın koşusu",
+        "aşırı uzun/opsiyon pozisyonu",
+        "düşük piyasa derinliği"
+      ],
+      "requiredTransmission": [
+        "Önceden kanıtlı COT/OI/ETF/opsiyon positioning",
+        "Haberden bağımsız volume/OI ve fiyat yolu, boşluk tespiti",
+        "Diğer risk/FX haberlerinin asof rakip delili"
+      ],
+      "expected": "DOWN_AFTER_RALLY_IF_UNWINDING_CONFIRMED",
+      "amplifier": [
+        "kaldıraç azaltımı",
+        "stop satışı ve opsiyon gamma"
+      ],
+      "counter": [
+        "Fiyat düşüşü tek başına profit-taking kanıtı değildir",
+        "Güçlü USD/yields veya savaşın çözülmesi daha gerçek kaynak olabilir"
+      ],
+      "flip": "Yeni havan/rezerv alımı veya tasfiye bitmesi",
+      "rule": "Ön-ralli + bağımsız aşırı pozisyon + gerçek çözülme sinyali → DOWN mekanizma adayı; sırf fiyat kırıldı diye kâr alma etiketleme",
+      "evidence": {
+        "deepCases": 3,
+        "directLongCases": 2,
+        "sourceIds": [
+          "SWING_V1_014",
+          "SWING_V1_018",
+          "MOVE_V2_C035"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_014",
+            "direction": "DOWN",
+            "goldLegPct": -4.378754,
+            "start": "2024-04-19",
+            "end": "2024-04-30",
+            "documentaryReason": "Profit-taking and COMEX slowdown after extended metal gains",
+            "counterevidence": "METAL_DOWN_EQUITY_UP_NOT_SYSTEMIC_LIQUIDATION",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          },
+          {
+            "id": "SWING_V1_018",
+            "direction": "DOWN",
+            "goldLegPct": -4.222006,
+            "start": "2024-07-16",
+            "end": "2024-07-25",
+            "documentaryReason": "Gold high followed by position reset and technology-stock correction",
+            "counterevidence": "POSITION_VERSUS_GENERAL_RISK_UNRESOLVED",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_014",
+            "counterevidence": "METAL_DOWN_EQUITY_UP_NOT_SYSTEMIC_LIQUIDATION"
+          },
+          {
+            "id": "SWING_V1_018",
+            "counterevidence": "POSITION_VERSUS_GENERAL_RISK_UNRESOLVED"
+          },
+          {
+            "id": "MOVE_V2_C035",
+            "counterevidence": "ZERO_SAME_DAY_ENDPOINT_INVALID"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG11",
+      "name": "Merkez bankası rezerv haberi ile karşıt makro şok",
+      "family": [
+        "G04",
+        "G01"
+      ],
+      "driver": [
+        "ECONOMIC_EXPANSION",
+        "OPPORTUNITY_COST"
+      ],
+      "trigger": "PBoC veya başka rezerv verisiyle bağımsız CPI/NFP/Fed açıklamalarının rekabeti",
+      "preconditions": [
+        "Altın alım trendi",
+        "faiz ve dolar baskısı"
+      ],
+      "requiredTransmission": [
+        "Rezerv raporu yayımlanma ve referans ayı",
+        "Makro haberde gerçek sürpriz/ilk erişim",
+        "İki farklı bilginin katkısı ve zamanları"
+      ],
+      "expected": "MIXED_DEPENDS_ON_FLOW_VERSUS_RATE_STRENGTH",
+      "amplifier": [
+        "ETF/opsiyon akışı",
+        "zaten beklentide fiyatlanmış talep"
+      ],
+      "counter": [
+        "Son gün gelen istihdam tüm aylık bacağı açıklayamaz",
+        "Aylık rezerv raporu geçmiş alımları zamanda geriye taşımaz"
+      ],
+      "flip": "Makro faiz şoku baskınlaşır veya talep fonu yavaşlar",
+      "rule": "Rezerv alımı + makro politika şoku = iki ayrı haber; fiyat yönü ancak ayrıştırılmış aktarımlardan sonra belirlenir",
+      "evidence": {
+        "deepCases": 1,
+        "directLongCases": 1,
+        "sourceIds": [
+          "SWING_V1_016"
+        ],
+        "directLongExamples": [
+          {
+            "id": "SWING_V1_016",
+            "direction": "DOWN",
+            "goldLegPct": -5.458903,
+            "start": "2024-05-20",
+            "end": "2024-06-07",
+            "documentaryReason": "Hawkish Fed news and PBoC purchase pause plus strong jobs release are separate information shocks",
+            "counterevidence": "FINAL_DAY_EVENT_NOT_CAUSE_OF_WHOLE_LEG",
+            "firstprintVerified": false,
+            "causalConfirmed": false
+          }
+        ],
+        "counterCases": [
+          {
+            "id": "SWING_V1_016",
+            "counterevidence": "FINAL_DAY_EVENT_NOT_CAUSE_OF_WHOLE_LEG"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    },
+    {
+      "org": "ORG12",
+      "name": "Marjin ve fonlama nedeniyle zorunlu pozisyon boşaltma",
+      "family": [
+        "G05",
+        "G06"
+      ],
+      "driver": [
+        "MOMENTUM",
+        "RISK_UNCERTAINTY"
+      ],
+      "trigger": "Borsa marjin/teminat değişimi, likidite kaybı veya kaldıraçta zorunlu azaltma",
+      "preconditions": [
+        "Yüksek kaldıraç",
+        "ince piyasa",
+        "marjin artışına duyarlı uzun pozisyon"
+      ],
+      "requiredTransmission": [
+        "Borsa/resmi marjin değişimi ilk duyuru",
+        "OI/futures işlem-hacim ve cross-asset eşzamanlı",
+        "Fonlama/teminat veya pozisyon azaltma için bağımsız doğrulama"
+      ],
+      "expected": "DOWN_IF_FORCED_LONG_LIQUIDATION_CONFIRMED",
+      "amplifier": [
+        "stop emri/gamma likidite boşluğu",
+        "diğer varlıkla ortak satış"
+      ],
+      "counter": [
+        "Marjin artışı tek başına zorunlu satışı ispatlamaz",
+        "Volatilite zaten yükseldiyse karar tepki olabilir, başlangıç olayı değildir",
+        "İnce piyasada boşluk sonraki kapanışta hızla terslenebilir"
+      ],
+      "flip": "Teminat baskısının sona ermesi ve risk iştahının dönmesi",
+      "rule": "Önce kaynak doğrulaması + marjin ve OI/cross-asset imza → tasfiye DOWN adayı; tekrarlı fiyat düşüşü yeterli delil değil",
+      "evidence": {
+        "deepCases": 1,
+        "directLongCases": 0,
+        "sourceIds": [
+          "MOVE_V2_C053"
+        ],
+        "directLongExamples": [],
+        "counterCases": [
+          {
+            "id": "MOVE_V2_C053",
+            "counterevidence": "INTRADAY_DROP_DIFFERS_WINDOW_NET"
+          }
+        ],
+        "verifiedCausalStarts": 0,
+        "evidenceLevel": "HYPOTHESIS_RESEARCH"
+      }
+    }
+  ],
+  "majorLegsExPostExamples": [
+    {
+      "id": "SWING_V1_037",
+      "date_start": "2025-07-30",
+      "date_end": "2025-10-20",
+      "direction": "UP",
+      "priceLegPct": 32.998457,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_013",
+      "date_start": "2024-02-14",
+      "date_end": "2024-04-19",
+      "direction": "UP",
+      "priceLegPct": 19.984039,
+      "orgResearch": "ORG09",
+      "roleHypothesis": "Gold physical/OTC/options demand and soft activity data act together",
+      "sourceDocUrl": "https://www.gold.org/goldhub/gold-focus/2024/03/you-asked-we-answered-whats-behind-golds-march-rally",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_019",
+      "date_start": "2024-07-25",
+      "date_end": "2024-10-30",
+      "direction": "UP",
+      "priceLegPct": 17.88621,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_029",
+      "date_start": "2025-04-07",
+      "date_end": "2025-04-21",
+      "direction": "UP",
+      "priceLegPct": 14.779037,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_025",
+      "date_start": "2024-12-18",
+      "date_end": "2025-02-24",
+      "direction": "UP",
+      "priceLegPct": 14.242996,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_003",
+      "date_start": "2023-02-24",
+      "date_end": "2023-05-04",
+      "direction": "UP",
+      "priceLegPct": 13.199859,
+      "orgResearch": "ORG03",
+      "roleHypothesis": "Bank failure and haven flows interact with expected rate relief",
+      "sourceDocUrl": "https://www.gold.org/goldhub/research/gold-market-commentary-march-2023",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_041",
+      "date_start": "2025-11-17",
+      "date_end": "2025-12-26",
+      "direction": "UP",
+      "priceLegPct": 12.077002,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_007",
+      "date_start": "2023-10-05",
+      "date_end": "2023-10-27",
+      "direction": "UP",
+      "priceLegPct": 10.226942,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_038",
+      "date_start": "2025-10-20",
+      "date_end": "2025-10-29",
+      "direction": "DOWN",
+      "priceLegPct": -9.784683,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_027",
+      "date_start": "2025-02-28",
+      "date_end": "2025-04-02",
+      "direction": "UP",
+      "priceLegPct": 9.639908,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_020",
+      "date_start": "2024-10-30",
+      "date_end": "2024-11-15",
+      "direction": "DOWN",
+      "priceLegPct": -8.048451,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_033",
+      "date_start": "2025-05-14",
+      "date_end": "2025-06-13",
+      "direction": "UP",
+      "priceLegPct": 8.03015,
+      "orgResearch": "ORG06",
+      "roleHypothesis": "Trade/fiscal uncertainty precedes later separate geopolitical information",
+      "sourceDocUrl": "https://www.kitco.com/news/off-the-wire/2025-06-13/gold-advances-israel-iran-escalation-fuels-safe-haven-bids",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_006",
+      "date_start": "2023-07-18",
+      "date_end": "2023-10-05",
+      "direction": "DOWN",
+      "priceLegPct": -8.020636,
+      "orgResearch": "ORG02",
+      "roleHypothesis": "Higher yields/USD and financial outflows coincide with extended gold weakness",
+      "sourceDocUrl": "https://www.gold.org/goldhub/research/gold-market-commentary-september-2023",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_017",
+      "date_start": "2024-06-07",
+      "date_end": "2024-07-16",
+      "direction": "UP",
+      "priceLegPct": 7.632614,
+      "orgResearch": "ORG01",
+      "roleHypothesis": "Falling yields/USD and rate-cut expectations accompany gold gains",
+      "sourceDocUrl": "https://www.gold.org/goldhub/research/gold-market-commentary-july-2024",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_032",
+      "date_start": "2025-05-06",
+      "date_end": "2025-05-14",
+      "direction": "DOWN",
+      "priceLegPct": -7.410996,
+      "orgResearch": "ORG07",
+      "roleHypothesis": "Trade agreement de-escalation and firmer USD coincide with gold decline and equities gaining",
+      "sourceDocUrl": "https://www.kitco.com/news/off-the-wire/2025-05-12/gold-slides-3-us-china-agree-slash-reciprocal-tariffs",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_002",
+      "date_start": "2023-02-01",
+      "date_end": "2023-02-24",
+      "direction": "DOWN",
+      "priceLegPct": -7.147197,
+      "orgResearch": "ORG02",
+      "roleHypothesis": "Strong jobs and rates/USD rise; equities and metals weaken together",
+      "sourceDocUrl": "https://www.gold.org/goldhub/research/gold-market-commentary-february-2023",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_004",
+      "date_start": "2023-05-04",
+      "date_end": "2023-06-28",
+      "direction": "DOWN",
+      "priceLegPct": -6.959525,
+      "orgResearch": "ORG02",
+      "roleHypothesis": "Rising real yields/USD press precious metals despite positive equities",
+      "sourceDocUrl": "https://www.gold.org/goldhub/research/gold-market-commentary-may-2023",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_009",
+      "date_start": "2023-11-10",
+      "date_end": "2023-12-01",
+      "direction": "UP",
+      "priceLegPct": 6.889178,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_039",
+      "date_start": "2025-10-29",
+      "date_end": "2025-11-12",
+      "direction": "UP",
+      "priceLegPct": 6.755117,
+      "orgResearch": null,
+      "roleHypothesis": null,
+      "sourceDocUrl": null,
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    },
+    {
+      "id": "SWING_V1_015",
+      "date_start": "2024-04-30",
+      "date_end": "2024-05-20",
+      "direction": "UP",
+      "priceLegPct": 6.141055,
+      "orgResearch": "ORG09",
+      "roleHypothesis": "ETF and futures long accumulation with precious-metal price gains",
+      "sourceDocUrl": "https://www.gold.org/goldhub/research/gold-market-commentary-may-2024",
+      "firstprintProof": "NO",
+      "sourceMeaning": "selected historical full leg, NOT single news return"
+    }
+  ],
+  "evidenceStages": [
+    {
+      "id": "H0",
+      "meaning": "Theme/source/price association only, candidate; source availability or rival missing"
+    },
+    {
+      "id": "H1",
+      "meaning": "Original news publisher + firstprint UTC and frozen forecast vintage are proven as-of"
+    },
+    {
+      "id": "H2",
+      "meaning": "Independent mediator USD/rates/energy/risk/flow aligns after event and before outcome"
+    },
+    {
+      "id": "H3",
+      "meaning": "Matched silent periods, competing news, event timing, placebo and cross-asset controls survive"
+    },
+    {
+      "id": "H4",
+      "meaning": "True time-forward, unaffected outcomes, calibrated direction/size/persistence beat baseline with uncertainty"
+    }
+  ],
+  "largeMoveResponseContract": {
+    "newsTime": "first original event/publication UTC and decision first available, not article first crawled later",
+    "prePrice": "Last fully closed XAU bar strictly before actionable first availability",
+    "checkpointsMinutes": [
+      15,
+      60,
+      240,
+      1440,
+      7200
+    ],
+    "checkpointNotes": "1d,5d require market-open matched session close, not fixed continuous elapsed hours across weekends",
+    "parallelCounters": "global 4h price trend, market precondition, macro prior-release context, independent volatility denominator",
+    "requiredSeparateTargets": [
+      "UP_DOWN_FLAT",
+      "ABS_SIZE_VS_PRE_EVENT_VOL",
+      "FWD_REMAINING_RETURN_AFTER_DETECTION",
+      "RUNUP_CONTINUE_FADE_REVERSE",
+      "EVENT_TO_PRICE_LAG",
+      "TRANSMISSION_ROLE_VS_AMPLIFIER_ROLE"
+    ],
+    "comparators": [
+      "similar news without large movement",
+      "similarly large movement without identified news",
+      "opposing economic signal",
+      "matched quiet clock periods"
+    ],
+    "noLeakage": "End pivot and full selected price-leg percent never a feature available at event announcement"
+  },
+  "rules": [
+    "R-PERIOD: Study ALL 2023-25 42 long swings and 54 corrections, not just CPI/NFP days; 2020-22 excluded and 2026 excluded as requested.",
+    "R-NEWS: Country, source, exact primary published_at and when actionable/received. Secondary monthly ETF/CFTC/central-bank reports not retroactive.",
+    "R-TRIGGER: Actual shock content vs previously known expectations / policies. Announcement existence alone not a directional surprise.",
+    "R-CHANNEL: Source-verified coincident USD/real yield/energy/spreads/flow separately; unmeasured mediator UNKNOWN, not FALSE.",
+    "R-AMPLIFY: Market exposure/positioning before or after event and liquidity data independent of the fact that gold moved.",
+    "R-COMPETE: ORG01 vs ORG02, haven vs forced sale, reserve buying vs Fed tightening may coexist; do not force one primary.",
+    "R-DURATION: Price event starts after t0, first 15m vs hours vs sessions vs weeks different labels. Each additional news gets its own t0.",
+    "R-CAUSAL: Just seeing news inside a big price leg does not prove initiating cause; document positive, opposite and news-free matched controls.",
+    "R-SCIENCE: no trained alpha, no verified news→size model, no BUY/SELL, no automatic S1/S2/S3 bridge until H4."
+  ],
+  "sources": [
+    "gold_axis_2026/GOLD_96_EVENT_SCIENTIFIC_CAUSE_EVIDENCE_REGISTER_20261014.csv",
+    "gold_axis_2026/OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv",
+    "gold_axis_2026/OLAY_02_42_UZUN_HAREKET_YASAM_DONGUSU_V1_20261014.csv",
+    "gold_axis_2026/OLAY_02_96_KAYIT_COKLU_DNA_KANIT_TRIANGULASYON_20261014.csv"
+  ],
+  "evidenceStatus": "0/96 causally confirmed; 38 documentary cases none original first-news initiation time certified; research-only",
+  "coreChanged": false,
+  "automaticTrade": false
+}
