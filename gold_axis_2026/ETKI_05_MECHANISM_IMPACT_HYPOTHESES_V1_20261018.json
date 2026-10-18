@@ -1,0 +1,257 @@
+{
+  "schema": "ETKI05_CONDITIONAL_MECHANISM_IMPACT_HYPOTHESES_V1",
+  "asof_research_date": "2026-10-18",
+  "project": "GOLD-ADAPTIVE-MODEL-APP-01",
+  "mode": "RESEARCH_ONLY",
+  "evidence_status": "OBSERVATIONAL_EXPOST_NOT_CAUSALLY_VALIDATED",
+  "science_gate": "FAIL",
+  "decision_authority": "NONE",
+  "core_modified": false,
+  "learn03_modified": false,
+  "olay02_modified": false,
+  "source_contract": {
+    "mechanism_source": "adaptive_volatility_learning/EVENT_CAUSAL_ACTION_HYPOTHESIS_REGISTER_20261014.md",
+    "case_source": "OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md",
+    "deep_case_org_mapping": "OLAY_02_38_DERIN_VAKA_OLAY_ORGUSU_ARSIV_ESLESMESI_20261014.csv",
+    "numeric_96": "OLAY_02_96_VAKA_FILITRELENEBILIR_KARAR_KATALOGU_20261014.csv",
+    "historical_release_85": "OLAY_02_85_MAKRO_YENI_DNA_TEPKI_PLASEBO_20261014.csv",
+    "distinct_96_checkpoints": 84,
+    "overlapping_id_count": 12,
+    "deep_case_total": 38,
+    "legacy_v2_rejoin": "NOT_ALLOWED_WITHOUT_ID_PROVENANCE",
+    "original_firstprint_price_causation_verified": "0/96"
+  },
+  "groups": [
+    {
+      "id": "E01",
+      "name": "Faiz/reel getiri/USD fırsat maliyeti",
+      "org": [
+        "ORG01",
+        "ORG02"
+      ],
+      "deepPrimaryN": 15,
+      "deepV1N": 7,
+      "evidence": "OBSERVATIONAL_MACRO_WITH_COUNTEREXAMPLES",
+      "signalCandidates": [
+        "actual-versus-consensus CPI/NFP surprise and constituent breakdown",
+        "first-published nominal/real yield response",
+        "USD and metals synchronous reaction",
+        "pre-event price trend and positioning"
+      ],
+      "distinguish": "risk-premium and funding may dominate interest-rate channel",
+      "firstTest": "CPI negative surprise 11/13 4h UP; 5/13 >=+1%; positive CPI surprise 5/8 4h DOWN; 2/8 <=-1%; positive NFP surprise 13/23 DOWN, 10/23 UP",
+      "confidence": "NOT_VALIDATED"
+    },
+    {
+      "id": "E02",
+      "name": "Risk primi oluşumu veya çözülmesi",
+      "org": [
+        "ORG03",
+        "ORG04",
+        "ORG05",
+        "ORG06",
+        "ORG07"
+      ],
+      "deepPrimaryN": 13,
+      "deepV1N": 6,
+      "evidence": "RETROSPECTIVE_DEEP_V1_OPPOSING_LEGS",
+      "signalCandidates": [
+        "verified novel banking/geopolitical/trade event",
+        "risk premia persistence versus de-escalation",
+        "cross-asset haven versus forced-cash signature",
+        "event-vintage USD/yield"
+      ],
+      "distinguish": "flight-to-quality and dollar/repricing can point in opposite directions",
+      "firstTest": "6 handpicked V1 deep cases: 4 UP and 2 DOWN; NOT representative of conditional size",
+      "confidence": "NOT_VALIDATED"
+    },
+    {
+      "id": "E03",
+      "name": "Fizikî/rezerv/finansal talep birikimi",
+      "org": [
+        "ORG09"
+      ],
+      "deepPrimaryN": 3,
+      "deepV1N": 2,
+      "evidence": "LOW_SUPPORT_RETROSPECTIVE_LONG_LEGS",
+      "signalCandidates": [
+        "ETF flow and original publication lag",
+        "CFTC vintage and position concentration",
+        "reserve/physical demand firstprint",
+        "gold versus silver/platinum relative strength"
+      ],
+      "distinguish": "published ETF/reserve flows may follow price and cannot be imported earlier",
+      "firstTest": "2 selected deep V1 cases UP; cannot infer P(LARGE) or causal start",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "id": "E04",
+      "name": "Likidite/teminat zorunlu tasfiye ve terslenme",
+      "org": [
+        "ORG08",
+        "ORG12"
+      ],
+      "deepPrimaryN": 3,
+      "deepV1N": 0,
+      "evidence": "LOW_SUPPORT_LEGACY_V2_ID_UNMAPPED",
+      "signalCandidates": [
+        "margin/funding stress timing",
+        "bid-ask/depth deterioration",
+        "gold versus other liquid assets co-sell",
+        "post-liquidation haven demand"
+      ],
+      "distinguish": "panic hedge demand can coexist with forced gold sale",
+      "firstTest": "three historical deep candidates only old MOVE_V2 IDs; cannot join 96 modern numeric outcomes by numeric order",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "id": "E05",
+      "name": "Doygunluk/kâr alma/pozisyon çözülmesi",
+      "org": [
+        "ORG10"
+      ],
+      "deepPrimaryN": 3,
+      "deepV1N": 2,
+      "evidence": "LOW_SUPPORT_RETROSPECTIVE_LONG_LEGS",
+      "signalCandidates": [
+        "prior trend age",
+        "positioning concentration vintage",
+        "retrace confirmed by volume/liquidity",
+        "counter-news and yield/USD"
+      ],
+      "distinguish": "small pullback can resume trend; don't treat prior peak as known as-of",
+      "firstTest": "2 selected deep V1 cases DOWN; no verified economic beginning or typical small-versus-large probabilities",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "id": "EX",
+      "name": "Rekabet eden çoklu mekanizma",
+      "org": [
+        "ORG11"
+      ],
+      "deepPrimaryN": 1,
+      "deepV1N": 1,
+      "evidence": "CONFLICT_OR_UNKNOWN_FALLBACK",
+      "signalCandidates": [
+        "simultaneous reserve and macro publications",
+        "source timing conflict",
+        "opposing cross-asset channels"
+      ],
+      "distinguish": "classify unknown instead of forcing a directional mechanism",
+      "firstTest": "one selected deep V1 case; this is a routing state not sixth independent causal family",
+      "confidence": "UNKNOWN"
+    }
+  ],
+  "response_schema": {
+    "target": "P(direction, magnitude, path, duration | verifiable pre-event conditions)",
+    "direction": [
+      "UP",
+      "DOWN",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "magnitude": [
+      "SMALL",
+      "MEDIUM",
+      "LARGE",
+      "UNKNOWN"
+    ],
+    "magnitude_rule": "use explicit horizons and regime-calibrated matched-control/volatility-normalized ranges; 1pct is only provisional descriptive threshold",
+    "path": [
+      "FADE",
+      "SIMILAR_PERSISTENCE",
+      "AMPLIFY",
+      "REVERSE",
+      "MULTIWAVE",
+      "UNKNOWN"
+    ],
+    "horizons": [
+      "15m",
+      "60m",
+      "4h",
+      "1 eligible session",
+      "3 eligible sessions",
+      "5 eligible sessions"
+    ],
+    "mandatory_evidence": [
+      "firstprint timestamp",
+      "actual-consensus-vintage",
+      "known-as-of USD and US real/nominal yields",
+      "other metals synchronous reaction",
+      "quiet matched placebo",
+      "rival mechanism and negative cases"
+    ],
+    "false_positive_guard": "zero/near-zero 15m response makes magnitude ratios unstable; unresolved and missing fields remain UNKNOWN"
+  },
+  "macro_evidence": {
+    "release_events": 85,
+    "cpi": 34,
+    "nfp": 35,
+    "fomc": 16,
+    "event15m_above_matched_weekly_control": 66,
+    "first15_to60": {
+      "same_sign": 64,
+      "reversal": 20,
+      "missing": 1
+    },
+    "first60_magnitude_shape_provisional": {
+      "similar": 32,
+      "amplified_ge_1_5x": 19,
+      "faded_lt_0_5x": 13,
+      "reversed": 20,
+      "missing": 1
+    },
+    "four_hour_available_cpi": 34,
+    "four_hour_available_nfp": 34,
+    "four_hour_available_fomc": 0,
+    "before_event_price4h": {
+      "matched": 84,
+      "full17bars_span240minutes": 84,
+      "missing": 1,
+      "selection": "17 completed bars strictly before release timestamp; no release-bar leakage"
+    },
+    "cpi_surprise": {
+      "negative": {
+        "n": 13,
+        "up_4h": 11,
+        "up_ge_1pct_4h": 5,
+        "down_4h": 2
+      },
+      "positive": {
+        "n": 8,
+        "down_4h": 5,
+        "down_le_minus1pct_4h": 2,
+        "up_4h": 3
+      },
+      "zero": {
+        "n": 13,
+        "down_4h": 10,
+        "up_4h": 3
+      }
+    },
+    "nfp_surprise": {
+      "positive": {
+        "n": 23,
+        "down_4h": 13,
+        "up_4h": 10,
+        "up_ge_1pct_4h": 4,
+        "down_le_minus1pct_4h": 5
+      },
+      "negative": {
+        "n": 12,
+        "valid_4h": 11,
+        "up_4h": 6,
+        "down_4h": 5
+      }
+    },
+    "exploratory_2025_chronological_holdout_brier_laplace": {
+      "evaluation_n": 21,
+      "sign_up_kind_only": 0.29237,
+      "sign_up_kind_plus_surprise": 0.29067,
+      "magnitude_abs4h_ge1pct_kind_only": 0.20392,
+      "magnitude_abs4h_ge1pct_kind_plus_surprise": 0.23232,
+      "caveat": "train 2023-2024 and evaluate 2025; hypotheses were selected in retrospective research, not blind; improvement in size NOT shown"
+    }
+  },
+  "validated_trading_performance": false
+}
