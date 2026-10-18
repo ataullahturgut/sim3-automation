@@ -1,0 +1,206 @@
+{
+  "schema": "GOLD_FIRST_NEWS_DOWNSIDE_NATIVE_CORE_FEB2023_SHADOW",
+  "runDate": "2026-10-19",
+  "priceBars": 3750,
+  "timeBasis": "2023 official historical release schedule proxy, firstprint and original consensus not certified",
+  "trueFirstprintCount": 0,
+  "noEconomicAlphaProof": true,
+  "noTrading": true,
+  "firstObservedWeakness": [
+    {
+      "at": "2023-02-01T17:15:00.000Z",
+      "phase": "EARLY_WEAKNESS",
+      "newsLinked": [],
+      "price": 1921.875
+    },
+    {
+      "at": "2023-02-02T13:45:00.000Z",
+      "phase": "EARLY_WEAKNESS",
+      "newsLinked": [],
+      "price": 1948.665
+    },
+    {
+      "at": "2023-02-03T13:45:00.000Z",
+      "phase": "CONFIRMED_FALL",
+      "newsLinked": [],
+      "price": 1888.1750000000002
+    }
+  ],
+  "events": [
+    {
+      "asof": "2023-02-01T19:00:00.000Z",
+      "marketPrice": 1927.725,
+      "s2": {
+        "phase": "NEUTRAL",
+        "direction": 0
+      },
+      "downside": {
+        "phase": "NO_ALERT",
+        "priorPriceWeaknessAt": "2023-02-01T17:15:00.000Z",
+        "incoming": [
+          {
+            "id": "FED_2023_0201",
+            "source": "FED",
+            "chronologyRole": "AFTER_PRICE_WEAKNESS",
+            "evidenceRole": "UNVERIFIED_OR_LATE_CONTEXT",
+            "firstprint": false,
+            "K": [
+              "K39"
+            ],
+            "org": [
+              "ORG01",
+              "ORG02"
+            ]
+          }
+        ],
+        "s3Review": "NO_DOWNSIDE_REVIEW"
+      },
+      "tradeAllowed": false
+    },
+    {
+      "asof": "2023-02-02T12:00:00.000Z",
+      "marketPrice": 1954.8200000000002,
+      "s2": {
+        "phase": "NEUTRAL",
+        "direction": 0
+      },
+      "downside": {
+        "phase": "NO_ALERT",
+        "priorPriceWeaknessAt": null,
+        "incoming": [
+          {
+            "id": "BOE_2023_0202",
+            "source": "BOE",
+            "chronologyRole": "NOT_YET_WEAK",
+            "evidenceRole": "UNVERIFIED_OR_LATE_CONTEXT",
+            "firstprint": false,
+            "K": [
+              "K39"
+            ],
+            "org": [
+              "ORG01",
+              "ORG02"
+            ]
+          }
+        ],
+        "s3Review": "NO_DOWNSIDE_REVIEW"
+      },
+      "tradeAllowed": false
+    },
+    {
+      "asof": "2023-02-02T13:15:00.000Z",
+      "marketPrice": 1953.19,
+      "s2": {
+        "phase": "NEUTRAL",
+        "direction": 0
+      },
+      "downside": {
+        "phase": "NO_ALERT",
+        "priorPriceWeaknessAt": null,
+        "incoming": [
+          {
+            "id": "ECB_2023_0202",
+            "source": "ECB",
+            "chronologyRole": "NOT_YET_WEAK",
+            "evidenceRole": "UNVERIFIED_OR_LATE_CONTEXT",
+            "firstprint": false,
+            "K": [
+              "K39"
+            ],
+            "org": [
+              "ORG01",
+              "ORG02"
+            ]
+          }
+        ],
+        "s3Review": "NO_DOWNSIDE_REVIEW"
+      },
+      "tradeAllowed": false
+    },
+    {
+      "asof": "2023-02-02T13:45:00.000Z",
+      "marketPrice": 1948.665,
+      "s2": {
+        "phase": "START",
+        "direction": -1
+      },
+      "downside": {
+        "phase": "EARLY_WEAKNESS",
+        "priorPriceWeaknessAt": "2023-02-02T13:45:00.000Z",
+        "incoming": [
+          {
+            "id": "ECB_PRESS_0202",
+            "source": "ECB",
+            "chronologyRole": "NOT_YET_WEAK",
+            "evidenceRole": "UNVERIFIED_OR_LATE_CONTEXT",
+            "firstprint": false,
+            "K": [
+              "K40"
+            ],
+            "org": [
+              "ORG01",
+              "ORG02"
+            ]
+          }
+        ],
+        "s3Review": "NO_DOWNSIDE_REVIEW"
+      },
+      "tradeAllowed": false
+    },
+    {
+      "asof": "2023-02-03T13:30:00.000Z",
+      "marketPrice": 1913.81,
+      "s2": {
+        "phase": "NEUTRAL",
+        "direction": 0
+      },
+      "downside": {
+        "phase": "NO_ALERT",
+        "priorPriceWeaknessAt": null,
+        "incoming": [
+          {
+            "id": "NFP_2023_0203",
+            "source": "BLS",
+            "chronologyRole": "AFTER_PREVIOUS_PRICE_WEAKNESS_PRIOR_SESSION",
+            "evidenceRole": "UNVERIFIED_OR_LATE_CONTEXT",
+            "firstprint": false,
+            "K": [],
+            "org": []
+          }
+        ],
+        "s3Review": "NO_DOWNSIDE_REVIEW"
+      },
+      "tradeAllowed": false
+    }
+  ],
+  "newModelSummary": {
+    "enabled": true,
+    "audit": {
+      "bars": 3750,
+      "gaps": 41,
+      "newsReceived": 5,
+      "newsFirstprintAttested": 0,
+      "priceOnlyStarts": 49,
+      "firstNewsBeforeOnsetCandidates": 0,
+      "newsAfterOnset": 0,
+      "coincidentUnresolved": 0,
+      "posthocOrUnverified": 5
+    },
+    "lastOnset": null,
+    "lastNews": {
+      "id": "NFP_2023_0203",
+      "source": "BLS",
+      "detectedAt": "2023-02-03T13:30:00Z",
+      "observedAt": "2023-02-03T13:30:00.000Z",
+      "eventTime": "2023-02-03T13:30:00Z",
+      "conditions": [],
+      "candidateOrgs": [],
+      "firstprintAttested": false,
+      "availableFirstAt": "2023-02-03T13:30:00Z",
+      "role": "UNVERIFIED_OR_LATE_CONTEXT",
+      "chronologyRole": "AFTER_PREVIOUS_PRICE_WEAKNESS_PRIOR_SESSION",
+      "causalEvidence": "NOT_ESTABLISHED"
+    }
+  },
+  "controls": "No history before January 2023, only completed M15 price bars; K/ORG real-time feature inputs remain OFF because publisher firstprint not verified."
+}
