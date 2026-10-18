@@ -218,6 +218,40 @@ function route(news,{asof,registry}){
   firstprintScope:"source provenance only; not proof gold transmission",
   countAsIndependentPriceCause:false};
 }
+/** Prior macro context is distinct from same-release or same-4h AND patterns.
+ * Forty-five days is an exploratory context window, not a learned effect life.
+ */
+const PRIOR_CONTEXT_PATTERNS=[
+ {id:"CTX01",current:["K03"],prior:["K02"],name:"Strong employment after below-consensus CPI"},
+ {id:"CTX02",current:["K02"],prior:["K03"],name:"Soft CPI after strong employment"},
+ {id:"CTX03",current:["K01"],prior:["K03"],name:"High CPI after strong employment"},
+ {id:"CTX04",current:["K05"],prior:["K03"],name:"At-consensus CPI after strong employment"},
+ {id:"CTX05",current:["K03"],prior:["K01"],name:"Strong employment after high CPI"},
+ {id:"CTX06",current:["K04"],prior:["K01"],name:"Weak employment after high CPI"}
+];
+function priorContexts(events,{maxDays=45}={}){
+ if(!Number.isInteger(maxDays)||maxDays<=0||maxDays>60)throw Error("BAD_CONTEXT_LOOKBACK");
+ const macro=new Set(["NFP","CPI","EMPLOYMENT","PCE","GDP"]);
+ const valid=events.filter(e=>e.status!=="PENDING_FIRST_ACCESS"&&macro.has(e.eventKind))
+  .sort((a,b)=>ms(a.eventTime,"eventTime")-ms(b.eventTime,"eventTime"));
+ const rows=[];
+ for(let i=0;i<valid.length;i++){
+  const e=valid[i],t=ms(e.eventTime,"eventTime");
+  const prior=valid.slice(0,i).reverse().find(p=>p.eventKind!==e.eventKind&&
+   ms(p.detectedAt,"detectedAt")<=ms(e.detectedAt,"detectedAt")&&
+   t-ms(p.eventTime,"eventTime")<=maxDays*86400000);
+  if(!prior)continue;
+  const matched=PRIOR_CONTEXT_PATTERNS.filter(x=>
+   x.current.every(k=>e.conditions.includes(k))&&x.prior.every(k=>prior.conditions.includes(k)))
+   .map(x=>({id:x.id,name:x.name,authority:"EXPLORATORY_PRIOR_K_CONTEXT",
+      predictiveAlpha:"NOT_ESTABLISHED",tradeAllowed:false}));
+  rows.push({id:e.id,priorId:prior.id,ageDays:+((t-ms(prior.eventTime,"eventTime"))/86400000).toFixed(4),
+   sourceContext:"PREVIOUS_KNOWN_MACRO_RELEASE_NOT_SAME_EVENT",
+   matchedPatterns:matched,priorTags:prior.conditions,currentTags:e.conditions,
+   causalLink:"UNPROVEN_RETROSPECTIVE_CONTEXT",tradeAllowed:false});
+ }
+ return rows;
+}
 function routeMany(news,{asof,registry,overlapMinutes=240}){
  if(!Array.isArray(news)||!Number.isInteger(overlapMinutes)||overlapMinutes<0)
   throw Error("NEWS_BATCH_INVALID");
@@ -243,9 +277,10 @@ function routeMany(news,{asof,registry,overlapMinutes=240}){
    ...e,firstEventTime:new Date(firstEventMs).toISOString(),lastEventTime:new Date(lastEventMs).toISOString(),
    matchedPatterns:matchPatterns(e.conditions),
    causalAttribution:"UNVERIFIED_OVERLAPPING_INFORMATION"})),
+  priorEconomicContexts:priorContexts(outputs),
   audit:{total:outputs.length,visible:visible.length,pending:outputs.length-visible.length,
    withConditions:visible.filter(x=>x.conditions.length).length,
    firstprintAttested:visible.filter(x=>x.firstprintAttested).length,
    tradeSignals:0},tradeAllowed:false};
 }
-module.exports={VERSION,route,routeMany,CONDITION_PATTERNS,matchPatterns};
+module.exports={VERSION,route,routeMany,CONDITION_PATTERNS,matchPatterns,PRIOR_CONTEXT_PATTERNS,priorContexts};
