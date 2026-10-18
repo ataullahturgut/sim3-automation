@@ -2246,5 +2246,20 @@
     "brierImprovementPts": 0.258
   },
   "evidence": "Prequential outcomes label only 16 contiguous M15 bars from forecast anchor. Experimental in-sample cumulative online learning (not out-of-year independent OOS). No real news PIT passed, no S3 orders. No tuning or profitability claim.",
-  "warning": "Anchors may overlap partially, source reconstruction not verified PIT, 2023 sample small. There is no out-of-sample 2024/25 S1 predictive evidence."
+  "warning": "Anchors may overlap partially, source reconstruction not verified PIT, 2023 sample small. There is no out-of-sample 2024/25 S1 predictive evidence.",
+  "pairedSameIssueTimeComparison": {
+    "baseline": {
+      "n": 155,
+      "accuracyPct": 54.194,
+      "brier": 0.263567
+    },
+    "integrated": {
+      "n": 155,
+      "accuracyPct": 50.323,
+      "brier": 0.260198
+    },
+    "restriction": "Only identical anchor timestamps, no value comparison across unequal issuances; 4h forward labels use same contiguous MID observations, no future seen at issuance.",
+    "deltaAccuracyPctPts": -3.871,
+    "deltaBrier": 0.003369
+  }
 }
