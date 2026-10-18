@@ -575,3 +575,24 @@ Kullanıcı onayıyla olayın ilk koşulu → açıklama → fiyat aktarımı �
 **Somut ilk kontrol:** OLAY-02'nin 85 makro açıklamasından 69 CPI/NFP release, **68 tam sonraki 4 saat fiyat** kaydı incelendi. K01=beklentiden yüksek CPI, K02=düşük CPI, K03=güçlü NFP, K04=zayıf NFP, K05=beklentiye eşit CPI. Önceki **farklı türdeki en yakın** CPI/NFP (<=45 gün) bağlamı ile ikili `K_current + K_prior` sayımı: **K01+önceki K03: 5/6 DOWN**, **K02+önceki K04: 5/5 UP**, **K03+önceki K02: 9/10 DOWN**. Bunlar keşif sonrası sayılan tarihsel sonuçlardır; kesin ekonomik nedensellik/kalibre model/kâr demek değildir. Güncel dolar, reel faiz, ücret ve işsizlik etiketlerinde as-of veri **EKSİK** ve uydurulmaz. "Yüksek enflasyon seviyesi" ile "beklenti üstü sürpriz" farklı etiketler olmalıdır; ilk veride yalnız sürpriz bulunuyor.
 
 **Kilitlemeler:** `NO_NEW_TRADING_ALGORITHM`, `INPUT_LABELS_NOT_OUTCOME`, `DATE_AS_RULE_ID=FORBIDDEN`, `MISSING_AS_FALSE=FORBIDDEN`, `FIRSTPRINT_VINTAGE_UNVERIFIED`, `CROSS_ASSET_MISSING`, `LOOKAHEAD_FORBIDDEN`, `SMALL_LARGE_REGIME_SCALING=NOT_CALIBRATED`, `CORE_UNMODIFIED`, `S3_TRADE_AUTHORITY=FALSE`, `SCIENCE_GATE=FAIL`. Sıradaki modelleme adımı, etiketi doğru yayın/erişim anında üreten as-of adapter ve bağımsız negatif/olaysız kontrollerle kombinasyon validasyonudur; yetersiz destek `UNKNOWN` kalır.
+
+
+---
+
+## 2026-10-18 — ETKİ-05 ekonomik madde kombinasyonları: ücret/işsizlik/çekirdek enflasyon doğrulaması
+
+**SCOPE:** Kullanıcının istediği basit **K şart etiketlerinin** tekli ve birlikte ekonomik anlam + tarihsel XAU etki taraması; **ayrı trading algoritması değil**. [K01–K19 etiket sözlüğü](ETKI_05_KOSUL_ETIKETLERI_V1_20261018.json), [araştırma V2](ETKI_05_EKONOMIK_KOSUL_BIRLESIMI_ARASTIRMA_20261018.md), [denetlenebilir sayım JSON](ETKI_05_EKONOMIK_KOSUL_BIRLESIMI_V2_20261018.json). Eski beş E-grup taksonomisi ekonomik süreç adaylarıdır; kullanıcı hedeflediği etiket birleşimlerinin yerine geçmez. ÖĞREN-03/OLAY-02/CORE kodu değiştirilmedi.
+
+**Gerçek veri çalışması:** Salt okunur Neon `gold_research_r72_claude_macro_analogs_v1` içindeki **yalnız 2023–2025** NFP istihdam/ücret/işsizlik ve CPI manşet/çekirdek sürprizleri, GitHub 85 makro release fiyat kaydı ile yayın UTC + tip üzerinden 69/69 eşlendi; **68 tam 4 saat fiyat sonucu** (34 CPI, 34 NFP). 2023-04-07 Cuma (altın piyasası) 4s hedefi eksik kaldığından sonuç ölçümüne girmedi. R72 2020–2022 kayıtları **kullanılmadı**. Verinin orijinal beklenen konsensüsü/ilk yayım tarihi henüz as-of kesin belgelenmedi: arşiv araştırması `RETROSPECTIVE_ONLY`.
+
+**Aynı açıklamadaki maddeler — koşullu arşiv sonuçları:**
+- `K02+K17` (manşet CPI düşük + çekirdek CPI düşük): **8/9 UP**, **4/9 en az +%1** (4 saat), karşı örnek 2025-06-11 CPI.
+- `K03+K06` (istihdam güçlü + ücret beklentiden yüksek): **6/8 DOWN**, **2/8 en az -%1** (4s).
+- `K03+K18` (istihdam güçlü + ücret beklentiden düşük): **5/10 UP, 5/10 DOWN** (yön ayrışmadı).
+- `K03+K06+K19` (istihdam güçlü + ücret yüksek + işsizlik düşük): **4/5 DOWN**; küçük n, etkin nedensellik veya güvenilir tahmin değil.
+
+**2025 sonraki dönem hassasiyet denetimi (21 release, 2023–24'te 47 önceki örnekten Laplace koşullu oran):** 4s UP için Brier `kind_only=0.29237` → `kind+headline=0.29067` → `kind+headline+wage_or_coreCPI=0.27675` → `+unemployment_NFP=0.30505`. 4s **|hareket|≥%1** için `0.20392` → `0.23232` → `0.27028` → `0.27955`: **ek şartlar büyüklük tahminini KÖTÜLEŞTİRDİ.** Çoklu-etiket öğrenimi bilim kapısını geçmedi; 2025 çift-kombinasyonların 5/21'i ve üçlülerin 6/21'i önceki eğitimde hiç görülmemişti. Bulgular seçilmiş hipotezlerin retrospektif sınamasıdır, kör OOS değil.
+
+**Asıl iş ayrımı:** K koşul etiketleri `asof,source,consensus_vintage,true/false/unknown`; diğer yanda gerçekleşmiş fiyat sonucu `UP/DOWN/scale/horizon/path`. K06/K07/K16–K19 gerçek arşiv şaşırtıları bulunduğundan `RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED`; K08–K13 (DXY, reel tahvil getirisi, fonlama/teminat) hâlen `NOT_MEASURED`. Altındaki tarihi outcome input koşulu gibi kullanma. Normal oynaklığa göre şiddet sınıfı ve gerçek USD/faiz/metal mekanizması henüz kanıtlanmadı.
+
+**Yapılan iş = ekonomik etiket kütüphanesi bilimsel durum raporu;** `NO_NEW_ALGORITHM`, `CORE_S1_S2_S3_UNCHANGED`, `SCIENCE_GATE=FAIL`, `TRADE_ALLOWED=FALSE`, `NO_LIVE_GPT`. Bir sonraki gerçek engel orijinal ilk-baskı actual+consensus kanıtı ve olay-saatli dolar/getiri bağımsız doğrulamadır.
