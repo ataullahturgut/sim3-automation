@@ -596,3 +596,20 @@ Kullanıcı onayıyla olayın ilk koşulu → açıklama → fiyat aktarımı �
 **Asıl iş ayrımı:** K koşul etiketleri `asof,source,consensus_vintage,true/false/unknown`; diğer yanda gerçekleşmiş fiyat sonucu `UP/DOWN/scale/horizon/path`. K06/K07/K16–K19 gerçek arşiv şaşırtıları bulunduğundan `RETROSPECTIVE_PROXY_VINTAGE_UNVERIFIED`; K08–K13 (DXY, reel tahvil getirisi, fonlama/teminat) hâlen `NOT_MEASURED`. Altındaki tarihi outcome input koşulu gibi kullanma. Normal oynaklığa göre şiddet sınıfı ve gerçek USD/faiz/metal mekanizması henüz kanıtlanmadı.
 
 **Yapılan iş = ekonomik etiket kütüphanesi bilimsel durum raporu;** `NO_NEW_ALGORITHM`, `CORE_S1_S2_S3_UNCHANGED`, `SCIENCE_GATE=FAIL`, `TRADE_ALLOWED=FALSE`, `NO_LIVE_GPT`. Bir sonraki gerçek engel orijinal ilk-baskı actual+consensus kanıtı ve olay-saatli dolar/getiri bağımsız doğrulamadır.
+
+
+---
+
+## 2026-10-18 — KULLANICI TASARIM BULGUSU: ekonomik olay sonrası çift saatli S1/S2/S3
+
+**SCOPE=DESIGN_ONLY | CORE_CODE_UNCHANGED | MODEL_SCIENCE_GATE=FAIL | TRADES=NONE.**
+
+**Kullanıcı teşhisi:** Ekonomik koşullar (ETKİ-05 K etiketleri) + ÖĞREN-03 ekonomik mekanizma gerçekten as-of tespit edildikten sonra S1/S2/S3'ün sabit genel geçmiş penceresindeki **olay öncesi fiyatlarla olay sonrası yeni fiyatları karıştırarak** ekonomik etkiyi ölçmesi sakıncalıdır. Tespit yoksa **mevcut normal piyasa hesabı** sürmelidir.
+
+**Denetlenen mevcut kod:** S2 hızlı `adaptive_phase_lifecycle_s2.js` son 17 tamamlanmış M15 fiyatıyla 4s trend Z hesaplıyor; ekonomik olay başlangıcına özel bir trend referansı yok. S1 `adaptive_market_core_s1_s2.js` son S2 hızlı/slow fazını ve izinli sayısal makro özellikleri kullanıyor; 240dk tahmin ve periyodik 240dk eğitim origin'i var, ekonomik yayına özgü origin yok. Koşullu S3 `adaptive_conditional_position_s3.js` bir en baskın makro sürpriz ile market fazını eşleyebiliyor; ekonomi mekanizması olgunluk-zinciri/event elapsed/cross-asset ve şiddeti birlikte ölçen bir `event_clock` yok. Bu modelin her zaman yanlış olduğunu ispatlamaz; **olaya özgü etkinin yanlış ayrıştırılabileceğine dair somut tasarım eksikliğidir**.
+
+**Araştırma adayı kabul edilen çözüm:** Tek CORE üzerinde **GLOBAL + EVENT çift metrik saati**. Global geçmiş fazı ve slow/piyasa belleği KORUNUR; olay kabul edilince `event_time,first_available_at,detected_at,last_closed_pre_event_price,first_closed_post_event_bar` değişmez kökenle event-specific S1 olay koşullu şiddet/yön, S2 olay sonrası gelişim/sönme/dönüş ve S3 olay koşullu artımlı maliyet-net konum değeri **ayrı ölçülür**. Sırf haber için CORE'u sıfırlamak YANLIŞTIR; yalnız olay E metrikleri t0'dan başlar. Olay henüz yayınlanmamışsa, ilk-baskı/consensus doğrulanmamışsa veya olay karşıt mekanizmalarla çatışıyorsa belirsizlik/gölge değerlendirme korunur. Ekonomik tetik ile S2 fiyat epizodu aynı şey değildir; 2 Şubat DOWN fiyat epizodu yeni doğrulanmış K olmadığı için yalnız market kanalındadır.
+
+**TAM TASARIM / sınama sözleşmesi:** [EVENT_ANCHORED_DUAL_CLOCK_METRICS_DESIGN_20261018.md](adaptive_trading_core/EVENT_ANCHORED_DUAL_CLOCK_METRICS_DESIGN_20261018.md).
+
+**Gelecek kabul kapısı:** A=eski core, B=naif full reset, C=global + event-relative çift saat; aynı fiyat/veri as-of koşullarıyla olaylı/olaysız/no-event ve Jan-Feb 2023 olay yürüyüşleri; yenileri yalnız olgunlaşmış geçmiş kanıtıyla eğit; Brier direction, hareket şiddeti, ek ekonomik değer, S3 banka maliyetli shadow kıyas. 2024–25 sonuçlarını geçmiş 2023 blind ilk öğrenimiymiş gibi gösterme. **Henüz uygulama/test yapılmadı.**
