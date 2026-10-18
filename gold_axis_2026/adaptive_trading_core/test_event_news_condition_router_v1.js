@@ -173,6 +173,31 @@ function testAll(){
  test("news class alone never matches pattern requiring independent USD or yield",()=>{
   const n=f("hawk","ECB","CB_DECISION",T,{data:{rate:v(3.5,3.25,T)}});
   assert.equal(route(n).matchedPatterns.some(x=>x.id==="CR06"),false);});
+
+ test("Jan12 soft CPI becomes historical context for Feb3 strong NFP, not same shock",()=>{
+  const jan="2023-01-12T13:30:00Z",feb="2023-02-03T13:30:00Z";
+  const a=f("cpiJan","BLS","CPI",jan,{data:{headline:v(.1,.2,jan,"2023-01-11T12:00:00Z")}});
+  const b=f("nfpFeb","BLS","NFP",feb,{data:{employment:v(517,185,feb,"2023-02-02T12:00:00Z")}});
+  const z=router.routeMany([a,b],{asof:"2023-02-03T13:45:00Z",registry});
+  assert.deepEqual(z.overlappingEpisodes.map(x=>x.ids),[["cpiJan"],["nfpFeb"]]);
+  const c=z.priorEconomicContexts.find(x=>x.id==="nfpFeb");
+  assert.equal(c.priorId,"cpiJan");assert.ok(c.ageDays>21&&c.ageDays<23);
+  assert.ok(c.matchedPatterns.some(x=>x.id==="CTX01"));assert.equal(c.tradeAllowed,false);});
+ test("stale CPI over 45d cannot trigger previous macro context",()=>{
+  const old="2023-01-12T13:30:00Z",now="2023-04-02T13:30:00Z";
+  const a=f("old","BLS","CPI",old,{data:{headline:v(.1,.2,old,"2023-01-11T12:00:00Z")}});
+  const b=f("new","BLS","NFP",now,{data:{employment:v(400,300,now,"2023-04-01T12:00:00Z")}});
+  const z=router.routeMany([a,b],{asof:"2023-04-02T14:00:00Z",registry});
+  assert.equal(z.priorEconomicContexts.length,0);});
+ test("late-discovered old release is not retroactively first-known prior context",()=>{
+  const jan="2023-01-12T13:30:00Z",feb="2023-02-03T13:30:00Z";
+  const a=f("lateCPI","BLS","CPI",jan,{detectedAt:"2023-02-05T13:30:00Z",
+    data:{headline:v(.1,.2,jan,"2023-01-11T12:00:00Z")}});
+  const b=f("nfp","BLS","NFP",feb,{data:{employment:v(517,185,feb,"2023-02-02T12:00:00Z")}});
+  const z=router.routeMany([a,b],{asof:"2023-02-06T14:00:00Z",registry});
+  assert.equal(z.priorEconomicContexts.length,0);});
+ test("lookback outside supported range rejected",()=>{
+  assert.throws(()=>router.priorContexts([],{maxDays:1000}));});
  return {passed,report};
 }
 module.exports={testAll};
