@@ -421,3 +421,9 @@ Bu tablo yalnız giriş kapısı. **Her kimliğe tıklandığında haberlerin ya
 **Ana yönetim ilkesi:** Eski 5.190 satırlık bilimsel arşiv değiştirilmez, yeni olaylar **OLAY-02 bu dosyaya** doğru kimlikle ve delil yollarıyla eklenir; ortak mekanizma deneyimleri **ÖĞREN-03**, çalışma hedefleri **ANA-01**, aylık durum ise **DURUM-04**. Yanlış bir sayı ya da ekonomik atıf düzeltilirse orijinali sessizce silme; kaynak, `supersedes` ve sürüm notuyla düzelt.
 
 **Durum:** `96_PRICE_RECORDS_INDIVIDUALLY_LINKED / 85_TIMED_MACRO_EVENT_WINDOWS / 3_COSTED_RETRO_CASES / 0_VERIFIED_PRICE_INITIATION_CAUSES / RESEARCH_ONLY_NO_AUTOMATED_TRADING`.
+
+---
+
+## Küresel haber kaynak kayıt standardı — yeni kural arayüzü
+
+**OLAY-02'nin tarihli haber kaynağı sözleşmesi** genişletildi: [resmî ve ikincil haber kaynakları; 32 kurum](OLAY_02_KURESEL_HABER_KAYNAK_KURALLARI_V1_20261018.json), [tüm haber–öğren–etki kuralları ve denetimi](KURESEL_HABER_OLAY_OGREN_ETKI_KURAL_SOZLESMESI_20261018.md). Haber için yayıncı, menşei, olay coğrafyası, kaynağın resmî/ikincil/rapor türü, gerçek ilk yayın ve kaynak erişim saati, yayın öncesi beklenti, rakip haberler ve eşzamanlı fiyat/FX/faiz kanıtı ayrı tutulur. İlgili kod yalnız araştırma etiketi üretir; gerçek ilk kaynak ve nedensellik kontrolünden geçmeden bir olaya kesin fiyat yönü atamaz. Özellikle ECB/BoE/Fed gibi merkez bankası kararları, CPI/NFP olmayan günlerde de izlenecek; birden fazla örtüşen olayın getirisi üç bağımsız şok sayılmayacaktır.
