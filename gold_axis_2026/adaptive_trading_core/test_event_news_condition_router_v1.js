@@ -14,7 +14,11 @@ const profiles={
  RBI:["IN","https://www.rbi.org.in/"],
  REUTERS:["GLOBAL","https://www.reuters.com/"],
  UN:["GLOBAL","https://www.un.org/"],
- US_WHITE_HOUSE:["US","https://www.whitehouse.gov/"]
+ US_WHITE_HOUSE:["US","https://www.whitehouse.gov/"],
+ BOJ:["JP","https://www.boj.or.jp/en/"],
+ INDIA_FINANCE:["IN","https://finmin.gov.in/"],
+ WGC:["GLOBAL","https://www.gold.org/goldhub/data/gold-reserves-by-country"],
+ EU_COUNCIL:["EU","https://www.consilium.europa.eu/en/press/press-releases/"]
 };
 function f(id,publisher,eventKind,time=T,extra={}){
  const [jurisdiction,sourceUrl]=profiles[publisher];
@@ -127,6 +131,27 @@ function testAll(){
    data:{rate:v(3.5,3.25,T)}});
   const r=route(e);assert.equal(r.firstprintAttested,true);
   assert.equal(r.xauPrediction,"NOT_ESTIMATED");assert.equal(r.tradeAllowed,false);});
+
+ test("Japan BOJ monetary decision is registered and requires rate expectation",()=>{
+  assert.deepEqual(tags(f("boj","BOJ","CB_DECISION")),["K39"]);});
+ test("India import tariff change is trade easing, not an US employment label",()=>{
+  const e=f("india","INDIA_FINANCE","TRADE_POLICY",T,{change:{direction:"EASE",
+   evidenceAvailableAt:T,factualEvidenceVerified:true,sourceEvidenceId:"official_india_policy_001"}});
+  assert.deepEqual(tags(e),["K28"]);});
+ test("EU council can carry a tariff tightening mechanism but never auto trade",()=>{
+  const e=f("eu_trade","EU_COUNCIL","TRADE_POLICY",T,{change:{direction:"TIGHTEN",
+   evidenceAvailableAt:T,factualEvidenceVerified:true,sourceEvidenceId:"eu_trade_report_001"}});
+  const r=route(e);assert.deepEqual(r.conditions,["K27"]);assert.equal(r.tradeAllowed,false);});
+ test("a WGC reserve data report cannot become firstprint official bank alert",()=>{
+  const e=f("wgc","WGC","CB_RESERVE",T,{firstprintVerified:true,firstprintEvidenceId:"report_reference_id_001",
+   change:{direction:"BUY",evidenceAvailableAt:T,factualEvidenceVerified:true,sourceEvidenceId:"published_report_001"}});
+  const r=route(e);assert.deepEqual(r.conditions,["K25"]);
+  assert.equal(r.firstprintAttested,false);assert.equal(r.status,"SECONDARY_OR_LAGGED_CONTEXT_ONLY");});
+ test("UN verified security event produces geopolitical research candidate not UP prediction",()=>{
+  const e=f("unEsc","UN","GEOPOLITICS",T,{change:{direction:"ESCALATE",
+   evidenceAvailableAt:T,factualEvidenceVerified:true,sourceEvidenceId:"un_primary_statement_001"}});
+  const r=route(e);assert.deepEqual(r.conditions,["K29"]);
+  assert.ok(r.candidateOrgs.some(x=>x.org==="ORG04"));assert.equal(r.xauPrediction,"NOT_ESTIMATED");});
  return {passed,report};
 }
 module.exports={testAll};
