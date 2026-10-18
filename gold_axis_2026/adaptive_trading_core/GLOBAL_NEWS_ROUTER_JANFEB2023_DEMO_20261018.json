@@ -1,0 +1,475 @@
+{
+  "schema": "GLOBAL_NEWS_RULES_2023_JAN_FEB_READONLY_DEMO_20261018",
+  "disclaimer": "No archive firstprint/consensus-vintage verified. Publisher and scheduled UTC are historical research proxies. Macro tags in retrospectiveArchiveLabelsNotRouted are previously observed research hypotheses, not output of this strict rule router.",
+  "inputs": [
+    {
+      "id": "2023-01-06_BLS_NFP",
+      "source": "BLS",
+      "jurisdiction": "US",
+      "eventKind": "NFP",
+      "announcementReferenceUtc": "2023-01-06T13:30:00Z",
+      "newsUrl": "https://www.bls.gov/news.release/archives/empsit_01062023.htm",
+      "retrospectiveArchiveLabelsNotRouted": [
+        "K03",
+        "K18",
+        "K19"
+      ]
+    },
+    {
+      "id": "2023-01-12_BLS_CPI",
+      "source": "BLS",
+      "jurisdiction": "US",
+      "eventKind": "CPI",
+      "announcementReferenceUtc": "2023-01-12T13:30:00Z",
+      "newsUrl": "https://www.bls.gov/news.release/archives/cpi_01122023.htm",
+      "retrospectiveArchiveLabelsNotRouted": [
+        "K02"
+      ]
+    },
+    {
+      "id": "2023-02-01_FED_DECISION",
+      "source": "FED",
+      "jurisdiction": "US",
+      "eventKind": "CB_DECISION",
+      "announcementReferenceUtc": "2023-02-01T19:00:00Z",
+      "newsUrl": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20230201a.htm",
+      "retrospectiveArchiveLabelsNotRouted": []
+    },
+    {
+      "id": "2023-02-02_BOE_DECISION",
+      "source": "BOE",
+      "jurisdiction": "UK",
+      "eventKind": "CB_DECISION",
+      "announcementReferenceUtc": "2023-02-02T12:00:00Z",
+      "newsUrl": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2023/february-2023",
+      "retrospectiveArchiveLabelsNotRouted": []
+    },
+    {
+      "id": "2023-02-02_ECB_DECISION",
+      "source": "ECB",
+      "jurisdiction": "EU",
+      "eventKind": "CB_DECISION",
+      "announcementReferenceUtc": "2023-02-02T13:15:00Z",
+      "newsUrl": "https://www.ecb.europa.eu/press/pr/date/2023/html/ecb.mp230202~08a972ac76.en.html",
+      "retrospectiveArchiveLabelsNotRouted": []
+    },
+    {
+      "id": "2023-02-02_ECB_PRESSER",
+      "source": "ECB",
+      "jurisdiction": "EU",
+      "eventKind": "CB_PRESSER",
+      "announcementReferenceUtc": "2023-02-02T13:45:00Z",
+      "newsUrl": "https://www.ecb.europa.eu/press/press_conference/monetary-policy-statement/2023/html/ecb.is230202~4313651089.en.html",
+      "retrospectiveArchiveLabelsNotRouted": []
+    },
+    {
+      "id": "2023-02-03_BLS_NFP",
+      "source": "BLS",
+      "jurisdiction": "US",
+      "eventKind": "NFP",
+      "announcementReferenceUtc": "2023-02-03T13:30:00Z",
+      "newsUrl": "https://www.bls.gov/news.release/archives/empsit_02032023.htm",
+      "retrospectiveArchiveLabelsNotRouted": [
+        "K03",
+        "K19"
+      ]
+    },
+    {
+      "id": "2023-02-14_BLS_CPI",
+      "source": "BLS",
+      "jurisdiction": "US",
+      "eventKind": "CPI",
+      "announcementReferenceUtc": "2023-02-14T13:30:00Z",
+      "newsUrl": "https://www.bls.gov/news.release/archives/cpi_02142023.htm",
+      "retrospectiveArchiveLabelsNotRouted": [
+        "K05"
+      ]
+    }
+  ],
+  "results": {
+    "version": "GOLD_GLOBAL_NEWS_EVENT_CONDITION_ROUTER_V1_20261018",
+    "asof": "2023-02-15T13:45:00Z",
+    "events": [
+      {
+        "id": "2023-01-06_BLS_NFP",
+        "source": "BLS",
+        "jurisdiction": "US",
+        "eventKind": "NFP",
+        "eventTime": "2023-01-06T13:30:00Z",
+        "publishedAt": "2023-01-06T13:30:00Z",
+        "availableAt": "2023-01-06T13:30:00Z",
+        "detectedAt": "2023-01-06T13:30:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "CONDITIONS_UNKNOWN",
+        "conditions": [],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_employment",
+          "MISSING_OR_UNVERIFIED_wages",
+          "MISSING_OR_UNVERIFIED_unemployment"
+        ],
+        "candidateOrgs": [],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": false,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      },
+      {
+        "id": "2023-01-12_BLS_CPI",
+        "source": "BLS",
+        "jurisdiction": "US",
+        "eventKind": "CPI",
+        "eventTime": "2023-01-12T13:30:00Z",
+        "publishedAt": "2023-01-12T13:30:00Z",
+        "availableAt": "2023-01-12T13:30:00Z",
+        "detectedAt": "2023-01-12T13:30:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "CONDITIONS_UNKNOWN",
+        "conditions": [],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_headline",
+          "MISSING_OR_UNVERIFIED_core"
+        ],
+        "candidateOrgs": [],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": false,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      },
+      {
+        "id": "2023-02-01_FED_DECISION",
+        "source": "FED",
+        "jurisdiction": "US",
+        "eventKind": "CB_DECISION",
+        "eventTime": "2023-02-01T19:00:00Z",
+        "publishedAt": "2023-02-01T19:00:00Z",
+        "availableAt": "2023-02-01T19:00:00Z",
+        "detectedAt": "2023-02-01T19:00:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "RETROSPECTIVE_OR_UNVERIFIED",
+        "conditions": [
+          "K39"
+        ],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_rate_surprise"
+        ],
+        "candidateOrgs": [
+          {
+            "org": "ORG01",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K39"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          },
+          {
+            "org": "ORG02",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K39"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          }
+        ],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": true,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      },
+      {
+        "id": "2023-02-02_BOE_DECISION",
+        "source": "BOE",
+        "jurisdiction": "UK",
+        "eventKind": "CB_DECISION",
+        "eventTime": "2023-02-02T12:00:00Z",
+        "publishedAt": "2023-02-02T12:00:00Z",
+        "availableAt": "2023-02-02T12:00:00Z",
+        "detectedAt": "2023-02-02T12:00:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "RETROSPECTIVE_OR_UNVERIFIED",
+        "conditions": [
+          "K39"
+        ],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_rate_surprise"
+        ],
+        "candidateOrgs": [
+          {
+            "org": "ORG01",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K39"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          },
+          {
+            "org": "ORG02",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K39"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          }
+        ],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": true,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      },
+      {
+        "id": "2023-02-02_ECB_DECISION",
+        "source": "ECB",
+        "jurisdiction": "EU",
+        "eventKind": "CB_DECISION",
+        "eventTime": "2023-02-02T13:15:00Z",
+        "publishedAt": "2023-02-02T13:15:00Z",
+        "availableAt": "2023-02-02T13:15:00Z",
+        "detectedAt": "2023-02-02T13:15:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "RETROSPECTIVE_OR_UNVERIFIED",
+        "conditions": [
+          "K39"
+        ],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_rate_surprise"
+        ],
+        "candidateOrgs": [
+          {
+            "org": "ORG01",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K39"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          },
+          {
+            "org": "ORG02",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K39"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          }
+        ],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": true,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      },
+      {
+        "id": "2023-02-02_ECB_PRESSER",
+        "source": "ECB",
+        "jurisdiction": "EU",
+        "eventKind": "CB_PRESSER",
+        "eventTime": "2023-02-02T13:45:00Z",
+        "publishedAt": "2023-02-02T13:45:00Z",
+        "availableAt": "2023-02-02T13:45:00Z",
+        "detectedAt": "2023-02-02T13:45:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "RETROSPECTIVE_OR_UNVERIFIED",
+        "conditions": [
+          "K40"
+        ],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_guidance_first_sentence_evidence"
+        ],
+        "candidateOrgs": [
+          {
+            "org": "ORG01",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K40"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          },
+          {
+            "org": "ORG02",
+            "role": "COMPETING",
+            "triggerTags": [
+              "K40"
+            ],
+            "confidence": "UNVALIDATED_HYPOTHESIS"
+          }
+        ],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": true,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      },
+      {
+        "id": "2023-02-03_BLS_NFP",
+        "source": "BLS",
+        "jurisdiction": "US",
+        "eventKind": "NFP",
+        "eventTime": "2023-02-03T13:30:00Z",
+        "publishedAt": "2023-02-03T13:30:00Z",
+        "availableAt": "2023-02-03T13:30:00Z",
+        "detectedAt": "2023-02-03T13:30:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "CONDITIONS_UNKNOWN",
+        "conditions": [],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_employment",
+          "MISSING_OR_UNVERIFIED_wages",
+          "MISSING_OR_UNVERIFIED_unemployment"
+        ],
+        "candidateOrgs": [],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": false,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      },
+      {
+        "id": "2023-02-14_BLS_CPI",
+        "source": "BLS",
+        "jurisdiction": "US",
+        "eventKind": "CPI",
+        "eventTime": "2023-02-14T13:30:00Z",
+        "publishedAt": "2023-02-14T13:30:00Z",
+        "availableAt": "2023-02-14T13:30:00Z",
+        "detectedAt": "2023-02-14T13:30:00Z",
+        "asof": "2023-02-15T13:45:00Z",
+        "status": "CONDITIONS_UNKNOWN",
+        "conditions": [],
+        "unknown": [
+          "MISSING_OR_UNVERIFIED_headline",
+          "MISSING_OR_UNVERIFIED_core"
+        ],
+        "candidateOrgs": [],
+        "economicDirection": "UNKNOWN",
+        "xauPrediction": "NOT_ESTIMATED",
+        "action": null,
+        "tradeAllowed": false,
+        "hasCompetingRateChannels": false,
+        "firstprintAttested": false,
+        "firstprintScope": "source provenance only; not proof gold transmission",
+        "countAsIndependentPriceCause": false
+      }
+    ],
+    "overlappingEpisodes": [
+      {
+        "ids": [
+          "2023-01-06_BLS_NFP"
+        ],
+        "regions": [
+          "US"
+        ],
+        "conditions": [],
+        "firstEventTime": "2023-01-06T13:30:00.000Z",
+        "lastEventTime": "2023-01-06T13:30:00.000Z",
+        "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
+      },
+      {
+        "ids": [
+          "2023-01-12_BLS_CPI"
+        ],
+        "regions": [
+          "US"
+        ],
+        "conditions": [],
+        "firstEventTime": "2023-01-12T13:30:00.000Z",
+        "lastEventTime": "2023-01-12T13:30:00.000Z",
+        "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
+      },
+      {
+        "ids": [
+          "2023-02-01_FED_DECISION"
+        ],
+        "regions": [
+          "US"
+        ],
+        "conditions": [
+          "K39"
+        ],
+        "firstEventTime": "2023-02-01T19:00:00.000Z",
+        "lastEventTime": "2023-02-01T19:00:00.000Z",
+        "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
+      },
+      {
+        "ids": [
+          "2023-02-02_BOE_DECISION",
+          "2023-02-02_ECB_DECISION",
+          "2023-02-02_ECB_PRESSER"
+        ],
+        "regions": [
+          "UK",
+          "EU"
+        ],
+        "conditions": [
+          "K39",
+          "K40"
+        ],
+        "firstEventTime": "2023-02-02T12:00:00.000Z",
+        "lastEventTime": "2023-02-02T13:45:00.000Z",
+        "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
+      },
+      {
+        "ids": [
+          "2023-02-03_BLS_NFP"
+        ],
+        "regions": [
+          "US"
+        ],
+        "conditions": [],
+        "firstEventTime": "2023-02-03T13:30:00.000Z",
+        "lastEventTime": "2023-02-03T13:30:00.000Z",
+        "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
+      },
+      {
+        "ids": [
+          "2023-02-14_BLS_CPI"
+        ],
+        "regions": [
+          "US"
+        ],
+        "conditions": [],
+        "firstEventTime": "2023-02-14T13:30:00.000Z",
+        "lastEventTime": "2023-02-14T13:30:00.000Z",
+        "causalAttribution": "UNVERIFIED_OVERLAPPING_INFORMATION"
+      }
+    ],
+    "audit": {
+      "total": 8,
+      "visible": 8,
+      "pending": 0,
+      "withConditions": 4,
+      "firstprintAttested": 0,
+      "tradeSignals": 0
+    },
+    "tradeAllowed": false
+  },
+  "explanations": {
+    "2023-02-02_BOE_DECISION": "K39 CB decision but no independently confirmed market consensus. No K20 or K21.",
+    "2023-02-02_ECB_DECISION": "K39; 50bp increase cannot be labeled a hawkish surprise from rate change alone.",
+    "2023-02-02_ECB_PRESSER": "K40 press event start does not include future statements, so K23/K24 not produced.",
+    "2023-02-03_BLS_NFP": "Retro archive K03/K19 is not admitted to strict engine until original pre-release consensus and actual vintage are documented."
+  },
+  "status": "EXECUTED_WITH_HISTORICAL_PROXY_INPUTS_READONLY_NO_TRADE"
+}
