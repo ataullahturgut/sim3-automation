@@ -523,3 +523,9 @@ Tek sürpriz işareti altın yönünü evrensel belirlemez; ilk tepkinin yönü,
 **Tarih ya da yıl DNA değildir.** Olay sırasında bilinen haber, çapraz piyasa aktarımı, beklenen kanal ve rakip açıklama gerekir. Geriye dönük M1–M5 biçimi canlı P4/P5 evresi değildir. OLAY-02'de doğrudan kanıt değişmedikçe bütün ORG'ler araştırma hipotezidir; bu bölüm AL/SAT sinyali üretmez.
 
 **Kanıt otoritesi:** [OLAY-02 olay ve karşıt vaka kütüphanesi](../OLAY_02_ENTEGRE_OLAY_VAKA_KUTUPHANESI.md).
+
+---
+
+## Ekonomik DNA kodları için küresel koşul kuralı arayüzü
+
+**Tarihsiz ÖĞREN-03** 12 ORG mekanizmasının açıklama dilini korur. Dışarıdaki [OLAY kaynak sicili](../OLAY_02_KURESEL_HABER_KAYNAK_KURALLARI_V1_20261018.json) ile [ETKİ ekonomik koşulları](../ETKI_05_KOSUL_ETIKETLERI_V1_20261018.json) birbirine yalnız **`K koşulu (tekli/AND)` → `ORG aday TRIGGER/TRANSMISSION/AMPLIFIER`** üzerinden bağlanır. Dovish ve hawkish bileşenler eşzamanlı ise ORG01 ve ORG02 birlikte kalır; resmî faiz artışı kendi başına hawkish sürpriz değildir. Jeopolitik, tarife, merkez bankası rezervi, talep ve fonlama aileleri ilk kaynak/erişim saatleri OLAY-02'de ispatlanmadan ekonomik neden olarak doğrulanamaz. 14 birleşim kalıbı aday mekanizma sorgusudur, öğrenilmiş UP/DOWN değildir. Canlı S1/S2/S3 ya da işlem yetkisi bu kayıtla değişmez. [Kural sözleşmesi](../KURESEL_HABER_OLAY_OGREN_ETKI_KURAL_SOZLESMESI_20261018.md).
