@@ -10,16 +10,19 @@ const s1=require("./adaptive_rule_discovery_s1");
 const s2=require("./adaptive_phase_lifecycle_s2");
 const slow=require("./adaptive_slow_lifecycle_s2");
 const s3=require("./adaptive_position_value_s3");
+const downside=require("./downside_news_onset_v1");
 const VERSION="GOLD_ADAPTIVE_S1_S2_SLOW_S3_RESEARCH_BRIDGE_20261016";
 const SCHEMA=["phase_trend_z","phase_retracement_norm","phase_direction","phase_age_norm",
  "slow_trend_z","slow_direction","slow_age_norm","slow_end_5session",
  "nfp_surprise_z","ahe_surprise_z","unemployment_surprise_z","cpi_surprise_z"];
+const DOWNSIDE_SCHEMA=["down_pressure_z","down_drawdown_norm","down_negative_share","down_rally_exhaustion"];
 const cp=x=>JSON.parse(JSON.stringify(x));
 const iso=x=>new Date(x).toISOString();
 const clip=x=>Math.max(-5,Math.min(5,x));
 function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_ASOF",
  learningMode="DISCOVERY_FULL_ARCHIVE",shadowResearch=false,
- positionResearchMode="LEGACY_M15",economicSources={}}={}){
+ positionResearchMode="LEGACY_M15",economicSources={},
+ downsideEnabled=true,downsideNewsRegistry=null}={}){
  if(typeof sourceId!=="string"||!sourceId)
   throw Error("MODEL_SOURCE_ID_REQUIRED");
  if(!["RECONSTRUCTED_MARKET_ASOF","VERIFIED_PIT","SYNTHETIC_ONLY"].includes(sourceEvidence))
@@ -41,9 +44,11 @@ function create({sourceId,sourceIds=null,sourceEvidence="RECONSTRUCTED_MARKET_AS
  const s1Registry={...sourceRegistry,...cp(economicSources)};
  return {version:VERSION,sourceId,allowedSources:known.slice(),
   mode:learningMode,
-  s1:s1.create({learningMode,featureNames:SCHEMA,sourceRegistry:s1Registry,
+  s1:s1.create({learningMode,featureNames:downsideEnabled?[...SCHEMA,...DOWNSIDE_SCHEMA]:SCHEMA,sourceRegistry:s1Registry,
    horizons:[240],anchorMinutes:240,maxRules:16}),
   s2:s2.create({learningMode,sourceRegistry}),
+  downside:downside.create({registry:downsideNewsRegistry,sourceId}),
+  downsideEnabled:!!downsideEnabled,
   slow:slow.create({sourceRegistry}),
   s3:s3.create({sourceRegistry,learningMode,shadowEnabled:shadowResearch,
     positionResearchMode}),lastSlow:null,
@@ -98,9 +103,21 @@ function observe(s,bar){
  if(s.version!==VERSION)throw Error("MODEL_BRIDGE_CHECKPOINT_VERSION");
  if(!(s.allowedSources??[s.sourceId]).includes(bar.priceSource))
   throw Error("MODEL_UNDECLARED_SOURCE");
+ // Preflight event time and source BEFORE mutating S2/S1/S3 state.
+ if(s.downside)downside.preflight(s.downside,bar);
  // Price is validated by S2 and by S1; source and complete-bar time match.
  const p=s2.observe(s.s2,bar);
+ const down=s.downside?downside.observe(s.downside,bar):null;
  const t=Date.parse(bar.asof),fs=features(p,t,bar.priceSource);
+ // Market-only decline features are derived exclusively from completed M15 prices.
+ // Legacy restored checkpoints do not have the new S1 feature schema: omit
+ // rather than inventing old downside training histories.
+ if(s.downsideEnabled&&down?.ready){
+  const marketDown=value=>({value:clip(value),kind:"MARKET",
+   source:bar.priceSource,observedAt:bar.asof,availableAt:bar.asof});
+  for(const name of DOWNSIDE_SCHEMA)if(s.s1.featureNames.includes(name))
+   fs[name]=marketDown(down.marketEvidence[name]);
+ }
  const hist=s.lastSlow,market=value=>({value:clip(value),
   kind:"MARKET",source:bar.priceSource,
   observedAt:hist.observedAt,availableAt:hist.observedAt});
@@ -134,6 +151,11 @@ function observe(s,bar){
    Date.parse(hist.observedAt)<=t&&t-Date.parse(hist.observedAt)<=4*86400000&&
    !["WARMUP","REJECTED_SESSION","GAP"].includes(hist.phase)?
     {phase:hist.phase,direction:hist.direction}:null,
+   downsideEvidence:down?{asof:bar.asof,phase:down.phase,
+    firstPriceWeaknessAt:down.observedPriceWeaknessSince,
+    linkedNewsIds:down.linkedNewsBeforeObservedWeakness,
+    firstprintNewsCount:down.newsNewlyObserved.filter(n=>n.firstprintAttested).length,
+    causalAttribution:"UNPROVEN"}:undefined,
    s1Evidence:{asof:bar.asof,provenance:
     bar.economicFeatures&&Object.keys(bar.economicFeatures).length?
      (learningModeOf(s)==="STRICT_WALK_FORWARD"?
@@ -147,12 +169,15 @@ function observe(s,bar){
  if(Object.keys(fs).length>=2)s.audit.contextReady++;
  if(p.phase==="START"||p.phase==="END")s.audit.phaseTransitions++;
  return {asof:bar.asof,lifecycle:p,ruleDiscovery:q,
-  positionResearch:v,action:null,tradeAllowed:false};
+  downsideResearch:down,positionResearch:v,action:null,tradeAllowed:false};
 }
 function summary(s){
  return {version:VERSION,mode:s.mode,
   lifecycle:s2.summary(s.s2),slowLifecycle:slow.summary(s.slow),
-  positionResearch:s3.summary(s.s3),ruleDiscovery:{
+  positionResearch:s3.summary(s.s3),
+  downsideResearch:s.downside?{enabled:s.downsideEnabled,audit:cp(s.downside.audit),
+   lastOnset:s.downside.onsetAt===null?null:iso(s.downside.onsetAt),
+   lastNews:s.downside.latestNews}:null,ruleDiscovery:{
    observations:s.s1.audit.observations,anchors:s.s1.audit.anchors,
    matureLabels:s.s1.audit.labelsMatured,learnedRules:s1.rules(s.s1).length},
   audit:cp(s.audit),tradeAllowed:false,bankTrades:0};
@@ -167,6 +192,11 @@ function restore(data){
  s.slow=slow.restore(s.slow);
  if(!s.s3)throw Error("MODEL_MISSING_S3_RESEARCH_CHECKPOINT");
  s.s3=s3.restore(s.s3);
+ // A legacy checkpoint begins a fresh online fall clock; old timestamps
+ // are never reconstructed using future series or an ex-post pivot.
+ if(!s.downside){s.downside=downside.create({sourceId:s.sourceId});s.downsideEnabled=false;}
+ else s.downside=downside.restore(s.downside);
+ if(s.downsideEnabled===undefined)s.downsideEnabled=false;
  return s;
 }
-module.exports={VERSION,create,observe,observeSlowSession,summary,checkpoint,restore,SCHEMA};
+module.exports={VERSION,create,observe,observeSlowSession,summary,checkpoint,restore,SCHEMA,DOWNSIDE_SCHEMA};
