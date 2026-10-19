@@ -1024,6 +1024,8 @@ function model23Percent(v){
  if(typeof v!=="number")return "—";
  return (v>0?"+":"")+model23Numeric.format(v)+"%";
 }
+let model23Effects=[];
+function model23EffectsFor(date){return model23Effects.filter(e=>e.date===date);}
 function model23Rows(){
  if(!model23)return;
  const filter=$("model23Filter").value;
@@ -1051,11 +1053,18 @@ function model23Rows(){
    cell(escapeText(phase)+(side?"<small>"+escapeText(side)+"</small>":""))+
    cell(d.hasSession?model23Value(d.s2.trendZ):"—")+
    cell(d.hasSession?"<span class='model23-decision'>NAKİT KORU</span>":"—")+
-   cell(actual)+"</tr>";
+   cell(actual)+
+   cell(escapeText(model23EffectsFor(d.date).map(e=>e.source+" "+e.eventKind).join(" / ")||"—"))+
+   cell(escapeText(model23EffectsFor(d.date).flatMap(e=>e.verifiedK).join(", ")||"—"))+
+   cell(escapeText(model23EffectsFor(d.date).flatMap(e=>e.archiveK).join(", ")||"—"))+
+   cell(escapeText([...new Set(model23EffectsFor(d.date).flatMap(e=>e.orgs))].join(", ")||"—"))+
+   cell(escapeText([...new Set(model23EffectsFor(d.date).flatMap(e=>e.patterns.map(p=>typeof p==="string"?p:p.id||p.patternId||"CR?")))].join(", ")||"—"))+
+   cell(escapeText(model23EffectsFor(d.date).length?"İlk yayın doğrulanmadı":"Haber kaydı yok / bilinmiyor"))+"</tr>";
  });
  $("model23Rows").innerHTML=table([
   "Tarih","Ekonomik kural adayı","S1 UP · +4 saat",
-  "S1 beklenen log%","S2 evre / yön","S2 trend z","S3 araştırma","Altın · aynı seans"
+  "S1 beklenen log%","S2 evre / yön","S2 trend z","S3 araştırma","Altın · aynı seans",
+  "Haber / kaynak","ETKİ-05 K (koşullu)","Arşiv K (doğrulanmamış)","ÖĞREN-03 ORG adayları","CR birleşimi","Haber kanıt durumu"
  ],lines);
 }
 function model23Detail(){
@@ -1155,6 +1164,7 @@ $("model23Rows").addEventListener("click",function(e){
  if(!model23.days.some(d=>d.date===date))return;
  model23SelectedDate=date;model23Rows();model23Detail();
 });
+fetch("/api/research/news-effect-2023",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json();}).then(data=>{if(!Array.isArray(data.events))throw Error("Schema");model23Effects=data.events;if(model23)model23Rows();}).catch(e=>console.warn("Haber/ETKI-05 sütunları yüklenemedi:",e.message));
 loadModel23();
 
 
