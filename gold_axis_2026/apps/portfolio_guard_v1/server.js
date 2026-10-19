@@ -205,6 +205,13 @@ function requestHandler(req,res) {
     autoRetrain:false,labelMaturityGuard:"96 hours"}
   }));
  }
+ if(route==="/api/research/news-effect-2023"){
+  try{
+   const data=JSON.parse(fs.readFileSync(path.resolve(__dirname,"../../adaptive_trading_core/GLOBAL_NEWS_ROUTER_JANFEB2023_DEMO_20261018.json"),"utf8"));
+   if(data.schema!=="GLOBAL_NEWS_RULES_2023_JAN_FEB_READONLY_DEMO_20261018"||!Array.isArray(data.inputs)||data.inputs.length!==8||!Array.isArray(data.results.events))throw Error("NEWS_EFFECT_SCHEMA");
+   return respond(res,200,JSON.stringify({status:"RETROSPECTIVE_UNVERIFIED",events:data.inputs.map(n=>{const e=data.results.events.find(x=>x.id===n.id);return {date:n.announcementReferenceUtc.slice(0,10),eventKind:n.eventKind,source:n.source,referenceUtc:n.announcementReferenceUtc,archiveK:n.retrospectiveArchiveLabelsNotRouted,verifiedK:e?.conditions||[],orgs:(e?.candidateOrgs||[]).map(o=>o.org),patterns:e?.matchedPatterns||[],status:e?.status||"UNKNOWN",firstprintAttested:!!e?.firstprintAttested};})}));
+  }catch(e){console.error("News effects:",e.message);return respond(res,503,JSON.stringify({error:"NEWS_EFFECT_UNAVAILABLE"}));}
+ }
  if(route==="/api/research/down-news"){
   try {
    const source=path.resolve(__dirname,"../../ETKI_05_17_DUSUS_HABER_VE_M15_GERI_CEKILME_SAAT_KARSILASTIRMA_V2_20261018.json");
