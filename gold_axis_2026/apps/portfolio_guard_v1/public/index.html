@@ -16,6 +16,7 @@
    <nav aria-label="Bölümler">
     <a href="#overview" class="active">◉ &nbsp; Genel görünüm</a>
     <a href="#model2023">▤ &nbsp; 2023 · Ekonomik kural / S1 / S2</a>
+    <a href="#downNewsResearch">◷ &nbsp; S1/S2 · Büyük düşüş ve haberler</a>
     <a href="#selective2023">▶ &nbsp; Ocak 2023 · Canlandırılmış yürüyüş</a>
     <a href="#ai2023">⌁ &nbsp; Ocak–Şubat 2023 · AI mekanizma deneyi</a>
     <a href="#history">▤ &nbsp; Karar geçmişi</a>
@@ -98,6 +99,15 @@
      <div id="model23Detail">Tablodan bir gün seçerek ekonomik olay ve S1/S2 ayrıntılarını görebilirsiniz.</div>
     </div>
     <p class="model23-source" id="model23Source">Kaynak: CORE denetim kayıtları. Ham fiyatlar bu ekrana aktarılmamıştır.</p>
+   </section>
+   <section id="downNewsResearch" class="section" aria-labelledby="downNewsTitle">
+    <div class="sectionhead"><div class="eyebrow">HABER × S1 / S2 · TARİHSEL GÖZLEM</div>
+     <h2 id="downNewsTitle">17 büyük altın düşüşünde haber ne zaman geldi?</h2>
+     <p>Bu tablo mevcut S1 / S2 karar modelinin yanında araştırma kanıtını gösterir; sinyalleri veya AL/SAT kararlarını değiştirmez. Haber tarihi her olayda ilk yayın doğrulaması değildir.</p></div>
+    <p class="notice"><strong>Önemli:</strong> “İlk haber henüz bulunmadı” = “habersiz düşüş” değildir. Fiyat eşikleri, sonradan seçilmiş düşüşler üzerinde hesaplanmıştır. Haberlerin düşüşe neden olduğu 17 olayın hiçbirinde kanıtlanmış değildir.</p>
+    <div class="model23-controls"><div><label for="downNewsYear">Yıl seçin</label><select id="downNewsYear"><option value="all">2023–2025 tüm düşüşler</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option></select></div></div>
+    <p id="downNewsStatus" class="monthstatus" role="status">Düşüş ve haber kayıtları yükleniyor…</p>
+    <div class="panel"><div class="paneltitle"><h3>Düşüş başlangıcı ↔ haber zamanı ↔ fiyat zayıflaması</h3><span>Geriye dönük araştırma · SAT sinyali değil</span></div><div class="tablewrap" id="downNewsRows"></div></div>
    </section>
    <section class="section selective23-section" id="selective2023" aria-labelledby="selective23Title">
     <div class="sectionhead">
