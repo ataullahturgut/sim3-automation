@@ -1385,3 +1385,36 @@ $("ai23Slider").addEventListener("input",v=>{
  if(ai23){ai23Day=Math.max(0,Math.min(58,Number(v.target.value)-1));ai23Render();}
 });
 ai23Load();
+
+
+/* Research overlay: never updates S1/S2 calculations or trading decisions. */
+(function(){
+ const year=document.getElementById("downNewsYear"),output=document.getElementById("downNewsRows"),status=document.getElementById("downNewsStatus");
+ if(!year||!output||!status)return;
+ const trTime=v=>v?new Date(v).toLocaleString("tr-TR",{timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):"Saat kanıtı yok";
+ let records=[];
+ function draw(){
+  const selected=records.filter(r=>year.value==="all"||r.startPivotDay.startsWith(year.value));
+  output.replaceChildren();
+  const table=document.createElement("table"),thead=document.createElement("thead"),headers=["Düşüş dönemi / büyüklük","İlişkili haber (araştırma)","Haber saati (TSİ)","İlk ≥%0,5 gerileme (TSİ)","Zaman sırası","İlk haber kanıtı"];
+  const hr=document.createElement("tr");
+  headers.forEach(h=>{const th=document.createElement("th");th.textContent=h;hr.append(th);});thead.append(hr);table.append(thead);
+  const tbody=document.createElement("tbody");
+  selected.forEach(r=>{
+   const row=document.createElement("tr");const add=t=>{const cell=document.createElement("td");cell.textContent=String(t);row.append(cell);return cell;};
+   add(r.startPivotDay+" → "+r.endPivotDay+" · "+Number(r.fullLegPct).toFixed(2)+"%");
+   const n=add(r.newsHeadline||"Henüz belirlenmedi");
+   if(r.sourceUrl&&/^https:\/\//.test(r.sourceUrl)){const link=document.createElement("a");link.href=r.sourceUrl;link.target="_blank";link.rel="noopener noreferrer";link.textContent=" Kaynak ↗";n.append(link);}
+   add(r.documentedNewsReleaseUtc?trTime(r.documentedNewsReleaseUtc):(r.newsDate||"Bilinmiyor")+" · yalnız tarih");
+   add(trTime(r.firstHalfPctDrawdownUtc));
+   const news=Date.parse(r.documentedNewsReleaseUtc||""),price=Date.parse(r.firstHalfPctDrawdownUtc||"");
+   add(Number.isFinite(news)&&Number.isFinite(price)?(news<price?"Haber eşikten önce":news>price?"Haber eşikten sonra":"Aynı anda"): "Saat sırası doğrulanamıyor");
+   add(r.newsOriginalFirstAvailableUtcCertified?"Doğrulandı":"Doğrulanmadı");
+   tbody.append(row);
+  });
+  table.append(tbody);output.append(table);
+  status.textContent=selected.length+" düşüş gösteriliyor. S1/S2 bağımsız karar üretir; bu araştırma örtüsü işlem kararını değiştirmez.";
+ }
+ year.addEventListener("change",draw);
+ fetch("/api/research/down-news",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json();}).then(data=>{if(!Array.isArray(data.records)||data.records.length!==17)throw Error("17 olay bulunamadı");records=data.records;draw();}).catch(e=>{status.textContent="Haber/düşüş araştırması yüklenemedi: "+e.message;});
+})();
