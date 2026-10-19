@@ -205,6 +205,15 @@ function requestHandler(req,res) {
     autoRetrain:false,labelMaturityGuard:"96 hours"}
   }));
  }
+ if(route==="/api/research/down-news"){
+  try {
+   const source=path.resolve(__dirname,"../../ETKI_05_17_DUSUS_HABER_VE_M15_GERI_CEKILME_SAAT_KARSILASTIRMA_V2_20261018.json");
+   const data=JSON.parse(fs.readFileSync(source,"utf8"));
+   if(data.schema!=="GOLD_DOWN_NEWS_VS_M15_THRESHOLD_TIMELINE_V2"||!Array.isArray(data.records)||data.records.length!==17)
+    throw new Error("Unexpected research data");
+   return respond(res,200,JSON.stringify({status:"RETROSPECTIVE_RESEARCH_ONLY",firstNewsCausesDownCertified:data.firstNewsCausesDownCertified,records:data.records.map(r=>({id:r.id,startPivotDay:r.startPivotDay,endPivotDay:r.endPivotDay,fullLegPct:r.fullLegPct,newsHeadline:r.newsHeadline,newsDate:r.newsDate,documentedNewsReleaseUtc:r.documentedNewsReleaseUtc,newsUtcQuality:r.newsUtcQuality,firstHalfPctDrawdownUtc:r.firstHalfPctDrawdownUtc,firstOnePctDrawdownUtc:r.firstOnePctDrawdownUtc,firstTwoPctDrawdownUtc:r.firstTwoPctDrawdownUtc,observation:r.observation,sourceUrl:r.sourceUrl,newsOriginalFirstAvailableUtcCertified:r.newsOriginalFirstAvailableUtcCertified,newsCausedInitialFall:r.newsCausedInitialFall}))}));
+  }catch(e){console.error("Down-news research read:",e.message);return respond(res,503,JSON.stringify({error:"DOWN_NEWS_RESEARCH_UNAVAILABLE"}));}
+ }
  if(route==="/api/summary")return respond(res,200,JSON.stringify(summary()));
  if(route==="/api/replay"){
   const mode=url.searchParams.get("mode");
