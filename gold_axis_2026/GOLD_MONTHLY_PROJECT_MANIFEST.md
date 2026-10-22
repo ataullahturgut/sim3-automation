@@ -204,6 +204,22 @@ After F0–F3:
 - L1+L2, L1+L2+L3 and distributed-lag packages materially worse
 - decision: L1 only.
 
+### 4.2a İzole GPR ağırlık katkısı — 22 Ekim 2026, tamamlanmış deney
+
+**GPR'nin bağımsız VW ağırlıklandırma katkısı**, önceki F1 MR-only/VW-only deneylerinden farklı olarak **GPR ON vs OFF** üzerinden ölçüldü. Günlük veriden gelen ikinci özellik kanalı silinmedi; her kolda 8 özellik ve aynı ChHHO-ANFIS algoritması, dört metal, kronolojik 33 DEV target ve dondurulmuş optimizer kullanıldı.
+
+| Önceden sabitlenen yöntem | DEV ΣAE USD | Yön |
+|---|---:|---:|
+| CURRENT8 PIT GPR-weighted VW | **1413.0299** | **23/33** |
+| NO-GPR sabit üstel yaş ağırlığı, λ=0.05 | 1780.9258 | 18/33 |
+| NO-GPR eşit günlük ağırlık | **≈7.003×10^9 — patologik**, yalnız tanı amaçlı | 19/33 |
+
+- **GPR vs sabit zaman ağırlığı:** −367.896 USD ΣAE (**%20.66 az hata**), **+5 doğru yön**; 2022/2023/2024 üç DEV yılında da düşük toplam hata, 20/33 ayda daha düşük AE, median paired advantage +6.159 USD.
+- **Eşit ağırlık stabil değil:** 2022-06'da ≈7.003 milyar USD/ons tahmin, design condition ≈2.236×10^18; bu durum GPR'ye milyarlarca USD fayda atfetmek için **YASAK**. Aynı problemli ay çıkarıldığında sadece hassasiyet teşhisi olarak eşit ağırlık 32-ay ΣAE ≈1879.77, GPR 32-ay ≈1402.14.
+- **Canonical parity:** GPR açık referans ΣAE 1413.029779 vs deney yeniden çalıştırma 1413.029855 (fark ≈0.000075 USD), yön tam 23/33; **PASS**.
+- GitHub Actions [run 39766658131](https://github.com/ataullahturgut/sim3-automation/actions/runs/39766658131) = **SUCCESS**. [Bağımsız deney sonucu](GOLD_MONTHLY_CHHHO_GPR_WEIGHT_ABLATION_RESULT_2026-10-22.md), [ön kayıt sözleşmesi](GOLD_MONTHLY_CHHHO_GPR_WEIGHT_ABLATION_PROTOCOL_2026-10-22.md).
+- **Bilimsel karar:** GPR ağırlıkları **DEV döneminde faydalı görünüyor**, CURRENT8 korunur. **2025/2026 GPR ON/OFF dış dönem sınaması yapılmadı; prospektif üstünlük/istatistiksel kesinlik/promosyon yok**. 2025/2026 verisiyle eşik/λ seçilmez, uygulama otomatik model-switch yapmaz.
+
 ## 4.3 Native external-family research
 
 ALL6 compact external expansion (Rates + USD + VIX + Nasdaq + WTI + Brent) degraded strongly.
