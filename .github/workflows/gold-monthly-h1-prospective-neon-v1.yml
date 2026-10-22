@@ -1,0 +1,154 @@
+name: Gold Monthly H1 frozen top-2 origin-safe prospective production
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'YYYY-MM target, previous month must have closed'
+        required: true
+        type: string
+  schedule:
+    # Attempt on the 1st–5th calendar days; scientific gates reject missing as-of data.
+    # Disabled until the owner enables repository variable GOLD_MONTHLY_AUTOMATION_ENABLED.
+    - cron: '25 8 1-5 * *'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  NEON_DATABASE_URL: ''
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+
+jobs:
+  source:
+    if: ${{ github.event_name == 'workflow_dispatch' || vars.GOLD_MONTHLY_AUTOMATION_ENABLED == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    outputs:
+      target: ${{ steps.origin.outputs.target }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require private Neon publishing secret
+        env:
+          DB_URL: ${{ secrets.GOLD_MONTHLY_DATABASE_URL }}
+        run: |
+          if [ -z "$DB_URL" ]; then
+            echo "::error::Missing repository secret GOLD_MONTHLY_DATABASE_URL; do not claim production readiness"
+            exit 1
+          fi
+      - name: Resolve unique target
+        id: origin
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_TARGET: ${{ inputs.target }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            TARGET="$REQUESTED_TARGET"
+          else
+            TARGET="$(date -u +%Y-%m)"
+          fi
+          [[ "$TARGET" =~ ^20[0-9]{2}-(0[1-9]|1[0-2])$ ]] || exit 1
+          echo "target=$TARGET" >> "$GITHUB_OUTPUT"
+      - name: Install frozen scientific dependencies
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'pandas>=2.2,<3' 'xlrd==2.0.2' 'openpyxl>=3.1,<4' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Download immutable DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+          test -s dev_snapshot/gold_monthly_dev_snapshot_v1.json
+      - name: Validate source and model code
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_h1_origin_public_bundle_v1.py
+          python -m py_compile gold_axis_2026/tools/gold_monthly_h1_forward_monthly_v1.py
+          python -m py_compile gold_axis_2026/tools/gold_monthly_h1_publish_neon_v1.py
+      - name: Build origin-cutoff-pinned four-metal plus official GPR bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ steps.origin.outputs.target }}
+        run: |
+          python gold_axis_2026/tools/gold_monthly_h1_origin_public_bundle_v1.py \
+            --target "$TARGET" \
+            --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json \
+            --output gold_monthly_h1_origin_bundle.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-h1-source-${{ steps.origin.outputs.target }}-${{ github.run_id }}
+          path: gold_monthly_h1_origin_bundle.json
+          retention-days: 90
+          if-no-files-found: error
+
+  forecast:
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        model: [CHHHO, DE_ABC]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Scientific dependencies
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'pandas>=2.2,<3' 'xlrd==2.0.2' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Download same-run source and frozen DEV baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts" --jq '.artifacts[] | select(.name | startswith("gold-monthly-h1-source-")) | .id' | head -1)"
+          test -n "$AID"
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/$AID/zip" > current.zip
+          unzip -q current.zip
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+      - name: Execute selected frozen top-2 model
+        env:
+          TARGET: ${{ needs.source.outputs.target }}
+          MODEL: ${{ matrix.model }}
+        run: |
+          python gold_axis_2026/tools/gold_monthly_h1_forward_monthly_v1.py \
+            --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json \
+            --current-bundle gold_monthly_h1_origin_bundle.json \
+            --target "$TARGET" --model "$MODEL" \
+            --output "forecast_${MODEL}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-h1-model-${{ matrix.model }}-${{ needs.source.outputs.target }}-${{ github.run_id }}
+          path: forecast_*.json
+          retention-days: 90
+          if-no-files-found: error
+
+  publish:
+    needs: [source, forecast]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Download exact same-run source and both model outputs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: gold-monthly-h1-*-${{ needs.source.outputs.target }}-${{ github.run_id }}
+          merge-multiple: true
+          path: publish_inputs
+      - name: Pair input parity and append-only Neon commit
+        env:
+          GOLD_MONTHLY_DATABASE_URL: ${{ secrets.GOLD_MONTHLY_DATABASE_URL }}
+        run: |
+          test -n "$GOLD_MONTHLY_DATABASE_URL"
+          python gold_axis_2026/tools/gold_monthly_h1_publish_neon_v1.py \
+            --bundle publish_inputs/gold_monthly_h1_origin_bundle.json \
+            --chhho publish_inputs/forecast_CHHHO.json \
+            --de-abc publish_inputs/forecast_DE_ABC.json
