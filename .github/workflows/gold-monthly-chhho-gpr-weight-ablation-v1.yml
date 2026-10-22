@@ -1,0 +1,89 @@
+name: Gold Monthly ChHHO GPR Weighting Ablation V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_gpr_weight_ablation_v1.py
+      - gold_axis_2026/tools/gold_monthly_chhho_gpr_weight_summarize_v1.py
+      - .github/workflows/gold-monthly-chhho-gpr-weight-ablation-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  NEON_DATABASE_URL: ''
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  model:
+    name: ChHHO / ${{ matrix.arm }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        arm: [GPR_PIT_CURRENT8, NO_GPR_EQUAL, NO_GPR_FIXED_RECENCY]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen scientific dependencies
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn>=1.5,<2' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Assert no DB connection
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Fetch immutable authorized DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+          test -s dev_snapshot/gold_monthly_dev_snapshot_v1.json
+      - name: Compile / check experiment
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_gpr_weight_ablation_v1.py
+          python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_gpr_weight_summarize_v1.py
+      - name: Run independent frozen ChHHO experiment
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_gpr_weight_ablation_v1.py \
+            --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json \
+            --arm "${{ matrix.arm }}" \
+            --output "gpr_weight_${{ matrix.arm }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gpr-weight-${{ matrix.arm }}-${{ github.sha }}
+          path: gpr_weight_${{ matrix.arm }}.json
+          if-no-files-found: error
+          retention-days: 90
+
+  compare:
+    name: Same-month paired GPR audit
+    needs: model
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gpr-weight-*-${{ github.sha }}
+          path: gpr-results
+          merge-multiple: true
+      - name: Recompute paired errors and enforce frozen baseline parity
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_gpr_weight_summarize_v1.py \
+            --input-dir gpr-results --output GOLD_MONTHLY_CHHHO_GPR_WEIGHT_PAIRED_V1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-gpr-weight-paired-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_GPR_WEIGHT_PAIRED_V1.json
+          if-no-files-found: error
+          retention-days: 90
