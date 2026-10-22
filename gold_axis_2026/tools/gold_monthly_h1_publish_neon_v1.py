@@ -75,7 +75,6 @@ def publish(bundle,forecasts):
     if any(len(v)<18 for v in bymetal.values()):raise RuntimeError("NO_COMPLETE_METAL_MONTH")
     pg_models={"Gold":"AU","Silver":"AG","Platinum":"PT","Palladium":"PD"}
     bhash=bundle["payload_sha256"]
-    source_blob=git_blob_bytes(Path(bundle["authority"].get("local_bundle_path","")).read_bytes()) if False else g["source_commit_sha"]
     produced=max(datetime.fromisoformat(x["produced_on_utc"]) for x in forecasts)
     with psycopg.connect(db,connect_timeout=15) as conn:
       with conn.transaction():
@@ -144,7 +143,7 @@ def publish(bundle,forecasts):
               ON CONFLICT (record_id) DO NOTHING""",(
              record_id,mid,target_day,origin_day,x["forecast"],x["origin_reference"],
              datetime.fromisoformat(x["produced_on_utc"]).date(),x["train_rows"],
-             SCIENTIFIC_SHA,source_blob,
+             SCIENTIFIC_SHA,None,
              "https://github.com/ataullahturgut/sim3-automation/tree/gold-midas-headswap-v1-20260925/gold_axis_2026",
              feature_id,Jsonb({"gprVintage":origin,"source_bundle_sha256":bhash,
              "feature_vector_sha256":feature_sha,"pred_log_return_gold":x["pred_log_return_gold"],
@@ -156,13 +155,29 @@ def publish(bundle,forecasts):
                 raise RuntimeError("PREDICTION_APPEND_ONLY_CONFLICT")
         batch=f"GOLD_MONTHLY_H1_PROSPECTIVE_{target}_V1"
         digest=canonical_sha({"bundle":bhash,"predictions":[{"model":x["model"],"value":x["forecast"],"feature":x["input_feature_sha256"]} for x in sorted(forecasts,key=lambda v:v["model"])]})
+        origin_daily=[r for r in bundle["daily_extension_rows"] if r["date"].startswith(origin)]
+        if len(origin_daily)<18:raise RuntimeError("ORIGIN_MONTH_SOURCE_DAILY_RECORDS_MISSING")
+        provenance_pack={
+          "source_bundle_sha256":bhash,
+          "feature_sha256":feature_sha,
+          "mode":"MONTHLY_PROSPECTIVE_FORWARD","target":target,
+          "verifiedModelForecasts":2,"originActualUsed":False,
+          "origin_cutoff_utc":bundle["origin_cutoff_utc"],
+          "origin_daily_rows_four_metals":origin_daily,
+          "origin_day_count":len(origin_daily),
+          "official_gpr_history":{month:float(v) for month,v in bundle["gpr_vintages"][origin].items()
+                                  if month<=g["lag_month"]},
+          "official_gpr_xls_sha256":g["source_xls_sha256"],
+          "source_commits":bundle["source_commits"],
+          "dev_snapshot_payload_sha256":bundle["authority"]["dev_snapshot_payload_sha256"],
+          "model_inputs_original_sha256":feature_sha,
+          "original_training_data_PIT_verified":False
+        }
         cur.execute("""INSERT INTO gold_monthly_h1.ingestion_batches
           (batch_id,payload_sha256,archive_schema,source_commit,model_rows,gpr_rows,status,evidence)
           VALUES (%s,%s,'GOLD_MONTHLY_H1_FROZEN_FORWARD_V1',%s,2,1,'VALIDATED_IMPORT',%s)
           ON CONFLICT (batch_id) DO NOTHING""",(batch,digest,SCIENTIFIC_SHA,
-             Jsonb({"source_bundle_sha256":bhash,"feature_sha256":feature_sha,
-                    "mode":"MONTHLY_PROSPECTIVE_FORWARD", "target":target,
-                    "verifiedModelForecasts":2,"originActualUsed":False})))
+             Jsonb(provenance_pack)))
         cur.execute("SELECT payload_sha256 FROM gold_monthly_h1.ingestion_batches WHERE batch_id=%s",(batch,))
         z=cur.fetchone()
         if z is None or z[0]!=digest:raise RuntimeError("BATCH_REPLAY_CHANGED")
