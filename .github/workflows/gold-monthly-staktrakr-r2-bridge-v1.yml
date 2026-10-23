@@ -1,0 +1,51 @@
+name: Gold Monthly Four-Metal StakTrakr R1 vs R2 Source Recovery
+on:
+  push:
+    branches: [research-monthly-staktrakr-r2-bridge-20261023]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_staktrakr_r2_source_bridge_v1.py
+      - gold_axis_2026/tools/tests/test_monthly_staktrakr_r2_source_bridge_v1.py
+      - .github/workflows/gold-monthly-staktrakr-r2-bridge-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  NEON_DATABASE_URL: ''
+jobs:
+  recover-without-overwrite:
+    name: Verify pinned StakTrakr Aug and Sep all-four-metal research data
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: No database credentials or writes
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download original and 17-Oct frozen StakTrakr JSON files
+        run: |
+          curl --fail --location --retry 3 --silent --show-error \
+            'https://raw.githubusercontent.com/lbruton/StakTrakr/ed2e549f82ba0d1cd3ca32842b82d3888d301e01/data/spot-history-2026.json' \
+            --output spot-history-old.json
+          curl --fail --location --retry 3 --silent --show-error \
+            'https://raw.githubusercontent.com/lbruton/StakTrakr/709f31117ec0b748a6d0478bb652e086cd44e609/data/spot-history-2026.json' \
+            --output spot-history-r2.json
+          test -s spot-history-old.json
+          test -s spot-history-r2.json
+      - name: Compile and run synthetic bridge tests
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_staktrakr_r2_source_bridge_v1.py
+          python -m unittest discover -s gold_axis_2026/tools/tests -p 'test_monthly_staktrakr_r2_source_bridge_v1.py' -v
+      - name: Audit 2026 source revision and Aug Sep four-metal recovery
+        run: |
+          python gold_axis_2026/tools/gold_monthly_staktrakr_r2_source_bridge_v1.py \
+            --old spot-history-old.json \
+            --new spot-history-r2.json \
+            --output GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_SOURCE_BRIDGE_RESULT_20261023.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-staktrakr-r2-four-metal-source-bridge-${{ github.sha }}
+          path: GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_SOURCE_BRIDGE_RESULT_20261023.json
+          if-no-files-found: error
+          retention-days: 90
