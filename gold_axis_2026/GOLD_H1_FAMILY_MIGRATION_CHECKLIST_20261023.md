@@ -17,7 +17,7 @@
 | 5 | AOA-ELM | `tools/vw_midas_elm_meta_batch_21_25_v1.py` | BEKLİYOR | 0/54 |
 | 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **54/54 PASS, DEV33 + 2025 12 + 2026 9, LMC2 tamamlandı** | [Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055) tüm işler SUCCESS; DEV ΣAE 1364.4169, 2025 ΣAE 1016.4622, 2026 ΣAE 1947.1634; 2026 %4.8433 MAPE ve 7/9 yön |
 | 7 | EPSILON_RBF_DAILY12 (RBF-SVR) | `tools/gold_monthly_svr_dwt_stage2c_formulation_v1.py`, dondurulmuş orijinal Stage2C parent, DAILY_SUMMARY12, C=1, epsilon=0.1, gamma=scale | **54/54 PASS ve 54/54 aktif hedef/gelecek zehirleme testi PASS** | [Actions 39992356299](https://github.com/ataullahturgut/sim3-automation/actions/runs/39992356299); DEV ΣAE 1421.7529, 2025 1220.2910, 2026 1925.1144; 2026 MAPE %4.7543 ve 6/9 yön |
-| 8 | CatBoost PRICE | `tools/gold_monthly_boosting_stage6b_catboost_full_dev_v1.py` ve Stage6 frozen model | BEKLİYOR; ekstra model paketi | 0/54 |
+| 8 | CATBOOST_PRICE / CATBOOST_ORDERED | `tools/gold_monthly_boosting_stage1_canonical_v1.py` orijinal Ordered CatBoost, Stage6B VANILLA araştırma hattına eşdeğer parametreler | **54/54 tahmin PASS; 54/54 aktif gelecek/etiket sızıntı testi PASS** | [Actions 39993825386](https://github.com/ataullahturgut/sim3-automation/actions/runs/39993825386); DEV ΣAE 1410.0734, 2025 1009.4287, 2026 1797.2946; 2026 MAPE %4.4802 ve 7/9 yön |
 
 ## Her modelin zorunlu kapısı
 
@@ -114,3 +114,18 @@ Gerçek hesaplama [GitHub Actions 39990355055](https://github.com/ataullahturgut
 | STRESS 2026-01..2026-09 | 9 | 1925.114420 | 4.754341% | 6/9 |
 
 2026 dokuz aylık en büyük mutlak fiyat hatası **Ocak 2026**. Tüm 54 tahmin satırı çalışma artifact'ında kalıcıdır. Yeni havuz durumu **7/10 model tamamlandı**, sırada **CatBoost, AOA-ELM, SMA-ELMFIS**.
+
+## 23 Ekim 2026 — CATBOOST_PRICE 54/54 tam bilimsel koşu
+
+- Orijinal model kimliği: `CATBOOST_ORDERED` (PRICE rolü). Eski `CATBOOST_PRICE` DEV hatası 1460.433935; dondurulmuş orijinal kaynak `tools/gold_monthly_boosting_stage1_canonical_v1.py`. 8 CURRENT8 girdi. Parametreler `loss_function=RMSE, iterations=100, depth=6, learning_rate=0.03, l2_leaf_reg=3, boosting_type=Ordered, random_seed=1701, thread_count=1, allow_writing_files=False`. Orijinal kod güncellenmedi; Stage6B finalist çalışmasındaki VANILLA aynı sabit parametreli price referansının üzerine ek optimizasyon koymuyordu.
+- Girdi/etiket: ANN/LMC2 ile **aynı tek kaynak snapshot SHA256 `576efa5033975559e1a963e06a9dc5b2b2b47d87e046390100605bd132f4d15b`**. Mart 2010'dan tahmin öncesindeki tamamlanmış aya kadar geçmiş (ilk 2022-04 tahmininde 145 eğitim ayı), son ay gerçek fiyat etiketi `None` olarak modelin girdisinde. Model yalnız kendi `predict_one` orijinal fonksiyonuyla tahmin üretti.
+- Aktif veri sızıntısı testi: 54/54 origin ayı için hedef ayın metal getiri vektörü ve 2099 yılı satırı sahte değerlerle dolduruldu; tahmin edilen dört metal yerine modelin tek Gold çıktısı, eğitim X/Y ve 8 özellikli hedef X değişmedi; `core_gold[target]` 10.000× zehirlendi ve tahminin yine değişmediği doğrulandı. Verinin retrospektif / firstprint sertifikasız olması ayrı bilimsel sınırlama.
+- Çalışma: [GitHub Actions 39993825386](https://github.com/ataullahturgut/sim3-automation/actions/runs/39993825386): **3/3 bağımsız aşama SUCCESS**; audit 54/54 PASS → pilot Nisan 2022 tahmin 1943.936044 ve gerçekleşme 1935.039474 PASS → 54/54 tam sonuç ve bilimsel kabul PASS. Sonuç artifact `gold-h1-catboost-price-frozen-full-54-v1`.
+
+| Dönem | n | ΣAE ($/oz) | MAPE | Doğru yön |
+|---|---:|---:|---:|---:|
+| DEV Nisan 2022–Aralık 2024 | 33 | 1410.073375 | 2.076004% | 21/33 |
+| TEST 2025 | 12 | 1009.428695 | 2.426613% | 11/12 |
+| STRESS Ocak–Eylül 2026 | 9 | 1797.294562 | 4.480232% | 7/9 |
+
+**Sekiz modelden sekizi tam değil; 10 modelin 8'i tamamlandı.** Kalan AOA-ELM ve SMA-ELMFIS. Tamamlama puanları yalnız yeni ortak veri kontratında geçerli; eski DEV sayılarıyla doğrudan sıralama yapmak yasaktır. Neon veritabanına yazılmadı, eski modeller güncellenmedi.
