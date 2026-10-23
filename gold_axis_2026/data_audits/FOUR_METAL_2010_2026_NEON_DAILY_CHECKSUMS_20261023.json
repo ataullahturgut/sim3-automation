@@ -1,0 +1,688 @@
+{
+  "schema": "GOLD_FOUR_METAL_2010_2026_NEON_DAILY_SOURCE_DIGEST_V1",
+  "commit_snapshot_old": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+  "original_source_repo": "lbruton/StakTrakr",
+  "normalization": "YYYY-MM-DD|price rounded fixed 4 decimal, joined LF sorted by day. 2026 stops at Neon July 31; source JSON may extend through Aug 19",
+  "groups": [
+    {
+      "symbol": "XAG",
+      "yr": 2010,
+      "n": 253,
+      "first_day": "2010-01-04",
+      "last_day": "2010-12-31",
+      "min_value": "15.140000",
+      "max_value": "30.700000",
+      "md5_day_value_4dp": "f74159ca40f4026c37d838b9af9452fb"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2010,
+      "n": 253,
+      "first_day": "2010-01-04",
+      "last_day": "2010-12-31",
+      "min_value": "1052.250000",
+      "max_value": "1426.000000",
+      "md5_day_value_4dp": "80ead485c15111b87e03fcb9ec5229fb"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2010,
+      "n": 253,
+      "first_day": "2010-01-04",
+      "last_day": "2010-12-31",
+      "min_value": "387.000000",
+      "max_value": "797.000000",
+      "md5_day_value_4dp": "fbbeadad09cab0b5c420bf1da6b9f1ff"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2010,
+      "n": 253,
+      "first_day": "2010-01-04",
+      "last_day": "2010-12-31",
+      "min_value": "1477.000000",
+      "max_value": "1780.000000",
+      "md5_day_value_4dp": "f37eb14f6125da1333020ea986e6774e"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2011,
+      "n": 251,
+      "first_day": "2011-01-04",
+      "last_day": "2011-12-30",
+      "min_value": "26.160000",
+      "max_value": "48.700000",
+      "md5_day_value_4dp": "d1ee1ed4951d4edb3db4aa0dc5b5b067"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2011,
+      "n": 251,
+      "first_day": "2011-01-04",
+      "last_day": "2011-12-30",
+      "min_value": "1316.000000",
+      "max_value": "1896.500000",
+      "md5_day_value_4dp": "5ffe00426538f49e6feebefb2ea41a6b"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2011,
+      "n": 251,
+      "first_day": "2011-01-04",
+      "last_day": "2011-12-30",
+      "min_value": "561.000000",
+      "max_value": "859.000000",
+      "md5_day_value_4dp": "91aa87e17a9077f599389dae59887895"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2011,
+      "n": 251,
+      "first_day": "2011-01-04",
+      "last_day": "2011-12-30",
+      "min_value": "1364.000000",
+      "max_value": "1899.000000",
+      "md5_day_value_4dp": "0c88f29a35fade76c1f519ddfe3c525d"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2012,
+      "n": 252,
+      "first_day": "2012-01-03",
+      "last_day": "2012-12-31",
+      "min_value": "26.670000",
+      "max_value": "37.230000",
+      "md5_day_value_4dp": "55798884db6db73b31911f141706b6ab"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2012,
+      "n": 252,
+      "first_day": "2012-01-03",
+      "last_day": "2012-12-31",
+      "min_value": "1537.500000",
+      "max_value": "1790.000000",
+      "md5_day_value_4dp": "fbb678a919bb5be54b4ae2762a725174"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2012,
+      "n": 252,
+      "first_day": "2012-01-03",
+      "last_day": "2012-12-31",
+      "min_value": "564.000000",
+      "max_value": "721.000000",
+      "md5_day_value_4dp": "e436ab61ae71c6f462e6127b30c4c68c"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2012,
+      "n": 252,
+      "first_day": "2012-01-03",
+      "last_day": "2012-12-31",
+      "min_value": "1391.000000",
+      "max_value": "1728.000000",
+      "md5_day_value_4dp": "9567c7f51523b9b2ab57855b0fccbf99"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2013,
+      "n": 253,
+      "first_day": "2013-01-02",
+      "last_day": "2013-12-31",
+      "min_value": "18.610000",
+      "max_value": "32.230000",
+      "md5_day_value_4dp": "3d4a3949af8b491d70dfbb3c28ca8359"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2013,
+      "n": 253,
+      "first_day": "2013-01-02",
+      "last_day": "2013-12-31",
+      "min_value": "1192.750000",
+      "max_value": "1692.500000",
+      "md5_day_value_4dp": "6a02e273936f43df057b25ed1f20b001"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2013,
+      "n": 253,
+      "first_day": "2013-01-02",
+      "last_day": "2013-12-31",
+      "min_value": "644.000000",
+      "max_value": "774.000000",
+      "md5_day_value_4dp": "ba38def3a2c5774f8efd8cf48787e090"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2013,
+      "n": 253,
+      "first_day": "2013-01-02",
+      "last_day": "2013-12-31",
+      "min_value": "1323.000000",
+      "max_value": "1730.000000",
+      "md5_day_value_4dp": "02f34ceda9253eb6b6100b593e4e750e"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2014,
+      "n": 253,
+      "first_day": "2014-01-02",
+      "last_day": "2014-12-31",
+      "min_value": "15.280000",
+      "max_value": "22.050000",
+      "md5_day_value_4dp": "85f57d3ed736dfd373948b99a11e529e"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2014,
+      "n": 253,
+      "first_day": "2014-01-02",
+      "last_day": "2014-12-31",
+      "min_value": "1144.500000",
+      "max_value": "1379.000000",
+      "md5_day_value_4dp": "ed6cc6467b15ec1ca538531e054aa899"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2014,
+      "n": 253,
+      "first_day": "2014-01-02",
+      "last_day": "2014-12-31",
+      "min_value": "703.000000",
+      "max_value": "909.000000",
+      "md5_day_value_4dp": "aab7e874bcf5dd38f6fc2bd423b730d5"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2014,
+      "n": 253,
+      "first_day": "2014-01-02",
+      "last_day": "2014-12-31",
+      "min_value": "1188.000000",
+      "max_value": "1511.000000",
+      "md5_day_value_4dp": "7fc72305699136a88f33128430824812"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2015,
+      "n": 253,
+      "first_day": "2015-01-02",
+      "last_day": "2015-12-31",
+      "min_value": "13.710000",
+      "max_value": "18.230000",
+      "md5_day_value_4dp": "30f6b53e299d20446914c28cfccb1b9c"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2015,
+      "n": 253,
+      "first_day": "2015-01-02",
+      "last_day": "2015-12-31",
+      "min_value": "1050.600000",
+      "max_value": "1298.000000",
+      "md5_day_value_4dp": "7cadc0e1c04e1367c0661e06aefd756c"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2015,
+      "n": 253,
+      "first_day": "2015-01-02",
+      "last_day": "2015-12-31",
+      "min_value": "528.000000",
+      "max_value": "830.000000",
+      "md5_day_value_4dp": "03b9ae2c580584d3379bc4bbe2269d07"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2015,
+      "n": 253,
+      "first_day": "2015-01-02",
+      "last_day": "2015-12-31",
+      "min_value": "829.000000",
+      "max_value": "1281.000000",
+      "md5_day_value_4dp": "dd0cb3165e07ae89f6cde6b99e57960d"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2016,
+      "n": 253,
+      "first_day": "2016-01-04",
+      "last_day": "2016-12-30",
+      "min_value": "13.580000",
+      "max_value": "20.710000",
+      "md5_day_value_4dp": "8ec280a75332c8c7b8134b81c1910eb1"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2016,
+      "n": 253,
+      "first_day": "2016-01-04",
+      "last_day": "2016-12-30",
+      "min_value": "1072.700000",
+      "max_value": "1370.000000",
+      "md5_day_value_4dp": "135ef21fba267a7ef3c0071a5ad5c04b"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2016,
+      "n": 253,
+      "first_day": "2016-01-04",
+      "last_day": "2016-12-30",
+      "min_value": "465.000000",
+      "max_value": "774.000000",
+      "md5_day_value_4dp": "6c238afe26d4c7be941678f06c82e1c2"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2016,
+      "n": 253,
+      "first_day": "2016-01-04",
+      "last_day": "2016-12-30",
+      "min_value": "817.000000",
+      "max_value": "1177.000000",
+      "md5_day_value_4dp": "d3c314294b23897cc5403a9158101a7f"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2017,
+      "n": 252,
+      "first_day": "2017-01-03",
+      "last_day": "2017-12-29",
+      "min_value": "15.220000",
+      "max_value": "18.560000",
+      "md5_day_value_4dp": "ab5e97e9958c1ac05583abf096515072"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2017,
+      "n": 252,
+      "first_day": "2017-01-03",
+      "last_day": "2017-12-29",
+      "min_value": "1148.650000",
+      "max_value": "1350.900000",
+      "md5_day_value_4dp": "58ffcf6e6cb2ce039310a24bff1876f3"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2017,
+      "n": 252,
+      "first_day": "2017-01-03",
+      "last_day": "2017-12-29",
+      "min_value": "684.000000",
+      "max_value": "1060.000000",
+      "md5_day_value_4dp": "06b27e39ed79ebb5a84232558e626d03"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2017,
+      "n": 252,
+      "first_day": "2017-01-03",
+      "last_day": "2017-12-29",
+      "min_value": "877.000000",
+      "max_value": "1027.000000",
+      "md5_day_value_4dp": "d3bb8d72c4da9c636942919237b8facc"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2018,
+      "n": 253,
+      "first_day": "2018-01-02",
+      "last_day": "2018-12-31",
+      "min_value": "13.970000",
+      "max_value": "17.520000",
+      "md5_day_value_4dp": "1e357e9f87380c6acf3a72a2b2a22053"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2018,
+      "n": 253,
+      "first_day": "2018-01-02",
+      "last_day": "2018-12-31",
+      "min_value": "1176.700000",
+      "max_value": "1360.250000",
+      "md5_day_value_4dp": "e1d7113dea675aab5eae3d9a06f74891"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2018,
+      "n": 253,
+      "first_day": "2018-01-02",
+      "last_day": "2018-12-31",
+      "min_value": "864.000000",
+      "max_value": "1274.000000",
+      "md5_day_value_4dp": "7345288585c988f91672a6aa27573d6b"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2018,
+      "n": 253,
+      "first_day": "2018-01-02",
+      "last_day": "2018-12-31",
+      "min_value": "774.000000",
+      "max_value": "1020.000000",
+      "md5_day_value_4dp": "a455dc5d458e15c6d94d256b01c32e7a"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2019,
+      "n": 253,
+      "first_day": "2019-01-02",
+      "last_day": "2019-12-31",
+      "min_value": "14.375000",
+      "max_value": "19.305000",
+      "md5_day_value_4dp": "16bd7b2189f97ea11d0fb787e0f06f14"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2019,
+      "n": 253,
+      "first_day": "2019-01-02",
+      "last_day": "2019-12-31",
+      "min_value": "1270.050000",
+      "max_value": "1542.600000",
+      "md5_day_value_4dp": "51d45fe98033e6aba5e52d4288d2911d"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2019,
+      "n": 253,
+      "first_day": "2019-01-02",
+      "last_day": "2019-12-31",
+      "min_value": "1261.000000",
+      "max_value": "1990.000000",
+      "md5_day_value_4dp": "12688b733869afd5a4e70c99718c539f"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2019,
+      "n": 253,
+      "first_day": "2019-01-02",
+      "last_day": "2019-12-31",
+      "min_value": "784.000000",
+      "max_value": "982.000000",
+      "md5_day_value_4dp": "8b4630118f677102529e5da994f5d894"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2020,
+      "n": 254,
+      "first_day": "2020-01-02",
+      "last_day": "2020-12-31",
+      "min_value": "12.005000",
+      "max_value": "28.885000",
+      "md5_day_value_4dp": "35ae997acdf996e86f5a660b6199a0fa"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2020,
+      "n": 254,
+      "first_day": "2020-01-02",
+      "last_day": "2020-12-31",
+      "min_value": "1472.350000",
+      "max_value": "2061.500000",
+      "md5_day_value_4dp": "fd31514cd2b08506badb12875f3dc672"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2020,
+      "n": 254,
+      "first_day": "2020-01-02",
+      "last_day": "2020-12-31",
+      "min_value": "1583.000000",
+      "max_value": "2795.000000",
+      "md5_day_value_4dp": "2313ff53343e5d75efc906da4035162a"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2020,
+      "n": 254,
+      "first_day": "2020-01-02",
+      "last_day": "2020-12-31",
+      "min_value": "607.000000",
+      "max_value": "1075.000000",
+      "md5_day_value_4dp": "85ab5f6cc751a83967507f9b518fe28c"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2021,
+      "n": 253,
+      "first_day": "2021-01-04",
+      "last_day": "2021-12-31",
+      "min_value": "21.525000",
+      "max_value": "29.585000",
+      "md5_day_value_4dp": "d28313e378e2c252525e3662b0f2827e"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2021,
+      "n": 253,
+      "first_day": "2021-01-04",
+      "last_day": "2021-12-31",
+      "min_value": "1685.350000",
+      "max_value": "1957.200000",
+      "md5_day_value_4dp": "4b9503ec0552f7167f10f702986e81d9"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2021,
+      "n": 252,
+      "first_day": "2021-01-04",
+      "last_day": "2021-12-31",
+      "min_value": "1608.000000",
+      "max_value": "2997.000000",
+      "md5_day_value_4dp": "550283acbfaf1dcc537fa7efc0494c31"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2021,
+      "n": 252,
+      "first_day": "2021-01-04",
+      "last_day": "2021-12-31",
+      "min_value": "911.000000",
+      "max_value": "1306.000000",
+      "md5_day_value_4dp": "b819057982176a3341340ed233213485"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2022,
+      "n": 250,
+      "first_day": "2022-01-04",
+      "last_day": "2022-12-30",
+      "min_value": "17.770000",
+      "max_value": "26.175000",
+      "md5_day_value_4dp": "1d5216f59500e0860c7812d282d571bd"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2022,
+      "n": 250,
+      "first_day": "2022-01-04",
+      "last_day": "2022-12-30",
+      "min_value": "1618.200000",
+      "max_value": "2017.150000",
+      "md5_day_value_4dp": "13f43de4146d32671595a1fcbc386454"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2022,
+      "n": 250,
+      "first_day": "2022-01-04",
+      "last_day": "2022-12-30",
+      "min_value": "1658.000000",
+      "max_value": "3339.000000",
+      "md5_day_value_4dp": "f04da78acdb646b8a79e63190cf75404"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2022,
+      "n": 250,
+      "first_day": "2022-01-04",
+      "last_day": "2022-12-30",
+      "min_value": "836.000000",
+      "max_value": "1149.000000",
+      "md5_day_value_4dp": "c93364c8a3cb92b929bac85f41211370"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2023,
+      "n": 251,
+      "first_day": "2023-01-03",
+      "last_day": "2023-12-29",
+      "min_value": "20.090000",
+      "max_value": "26.025000",
+      "md5_day_value_4dp": "3021258ee4c5fda258aa7fd1093360b0"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2023,
+      "n": 251,
+      "first_day": "2023-01-03",
+      "last_day": "2023-12-29",
+      "min_value": "1809.050000",
+      "max_value": "2077.800000",
+      "md5_day_value_4dp": "c34b19b139ba114b55bc270778a66547"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2023,
+      "n": 251,
+      "first_day": "2023-01-03",
+      "last_day": "2023-12-29",
+      "min_value": "941.000000",
+      "max_value": "1830.000000",
+      "md5_day_value_4dp": "356b382c2637d8c2036398dc7f070926"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2023,
+      "n": 251,
+      "first_day": "2023-01-03",
+      "last_day": "2023-12-29",
+      "min_value": "852.000000",
+      "max_value": "1106.000000",
+      "md5_day_value_4dp": "46d5d30e4bcbf7beedf1b565a2f34305"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2024,
+      "n": 254,
+      "first_day": "2024-01-02",
+      "last_day": "2024-12-31",
+      "min_value": "22.085000",
+      "max_value": "34.510000",
+      "md5_day_value_4dp": "ad1083fa6586f3af6238dc41b397d0f9"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2024,
+      "n": 254,
+      "first_day": "2024-01-02",
+      "last_day": "2024-12-31",
+      "min_value": "1990.800000",
+      "max_value": "2783.950000",
+      "md5_day_value_4dp": "7961a3c5352ba15a01207a42e9fdf91a"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2024,
+      "n": 254,
+      "first_day": "2024-01-02",
+      "last_day": "2024-12-31",
+      "min_value": "858.000000",
+      "max_value": "1232.000000",
+      "md5_day_value_4dp": "6b431b242be470cf472f05708e014938"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2024,
+      "n": 254,
+      "first_day": "2024-01-02",
+      "last_day": "2024-12-31",
+      "min_value": "875.000000",
+      "max_value": "1082.000000",
+      "md5_day_value_4dp": "88275eb0d8f6342c6ab86b3eb1c3f0b5"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2025,
+      "n": 253,
+      "first_day": "2025-01-02",
+      "last_day": "2025-12-31",
+      "min_value": "29.405000",
+      "max_value": "74.835000",
+      "md5_day_value_4dp": "7cff4954a623fa992ae69f4353e6b1c6"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2025,
+      "n": 253,
+      "first_day": "2025-01-02",
+      "last_day": "2025-12-31",
+      "min_value": "2631.800000",
+      "max_value": "4481.850000",
+      "md5_day_value_4dp": "b0382ca08de0a53efd26adcc66fb6a90"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2025,
+      "n": 253,
+      "first_day": "2025-01-02",
+      "last_day": "2025-12-31",
+      "min_value": "910.000000",
+      "max_value": "1825.000000",
+      "md5_day_value_4dp": "fc08b423564e596708cf8bb3fbebdda8"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2025,
+      "n": 253,
+      "first_day": "2025-01-02",
+      "last_day": "2025-12-31",
+      "min_value": "911.000000",
+      "max_value": "2303.000000",
+      "md5_day_value_4dp": "9b270d0e2470391af59fc29904676520"
+    },
+    {
+      "symbol": "XAG",
+      "yr": 2026,
+      "n": 189,
+      "first_day": "2026-01-02",
+      "last_day": "2026-07-31",
+      "min_value": "55.620000",
+      "max_value": "118.450000",
+      "md5_day_value_4dp": "c3aca39a8767090dd123e5cf5e337066"
+    },
+    {
+      "symbol": "XAU",
+      "yr": 2026,
+      "n": 189,
+      "first_day": "2026-01-02",
+      "last_day": "2026-07-31",
+      "min_value": "3990.500000",
+      "max_value": "5501.700000",
+      "md5_day_value_4dp": "21c31d204cfe7e4d7e79876c3a3499a4"
+    },
+    {
+      "symbol": "XPD",
+      "yr": 2026,
+      "n": 189,
+      "first_day": "2026-01-02",
+      "last_day": "2026-07-31",
+      "min_value": "1178.370000",
+      "max_value": "2090.000000",
+      "md5_day_value_4dp": "1b8fa8ef17c696868fc0a3aa892c6881"
+    },
+    {
+      "symbol": "XPT",
+      "yr": 2026,
+      "n": 189,
+      "first_day": "2026-01-02",
+      "last_day": "2026-07-31",
+      "min_value": "1565.430000",
+      "max_value": "2860.000000",
+      "md5_day_value_4dp": "d12df7c1e5462950255b0ee735b9f632"
+    }
+  ]
+}

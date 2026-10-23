@@ -1,0 +1,70 @@
+name: Gold 2010-to-Date Five Series Original Source Full Integrity
+
+on:
+  push:
+    branches: [research-gold-2010-2026-five-series-integrity-20261023]
+    paths:
+      - gold_axis_2026/tools/audit_full_2010_2026_stak_exact_v1.py
+      - gold_axis_2026/tools/audit_full_2010_2026_gpr_vintages_v1.py
+      - gold_axis_2026/data_audits/FOUR_METAL_2010_2026_NEON_DAILY_CHECKSUMS_20261023.json
+      - gold_axis_2026/data_audits/GPR_OFFICIAL_54_VINTAGE_NEON_AGGREGATE_CHECKSUMS_20261023.json
+      - .github/workflows/gold-monthly-2010-all-five-source-integrity-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NEON_DATABASE_URL: ''
+  OPENBLAS_NUM_THREADS: '1'
+
+jobs:
+  metals:
+    name: 68 year-metal source exact price/value/scale digests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: No write access to Neon
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Exact 2010-2026 July four-metal upstream parity
+        run: |
+          python gold_axis_2026/tools/audit_full_2010_2026_stak_exact_v1.py \
+            --manifest gold_axis_2026/data_audits/FOUR_METAL_2010_2026_NEON_DAILY_CHECKSUMS_20261023.json \
+            --output FOUR_METAL_2010_2026_UPSTREAM_EXACT_PARITY_REPORT.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: four-metal-2010-2026-exact-source-verification
+          path: FOUR_METAL_2010_2026_UPSTREAM_EXACT_PARITY_REPORT.json
+          if-no-files-found: error
+          retention-days: 90
+  gpr:
+    name: Official 54 vintages 3 index series exact original XLS parity
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install official monthly workbook parser
+        run: python -m pip install 'pandas>=2.2,<3' 'xlrd>=2.0,<3'
+      - name: No write access to Neon
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Source-download and exact 54 x 3 archive-vintage parity
+        run: |
+          python gold_axis_2026/tools/audit_full_2010_2026_gpr_vintages_v1.py \
+            --manifest gold_axis_2026/data_audits/GPR_OFFICIAL_54_VINTAGE_NEON_AGGREGATE_CHECKSUMS_20261023.json \
+            --report GPR_OFFICIAL_54_VINTAGE_EXACT_PARITY_REPORT.json \
+            --new-vintage-rows GPR_OFFICIAL_2026_SEP_OCT_COMPLETE_VINTAGES_2010_PLUS.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gpr-54-existing-plus-2-new-vintage-full-original-source
+          path: |
+            GPR_OFFICIAL_54_VINTAGE_EXACT_PARITY_REPORT.json
+            GPR_OFFICIAL_2026_SEP_OCT_COMPLETE_VINTAGES_2010_PLUS.json
+          if-no-files-found: error
+          retention-days: 90
