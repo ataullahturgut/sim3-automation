@@ -230,7 +230,14 @@ def validate_gpr(audit_rows, history_rows, sep_rows):
         require(lag in vintages[o], "GPR_MISSING_REQUIRED_LAG_" + o)
         require(len(vintages[o]) >= 24, "GPR_TOO_SHORT_" + o)
         require(abs(vintages[o][lag] - v) < 1e-6, "GPR_LAG_VALUE_MISMATCH_" + o)
+    lineage = {
+        o: {"official_source_file": r[1], "official_commit_sha": r[2],
+            "released_at_utc": r[3].isoformat(), "lag_month": previous(o),
+            "lag_value": r[0]}
+        for o, r in audit.items()
+    }
     return dict(vintages), {"gpr_origin_vintages": len(vintages),
+                           "gpr_origin_lineage": lineage,
                            "missing_required_gpr_origins": [],
                            "late_required_gpr_origins": [],
                            "missing_required_gpr_lag_month": [],
