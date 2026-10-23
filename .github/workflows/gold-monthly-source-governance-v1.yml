@@ -5,6 +5,8 @@ on:
     branches: [research-gold-monthly-data-governance-20261023]
     paths:
       - gold_axis_2026/tools/gold_monthly_four_metal_governance_v1.py
+      - gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+      - gold_axis_2026/tools/tests/test_monthly_single_provider_loader_v1.py
       - gold_axis_2026/tools/gold_monthly_governance_dev_snapshot_gate_v1.py
       - gold_axis_2026/tools/tests/test_monthly_four_metal_governance_v1.py
       - .github/workflows/gold-monthly-source-governance-v1.yml
@@ -41,11 +43,14 @@ jobs:
       - name: Compile source code
         run: |
           python -m py_compile gold_axis_2026/tools/gold_monthly_four_metal_governance_v1.py
+          python -m py_compile gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+          python -m py_compile gold_axis_2026/tools/tests/test_monthly_single_provider_loader_v1.py
           python -m py_compile gold_axis_2026/tools/gold_monthly_governance_dev_snapshot_gate_v1.py
           python -m py_compile gold_axis_2026/tools/tests/test_monthly_four_metal_governance_v1.py
       - name: Verify synthetic regression cases
         run: |
           python -m unittest discover -s gold_axis_2026/tools/tests -p 'test_monthly_four_metal_governance_v1.py' -v
+          python -m unittest discover -s gold_axis_2026/tools/tests -p 'test_monthly_single_provider_loader_v1.py' -v
       - name: Validate immutable 2010-2024 research panel
         run: |
           python gold_axis_2026/tools/gold_monthly_governance_dev_snapshot_gate_v1.py \
