@@ -1,5 +1,8 @@
 # GOLD WEEKLY H=1 — First four-metal ANN real 234-week replay
 
+> **CRITICAL RESEARCH HOLD (23 October 2026):** The pinned research price source contains an implausible four-metal 2026-02-27 last-day value (Au 3516.02 USD/oz), contradicted by contemporaneous Reuters gold above USD 5200 and WGC USD 5222. This skews February weekly mean/end quote and likely contaminates March training and February monthly source. The prior 2026 model scores below are provisional/not validated as genuine historical market-price performance. See [source anomaly audit](GOLD_WEEKLY_DATA_ANOMALY_AUDIT_20261023.md). Do not fix data silently or promote any source-dependent model until separately verified and rerun.
+
+
 **Date:** 2026-10-23
 **Branch:** gold-weekly-h1-ann-v1-20261023
 **Monthly branch:** gold-midas-headswap-v1-20260925 — no monthly code changed.
