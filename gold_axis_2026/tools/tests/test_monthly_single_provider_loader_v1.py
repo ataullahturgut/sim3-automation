@@ -62,6 +62,14 @@ class SingleProviderMonthlyModel(unittest.TestCase):
         self.assertEqual(len(daily["Gold"]["2021-12"]), 22)
         self.assertEqual(len(daily["Palladium"]["2021-12"]), 22)
 
+    def test_second_archive_lineage_is_not_silently_merged(self):
+        rows = month_rows(2025, 1) + month_rows(2025, 2)
+        for row in rows:
+            if row["day"] >= "2025-02-01":
+                row["provenance"] = "different archival source"
+        with self.assertRaisesRegex(RuntimeError, "MULTIPLE_OR_MISSING_APPROVED_METAL_ARCHIVE_LINEAGES"):
+            model.select_single_source_metal_prices(rows)
+
     def test_no_certifiable_provider_rows_fails_closed(self):
         bad = month_rows(2026, 3, provider=None, payload="sqld")
         with self.assertRaisesRegex(RuntimeError, "NO_FOUR_METAL_SINGLE_PROVIDER"):
