@@ -139,6 +139,17 @@ def select_single_source_metal_prices(provider_rows: list[dict]):
     Never impute; derive gold targets and all other metal features from the
     *same* matched business dates and provider-labelled source family.
     """
+    approved_lineages = {
+        str(row.get("provenance") or "UNKNOWN")
+        for row in provider_rows
+        if row.get("provider_label") == "LBMA"
+        and row.get("payload_source_label") == "seed"
+    }
+    if len(approved_lineages) != 1:
+        raise RuntimeError(
+            "MULTIPLE_OR_MISSING_APPROVED_METAL_ARCHIVE_LINEAGES "
+            + str(sorted(approved_lineages))
+        )
     panel = build_governed_panel(provider_rows)
     if not panel["clean_four_metal_rows"]:
         raise RuntimeError("NO_FOUR_METAL_SINGLE_PROVIDER_RESEARCH_MONTHS")
@@ -199,6 +210,7 @@ def load_data(dsn: str) -> DataBundle:
                 "core_gold_rows": len(core_gold), "core_gold_first": min(core_gold), "core_gold_last": max(core_gold),
                 "core5_reference_rows_not_used_as_metal_target": len(core_gold_reference),
                 "metal_price_basis": "SINGLE_PROVIDER_LABELLED_STAKTRAKR_SEED_LBMA_RESEARCH_ONLY",
+                "selected_research_archive_lineage": sorted({r["provenance"] for r in provider_rows if r["provider_label"]=="LBMA" and r["payload_source_label"]=="seed"})[0],
                 "historical_firstprint_verified": False,
                 "single_source_accepted_months": panel["accepted_months"],
                 "single_source_excluded_months": panel["quarantined_months"],
