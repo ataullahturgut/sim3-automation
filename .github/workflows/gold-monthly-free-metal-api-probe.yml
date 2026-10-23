@@ -31,7 +31,7 @@ jobs:
           r=json.load(open("free_four_metal_source_probe.json"))
           for y, v in r["standard_bullion_daily_probe"].items():
               for metal, x in v["metals"].items():
-                  print(f"STANDARD_BULLION year={y} metal={metal} status={x.get('http_status')} grain={x.get('grain')} points={x.get('points_in_response')} days={len(x.get('unique_daily_dates',[]))} reason={x.get('reason', x.get('error'))}")
+                  print(f"STANDARD_BULLION year={y} metal={metal} status={x.get('http_status')} grain={x.get('grain')} response_range={x.get('response_range')} first={x.get('first_response_date')} last={x.get('last_response_date')} points={x.get('points_in_response')} days={len(x.get('unique_daily_dates',[]))} reason={x.get('reason', x.get('error'))}")
           for metal, x in r["gold_api_anonymous_live"].items():
               print(f"GOLD_API_LIVE metal={metal} status={x.get('http_status')} valid={x.get('valid')}")
           PY
