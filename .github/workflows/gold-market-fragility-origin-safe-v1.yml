@@ -27,7 +27,7 @@ jobs:
       - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
       - name: Download official GVZCLS raw FRED daily close history
         run: |
-          curl --fail --show-error --location --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 180 \
+          curl --http1.1 --retry-all-errors --fail --show-error --location --retry 5 --retry-delay 3 --connect-timeout 20 --max-time 180 \
             -A 'Mozilla/5.0 (research scientific source audit)' \
             'https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS' \
             -o /tmp/gvzcls-raw-fred.csv
