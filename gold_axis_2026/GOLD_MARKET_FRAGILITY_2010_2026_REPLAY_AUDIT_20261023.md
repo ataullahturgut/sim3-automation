@@ -66,6 +66,16 @@ For GOLD_CROSS_GVZ:
 
 The Jan26 five-day flag is ~4 trading days before Feb2 event (Jan27,28,29,30,Feb2). The Jan29 next-day warning is generated after the **already-large intraday reversal** within Jan29 and after GVZ 46 close, i.e. before Jan30's next major leg, NOT before every onset.
 
+## Post-hoc feature-hypothesis warning and independent event count
+
+Although all estimator *parameters and alert cutoffs* are fitted only on 2010–2023, the decision to test GVZ acceleration, RSI stretch and silver leverage was explicitly prompted by observing the January 2026 crash. Thus 2026 **IS NOT an untouched scientific validation of the entire hypothesis-search process**. It is a retrospective, chronology-controlled reproduction of a hypothesized warning signal. Do not claim this model was constructed before 2026 or that it predicted the crash prospectively in operation.
+
+**Separate event episodes (descriptive grouping, not a model retune):**
+- In 2024, the 2 overlapping positive 5-day issue rows correspond to about **one** November 2024 drawdown cluster; no signal flagged those issue rows.
+- In 2025, the 6 positive 5-day issue rows group into approximately **three** episodes (late April, early May, October); CROSS+GVZ flagged 6/6 positive issue rows, but raised 42 false warnings as well. Event accuracy/alert economics are not automatically validated by this clustering.
+- In Jan-Feb 2026, 5 positive 5-day issue rows represent **one** dramatic Jan30–Feb2 crash episode, correctly anticipated with warning origins Jan26–Jan30; NOT five independent crash predictions.
+- 2025 one-day -3% negative jumps occurred after issue days Apr22, May9, and Oct21; all THREE missed by the CROSS+GVZ detector.
+
 ## Decision and scientific limits
 
 **PRE-30-JAN WARNING: YES. ROBUST GENERAL PROVEN PERFORMANCE: NO.**
