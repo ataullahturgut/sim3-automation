@@ -21,7 +21,7 @@ METALS=("Gold","Silver","Platinum","Palladium")
 STAGE_MONTHS=("2026-08","2026-09")
 
 def git_blob_hash(data:bytes)->str:
-    return hashlib.sha1(b"blob "+str(len(data)).encode()+b"\\0"+data).hexdigest()
+    return hashlib.sha1(b"blob "+str(len(data)).encode()+bytes([0])+data).hexdigest()
 
 def read_snapshot(path:str,expected_blob:str)->tuple[list[dict],str]:
     raw=Path(path).read_bytes()
@@ -130,7 +130,7 @@ def main():
     old,osh=read_snapshot(args.old_json,OLD_BLOB)
     new,nsh=read_snapshot(args.new_json,NEW_BLOB)
     report,stage=compare(old,new,osh,nsh)
-    Path(args.report).write_text(json.dumps(report,indent=2,sort_keys=True)+"\\n")
+    Path(args.report).write_text(json.dumps(report,indent=2,sort_keys=True)+chr(10))
     Path(args.stage).write_text(json.dumps({
         "schema":"GOLD_MONTHLY_STAK_FOUR_METAL_AUG_SEP_2026_SHADOW_V1",
         "source_repo":UPSTREAM_REPO,"source_commit":NEW_COMMIT,
@@ -138,7 +138,7 @@ def main():
         "official_firstprint_certified":False,
         "eligible_for_canonical_LBMA_fixer":False,
         "neon_ingested":False,
-    },indent=2,sort_keys=True)+"\\n")
+    },indent=2,sort_keys=True)+chr(10))
     print("SAME_UPSTREAM_SOURCE_STAGING_GATE=PASS")
     print(json.dumps({k:v for k,v in report.items()
                        if k in ("old_commit","new_commit","stage_months",
