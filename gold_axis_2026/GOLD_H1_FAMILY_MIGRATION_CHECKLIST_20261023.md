@@ -4,7 +4,7 @@
 **İşlem:** Eski başarıları yeniden icat etmek değil; mevcut dondurulmuş model sınıflarını, mevcut NEON_STAKTRAKR_GPR_V2 salt-okunur kaynağıyla teknik doğrulamadan geçirip sırayla yeniden çalıştırmak.
 **Kayıt zamanı:** 2026-10-23.
 
-**EN GÜNCEL DURUM:** 10 modelin 8'i özgün algoritmalarıyla tamamlandı; **AOA-ELM orijinalindeki yapısal hata nedeniyle eski AOA-ELM karantinaya alındı, ayrı isimli AOA_ELM_FIXED_V2 54/54 tamamlandı**. Son model SMA-ELMFIS henüz çalıştırılmadı. Aşağıdaki tarihli eski koşu paragrafları tarihsel denetim kaydıdır, bu güncel özetin yerine geçmez.
+**EN GÜNCEL DURUM:** Belirlenen **10 modelin 10'u denetlendi ve 54 aylık koşuları tamamlandı**; bunlardan **AOA-ELM ve SMA-ELMFIS orijinal kodlarında iç yöntem kusuru bulunduğu için orijinalleri karantinada**, kendi açık etiketleriyle algoritması düzeltilmiş V2 araştırma modelleri ayrıca 54/54 çalıştırıldı. 2025 ve 2026 retrospektif sonuçları model/parametre seçiminde kullanılmadı. Bu onlu havuzun tamamlanması, otomatik olarak canlıya geçiş veya 10/10 orijinal modelin bilimsel onayı anlamına gelmez.
 
 ## Başarılı model havuzu, yürütme sırası
 
@@ -15,7 +15,7 @@
 | 1 | PLS1 V1 All-4 | `tools/gold_monthly_challenger_b_pls1_v1.py` | 3/3 smoke PASS; 54/54 full PASS | [Actions 39979925070](https://github.com/ataullahturgut/sim3-automation/actions/runs/39979925070); DEV ΣAE 1390.83, 2025 ΣAE 1098.01, 2026 Ocak–Eylül ΣAE 1996.05 |
 | 2 | FULL7 ANN | 7 orijinal ANN bileşeni, `tools/vw_midas_ann_stage4_batch41_v1.py` toplama kuralı | **54/54 PASS + 7/7 ACTIVE LEAK TEST PASS** | [Kaynak-snapshot 39986747259](https://github.com/ataullahturgut/sim3-automation/actions/runs/39986747259), [aktif sızıntı testi 39987397390](https://github.com/ataullahturgut/sim3-automation/actions/runs/39987397390); DEV ΣAE 1390.3694, 2025 1036.1148, 2026 1604.0026 ve 8/9 yön |
 | 3 | REDUCED4 ANN | Aynı ANN havuzunun dondurulmuş dört bileşeni | **54/54 PASS + 4/4 ACTIVE LEAK TEST PASS** | Aynı kaynak snapshot ve test; DEV ΣAE 1392.9719, 2025 1034.6766, 2026 1680.6234 ve 8/9 yön |
-| 4 | SMA-ELMFIS (yön uzmanı) | `tools/vw_midas_elmfis_meta_batch_5_v1.py` | BEKLİYOR | 0/54 |
+| 4 | SMA-ELMFIS → **SMA_ELMFIS_V2_INNER_TRAIN_ONLY_SCALING** | Orijinal `tools/vw_midas_elmfis_meta_batch_5_v1.py` korundu; iç-kat ölçekleme kusuru bulundu. Ayrı bağımsız V2: `tools/gold_monthly_h1_sma_elmfis_chrono_replay_v2.py` | **54/54 V2 PASS; eski V1 54/54 ancak tarihsel iç ölçekleme sızıntısı nedeniyle KARANTİNA** | [Actions 39997248183](https://github.com/ataullahturgut/sim3-automation/actions/runs/39997248183), 21/21 işler SUCCESS; V2 DEV ΣAE 1725.0411 (22/33 yön); 2025 1494.2941 (6/12); 2026 2950.4664 MAPE %7.0858 ve 5/9 yön — **yön uzmanı olarak terfi ettirilmedi** |
 | 5 | AOA-ELM → **AOA_ELM_FIXED_V2** | `tools/vw_midas_elm_meta_batch_21_25_v1.py` eski algoritması **AOA sıfır çarpan hatalı**, değişmeden arşivli. YENİ `tools/gold_monthly_h1_aoa_elm_bugfix_replay_v2.py` normalized search, inner-train-only scaler | **54/54 corrected V2 PASS; eski V1 54/54 yalnız KARANTİNA amaçlı** | [Actions 39995352199](https://github.com/ataullahturgut/sim3-automation/actions/runs/39995352199), 5/5 jobs SUCCESS; DEV ΣAE 1453.1707 ve yön 25/33, 2025 1080.5009 ve 9/12, 2026 1678.8165, MAPE %4.1869 ve yön 7/9 |
 | 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **54/54 PASS, DEV33 + 2025 12 + 2026 9, LMC2 tamamlandı** | [Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055) tüm işler SUCCESS; DEV ΣAE 1364.4169, 2025 ΣAE 1016.4622, 2026 ΣAE 1947.1634; 2026 %4.8433 MAPE ve 7/9 yön |
 | 7 | EPSILON_RBF_DAILY12 (RBF-SVR) | `tools/gold_monthly_svr_dwt_stage2c_formulation_v1.py`, dondurulmuş orijinal Stage2C parent, DAILY_SUMMARY12, C=1, epsilon=0.1, gamma=scale | **54/54 PASS ve 54/54 aktif hedef/gelecek zehirleme testi PASS** | [Actions 39992356299](https://github.com/ataullahturgut/sim3-automation/actions/runs/39992356299); DEV ΣAE 1421.7529, 2025 1220.2910, 2026 1925.1144; 2026 MAPE %4.7543 ve 6/9 yön |
@@ -149,3 +149,21 @@ Gerçek hesaplama [GitHub Actions 39990355055](https://github.com/ataullahturgut
 | STRESS Ocak–Eylül 2026 | 1678.816488 | 4.186915% | 7/9 | 1864.086364 | 5/9 |
 
 **ÖNEMLİ:** AOA V2 araştırma sonucu farklı bir algoritma versiyonudur; eski V1 ismi altında veya eski frozen DEV sonucu `1474.1021` ile gizlice birleştirilemez. 2025/2026 dönemleri V2 geliştirmesinde hiperparametre seçimi için kullanılmadı; fakat bu yeni versiyonun onayı ayrıca DEV sıralamasına bağlıdır. Tarihsel fiyat serilerinin ilk yayımlanan PIT sürümü kanıtlı değil. **Sıradaki model:** SMA-ELMFIS yön uzmanı, model havuzundaki 10'uncu aile.
+
+## 23 Ekim 2026 — SMA-ELMFIS 10. model, tamamlanan son aile
+
+Kaynak [GitHub Actions 39997248183](https://github.com/ataullahturgut/sim3-automation/actions/runs/39997248183), **21/21 workflow jobs SUCCESS**: origin input provenance + gelecek Y/future poisoning 54/54; Nisan 2022 yeni sürüm gerçek optimize pilot; tam 54 ay için 9×6'lık split × eski ve yeni sürüm; son aggregate iki modelin tüm 54 tahminini aynı immutable source SHA-256 `576efa5033975559e1a963e06a9dc5b2b2b47d87e046390100605bd132f4d15b` ile birleştirip ayrı sonuçları hesapladı.
+
+**Orijinal frozen SMA optimizasyon fonksiyonu değişmedi.** Eski metaheuristic `vw_midas_elmfis_meta_batch_5_v1.py:sma_phase`, beş kural, 8 girdi, 4 çıktı, 80 antecedent (5×8 centers ve 5×8 log-spreads), TSK first-order ridge alpha 0.001. 24 popülasyon, 3 bağımsız tekrar, kronolojik iç doğrulama (last 20%), 45 jenerasyon seçim, 15 jenerasyon tam geçmiş refit, seed 208110. Her origin eğitim verisi 2010-03…origin, target month Y null ve 2099 sentetik future row ile 54/54 veri sızıntısı testi PASS.
+
+**Tespit edilen tarihsel kusur:** `vw_midas_elmfis_meta_batch_1_v1.py:arrays` iç doğrulama ayrımından **önce** X/Y scaler'ını inner-training + inner-validation toplamından çıkarır; inner-validation bağımsızlığı ve model seçimi saflığı zedelenir, ancak hedef ay etiketi sızıntısı değildir. Eski algoritma ve sonuç `SMA_ELMFIS_V1_INNER_SCALER_CONTAMINATED` etiketiyle orijinal ayrı karantina artifact'ında tutuldu. Yeni, ayrı `SMA_ELMFIS_V2_INNER_TRAIN_ONLY_SCALING` algoritması, inner scale'ı yalnız kronolojik inner-training bölümünden öğrenir; seçilmiş Gaussian kural parametreleri fiziksel ham öznitelik uzayında korunacak şekilde yeni full-history scaler koordinatlarına taşındıktan sonra özgün SMA ile geçmiş-only refit yapılır. Özgün SMA faz algoritması değişmez; yeni geçerli model eskisinin aynı modeli olarak kabul edilmez.
+
+Nisan 2022 düzeltilmiş gerçek pilot: tahmin **1776.960835 $/oz**, gerçekleşen **1935.039474**, yön DOĞRU ama mutlak hata **158.078639 $/oz**. Model teknik kapı PASS, performans-güçlü değildir.
+
+| Dönem | V2 ΣAE USD/oz | V2 MAPE | V2 yön | Eski V1 karantinada ΣAE | Eski V1 karantinada yön |
+|---|---:|---:|---:|---:|---:|
+| DEV 2022-04…2024-12 (33) | 1725.041072 | 2.533306% | 22/33 | 1619.843858 | 26/33 |
+| TEST 2025 (12) | 1494.294053 | 3.516093% | 6/12 | 1524.566702 | 10/12 |
+| STRESS 2026-01…2026-09 (9) | 2950.466377 | 7.085761% | 5/9 | 3499.376675 | 3/9 |
+
+**Yön uzmanlığı kararı:** Yeni geçerli SMA-ELMFIS V2 2026'da yalnız 5/9 yön; FULL7 8/9. SMA V2 fiyat/ yön ana fiyat modeline **PROMOTE edilmedi**; eski V1 geliştirme 26/33 yön puanı kusurlu iç doğrulama nedeniyle clean ranking'e katılmamalıdır. Kapanış sonucu **10 model ailesi işlem olarak tamamlandı; 2 ayrı düzeltmeli V2**. Tüm modellerin DEV puanı ve bilimsel geçerliliği ayrı listelenmelidir; 2025/2026 retuning seçiminde kullanılmaz, firstprint/PIT altın fiyat sürümleri halen doğrulanmamıştır. Live deployment otomatik yapılmadı.
