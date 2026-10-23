@@ -1,0 +1,142 @@
+name: GOLD H1 Frozen RBF DAILY12 Original Model 54 Replay
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-rbf-daily12-frozen-replay-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  audit:
+    name: Freeze correct RBF Daily12 and active 54-origin label leakage test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install original family transitive Python dependencies
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'psycopg[binary]' 'scikit-learn' xgboost lightgbm catboost
+      - name: Run 54-origin hard no-leak audit incl target price and 2099 fake data
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo NO_DB_SECRET && exit 1)
+          python gold_axis_2026/tools/gold_monthly_h1_rbf_daily12_original_replay_v1.py \
+            --mode audit --output /tmp/rbf-daily12-audit.json
+      - name: Require correct frozen identity and 54 target-origin gates
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/rbf-daily12-audit.json'))
+          assert a['status']=='54_OF_54_ORIGIN_CHRONOLOGY_AND_ACTIVE_POISON_PASS'
+          assert a['source_contract']=='NEON_STAKTRAKR_GPR_V2'
+          assert a['algorithm']['model']=='EPSILON_RBF_DAILY12'
+          assert a['algorithm']['representation']=='DAILY_SUMMARY12'
+          assert a['algorithm']['first_effective_training_target']=='2010-05'
+          assert a['algorithm']['model_parameters']=={'kernel':'rbf','C':1.0,'epsilon':0.1,'gamma':'scale','shrinking':True,'tol':0.001}
+          assert a['database_writes']=='NONE'
+          assert len(a['audited'])==54
+          assert all(x['target_future_poison_invariance_pass'] and x['feature_dim']==12
+                     and x['train_first']=='2010-05' and x['train_last']==x['origin']
+                     for x in a['audited'])
+          assert a['audited'][0]['training_rows']==143
+          assert a['audited'][-1]['training_rows']==196
+          print('RBF_DAILY12_ORIGINAL_54_ORIGIN_ACTIVE_LEAK_AUDIT_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-rbf-daily12-frozen-preflight-54
+          path: /tmp/rbf-daily12-audit.json
+          retention-days: 90
+  pilot:
+    name: Original frozen RBF Daily12 April 2022 single-month pilot
+    needs: audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'psycopg[binary]' 'scikit-learn' xgboost lightgbm catboost
+      - name: Run old code unchanged on new source after passed leakage checks
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          python gold_axis_2026/tools/gold_monthly_h1_rbf_daily12_original_replay_v1.py \
+            --mode pilot --output /tmp/rbf-daily12-pilot.json
+      - name: Pilot hard acceptance
+        run: |
+          python - <<'PY'
+          import json,math
+          a=json.load(open('/tmp/rbf-daily12-pilot.json'))
+          assert a['status']=='PILOT_ORIGINAL_FROZEN_SVR_PASS'
+          assert len(a['rows'])==1
+          r=a['rows'][0]
+          assert r['target']=='2022-04' and r['origin']=='2022-03'
+          assert r['train_first']=='2010-05' and r['train_rows']==143
+          assert r['train_last']=='2022-03'
+          assert math.isfinite(r['forecast']) and r['forecast']>0
+          assert a['algorithm']['original_implementation_modified'] is False
+          print('RBF_DAILY12_FROZEN_PILOT_SUCCESS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-rbf-daily12-frozen-pilot
+          path: /tmp/rbf-daily12-pilot.json
+          retention-days: 90
+  full:
+    name: Frozen 54 monthly RBF Daily12 controlled replay
+    needs: pilot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'psycopg[binary]' 'scikit-learn' xgboost lightgbm catboost
+      - name: Original 12-feature epsilon-RBF-SVR; 33 DEV + 12 TEST + 9 STRESS
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          python gold_axis_2026/tools/gold_monthly_h1_rbf_daily12_original_replay_v1.py \
+            --mode full --output /tmp/rbf-daily12-full-54.json
+      - name: Insist complete historic coverage and never redefine model
+        run: |
+          python - <<'PY'
+          import json,math
+          a=json.load(open('/tmp/rbf-daily12-full-54.json'))
+          assert a['status']=='FULL_54_OF_54_ORIGINAL_FROZEN_SVR_PASS'
+          assert a['algorithm']['original_implementation_modified'] is False
+          assert a['algorithm']['representation']=='DAILY_SUMMARY12'
+          assert a['source_firstprint_certified'] is False
+          assert len(a['rows'])==54
+          assert len(set(r['target'] for r in a['rows']))==54
+          assert a['rows'][0]['target']=='2022-04'
+          assert a['rows'][-1]['target']=='2026-09'
+          assert all(r['train_first']=='2010-05' and r['train_last']==r['origin']
+                     and r['representation']=='DAILY_SUMMARY12'
+                     and math.isfinite(r['forecast']) and r['forecast']>0
+                     for r in a['rows'])
+          for p,n in [('DEV_2022_2024',33),('TEST_2025',12),('STRESS_2026_01_09',9)]:
+            m=a['metrics'][p]
+            assert m['n']==n and math.isfinite(m['sum_abs_error']) and math.isfinite(m['mape_pct'])
+            print('RBF_DAILY12_COMPLETE_FINAL_RESULT',p,'n=',n,
+                  'sumAE=',format(m['sum_abs_error'],'.8f'),
+                  'MAPE=',format(m['mape_pct'],'.8f'),
+                  'direction=',str(m['direction_correct'])+'/'+str(n))
+          print('RBF_DAILY12_FROZEN_54_OF_54_FINAL_SCIENTIFIC_GATE_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-rbf-daily12-frozen-54-v1
+          path: /tmp/rbf-daily12-full-54.json
+          retention-days: 90
