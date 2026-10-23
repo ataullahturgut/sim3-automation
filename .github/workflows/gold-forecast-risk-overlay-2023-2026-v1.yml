@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/gold-forecast-risk-overlay-2023-2026-v1.yml
       - gold_axis_2026/tools/gold_forecast_risk_overlay_2023_2026_v1.py
+      - gold_axis_2026/tools/gold_forecast_risk_warning_adapter_v1.py
   workflow_dispatch:
 permissions:
   contents: read
@@ -90,8 +91,15 @@ jobs:
           assert all(x['horizon5_last']!='2026-02-27' for x in p['rows'])
           print('GOLD_FORECAST_RISK_OVERLAY_SOURCE_TIME_AND_BASEMODEL_GATES_PASS',len(p['rows']))
           PY
+      - name: Apply risk warnings to illustrative daily weekly monthly forecasts (no price override)
+        run: |
+          python gold_axis_2026/tools/gold_forecast_risk_warning_adapter_v1.py \
+            --risk-json /tmp/risk-overlay-2023-2026-full.json \
+            --out /tmp/risk-forecast-horizon-annotations.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-risk-overlay-2025-2026-daily-flags-and-metrics
-          path: /tmp/risk-overlay-2023-2026-full.json
+          path: |
+            /tmp/risk-overlay-2023-2026-full.json
+            /tmp/risk-forecast-horizon-annotations.json
           retention-days: 90
