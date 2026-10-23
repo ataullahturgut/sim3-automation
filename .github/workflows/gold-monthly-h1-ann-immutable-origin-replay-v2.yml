@@ -1,0 +1,163 @@
+name: GOLD H1 ANN Full7 Reduced4 Immutable Origin Replay V2
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-ann-immutable-origin-replay-v2.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    name: Lock canonical source and origin-only feature chronology
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.4,<2' 'scipy>=1.12,<2'
+      - name: Freeze all 54 origin-specific training matrices once, target Y null
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/gold_monthly_h1_ann_frozen_snapshot_replay_v2.py \
+            --mode snapshot --output /tmp/h1-ann-single-source-snapshot.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          path: /tmp/h1-ann-single-source-snapshot.json
+          retention-days: 90
+  models:
+    name: Frozen original ANN component / ${{ matrix.component }}
+    needs: snapshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      max-parallel: 7
+      matrix:
+        component: [VANILLA, MPA, SCA, DE_ABC, ADAPTIVE_TLBO, TLBO_TUNED_PSO, MPA_SCA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.4,<2' 'scipy>=1.12,<2'
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          path: /tmp/model-input
+      - name: Exact original ANN optimizer, common immutable source, no db calls
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_ann_frozen_snapshot_replay_v2.py \
+            --mode component --component ${{ matrix.component }} \
+            --snapshot /tmp/model-input/h1-ann-single-source-snapshot.json \
+            --output /tmp/h1-ann-54-predictions.json
+      - name: Validate all 54 periods and untouched original algorithm
+        env:
+          COMP: ${{ matrix.component }}
+        run: |
+          python - <<'PY'
+          import json,os
+          o=json.load(open('/tmp/h1-ann-54-predictions.json'))
+          assert o['status']=='FROZEN_COMPONENT_54_PASS'
+          assert o['component']==os.environ['COMP']
+          assert o['original_model_code_changed'] is False
+          assert o['database_access']=='NONE'
+          assert len(o['rows'])==54
+          assert len(set(r['target_month'] for r in o['rows']))==54
+          assert o['rows'][0]['target_month']=='2022-04'
+          assert o['rows'][-1]['target_month']=='2026-09'
+          assert all(r['target_label_visible'] is False and
+                     r['source_mutation_detected'] is False and
+                     r['snapshot_sha256']==o['snapshot_sha256']
+                     for r in o['rows'])
+          print('ANN_IMMUTABLE_REPLAY_54_PASS',os.environ['COMP'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h1-ann-v2-full-${{ matrix.component }}
+          path: /tmp/h1-ann-54-predictions.json
+          retention-days: 90
+  aggregate:
+    name: Frozen FULL7 and REDUCED4 scientifically controlled comparison
+    needs: models
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: h1-ann-v2-full-*
+          path: /tmp/ann-seven
+      - name: Same 54 month input fingerprint, original equal weight price averaging
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files=sorted(Path('/tmp/ann-seven').glob('*/h1-ann-54-predictions.json'))
+          assert len(files)==7, f'Got {len(files)} of seven expected independent frozen components'
+          C=['VANILLA','MPA','SCA','DE_ABC','ADAPTIVE_TLBO','TLBO_TUNED_PSO','MPA_SCA']
+          reports=[json.loads(p.read_text()) for p in files]
+          model={r['component']:r['rows'] for r in reports}
+          assert set(model)==set(C)
+          source_hashes={r['snapshot_sha256'] for r in reports}
+          assert len(source_hashes)==1
+          common_sha=source_hashes.pop()
+          out={'status':'VALIDATED_FROZEN_FULL7_REDUCED4_54_RESEARCH_ONLY',
+               'source_contract':'NEON_STAKTRAKR_GPR_V2',
+               'source_firstprint_certified':False,
+               'snapshot_sha256':common_sha,
+               'target_y_leakage':'DISALLOWED_AND_VALIDATED',
+               'weighting':'EXACT_ARITHMETIC_EQUAL_PRICE_WEIGHTS',
+               'models':{}}
+          for name,comp in [('FULL7_ANN',C),('REDUCED4_ANN',C[:4])]:
+              rows=[]
+              for i in range(54):
+                  rr=[model[c][i] for c in comp]
+                  for x in rr:
+                      for k in ('target_month','origin_gold_average','actual_xau_average',
+                                'snapshot_sha256','model_input_sha256',
+                                'origin_feature_sha256','gpr_source_commit_sha',
+                                'training_rows','training_first','training_last'):
+                          assert x[k]==rr[0][k], f'FROZEN_COMPONENT_SOURCE_MISMATCH {name} {i} {k}'
+                      assert x['target_label_visible'] is False
+                      assert x['source_mutation_detected'] is False
+                  pred=sum(r['forecast_xau_average'] for r in rr)/len(rr)
+                  obs=rr[0]['actual_xau_average']
+                  prev=rr[0]['origin_gold_average']
+                  rows.append({'target_month':rr[0]['target_month'],'model':name,
+                    'forecast_xau_average':pred,'actual_xau_average':obs,
+                    'origin_gold_average':prev,'absolute_error':abs(pred-obs),
+                    'absolute_percentage_error':100*abs(pred-obs)/obs,
+                    'direction_correct':(pred>prev)==(obs>prev),
+                    'model_input_sha256':rr[0]['model_input_sha256']})
+              assert len(rows)==54
+              metrics={}
+              for phase,part in [('DEV_2022_2024',rows[:33]),
+                                 ('TEST_2025',rows[33:45]),
+                                 ('STRESS_2026_01_09',rows[45:])]:
+                  n=len(part)
+                  m={'n':n,'sum_ae_usd':sum(z['absolute_error'] for z in part),
+                      'mape_pct':sum(z['absolute_percentage_error'] for z in part)/n,
+                      'directions_correct':sum(z['direction_correct'] for z in part)}
+                  metrics[phase]=m
+                  print('FROZEN_ANN_MODEL_RESULT',name,phase,json.dumps(m,sort_keys=True))
+              out['models'][name]={'components':comp,'rows':rows,'metrics':metrics}
+          Path('/tmp/h1-ann-frozen-full7-reduced4-54-v2.json').write_text(
+              json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print('FROZEN_ANN_BOTH_ENSEMBLES_54_VALIDATED',common_sha)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h1-ann-full7-reduced4-frozen-54-v2
+          path: /tmp/h1-ann-frozen-full7-reduced4-54-v2.json
+          retention-days: 90
