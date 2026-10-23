@@ -182,24 +182,53 @@ def weighted_daily_return(bundle, metal, origin_month, z):
     return float(w @ r)
 
 
-def sample_for_target(bundle, target, gpr_history, lag_gpr):
-    p, pp = month_shift(target, -1), month_shift(target, -2); z = gpr_norm(gpr_history, pp if lag_gpr else p)
-    x, y = [], []
+def feature_for_target(bundle, target, gpr_history, lag_gpr):
+    """Build origin-known X only. Never read the target month's price/label."""
+    p, pp = month_shift(target, -1), month_shift(target, -2)
+    z = gpr_norm(gpr_history, pp if lag_gpr else p)
+    x = []
     for metal in METALS:
         M = bundle.monthly_metal[metal]
-        if target not in M or p not in M or pp not in M: raise RuntimeError(f"MONTHLY_METAL_MISSING {metal} {target}")
+        if p not in M or pp not in M:
+            raise RuntimeError(f"ORIGIN_FEATURE_MONTH_MISSING {metal} target={target} origin={p} prior={pp}")
         x.extend((math.log(M[p] / M[pp]), weighted_daily_return(bundle, metal, p, z)))
+    return np.array(x, float)
+
+
+def label_for_target(bundle, target):
+    """Historical Y only. This is forbidden for the month being forecast."""
+    p = month_shift(target, -1)
+    y = []
+    for metal in METALS:
+        M = bundle.monthly_metal[metal]
+        if target not in M or p not in M:
+            raise RuntimeError(f"TRAINING_LABEL_MONTH_MISSING {metal} target={target} origin={p}")
         y.append(math.log(M[target] / M[p]))
-    return np.array(x, float), np.array(y, float)
+    return np.array(y, float)
+
+
+def sample_for_target(bundle, target, gpr_history, lag_gpr):
+    """Backward-compatible *labelled historical* row for completed months."""
+    return feature_for_target(bundle, target, gpr_history, lag_gpr), label_for_target(bundle, target)
 
 
 def all_samples_at_origin(bundle, outer_target, governed):
-    origin = month_shift(outer_target, -1); history = bundle.gpr_vintages[origin] if governed else bundle.core_gpr; lag = governed
+    """Train with completed labelled months; forecast outer_target with X alone.
+
+    The upcoming month's realized metal prices must be entirely absent and
+    cannot influence the training matrix, validation or the forecast X.
+    This fixes label dependence, not separate historical source-PIT/anchor issues.
+    """
+    origin = month_shift(outer_target, -1)
+    history = bundle.gpr_vintages[origin] if governed else bundle.core_gpr
     out = {}
-    for t in month_range("2010-03", outer_target):
-        try: out[t] = sample_for_target(bundle, t, history, lag)
-        except RuntimeError: continue
-    if outer_target not in out: raise RuntimeError(f"OUTER_TARGET_NOT_BUILDABLE {outer_target} governed={governed}")
+    for t in month_range("2010-03", origin):
+        try:
+            out[t] = sample_for_target(bundle, t, history, governed)
+        except RuntimeError:
+            continue
+    # Never call label_for_target for the month we are forecasting.
+    out[outer_target] = (feature_for_target(bundle, outer_target, history, governed), None)
     return out
 
 
