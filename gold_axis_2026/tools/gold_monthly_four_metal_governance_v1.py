@@ -186,6 +186,38 @@ def build_governed_panel(rows: list[dict]) -> dict:
         "clean_four_metal_rows":clean,
     }
 
+def require_research_eligible_month(month: str, ledger: dict) -> dict:
+    """Fail closed for source-homogeneous *research* input months.
+
+    Passing this check DOES NOT certify first-publication timestamps. A
+    production-as-of model MUST separately demand verified firstprint evidence.
+    """
+    records=ledger.get("month_audit") or {
+        item["ym"]:item for item in ledger.get("monthly",[])
+    }
+    row=records.get(month)
+    if row is None:
+        raise RuntimeError(f"RESEARCH_MONTH_NOT_IN_GOVERNED_LEDGER {month}")
+    state=row.get("status",row.get("decision"))
+    if state not in (
+        "RESEARCH_ELIGIBLE_NOT_LIVE_PIT",
+        "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT",
+    ):
+        raise RuntimeError(f"RESEARCH_MONTH_QUARANTINED {month} {state}")
+    if row.get("invalid_values",0):
+        raise RuntimeError(f"RESEARCH_MONTH_BAD_VALUES {month}")
+    return row
+
+
+def require_real_time_firstprint(month: str, ledger: dict) -> None:
+    """Explicitly prevent upgrading a research-only reconstruction to live."""
+    require_research_eligible_month(month,ledger)
+    raise RuntimeError(
+        f"ORIGINAL_FIRSTPRINT_NOT_ESTABLISHED {month}: "
+        "research source dates are not publication timestamps"
+    )
+
+
 def inspect_historical_gpr(vintage_months: list[str], start="2010-01",
                            last="2026-07") -> dict:
     """Enumerate which months have GPR vintage proof.
