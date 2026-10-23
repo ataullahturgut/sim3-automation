@@ -4,6 +4,7 @@ on:
     branches: [gold-midas-headswap-v1-20260925]
     paths:
       - .github/workflows/gold-monthly-h1-rbf-daily12-frozen-replay-v1.yml
+      - gold_axis_2026/tools/gold_monthly_h1_rbf_daily12_original_replay_v1.py
   workflow_dispatch:
 permissions:
   contents: read
