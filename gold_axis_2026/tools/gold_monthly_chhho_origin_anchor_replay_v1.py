@@ -97,7 +97,7 @@ def run(snapshot_file: str) -> dict:
         if samples[target][1] is not None:
             raise RuntimeError("TARGET_LABEL_SHOULD_BE_ABSENT")
         prediction, training_rows, diag = chhho.select(samples,target,"CHHHO")
-        pred_return = float(pred[0])
+        pred_return = float(prediction[0])
         original = float(bundle.core_gold[origin])
         provisional = prefix_origin_price(dated,origin,strict=True)
         full = prefix_origin_price(dated,origin,strict=False)
