@@ -32,6 +32,15 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual(r["august_september"]["2026-09"]["complete_weekdays"],22)
         self.assertFalse(r["result_guard"]["auto_model_promotion"])
 
+    def test_recovered_panel_is_research_only_and_dated_october(self):
+        panel=bridge.candidate_four_metal_business_panel(self.new)
+        self.assertEqual(panel["n_business_days"],43)
+        self.assertEqual(panel["n_metal_prices"],172)
+        self.assertEqual(panel["source_commit_date"],"2026-10-17")
+        self.assertFalse(panel["first_publication_timestamp_verified"])
+        self.assertFalse(panel["auto_model_promotion"])
+        self.assertEqual(panel["business_rows"][0]["day"],"2026-08-03")
+
     def test_old_price_revisions_not_silently_discarded(self):
         changed=dict(self.new)
         z=changed[("2026-08-02","Gold")]
