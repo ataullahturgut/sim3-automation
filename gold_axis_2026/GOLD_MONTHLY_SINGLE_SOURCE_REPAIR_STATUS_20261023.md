@@ -25,3 +25,11 @@ Tek kaynak 2010–2026/10 tarih aralığının **tüm dört metali** için aynı
 - Eski DB kayıtları önce güvenli yedeklenir, fiyat farkları ve kimlikli kaynak kayıtları karşılaştırılır, ayrı **versioned canonical** seriye aktarılır; bozuk kaynak satırları geriye dönük gerçek veri diye değiştirilmez.
 - Tüm tahmin modellerinde girdi ve fiyat hedefi yeni seriyle yeniden kurulup 2010–2024 DEV, 2025 test, 2026 stress ayrı ayrı yeniden yürütülür.
 - **Bu rapor sonuç: MODEL_VERI_KARISIMI_DURDURULDU / GERCEK_TEK_KAYNAK_2010_2026_BACKFILL_TAMAMLANMADI.**
+
+## 23.10.2026 uygulanan Neon kaynak süzgeci (gerçek DB)
+- `public.gold_monthly_four_metals_single_source_research_v1` adlı **salt-okunur görünüm** oluşturuldu. Şeması `data_pipeline/schema_gold_monthly_single_source_research_view_v1.sql` dosyasındadır.
+- Neon sorgusunda doğrulandı: **16.244 satır, 4.061 dört-metal ortak gün, 193 ay, dört seri, tek arşiv soyu, tek kaynak etiketi**; aralık 2010-01-04..2026-01-30.
+- 16.918 ham satırdan **674'ü** bu seçim dışında kalır: kaynağı karışmış 2026-02..07 fiyatları ile 2021-12-24'ün tam eşleşmeyen iki metal satırı. Bu sayı **674 yanlış fiyatın varlığı kanıtlandı** demek değildir; veri sözleşmesine göre **kullanılamayan 674 satır** demektir.
+- Görünüm oluşturma kalıcı veri mutasyonu değildir: eski gözlemler veya değerleri **değiştirilmedi**, `public.observations` kayıtları silinmedi.
+- GitHub tek-kaynak CI: 14 yönetişim + 6 model-yükleme **20/20 test** PASS, `39935256256` koşusu: https://github.com/ataullahturgut/sim3-automation/actions/runs/39935256256
+- Tam 2010–2026 günlük fiyatların tek bir doğrulanmış sağlayıcıdan **indirildiği veya Neon'da yanlış fiyatların değiştirildiği iddia edilmemektedir**. Bu tamamlanmamış esas iş için tarihsel kaynak erişimi gerekir.
