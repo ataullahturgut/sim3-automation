@@ -155,6 +155,15 @@ def build_governed_panel(rows: list[dict]) -> dict:
         all_months[m]=out
         (accepted if eligible else quarantined).append(m)
     clean=[r for r in aligned if r["month"] in accepted]
+    # Report *absent entire calendar months* separately; never add synthetic
+    # zero rows or mark a missing month as an observed/quarantined one.
+    expected_months=[]
+    y,mo=map(int,MODEL_MONTHS_START.split("-"))
+    ey,em=map(int,MODEL_MONTHS_END.split("-"))
+    while (y,mo)<=(ey,em):
+        expected_months.append(f"{y:04d}-{mo:02d}")
+        y,mo=(y+1,1) if mo==12 else (y,mo+1)
+    missing_expected=[m for m in expected_months if m not in months]
     # The common-date 2010-2025 source replay is not equivalent to the
     # original GPR true-time vintage/official WB final monthly average.
     return {
@@ -171,6 +180,8 @@ def build_governed_panel(rows: list[dict]) -> dict:
         "count_common_business_dates":len(aligned),
         "count_accepted_business_dates":len(clean),
         "accepted_months":accepted,"quarantined_months":quarantined,
+        "expected_calendar_months":len(expected_months),
+        "missing_expected_months":missing_expected,
         "month_audit":all_months,
         "clean_four_metal_rows":clean,
     }
