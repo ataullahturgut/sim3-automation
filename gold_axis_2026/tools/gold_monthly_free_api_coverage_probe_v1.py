@@ -82,8 +82,14 @@ def check_daily_window(payload, first: str, last: str):
             daily.add(day)
     # A single monthly point must not be promoted to a five-day daily series.
     eligible = grain.lower() in ("daily", "1d", "day") and len(daily) >= 2 and invalid == 0
+    response_dates = sorted({str(row.get("t") or "")[:10]
+                             for row in points if isinstance(row, dict) and row.get("t")})
     return {"eligible": eligible, "grain": grain, "points_in_response": len(points),
             "invalid_points": invalid, "unique_daily_dates": sorted(daily),
+            "first_response_date": response_dates[0] if response_dates else None,
+            "last_response_date": response_dates[-1] if response_dates else None,
+            "response_range": payload.get("range"),
+            "response_granularity": payload.get("resolution"),
             "source": payload.get("source"), "unit": payload.get("unit"),
             "reason": "DAILY_WINDOW_PASS" if eligible else "NOT_VERIFIED_AS_DAILY_4METAL"}
 
