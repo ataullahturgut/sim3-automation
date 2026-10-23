@@ -32,6 +32,27 @@ jobs:
           python -m py_compile gold_axis_2026/tools/gold_monthly_h1_retrain_v2.py
       - name: Unit tests for historical GPR vintages, price parity and no target leakage
         run: python -m unittest discover -v -s gold_axis_2026/tools -p 'test_gold_monthly_h1_neon_source_v2.py'
+      - name: Check live Neon data and exact eight-feature model inputs
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          if [ -z "$NEON_DATABASE_URL" ]; then
+            echo "LIVE_NEON_AUDIT=NOT_RUN_NO_SECRET"
+          else
+            python gold_axis_2026/tools/gold_monthly_h1_retrain_v2.py \
+              --mode inputs --targets 2022-04,2025-01,2026-08,2026-09 \
+              --output /tmp/gold_monthly_h1_live_neon_input_check.json
+            python - <<'PY'
+          import json
+          r=json.load(open('/tmp/gold_monthly_h1_live_neon_input_check.json'))
+          assert r['mode']=='inputs' and len(r['rows'])==4
+          assert all(x['feature_count']==8 for x in r['rows'])
+          assert all(x['gpr_origin_vintage_verified'] for x in r['rows'])
+          assert r['source_contract']=='NEON_STAKTRAKR_GPR_V2'
+          assert r['status']=='RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED'
+          print('LIVE_NEON_H1_8_FEATURES=PASS')
+          PY
+          fi
       - name: Ensure new model cannot silently load legacy CORE5 GPR
         run: |
           python - <<'PY'
