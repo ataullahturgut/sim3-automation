@@ -61,3 +61,13 @@ Still need:
 - Model 2025–2026 full optimized retrospective run on a scientifically approved unbroken data source has **NOT** been executed here. Existing results are frozen and not promoted.
 
 **Disposition:** SOURCE_REFRESH_PASS / NEON_SHADOW_244_DAILY_18_MONTHLY_PASS / ORIGINAL_SOURCE_REVISIONS_PRESERVED / MODEL_INTEGRATION_BLOCKED_ON_SOURCE_FIRSTPRINT / NO_CANONICAL_MUTATION.
+
+## Post-ingestion upstream code-level provider semantics — confirmed
+
+The ambiguous `source="sqld"` label has now been traced **to its actual calculation code**, not merely guessed:
+- [StakTrakr `update-spot-bundle.py`, query / lines 228–270](https://github.com/lbruton/StakTrakr/blob/02964d0324dde362099976c867f5077a369acaa5/.agents/skills/update-spot-bundle/update-spot-bundle.py#L228-L270): selects `AVG(spot)` grouped by **UTC DATE(timestamp_floor),metal**, rounding to 2 decimals for price >=1 (4 decimals for smaller metals); writes `source="sqld"` and `timestamp=YYYY-MM-DD 12:00:00`. The latter is **an artificial daily row timestamp, not a noon quotation or published-firstprint at 12:00**. It intentionally selects only complete UTC days before the start of today.
+- [StakTrakr `spot-extract.js`, lines 103–150](https://github.com/lbruton/StakTrakr/blob/02964d0324dde362099976c867f5077a369acaa5/devops/pollers/shared/spot-extract.js#L103-L150): poller obtains spot rates via `https://api.metalpriceapi.com/v1/latest` (USD base) and writes derived four metal rates to their `sqld` store. This establishes the **usual upstream collection pipeline** but not per-record firstprint/providercode/vintage provenance from the stored aggregate.
+- The old `source=seed, provider=LBMA` rows and the 2026 `source=sqld` `AVG(spot)` daily rows **do not represent an identical daily fixing methodology**. Existing 2010–2025 history was not deleted or replaced; the 2026 Aug/Sep rows stay isolated. Passing an end-of-day average off as an at-noon known quote would create **lookahead**.
+- Because daily `sqld` mean for date D is compiled **only after D's UTC day has completed**, the last D calendar-day aggregate cannot be automatically assumed available at 23:59 UTC on D. This has to enter the precise origin decision-time contract, not inferred from the fake 12:00 observation label.
+
+This source-code tracing is the key final quality result: *same StakTrakr repo* is maintained, but different original market measurement channels require separate market method semantics before any full ChHHO model training promotion.
