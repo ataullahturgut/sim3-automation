@@ -1,0 +1,3332 @@
+{
+  "schema": "GOLD_MONTHLY_FOUR_METAL_NEON_DATA_AUDIT_V1",
+  "audited_at": "2026-10-23",
+  "data_evidence": "READ_ONLY_NEON_SOURCE_METADATA_HISTORICAL_RECONSTRUCTION",
+  "source_notes": {
+    "provider_label_is_not_official_LBMA_firstprint": true,
+    "no_missing_value_imputation": true,
+    "research_source_ingestion": "2026-09-05",
+    "canonical_prices_remain_unchanged": true,
+    "gpr_archives_are_historical_git_commit_vintages_not_original_captured_sessions": true
+  },
+  "summary": {
+    "months_expected": 201,
+    "historical_labelled_eligible": 193,
+    "quarantined": [
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ],
+    "missing_all_metals": [
+      "2026-08",
+      "2026-09"
+    ],
+    "partial_metal_date": [
+      {
+        "ym": "2021-12",
+        "date": "2021-12-24"
+      }
+    ],
+    "gpr_vintage_first": "2022-03",
+    "gpr_vintage_last": "2026-08",
+    "gpr_vintage_count": 54,
+    "gpr_before_march_2022_monthly_original_vintages_available": false
+  },
+  "monthly": [
+    {
+      "ym": "2010-01",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-03",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-05",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-07",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-08",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-10",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2010-12",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-01",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-03",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-04",
+      "n": "72",
+      "common_days": "18",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-05",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-07",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-08",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-10",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2011-12",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-01",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-02",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-03",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-04",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-05",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-06",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-07",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-08",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-09",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-10",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2012-12",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-01",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-03",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-04",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-05",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-06",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-07",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-08",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-09",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-10",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-11",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2013-12",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-01",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-03",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-05",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-06",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-07",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-08",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-10",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-11",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2014-12",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-01",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-03",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-05",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-07",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-08",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-10",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-11",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2015-12",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-01",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-02",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-03",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-04",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-05",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-07",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-08",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-10",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2016-12",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-01",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-03",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-04",
+      "n": "72",
+      "common_days": "18",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-05",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-07",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-08",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-09",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-10",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2017-12",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-01",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-03",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-05",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-06",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-07",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-08",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-09",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-10",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2018-12",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-01",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-03",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-05",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-06",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-07",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-08",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-09",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-10",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-11",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2019-12",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-01",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-03",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-05",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-07",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-08",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-10",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-11",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2020-12",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-01",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-03",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-05",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-07",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-08",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-10",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2021-12",
+      "n": "82",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [
+        "2021-12-24"
+      ],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-01",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-03",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-04",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-05",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-06",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-07",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-08",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-09",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-10",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2022-12",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-01",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-03",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-04",
+      "n": "72",
+      "common_days": "18",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-05",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-06",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-07",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-08",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-09",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-10",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-11",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2023-12",
+      "n": "76",
+      "common_days": "19",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-01",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-02",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-03",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-04",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-05",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-06",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-07",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-08",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-09",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-10",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-11",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2024-12",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-01",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-02",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-03",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-04",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-05",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-06",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-07",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-08",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-09",
+      "n": "88",
+      "common_days": "22",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-10",
+      "n": "92",
+      "common_days": "23",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-11",
+      "n": "80",
+      "common_days": "20",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2025-12",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2026-01",
+      "n": "84",
+      "common_days": "21",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT"
+    },
+    {
+      "ym": "2026-02",
+      "n": "92",
+      "common_days": "19",
+      "weekend_days": "4",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "LBMA",
+        "MetalPriceAPI",
+        "StakTrakr"
+      ],
+      "payloads": [
+        "seed"
+      ],
+      "status": "QUARANTINE_MIXED_OR_WEEKEND"
+    },
+    {
+      "ym": "2026-03",
+      "n": "92",
+      "common_days": "17",
+      "weekend_days": "6",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "MetalPriceAPI",
+        "UNKNOWN"
+      ],
+      "payloads": [
+        "seed",
+        "sqld"
+      ],
+      "status": "QUARANTINE_MIXED_OR_WEEKEND"
+    },
+    {
+      "ym": "2026-04",
+      "n": "120",
+      "common_days": "22",
+      "weekend_days": "8",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "UNKNOWN"
+      ],
+      "payloads": [
+        "sqld"
+      ],
+      "status": "QUARANTINE_MIXED_OR_WEEKEND"
+    },
+    {
+      "ym": "2026-05",
+      "n": "124",
+      "common_days": "21",
+      "weekend_days": "10",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "UNKNOWN"
+      ],
+      "payloads": [
+        "sqld"
+      ],
+      "status": "QUARANTINE_MIXED_OR_WEEKEND"
+    },
+    {
+      "ym": "2026-06",
+      "n": "120",
+      "common_days": "22",
+      "weekend_days": "8",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "UNKNOWN"
+      ],
+      "payloads": [
+        "sqld"
+      ],
+      "status": "QUARANTINE_MIXED_OR_WEEKEND"
+    },
+    {
+      "ym": "2026-07",
+      "n": "124",
+      "common_days": "23",
+      "weekend_days": "8",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [
+        "UNKNOWN"
+      ],
+      "payloads": [
+        "sqld"
+      ],
+      "status": "QUARANTINE_MIXED_OR_WEEKEND"
+    },
+    {
+      "ym": "2026-08",
+      "n": "0",
+      "common_days": "0",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [],
+      "payloads": [],
+      "status": "NO_SOURCE_DATA"
+    },
+    {
+      "ym": "2026-09",
+      "n": "0",
+      "common_days": "0",
+      "weekend_days": "0",
+      "partial_dates": [],
+      "invalid_values": "0",
+      "providers": [],
+      "payloads": [],
+      "status": "NO_SOURCE_DATA"
+    }
+  ],
+  "gpr_vintages": [
+    {
+      "vintage": "2022-03",
+      "n": "446",
+      "available_as_of": "2022-03-01 16:50:19+00"
+    },
+    {
+      "vintage": "2022-04",
+      "n": "447",
+      "available_as_of": "2022-04-01 15:34:49+00"
+    },
+    {
+      "vintage": "2022-05",
+      "n": "448",
+      "available_as_of": "2022-05-02 15:23:56+00"
+    },
+    {
+      "vintage": "2022-06",
+      "n": "449",
+      "available_as_of": "2022-06-01 19:20:02+00"
+    },
+    {
+      "vintage": "2022-07",
+      "n": "450",
+      "available_as_of": "2022-07-05 16:00:36+00"
+    },
+    {
+      "vintage": "2022-08",
+      "n": "451",
+      "available_as_of": "2022-08-01 18:19:48+00"
+    },
+    {
+      "vintage": "2022-09",
+      "n": "452",
+      "available_as_of": "2022-09-01 15:29:30+00"
+    },
+    {
+      "vintage": "2022-10",
+      "n": "453",
+      "available_as_of": "2022-10-03 18:54:11+00"
+    },
+    {
+      "vintage": "2022-11",
+      "n": "454",
+      "available_as_of": "2022-11-01 19:25:30+00"
+    },
+    {
+      "vintage": "2022-12",
+      "n": "455",
+      "available_as_of": "2022-12-01 16:25:55+00"
+    },
+    {
+      "vintage": "2023-01",
+      "n": "456",
+      "available_as_of": "2023-01-03 00:51:32+00"
+    },
+    {
+      "vintage": "2023-02",
+      "n": "457",
+      "available_as_of": "2023-02-01 16:59:38+00"
+    },
+    {
+      "vintage": "2023-03",
+      "n": "458",
+      "available_as_of": "2023-03-01 15:46:18+00"
+    },
+    {
+      "vintage": "2023-04",
+      "n": "459",
+      "available_as_of": "2023-04-03 14:32:36+00"
+    },
+    {
+      "vintage": "2023-05",
+      "n": "460",
+      "available_as_of": "2023-05-01 19:48:23+00"
+    },
+    {
+      "vintage": "2023-06",
+      "n": "461",
+      "available_as_of": "2023-06-02 18:08:55+00"
+    },
+    {
+      "vintage": "2023-07",
+      "n": "462",
+      "available_as_of": "2023-07-03 16:43:50+00"
+    },
+    {
+      "vintage": "2023-08",
+      "n": "463",
+      "available_as_of": "2023-08-01 20:22:31+00"
+    },
+    {
+      "vintage": "2023-09",
+      "n": "464",
+      "available_as_of": "2023-09-05 20:58:24+00"
+    },
+    {
+      "vintage": "2023-10",
+      "n": "465",
+      "available_as_of": "2023-10-02 21:23:29+00"
+    },
+    {
+      "vintage": "2023-11",
+      "n": "466",
+      "available_as_of": "2023-11-02 01:48:48+00"
+    },
+    {
+      "vintage": "2023-12",
+      "n": "467",
+      "available_as_of": "2023-12-01 22:38:04+00"
+    },
+    {
+      "vintage": "2024-01",
+      "n": "468",
+      "available_as_of": "2024-01-04 22:56:31+00"
+    },
+    {
+      "vintage": "2024-02",
+      "n": "469",
+      "available_as_of": "2024-02-02 22:30:31+00"
+    },
+    {
+      "vintage": "2024-03",
+      "n": "470",
+      "available_as_of": "2024-03-01 22:27:32+00"
+    },
+    {
+      "vintage": "2024-04",
+      "n": "471",
+      "available_as_of": "2024-04-01 17:48:50+00"
+    },
+    {
+      "vintage": "2024-05",
+      "n": "472",
+      "available_as_of": "2024-05-06 20:07:46+00"
+    },
+    {
+      "vintage": "2024-06",
+      "n": "473",
+      "available_as_of": "2024-06-03 19:15:46+00"
+    },
+    {
+      "vintage": "2024-07",
+      "n": "474",
+      "available_as_of": "2024-07-01 19:55:02+00"
+    },
+    {
+      "vintage": "2024-08",
+      "n": "475",
+      "available_as_of": "2024-08-01 15:21:07+00"
+    },
+    {
+      "vintage": "2024-09",
+      "n": "476",
+      "available_as_of": "2024-09-03 20:42:20+00"
+    },
+    {
+      "vintage": "2024-10",
+      "n": "477",
+      "available_as_of": "2024-10-01 18:37:29+00"
+    },
+    {
+      "vintage": "2024-11",
+      "n": "478",
+      "available_as_of": "2024-11-01 20:31:09+00"
+    },
+    {
+      "vintage": "2024-12",
+      "n": "479",
+      "available_as_of": "2024-12-02 16:24:20+00"
+    },
+    {
+      "vintage": "2025-01",
+      "n": "480",
+      "available_as_of": "2025-01-03 22:07:24+00"
+    },
+    {
+      "vintage": "2025-02",
+      "n": "481",
+      "available_as_of": "2025-02-03 16:10:18+00"
+    },
+    {
+      "vintage": "2025-03",
+      "n": "482",
+      "available_as_of": "2025-03-03 16:14:59+00"
+    },
+    {
+      "vintage": "2025-04",
+      "n": "483",
+      "available_as_of": "2025-04-01 19:52:07+00"
+    },
+    {
+      "vintage": "2025-05",
+      "n": "484",
+      "available_as_of": "2025-05-01 17:34:31+00"
+    },
+    {
+      "vintage": "2025-06",
+      "n": "485",
+      "available_as_of": "2025-06-02 20:12:20+00"
+    },
+    {
+      "vintage": "2025-07",
+      "n": "486",
+      "available_as_of": "2025-07-01 13:58:58+00"
+    },
+    {
+      "vintage": "2025-08",
+      "n": "487",
+      "available_as_of": "2025-08-01 14:24:30+00"
+    },
+    {
+      "vintage": "2025-09",
+      "n": "488",
+      "available_as_of": "2025-09-02 14:08:15+00"
+    },
+    {
+      "vintage": "2025-10",
+      "n": "489",
+      "available_as_of": "2025-10-01 13:45:09+00"
+    },
+    {
+      "vintage": "2025-11",
+      "n": "490",
+      "available_as_of": "2025-11-03 15:29:56+00"
+    },
+    {
+      "vintage": "2025-12",
+      "n": "491",
+      "available_as_of": "2025-12-01 19:43:52+00"
+    },
+    {
+      "vintage": "2026-01",
+      "n": "492",
+      "available_as_of": "2026-01-03 01:26:43+00"
+    },
+    {
+      "vintage": "2026-02",
+      "n": "493",
+      "available_as_of": "2026-02-02 14:38:34+00"
+    },
+    {
+      "vintage": "2026-03",
+      "n": "494",
+      "available_as_of": "2026-03-02 15:02:52+00"
+    },
+    {
+      "vintage": "2026-04",
+      "n": "495",
+      "available_as_of": "2026-04-01 16:55:48+00"
+    },
+    {
+      "vintage": "2026-05",
+      "n": "496",
+      "available_as_of": "2026-05-01 14:27:21+00"
+    },
+    {
+      "vintage": "2026-06",
+      "n": "497",
+      "available_as_of": "2026-06-01 15:40:52+00"
+    },
+    {
+      "vintage": "2026-07",
+      "n": "498",
+      "available_as_of": "2026-07-01 17:40:48+00"
+    },
+    {
+      "vintage": "2026-08",
+      "n": "499",
+      "available_as_of": "2026-08-03 14:01:30+00"
+    }
+  ],
+  "remediation_policy": {
+    "historical_four_metal_train": "RESEARCH_ONLY_2010_01_THROUGH_2026_01_CUTOFF, no firstprint assurance",
+    "mixed_provider_months": "QUARANTINE_NOT_ELIGIBLE_FOR_HOMOGENEOUS_CORE_BACKTEST",
+    "missing_four_metals_aug_sep_2026": "NOT_FILLED_NO_INDEPENDENT_SAME_FIXING_PROVENANCE",
+    "december_2021": "DROP_UNPAIRED_DAY_FROM_FOUR_METAL_FEATURE_CALCULATION_ONLY",
+    "gpr_prior_to_2022_03": "LATER_VINTAGE_HISTORICAL_VALUES_ALLOW_PAST_TRAINING_ONLY_NOT_OLD_ORIGIN_PIT"
+  }
+}

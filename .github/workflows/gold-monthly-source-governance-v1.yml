@@ -1,0 +1,64 @@
+name: Gold Monthly Four Metal Provenance and Coverage Gate
+
+on:
+  push:
+    branches: [research-gold-monthly-data-governance-20261023]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_four_metal_governance_v1.py
+      - gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+      - gold_axis_2026/tools/tests/test_monthly_single_provider_loader_v1.py
+      - gold_axis_2026/tools/gold_monthly_governance_dev_snapshot_gate_v1.py
+      - gold_axis_2026/tools/tests/test_monthly_four_metal_governance_v1.py
+      - .github/workflows/gold-monthly-source-governance-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  NEON_DATABASE_URL: ''
+
+jobs:
+  source-gate:
+    name: 2010-2024 source coverage and non-imputation gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numpy and psycopg for locked snapshot reader
+        run: python -m pip install 'numpy==2.3.5' 'psycopg[binary]>=3.2,<4'
+      - name: Assert no database connection
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download immutable authorized DEV dataset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > frozen-source.zip
+          unzip -q frozen-source.zip -d frozen_source
+          test -s frozen_source/gold_monthly_dev_snapshot_v1.json
+      - name: Compile source code
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_four_metal_governance_v1.py
+          python -m py_compile gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+          python -m py_compile gold_axis_2026/tools/tests/test_monthly_single_provider_loader_v1.py
+          python -m py_compile gold_axis_2026/tools/gold_monthly_governance_dev_snapshot_gate_v1.py
+          python -m py_compile gold_axis_2026/tools/tests/test_monthly_four_metal_governance_v1.py
+      - name: Verify synthetic regression cases
+        run: |
+          python -m unittest discover -s gold_axis_2026/tools/tests -p 'test_monthly_four_metal_governance_v1.py' -v
+          python -m unittest discover -s gold_axis_2026/tools/tests -p 'test_monthly_single_provider_loader_v1.py' -v
+      - name: Validate immutable 2010-2024 research panel
+        run: |
+          python gold_axis_2026/tools/gold_monthly_governance_dev_snapshot_gate_v1.py \
+            --snapshot frozen_source/gold_monthly_dev_snapshot_v1.json \
+            --output GOLD_MONTHLY_DEV_2010_2024_GOVERNED_SOURCE_GATE_V1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monthly-four-metal-governance-dev-${{ github.sha }}
+          path: GOLD_MONTHLY_DEV_2010_2024_GOVERNED_SOURCE_GATE_V1.json
+          if-no-files-found: error
+          retention-days: 90

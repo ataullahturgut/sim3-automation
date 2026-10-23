@@ -13,6 +13,10 @@ from pathlib import Path
 
 import numpy as np
 import psycopg
+try:
+    from .gold_monthly_four_metal_governance_v1 import build_governed_panel
+except ImportError:  # Direct script execution: its own directory is on sys.path.
+    from gold_monthly_four_metal_governance_v1 import build_governed_panel
 
 MODEL_ID = "VW_MIDAS_MSVR_SUCCESSOR_V1"
 PIPELINE_VERSION = "GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_2026-09-06"
@@ -128,23 +132,71 @@ def authority_invariants(cur):
     return out
 
 
+def select_single_source_metal_prices(provider_rows: list[dict]):
+    """One research-only, provider-consistent daily source for all four metals.
+
+    Reject whole months with mixed/unknown providers or weekend observations.
+    Never impute; derive gold targets and all other metal features from the
+    *same* matched business dates and provider-labelled source family.
+    """
+    approved_lineages = {
+        str(row.get("provenance") or "UNKNOWN")
+        for row in provider_rows
+        if row.get("provider_label") == "LBMA"
+        and row.get("payload_source_label") == "seed"
+    }
+    if not approved_lineages:
+        raise RuntimeError("NO_FOUR_METAL_SINGLE_PROVIDER_RESEARCH_MONTHS")
+    if len(approved_lineages) != 1:
+        raise RuntimeError(
+            "MULTIPLE_OR_MISSING_APPROVED_METAL_ARCHIVE_LINEAGES "
+            + str(sorted(approved_lineages))
+        )
+    panel = build_governed_panel(provider_rows)
+    if not panel["clean_four_metal_rows"]:
+        raise RuntimeError("NO_FOUR_METAL_SINGLE_PROVIDER_RESEARCH_MONTHS")
+    daily = {m: defaultdict(list) for m in METALS}
+    for row in panel["clean_four_metal_rows"]:
+        for metal in METALS:
+            daily[metal][row["month"]].append(row["prices"][metal])
+    daily = {m: {k: np.asarray(v, float) for k, v in months.items()}
+             for m, months in daily.items()}
+    monthly = {m: {k: float(v.mean()) for k, v in daily[m].items()} for m in METALS}
+    return daily, monthly, panel
+
+
 def load_data(dsn: str) -> DataBundle:
     with psycopg.connect(dsn, autocommit=True) as conn:
         with conn.cursor() as cur:
             cur.execute("SET default_transaction_read_only=on")
             invariants = authority_invariants(cur)
             core_gold, core_gpr = fetch_scalar_map(cur, CORE_GOLD), fetch_scalar_map(cur, CORE_GPR)
-            raw = {m: {} for m in METALS}
+            # Choose exactly ONE immutable historical research source family.
+            # The StakTrakr bundle is an aggregator; its LBMA label is NOT a
+            # certified original LBMA fixing, licence, or firstprint timestamp.
+            provider_rows = []
             for metal, sid in DAILY_SERIES.items():
-                cur.execute("SELECT observation_ts,value FROM observations WHERE series_id=%s ORDER BY observation_ts", (sid,))
-                for ts, value in cur.fetchall(): raw[metal][ts.date()] = float(value)
-            common_dates = sorted(set.intersection(*(set(raw[m]) for m in METALS)))
-            daily_month_values = {m: defaultdict(list) for m in METALS}
-            for d in common_dates:
-                mk = f"{d.year:04d}-{d.month:02d}"
-                for m in METALS: daily_month_values[m][mk].append(raw[m][d])
-            daily_month_values = {m: {k: np.asarray(v, float) for k, v in vv.items()} for m, vv in daily_month_values.items()}
-            monthly_metal = {m: {k: float(v.mean()) for k, v in daily_month_values[m].items()} for m in METALS}
+                cur.execute(
+                    "SELECT observation_ts,value,source,"
+                    "metadata->>'payload_provider_label',"
+                    "metadata->>'payload_source_label' "
+                    "FROM observations WHERE series_id=%s ORDER BY observation_ts",
+                    (sid,),
+                )
+                for ts, value, source, provider, payload in cur.fetchall():
+                    provider_rows.append({
+                        "day": ts.date().isoformat(), "metal": metal,
+                        "value": float(value), "provider_label": provider,
+                        "payload_source_label": payload, "provenance": source,
+                        "firstprint_proven": False,
+                    })
+            daily_month_values, monthly_metal, panel = select_single_source_metal_prices(provider_rows)
+            # Historical target price and four model metal inputs MUST share
+            # the identical day-aligned provider family. CORE5 gold remains
+            # an independently readable reference, never our active target.
+            core_gold_reference = core_gold
+            core_gold = dict(monthly_metal["Gold"])
+            common_dates = panel["count_accepted_business_dates"]
 
             cur.execute("SELECT observation_ts,value,available_as_of,metadata->>'origin_month' FROM observations WHERE series_id=%s ORDER BY metadata->>'origin_month',observation_ts", (GPR_PIT,))
             vintages, availability = defaultdict(dict), {}
@@ -158,8 +210,17 @@ def load_data(dsn: str) -> DataBundle:
             missing_lag = [m for m in required if m in vintages and month_shift(m, -1) not in vintages[m]]
             checks = {
                 "core_gold_rows": len(core_gold), "core_gold_first": min(core_gold), "core_gold_last": max(core_gold),
-                "core_gpr_rows": len(core_gpr), "common_daily_rows": len(common_dates),
-                "common_daily_first": common_dates[0].isoformat(), "common_daily_last": common_dates[-1].isoformat(),
+                "core5_reference_rows_not_used_as_metal_target": len(core_gold_reference),
+                "metal_price_basis": "SINGLE_PROVIDER_LABELLED_STAKTRAKR_SEED_LBMA_RESEARCH_ONLY",
+                "selected_research_archive_lineage": sorted({r["provenance"] for r in provider_rows if r["provider_label"]=="LBMA" and r["payload_source_label"]=="seed"})[0],
+                "historical_firstprint_verified": False,
+                "single_source_accepted_months": panel["accepted_months"],
+                "single_source_excluded_months": panel["quarantined_months"],
+                "single_source_missing_months": panel["missing_expected_months"],
+                "single_source_excluded_records": panel["count_raw_records"] - 4 * panel["count_accepted_business_dates"],
+                "core_gpr_rows": len(core_gpr), "common_daily_rows": common_dates,
+                "common_daily_first": panel["clean_four_metal_rows"][0]["day"],
+                "common_daily_last": panel["clean_four_metal_rows"][-1]["day"],
                 "metal_months": {m: len(monthly_metal[m]) for m in METALS}, "gpr_origin_vintages": len(vintages),
                 "missing_required_gpr_origins": missing, "late_required_gpr_origins": late, "missing_required_gpr_lag_month": missing_lag,
             }
