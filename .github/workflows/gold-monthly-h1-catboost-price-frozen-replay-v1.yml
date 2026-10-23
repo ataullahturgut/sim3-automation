@@ -1,0 +1,152 @@
+name: GOLD H1 Frozen CatBoost PRICE 54-Month Origin-Safe Replay
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-catboost-price-frozen-replay-v1.yml
+      - gold_axis_2026/tools/gold_monthly_h1_catboost_frozen_replay_v1.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  audit:
+    name: 54-month CatBoost frozen identity and target future poisoning
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install original family dependencies pinned for numeric replay
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn' 'psycopg[binary]' 'catboost==1.2.10' xgboost lightgbm
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/canonical-h1-source
+      - name: Compare original CatBoost training inputs after fake target Y and 2099 future records
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_catboost_frozen_replay_v1.py \
+            --mode audit --snapshot /tmp/canonical-h1-source/h1-ann-single-source-snapshot.json \
+            --output /tmp/catboost-54-active-poison-audit.json
+      - name: Validate 54 explicit source and original-code checks
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/catboost-54-active-poison-audit.json'))
+          assert a['status']=='CATBOOST_TARGET_FUTURE_POISON_54_OF_54_PASS'
+          assert a['model']=='CATBOOST_PRICE' and a['database_reads']=='NONE' and a['database_writes']=='NONE'
+          assert a['algorithm']['original_mathematical_model_changed'] is False
+          assert a['algorithm']['feature_representation']=='CURRENT8'
+          assert a['algorithm']['training_start']=='2010-03'
+          assert len(a['rows'])==54
+          assert all(x['target_label_or_future_poison_no_effect'] is True for x in a['rows'])
+          assert all(x['training_first']=='2010-03' and x['training_last']==x['origin_month'] for x in a['rows'])
+          assert len({x['source_snapshot_sha256'] for x in a['rows']})==1
+          print('CATBOOST_PRICE_SCIENTIFIC_AUDIT_AND_54_TARGET_FUTURE_ACTIVE_POISON_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-catboost-price-audit-54
+          path: /tmp/catboost-54-active-poison-audit.json
+          retention-days: 90
+  pilot:
+    name: April 2022 frozen CatBoost PRICE original real-data pilot
+    needs: audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn' 'psycopg[binary]' 'catboost==1.2.10' xgboost lightgbm
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/canonical-h1-source
+      - name: Original CatBoost stage1 predict_one unchanged, 1-month test
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_catboost_frozen_replay_v1.py \
+            --mode pilot --snapshot /tmp/canonical-h1-source/h1-ann-single-source-snapshot.json \
+            --output /tmp/catboost-pilot.json
+      - name: Validate fit and scientific gate
+        run: |
+          python - <<'PY'
+          import json,math
+          a=json.load(open('/tmp/catboost-pilot.json'))
+          assert a['status']=='CATBOOST_FROZEN_PILOT_1_OF_1_PASS'
+          assert len(a['rows'])==1
+          x=a['rows'][0]
+          assert x['target_month']=='2022-04'
+          assert x['training_first']=='2010-03' and x['training_last']=='2022-03' and x['training_rows']==145
+          assert math.isfinite(x['forecast_xau_average'])
+          print('CATBOOST_PRICE_FROZEN_2022_04_PILOT_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-catboost-price-frozen-pilot
+          path: /tmp/catboost-pilot.json
+          retention-days: 90
+  full:
+    name: CatBoost PRICE complete 54-month original algorithm comparison
+    needs: pilot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn' 'psycopg[binary]' 'catboost==1.2.10' xgboost lightgbm
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/canonical-h1-source
+      - name: 33 original monthly DEV, 12 2025 and 9 2026 frozen CatBoost PRICE
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_catboost_frozen_replay_v1.py \
+            --mode full --snapshot /tmp/canonical-h1-source/h1-ann-single-source-snapshot.json \
+            --output /tmp/catboost-full-54.json
+      - name: Validate original eight-feature CATBOOST_PRICE and untouched source
+        run: |
+          python - <<'PY'
+          import json,math
+          a=json.load(open('/tmp/catboost-full-54.json'))
+          assert a['status']=='CATBOOST_PRICE_54_OF_54_RESEARCH_PASS'
+          assert a['model']=='CATBOOST_PRICE' and a['original_algorithm_untouched']
+          assert len(a['rows'])==54
+          assert len({r['target_month'] for r in a['rows']})==54
+          assert a['rows'][0]['target_month']=='2022-04'
+          assert a['rows'][-1]['target_month']=='2026-09'
+          assert all(r['training_first']=='2010-03' and r['training_last']==r['origin_month']
+                     and math.isfinite(r['forecast_xau_average']) and r['forecast_xau_average']>0
+                     for r in a['rows'])
+          assert len({r['source_snapshot_sha256'] for r in a['rows']})==1
+          assert [a['metrics'][k]['n'] for k in ('DEV_2022_2024','TEST_2025','STRESS_2026_01_09')]==[33,12,9]
+          assert a['source_firstprint_certified'] is False
+          for name,v in a['metrics'].items():
+            print('CATBOOST_VERIFIED_RESULT',name,'sumAE',format(v['sum_abs_error'],'.8f'),
+                  'MAPE',format(v['mape_pct'],'.8f'),
+                  'direction',str(v['directions_correct'])+'/'+str(v['n']))
+          print('CATBOOST_PRICE_COMPLETE_54_MONTHS_ALL_GATES_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-catboost-price-frozen-full-54-v1
+          path: /tmp/catboost-full-54.json
+          retention-days: 90
