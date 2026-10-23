@@ -6,6 +6,7 @@ not original month-end first prints. Does not write database or change model reg
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -29,6 +30,8 @@ def source_gate(bundle):
         raise RuntimeError("H1_MODEL_GPR_VINTAGE_NOT_VERIFIED")
     if c.get("gpr_origin_vintages") != 55:
         raise RuntimeError("H1_MODEL_INCOMPLETE_GPR_VINTAGES")
+    if len(c.get("gpr_origin_lineage", {})) != 55:
+        raise RuntimeError("H1_MODEL_MISSING_GPR_COMMIT_AUDIT")
     if bundle.core_gpr:
         raise RuntimeError("H1_MODEL_LEGACY_CORE5_GPR_FORBIDDEN")
     if bundle.core_gold != bundle.monthly_metal["Gold"]:
@@ -54,11 +57,37 @@ def features_for_target(bundle, target):
     return samples
 
 
+
+def input_audit(bundle, target, samples):
+    origin = base.month_shift(target, -1)
+    audit = bundle.source_checks["gpr_origin_lineage"].get(origin)
+    if audit is None:
+        raise RuntimeError("H1_MODEL_MISSING_GPR_ORIGIN_LINEAGE")
+    expected = "gpr_archive_files/data_gpr_export_" + origin.replace("-", "") + ".xls"
+    if audit["official_source_file"] != expected:
+        raise RuntimeError("H1_MODEL_GPR_ORIGIN_COMMIT_MISMATCH")
+    if audit["lag_month"] != base.month_shift(origin, -1):
+        raise RuntimeError("H1_MODEL_GPR_LAG_LINEAGE_MISMATCH")
+    features = samples[target][0]
+    payload = {
+        "target_month": target, "origin_month": origin,
+        "current8_features": [float(x) for x in features],
+        "gpr_commit_sha": audit["official_commit_sha"],
+        "gpr_file": audit["official_source_file"],
+        "gpr_released_at_utc": audit["released_at_utc"],
+        "lagged_gpr_value": audit["lag_value"],
+    }
+    payload["input_sha256"] = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    return payload
+
 def predict_target(bundle, target, model):
     if model not in MODEL_IDS:
         raise RuntimeError("H1_MODEL_UNKNOWN_ESTIMATOR")
     source_gate(bundle)
     samples = features_for_target(bundle, target)
+    provenance = input_audit(bundle, target, samples)
     if model == "CHHHO":
         import vw_midas_anfis_stage3c_literature_v1 as anfis
         prediction, n_train, details = anfis.select(samples, target, "CHHHO")
@@ -84,6 +113,10 @@ def predict_target(bundle, target, model):
         "absolute_percentage_error": 100*abs(projected-realized)/realized,
         "direction_correct": (projected > origin_level) == (realized > origin_level),
         "gpr_source_vintage_origin": origin,
+        "gpr_source_file": provenance["gpr_file"],
+        "gpr_source_commit_sha": provenance["gpr_commit_sha"],
+        "gpr_released_at_utc": provenance["gpr_released_at_utc"],
+        "origin_feature_sha256": provenance["input_sha256"],
         "data_provenance": "OFFICIAL_GPR_PIT_RECONSTRUCTION_AND_STAKTRAKR_RESEARCH_NOT_PRICE_PIT",
         "diagnostics": details,
     }
@@ -104,11 +137,16 @@ def run(dsn, targets, models, mode):
         result = []
         for t in targets:
             samples = features_for_target(bundle, t)
+            provenance = input_audit(bundle, t, samples)
             x, _ = samples[t]
             result.append({
                 "target_month": t, "origin_month": base.month_shift(t, -1),
                 "current8": [float(v) for v in x],
                 "gpr_origin_vintage_verified": True,
+                "gpr_source_file": provenance["gpr_file"],
+                "gpr_source_commit_sha": provenance["gpr_commit_sha"],
+                "gpr_released_at_utc": provenance["gpr_released_at_utc"],
+                "origin_feature_sha256": provenance["input_sha256"],
                 "feature_count": 8,
                 "training_rows": len([z for z in samples if z < t]),
             })
