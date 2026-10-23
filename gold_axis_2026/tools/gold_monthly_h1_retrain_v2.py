@@ -10,6 +10,9 @@ import hashlib
 import json
 import math
 import os
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -181,7 +184,40 @@ def main():
     dsn = os.environ.get("NEON_DATABASE_URL")
     if not dsn:
         raise SystemExit("NEON_DATABASE_URL is required for live Neon input audit/replay")
-    output = run(dsn, args.targets.split(","), models, args.mode)
+    targets = args.targets.split(",")
+    # Original optimizer implementations mutate module-level shared search state
+    # (e.g. ELMFIS PARAM_DIM / objective). NEVER run multiple origins or
+    # model families in the same interpreter; each gets a clean Python process.
+    if args.mode == "replay" and len(targets) * len(models) > 1:
+        results = []
+        with tempfile.TemporaryDirectory(prefix="h1_isolated_replay_") as tmp:
+            for target in targets:
+                for model in models:
+                    child_output = str(Path(tmp) / (model + "_" + target + ".json"))
+                    subprocess.run([
+                        sys.executable, str(Path(__file__).resolve()),
+                        "--mode", "replay", "--models", model, "--targets", target,
+                        "--output", child_output,
+                    ], check=True, env=os.environ.copy())
+                    child = json.loads(Path(child_output).read_text())
+                    if (child.get("status") != "RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED"
+                            or len(child.get("rows", [])) != 1
+                            or child["rows"][0]["model"] != model
+                            or child["rows"][0]["target_month"] != target):
+                        raise RuntimeError("H1_ISOLATED_OPTIMIZER_RESULT_MISMATCH")
+                    results.extend(child["rows"])
+        output = {
+            "status": "RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED",
+            "source_contract": CONTRACT,
+            "target": "NEXT_CALENDAR_MONTH_XAU_USD_ARITHMETIC_MEAN",
+            "no_legacy_core5_price_or_gpr": True, "prices_research_only": True,
+            "gpr_official_origin_vintage": True, "mode": "replay",
+            "optimizer_execution": "ISOLATED_PYTHON_PROCESS_PER_ORIGIN_AND_FAMILY",
+            "models": models, "rows": results,
+            "database_writes": "NONE", "new_models_promoted": False,
+        }
+    else:
+        output = run(dsn, targets, models, args.mode)
     Path(args.output).write_text(json.dumps(output, indent=2, sort_keys=True) + "\n")
     print(json.dumps({"status": output["status"], "mode": output["mode"],
                       "results": len(output["rows"]), "models": output["models"]}))
