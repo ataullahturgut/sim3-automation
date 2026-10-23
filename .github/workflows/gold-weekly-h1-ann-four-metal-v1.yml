@@ -1,0 +1,245 @@
+name: Gold Weekly H1 First ANN Four Metal Scientific Replay
+on:
+  push:
+    branches: [gold-weekly-h1-ann-v1-20261023]
+    paths:
+      - .github/workflows/gold-weekly-h1-ann-four-metal-v1.yml
+      - gold_axis_2026/tools/gold_weekly_h1_ann_4metal_v1.py
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  PYTHONUNBUFFERED: '1'
+jobs:
+  source:
+    name: Retrospective Git pinned daily 4-metal, cross-check monthly, canonical weeks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - name: Create weekly aligned source artifact read-only
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo NEON_SOURCE_MISSING && exit 1)
+          python gold_axis_2026/tools/gold_weekly_h1_ann_4metal_v1.py \
+            --mode snapshot --output /tmp/gold-weekly-h1-four-metals-source-v1.json
+      - name: Mandatory 2010 baseline, 2022..2026 sample and provenance checks
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/gold-weekly-h1-four-metals-source-v1.json'))
+          assert a['source_firstprint_certified'] is False
+          assert a['monthly_source_verified'] is True
+          assert a['price_git_commits']['pre2026']=='ed2e549f82ba0d1cd3ca32842b82d3888d301e01'
+          assert a['price_git_commits']['in2026']=='02964d0324dde362099976c867f5077a369acaa5'
+          assert a['targets'][0]=='2022-04-04'
+          assert a['targets'][-1]<='2026-09-21'
+          assert len(a['targets'])>180
+          assert len(a['week_summaries'])>=800
+          assert all(w['shared_trading_days']>=3 for w in a['week_summaries'])
+          assert len({w['week_monday'] for w in a['week_summaries']})==len(a['week_summaries'])
+          print('WEEKLY_SOURCE_AND_PROVENANCE_ACCEPTED',len(a['week_summaries']),len(a['targets']),a['sha256'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-weekly-h1-4metal-original-git-source-v1
+          path: /tmp/gold-weekly-h1-four-metals-source-v1.json
+          retention-days: 90
+  audit:
+    name: For every target week poison target labels and far future record
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-weekly-h1-4metal-original-git-source-v1
+          path: /tmp/source
+      - name: Run active temporal leak test for all future forecast origins
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_weekly_h1_ann_4metal_v1.py \
+            --mode audit --snapshot /tmp/source/gold-weekly-h1-four-metals-source-v1.json \
+            --output /tmp/gold-weekly-ann-all-origin-audit.json
+      - name: Confirm only past completed weekly observations are ever in fit
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/gold-weekly-ann-all-origin-audit.json'))
+          assert a['status']=='WEEKLY_ALL_TARGETS_ACTIVE_POISON_PASS'
+          assert a['n']>180
+          assert all(r['pass'] and r['training_last']<r['week'] for r in a['rows'])
+          assert a['database_writes']=='NONE'
+          assert a['fit_past_only']
+          print('WEEKLY_ORIGIN_BY_ORIGIN_TARGET_AND_2099_FUTURE_POISON_PASS',a['n'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-weekly-h1-ann-active-origin-leak-audit
+          path: /tmp/gold-weekly-ann-all-origin-audit.json
+          retention-days: 90
+  pilot:
+    name: Original weekly ANN first real test Apr 2022 and target poisoning invariance
+    needs: audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-weekly-h1-4metal-original-git-source-v1
+          path: /tmp/source
+      - name: Week 2022-04-04 single first ANN mean+close prediction
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_weekly_h1_ann_4metal_v1.py \
+            --mode pilot --snapshot /tmp/source/gold-weekly-h1-four-metals-source-v1.json \
+            --output /tmp/gold-weekly-ann-first-pilot.json
+      - name: Assert model actually fitted and numerical target vs previous week
+        run: |
+          python - <<'PY'
+          import json,math
+          a=json.load(open('/tmp/gold-weekly-ann-first-pilot.json'))
+          assert a['status']=='WEEKLY_ANN_SINGLE_WEEK_PILOT_PASS' and a['n']==1
+          z=a['rows'][0]
+          assert z['target_week']=='2022-04-04'
+          assert z['training_last_week']<z['target_week']
+          assert z['feature_dim']==16 and z['training_n']>550
+          assert 0<z['fitted_iterations']<=180
+          assert all(math.isfinite(z[k]) and z[k]>0 for k in ('forecast_mean_xau','forecast_close_xau'))
+          print('WEEKLY_ANN_PILOT_FIRST_WEEK_PASS',z['forecast_mean_xau'],z['actual_mean_xau'],z['mean_ape_pct'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-weekly-h1-ann-first-forecast-pilot
+          path: /tmp/gold-weekly-ann-first-pilot.json
+          retention-days: 90
+  replay:
+    name: Week ANN first-model sequential-origin shard ${{ matrix.shard }}
+    needs: pilot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 70
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        shard: [0,1,2,3,4,5,6,7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-weekly-h1-4metal-original-git-source-v1
+          path: /tmp/source
+      - name: H1 chronological each Monday week four metals - ANN model outputs 2 targets
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_weekly_h1_ann_4metal_v1.py \
+            --mode replay --shard ${{ matrix.shard }} \
+            --snapshot /tmp/source/gold-weekly-h1-four-metals-source-v1.json \
+            --output /tmp/gold-weekly-ann-shard-result.json
+      - name: Each fitted week has only pre-origin training histories
+        run: |
+          python - <<'PY'
+          import json,math
+          a=json.load(open('/tmp/gold-weekly-ann-shard-result.json'))
+          assert a['status']=='WEEKLY_ANN_SHARD_REPLAY_PASS'
+          assert len(a['rows'])>20
+          assert all(r['training_last_week']<r['target_week'] and
+                     r['origin_week']<r['target_week'] and r['feature_dim']==16
+                     and r['forecast_mean_xau']>0 and r['forecast_close_xau']>0
+                     and math.isfinite(r['mean_ape_pct']) for r in a['rows'])
+          assert a['database_writes']=='NONE'
+          print('WEEKLY_ANN_SHARD_ALL_TRAINING_ORIGIN_GATES_PASS',a['shard'],a['n'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-weekly-h1-ann-week-shard-${{ matrix.shard }}
+          path: /tmp/gold-weekly-ann-shard-result.json
+          retention-days: 90
+  final:
+    name: Complete weekly ANN V1 2022 development 2025 test and 2026 stress comparison
+    needs: replay
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gold-weekly-h1-ann-week-shard-*
+          path: /tmp/shards
+      - uses: actions/checkout@v4
+      - name: All weeks rejoined, strict chronology, MLP vs naive mean and close
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          docs=[json.loads(f.read_text()) for f in sorted(Path('/tmp/shards').glob('*/gold-weekly-ann-shard-result.json'))]
+          assert len(docs)==8
+          assert sorted(d['shard'] for d in docs)==list(range(8))
+          assert len(set(d['source_sha256'] for d in docs))==1
+          rows=sorted([r for d in docs for r in d['rows']],key=lambda r:r['target_week'])
+          assert len(rows)==len(set(r['target_week'] for r in rows))
+          assert len(rows)>180
+          assert rows[0]['target_week']=='2022-04-04'
+          assert rows[-1]['target_week']<='2026-09-21'
+          assert all(r['training_last_week']<r['target_week'] and
+                     r['origin_week']<r['target_week'] for r in rows)
+          def m(a):
+            n=len(a)
+            return {'n':n,'mean_MAPE_pct':sum(r['mean_ape_pct'] for r in a)/n,
+              'mean_sum_AE_usd':sum(r['mean_abs_error'] for r in a),
+              'mean_direction_correct':sum(r['mean_direction_correct'] for r in a),
+              'close_MAPE_pct':sum(r['close_ape_pct'] for r in a)/n,
+              'close_sum_AE_usd':sum(r['close_abs_error'] for r in a),
+              'close_direction_correct':sum(r['close_direction_correct'] for r in a),
+              'naive_mean_MAPE_pct':sum(r['baseline_mean_ape_pct'] for r in a)/n,
+              'naive_mean_sum_AE_usd':sum(r['baseline_mean_abs_error'] for r in a),
+              'naive_close_MAPE_pct':sum(r['baseline_close_ape_pct'] for r in a)/n,
+              'naive_close_sum_AE_usd':sum(r['baseline_close_abs_error'] for r in a)}
+          parts={'DEV_2022_APR_2024_DEC':[r for r in rows if r['target_week']<'2025-01-01'],
+                 'TEST_2025':[r for r in rows if '2025-01-01'<=r['target_week']<'2026-01-01'],
+                 'STRESS_2026_JAN_SEP':[r for r in rows if '2026-01-01'<=r['target_week']]}
+          assert all(len(a)>10 for a in parts.values())
+          report={
+              'status':'WEEKLY_H1_FIRST_ANN_FULL_CHRONOLOGICAL_REPLAY_PASS',
+              'model':docs[0]['model'],
+              'source_sha256':docs[0]['source_sha256'],
+              'source_firstprint_certified':False,
+              'model_optimized_on_2025_2026':False,
+              'model_parameters':docs[0]['model_hyperparameters'],
+              'interpretation':'NEW_RESEARCH_WEEKLY_MLP_NOT_MONTHLY_ANN_PARAMETER_TRANSFER',
+              'price_target':'NEXT_ISO_WEEK_MEAN_XAU',
+              'close_target':'NEXT_ISO_WEEK_LAST_COMMON_TRADING_DAY_XAU',
+              'baseline':'PREVIOUS_WEEK_PRICE_LEVEL',
+              'metrics':{p:m(z) for p,z in parts.items()},
+              'all_target_weeks':rows,
+          }
+          for p,v in report['metrics'].items():print('WEEKLY_ANN_FIRST_MODEL_METRICS',p,json.dumps(v,sort_keys=True))
+          Path('/tmp/gold-weekly-ann-first-full-replay.json').write_text(json.dumps(report,indent=2,sort_keys=True,allow_nan=False)+'\n')
+          print('WEEKLY_ANN_FIRST_MODEL_2022_TO_2026_ALL_WEEKS_PASS',len(rows))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-weekly-h1-ann-first-model-complete-2022-2026-v1
+          path: /tmp/gold-weekly-ann-first-full-replay.json
+          retention-days: 90
