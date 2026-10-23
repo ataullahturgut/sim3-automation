@@ -199,7 +199,7 @@ def load_data(dsn: str) -> DataBundle:
                 "single_source_excluded_months": panel["quarantined_months"],
                 "single_source_missing_months": panel["missing_expected_months"],
                 "single_source_excluded_records": panel["count_raw_records"] - 4 * panel["count_accepted_business_dates"],
-                "core_gpr_rows": len(core_gpr), "common_daily_rows": len(common_dates),
+                "core_gpr_rows": len(core_gpr), "common_daily_rows": common_dates,
                 "common_daily_first": panel["clean_four_metal_rows"][0]["day"],
                 "common_daily_last": panel["clean_four_metal_rows"][-1]["day"],
                 "metal_months": {m: len(monthly_metal[m]) for m in METALS}, "gpr_origin_vintages": len(vintages),
