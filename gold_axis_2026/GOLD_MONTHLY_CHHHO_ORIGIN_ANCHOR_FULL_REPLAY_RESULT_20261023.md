@@ -76,3 +76,12 @@ Bu da orijinal (STAK eğitilmiş return × CORE5 origin) ile (STAK target) aras�
 ## Sonuç / sonraki bilimsel karar
 
 **Kod düzeltmesi ve 33 aylık tam optimizer karşılaştırması başarıyla tamamlandı.** Eski referans özdeş yeniden hesaplandı; katı günlük tarih kesitli geçici ortalama teknik olarak çalışıyor ve 33 ayda daha iyi görünen, ancak ekonomik/statistiksel olarak küçük fark üretiyor. Ana modelin doğruluğu bugünkü kanıttan daha güçlü ilan edilmez. Bundan sonra **gerçek as-of yayımlanma zamanlı günlük veri kaynağı** edinilmeli ve onunla 2025/2026'yı da içeren *kronolojik, değiştirilmeyen optimizer* transport testi yapılmalı; production izin/yükseltme ayrıca kararlaştırılmalıdır.
+
+## Sonraki tam 8-girdi zaman-kesiti koşusu — kritik tamamlayıcı sonuç
+
+Bu sayfadaki price-origin çalışmasında **8 model girdisi değiştirilmemişti**. Sonradan tüm dört metalin MR ve VW X özellikleri de son takvim günü dışlanarak **33 ayın her birinde yeniden tam orijinal ChHHO-ANFIS optimizasyonu** çalıştırıldı:
+
+- [Ayrıntılı rapor: GOLD_MONTHLY_CHHHO_STRICT_8_FEATURE_ASOF_STRESS_RESULT_20261023.md](GOLD_MONTHLY_CHHHO_STRICT_8_FEATURE_ASOF_STRESS_RESULT_20261023.md)
+- Full strict X+origin CORE5 DEV ΣAE **1855.692973 USD**, direction **21/33**, eski **1413.029779 USD**, **23/33**. **%31.33 daha yüksek toplam hata**.
+- [CI 39911429995](https://github.com/ataullahturgut/sim3-automation/actions/runs/39911429995) = SUCCESS, 33/33 optimizer. Son günün veri yayınlanma saati kanıtlı olmadığından bunu otomatik "geleceği görme" teşhisi diye değil, **tahmin anı bilgi-kesiti duyarlılığı** olarak yorumla.
+
