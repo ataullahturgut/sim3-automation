@@ -1,0 +1,88 @@
+name: GOLD H1 LMC2 Algorithm and Leak Preflight ONLY
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-lmc2-scientific-preflight-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mathematical:
+    name: Existing 40-gradient covariance exactness and label-invariance tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install original GP dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.12,<2' 'scikit-learn>=1.4,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Check original two-kernel covariance, all 40 derivatives, future label poison
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          python gold_axis_2026/tools/test_gpr_lmc_core_v1.py
+      - name: Freeze original implementation and code checks
+        run: |
+          python gold_axis_2026/tools/gold_monthly_h1_lmc2_scientific_preflight_v1.py \
+            --mode static --output /tmp/lmc2-code-audit.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lmc2-original-mathematical-frozen-spec-audit
+          path: /tmp/lmc2-code-audit.json
+          retention-days: 90
+  historical_origin_source:
+    name: V2 data, 2010 history, 54 x origin chronology and target Y poison
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install original GP dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.12,<2' 'scikit-learn>=1.4,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Fail closed if any of 54 target months uses future observations or truncated 2010 history
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo NEON_V2_SOURCE_SECRET_UNAVAILABLE && exit 1)
+          python gold_axis_2026/tools/gold_monthly_h1_lmc2_scientific_preflight_v1.py \
+            --mode source --output /tmp/lmc2-source-audit.json
+      - name: Assert all 54 approved origin months and no model retraining yet
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/lmc2-source-audit.json'))
+          assert d['status']=='MODEL_STATIC_AND_54_ORIGIN_INPUT_LEAK_AUDIT_PASS'
+          assert d['n_checked']==54
+          assert d['all_training_start_in_2010'] is True
+          assert d['all_inner_validation_chronological'] is True
+          assert d['database_writes']=='NONE'
+          assert d['model_forecast_execution']=='NOT_STARTED'
+          assert d['source_contract']=='NEON_STAKTRAKR_GPR_V2'
+          assert all(r['target_label_poison_invariant'] and
+                     r['future_2099_record_invariant'] for r in d['rows'])
+          assert len(d['rows'])==54
+          print('LMC2_REAL_DATA_PRETRAINING_AUDIT_54_OUT_OF_54_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lmc2-54-origin-source-chronology-and-leak-audit
+          path: /tmp/lmc2-source-audit.json
+          retention-days: 90
+  final_gate:
+    name: BLOCK full training unless two independent audits PASS
+    needs: [mathematical, historical_origin_source]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo LMC2_ALGORITHM_PREFLIGHT_ACCEPTED_NO_54_MONTH_TRAINING_PERFORMED
+          echo Authorize separate replay runner only after this result has succeeded.
