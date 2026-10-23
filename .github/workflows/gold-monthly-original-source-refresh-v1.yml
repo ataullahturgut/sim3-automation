@@ -72,6 +72,13 @@ jobs:
             --gpr-oct source_input/data_gpr_export_202610.xls \
             --wb source_input/CMO-Historical-Data-Monthly.xlsx \
             --report report/GOLD_MONTHLY_OFFICIAL_WORKBOOK_STRUCTURE_INSPECTION.json
+      - name: Parse August/September original official GPR and World Bank values
+        run: |
+          python gold_axis_2026/tools/gold_monthly_parse_official_2026_vintages_v1.py \
+            --gpr-sep source_input/data_gpr_export_202609.xls \
+            --gpr-oct source_input/data_gpr_export_202610.xls \
+            --wb source_input/CMO-Historical-Data-Monthly.xlsx \
+            --report report/GOLD_MONTHLY_OFFICIAL_GPR_WB_AUG_SEP_2026_VALUES.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-monthly-original-sources-staging-${{ github.sha }}
@@ -80,5 +87,6 @@ jobs:
             report/GOLD_MONTHLY_AUG_SEP_2026_FOUR_METAL_SHADOW_DATA.json
             report/GOLD_MONTHLY_GPR_WB_ORIGINAL_SOURCE_GATE_V1.json
             report/GOLD_MONTHLY_OFFICIAL_WORKBOOK_STRUCTURE_INSPECTION.json
+            report/GOLD_MONTHLY_OFFICIAL_GPR_WB_AUG_SEP_2026_VALUES.json
           if-no-files-found: error
           retention-days: 90
