@@ -80,6 +80,34 @@ def select(samples,target,method):
     p=(av6.acore.design((txr-xfm)/xfs,c,l)@b)[0]*yfs+yfm
     return p,len(keys),{"selected_repeat":rep,"meta_check_fitness":v,"selected_local_epochs":epochs,"local_check_mse":chk,**ld}
 
+def forecast_at_origin(bundle, target, origin_reference_usd_oz):
+    """Research-only ChHHO price inference without target-month actuals.
+
+    Caller MUST supply an independently as-of-verified origin price level.
+    This function intentionally never falls back to retrospective CORE5/WB
+    final-month values, nor reads the target month gold actual. Live/PIT
+    certification of the supplied origin level remains a separate audit.
+    """
+    origin_level = float(origin_reference_usd_oz)
+    if not (math.isfinite(origin_level) and origin_level > 0):
+        raise ValueError("ASOF_ORIGIN_REFERENCE_MUST_BE_FINITE_POSITIVE")
+    samples = base.all_samples_at_origin(bundle, target, governed=True)
+    p, n, diag = select(samples, target, "CHHHO")
+    return {
+        "target": target,
+        "origin": base.month_shift(target, -1),
+        "model": "CHHHO",
+        "training_rows": n,
+        "pred_log_return_gold": float(p[0]),
+        "origin_reference_usd_oz": origin_level,
+        "forecast_usd_oz": float(origin_level * math.exp(float(p[0]))),
+        "actual_usd_oz": None,
+        "origin_reference_asof_verified": False,
+        "status": "RESEARCH_ONLY_UNCERTIFIED_ORIGIN_PRICE",
+        "diag": diag,
+    }
+
+
 def evaluate(b,cache,method,a,z):
     rows=[]
     for t in base.month_range(a,z):
