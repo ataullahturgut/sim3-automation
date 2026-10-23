@@ -49,11 +49,13 @@ jobs:
           assert all(x['feature_count']==8 for x in r['rows'])
           assert all(x['gpr_origin_vintage_verified'] for x in r['rows'])
           assert r['source_contract']=='NEON_STAKTRAKR_GPR_V2'
+          assert all(len(x['origin_feature_sha256'])==64 for x in r['rows'])
+          assert all(len(x['gpr_source_commit_sha'])==40 for x in r['rows'])
           assert r['status']=='RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED'
           print('LIVE_NEON_H1_8_FEATURES=PASS')
           PY
           fi
-      - name: Actual ChHHO-ANFIS one-origin training and prediction smoke test
+      - name: Actual unchanged ChHHO-ANFIS and DE-ABC-RBFNN two-origin training smoke test
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: |
@@ -61,21 +63,27 @@ jobs:
             echo "ACTUAL_CHHHO_REPLAY=NOT_RUN_NO_SECRET"
           else
             OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python gold_axis_2026/tools/gold_monthly_h1_retrain_v2.py \
-              --mode replay --models CHHHO --targets 2026-08 \
+              --mode replay --models CHHHO,DE_ABC --targets 2026-08,2026-09 \
               --output /tmp/h1_chhho_model_smoke.json
             python - <<'PY'
           import json,math
           r=json.load(open('/tmp/h1_chhho_model_smoke.json'))
-          assert len(r['rows'])==1
-          x=r['rows'][0]
-          assert x['model']=='CHHHO' and x['target_month']=='2026-08'
-          assert x['feature_contract']=='CURRENT8_4x_MR1_VW_GPR_ORIGIN'
-          assert x['training_rows']>=30
-          assert math.isfinite(x['forecast_xau_average'])
+          assert len(r['rows'])==4
+          for x in r['rows']:
+            assert x['model'] in ('CHHHO','DE_ABC')
+            assert x['target_month'] in ('2026-08','2026-09')
+            assert x['feature_contract']=='CURRENT8_4x_MR1_VW_GPR_ORIGIN'
+            assert x['training_rows']>=30
+            assert math.isfinite(x['forecast_xau_average'])
+            assert len(x['origin_feature_sha256'])==64
+            assert len(x['gpr_source_commit_sha'])==40
           assert r['status']=='RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED'
-          print('ACTUAL_CHHHO_REPLAY_PASS',x['target_month'],
-                'forecast=',x['forecast_xau_average'],
-                'absolute_error=',x['absolute_error'])
+          for x in r['rows']:
+            print('REAL_H1_MODEL_REPLAY_PASS',x['model'],x['target_month'],
+                  'forecast=',x['forecast_xau_average'],
+                  'actual=',x['actual_xau_average'],
+                  'absolute_error=',x['absolute_error'],
+                  'input_sha256=',x['origin_feature_sha256'])
           PY
           fi
       - name: Ensure new model cannot silently load legacy CORE5 GPR
