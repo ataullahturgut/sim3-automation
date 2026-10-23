@@ -159,5 +159,26 @@ class TestGoldH1NeonAuthority(unittest.TestCase):
         self.assertNotIn("data_gpr_export_202610", adapter.GPR_HISTORY_SQL)
 
 
+    def test_real_original_vw_midas_builder_is_eight_origin_safe_inputs(self):
+        import vw_midas_msvr_successor_v1 as original
+        daily, monthly, _ = adapter.normalize_daily(self.prices, self.expected)
+        vintages, _ = adapter.validate_gpr(self.audit, self.gpr_rows, self.sep)
+        bundle = original.DataBundle(monthly["Gold"], {}, daily, monthly, vintages, {}, {})
+        x1, y1 = original.sample_for_target(bundle, "2026-09", vintages["2026-08"], True)
+        self.assertEqual(x1.shape, (8,))
+        self.assertEqual(y1.shape, (4,))
+        self.assertTrue(np.isfinite(x1).all())
+        for j, metal in enumerate(original.METALS):
+            check = math.log(monthly[metal]["2026-08"] / monthly[metal]["2026-07"])
+            self.assertAlmostEqual(x1[j * 2], check, places=12)
+        changed = copy.deepcopy(bundle)
+        changed.monthly_metal["Gold"]["2026-09"] *= 2
+        # Target-month actual is LABEL ONLY; modifying it changes y but never x.
+        x2, y2 = original.sample_for_target(changed, "2026-09",
+                                            vintages["2026-08"], True)
+        np.testing.assert_allclose(x1, x2)
+        self.assertNotEqual(float(y1[0]), float(y2[0]))
+
+
 if __name__ == "__main__":
     unittest.main()
