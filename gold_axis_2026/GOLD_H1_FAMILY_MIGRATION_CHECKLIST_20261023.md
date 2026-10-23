@@ -11,8 +11,8 @@
 | 0 | ChHHO-ANFIS | `tools/vw_midas_anfis_stage3c_literature_v1.py` | PASS | 54/54 geçmiş araştırma replays tamam, ayrı kaydedildi |
 | 0 | DE-ABC-RBFNN | `tools/vw_midas_rbfnn_stage1_v1.py` | PASS | 54/54 geçmiş araştırma replays tamam, ayrı kaydedildi |
 | 1 | PLS1 V1 All-4 | `tools/gold_monthly_challenger_b_pls1_v1.py` | 3/3 smoke PASS; 54/54 full PASS | [Actions 39979925070](https://github.com/ataullahturgut/sim3-automation/actions/runs/39979925070); DEV ΣAE 1390.83, 2025 ΣAE 1098.01, 2026 Ocak–Eylül ΣAE 1996.05 |
-| 2 | FULL7 ANN | 7 orijinal ANN bileşeni, `tools/vw_midas_ann_stage4_batch41_v1.py` toplama kuralı | 7/7 SMOKE + 7×54 BİLEŞEN PASS; ENSEMBLE BLOKE | [Actions 39980863604](https://github.com/ataullahturgut/sim3-automation/actions/runs/39980863604): 7 orijinal bileşen 3 ay smoke → 54 ay replay → eşit ağırlık kontrolü |
-| 3 | REDUCED4 ANN | Aynı ANN havuzunun frozen 4 bileşeni | 4/4 SMOKE + 4×54 BİLEŞEN PASS; ENSEMBLE BLOKE | Aynı Actions 39980863604; 4 özgün ANN bileşeninin eşit fiyat ağırlığı ile hesaplanır |
+| 2 | FULL7 ANN | 7 orijinal ANN bileşeni, `tools/vw_midas_ann_stage4_batch41_v1.py` toplama kuralı | **54/54 PASS + 7/7 ACTIVE LEAK TEST PASS** | [Kaynak-snapshot 39986747259](https://github.com/ataullahturgut/sim3-automation/actions/runs/39986747259), [aktif sızıntı testi 39987397390](https://github.com/ataullahturgut/sim3-automation/actions/runs/39987397390); DEV ΣAE 1390.3694, 2025 1036.1148, 2026 1604.0026 ve 8/9 yön |
+| 3 | REDUCED4 ANN | Aynı ANN havuzunun dondurulmuş dört bileşeni | **54/54 PASS + 4/4 ACTIVE LEAK TEST PASS** | Aynı kaynak snapshot ve test; DEV ΣAE 1392.9719, 2025 1034.6766, 2026 1680.6234 ve 8/9 yön |
 | 4 | SMA-ELMFIS (yön uzmanı) | `tools/vw_midas_elmfis_meta_batch_5_v1.py` | BEKLİYOR | 0/54 |
 | 5 | AOA-ELM | `tools/vw_midas_elm_meta_batch_21_25_v1.py` | BEKLİYOR | 0/54 |
 | 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | BEKLİYOR; frozen external-parameter modeli ayrıca korunmalı | 0/54 |
@@ -53,3 +53,19 @@
 - The sole failed job is `Assemble frozen equal-weight FULL7 and REDUCED4` (job 120509681486): assert on monthly per-origin feature SHA identical across 7 component artifacts. This scientific gate was not bypassed.
 - Independent downloaded artifact comparison: VANILLA/SCA/DE_ABC/TLBO_TUNED_PSO/MPA_SCA feature provenance hashes agree for all 54 months. **MPA and ADAPTIVE_TLBO disagree with those five for 51 of the 54 months**; those two mutually agree. Their origin price, target actual and official GPR source commit agree with the five across 54 months. Hash mismatch reason remains **not yet established**. Do not claim exact feature-byte equality, model-pool scientific pass or frozen-ensemble validated success.
 - Resolve provenance discrepancy before final FULL7 and REDUCED4 54-month numeric performance is declared. Existing components remain archived, source database and legacy model code unchanged. **Other families SMA-ELMFIS / AOA-ELM / LMC2 / SVR / CatBoost have NOT been rerun in the new source contract.**
+
+## 23 Ekim 2026 — FINAL FULL7/REDUCED4 kaynak eşliği ve sızıntı kapısı PASS
+
+Eski hata kaydı silinmedi: [39980863604](https://github.com/ataullahturgut/sim3-automation/actions/runs/39980863604) bileşenleri 7×54 PASS, fakat tam seti birleştirirken iki süreç grubu arasında hash uyumsuzluğu nedeniyle son aşama FAIL. Bu kaydın düzeltilmesi için yeni işlem geçerli ve bağımsız bir veri snapshot'ı üretir; orijinal algoritma kodlarına dokunulmadı.
+
+Yeni doğrulanmış işlem: [39986747259](https://github.com/ataullahturgut/sim3-automation/actions/runs/39986747259), **tüm işler SUCCESS**. Veri 54 hedef için tek salt-okunur `NEON_STAKTRAKR_GPR_V2` yüklemesinde oluşturulan sabit girdilerden gelir: snapshot SHA-256 `576efa5033975559e1a963e06a9dc5b2b2b47d87e046390100605bd132f4d15b`. ANN'nin yedi orijinal bileşeninin tamamı ve FULL7/REDUCED4 toplama aşaması **tamamen aynı snapshot_sha256 ve per-origin model_input_sha256** izini doğruladı. Her bileşen 54/54; topluluklar da 54/54 ay.
+
+Bağımsız aktif nedensel sızıntı testi: [39987397390](https://github.com/ataullahturgut/sim3-automation/actions/runs/39987397390), **8/8 GitHub Actions job SUCCESS**. Her yedi bileşenin 2022-04, 2025-01, 2026-09 aylarında hedef ay tüm metal getirileri aşırı sahte değerlere çevrildi ve 2099 ayından uydurma kayıt eklendi. Orijinal algoritma yeniden çağrıldığında dört çıktının tamamı aynı kaldı (maksimum mutlak değişim `<=1e-10`); geçmiş eğitim satırları da değişmedi. Bu **algoritmanın hedef etiket veya ileriki ay örneği sızdırmadığı** mekanik kanıttır. Veri kaynağı yeni StakTrakr retrospektif fiyat snapshot'ları olduğundan **orijinal tahmin anında o fiyat revizyonlarının aynen mevcut olduğu kanıtlanmış değildir**; prospektif PIT veya firstprint iddiası yok.
+
+| Dönem | FULL7 ANN ΣAE USD | FULL7 MAPE | FULL7 doğru yön | REDUCED4 ANN ΣAE USD | REDUCED4 MAPE | REDUCED4 doğru yön |
+|---|---:|---:|---:|---:|---:|---:|
+| DEV 2022-04..2024-12 | 1390.369428 | 2.046950% | 23/33 | 1392.971904 | 2.061535% | 25/33 |
+| TEST 2025-01..2025-12 | 1036.114849 | 2.470360% | 11/12 | 1034.676569 | 2.459699% | 11/12 |
+| STRESS 2026-01..2026-09 | 1604.002602 | 3.989352% | 8/9 | 1680.623431 | 4.163872% | 8/9 |
+
+**2026:** Her iki model de yalnız Eylül ayında yönü kaçırdı; diğer sekiz ayda doğru yön. FULL7 tahminleri 2026 Eylül için 4576.51 USD/oz, gerçek 4327.88; REDUCED4 4577.46 USD/oz. Karşılaştırma ve model seçimi DEV yetkisine bağlı, bu 2026 raporu yeni hiperparametre optimizasyon yetkisi değildir. **Sıradaki model:** LMC2_RBF_M32 GPR/MOGP; ardından RBF-SVR, CatBoost, AOA-ELM, SMA-ELMFIS.
