@@ -42,10 +42,13 @@ jobs:
           python gold_axis_2026/tools/gold_monthly_staktrakr_r2_source_bridge_v1.py \
             --old spot-history-old.json \
             --new spot-history-r2.json \
-            --output GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_SOURCE_BRIDGE_RESULT_20261023.json
+            --output GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_SOURCE_BRIDGE_RESULT_20261023.json \
+            --panel-output GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_FOUR_METAL_RESEARCH_PANEL_V1.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-monthly-staktrakr-r2-four-metal-source-bridge-${{ github.sha }}
-          path: GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_SOURCE_BRIDGE_RESULT_20261023.json
+          path: |
+            GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_SOURCE_BRIDGE_RESULT_20261023.json
+            GOLD_MONTHLY_STAKTRAKR_R2_AUG_SEP_FOUR_METAL_RESEARCH_PANEL_V1.json
           if-no-files-found: error
           retention-days: 90
