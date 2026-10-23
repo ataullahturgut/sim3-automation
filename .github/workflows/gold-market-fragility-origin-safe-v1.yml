@@ -25,29 +25,37 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
-      - name: Download official GVZCLS raw FRED daily close history
+      - name: Download CBOE original history; FRED official only if CBOE unavailable
         run: |
-          curl --http1.1 --retry-all-errors --fail --show-error --location --retry 5 --retry-delay 3 --connect-timeout 20 --max-time 180 \
-            -A 'Mozilla/5.0 (research scientific source audit)' \
-            'https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS' \
-            -o /tmp/gvzcls-raw-fred.csv
-          head -c 130 /tmp/gvzcls-raw-fred.csv; echo
-          sha256sum /tmp/gvzcls-raw-fred.csv
-          test "$(wc -c < /tmp/gvzcls-raw-fred.csv)" -gt 50000
+          if curl --http1.1 --fail --show-error --location --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
+            -A 'Mozilla/5.0' \
+            'https://cdn.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv' \
+            -o /tmp/gvz-official-history.csv; then
+            echo "GVZ_HISTORY_CBOE_PRIMARY"
+          else
+            echo "GVZ_CBOE_UNAVAILABLE_FRED_FALLBACK"
+            curl --http1.1 --retry-all-errors --fail --show-error --location --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
+              -A 'Mozilla/5.0' \
+              'https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS' \
+              -o /tmp/gvz-official-history.csv
+          fi
+          head -c 130 /tmp/gvz-official-history.csv; echo
+          sha256sum /tmp/gvz-official-history.csv
+          test "$(wc -c < /tmp/gvz-official-history.csv)" -gt 50000
       - name: Read-only Neon single-source price parity and Jan29 GVZ official check
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: |
           test -n "$NEON_DATABASE_URL"
           python gold_axis_2026/tools/gold_market_fragility_origin_safe_v1.py \
-            --mode source --gvz_csv /tmp/gvzcls-raw-fred.csv \
+            --mode source --gvz_csv /tmp/gvz-official-history.csv \
             --out /tmp/gold-market-fragility-source.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-market-fragility-official-gvz-canonical-research-source
           path: |
             /tmp/gold-market-fragility-source.json
-            /tmp/gvzcls-raw-fred.csv
+            /tmp/gvz-official-history.csv
           retention-days: 90
   score:
     runs-on: ubuntu-24.04
