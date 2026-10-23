@@ -100,6 +100,39 @@ class SourcePolicy(unittest.TestCase):
         self.assertEqual(panel["accepted_months"],["2023-01","2023-03"])
         self.assertNotIn("2023-02",panel["month_audit"])
 
+    def test_governed_research_month_requires_source_approval(self):
+        panel=gov.build_governed_panel(fake_month(2025,1))
+        self.assertEqual(gov.require_research_eligible_month("2025-01",panel)["month"],
+                         "2025-01")
+        with self.assertRaisesRegex(RuntimeError,"RESEARCH_MONTH_NOT_IN_GOVERNED_LEDGER"):
+            gov.require_research_eligible_month("2026-08",panel)
+        with self.assertRaisesRegex(RuntimeError,"ORIGINAL_FIRSTPRINT_NOT_ESTABLISHED"):
+            gov.require_real_time_firstprint("2025-01",panel)
+
+    def test_quarantined_month_cannot_reach_research_training(self):
+        panel=gov.build_governed_panel(fake_month(2026,3,provider=None,source="sqld"))
+        with self.assertRaisesRegex(RuntimeError,"RESEARCH_MONTH_QUARANTINED"):
+            gov.require_research_eligible_month("2026-03",panel)
+
+    def test_persisted_neon_201_month_ledger_has_correct_quarantine(self):
+        path=Path(__file__).resolve().parents[2] / "data_audits" / "GOLD_MONTHLY_FOUR_METAL_NEON_DATA_AUDIT_20261023.json"
+        ledger=__import__("json").loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(len(ledger["monthly"]),201)
+        self.assertEqual(ledger["summary"]["historical_labelled_eligible"],193)
+        self.assertEqual(ledger["summary"]["quarantined"],
+                         ["2026-02","2026-03","2026-04","2026-05","2026-06","2026-07"])
+        self.assertEqual(ledger["summary"]["missing_all_metals"],["2026-08","2026-09"])
+        self.assertEqual(ledger["summary"]["partial_metal_date"],
+                         [{"ym":"2021-12","date":"2021-12-24"}])
+        self.assertEqual(ledger["summary"]["gpr_vintage_count"],54)
+        self.assertEqual(gov.require_research_eligible_month("2026-01",ledger)["ym"],
+                         "2026-01")
+        for m in ledger["summary"]["quarantined"]+ledger["summary"]["missing_all_metals"]:
+            with self.assertRaisesRegex(RuntimeError,"RESEARCH_MONTH_QUARANTINED|RESEARCH_MONTH_NOT_IN_GOVERNED_LEDGER"):
+                gov.require_research_eligible_month(m,ledger)
+        with self.assertRaisesRegex(RuntimeError,"ORIGINAL_FIRSTPRINT_NOT_ESTABLISHED"):
+            gov.require_real_time_firstprint("2020-08",ledger)
+
     def test_clean_panel_preserves_price_values_and_date_order(self):
         rows=fake_month(2020,1)+fake_month(2020,2)
         panel=gov.build_governed_panel(list(reversed(rows)))
