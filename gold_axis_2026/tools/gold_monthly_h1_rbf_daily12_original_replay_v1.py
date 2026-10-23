@@ -116,7 +116,8 @@ def prediction(b,target):
             "ALGORITHM_WRONG_FROZEN_IDENTITY")
     require(math.isfinite(result["forecast"]) and result["forecast"]>0,
             "ALGORITHM_PATHOLOGICAL_PREDICTION")
-    return {**result,"absolute_percentage_error":100*result["absolute_error"]/result["actual"]}
+    return {**result,"absolute_error":abs(result["forecast"]-result["actual"]),
+            "absolute_percentage_error":100*abs(result["forecast"]-result["actual"])/result["actual"]}
 
 def metrics(rows):
     return {"n":len(rows),
