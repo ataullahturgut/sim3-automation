@@ -10,7 +10,7 @@
 |---|---|---|---|---|
 | 0 | ChHHO-ANFIS | `tools/vw_midas_anfis_stage3c_literature_v1.py` | PASS | 54/54 geçmiş araştırma replays tamam, ayrı kaydedildi |
 | 0 | DE-ABC-RBFNN | `tools/vw_midas_rbfnn_stage1_v1.py` | PASS | 54/54 geçmiş araştırma replays tamam, ayrı kaydedildi |
-| 1 | PLS1 V1 All-4 | `tools/gold_monthly_challenger_b_pls1_v1.py` | 3 hedef smoke PASS | Sıradaki 54 hedef koşusu GitHub Actions 39979925070 |
+| 1 | PLS1 V1 All-4 | `tools/gold_monthly_challenger_b_pls1_v1.py` | 3/3 smoke PASS; 54/54 full PASS | [Actions 39979925070](https://github.com/ataullahturgut/sim3-automation/actions/runs/39979925070); DEV ΣAE 1390.83, 2025 ΣAE 1098.01, 2026 Ocak–Eylül ΣAE 1996.05 |
 | 2 | FULL7 ANN | 7 orijinal ANN bileşeni, `tools/vw_midas_ann_stage4_batch41_v1.py` toplama kuralı | BEKLİYOR | 0/54 yeni kaynak koşusu |
 | 3 | REDUCED4 ANN | Aynı ANN havuzunun frozen 4 bileşeni | BEKLİYOR | 0/54 |
 | 4 | SMA-ELMFIS (yön uzmanı) | `tools/vw_midas_elmfis_meta_batch_5_v1.py` | BEKLİYOR | 0/54 |
@@ -35,5 +35,5 @@
 
 - PLS1 kaynak dosyası zaten bu dalda mevcut; yeniden kopyalanmadı.
 - `tools/gold_monthly_h1_family_replay_pls1_v1.py` özgün PLS1 `forecast_one` fonksiyonunu değiştirmeden çağıran kontrol katmanı oluşturuldu.
-- `.github/workflows/gold-monthly-h1-family-migration-pls1-v1.yml`: 3 hedef smoke → 54 hedef sıralı koşu. Her ikisi aynı veriyi kullanıyor.
+- `.github/workflows/gold-monthly-h1-family-migration-pls1-v1.yml`: 3 hedef smoke → 54 hedef sıralı koşu. Her ikisi de SUCCESS ve aynı NEON V2 verisini kullanıyor.
 - Kanıt: [GitHub Actions PLS1](https://github.com/ataullahturgut/sim3-automation/actions/runs/39979925070); orijinal ANFIS/RBFNN 54x2 [kanıtı](https://github.com/ataullahturgut/sim3-automation/actions/runs/39969094669).
