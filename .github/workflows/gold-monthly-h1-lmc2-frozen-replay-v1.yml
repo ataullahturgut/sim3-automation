@@ -1,0 +1,132 @@
+name: GOLD H1 LMC2 Frozen Pilot then 54 Monthly Replay
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-lmc2-frozen-replay-v1.yml
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  pilot:
+    name: LMC2 exact frozen solver one-month real-data fit gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned original LMC2 dependencies
+        run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'psycopg[binary]' 'scikit-learn'
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/h1-governed-data
+      - name: Run unchanged 3-restart 40-dim optimizer + exact GP on 2022-04
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/test_gpr_lmc_core_v1.py
+          python gold_axis_2026/tools/gold_monthly_h1_lmc2_frozen_replay_v1.py \
+            --mode pilot \
+            --snapshot /tmp/h1-governed-data/h1-ann-single-source-snapshot.json \
+            --output /tmp/lmc2-pilot.json
+      - name: Prove pilot forecast, no target Y, frozen algorithm hashes
+        run: |
+          python - <<'PY'
+          import json,math
+          d=json.load(open('/tmp/lmc2-pilot.json'))
+          assert d['status']=='PILOT_1_OF_1_PASS'
+          assert d['method']=='LMC2_RBF_M32'
+          assert len(d['rows'])==1
+          assert d['rows'][0]['target_month']=='2022-04'
+          assert d['rows'][0]['training_first']=='2010-03'
+          assert d['rows'][0]['training_last']=='2022-03'
+          assert d['rows'][0]['model_selection_role']=='DEV_ORIGIN_SELECTION'
+          assert math.isfinite(d['rows'][0]['forecast'])
+          assert d['rows'][0]['condition_upper_bound']<=1e12
+          assert d['contract']['original_component_modified'] is False
+          assert d['contract']['database_writes']=='NONE'
+          print('LMC2_LIVE_ORIGINAL_FROZEN_ALGORITHM_2022_APRIL_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h1-lmc2-gated-pilot-v1
+          path: /tmp/lmc2-pilot.json
+          if-no-files-found: warn
+          retention-days: 90
+  full_replay:
+    name: LMC2 frozen full 54-month controlled historical replay
+    needs: pilot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 210
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'psycopg[binary]' 'scikit-learn'
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/h1-governed-data
+      - name: 33 frozen per-origin DEV tunes and single 2025 external freeze, 21 retrospective external forecasts
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_lmc2_frozen_replay_v1.py \
+            --mode full \
+            --snapshot /tmp/h1-governed-data/h1-ann-single-source-snapshot.json \
+            --output /tmp/lmc2-full-54.json
+      - name: Recheck frozen scientific constraints for EVERY month
+        run: |
+          python - <<'PY'
+          import json,math
+          d=json.load(open('/tmp/lmc2-full-54.json'))
+          assert d['status']=='FULL_54_OF_54_PASS'
+          assert d['method']=='LMC2_RBF_M32'
+          assert d['contract']['original_component_modified'] is False
+          assert d['contract']['database_writes']=='NONE'
+          assert d['contract']['source_firstprint_certified'] is False
+          assert len(d['rows'])==54
+          assert len({r['target_month'] for r in d['rows']})==54
+          assert d['rows'][0]['target_month']=='2022-04'
+          assert d['rows'][-1]['target_month']=='2026-09'
+          assert len({r['source_snapshot_sha256'] for r in d['rows']})==1
+          assert all(r['training_first']=='2010-03' and
+                     r['training_last']==r['origin_month'] and
+                     r['condition_upper_bound']<=1e12
+                     for r in d['rows'])
+          assert all(r['model_selection_role']=='DEV_ORIGIN_SELECTION' for r in d['rows'][:33])
+          assert all(r['model_selection_role']=='EXTERNAL_2025_2026_FIXED_PARAMETERS' for r in d['rows'][33:])
+          assert d['external_freeze']['tuning_last']=='2024-12'
+          assert len({r['diagnostic_theta_sha256'] for r in d['rows'][33:]})==1
+          assert len({r['frozen_selection_until'] for r in d['rows'][33:]})==1
+          assert [d['metrics'][k]['n'] for k in ('DEV_2022_2024','TEST_2025','STRESS_2026_01_09')]==[33,12,9]
+          for k,val in d['metrics'].items():
+            assert math.isfinite(val['sum_abs_error']) and math.isfinite(val['mape_pct'])
+            print('LMC2_FROZEN_RESULT',k,'sumAE=',format(val['sum_abs_error'],'.8f'),
+                  'MAPE=',format(val['mape_pct'],'.8f'),
+                  'direction=',str(val['correct_directions'])+'/'+str(val['n']))
+          print('LMC2_ALL_54_SCIENTIFIC_GATES_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h1-lmc2-frozen-realdata-full-54-v1
+          path: /tmp/lmc2-full-54.json
+          if-no-files-found: warn
+          retention-days: 90
