@@ -129,6 +129,14 @@ def authority_invariants(cur):
 
 
 def load_data(dsn: str) -> DataBundle:
+    # Opt-in, fail-closed new source mode. Existing frozen legacy experiments
+    # remain reproducible when this explicit environment value is absent.
+    mode = os.environ.get("GOLD_MONTHLY_H1_DATA_CONTRACT", "FROZEN_LEGACY")
+    if mode == "NEON_STAKTRAKR_GPR_V2":
+        from gold_monthly_h1_neon_source_v2 import load_data_neon_h1
+        return load_data_neon_h1(dsn)
+    if mode != "FROZEN_LEGACY":
+        raise RuntimeError("UNKNOWN_GOLD_MONTHLY_H1_DATA_CONTRACT")
     with psycopg.connect(dsn, autocommit=True) as conn:
         with conn.cursor() as cur:
             cur.execute("SET default_transaction_read_only=on")
