@@ -145,6 +145,8 @@ def select_single_source_metal_prices(provider_rows: list[dict]):
         if row.get("provider_label") == "LBMA"
         and row.get("payload_source_label") == "seed"
     }
+    if not approved_lineages:
+        raise RuntimeError("NO_FOUR_METAL_SINGLE_PROVIDER_RESEARCH_MONTHS")
     if len(approved_lineages) != 1:
         raise RuntimeError(
             "MULTIPLE_OR_MISSING_APPROVED_METAL_ARCHIVE_LINEAGES "
