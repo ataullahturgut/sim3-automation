@@ -204,7 +204,7 @@ def require_research_eligible_month(month: str, ledger: dict) -> dict:
         "RESEARCH_ELIGIBLE_NOT_ORIGINAL_PIT",
     ):
         raise RuntimeError(f"RESEARCH_MONTH_QUARANTINED {month} {state}")
-    if row.get("invalid_values",0):
+    if int(row.get("invalid_values",0)):
         raise RuntimeError(f"RESEARCH_MONTH_BAD_VALUES {month}")
     return row
 
