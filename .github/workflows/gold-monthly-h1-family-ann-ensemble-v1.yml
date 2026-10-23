@@ -1,0 +1,168 @@
+name: GOLD H1 Frozen ANN FULL7 REDUCED4 Migration
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-family-ann-ensemble-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    name: ANN component scientific gate / ${{ matrix.component }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        component: [VANILLA, MPA, SCA, DE_ABC, ADAPTIVE_TLBO, TLBO_TUNED_PSO, MPA_SCA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.4,<2' 'scipy>=1.12,<2'
+      - name: Compare original/current8 features, verify missing outer labels, run frozen original ANN solver
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo NO_NEON_SECRET && exit 1)
+          python gold_axis_2026/tools/gold_monthly_h1_family_replay_ann_component_v1.py \
+            --component ${{ matrix.component }} \
+            --targets 2022-04,2025-01,2026-09 \
+            --output /tmp/smoke.json
+      - name: Require complete scientific gate for each component
+        env:
+          COMPONENT: ${{ matrix.component }}
+        run: |
+          python - <<'PY'
+          import json,os,math
+          a=json.load(open('/tmp/smoke.json'))
+          assert a['component']==os.environ['COMPONENT']
+          assert a['status']=='FROZEN_COMPONENT_REPLAY_PASS'
+          assert a['source_contract']=='NEON_STAKTRAKR_GPR_V2'
+          assert a['original_algorithm_changes']=='NONE'
+          assert a['database_writes']=='NONE'
+          assert [r['target_month'] for r in a['rows']]==['2022-04','2025-01','2026-09']
+          assert all(r['target_label_seen_by_learner'] is False for r in a['rows'])
+          assert all(len(r['origin_feature_sha256'])==64 for r in a['rows'])
+          assert all(math.isfinite(r['forecast_xau_average']) for r in a['rows'])
+          print('ANN_COMPONENT_ORIGINAL_SMOKE_PASS',os.environ['COMPONENT'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h1-ann-smoke-${{ matrix.component }}
+          path: /tmp/smoke.json
+          retention-days: 90
+  full:
+    name: ANN component 54-month replay / ${{ matrix.component }}
+    needs: smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        component: [VANILLA, MPA, SCA, DE_ABC, ADAPTIVE_TLBO, TLBO_TUNED_PSO, MPA_SCA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.4,<2' 'scipy>=1.12,<2'
+      - name: Compute all 54 months, preserving each component's original tuning
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/gold_monthly_h1_family_replay_ann_component_v1.py \
+            --component ${{ matrix.component }} \
+            --targets 2022-04,2022-05,2022-06,2022-07,2022-08,2022-09,2022-10,2022-11,2022-12,2023-01,2023-02,2023-03,2023-04,2023-05,2023-06,2023-07,2023-08,2023-09,2023-10,2023-11,2023-12,2024-01,2024-02,2024-03,2024-04,2024-05,2024-06,2024-07,2024-08,2024-09,2024-10,2024-11,2024-12,2025-01,2025-02,2025-03,2025-04,2025-05,2025-06,2025-07,2025-08,2025-09,2025-10,2025-11,2025-12,2026-01,2026-02,2026-03,2026-04,2026-05,2026-06,2026-07,2026-08,2026-09 \
+            --output /tmp/ann-component-full-54.json
+      - name: Hard no-missing-month gate
+        env:
+          COMPONENT: ${{ matrix.component }}
+        run: |
+          python - <<'PY'
+          import json,os
+          a=json.load(open('/tmp/ann-component-full-54.json'))
+          assert a['component']==os.environ['COMPONENT']
+          assert len(a['rows'])==54
+          assert len(set(r['target_month'] for r in a['rows']))==54
+          assert a['rows'][0]['target_month']=='2022-04'
+          assert a['rows'][-1]['target_month']=='2026-09'
+          assert all(r['target_label_seen_by_learner'] is False for r in a['rows'])
+          print('FROZEN_ANN_COMPONENT_54_OF_54_PASS',os.environ['COMPONENT'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h1-ann-full-${{ matrix.component }}
+          path: /tmp/ann-component-full-54.json
+          retention-days: 90
+  ensembles:
+    name: Assemble frozen equal-weight FULL7 and REDUCED4
+    needs: full
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: h1-ann-full-*
+          path: /tmp/ann-seven
+      - name: Enforce identical actuals/origin/features before equal-price averaging
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files=sorted(Path('/tmp/ann-seven').glob('*/ann-component-full-54.json'))
+          assert len(files)==7, f'Expected 7 independent component artifacts: {len(files)}'
+          C=['VANILLA','MPA','SCA','DE_ABC','ADAPTIVE_TLBO','TLBO_TUNED_PSO','MPA_SCA']
+          model={a['component']:a['rows'] for a in (json.loads(x.read_text()) for x in files)}
+          assert set(model)==set(C)
+          out={'status':'FROZEN_FULL7_REDUCED4_RESEARCH_PASS',
+               'source_contract':'NEON_STAKTRAKR_GPR_V2',
+               'source_firstprint_certified':False, 'component_count':7,
+               'original_equal_weight_formula_unchanged':True,'ensembles':{}}
+          for name,comp in [('FULL7_ANN',C),('REDUCED4_ANN',C[:4])]:
+              rows=[]
+              for i in range(54):
+                  rr=[model[c][i] for c in comp]
+                  for x in rr:
+                      assert x['target_month']==rr[0]['target_month']
+                      assert x['origin_feature_sha256']==rr[0]['origin_feature_sha256']
+                      assert x['origin_gold_average']==rr[0]['origin_gold_average']
+                      assert x['actual_xau_average']==rr[0]['actual_xau_average']
+                  pred=sum(r['forecast_xau_average'] for r in rr)/len(rr)
+                  obs=rr[0]['actual_xau_average']
+                  prev=rr[0]['origin_gold_average']
+                  rows.append({'target_month':rr[0]['target_month'],'model':name,
+                               'forecast_xau_average':pred,'actual_xau_average':obs,
+                               'origin_gold_average':prev,'absolute_error':abs(pred-obs),
+                               'absolute_percentage_error':100*abs(pred-obs)/obs,
+                               'direction_correct':(pred>prev)==(obs>prev),
+                               'origin_feature_sha256':rr[0]['origin_feature_sha256']})
+              assert len(rows)==54
+              phases={'DEV_2022_2024':rows[:33],'TEST_2025':rows[33:45],
+                      'STRESS_2026_01_09':rows[45:]}
+              metrics={}
+              for phase,v in phases.items():
+                  n=len(v)
+                  x={'n':n,'sum_ae_usd':sum(z['absolute_error'] for z in v),
+                    'mape_pct':sum(z['absolute_percentage_error'] for z in v)/n,
+                    'directions_correct':sum(z['direction_correct'] for z in v)}
+                  metrics[phase]=x
+                  print('FROZEN_ANN_MODEL_RESULT',name,phase,json.dumps(x,sort_keys=True))
+              out['ensembles'][name]={'components':comp,'rows':rows,'metrics':metrics}
+          Path('/tmp/h1-ann-full7-reduced4-54-comparison.json').write_text(
+              json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print('ANN_TWO_FROZEN_ENSEMBLES_SUCCESS_54_EACH')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h1-ann-full7-reduced4-54-comparison
+          path: /tmp/h1-ann-full7-reduced4-54-comparison.json
+          retention-days: 90
