@@ -119,14 +119,65 @@ def summarize(old: dict,new: dict) -> dict:
     }
     return summary
 
+def candidate_four_metal_business_panel(new: dict) -> dict:
+    """43 common business-day rows, frozen *Oct17 retrieval*, not Sept30 PIT.
+
+    Raw observations originate from retrospectively updated source and their
+    original first publication timestamps/fixing definitions are not proven.
+    """
+    daily=[]
+    for m in ("2026-08","2026-09"):
+        days=sorted({d for d,metal in new if d.startswith(m)})
+        for day in days:
+            if date.fromisoformat(day).isoweekday()>5:
+                continue
+            if any((day,metal) not in new for metal in METALS):
+                raise RuntimeError(f"R2_BUSINESS_DAY_INCOMPLETE {day}")
+            daily.append({
+                "day":day,
+                "month":m,
+                "prices":{metal:new[(day,metal)]["price"] for metal in METALS},
+                "source_provenance":{
+                    metal:{"label":new[(day,metal)]["source"],
+                           "provider":new[(day,metal)]["provider"],
+                           "timestamp_in_source":new[(day,metal)]["source_timestamp"]}
+                    for metal in METALS
+                },
+            })
+    if len(daily)!=43:
+        raise RuntimeError(f"R2_BUSINESS_PANEL_EXPECTED_43_GOT_{len(daily)}")
+    return {
+        "schema":"GOLD_MONTHLY_STAKTRAKR_R2_FOUR_METAL_PROVISIONAL_BUSINESS_V1",
+        "source_repo":"lbruton/StakTrakr",
+        "source_commit":NEW_REF,
+        "source_blob_sha1":NEW_BLOB,
+        "source_commit_date":"2026-10-17",
+        "time_asof_class":"RETROSPECTIVE_OCT17_ARCHIVE_NOT_SEP30_FIRSTPRINT",
+        "price_unit_source_verified":False,
+        "first_publication_timestamp_verified":False,
+        "official_LBMA_fixing_equivalence_verified":False,
+        "compatible_with_original_R1_prices_without_revision_replay":False,
+        "auto_model_promotion":False,
+        "business_rows":daily,
+        "n_business_days":len(daily),
+        "n_metal_prices":len(daily)*len(METALS),
+    }
+
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--old",required=True)
     ap.add_argument("--new",required=True)
     ap.add_argument("--output",required=True)
+    ap.add_argument("--panel-output")
     a=ap.parse_args()
-    out=summarize(load(Path(a.old).read_bytes(),OLD_BLOB),load(Path(a.new).read_bytes(),NEW_BLOB))
-    Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\n",encoding="utf-8")
+    old=load(Path(a.old).read_bytes(),OLD_BLOB)
+    new=load(Path(a.new).read_bytes(),NEW_BLOB)
+    out=summarize(old,new)
+    Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\\n",encoding="utf-8")
+    if a.panel_output:
+        data=candidate_four_metal_business_panel(new)
+        Path(a.panel_output).write_text(json.dumps(data,indent=2,sort_keys=True,allow_nan=False)+"\\n",encoding="utf-8")
     print("STAK_R2_AUG_SEP_SOURCE_RECOVERY_GATE=PASS")
     print(json.dumps({k:v for k,v in out.items() if k in (
         "status","old_new_exact_common_rows","old_new_revised_common_rows",
