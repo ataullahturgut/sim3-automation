@@ -227,8 +227,8 @@ def validate_gpr(audit_rows, history_rows, sep_rows):
 
     for o, (v, _, _, _, _) in audit.items():
         lag = previous(o)
-        require(len(vintages[o]) >= 24, "GPR_TOO_SHORT_" + o)
         require(lag in vintages[o], "GPR_MISSING_REQUIRED_LAG_" + o)
+        require(len(vintages[o]) >= 24, "GPR_TOO_SHORT_" + o)
         require(abs(vintages[o][lag] - v) < 1e-6, "GPR_LAG_VALUE_MISMATCH_" + o)
     return dict(vintages), {"gpr_origin_vintages": len(vintages),
                            "missing_required_gpr_origins": [],
