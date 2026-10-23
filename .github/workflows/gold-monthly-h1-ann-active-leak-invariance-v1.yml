@@ -1,0 +1,78 @@
+name: GOLD H1 ANN Active Label and Future-Leak Invariance Gate
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-ann-active-leak-invariance-v1.yml
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  leak_invariance:
+    name: Target Y and future-row poisoning / ${{ matrix.component }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 7
+      matrix:
+        component: [VANILLA, MPA, SCA, DE_ABC, ADAPTIVE_TLBO, TLBO_TUNED_PSO, MPA_SCA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.4,<2' 'scipy>=1.12,<2'
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/h1-leak-input
+      - name: Force fake target Y and fake 2099 sample, prove no change in original ANN forecast
+        env:
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_ann_target_future_leakage_test_v1.py \
+            --component ${{ matrix.component }} \
+            --snapshot /tmp/h1-leak-input/h1-ann-single-source-snapshot.json \
+            --output /tmp/leak-proof.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ann-active-leak-proof-${{ matrix.component }}
+          path: /tmp/leak-proof.json
+          retention-days: 90
+  verify:
+    name: All seven frozen components leak-proof certificate
+    needs: leak_invariance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ann-active-leak-proof-*
+          path: /tmp/leak-proof
+      - name: Verify every model on 3 chronology slices
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          docs=[json.loads(p.read_text()) for p in Path('/tmp/leak-proof').glob('*/leak-proof.json')]
+          assert len(docs)==7
+          sources=set()
+          for d in docs:
+            assert d['status']=='ACTIVE_TARGET_FUTURE_POISONING_TEST_PASS'
+            assert len(d['cases'])==3
+            assert [c['month'] for c in d['cases']]==['2022-04','2025-01','2026-09']
+            assert all(c['leakage'] is False and
+                c['target_label_poisoned'] and c['far_future_sample_added'] and
+                c['max_four_metal_return_delta']<=1e-10
+                for c in d['cases'])
+            sources.add(d['source_sha256'])
+          assert len(sources)==1
+          print('ANN_FROZEN_SEVEN_ALGORITHMS_ACTIVE_LABEL_AND_FUTURE_LEAK_TEST_PASS')
+          print('ANN_LEAK_FROZEN_SOURCE_SHA',sources.pop())
+          PY
