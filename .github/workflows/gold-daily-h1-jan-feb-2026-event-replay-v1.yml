@@ -1,0 +1,204 @@
+name: GOLD DAILY H1 Jan-Feb 2026 D-1 Shock Forecast Real Replay
+on:
+  push:
+    branches: [gold-daily-h1-janfeb2026-v1-20261023]
+    paths:
+      - .github/workflows/gold-daily-h1-jan-feb-2026-event-replay-v1.yml
+      - gold_axis_2026/tools/gold_daily_h1_2026_jan_feb_event_replay_v1.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  PYTHONUNBUFFERED: '1'
+jobs:
+  source:
+    name: Four metal daily read-only source, monthly parity, critical Feb27 quarantine
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - name: Source with exact four-metal 2010-2026 pinned research commits
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/gold_daily_h1_2026_jan_feb_event_replay_v1.py \
+            --mode source --output /tmp/gold-d1-source.json
+      - name: Firstprint and quarantined day scientific check
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/gold-d1-source.json'))
+          assert a['firstprint_certified'] is False
+          assert a['quarantined_targets']=={'2026-02-27':'INDEPENDENT_SOURCE_CONFLICT_AU3516_VS_REUTERS5230'}
+          assert a['monthly_view_exact_parity'] is True
+          print('DAILY_SOURCE_2010_TO_2026_PROVENANCE_PASS',len(a['data']),a['sha256'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-d1-janfeb-2026-immutable-source
+          path: /tmp/gold-d1-source.json
+          retention-days: 90
+  audit:
+    name: All Jan-Feb D-1 histories target poison and 2099 future poison
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-d1-janfeb-2026-immutable-source
+          path: /tmp/s
+      - name: Each day test target labels and dummy 2099 future record
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_daily_h1_2026_jan_feb_event_replay_v1.py \
+            --mode audit --snapshot /tmp/s/gold-d1-source.json --output /tmp/gold-d1-audit.json
+      - name: Gate
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/gold-d1-audit.json'))
+          assert a['status']=='JAN_FEB_DAILY_ALL_ORIGIN_AND_FUTURE_POISON_PASS'
+          assert a['n']>=35
+          assert all(r['target_label_poison_invariant'] and r['future_2099_poison_invariant'] for r in a['rows'])
+          assert all(r['training_last']==r['issue_date'] for r in a['rows'])
+          assert not any(r['date']=='2026-02-27' for r in a['rows'])
+          print('JAN_FEB_2026_DAILY_ORIGIN_FORECAST_INPUT_SAFETY_PASS',a['n'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-d1-janfeb-2026-active-future-poison-audit
+          path: /tmp/gold-d1-audit.json
+          retention-days: 90
+  replay:
+    name: D1 ANN 2026 Jan-Feb past-only shard ${{ matrix.shard }}
+    needs: audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0,1,2,3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-d1-janfeb-2026-immutable-source
+          path: /tmp/s
+      - name: Expanding past data daily ANN fit per date and forecast future quote only
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_daily_h1_2026_jan_feb_event_replay_v1.py \
+            --mode replay --shard ${{ matrix.shard }} \
+            --snapshot /tmp/s/gold-d1-source.json \
+            --output /tmp/gold-d1-result.json
+      - name: Assert daily prediction model period and original training cutoff
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/gold-d1-result.json'))
+          assert a['status']=='JAN_FEB_DAILY_H1_REAL_ANN_4METAL_REPLAY_SUCCESS'
+          assert a['n']>=9
+          assert all(r['training_last']==r['issue_date'] and
+                     r['training_last']<r['target_date'] and
+                     r['target_date']!='2026-02-27'
+                     for r in a['rows'])
+          assert all(r['training_rows']>600 and r['fit_iterations']>0 for r in a['rows'])
+          print('D1_SHARD_STRICT_ORIGIN_TRAINING_PASS',a['shard'],a['n'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-d1-janfeb2026-shard-${{ matrix.shard }}
+          path: /tmp/gold-d1-result.json
+          retention-days: 90
+  final:
+    name: Final daily Jan Feb 2026 direction and crash alert -1 day rigor
+    needs: replay
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gold-d1-janfeb2026-shard-*
+          path: /tmp/a
+      - name: Merge 4 output shards and inspect January 29, 30, February 2, 3, 4
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          docs=[json.loads(p.read_text()) for p in Path('/tmp/a').glob('*/gold-d1-result.json')]
+          assert len(docs)==4
+          assert sorted(d['shard'] for d in docs)==[0,1,2,3]
+          assert len(set(d['source_sha256'] for d in docs))==1
+          rows=sorted((r for d in docs for r in d['rows']),key=lambda x:x['target_date'])
+          assert len({r['target_date'] for r in rows})==len(rows)
+          assert rows[0]['target_date']>='2026-01-01' and rows[-1]['target_date']<='2026-02-26'
+          check={r['target_date']:r for r in rows}
+          assert all(k in check for k in ('2026-01-29','2026-01-30','2026-02-02','2026-02-03','2026-02-04'))
+          def metrics(sub):
+            n=len(sub)
+            falls=[r for r in sub if r['actual_severe_drop_3pct']]
+            flagged=[r for r in sub if r['forecast_severe_drop_3pct']]
+            return {
+              'days':n,
+              'direction_correct':sum(r['correct_direction'] for r in sub),
+              'mape_pct':sum(r['price_error_pct'] for r in sub)/n,
+              'naive_mape_pct':sum(r['naive_price_error_pct'] for r in sub)/n,
+              'actual_severe_drop_days':len(falls),
+              'forecast_severe_drop_alert_days':len(flagged),
+              'severe_drop_3pct_detected_prior_day':sum(r['actual_severe_drop_3pct'] and r['forecast_severe_drop_3pct'] for r in sub),
+              'real_crash_5pct_days':sum(r['actual_crash_5pct'] for r in sub),
+              'forecast_crash_5pct_days':sum(r['forecast_crash_5pct'] for r in sub),
+              'crash_5pct_detected_before_day':sum(r['actual_crash_5pct'] and r['forecast_crash_5pct'] for r in sub),
+             }
+          metrics_by_period={
+            'JAN_2026':metrics([r for r in rows if r['target_date'].startswith('2026-01')]),
+            'FEB_2026_EXCLUDING_FEB27_UNVERIFIED':metrics([r for r in rows if r['target_date'].startswith('2026-02')]),
+            'ALL_VALID_JAN_FEB':metrics(rows),
+          }
+          report={
+            'status':'DAILY_H1_JAN_FEB_2026_CHRONOLOGICAL_ANN_RESEARCH_DONE',
+            'model':docs[0]['model'],'source_sha256':docs[0]['source_sha256'],
+            'firstprint_certified':False,
+            'target':'NEXT_COMMON_TRADING_DAY_REFERENCE_QUOTE',
+            'not_intra_day_collapse_detection':True,
+            'source_anomaly_day_quarantined':'2026-02-27',
+            'selected_model_hyperparameters_2026':False,
+            'monthly_models_changed':False,
+            'metrics':metrics_by_period,
+            'critical_dates':[check[k] for k in ('2026-01-29','2026-01-30','2026-02-02','2026-02-03','2026-02-04')],
+            'all_dates':rows,
+          }
+          Path('/tmp/daily-h1-janfeb-2026-final.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+          for period,value in metrics_by_period.items():
+            print('DAILY_H1_SHOCK_REPLAY_METRICS',period,json.dumps(value,sort_keys=True))
+          for row in report['critical_dates']:
+            print('DAILY_H1_SHOCK_DATE',row['issue_date'],'->',row['target_date'],'p_change',row['predicted_return_pct'],
+                  'a_change',row['actual_return_pct'],'alert3',row['forecast_severe_drop_3pct'],
+                  'actual3',row['actual_severe_drop_3pct'],'forecast',row['forecast_xau_reference'],
+                  'actual',row['actual_xau_reference'])
+          print('DAILY_H1_2026_JAN_FEB_MODEL_RESULT_FINAL_PASS',len(rows))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-daily-h1-janfeb2026-final-all-day-shock-comparison
+          path: /tmp/daily-h1-janfeb-2026-final.json
+          retention-days: 90
