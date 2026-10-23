@@ -1,0 +1,75 @@
+name: Gold Monthly Same Original Sources Refresh 2026
+
+on:
+  push:
+    branches: [research-gold-monthly-original-sources-refresh-20261023]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_refresh_original_stak_sources_v1.py
+      - gold_axis_2026/tools/gold_monthly_original_gpr_wb_source_gate_v1.py
+      - .github/workflows/gold-monthly-original-source-refresh-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NEON_DATABASE_URL: ''
+
+jobs:
+  original-sources:
+    name: Fetch same StakTrakr, GPR and World Bank sources (shadow only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reject database writes or connections
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Fetch immutable original and refreshed StakTrakr snapshots
+        run: |
+          mkdir -p source_input report
+          curl --retry 2 --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/lbruton/StakTrakr/ed2e549f82ba0d1cd3ca32842b82d3888d301e01/data/spot-history-2026.json" \
+            --output source_input/stak_original_2026.json
+          curl --retry 2 --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/lbruton/StakTrakr/02964d0324dde362099976c867f5077a369acaa5/data/spot-history-2026.json" \
+            --output source_input/stak_refreshed_2026.json
+      - name: Compare originals, source-date coverage and vintage changes
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_refresh_original_stak_sources_v1.py
+          python gold_axis_2026/tools/gold_monthly_refresh_original_stak_sources_v1.py \
+            --old-json source_input/stak_original_2026.json \
+            --new-json source_input/stak_refreshed_2026.json \
+            --report report/GOLD_MONTHLY_STAK_ORIGINAL_SOURCE_REFRESH_AUDIT_V1.json \
+            --stage report/GOLD_MONTHLY_AUG_SEP_2026_FOUR_METAL_SHADOW_DATA.json
+      - name: Fetch original academic GPR release files and official World Bank target workbook
+        run: |
+          curl --retry 2 --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/iacoviel/iacoviel.github.io/21449bec606bc5a5b1bf58d08ce526dc35d66c94/gpr_archive_files/data_gpr_export_202609.xls" \
+            --output source_input/data_gpr_export_202609.xls
+          curl --retry 2 --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/iacoviel/iacoviel.github.io/8b903073ea4ce9caf9b2f238e792685ca17270f4/gpr_archive_files/data_gpr_export_202610.xls" \
+            --output source_input/data_gpr_export_202610.xls
+          curl --retry 2 --fail --silent --show-error --location --max-time 90 \
+            --user-agent "GoldMonthlyResearch/1.0 (original-source-integrity; no rehosting)" \
+            "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx" \
+            --output source_input/CMO-Historical-Data-Monthly.xlsx
+      - name: Verify original GPR Git blobs and World Bank XLSX file
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_original_gpr_wb_source_gate_v1.py
+          python gold_axis_2026/tools/gold_monthly_original_gpr_wb_source_gate_v1.py \
+            --gpr-sep source_input/data_gpr_export_202609.xls \
+            --gpr-oct source_input/data_gpr_export_202610.xls \
+            --wb source_input/CMO-Historical-Data-Monthly.xlsx \
+            --report report/GOLD_MONTHLY_GPR_WB_ORIGINAL_SOURCE_GATE_V1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-original-sources-staging-${{ github.sha }}
+          path: |
+            report/GOLD_MONTHLY_STAK_ORIGINAL_SOURCE_REFRESH_AUDIT_V1.json
+            report/GOLD_MONTHLY_AUG_SEP_2026_FOUR_METAL_SHADOW_DATA.json
+            report/GOLD_MONTHLY_GPR_WB_ORIGINAL_SOURCE_GATE_V1.json
+          if-no-files-found: error
+          retention-days: 90
