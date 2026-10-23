@@ -29,13 +29,13 @@ def feature_without_target_label(bundle, target: str, gpr_history: dict) -> np.n
     p, pp = base.month_shift(target, -1), base.month_shift(target, -2)
     if p not in bundle.core_gold or pp not in bundle.core_gold:
         raise RuntimeError("OCT26_ORIGIN_PRICE_MISSING")
-    if target in bundle.core_gold:
+    if target == TARGET and target in bundle.core_gold:
         raise RuntimeError("OCT26_TARGET_PRICE_FORBIDDEN")
     z = base.gpr_norm(gpr_history, pp)
     x = []
     for metal in base.METALS:
         monthly = bundle.monthly_metal[metal]
-        if target in monthly:
+        if target == TARGET and target in monthly:
             raise RuntimeError("OCT26_TARGET_METAL_PRICE_FORBIDDEN")
         if p not in monthly or pp not in monthly:
             raise RuntimeError("OCT26_METAL_ORIGIN_MISSING_" + metal)
