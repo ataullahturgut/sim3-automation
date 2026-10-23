@@ -52,11 +52,26 @@ def sha(obj):
 def source_extract(outfile,fred_path):
     with open(fred_path,encoding="utf-8-sig",newline="") as f:
         rows=list(csv.DictReader(f))
-    gate(rows and {"observation_date","GVZCLS"}.issubset(rows[0]),"FRED_CSV_COLUMNS")
+    gate(bool(rows),"GVZ_CSV_EMPTY")
+    header={k.lower():k for k in rows[0]}
+    if "observation_date" in header and "gvzcls" in header:
+        datekey,valuekey=header["observation_date"],header["gvzcls"]
+        actual_source="CBOE_GVZ_VIA_FRED_OFFICIAL"
+    elif "date" in header and "close" in header:
+        datekey,valuekey=header["date"],header["close"]
+        actual_source="CBOE_GVZ_CBOE_OFFICIAL_HISTORICAL_DOWNLOAD"
+    else:
+        raise RuntimeError("MARKET_FRAGILITY_FAIL_CLOSED: UNKNOWN_GVZ_CSV_COLUMNS_"+str(list(rows[0])))
     gvz={}
     for row in rows:
-        d=row["observation_date"];v=row["GVZCLS"].strip()
+        rawdate=row[datekey].strip();v=row[valuekey].strip()
         if not v or v==".":continue
+        if "/" in rawdate:
+            from datetime import datetime
+            d=datetime.strptime(rawdate,"%m/%d/%Y").date().isoformat()
+        else:
+            d=rawdate
+        gate(len(d)==10 and d[4]=="-" and d[7]=="-","INVALID_GVZ_DATE")
         num=float(v)
         gate(math.isfinite(num) and num>0,"GVZ_NONFINITE")
         gvz[d]=num
@@ -89,8 +104,9 @@ def source_extract(outfile,fred_path):
         delta=b["four_prices"][0]/a["four_prices"][0]-1
         if abs(delta)>0.15:
             changes.append({"prev":a["date"],"date":b["date"],"ret_pct":100*delta})
-    payload={"source":"CBOE_GVZCLS_OFFICIAL_FRED_AND_PINNED_STAKTRAKR_RESEARCH_PRICE",
-       "gvz_url":SRC_GVZ,
+    payload={"source":"OFFICIAL_CBOE_GVZ_AND_PINNED_STAKTRAKR_RESEARCH_PRICE",
+       "gvz_actual_provider":actual_source,
+       "gvz_url": SRC_GVZ if actual_source=="CBOE_GVZ_VIA_FRED_OFFICIAL" else "https://cdn.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv",
        "gvz_csv_sha256":hashlib.sha256(Path(fred_path).read_bytes()).hexdigest(),
        "gvz_count":len(gvz),"gvz":gvz,
        "prices":panel,"monthly_parity":proof,
@@ -110,7 +126,7 @@ def rsi14(v):
     return 100.0 if down<1e-12 else 100*up/(up+down)
 
 def build(s):
-    gate(s["source"]=="CBOE_GVZCLS_OFFICIAL_FRED_AND_PINNED_STAKTRAKR_RESEARCH_PRICE","SRC_WRONG")
+    gate(s["source"]=="OFFICIAL_CBOE_GVZ_AND_PINNED_STAKTRAKR_RESEARCH_PRICE","SRC_WRONG")
     digest=s.pop("sha256");gate(digest==sha(s),"SOURCE_CHANGED");s["sha256"]=digest
     dates=[p["date"] for p in s["prices"]]
     P=np.asarray([p["four_prices"] for p in s["prices"]],float)
