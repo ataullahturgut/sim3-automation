@@ -79,6 +79,11 @@ jobs:
             --gpr-oct source_input/data_gpr_export_202610.xls \
             --wb source_input/CMO-Historical-Data-Monthly.xlsx \
             --report report/GOLD_MONTHLY_OFFICIAL_GPR_WB_AUG_SEP_2026_VALUES.json
+      - name: Validate Neon shadow import contracts without any database connection
+        run: |
+          python gold_axis_2026/tools/gold_monthly_original_sources_neon_shadow_ingest_v1.py \
+            --stak-shadow-json report/GOLD_MONTHLY_AUG_SEP_2026_FOUR_METAL_SHADOW_DATA.json \
+            --official-monthly-json report/GOLD_MONTHLY_OFFICIAL_GPR_WB_AUG_SEP_2026_VALUES.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-monthly-original-sources-staging-${{ github.sha }}
