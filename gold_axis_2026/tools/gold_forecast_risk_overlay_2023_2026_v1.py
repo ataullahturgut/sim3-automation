@@ -135,7 +135,6 @@ def data(s):
  for i in range(260,len(dates)-5):
   d=dates[i]
   if d<"2023-01-03" or d>"2026-09-21":continue
-  if BAD in dates[max(0,i-260):i+6] and d>="2026-02-27":continue
   if any(v==BAD for v in dates[max(0,i-20):i+6]):continue
   pos=bisect_right(gdays,d)
   if pos<253:continue
