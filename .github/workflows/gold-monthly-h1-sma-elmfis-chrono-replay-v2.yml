@@ -1,0 +1,237 @@
+name: GOLD H1 SMA ELMFIS Last Family Scientific Audit and 54 Replay
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-sma-elmfis-chrono-replay-v2.yml
+      - gold_axis_2026/tools/gold_monthly_h1_sma_elmfis_chrono_replay_v2.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  PYTHONUNBUFFERED: '1'
+jobs:
+  audit:
+    name: SMA five-rule frozen identity plus 54-origin target and future poison
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/frozen-h1
+      - name: Audit 5-rule SMA method, inner validation scaling, 54 targets, 2099 fake samples
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_sma_elmfis_chrono_replay_v2.py \
+            --mode audit --snapshot /tmp/frozen-h1/h1-ann-single-source-snapshot.json \
+            --output /tmp/sma-elmfis-origin-audit-54.json
+      - name: Hard-stop on future label contamination or unexpected original architecture
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/sma-elmfis-origin-audit-54.json'))
+          assert a['status']=='SMA_ELMFIS_54_ORIGIN_TARGET_AND_FUTURE_POISON_PASS_INNER_DEFECT_FOUND'
+          assert a['model_provenance']['n_rules']==5
+          assert a['model_provenance']['num_antecedent_optimised_parameters']==80
+          assert a['model_provenance']['selection_repeats']==3
+          assert a['model_provenance']['select_generations']==45
+          assert a['model_provenance']['refit_generations']==15
+          assert a['model_provenance']['original_implementation_changed'] is False
+          assert a['model_provenance']['legacy_known_defect']=='INNER_TRAIN_AND_VALIDATION_SCALING_STATISTICS_MIXED_BEFORE_SPLIT'
+          assert len(a['rows'])==54
+          assert a['rows'][0]['target_month']=='2022-04' and a['rows'][-1]['target_month']=='2026-09'
+          assert a['rows'][0]['training_rows']==145 and a['rows'][-1]['training_rows']==198
+          assert all(r['target_label_and_future_2099_poison_no_effect'] is True for r in a['rows'])
+          print('SMA_ELMFIS_FIVE_RULE_54_MONTH_NO_TARGET_AND_FUTURE_LABEL_LEAK_GATE_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-sma-elmfis-54-origin-chrono-leak-audit
+          path: /tmp/sma-elmfis-origin-audit-54.json
+          retention-days: 90
+  pilot:
+    name: One-month genuine SMA corrected chronology and deterministic poison test
+    needs: audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/frozen-h1
+      - name: Run original untouched SMA optimizer with leak-free corrected chronological scaling
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_sma_elmfis_chrono_replay_v2.py \
+            --mode pilot --snapshot /tmp/frozen-h1/h1-ann-single-source-snapshot.json \
+            --output /tmp/sma-elmfis-safe-pilot.json
+      - name: Pilot PASS requires 3 selected optimizer seeds, 2010 start and true refit
+        run: |
+          python - <<'PY'
+          import json,math
+          a=json.load(open('/tmp/sma-elmfis-safe-pilot.json'))
+          assert a['status']=='SMA_ELMFIS_CORRECTED_V2_PILOT_PASS'
+          assert len(a['rows'])==1
+          x=a['rows'][0]
+          assert x['target_month']=='2022-04' and x['training_rows']==145
+          assert x['optimizer_diagnostics']['training_last']=='2022-03'
+          assert x['optimizer_diagnostics']['inner_train_scaler_fitted_on']=='INNER_TRAIN_ONLY'
+          assert x['optimizer_diagnostics']['full_refit_scaler_fitted_on']=='FULL_ORIGIN_HISTORY_ONLY'
+          assert x['optimizer_diagnostics']['original_sma_optimizer_function_used'] is True
+          assert len(x['optimizer_diagnostics']['repeat_records'])==3
+          assert math.isfinite(x['forecast_xau_average'])
+          print('SMA_ELMFIS_FROZEN_MATH_CORRECTED_TRAIN_ONLY_SCALER_PILOT_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-sma-elmfis-v2-one-month-proof
+          path: /tmp/sma-elmfis-safe-pilot.json
+          retention-days: 90
+  replay:
+    name: SMA ELMFIS ${{ matrix.variant }} six-month chunk ${{ matrix.shard }}
+    needs: pilot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        variant: [legacy, fixed]
+        shard: [0,1,2,3,4,5,6,7,8]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: h1-ann-54-canonical-input-snapshot-v2
+          run-id: 39986747259
+          github-token: ${{ github.token }}
+          path: /tmp/frozen-h1
+      - name: Frozen SMA ELMFIS variant, 6 months, no DB, same immutable origin inputs
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_h1_sma_elmfis_chrono_replay_v2.py \
+            --mode ${{ matrix.variant }} --shard ${{ matrix.shard }} \
+            --snapshot /tmp/frozen-h1/h1-ann-single-source-snapshot.json \
+            --output /tmp/sma-elmfis-six-month-replay.json
+      - name: Validate six monthly predictions with original 3x45/15 optimizer
+        env:
+          SMA_MODE: ${{ matrix.variant }}
+          SMA_SHARD: ${{ matrix.shard }}
+        run: |
+          python - <<'PY'
+          import json,os,math
+          d=json.load(open('/tmp/sma-elmfis-six-month-replay.json'))
+          assert d['status']==('SMA_ELMFIS_CORRECTED_V2_SIX_MONTH_SHARD_PASS' if os.environ['SMA_MODE']=='fixed'
+                               else 'SMA_ELMFIS_LEGACY_V1_QUARANTINED_SIX_MONTH_SHARD_PASS')
+          assert d['shard']==int(os.environ['SMA_SHARD'])
+          assert d['mode']==os.environ['SMA_MODE']
+          assert d['database_access']=='NONE'
+          assert d['source_firstprint_certified'] is False
+          assert len(d['rows'])==6
+          assert len(set(r['target_month'] for r in d['rows']))==6
+          assert len(set(r['source_snapshot_sha256'] for r in d['rows']))==1
+          assert all(r['training_rows']>=145 and
+                     r['optimizer_diagnostics']['training_first']=='2010-03' and
+                     r['optimizer_diagnostics']['training_last']==r['origin_month'] and
+                     len(r['optimizer_diagnostics']['repeat_records'])==3 and
+                     math.isfinite(r['forecast_xau_average']) and
+                     math.isfinite(r['absolute_error']) for r in d['rows'])
+          if os.environ['SMA_MODE']=='fixed':
+              assert all(r['optimizer_diagnostics']['inner_train_scaler_fitted_on']=='INNER_TRAIN_ONLY'
+                         and r['optimizer_diagnostics']['original_sma_optimizer_function_used']
+                         for r in d['rows'])
+          else:
+              assert d['analysis_role']=='QUARANTINED_HISTORICAL_INNER_SCALER_LEAK'
+          print('SMA_ELMFIS_SIX_MONTH_CHRONO_CONTROLLED_REPLAY_PASS',os.environ['SMA_MODE'],os.environ['SMA_SHARD'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-sma-elmfis-${{ matrix.variant }}-shard-${{ matrix.shard }}
+          path: /tmp/sma-elmfis-six-month-replay.json
+          retention-days: 90
+  aggregate:
+    name: Strict 54-month fixed SMA vs quarantined legacy comparison
+    needs: replay
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gold-h1-sma-elmfis-*-shard-*
+          path: /tmp/sma-elmfis-shards
+      - uses: actions/checkout@v4
+      - name: Source equality, all 54 targets, honest model statuses, period performance
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          root=Path('/tmp/sma-elmfis-shards')
+          files=sorted(root.glob('*/sma-elmfis-six-month-replay.json'))
+          assert len(files)==18,len(files)
+          b={mode:[] for mode in ('fixed','legacy')}
+          signatures=set()
+          for file in files:
+            p=json.loads(file.read_text())
+            b[p['mode']].append(p)
+            signatures.add(p['source_snapshot_sha256'])
+          assert len(signatures)==1
+          report={'status':'SMA_ELMFIS_TWO_VERSIONS_54_OF_54_FINAL_RESEARCH_PASS',
+                  'source_snapshot_sha256':signatures.pop(),
+                  'legacy_v1_approved_as_clean':False,
+                  'corrected_v2_approved_for_dev_comparison':True,
+                  'source_firstprint_certified':False,'models':{}}
+          for mode in ('fixed','legacy'):
+            docs=sorted(b[mode],key=lambda z:z['shard'])
+            assert [d['shard'] for d in docs]==list(range(9))
+            rr=[r for d in docs for r in d['rows']]
+            assert len(rr)==54 and len(set(r['target_month'] for r in rr))==54
+            assert rr[0]['target_month']=='2022-04' and rr[-1]['target_month']=='2026-09'
+            assert rr[0]['training_rows']==145 and rr[-1]['training_rows']==198
+            for r in rr:
+                assert r['source_snapshot_sha256']==report['source_snapshot_sha256']
+                assert r['optimizer_diagnostics']['training_last']==r['origin_month']
+            def metrics(rows):
+                return {'n':len(rows),
+                   'sum_abs_error':sum(r['absolute_error'] for r in rows),
+                   'mape_pct':sum(r['absolute_percentage_error'] for r in rows)/len(rows),
+                   'directions_correct':sum(r['direction_correct'] for r in rows),
+                   'worst_month':max(rows,key=lambda r:r['absolute_error'])['target_month']}
+            parts={'DEV_2022_2024':rr[:33],'TEST_2025':rr[33:45],'STRESS_2026_01_09':rr[45:]}
+            mm={k:metrics(v) for k,v in parts.items()}
+            for phase,v in mm.items():
+                print('SMA_ELMFIS_VALIDATED_54_RESULT',mode,phase,json.dumps(v,sort_keys=True))
+            report['models'][mode]={
+              'status':'CORRECTED_V2_VALID_RESEARCH' if mode=='fixed' else 'LEGACY_V1_QUARANTINED_INNER_FOLD_SCALER',
+              'model':docs[0]['model'],
+              'metrics':mm,'rows':rr,
+              'algorithm':docs[0]['model_provenance']}
+          Path('/tmp/sma-elmfis-final-comparison-54.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+          print('SMA_ELMFIS_FINAL_54_OF_54_SCIENTIFIC_VERIFICATION_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-h1-sma-elmfis-final-54-corrected-v2-vs-quarantined-v1
+          path: /tmp/sma-elmfis-final-comparison-54.json
+          retention-days: 90
