@@ -3,10 +3,12 @@ on:
   push:
     branches:
       - gold-monthly-h1-neon-source-adapter-v2-20261023
+      - gold-midas-headswap-v1-20260925
     paths:
       - gold_axis_2026/tools/gold_monthly_h1_neon_source_v2.py
       - gold_axis_2026/tools/gold_monthly_h1_retrain_v2.py
       - gold_axis_2026/tools/test_gold_monthly_h1_neon_source_v2.py
+      - gold_axis_2026/research_data/gold_monthly_h1_neon_v2_aug_sep_replay_20261023.json
       - gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
       - .github/workflows/gold-monthly-h1-neon-source-v2.yml
   workflow_dispatch:
@@ -101,3 +103,11 @@ jobs:
           assert 'modelTrained' not in b
           print('NO_CORE5_SOURCE_PROMOTION=PASS')
           PY
+      - name: Preserve the actual generated CHHHO and DEABC model replay evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-h1-neon-v2-${{ github.sha }}
+          path: /tmp/h1_chhho_model_smoke.json
+          if-no-files-found: warn
+          retention-days: 90
