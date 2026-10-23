@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install original model dependencies
-        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4'
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.4,<2'
       - name: Compile original H1 learner and new strict source adapter
         run: |
           python -m py_compile gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
@@ -51,6 +51,31 @@ jobs:
           assert r['source_contract']=='NEON_STAKTRAKR_GPR_V2'
           assert r['status']=='RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED'
           print('LIVE_NEON_H1_8_FEATURES=PASS')
+          PY
+          fi
+      - name: Actual ChHHO-ANFIS one-origin training and prediction smoke test
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          if [ -z "$NEON_DATABASE_URL" ]; then
+            echo "ACTUAL_CHHHO_REPLAY=NOT_RUN_NO_SECRET"
+          else
+            OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python gold_axis_2026/tools/gold_monthly_h1_retrain_v2.py \
+              --mode replay --models CHHHO --targets 2026-08 \
+              --output /tmp/h1_chhho_model_smoke.json
+            python - <<'PY'
+          import json,math
+          r=json.load(open('/tmp/h1_chhho_model_smoke.json'))
+          assert len(r['rows'])==1
+          x=r['rows'][0]
+          assert x['model']=='CHHHO' and x['target_month']=='2026-08'
+          assert x['feature_contract']=='CURRENT8_4x_MR1_VW_GPR_ORIGIN'
+          assert x['training_rows']>=30
+          assert math.isfinite(x['forecast_xau_average'])
+          assert r['status']=='RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED'
+          print('ACTUAL_CHHHO_REPLAY_PASS',x['target_month'],
+                'forecast=',x['forecast_xau_average'],
+                'absolute_error=',x['absolute_error'])
           PY
           fi
       - name: Ensure new model cannot silently load legacy CORE5 GPR
