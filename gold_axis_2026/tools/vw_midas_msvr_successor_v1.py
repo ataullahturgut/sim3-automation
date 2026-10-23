@@ -132,6 +132,26 @@ def authority_invariants(cur):
     return out
 
 
+def select_single_source_metal_prices(provider_rows: list[dict]):
+    """One research-only, provider-consistent daily source for all four metals.
+
+    Reject whole months with mixed/unknown providers or weekend observations.
+    Never impute; derive gold targets and all other metal features from the
+    *same* matched business dates and provider-labelled source family.
+    """
+    panel = build_governed_panel(provider_rows)
+    if not panel["clean_four_metal_rows"]:
+        raise RuntimeError("NO_FOUR_METAL_SINGLE_PROVIDER_RESEARCH_MONTHS")
+    daily = {m: defaultdict(list) for m in METALS}
+    for row in panel["clean_four_metal_rows"]:
+        for metal in METALS:
+            daily[metal][row["month"]].append(row["prices"][metal])
+    daily = {m: {k: np.asarray(v, float) for k, v in months.items()}
+             for m, months in daily.items()}
+    monthly = {m: {k: float(v.mean()) for k, v in daily[m].items()} for m in METALS}
+    return daily, monthly, panel
+
+
 def load_data(dsn: str) -> DataBundle:
     with psycopg.connect(dsn, autocommit=True) as conn:
         with conn.cursor() as cur:
@@ -157,22 +177,7 @@ def load_data(dsn: str) -> DataBundle:
                         "payload_source_label": payload, "provenance": source,
                         "firstprint_proven": False,
                     })
-            panel = build_governed_panel(provider_rows)
-            # Only aligned business days from complete, homogeneous months.
-            # Mixed/unknown-provider MONTHS are removed entirely, not repaired
-            # by dropping weekends or silently relabelling records.
-            daily_month_values = {m: defaultdict(list) for m in METALS}
-            for row in panel["clean_four_metal_rows"]:
-                for metal in METALS:
-                    daily_month_values[metal][row["month"]].append(row["prices"][metal])
-            daily_month_values = {
-                m: {k: np.asarray(v, float) for k, v in monthly.items()}
-                for m, monthly in daily_month_values.items()
-            }
-            monthly_metal = {
-                m: {k: float(v.mean()) for k, v in daily_month_values[m].items()}
-                for m in METALS
-            }
+            daily_month_values, monthly_metal, panel = select_single_source_metal_prices(provider_rows)
             # Historical target price and four model metal inputs MUST share
             # the identical day-aligned provider family. CORE5 gold remains
             # an independently readable reference, never our active target.
