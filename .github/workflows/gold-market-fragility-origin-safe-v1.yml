@@ -1,0 +1,101 @@
+name: Gold Market Fragility Historical Pre-shock 2010-2026 V1
+on:
+  push:
+    branches: [gold-market-fragility-core-v1-20261023]
+    paths:
+      - .github/workflows/gold-market-fragility-origin-safe-v1.yml
+      - gold_axis_2026/tools/gold_market_fragility_origin_safe_v1.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONUNBUFFERED: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    name: Verified 2010-2026 four-metal quotes and independent official FRED GVZ
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - name: Download official GVZCLS raw FRED daily close history
+        run: |
+          curl --fail --show-error --location --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 180 \
+            -A 'Mozilla/5.0 (research scientific source audit)' \
+            'https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS' \
+            -o /tmp/gvzcls-raw-fred.csv
+          head -c 130 /tmp/gvzcls-raw-fred.csv; echo
+          sha256sum /tmp/gvzcls-raw-fred.csv
+          test "$(wc -c < /tmp/gvzcls-raw-fred.csv)" -gt 50000
+      - name: Read-only Neon single-source price parity and Jan29 GVZ official check
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/gold_market_fragility_origin_safe_v1.py \
+            --mode source --gvz_csv /tmp/gvzcls-raw-fred.csv \
+            --out /tmp/gold-market-fragility-source.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-market-fragility-official-gvz-canonical-research-source
+          path: |
+            /tmp/gold-market-fragility-source.json
+            /tmp/gvzcls-raw-fred.csv
+          retention-days: 90
+  score:
+    runs-on: ubuntu-24.04
+    needs: source
+    timeout-minutes: 35
+    name: Frozen 2010-2023 training, 2024 check, 2025 holdout, JanFeb2026 stress
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-market-fragility-official-gvz-canonical-research-source
+          path: /tmp/input
+      - name: Exact-origin historical fragility model training + 3 risk targets
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_market_fragility_origin_safe_v1.py \
+            --mode score --snapshot /tmp/input/gold-market-fragility-source.json \
+            --out /tmp/gold-market-fragility-experiment.json
+      - name: Hard gates preserve train/test separation and all scenarios
+        run: |
+          python - <<'PY'
+          import json,datetime,math
+          z=json.load(open('/tmp/gold-market-fragility-experiment.json'))
+          assert z['source_firstprint_proven'] is False
+          assert z['development_2024_used_to_select_model'] is False
+          assert z['splits']['train_n']>2000
+          assert z['splits']['validation_2024_n']>200
+          assert z['splits']['test_2025_n']>200
+          assert z['splits']['stress_2026_Jan_to_Feb19_n']>=30
+          rows=z['daily_scores']
+          assert all(r['gvz_obs_date']<=r['origin']<r['target_next_quote_date']<=r['five_day_target_matures'] for r in rows)
+          assert all(r['five_day_target_matures']<'2026-02-27' for r in rows if r['origin']>='2026-01-01')
+          assert all(r['origin']!='2026-02-27' for r in rows)
+          assert all(r['risk_scores']['GOLD_CROSS_GVZ']['DROP_1D_3PCT']['alert'] in (True,False) for r in rows)
+          jan29=next(r for r in rows if r['origin']=='2026-01-29')
+          assert abs(jan29['gvz']-46.02)<1e-6
+          assert jan29['next_day_return_pct']<-7
+          jan30=next(r for r in rows if r['origin']=='2026-01-30')
+          assert jan30['next_day_return_pct']<-7
+          assert jan29['gvz_obs_date']=='2026-01-29'
+          print('MARKET_FRAGILITY_ALL_PIT_ORIGIN_AND_HORIZON_TEST_GATES_PASS',len(rows))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-market-fragility-full-2010-2026-locked-model-comparison
+          path: /tmp/gold-market-fragility-experiment.json
+          retention-days: 90
