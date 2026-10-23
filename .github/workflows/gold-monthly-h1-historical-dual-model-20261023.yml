@@ -1,0 +1,183 @@
+name: GOLD H1 Original Window Dual Model Replay
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-h1-historical-dual-model-20261023.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay:
+    name: ${{ matrix.period.id }} / ${{ matrix.model }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        model: [CHHHO, DE_ABC]
+        period:
+          - id: dev22
+            targets: "2022-04,2022-05,2022-06,2022-07,2022-08,2022-09,2022-10,2022-11,2022-12"
+            expected: 9
+          - id: dev23
+            targets: "2023-01,2023-02,2023-03,2023-04,2023-05,2023-06,2023-07,2023-08,2023-09,2023-10,2023-11,2023-12"
+            expected: 12
+          - id: dev24
+            targets: "2024-01,2024-02,2024-03,2024-04,2024-05,2024-06,2024-07,2024-08,2024-09,2024-10,2024-11,2024-12"
+            expected: 12
+          - id: test25
+            targets: "2025-01,2025-02,2025-03,2025-04,2025-05,2025-06,2025-07,2025-08,2025-09,2025-10,2025-11,2025-12"
+            expected: 12
+          - id: stress26
+            targets: "2026-01,2026-02,2026-03,2026-04,2026-05,2026-06,2026-07"
+            expected: 7
+          - id: extra26
+            targets: "2026-08,2026-09"
+            expected: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install original solver dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.4,<2'
+      - name: Require real Neon read-only connection
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: test -n "$NEON_DATABASE_URL" || (echo "Missing Neon read-only database secret" && exit 1)
+      - name: Replay original ChHHO-ANFIS / DE-ABC-RBFNN solver against unchanged original time windows
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          OPENBLAS_NUM_THREADS: '1'
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          mkdir -p /tmp/fullh1
+          python gold_axis_2026/tools/gold_monthly_h1_retrain_v2.py \
+            --mode replay \
+            --models "${{ matrix.model }}" \
+            --targets "${{ matrix.period.targets }}" \
+            --output /tmp/fullh1/result.json
+      - name: Validate period-specific replay completeness
+        env:
+          EXPECTED_ROWS: ${{ matrix.period.expected }}
+          MODEL_ID: ${{ matrix.model }}
+          PERIOD: ${{ matrix.period.id }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=json.loads(Path('/tmp/fullh1/result.json').read_text())
+          assert p['status']=='RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED'
+          assert p['source_contract']=='NEON_STAKTRAKR_GPR_V2'
+          assert p['mode']=='replay'
+          assert len(p['rows'])==int(os.environ['EXPECTED_ROWS'])
+          assert all(r['model']==os.environ['MODEL_ID'] for r in p['rows'])
+          assert all(r['feature_contract']=='CURRENT8_4x_MR1_VW_GPR_ORIGIN' for r in p['rows'])
+          assert all(len(r['gpr_source_commit_sha'])==40 for r in p['rows'])
+          print('VALID_REPLAY',os.environ['PERIOD'],os.environ['MODEL_ID'],len(p['rows']))
+          PY
+      - name: Save exact model replay output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monthly-h1-${{ matrix.period.id }}-${{ matrix.model }}
+          path: /tmp/fullh1/result.json
+          if-no-files-found: warn
+          retention-days: 90
+  aggregate:
+    name: DEV 33 + TEST 12 + STRESS 7 + EXTRA 2 by both models
+    needs: replay
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: monthly-h1-*
+          path: /tmp/full-h1-inputs
+      - name: Calculate error/direction metrics by original time splits
+        run: |
+          python - <<'PY'
+          import json, math
+          from collections import defaultdict
+          from pathlib import Path
+          files = sorted(Path('/tmp/full-h1-inputs').glob('*/result.json'))
+          assert len(files) == 12, f'Expected 12 independent model-period files; got {len(files)}'
+          months_expected = {'dev22':9,'dev23':12,'dev24':12,'test25':12,'stress26':7,'extra26':2}
+          models = ('CHHHO','DE_ABC')
+          seen, grouped, all_rows = set(), defaultdict(list), []
+          for p in files:
+              artifact = p.parent.name
+              period = next((s for s in months_expected if artifact.startswith('monthly-h1-'+s+'-')),None)
+              model = next((m for m in models if artifact.endswith('-'+m)),None)
+              assert period and model, f'Unexpected artifact {artifact}'
+              payload = json.loads(p.read_text())
+              assert payload['source_contract'] == 'NEON_STAKTRAKR_GPR_V2'
+              assert payload['mode'] == 'replay' and len(payload['rows']) == months_expected[period]
+              assert payload['status'] == 'RESEARCH_REPLAY_ONLY_NOT_ASOF_PRICE_CERTIFIED'
+              for r in payload['rows']:
+                  key = (r['target_month'], model)
+                  assert key not in seen, f'Duplicate {key}'
+                  seen.add(key)
+                  assert r['model'] == model
+                  assert len(r['origin_feature_sha256']) == 64
+                  assert len(r['gpr_source_commit_sha']) == 40
+                  assert r['feature_contract'] == 'CURRENT8_4x_MR1_VW_GPR_ORIGIN'
+                  assert r['training_rows'] >= 30
+                  assert all(math.isfinite(float(r[k])) for k in ('forecast_xau_average','actual_xau_average','origin_gold_average','absolute_error'))
+                  r['period'] = period
+                  grouped[(model,period)].append(r)
+                  all_rows.append(r)
+          assert len(seen) == 108, f'Expected 108 unique forecasts, got {len(seen)}'
+          def metrics(rows):
+              n=len(rows)
+              assert n
+              ae=[float(x['absolute_error']) for x in rows]
+              ap=[float(x['absolute_percentage_error']) for x in rows]
+              return {
+                  'n':n,
+                  'sum_absolute_error_usd_oz':round(sum(ae),8),
+                  'mean_absolute_error_usd_oz':round(sum(ae)/n,8),
+                  'mape_pct':round(sum(ap)/n,8),
+                  'directions_correct':sum(bool(x['direction_correct']) for x in rows),
+                  'direction_accuracy_pct':round(100*sum(bool(x['direction_correct']) for x in rows)/n,8),
+                  'naive_previous_month_sum_abs_error_usd_oz':round(sum(abs(float(x['actual_xau_average'])-float(x['origin_gold_average'])) for x in rows),8),
+                  'errors_above_2_5_pct':sum(float(x['absolute_percentage_error'])>2.5 for x in rows),
+                  'errors_above_3_0_pct':sum(float(x['absolute_percentage_error'])>3 for x in rows)
+              }
+          def union(model,periods):
+              return [r for p in periods for r in grouped[(model,p)]]
+          phases = {'DEV_2022_2024':['dev22','dev23','dev24'],
+                    'TEST_2025':['test25'],
+                    'STRESS_2026_JAN_JUL':['stress26'],
+                    'EXTRA_2026_AUG_SEP':['extra26']}
+          out={'status':'COMPLETED_54_MONTHS_PER_MODEL',
+               'scientific_status':'RETROSPECTIVE_RESEARCH_ONLY_PRICE_FIRSTPRINT_NOT_CERTIFIED',
+               'source_contract':'NEON_STAKTRAKR_GPR_V2',
+               'development_period':'2022-04..2024-12',
+               'test_period':'2025-01..2025-12',
+               'stress_period':'2026-01..2026-07',
+               'extra_period':'2026-08..2026-09',
+               'models':{},
+               'rows':sorted(all_rows,key=lambda r:(r['target_month'],r['model']))}
+          for model in models:
+              model_rows=[r for r in all_rows if r['model']==model]
+              assert len(model_rows)==54, (model,len(model_rows))
+              out['models'][model]={
+                  'all_54':metrics(model_rows),
+                  'phases':{k:metrics(union(model,v)) for k,v in phases.items()},
+                  'year_segments':{p:metrics(grouped[(model,p)]) for p in months_expected}
+              }
+          Path('/tmp/full-h1-comparison.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          for model in models:
+              for phase, result in out['models'][model]['phases'].items():
+                  print('H1_RESULT',model,phase,json.dumps(result,sort_keys=True))
+          print('H1_DUAL_MODEL_REPLAY_COMPLETE',len(all_rows),'rows')
+          PY
+      - name: Save full comparative report and all 108 monthly predictions
+        uses: actions/upload-artifact@v4
+        with:
+          name: monthly-h1-original-periods-54x2-comparison
+          path: /tmp/full-h1-comparison.json
+          retention-days: 90
