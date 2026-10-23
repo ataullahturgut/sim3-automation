@@ -1,0 +1,27 @@
+name: Gold GPR 2010-to-Now Two Source-Vintage Complete Extract
+
+on:
+  push:
+    branches: [research-gold-2010-2026-five-series-integrity-20261023]
+    paths:
+      - gold_axis_2026/tools/gpr_official_2010_two_vintages_dump_v1.py
+      - .github/workflows/gold-gpr-2010-two-vintages-extract-v1.yml
+
+permissions:
+  contents: read
+env:
+  NEON_DATABASE_URL: ''
+
+jobs:
+  origin-verified-gpr:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install 'pandas>=2.2,<3' 'xlrd>=2.0,<3'
+      - name: Print source-verified official 2010+ GPR Sep and Oct vintages
+        run: |
+          test -z "${NEON_DATABASE_URL:-}"
+          python gold_axis_2026/tools/gpr_official_2010_two_vintages_dump_v1.py
