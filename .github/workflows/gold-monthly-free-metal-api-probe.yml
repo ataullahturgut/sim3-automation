@@ -24,6 +24,17 @@ jobs:
         run: test -z "${NEON_DATABASE_URL:-}"
       - name: Probe real external endpoints (4 metals across 4 years, anonymous access)
         run: python gold_axis_2026/tools/gold_monthly_free_api_coverage_probe_v1.py --output free_four_metal_source_probe.json
+      - name: Summarize provider HTTP status and daily grain without displaying prices
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open("free_four_metal_source_probe.json"))
+          for y, v in r["standard_bullion_daily_probe"].items():
+              for metal, x in v["metals"].items():
+                  print(f"STANDARD_BULLION year={y} metal={metal} status={x.get('http_status')} grain={x.get('grain')} points={x.get('points_in_response')} days={len(x.get('unique_daily_dates',[]))} reason={x.get('reason', x.get('error'))}")
+          for metal, x in r["gold_api_anonymous_live"].items():
+              print(f"GOLD_API_LIVE metal={metal} status={x.get('http_status')} valid={x.get('valid')}")
+          PY
       - name: Check public report was produced
         run: python -c "import json; r=json.load(open('free_four_metal_source_probe.json')); assert len(r['standard_bullion_daily_probe'])==4; assert len(r['gold_api_anonymous_live'])==4"
       - uses: actions/upload-artifact@v4
