@@ -39,5 +39,5 @@ jobs:
           python -m py_compile gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
           python -m py_compile gold_axis_2026/tools/vw_midas_anfis_stage3c_literature_v1.py
           python -m py_compile gold_axis_2026/tools/tests/test_monthly_label_free_forecast_v1.py
-      - name: Run nine synthetic regression tests including real ChHHO smoke
+      - name: Run ten synthetic regression tests including actual ChHHO price inference
         run: python -m unittest discover -s gold_axis_2026/tools/tests -p 'test_monthly_label_free_forecast_v1.py' -v
