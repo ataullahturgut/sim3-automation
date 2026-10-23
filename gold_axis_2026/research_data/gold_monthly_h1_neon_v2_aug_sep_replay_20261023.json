@@ -1,0 +1,82 @@
+{
+  "schema": "GOLD_MONTHLY_H1_NEON_2026_AUG_SEP_REAL_REPLAY_V2",
+  "as_of_utc": "2026-10-23",
+  "run_id": 39966067685,
+  "github_action": "https://github.com/ataullahturgut/sim3-automation/actions/runs/39966067685",
+  "tested_git_head": "6ca890a13c23b6240da330358b737523c11cea5e",
+  "algorithm_source_branch": "gold-midas-headswap-v1-20260925",
+  "price_data_revision_old": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+  "price_data_revision_2026": "lbruton/StakTrakr@02964d0324dde362099976c867f5077a369acaa5",
+  "gpr_authority_view": "gold_monthly_h1.gpr_origin_safe_model_v1",
+  "eight_feature_spec": "AU,AG,PT,PD × (MR1, origin-month VW-GPR)",
+  "models": [
+    "CHHHO-ANFIS",
+    "DE-ABC-RBFNN"
+  ],
+  "status": "REAL_MODEL_REPLAY_EXECUTED_SOURCE_AND_UNIT_TESTS_PASS",
+  "limits": [
+    "2026 price research snapshot captured Oct 2026, original historical as-of/firstprint not proven",
+    "Not prospectively validated",
+    "Only two opened monthly targets tested, not evidence of model superiority",
+    "No fitting hyperparameters selected using 2025/2026 test outcomes",
+    "Old 262 frozen forecast records remain unchanged"
+  ],
+  "results": [
+    {
+      "target_month": "2026-08",
+      "origin_month": "2026-07",
+      "model": "CHHHO",
+      "forecast_xau_usd_oz": 4088.675030560757,
+      "realized_xau_usd_oz": 4407.303809523809,
+      "absolute_error_usd_oz": 318.6287789630519,
+      "absolute_percentage_error_pct": 7.229562397639168,
+      "gpr_lag_observation_month": "2026-06",
+      "gpr_lag_value": 173.63955688476562,
+      "gpr_source_file": "gpr_archive_files/data_gpr_export_202607.xls",
+      "gpr_source_commit_sha": "4dfcd0d067e8fec2cd0a5afd162b4305e582988f",
+      "origin_eight_feature_sha256": "35d9a05ee670fc92a5042ad026c3cf069c472335b99f4dcd6464f3232e92d9ef"
+    },
+    {
+      "target_month": "2026-08",
+      "origin_month": "2026-07",
+      "model": "DE_ABC",
+      "forecast_xau_usd_oz": 4123.896186044285,
+      "realized_xau_usd_oz": 4407.303809523809,
+      "absolute_error_usd_oz": 283.40762347952386,
+      "absolute_percentage_error_pct": 6.430408152646615,
+      "gpr_lag_observation_month": "2026-06",
+      "gpr_lag_value": 173.63955688476562,
+      "gpr_source_file": "gpr_archive_files/data_gpr_export_202607.xls",
+      "gpr_source_commit_sha": "4dfcd0d067e8fec2cd0a5afd162b4305e582988f",
+      "origin_eight_feature_sha256": "35d9a05ee670fc92a5042ad026c3cf069c472335b99f4dcd6464f3232e92d9ef"
+    },
+    {
+      "target_month": "2026-09",
+      "origin_month": "2026-08",
+      "model": "CHHHO",
+      "forecast_xau_usd_oz": 4701.684304562234,
+      "realized_xau_usd_oz": 4327.880454545454,
+      "absolute_error_usd_oz": 373.8038500167795,
+      "absolute_percentage_error_pct": 8.637111259027119,
+      "gpr_lag_observation_month": "2026-07",
+      "gpr_lag_value": 152.66822814941406,
+      "gpr_source_file": "gpr_archive_files/data_gpr_export_202608.xls",
+      "gpr_source_commit_sha": "b2f5fd1ef1b04a2fc9072cabc07f4855c5498b93",
+      "origin_eight_feature_sha256": "0cd3af0f37ebf0f650f58ea63fa9188b656d3f74e9dd100dc9d9f36a1d5e8cfd"
+    },
+    {
+      "target_month": "2026-09",
+      "origin_month": "2026-08",
+      "model": "DE_ABC",
+      "forecast_xau_usd_oz": 4563.94329820702,
+      "realized_xau_usd_oz": 4327.880454545454,
+      "absolute_error_usd_oz": 236.06284366156615,
+      "absolute_percentage_error_pct": 5.4544677502271535,
+      "gpr_lag_observation_month": "2026-07",
+      "gpr_lag_value": 152.66822814941406,
+      "gpr_source_file": "gpr_archive_files/data_gpr_export_202608.xls",
+      "gpr_source_commit_sha": "b2f5fd1ef1b04a2fc9072cabc07f4855c5498b93",
+      "origin_eight_feature_sha256": "0cd3af0f37ebf0f650f58ea63fa9188b656d3f74e9dd100dc9d9f36a1d5e8cfd"
+    }
+  ]
+}
