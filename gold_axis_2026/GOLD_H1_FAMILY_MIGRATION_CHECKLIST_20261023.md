@@ -15,7 +15,7 @@
 | 3 | REDUCED4 ANN | Aynı ANN havuzunun dondurulmuş dört bileşeni | **54/54 PASS + 4/4 ACTIVE LEAK TEST PASS** | Aynı kaynak snapshot ve test; DEV ΣAE 1392.9719, 2025 1034.6766, 2026 1680.6234 ve 8/9 yön |
 | 4 | SMA-ELMFIS (yön uzmanı) | `tools/vw_midas_elmfis_meta_batch_5_v1.py` | BEKLİYOR | 0/54 |
 | 5 | AOA-ELM | `tools/vw_midas_elm_meta_batch_21_25_v1.py` | BEKLİYOR | 0/54 |
-| 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **3/3 bilimsel ön denetim PASS, Nisan 2022 gerçek model pilotu PASS, 54 ay model koşusu başlatıldı** | [Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055) tam tarihsel koşu DEV33 + 2025 12 + 2026 9; nihai performans ancak workflow tam başarılıysa onaylanır |
+| 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **54/54 PASS, DEV33 + 2025 12 + 2026 9, LMC2 tamamlandı** | [Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055) tüm işler SUCCESS; DEV ΣAE 1364.4169, 2025 ΣAE 1016.4622, 2026 ΣAE 1947.1634; 2026 %4.8433 MAPE ve 7/9 yön |
 | 7 | RBF epsilon-SVR DAILY12 | `tools/gold_monthly_svr_dwt_stage2b_representation_v1.py` ve Stage3 özgün yöntem | BEKLİYOR; CURRENT8 yerine özgün DAILY12 gerekiyorsa muhafaza | 0/54 |
 | 8 | CatBoost PRICE | `tools/gold_monthly_boosting_stage6b_catboost_full_dev_v1.py` ve Stage6 frozen model | BEKLİYOR; ekstra model paketi | 0/54 |
 
@@ -84,3 +84,17 @@ Bağımsız aktif nedensel sızıntı testi: [39987397390](https://github.com/at
 Tek V2 tarihsel frozen ANN kaynak snapshot'ı SHA256 `576efa5033975559e1a963e06a9dc5b2b2b47d87e046390100605bd132f4d15b` LMC2 için de kullanıldı. Orijinal `gpr_lmc_experiment_v1.tune` / `forecast` ve kovaryans çekirdeği hiç değişmedi. Yeniden yürütme adaptörü `tools/gold_monthly_h1_lmc2_frozen_replay_v1.py`. İlk 33 DEV tarihi per-origin optimize, yalnız 2025-01'de bir kez theta/scaler freeze, sonrası Ocak 2025–Eylül 2026 arası 21 ay ek veriyle Gaussian posterior. Onaylı preflight [39989531757](https://github.com/ataullahturgut/sim3-automation/actions/runs/39989531757) daha önce 54/54 kronolojik eğitim ve sentetik hedef-gelecek zehirleme kontrolünü geçti.
 
 **İlk kayıt sırasında 54/54 koşusunun son durumu henüz onaylanmadı**; 54 ayın tamamı ve kontrol işleri PASS olmadan yeni model performans rakamı yazılmamalı. DB değişiklikleri yok, frozen old models korunur.
+
+## 23 Ekim 2026 — LMC2 final 54/54 doğrulanmış sonuçlar
+
+Gerçek hesaplama [GitHub Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055): tek ay pilot `2022-04` PASS (tahmin 1949.620751, gerçekleşme 1935.039474, training n=145) → 54 ay tam koşu PASS, bütün science/assertion denetimleri PASS, [artifact](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055). Dataset tek immutably frozen source snapshot SHA256 `576efa5033975559e1a963e06a9dc5b2b2b47d87e046390100605bd132f4d15b`, hem LMC2 hem ANN için ortak; stok fiyatlar retrospektif, exact PIT firstprint değil.
+
+**Frozen external model proof:** 2025-01–2026-09 toplam 21 tahmin için tek `theta_sha256` `27d4c48eab...` ve tek scaler; `tuning_last=2024-12`. 2025/2026 ayları optimizasyon seçiminde kullanılmadı. 2010-03'ten başlayarak tüm 54 hedefte yalnız origin dahil tamamlanmış aylar (her hedef train_last=origin) kullanıldı. Orijinal çekirdek / optimizasyon fonksiyonlarına müdahale edilmedi.
+
+| Period | n | ΣAE $/oz | MAPE | Direction | GP interval95 coverage |
+|---|---:|---:|---:|---:|---:|
+| DEV 2022-04..2024-12 | 33 | 1364.416875 | 2.025530% | 20/33 | 32/33 |
+| TEST 2025-01..2025-12 | 12 | 1016.462195 | 2.461820% | 10/12 | 9/12 |
+| STRESS 2026-01..2026-09 | 9 | 1947.163439 | 4.843309% | 7/9 | 5/9 |
+
+**2026 aylık detaylar (%APE):** Jan 9.183, Feb 1.793, Mar 1.209, Apr 1.508, May 2.658, Jun 7.773, Jul 2.745, Aug 7.022, Sep 9.698. 2026 yön hata ayları Mar ve Sep. 95% aralıkların 2026'da 5/9 kapsamı kalibrasyon bozulması işaretidir; araştırma sonuçları içinde açık uyarı olarak korunmalı. Ortak havuzda **6/10 model tamamlandı**; kalan **RBF-SVR, CatBoost, AOA-ELM, SMA-ELMFIS**. Eski Ekim 2026 H1 etiketli/etiketsiz tahminler değiştirilmedi.
