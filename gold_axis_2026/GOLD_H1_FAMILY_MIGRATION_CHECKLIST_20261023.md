@@ -15,7 +15,7 @@
 | 3 | REDUCED4 ANN | Aynı ANN havuzunun dondurulmuş dört bileşeni | **54/54 PASS + 4/4 ACTIVE LEAK TEST PASS** | Aynı kaynak snapshot ve test; DEV ΣAE 1392.9719, 2025 1034.6766, 2026 1680.6234 ve 8/9 yön |
 | 4 | SMA-ELMFIS (yön uzmanı) | `tools/vw_midas_elmfis_meta_batch_5_v1.py` | BEKLİYOR | 0/54 |
 | 5 | AOA-ELM | `tools/vw_midas_elm_meta_batch_21_25_v1.py` | BEKLİYOR | 0/54 |
-| 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | BEKLİYOR; frozen external-parameter modeli ayrıca korunmalı | 0/54 |
+| 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **ALGORİTMA DENETİMİ 3/3 PASS; MODEL KOŞUSU BAŞLAMADI** | [LMC2 ön kontrol 39989531757](https://github.com/ataullahturgut/sim3-automation/actions/runs/39989531757). Matematiksel 40 türev + 54/54 köken tarihi, 2010 eğitim tarihi, kronolojik iç split, GPR kaynağı, hedef-gelecek zehirleme testi PASS. Tahmin 0/54 |
 | 7 | RBF epsilon-SVR DAILY12 | `tools/gold_monthly_svr_dwt_stage2b_representation_v1.py` ve Stage3 özgün yöntem | BEKLİYOR; CURRENT8 yerine özgün DAILY12 gerekiyorsa muhafaza | 0/54 |
 | 8 | CatBoost PRICE | `tools/gold_monthly_boosting_stage6b_catboost_full_dev_v1.py` ve Stage6 frozen model | BEKLİYOR; ekstra model paketi | 0/54 |
 
@@ -69,3 +69,10 @@ Bağımsız aktif nedensel sızıntı testi: [39987397390](https://github.com/at
 | STRESS 2026-01..2026-09 | 1604.002602 | 3.989352% | 8/9 | 1680.623431 | 4.163872% | 8/9 |
 
 **2026:** Her iki model de yalnız Eylül ayında yönü kaçırdı; diğer sekiz ayda doğru yön. FULL7 tahminleri 2026 Eylül için 4576.51 USD/oz, gerçek 4327.88; REDUCED4 4577.46 USD/oz. Karşılaştırma ve model seçimi DEV yetkisine bağlı, bu 2026 raporu yeni hiperparametre optimizasyon yetkisi değildir. **Sıradaki model:** LMC2_RBF_M32 GPR/MOGP; ardından RBF-SVR, CatBoost, AOA-ELM, SMA-ELMFIS.
+
+## LMC2 — 23 Ekim 2026, **algoritma kontrolü tamamlandı / eğitime geçilmedi**
+
+- [Preflight GitHub Actions 39989531757](https://github.com/ataullahturgut/sim3-automation/actions/runs/39989531757): 3/3 işler **SUCCESS**. Eski matematiksel testler `tools/test_gpr_lmc_core_v1.py` orijinal iki çekirdek, bağımsız matris kovaryansı, posterior ortalama ve varyans, matris kondisyonu, 40 türevin sonlu fark farkları, sentetik veriyle hedef/gelecek etiket değişmezliğini sınadı. Orijinal çözücü koduna müdahale edilmedi.
+- Yeni test `tools/gold_monthly_h1_lmc2_scientific_preflight_v1.py`: `NEON_STAKTRAKR_GPR_V2` salt-okunur kaynağı için 54/54 ayın tüm örneklerini 2010-03'ten önceki tamamlanan aya dek kontrol etti, 54/54 ön-test hedefine yapay Y+2099 örneği eklendiğinde GP eğitim/doğrulama matrisleri ve scaler değişmedi, resmi GPR sürüm/lag kaynak izleri uygun bulundu.
+- Korumalı eğitim seçimi: 2022–2024 DEV'de her ay kronolojik eğitim/son %20 doğrulama, üç L-BFGS-B tekrarından en iyi doğrulama sonucu, dış dönemler için parametrelerin ve scaler'in 2024-12 sonunda sabitlenmesi; 2025–2026 sırasında yalnız GP posterior geçmiş gözlemlerle genişler. Bu mimari orijinal dondurulmuş çalışmanın şartıdır, tarihsel dış dönem performansını bakıp hiperparametre değiştirme yetkisi değildir.
+- **Yeni LMC2 fiyat tahmini henüz 0/54**; tam koşuya başlamadan önceki matematik ve veri engelleri temizlendi. `gpr_lmc_experiment_v1.py` eski 2026-07 bitişli dönem tanımlarını körlemesine çalıştırmak yerine, V2 veri kontratı ve 2026-09'a genişletilmiş ayrı salt-okunur yürütme adaptörü gerekir. Resmi as-of GPR ile kaynak izinin doğrulanması StakTrakr retrospective GOLD price **firstprint/PIT ispatı değildir**.
