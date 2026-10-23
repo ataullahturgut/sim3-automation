@@ -62,18 +62,32 @@ def make_sample(bundle, target: str, arm: str, gpr_history: dict) -> tuple[np.nd
 
 
 def samples_for_outer_origin(bundle, target: str, arm: str) -> dict:
+    """Completed historical (X,Y), future outer target (X,None).
+
+    The GPR control retains bit-for-bit comparison with the canonical
+    label-free target source; no future target-month price is necessary.
+    """
     origin = base.month_shift(target, -1)
     history = bundle.gpr_vintages[origin] if arm == "GPR_PIT_CURRENT8" else {}
     result = {}
-    for t in base.month_range("2010-03", target):
+    for t in base.month_range("2010-03", origin):
         try:
             result[t] = make_sample(bundle, t, arm, history)
         except RuntimeError:
             continue
-    if target not in result:
-        raise RuntimeError(f"OUTER_TARGET_NOT_BUILDABLE {arm} {target}")
     if arm == "GPR_PIT_CURRENT8":
-        # Numerically certify identical original feature implementation.
+        target_x = base.feature_for_target(bundle, target, history, True)
+    else:
+        p, pp = base.month_shift(target, -1), base.month_shift(target, -2)
+        if any(p not in bundle.monthly_metal[m] or pp not in bundle.monthly_metal[m] for m in METALS):
+            raise RuntimeError(f"OUTER_TARGET_ORIGIN_FEATURE_MISSING {target}")
+        target_x = np.asarray([
+            z for metal in METALS for z in (
+                math.log(bundle.monthly_metal[metal][p] / bundle.monthly_metal[metal][pp]),
+                daily_feature(bundle, metal, p, arm, None))
+        ], float)
+    result[target] = (target_x, None)
+    if arm == "GPR_PIT_CURRENT8":
         canonical = base.all_samples_at_origin(bundle, target, governed=True)
         if set(result) != set(canonical):
             raise RuntimeError("CANONICAL_SAMPLE_SET_DIFFERENCE")
