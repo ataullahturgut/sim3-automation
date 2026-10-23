@@ -15,7 +15,7 @@
 | 3 | REDUCED4 ANN | Aynı ANN havuzunun dondurulmuş dört bileşeni | **54/54 PASS + 4/4 ACTIVE LEAK TEST PASS** | Aynı kaynak snapshot ve test; DEV ΣAE 1392.9719, 2025 1034.6766, 2026 1680.6234 ve 8/9 yön |
 | 4 | SMA-ELMFIS (yön uzmanı) | `tools/vw_midas_elmfis_meta_batch_5_v1.py` | BEKLİYOR | 0/54 |
 | 5 | AOA-ELM | `tools/vw_midas_elm_meta_batch_21_25_v1.py` | BEKLİYOR | 0/54 |
-| 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **ALGORİTMA DENETİMİ 3/3 PASS; MODEL KOŞUSU BAŞLAMADI** | [LMC2 ön kontrol 39989531757](https://github.com/ataullahturgut/sim3-automation/actions/runs/39989531757). Matematiksel 40 türev + 54/54 köken tarihi, 2010 eğitim tarihi, kronolojik iç split, GPR kaynağı, hedef-gelecek zehirleme testi PASS. Tahmin 0/54 |
+| 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **3/3 bilimsel ön denetim PASS, Nisan 2022 gerçek model pilotu PASS, 54 ay model koşusu başlatıldı** | [Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055) tam tarihsel koşu DEV33 + 2025 12 + 2026 9; nihai performans ancak workflow tam başarılıysa onaylanır |
 | 7 | RBF epsilon-SVR DAILY12 | `tools/gold_monthly_svr_dwt_stage2b_representation_v1.py` ve Stage3 özgün yöntem | BEKLİYOR; CURRENT8 yerine özgün DAILY12 gerekiyorsa muhafaza | 0/54 |
 | 8 | CatBoost PRICE | `tools/gold_monthly_boosting_stage6b_catboost_full_dev_v1.py` ve Stage6 frozen model | BEKLİYOR; ekstra model paketi | 0/54 |
 
@@ -76,3 +76,11 @@ Bağımsız aktif nedensel sızıntı testi: [39987397390](https://github.com/at
 - Yeni test `tools/gold_monthly_h1_lmc2_scientific_preflight_v1.py`: `NEON_STAKTRAKR_GPR_V2` salt-okunur kaynağı için 54/54 ayın tüm örneklerini 2010-03'ten önceki tamamlanan aya dek kontrol etti, 54/54 ön-test hedefine yapay Y+2099 örneği eklendiğinde GP eğitim/doğrulama matrisleri ve scaler değişmedi, resmi GPR sürüm/lag kaynak izleri uygun bulundu.
 - Korumalı eğitim seçimi: 2022–2024 DEV'de her ay kronolojik eğitim/son %20 doğrulama, üç L-BFGS-B tekrarından en iyi doğrulama sonucu, dış dönemler için parametrelerin ve scaler'in 2024-12 sonunda sabitlenmesi; 2025–2026 sırasında yalnız GP posterior geçmiş gözlemlerle genişler. Bu mimari orijinal dondurulmuş çalışmanın şartıdır, tarihsel dış dönem performansını bakıp hiperparametre değiştirme yetkisi değildir.
 - **Yeni LMC2 fiyat tahmini henüz 0/54**; tam koşuya başlamadan önceki matematik ve veri engelleri temizlendi. `gpr_lmc_experiment_v1.py` eski 2026-07 bitişli dönem tanımlarını körlemesine çalıştırmak yerine, V2 veri kontratı ve 2026-09'a genişletilmiş ayrı salt-okunur yürütme adaptörü gerekir. Resmi as-of GPR ile kaynak izinin doğrulanması StakTrakr retrospective GOLD price **firstprint/PIT ispatı değildir**.
+
+## 23 Ekim 2026 LMC2 gerçek deney başlatılması
+
+[Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055): `pilot` işinin tamamı **SUCCESS**: 2022-04 gerçek veri, orijinal 3 tekrar × 40-parametre bounded L-BFGS-B, exact Gaussian Process posterior, 2010-03…2022-03 eğitim kontrolü, maksimum covariance condition bound ve finite tahmin doğrulandı. Yalnız pilot koşusu için başarı var; daha geniş dönem bitmeden onu tamamlandı sayma.
+
+Tek V2 tarihsel frozen ANN kaynak snapshot'ı SHA256 `576efa5033975559e1a963e06a9dc5b2b2b47d87e046390100605bd132f4d15b` LMC2 için de kullanıldı. Orijinal `gpr_lmc_experiment_v1.tune` / `forecast` ve kovaryans çekirdeği hiç değişmedi. Yeniden yürütme adaptörü `tools/gold_monthly_h1_lmc2_frozen_replay_v1.py`. İlk 33 DEV tarihi per-origin optimize, yalnız 2025-01'de bir kez theta/scaler freeze, sonrası Ocak 2025–Eylül 2026 arası 21 ay ek veriyle Gaussian posterior. Onaylı preflight [39989531757](https://github.com/ataullahturgut/sim3-automation/actions/runs/39989531757) daha önce 54/54 kronolojik eğitim ve sentetik hedef-gelecek zehirleme kontrolünü geçti.
+
+**İlk kayıt sırasında 54/54 koşusunun son durumu henüz onaylanmadı**; 54 ayın tamamı ve kontrol işleri PASS olmadan yeni model performans rakamı yazılmamalı. DB değişiklikleri yok, frozen old models korunur.
