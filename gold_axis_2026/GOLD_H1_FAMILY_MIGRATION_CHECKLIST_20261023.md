@@ -16,7 +16,7 @@
 | 4 | SMA-ELMFIS (yön uzmanı) | `tools/vw_midas_elmfis_meta_batch_5_v1.py` | BEKLİYOR | 0/54 |
 | 5 | AOA-ELM | `tools/vw_midas_elm_meta_batch_21_25_v1.py` | BEKLİYOR | 0/54 |
 | 6 | LMC2_RBF_M32 | `tools/gpr_lmc_experiment_v1.py`, `tools/gpr_lmc_core_v1.py` | **54/54 PASS, DEV33 + 2025 12 + 2026 9, LMC2 tamamlandı** | [Actions 39990355055](https://github.com/ataullahturgut/sim3-automation/actions/runs/39990355055) tüm işler SUCCESS; DEV ΣAE 1364.4169, 2025 ΣAE 1016.4622, 2026 ΣAE 1947.1634; 2026 %4.8433 MAPE ve 7/9 yön |
-| 7 | RBF epsilon-SVR DAILY12 | `tools/gold_monthly_svr_dwt_stage2b_representation_v1.py` ve Stage3 özgün yöntem | BEKLİYOR; CURRENT8 yerine özgün DAILY12 gerekiyorsa muhafaza | 0/54 |
+| 7 | EPSILON_RBF_DAILY12 (RBF-SVR) | `tools/gold_monthly_svr_dwt_stage2c_formulation_v1.py`, dondurulmuş orijinal Stage2C parent, DAILY_SUMMARY12, C=1, epsilon=0.1, gamma=scale | **54/54 PASS ve 54/54 aktif hedef/gelecek zehirleme testi PASS** | [Actions 39992356299](https://github.com/ataullahturgut/sim3-automation/actions/runs/39992356299); DEV ΣAE 1421.7529, 2025 1220.2910, 2026 1925.1144; 2026 MAPE %4.7543 ve 6/9 yön |
 | 8 | CatBoost PRICE | `tools/gold_monthly_boosting_stage6b_catboost_full_dev_v1.py` ve Stage6 frozen model | BEKLİYOR; ekstra model paketi | 0/54 |
 
 ## Her modelin zorunlu kapısı
@@ -98,3 +98,19 @@ Gerçek hesaplama [GitHub Actions 39990355055](https://github.com/ataullahturgut
 | STRESS 2026-01..2026-09 | 9 | 1947.163439 | 4.843309% | 7/9 | 5/9 |
 
 **2026 aylık detaylar (%APE):** Jan 9.183, Feb 1.793, Mar 1.209, Apr 1.508, May 2.658, Jun 7.773, Jul 2.745, Aug 7.022, Sep 9.698. 2026 yön hata ayları Mar ve Sep. 95% aralıkların 2026'da 5/9 kapsamı kalibrasyon bozulması işaretidir; araştırma sonuçları içinde açık uyarı olarak korunmalı. Ortak havuzda **6/10 model tamamlandı**; kalan **RBF-SVR, CatBoost, AOA-ELM, SMA-ELMFIS**. Eski Ekim 2026 H1 etiketli/etiketsiz tahminler değiştirilmedi.
+
+## 23 Ekim 2026 — SVR eski başarılı modelini aynen yeniden koşturma: 54/54 PASS
+
+- **Doğru model**: 2022–2024 eski dev ΣAE 1449.187363 gösteren model **`EPSILON_RBF_DAILY12`**. `CURRENT8` SVR değil; orijinal dondurma [Stage2C parent](GOLD_MONTHLY_SVR_DWT_STAGE2C_FORMULATION_PARENT_FREEZE_2026-09-28.md). 4 metal × {origin ayı açılış-kapanış log return, log günlük return gerçekleşen volatilite, ay içi max/min log range} = **12 özellik**. `COMMON_TRAIN_START=2010-05`, model `sklearn.svm.SVR(kernel='rbf', C=1, epsilon=.1, gamma='scale', shrinking=True, tol=.001)`; scaler her ay yalnız ilgili geçmiş eğitim örneklerinden türetilir. Kod `tools/gold_monthly_svr_dwt_stage2c_formulation_v1.py` değiştirilmedi.
+- **Kaynak**: `NEON_STAKTRAKR_GPR_V2`, 54 köken ayı 2022-04...2026-09; 2010-05…origin dahil önceki tamamlanan eğitim etiketleri. 2022-04 için 143 satır, 2026-09 için 196 satır. Tek geliştirme penceresi 2022-04...2024-12, 2025/2026 performansı sadece raporlama; **parametreler geçmiş dondurma ayarlarından hiç yeniden seçilmedi**.
+- **Sızıntı**: Tam 54/54 origin için hedef ayın metal aylık fiyatları ve tüm günlük verileri ile XAU actual değeri kasıtlı 10000× zehirlendi; 2099 yılından sahte fiyat serisi eklendi. Eğitim X/y matrisi, 12 boyutlu hedef X, aynı SVR tahmini ve geçmiş eğitim sayısı **tamamında aynı kaldı**. `Stage2B` DAILY_SUMMARY12 ile `Stage2C` DAILY_SUMMARY12 özellik vektörü her origin için birebir eşit. Ne hedef ay etiketi ne sahte gelecek ay verisi model öğrenimine girmiyor.
+- **İlk köprü hatası**: [39992012820](https://github.com/ataullahturgut/sim3-automation/actions/runs/39992012820) 54/54 audit PASS, pilot FAIL; neden orijinal Stage2C sonuç sözlüğünde `absolute_error` alanı bulunmaması ve yeni raporlama katmanının alanı beklemesi. Kök model etkilenmedi; raporlayıcı `abs(forecast-actual)` ile düzeltildi.
+- **Son başarılı koşu**: [39992356299](https://github.com/ataullahturgut/sim3-automation/actions/runs/39992356299) tüm 3 aşama **SUCCESS**: audit 54/54 → Nisan 2022 pilot tahmin 1970.392418, gerçek 1935.039474, başarı → 54 aylık orijinal model tam koşu PASS. Kaynak/neon üzerinde DB yazımı veya önceki modellerin dosyasında değişiklik yok. StakTrakr tarihsel market fiyatları **PIT / firstprint doğrulanmadı**.
+
+| SVR sonuç dönemi | n | ΣAE USD/oz | MAPE | Yön |
+|---|---:|---:|---:|---:|
+| DEV 2022-04..2024-12 | 33 | 1421.752899 | 2.124651% | 20/33 |
+| TEST 2025-01..2025-12 | 12 | 1220.290959 | 2.855071% | 9/12 |
+| STRESS 2026-01..2026-09 | 9 | 1925.114420 | 4.754341% | 6/9 |
+
+2026 dokuz aylık en büyük mutlak fiyat hatası **Ocak 2026**. Tüm 54 tahmin satırı çalışma artifact'ında kalıcıdır. Yeni havuz durumu **7/10 model tamamlandı**, sırada **CatBoost, AOA-ELM, SMA-ELMFIS**.
