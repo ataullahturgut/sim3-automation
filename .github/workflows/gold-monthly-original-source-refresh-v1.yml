@@ -64,6 +64,14 @@ jobs:
             --gpr-oct source_input/data_gpr_export_202610.xls \
             --wb source_input/CMO-Historical-Data-Monthly.xlsx \
             --report report/GOLD_MONTHLY_GPR_WB_ORIGINAL_SOURCE_GATE_V1.json
+      - name: Inspect official monthly workbook layouts
+        run: |
+          python -m pip install 'pandas>=2.2,<3' 'xlrd>=2.0,<3' 'openpyxl>=3.1,<4'
+          python gold_axis_2026/tools/gold_monthly_inspect_official_workbooks_v1.py \
+            --gpr-sep source_input/data_gpr_export_202609.xls \
+            --gpr-oct source_input/data_gpr_export_202610.xls \
+            --wb source_input/CMO-Historical-Data-Monthly.xlsx \
+            --report report/GOLD_MONTHLY_OFFICIAL_WORKBOOK_STRUCTURE_INSPECTION.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-monthly-original-sources-staging-${{ github.sha }}
@@ -71,5 +79,6 @@ jobs:
             report/GOLD_MONTHLY_STAK_ORIGINAL_SOURCE_REFRESH_AUDIT_V1.json
             report/GOLD_MONTHLY_AUG_SEP_2026_FOUR_METAL_SHADOW_DATA.json
             report/GOLD_MONTHLY_GPR_WB_ORIGINAL_SOURCE_GATE_V1.json
+            report/GOLD_MONTHLY_OFFICIAL_WORKBOOK_STRUCTURE_INSPECTION.json
           if-no-files-found: error
           retention-days: 90
