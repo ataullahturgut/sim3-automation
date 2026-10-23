@@ -139,10 +139,23 @@ class MonthlyUnlabeledTargetTests(unittest.TestCase):
              patch.object(chhho, "REPEATS", 1), patch.object(av6, "LOCAL_MAX_EPOCHS", 2):
             first, n1, diag1 = chhho.select(a, TARGET, "CHHHO")
             second, n2, diag2 = chhho.select(b, TARGET, "CHHHO")
+            price_first = chhho.forecast_at_origin(self.bundle_with_future, TARGET, 4309.0)
+            price_second = chhho.forecast_at_origin(self.bundle_without_future, TARGET, 4309.0)
         self.assertEqual(n1, n2)
         self.assertTrue(np.isfinite(first).all())
         np.testing.assert_array_equal(first, second)
         self.assertEqual(diag1, diag2)
+        self.assertEqual(price_first, price_second)
+        self.assertEqual(price_first["actual_usd_oz"], None)
+        self.assertEqual(price_first["status"], "RESEARCH_ONLY_UNCERTIFIED_ORIGIN_PRICE")
+        self.assertEqual(price_first["forecast_usd_oz"],
+                         4309.0*math.exp(price_first["pred_log_return_gold"]))
+
+    def test_forward_requires_explicit_positive_origin_level(self):
+        for bad in (0, -1, float("nan"), float("inf")):
+            with self.assertRaisesRegex(ValueError,
+                                        "ASOF_ORIGIN_REFERENCE_MUST_BE_FINITE_POSITIVE"):
+                chhho.forecast_at_origin(self.bundle_without_future, TARGET, bad)
 
 
 if __name__ == "__main__":
