@@ -57,8 +57,8 @@ def source_extract(outfile,fred_path):
     if "observation_date" in header and "gvzcls" in header:
         datekey,valuekey=header["observation_date"],header["gvzcls"]
         actual_source="CBOE_GVZ_VIA_FRED_OFFICIAL"
-    elif "date" in header and "close" in header:
-        datekey,valuekey=header["date"],header["close"]
+    elif "date" in header and ("close" in header or "gvz" in header):
+        datekey,valuekey=header["date"],header.get("gvz",header.get("close"))
         actual_source="CBOE_GVZ_CBOE_OFFICIAL_HISTORICAL_DOWNLOAD"
     else:
         raise RuntimeError("MARKET_FRAGILITY_FAIL_CLOSED: UNKNOWN_GVZ_CSV_COLUMNS_"+str(list(rows[0])))
