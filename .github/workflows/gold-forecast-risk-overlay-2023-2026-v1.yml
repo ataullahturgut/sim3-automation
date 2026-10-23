@@ -1,0 +1,97 @@
+name: Gold Forecast Risk Overlay 2023-2026 V1
+on:
+  push:
+    branches: [gold-forecast-risk-overlay-v1-20261023]
+    paths:
+      - .github/workflows/gold-forecast-risk-overlay-2023-2026-v1.yml
+      - gold_axis_2026/tools/gold_forecast_risk_overlay_2023_2026_v1.py
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONUNBUFFERED: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    name: Independent four metals 2010-2026, CBOE GVZ and Neon USD H10 + DGS10 H15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - name: Download historical official CBOE GVZ
+        run: |
+          curl --http1.1 --fail --show-error --location --retry 3 --retry-delay 2 \
+            --connect-timeout 10 --max-time 60 -A 'Mozilla/5.0' \
+            'https://cdn.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv' \
+            -o /tmp/gvz-official.csv
+          test "$(wc -c < /tmp/gvz-official.csv)" -gt 80000
+          head -n 2 /tmp/gvz-official.csv
+          sha256sum /tmp/gvz-official.csv
+      - name: Read only four-metal and USD/rates dated source including quality gates
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/gold_forecast_risk_overlay_2023_2026_v1.py \
+            --mode source --gvz-csv /tmp/gvz-official.csv --out /tmp/risk-overlay-source.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-overlay-2023-2026-source
+          path: |
+            /tmp/gvz-official.csv
+            /tmp/risk-overlay-source.json
+          retention-days: 90
+  replay:
+    runs-on: ubuntu-24.04
+    needs: source
+    timeout-minutes: 40
+    name: 2023-24 fit 2025 diagnostic; 2023-25 fit 2026 separate overlay
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn==1.9.1' 'psycopg[binary]'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-risk-overlay-2023-2026-source
+          path: /tmp/input
+      - name: Strict lagged cross-source signal replay and fixed 10% / 5% anomaly thresholds
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_forecast_risk_overlay_2023_2026_v1.py \
+            --mode score --snapshot /tmp/input/risk-overlay-source.json \
+            --out /tmp/risk-overlay-2023-2026-full.json
+      - name: Fail-closed chronological and release-lag gates
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/risk-overlay-2023-2026-full.json'))
+          assert p['no_base_price_model_changed']
+          assert p['ann_error_probability_validated'] is False
+          assert p['forecast_error_lookback_not_present']
+          assert p['data_vintage_verified'] is False
+          assert set(p['families'])==set(['METAL_ONLY','METAL_GVZ','METAL_GVZ_USD_RATES','USD_RATES_ONLY'])
+          dates=[x['origin'] for x in p['rows'] if x['family']=='METAL_GVZ_USD_RATES' and x['origin'].startswith('2026-')]
+          assert '2026-01-29' in dates and '2026-01-30' in dates
+          assert len(dates)>90
+          assert all(x['usd_last_release']<=x['origin'] and
+             x['dgs10_last_obs']<x['origin'] and
+             x['forecast_target_start']>x['origin'] and
+             x['horizon5_last']>x['forecast_target_start'] and
+             x['origin']!='2026-02-27' for x in p['rows'])
+          assert all(x['horizon5_last']!='2026-02-27' for x in p['rows'])
+          print('GOLD_FORECAST_RISK_OVERLAY_SOURCE_TIME_AND_BASEMODEL_GATES_PASS',len(p['rows']))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-overlay-2025-2026-daily-flags-and-metrics
+          path: /tmp/risk-overlay-2023-2026-full.json
+          retention-days: 90
