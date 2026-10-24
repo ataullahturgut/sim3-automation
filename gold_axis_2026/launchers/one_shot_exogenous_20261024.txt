@@ -1,0 +1,1 @@
+Authorised one-time official-source archive download — 2026-10-24. No Neon writes; no model run. After completion remove one-shot push trigger from branch workflow. This marker is never referenced by any other workflow.
