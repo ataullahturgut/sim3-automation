@@ -1,0 +1,40 @@
+name: Gold Official Exogenous Archives — MANUAL Only
+# Research ingestion deliberately requires workflow_dispatch.
+# No schedule, push, workflow_run or chain execution.
+on:
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "Manual run only; no Neon write, no model training"
+        required: false
+        default: "Source audit"
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Source branch
+        uses: actions/checkout@v4
+        with:
+          ref: gold-risk-exogenous-data-ingest-v1-20261024
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install download and publisher HTML resolver only
+        run: python -m pip install 'requests>=2.31,<3' 'beautifulsoup4>=4.11,<5'
+      - name: Capture official archives; preserve missing-data blockers
+        run: |
+          python gold_axis_2026/tools/gold_exogenous_official_archive_capture_v1.py \
+            --outdir /tmp/gold_exogenous
+          cat /tmp/gold_exogenous/source_inventory.json | python -c \
+            "import json,sys;d=json.load(sys.stdin);print({k:v['status'] for k,v in d['inventory'].items()})"
+      - name: Upload raw archive evidence for staged validation
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-exogenous-official-source-archive-audit
+          path: /tmp/gold_exogenous/
+          retention-days: 30
