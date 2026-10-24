@@ -1,0 +1,18 @@
+# TR09 H3 — Calendar-exposure duration as a preknown downside-risk feature (2026-10-24)
+
+Status: PRE-RESULT FROZEN exploratory research protocol. No model promotion or trade.
+
+## Unique, bounded hypothesis
+At 09:00 Europe/Istanbul, the *calendar-day duration* from the current origin to the third subsequent eligible 09:00 trading anchor is known in advance from the trading calendar. A horizon spanning a weekend/holiday (target_date - origin_date >= 5 calendar days) may have greater probability of a >=2% XAU/USD loss than a shorter 3/4-day horizon, even though both are three eligible business-day returns. This is a distinct calendar-time exposure test, NOT another prior-five-day volatility/drawdown feature. The weekend/holiday flag is pre-origin observable without a price vendor, subject to historically known trading closures. No alternative weekday bins or thresholds will be selected after observing outcomes.
+
+## Source, timing, labels
+Read-only Neon project winter-art-94880101 table public.gold_research_histdata_xau15m_candidate; HistData fixed-EST M1→M15, require native_minute_bars=15 and bar_start_utc converted to Europe/Istanbul local 08:45, bar closes at local09:00. Exact 09:00 anchor price = M15 close_price; actual execution at precisely09:00 and historical firstprint NOT verified, so retrospective-only outcome, NOT certified tradable PIT. Anchor time is used for labels and historical controls, NOT assumed available at08:45. Calendar exposure uses dates alone, known in advance. Existing calendar excludes 2023-01-02/04-07/12-25, 2024-01-01/03-29/12-25, 2025-01-01/04-18/12-25, 2026-01-01/04-03; 2026-09-25 missing quote remains outage (do NOT reclassify holiday). Mon–Fri eligible, third next eligible date, require exact quote on current, five previous eligible and third target date, fail-closed if absent.
+
+Y_up=1[Ptarget>Pcurrent]; Y_tail=1[Ptarget/Pcurrent<=0.98]; no prices from target in predictors. NEW binary gate long_calendar=(target_date-origin_date >=5). Historical source retrieved 2026-10-08, not as-of certified.
+
+## Freeze training, comparators, scoring
+Train origins 2023-01-01 through 2024-12-31 with target_date<=2024-12-31 (purged boundary). Evaluate fixed model in 2025 and Jan–Sep2026 separately. Use exact same rows and same train for 4 arms: constant; two_up=(Pcurrent>Pprev1>Pprev2); five-session realized-vol Q75 (sqrt(mean of five squared log returns), threshold from TRAIN ONLY); new long_calendar gate. Fit each gate's two groups via independent Laplace event rate (events+1)/(n+2) for P_up and P_tail. Direction UP iff P_up>=.5. No retraining on2025/26, no tuning on inspected periods. Metrics by year: N, actual UP/DOWN, tail count, balanced accuracy, UP recall, DOWN recall, direction Brier, tail Brier, long/short tail event rate, compared on identical dates with all controls. Sanity check target gap days and train counts.
+
+Acceptance: Only consider a research candidate if lower tail Brier than BOTH constant and five-session volatility on EACH 2025 and 2026 and no material signed-probability deterioration; require both UP/DOWN recalls, not accuracy alone. Even if favorable, 2025/26 were repeatedly inspected, outcomes overlap and are NOT independent validation. No causal weekend claim, no bank P&L, no production change; 2027 prospective issue-before-outcome with vendor-vintage and actual bank bid/ask is mandatory.
+
+Repository branch baseline HEAD before this prereg: cbb8cfb8035915db5b05ed2d36c7f5b6a7f09768. Canonical manifest blob 279dae0b2d5694593adda076d644a5d186241304 read and left untouched. Prior 2026-10-22 lagged vol and 2026-10-23 max-drawdown studies preserved.
