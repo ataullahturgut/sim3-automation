@@ -1,14 +1,7 @@
 name: Gold Control Data Scheduler - Authority and XAU
 
+# AUTOMATION PAUSED 2026-10-24 at user request. Manual workflow_dispatch retained.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/gold_control_data_neon_scheduler.yml'
-  schedule:
-    - cron: '17 * * * *'
-    - cron: '45 23 * * *'
-    - cron: '25 6 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -17,6 +10,7 @@ on:
         default: 'daily'
         type: choice
         options: [hourly, daily]
+
 
 concurrency:
   group: gold-control-data-neon-scheduler
