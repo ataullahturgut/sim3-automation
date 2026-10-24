@@ -114,20 +114,13 @@ def to_csv(records):
     writer.writeheader();writer.writerows(records)
     return out.getvalue()
 def capture_spdr(sess,root):
-    raw,_=download(sess,GLD,max_bytes=3_000_000)
-    html=BeautifulSoup(raw,"html.parser")
-    hits=[]
-    for a in html.find_all("a",href=True):
-        t=a.get_text(" ",strip=True).lower()
-        href=urljoin(GLD,a["href"])
-        if "api.spdrgoldshares.com" in href and ("xlsx" in href.lower() or "historical" in href.lower() or "archive" in href.lower() or "download" in t):
-            hits.append(href)
-    hits=list(dict.fromkeys(hits))
-    if len(hits)!=1:raise RuntimeError("GLD_AMBIGUOUS_HISTORIC_XLSX_LINKS "+repr(hits[:8]))
-    b,url=download(sess,hits[0],max_bytes=25_000_000)
+    # The publisher's own Historical Archive XLSX link; not a gold bar list.
+    url="https://api.spdrgoldshares.com/api/v1/historical-archive?exchange=NYSE&lang=en&product=gld"
+    b,final=download(sess,url,max_bytes=30_000_000)
     if not b.startswith(b"PK"):raise ValueError("GLD_DOWNLOAD_NOT_XLSX")
-    return safe_save(root,"gld_official_historical_archive.xlsx",b,url,"xlsx",
-         notes="Downloaded publisher archive; date coverage and point-in-time posting to be separately audited")
+    return safe_save(root,"gld_official_historical_archive.xlsx",b,final,"xlsx",
+         notes="Original issuer XLSX, daily record dates and publication vintage need review")
+
 def capture_slv(sess,root):
     raw,_=download(sess,SLV,max_bytes=3_000_000)
     soup=BeautifulSoup(raw,"html.parser")
