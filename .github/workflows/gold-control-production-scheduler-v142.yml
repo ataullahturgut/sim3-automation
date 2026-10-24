@@ -1,20 +1,7 @@
 name: Gold Control Production Scheduler V1.42
 
+# AUTOMATION PAUSED 2026-10-24 at user request. Manual workflow_dispatch retained.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/gold-control-production-scheduler-v142.yml'
-  schedule:
-    - cron: '17 * * * *'       # core hourly XAU
-    - cron: '27 * * * *'       # current production snapshot refresh
-    - cron: '45 23 * * *'      # core daily authority ingest
-    - cron: '25 6 * * *'       # core daily independent retry
-    - cron: '15 1 * * 2-6'     # FRED indices after US session
-    - cron: '30 12 * * 2-6'    # FRED indices retry
-    - cron: '35 1 * * 2-6'     # Twelve market after US session
-    - cron: '45 12 * * 2-6'    # Twelve market retry
-    - cron: '10 22 * * 1-5'    # canonical XAU NY17 after 17:00 New York
   workflow_dispatch:
     inputs:
       lane:
@@ -29,6 +16,7 @@ on:
           - fred-indices
           - twelve-market
           - xau-ny17
+
 
 permissions:
   contents: read
