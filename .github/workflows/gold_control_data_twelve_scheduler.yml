@@ -1,14 +1,9 @@
 name: Gold Control Data Scheduler - Twelve Market
 
+# AUTOMATION PAUSED 2026-10-24 at user request. Manual workflow_dispatch retained.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/gold_control_data_twelve_scheduler.yml'
-  schedule:
-    - cron: '35 1 * * 2-6'
-    - cron: '45 12 * * 2-6'
   workflow_dispatch:
+
 
 concurrency:
   group: gold-control-data-twelve-scheduler
