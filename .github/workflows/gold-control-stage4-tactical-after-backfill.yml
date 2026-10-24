@@ -1,13 +1,7 @@
 name: Gold Control Stage4 Tactical After Backfill
 
+# AUTOMATION PAUSED 2026-10-24 at user request; manual workflow_dispatch retained.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/gold-control-stage4-tactical-after-backfill.yml'
-  workflow_run:
-    workflows: ["Gold Control XAU NY17 History Backfill"]
-    types: [completed]
   workflow_dispatch:
 
 permissions:
