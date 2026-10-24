@@ -1,9 +1,7 @@
 name: Gold Control Stage4 Monthly Direction Issue
 
+# AUTOMATION PAUSED 2026-10-24 at user request; manual workflow_dispatch retained.
 on:
-  workflow_run:
-    workflows: ["Gold Control Stage4 Monthly Direction After Backfill"]
-    types: [completed]
   workflow_dispatch:
 
 permissions:
