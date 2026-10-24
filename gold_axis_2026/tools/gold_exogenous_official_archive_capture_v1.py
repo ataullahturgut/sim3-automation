@@ -71,9 +71,9 @@ def parse_cftc(zbytes,year,root):
     out={}; all_name=[]
     for row in reader:
         name=str(field(row,"Market_and_Exchange_Names","Contract_Market_Name") or "")
-        if "GOLD" in name.upper() and ("COMMODITY EXCHANGE" in name.upper() or "COMEX" in name.upper()):
+        if name.strip()=="GOLD - COMMODITY EXCHANGE INC." and str(field(row,"CFTC_Contract_Market_Code") or "").strip()=="088691":
             metal="GC"
-        elif "SILVER" in name.upper() and ("COMMODITY EXCHANGE" in name.upper() or "COMEX" in name.upper()):
+        elif name.strip()=="SILVER - COMMODITY EXCHANGE INC." and str(field(row,"CFTC_Contract_Market_Code") or "").strip()=="084691":
             metal="SI"
         else:continue
         day=str(field(row,"Report_Date_as_YYYY-MM-DD","Report_Date_as_YYYY_MM_DD","As_of_Date_In_Form_YYMMDD") or "").strip()
