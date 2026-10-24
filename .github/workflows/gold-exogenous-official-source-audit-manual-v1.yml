@@ -2,6 +2,9 @@ name: Gold Official Exogenous Archives — MANUAL Only
 # Research ingestion deliberately requires workflow_dispatch.
 # No schedule, push, workflow_run or chain execution.
 on:
+  push:
+    branches: [gold-risk-exogenous-data-ingest-v1-20261024]
+    paths: ['gold_axis_2026/launchers/one_shot_exogenous_20261024.txt']
   workflow_dispatch:
     inputs:
       note:
