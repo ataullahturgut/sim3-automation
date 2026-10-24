@@ -1,9 +1,8 @@
 name: GC-BREAK WP1 Closure Resume V1
 
+# AUTOMATION PAUSED 2026-10-24 at user request. Manual workflow_dispatch retained.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '17 */6 * * *'
 
 permissions:
   contents: read
