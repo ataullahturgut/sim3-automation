@@ -1,15 +1,14 @@
 name: GC-BREAK WP1 Neon Persist After Closure V1
 
+# AUTOMATION PAUSED 2026-10-24 at user request. Manual workflow_dispatch retained.
 on:
-  workflow_run:
-    workflows: ["GC-BREAK WP1 Closure Resume V1"]
-    types: [completed]
   workflow_dispatch:
     inputs:
       source_run_id:
         description: Successful WP1 closure run id to persist
         required: true
         type: string
+
 
 permissions:
   contents: read
