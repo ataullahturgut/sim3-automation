@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 import pandas as pd
-from risk_v24_event_timelines import load,event_timeline,research_summary,O
+from risk_v24_event_timelines import load,event_timeline,research_summary,family_timeline,O
 
 class StrictNineEventTimeline(unittest.TestCase):
     @classmethod
@@ -41,6 +41,16 @@ class StrictNineEventTimeline(unittest.TestCase):
         self.assertFalse(bool(self.events.true_intraday_onset_verified.any()))
         self.assertEqual(self.prices.loc[self.prices.quarantined,"date"].tolist(),
                          ["2026-02-27"])
+    def test_seven_families_first_episode_credited_once(self):
+        f=family_timeline(self.events).set_index("economic_family")
+        self.assertEqual(len(f),7)
+        self.assertEqual(f.family_verdict.value_counts().to_dict(),
+                         {"EARLY":4,"MISSED_STRICT_PREPEAK":2,
+                          "UNKNOWN_NO_MODEL_COVERAGE":1})
+        self.assertEqual(f.loc["2026_JUNE","first_component_peak"],"2026-06-04")
+        self.assertEqual(f.loc["2026_JUNE","family_verdict"],"MISSED_STRICT_PREPEAK")
+        self.assertEqual(f.loc["2026_MAR","family_verdict"],"UNKNOWN_NO_MODEL_COVERAGE")
+        self.assertEqual(f.loc["2025_APR_MAY","component_count"],2)
     def test_quality_counts_partition(self):
         m=research_summary(self.events)
         self.assertTrue((m.events == m.strict_early_signal +
