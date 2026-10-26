@@ -1,0 +1,33 @@
+name: Gold Risk Legacy CFTC GVZ Fed V12 - Research Only
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - gold-risk-official-download-retry-v4-20261026
+    paths:
+      - gold_axis_2026/research/V12_LEGACY_OFFICIAL_DOWNLOAD_TRIGGER_20261026.md
+permissions:
+  contents: read
+jobs:
+  legacy-official:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-risk-official-download-retry-v4-20261026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install HTTP client
+        run: python -m pip install "requests>=2.31,<3"
+      - name: Fetch official 2010-2019 original archives and audit
+        run: python gold_axis_2026/tools/gold_risk_legacy_macro_acquisition_v12.py
+      - name: Preserve evidence, hashes, source-release warnings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-official-legacy-2010-2019-v12
+          path: /tmp/gold_risk_legacy_macro_2010_2019_v12
+          if-no-files-found: error
+          retention-days: 30
