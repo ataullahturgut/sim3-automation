@@ -51,3 +51,26 @@ jobs:
             gold_axis_2026/research/case_control_v13/outputs/v26_monthly_*.csv
             gold_axis_2026/research/case_control_v13/outputs/v26_monthly_*.json
           retention-days: 30
+
+  curated-original-models-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original model dependencies
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - name: Replay curated MPA ANN CHHHO ANFIS corrected AOA ELM SMA ELMFIS
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v26_curated_models_stress.py
+      - name: Persist curated March 2026 model comparisons
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v26-curated-monthly-model-replays
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v26_curated_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v26_curated_*.json
+          retention-days: 30
