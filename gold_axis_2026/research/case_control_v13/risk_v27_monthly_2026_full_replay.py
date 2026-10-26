@@ -199,12 +199,9 @@ def main():
            2026_Feb_excluded_from_comparable_error_metrics=True,
            no_automatic_deployment=True)
         (O/"v27_2026_monthly_replay_manifest.json").write_text(json.dumps(meta,indent=2)+"\n")
-        print("V27_ALL_2026_MONTHS
-"+p.to_string())
-        print("V27_8MONTH_ACCURACY_FEB_EXCLUDED
-"+stat.to_string(index=False))
-        print("V27_ALL_SCENARIO_SHIFT
-"+dx.to_string())
+        print("V27_ALL_2026_MONTHS\n"+p.to_string())
+        print("V27_8MONTH_ACCURACY_FEB_EXCLUDED\n"+stat.to_string(index=False))
+        print("V27_ALL_SCENARIO_SHIFT\n"+dx.to_string())
         print("V27_MONTHLY_2026_REPLAY_COMPLETE",len(a))
 if __name__=="__main__":
     main()
