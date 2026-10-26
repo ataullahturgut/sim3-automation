@@ -1,0 +1,51 @@
+name: Gold V17 Early Drawdown Formation 2010-25
+on:
+  push:
+    branches:
+      - research/gold-risk-v17-event-formation-index-20261026
+    paths:
+      - .github/workflows/gold-risk-v17-event-formation.yml
+      - gold_axis_2026/research/case_control_v13/risk_v17_event_formation.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v17_event_formation.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  historical-formation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned data science libs
+        run: |
+          python -m pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+          python -m pip install 'tabulate>=0.9,<1'
+      - name: Reconstruct actual historic inputs and 2010-2022 case/control formation
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v17_event_formation.py 2>&1 | tee outputs/v17_run.log
+      - name: Check all 31 variables, historical episodes, out-of-period validity, no 2026 selection
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v17_event_formation 2>&1 | tee outputs/v17_tests.log
+      - name: Commit executed research report and actual index/episode outputs
+        if: success()
+        run: |
+          git config user.name gold-risk-research-bot
+          git config user.email gold-risk-research-bot@users.noreply.github.com
+          git add gold_axis_2026/research/case_control_v13/V17_EVENT_FORMATION_VARIABLE_STUDY_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v17*
+          git diff --cached --quiet || (git commit -m "research: real V17 gold risk event formation variables and index [skip ci]" && git push)
+      - name: Always retain entire V17 run and QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-v17-formation-evidence
+          path: |
+            gold_axis_2026/research/case_control_v13/V17_EVENT_FORMATION_VARIABLE_STUDY_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v17*
+          if-no-files-found: warn
+          retention-days: 30
