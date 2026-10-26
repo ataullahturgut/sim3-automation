@@ -1,0 +1,35 @@
+name: Gold V27 2026 monthly nine-month full model replay
+on:
+  push:
+    branches:
+      - research/gold-monthly-2026-jan-sep-v27-replay-20261026
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  monthly-2026-9month-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Frozen model dependencies
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - name: Assert exact original V26 March ANN ANFIS AOA ELM SMA ELMFIS parity
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v27_monthly_2026_full_replay.py --months 2026-03 --parity-v26-march
+      - name: Execute all 9 origins 2026 Jan through September for four true frozen model variants
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v27_monthly_2026_full_replay.py
+      - name: Archive all actual vs predicted and provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v27-2026-jan-sep-monthly-4models
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v27_monthly_2026_jan_sep_all_models_three_scenarios.csv
+            gold_axis_2026/research/case_control_v13/outputs/v27_2026_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v27_2026_*.json
+          retention-days: 90
