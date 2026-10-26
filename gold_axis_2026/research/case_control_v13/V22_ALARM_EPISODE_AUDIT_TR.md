@@ -1,3 +1,5 @@
+> **2026-10-26 düzeltmesi — V22 eski 10 günlük tablo artık geçersizdir.** 10 işlem günü yanlışlıkla seyrek karar günlerinden hesaplanmıştı. Tam fiyat takvimli ve 27 Şubat 2026 karantinalı düzeltilmiş sonuçlar için **[V23_CALENDAR_SAFE_CORRECTION_TR.md](V23_CALENDAR_SAFE_CORRECTION_TR.md)** dosyasını esas alın. Bu dosyanın aşağısındaki eski 10 günlük rakamlar tarihsel hata kaydıdır; aktif referans değildir.
+
 # V22 BAĞIMSIZ OLMAYAN ALARM EPİZOTLARI DENETİMİ
 
 Kırmızı alarm GÜNLERİ ile ardışık ALARM EPİZOTLARI
