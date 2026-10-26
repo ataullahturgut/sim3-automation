@@ -1,0 +1,4 @@
+year,n,threshold,attention_days,positive_5d_days,captured_positive_days,attention_without_5d_drop_days,unflagged_positive_days
+2023,251,70.51244393124877,12,0,0,12,0
+2024,254,70.51244393124877,31,2,0,31,2
+2025,248,70.51244393124877,10,6,0,10,6

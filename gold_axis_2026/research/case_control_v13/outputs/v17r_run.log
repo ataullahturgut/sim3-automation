@@ -1,0 +1,3 @@
+/home/runner/work/sim3-automation/sim3-automation/gold_axis_2026/research/case_control_v13/risk_v17_regime_relative.py:131: RuntimeWarning: Mean of empty slice
+  score=np.nanmean(valid,axis=1)*100
+V17_REGIME_RELATIVE_EXECUTED {"historical_window": "2010-2022", "candidate_descriptors": 62, "events": 27, "rule_is_forecast": false, "selection_uses_2023_2025": false, "selection_uses_2026": false, "original_risk_alarms_changed": false, "numerical_first_print_PIT_certified": false, "has_three_factors_across_two_families": true, "historical_95pct_cutoff": 70.51244393124877, "modern_events": 4, "modern_events_by_year": {"2023": 0, "2024": 1, "2025": 3}, "modern_preonset_event_hits": 3}

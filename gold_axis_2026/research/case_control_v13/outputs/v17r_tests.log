@@ -1,0 +1,10 @@
+test_62_full_variable_candidates (test_risk_v17_regime_relative.RelativeFormationTests.test_62_full_variable_candidates) ... ok
+test_historic_event_dates_only (test_risk_v17_regime_relative.RelativeFormationTests.test_historic_event_dates_only) ... ok
+test_index_2023_to_2025_only (test_risk_v17_regime_relative.RelativeFormationTests.test_index_2023_to_2025_only) ... ok
+test_no_future_selection (test_risk_v17_regime_relative.RelativeFormationTests.test_no_future_selection) ... ok
+test_signs_and_effects_are_numeric (test_risk_v17_regime_relative.RelativeFormationTests.test_signs_and_effects_are_numeric) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+OK

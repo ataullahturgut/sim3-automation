@@ -6,6 +6,6 @@ test_no_2026_fitting_or_selection (test_risk_v17_event_formation.FormationTests.
 test_no_future_prices_as_feature (test_risk_v17_event_formation.FormationTests.test_no_future_prices_as_feature) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.011s
+Ran 6 tests in 0.016s
 
 OK
