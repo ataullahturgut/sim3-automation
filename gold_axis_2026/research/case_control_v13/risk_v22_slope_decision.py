@@ -91,16 +91,12 @@ def calculate():
     return o
 
 def audit(d):
-    panel=pd.read_csv(OUT/"v19_asof_21_variable_panel.csv").sort_values("origin").reset_index(drop=True)
-    srcprices=panel.price.to_numpy(float)
-    lookup=dict(zip(panel.origin,range(len(panel))))
-    future=[]
-    for _,r in d.iterrows():
-        i=lookup[r.origin];q=srcprices[i+1:i+11]
-        mature=len(q)==10
-        future.append(dict(origin=r.origin,ten_day_mature=mature,
-            next10_min_pct_AUDIT_ONLY=(float(100*(q.min()/srcprices[i]-1)) if mature else np.nan)))
-    daily=d.merge(pd.DataFrame(future),on="origin",validate="one_to_one")
+    # V23 corrective audit: DO NOT count CFTC-eligible sparse decisions
+    # as consecutive full trading sessions. Full price calendar is required.
+    from risk_v23_calendar_safe_audit import build_daily
+    daily, price_calendar = build_daily()
+    assert daily.origin.tolist() == d.origin.tolist()
+    assert len(price_calendar) == 713 and price_calendar.quarantined.sum() == 1
     daily.to_csv(OUT/"v22_daily_outcome_audit_ONLY.csv",index=False)
     rows=[]
     for yr,g in daily.groupby("year"):
@@ -125,7 +121,8 @@ def audit(d):
                 five_day_clusters_total=len(segments),
                 mature10_flagged=int((mask&mature).sum()),
                 true10_days=int((mask&mature&true10).sum()),
-                false10_days=int((mask&mature&~true10).sum())))
+                false10_days=int((mask&mature&~true10).sum()),
+                unknown10_days=int((mask&~mature).sum())))
     m=pd.DataFrame(rows)
     m.to_csv(OUT/"v22_three_year_metrics.csv",index=False)
     physical=pd.read_csv(OUT/"v20_physical_peak_definitions.csv")
@@ -169,10 +166,13 @@ def main():
        "2025_hypotheses_explored":True,"full_numeric_PIT_certified":False,
        "10_day_outcomes_not_in_decision":True,
        "the_22_2026_false5_are_PRIORITIZED_days_not_live_original_RED":True,
+       "ten_day_uses_full_price_calendar":True,
+       "bad_2026_02_27_future_windows_censored":True,
+       "late_2026_october_prices_included_for_september_horizon":True,
        "false5_is_days_not_independent_false_economic_events":True,
        "V21_historical_old_casebook_did_not_support_this_narrow_band":True}
     (OUT/"v22_audit_limits.json").write_text(json.dumps(limitation,indent=2)+"\n")
-    table=m[["year","policy","flagged_days","false5_days","true5_days","nextday3_hit","nextday3_total","five_day_clusters_hit","five_day_clusters_total","mature10_flagged","false10_days"]].to_markdown(index=False)
+    table=m[["year","policy","flagged_days","false5_days","true5_days","nextday3_hit","nextday3_total","five_day_clusters_hit","five_day_clusters_total","mature10_flagged","true10_days","false10_days","unknown10_days"]].to_markdown(index=False)
     report=["# V22: ORİJİNAL BASE14/CFTC21 + EĞİM TEMELLİ KARAR ÖNCELİĞİ",
       "", "**SONUÇ: Araştırma amaçlı öncelik filtresi. Canlı kırmızı alarm",
       "silinmedi, Neon/üretim uygulaması değişmedi.**",
