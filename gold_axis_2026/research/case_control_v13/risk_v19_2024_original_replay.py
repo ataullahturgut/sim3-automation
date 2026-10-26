@@ -81,6 +81,9 @@ def original_2024(rows):
                 original_algorithm_math_unchanged=True))
     result=pd.DataFrame(records)
     assert len(result)==2*len(scored)
+    for k,name in enumerate(FEATURES):
+        result["feature_"+name]=np.tile(
+            np.array([r["features"][k] for r in scored],float),len(FAMS))
     result.to_csv(OUT/"v19_2024_original_models.csv",index=False)
     return result,scored,train
 
