@@ -202,7 +202,7 @@ def main():
         fitted_to_drop_outcome=False,training_window_choice_fixed_before_computation=True,
         model_2024_trained_without_2024_data=True,model_2025_trained_without_2025_data=True,
         model_2026_trained_without_2026_data=True,
-        2026_stress_previously_seen=True,numerical_first_print_PIT_certified=False,
+        stress2026_previously_seen=True,numerical_first_print_PIT_certified=False,
         production_models_untouched=True,
         windows_tested=WINDOWS,three_years_tested=CALENDAR,
         baseline_recall_2024_not_independently_early=True)
