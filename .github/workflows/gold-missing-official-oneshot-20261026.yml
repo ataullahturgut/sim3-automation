@@ -1,0 +1,32 @@
+name: Gold Missing Official Sources V4 - One Shot
+on:
+  push:
+    branches: [gold-risk-official-download-retry-v4-20261026]
+    paths:
+      - 'gold_axis_2026/launchers/gold_missing_download_once_20261026.txt'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-risk-official-download-retry-v4-20261026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install HTTP client
+        run: python -m pip install 'requests>=2.31,<3'
+      - name: Download official source originals and validate file types
+        run: python gold_axis_2026/tools/retrieve_missing_official_sources_20261026.py
+      - name: Upload raw evidence and machine-readable source audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: missing-gold-risk-official-20261026
+          path: /tmp/gold_official_retrieval_20261026
+          if-no-files-found: error
+          retention-days: 30
