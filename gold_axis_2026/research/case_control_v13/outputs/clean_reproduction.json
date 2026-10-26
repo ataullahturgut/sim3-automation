@@ -1,0 +1,62 @@
+[
+  {
+    "file": "paired_results.csv",
+    "original_sha256": "3e7fdfd4891bfd34aa85f448c3a5e8750cb09a465898a2a648129c34a67e1a54",
+    "reproduced_sha256": "3e7fdfd4891bfd34aa85f448c3a5e8750cb09a465898a2a648129c34a67e1a54",
+    "identical": true
+  },
+  {
+    "file": "daily_all_models.csv",
+    "original_sha256": "8b7f2e7aca0925825e9648cd05f245705647ce25361d8e1f0c2e99cfd00a77d3",
+    "reproduced_sha256": "8b7f2e7aca0925825e9648cd05f245705647ce25361d8e1f0c2e99cfd00a77d3",
+    "identical": true
+  },
+  {
+    "file": "daily_alarms_with_source_dates.csv",
+    "original_sha256": "8a94689d622fddf53b4f8c2ce37040f41aecc7f5396991618550245a0016a422",
+    "reproduced_sha256": "8a94689d622fddf53b4f8c2ce37040f41aecc7f5396991618550245a0016a422",
+    "identical": true
+  },
+  {
+    "file": "historical_events.csv",
+    "original_sha256": "c7e0038acbd16fb2095aff02e799040036167c5a17d4890e4a48cdcd0105e624",
+    "reproduced_sha256": "c7e0038acbd16fb2095aff02e799040036167c5a17d4890e4a48cdcd0105e624",
+    "identical": true
+  },
+  {
+    "file": "matched_controls.csv",
+    "original_sha256": "e82df0620e8268cef70e71b72f3a2196eb717b0fd09fecbfe4f4f9ae351d1549",
+    "reproduced_sha256": "e82df0620e8268cef70e71b72f3a2196eb717b0fd09fecbfe4f4f9ae351d1549",
+    "identical": true
+  },
+  {
+    "file": "FROZEN_SELECTION_2025.json",
+    "original_sha256": "172311feb60c9835e11c48eae69523e46cadffc89c0763a4970f07a31c97677b",
+    "reproduced_sha256": "172311feb60c9835e11c48eae69523e46cadffc89c0763a4970f07a31c97677b",
+    "identical": true
+  },
+  {
+    "file": "event_alarm_timeline.csv",
+    "original_sha256": "4c1ac856e0a5f770b18665ed5e51fd97e77ca8f23b8d1d01d93042f6d4c91f73",
+    "reproduced_sha256": "4c1ac856e0a5f770b18665ed5e51fd97e77ca8f23b8d1d01d93042f6d4c91f73",
+    "identical": true
+  },
+  {
+    "file": "research_feature_panel.csv",
+    "original_sha256": "1127f32e23264683f90353e5d2abf45b723bd7ecaee41493dcd41570f4b94964",
+    "reproduced_sha256": "1127f32e23264683f90353e5d2abf45b723bd7ecaee41493dcd41570f4b94964",
+    "identical": true
+  },
+  {
+    "file": "historical_walk_forward.csv",
+    "original_sha256": "751b9d6c3908e947b1af1e49eb239d06af5c9503aaa27e27ead8d64f3f416cbf",
+    "reproduced_sha256": "751b9d6c3908e947b1af1e49eb239d06af5c9503aaa27e27ead8d64f3f416cbf",
+    "identical": true
+  },
+  {
+    "file": "historical_lag_sensitivity_2025.csv",
+    "original_sha256": "172aeee3b772679eca7739b9be3d08eb3adc1fb20bb954f0d8c6b042d7b90dd0",
+    "reproduced_sha256": "172aeee3b772679eca7739b9be3d08eb3adc1fb20bb954f0d8c6b042d7b90dd0",
+    "identical": true
+  }
+]

@@ -1,0 +1,17 @@
+test_bad_price_window (test_research.ResearchTests.test_bad_price_window) ... ok
+test_controls_nonoverlap (test_research.ResearchTests.test_controls_nonoverlap) ... ok
+test_future_price_cannot_change_historical_features (test_research.ResearchTests.test_future_price_cannot_change_historical_features) ... ok
+test_neon_parity (test_research.ResearchTests.test_neon_parity) ... ok
+test_no_backdated_cftc (test_research.ResearchTests.test_no_backdated_cftc) ... ok
+test_original_reference (test_research.ResearchTests.test_original_reference) ... ok
+test_quarantined_event_not_false_miss (test_research.ResearchTests.test_quarantined_event_not_false_miss) ... ok
+test_release_ledger (test_research.ResearchTests.test_release_ledger) ... ok
+test_same_test_origins (test_research.ResearchTests.test_same_test_origins) ... ok
+test_selection_only_validation (test_research.ResearchTests.test_selection_only_validation) ... ok
+test_training_dates (test_research.ResearchTests.test_training_dates) ... ok
+test_unknown_firstprints_block (test_research.ResearchTests.test_unknown_firstprints_block) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 5.615s
+
+OK
