@@ -2,6 +2,7 @@
   "eligible_2025": 0,
   "selected_research_candidate": null,
   "shadow_model": "BASE14",
+  "diagnostic_independent_model": "V14_NO_CFTC_GBM_Q95_INDEPENDENT",
   "live_signal_mode": "UNTOUCHED",
   "trained_on_2026": false,
   "selected_on_2026": false,

@@ -7,6 +7,6 @@ test_independent_policy_exists (test_risk_v14_independent_overlay.V14ResearchTes
 test_origins_matched (test_risk_v14_independent_overlay.V14ResearchTests.test_origins_matched) ... ok
 
 ----------------------------------------------------------------------
-Ran 7 tests in 0.014s
+Ran 7 tests in 0.010s
 
 OK
