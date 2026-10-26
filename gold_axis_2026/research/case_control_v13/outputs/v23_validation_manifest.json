@@ -1,0 +1,29 @@
+{
+  "source": "Neon READ ONLY: 2024-2025 LBMA-labelled reconstructed StakTrakr and 2026 StakTrakr Git snapshot 02964d0",
+  "research_only": true,
+  "model_retrained": false,
+  "original_alert_modified": false,
+  "neon_modified": false,
+  "firstprint_price_PIT_certified": false,
+  "macro_CFTC_firstprint_PIT_certified": false,
+  "fully_blind_2026": false,
+  "ten_day_horizon": "next 10 full price-calendar observations",
+  "bad_price": "2026-02-27",
+  "bad_price_quarantined_not_replaced": true,
+  "source_cutoff": "2026-10-16",
+  "complete_price_rows": 713,
+  "scored_days": 647,
+  "origin_price_parity": 647,
+  "verified_next5_parity": 647,
+  "feb10_new_drop_pct": -3.4071256648738557,
+  "feb10_old_incorrect_pct": -10.5409,
+  "unknown_ten_day_origins": [
+    "2026-02-13",
+    "2026-02-16",
+    "2026-02-17",
+    "2026-02-18",
+    "2026-02-19"
+  ],
+  "tested_in_isolated_js_recalculation": true,
+  "python_script_end_to_end_executed": false
+}
