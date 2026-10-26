@@ -158,10 +158,65 @@ def historical_casebook(panel):
     return casebook
 
 
+
+def lookup_historical_analogues(panel,intelligence,casebook):
+    """Evidence retrieval in existing 14/21-parameter space, NO prediction.
+    Only compare to pre-2023 historical known drawdown/control snapshots.
+    Distances are descriptive; class labels are hindsight and NOT converted into
+    probabilities, weights, thresholds, or automatic signals.
+    """
+    hist_names=["AU_ret5","AU_ret20","rsi14","ma20gap","au_vol5","disp5",
+        "gvz_level","gvz_z252","gvz_dlog5","gvz_dlog1","usd_ret5","usd_ret1",
+        "nom10_delta5","nom10","GC_net","SI_net","GC_d1","GC_d4",
+        "SI_d4","GC_SI_diff","GC_short"]
+    assert len(hist_names)==21
+    training=panel.loc[:"2022-12-31",hist_names].dropna()
+    median=training.median(axis=0).to_numpy()
+    scale=np.maximum((training.quantile(.75)-training.quantile(.25)).to_numpy(),1e-8)
+    historical_rows=[]
+    for _,x in casebook.iterrows():
+        d=pd.Timestamp(x["date"])
+        v=panel.loc[d,hist_names].to_numpy(dtype=float)
+        if np.isfinite(v).all():
+            historical_rows.append((x,v))
+    assert len(historical_rows)>=85
+    found=[]
+    for _,q in intelligence.iterrows():
+        if q["alert_level"]!="RED":continue
+        d=pd.Timestamp(q["origin"])
+        ix=FAMS[q["model"]]
+        x=panel.loc[d,hist_names].to_numpy(dtype=float)
+        assert np.isfinite(x[ix]).all()
+        distances=[]
+        for h,v in historical_rows:
+            dist=float(np.linalg.norm((x[ix]-v[ix])/scale[ix])/np.sqrt(len(ix)))
+            distances.append(dict(kind=h["type"],event_id=h["event_id"],
+                reference_date=h["date"],relative_distance=dist,
+                historic_event_drawdown_pct=h["realized_drawdown_pct"]))
+        desc=sorted(distances,key=lambda z:z["relative_distance"])
+        case=next(k for k in desc if k["kind"]=="PRE_DECLINE_PEAK")
+        control=next(k for k in desc if k["kind"]=="MATCHED_NO_DROP")
+        found.append(dict(origin=q["origin"],model=q["model"],
+            original_alert=q["alert_level"],
+            original_risk_score=q["risk_score"],
+            nearest_historic_crash_date=case["reference_date"],
+            nearest_historic_crash_event_id=case["event_id"],
+            nearest_crash_parameter_distance=case["relative_distance"],
+            historic_crash_realized_size_pct_AUDIT_ONLY=case["historic_event_drawdown_pct"],
+            nearest_historic_no_crash_date=control["reference_date"],
+            nearest_control_parameter_distance=control["relative_distance"],
+            historical_analog_used_to_change_alarm=False,
+            does_not_estimate_future_drop_probability=True))
+    result=pd.DataFrame(found)
+    assert len(result)>50
+    result.to_csv(OUT/"v15_historical_parameter_analogues.csv",index=False)
+    return result
+
 def main():
     rows,official,panel=sources()
     intelligence=explain_models(rows,official,panel)
     cases=historical_casebook(panel)
+    analogues=lookup_historical_analogues(panel,intelligence,cases)
     flags=intelligence[intelligence.alert_level=="RED"].copy()
     flags["retrospective_outcome_AUDIT_ONLY"]=np.where(
        flags.future_drop5_AUDIT_ONLY,"DROP_WITHIN_NEXT_5_DAYS","NO_DROP_WITHIN_NEXT_5_DAYS")
@@ -177,6 +232,7 @@ def main():
         added_alarm_rule=False,original_BASE14_CFTC21_levels_changed=False,
         historical_event_groups=27,historical_control_days=81,
         rows_daily=len(intelligence),rows_historical=len(cases),
+        rows_alarm_historical_analogues=len(analogues),
         first_print_PIT_certified=False,neon_modified=False,
         provenance="V13 frozen historical source pack; corrected CFTC 2023 delay",
         interpretation="Counterfactual median group substitution is NON-ADDITIVE sensitivity, NOT SHAP, causality, probability or a calibrated drop forecast")
@@ -205,6 +261,9 @@ sınırlarının **neden alarm verdiğini** gösteren tarihsel analiz katmanı v
 - outputs/v15_case_control_descriptive_statistics.csv: geçmiş dağılımlar.
 - outputs/v15_retrospective_alarm_driver_audit.csv: sonuç etiketleriyle
   yalnız SONRADAN yapılan yanlış/doğru alarm gruplaması.
+- outputs/v15_historical_parameter_analogues.csv: her kırmızı alarm için
+  mevcut 14/21 parametre uzayında en benzer tarihsel düşüş ve düşüşsüz
+  dönem. Bu yalnız kayıt/kanıt aramasıdır; alarm ya da düşüş tahmini DEĞİLDİR.
 - outputs/v15_audit.json: bütün koruma kontrolleri.
 
 ## Yorum sınırları
