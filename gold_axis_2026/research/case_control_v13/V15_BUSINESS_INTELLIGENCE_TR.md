@@ -22,6 +22,9 @@ sınırlarının **neden alarm verdiğini** gösteren tarihsel analiz katmanı v
 - outputs/v15_case_control_descriptive_statistics.csv: geçmiş dağılımlar.
 - outputs/v15_retrospective_alarm_driver_audit.csv: sonuç etiketleriyle
   yalnız SONRADAN yapılan yanlış/doğru alarm gruplaması.
+- outputs/v15_historical_parameter_analogues.csv: her kırmızı alarm için
+  mevcut 14/21 parametre uzayında en benzer tarihsel düşüş ve düşüşsüz
+  dönem. Bu yalnız kayıt/kanıt aramasıdır; alarm ya da düşüş tahmini DEĞİLDİR.
 - outputs/v15_audit.json: bütün koruma kontrolleri.
 
 ## Yorum sınırları

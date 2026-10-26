@@ -8,6 +8,7 @@
   "historical_control_days": 81,
   "rows_daily": 786,
   "rows_historical": 108,
+  "rows_alarm_historical_analogues": 135,
   "first_print_PIT_certified": false,
   "neon_modified": false,
   "provenance": "V13 frozen historical source pack; corrected CFTC 2023 delay",
