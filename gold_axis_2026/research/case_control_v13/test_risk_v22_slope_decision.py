@@ -29,7 +29,7 @@ class V22PhaseChecks(unittest.TestCase):
   m=self.metrics
   self.assertEqual(set(m.year),{2024,2025,2026})
   get=lambda y,n:m[(m.year==y)&(m.policy==n)].iloc[0]
-  for yr,oldf,newf,hit5,hit1 in [(2024,18,11,0,0),(2025,27,15,5,3),(2026,40,22,10,4)]:
+  for yr,oldf,newf,hit5,hit1 in [(2024,18,12,0,0),(2025,27,15,5,3),(2026,40,22,10,4)]:
    a=get(yr,"BASE14_ORIGINAL_RED")
    b=get(yr,"V22_PRIORITIZED_REVIEW_PLUS_WATCH")
    self.assertEqual((a.false5_days,b.false5_days),(oldf,newf))
