@@ -1,0 +1,11 @@
+test_2024_untuned_original_math (test_risk_v19_2024_original_replay.Validation.test_2024_untuned_original_math) ... ok
+test_correctness_vs_2024_origins (test_risk_v19_2024_original_replay.Validation.test_correctness_vs_2024_origins) ... ok
+test_data_is_2024_only (test_risk_v19_2024_original_replay.Validation.test_data_is_2024_only) ... ok
+test_historic_casebook_never_uses_future_samples (test_risk_v19_2024_original_replay.Validation.test_historic_casebook_never_uses_future_samples) ... ok
+test_large_2024_case_appears (test_risk_v19_2024_original_replay.Validation.test_large_2024_case_appears) ... ok
+test_new_bi_only_marks_red_or_one_day_yellow (test_risk_v19_2024_original_replay.Validation.test_new_bi_only_marks_red_or_one_day_yellow) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.012s
+
+OK
