@@ -234,8 +234,7 @@ def main():
     chosen["V14_independent_diagnostic_model"]=diag or "NONE"
     chosen["V14_independent_diagnostic_red"]=all_alarms[diag].values if diag else False
     if diag:
-        parts=diag.split("_")
-        label=parts[1]+"_"+parts[2] if len(parts)>2 else None
+        label=diag.removeprefix("V14_").rsplit("_Q",1)[0]
         dscore=pd.concat(score_rows,ignore_index=True)
         ds=dscore.loc[dscore.model.eq(label)].set_index("origin")["risk_score"]
         chosen["V14_independent_diagnostic_score"]=ds.reindex(dates).values
