@@ -39,5 +39,5 @@ class TestedHistoricalWindows(unittest.TestCase):
   t=self.timing
   f=t.first_red_at_or_before_true_peak.notna()
   self.assertTrue((t.loc[f,"first_red_at_or_before_true_peak"]<=t.loc[f,"price_peak"]).all())
-  self.assertEqual(len(t),30)
+  self.assertEqual(len(t),60)
 if __name__=="__main__":unittest.main(verbosity=2)
