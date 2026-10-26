@@ -7,6 +7,8 @@ on:
       - .github/workflows/gold-risk-v15-business-intelligence.yml
       - gold_axis_2026/research/case_control_v13/risk_v15_business_intelligence.py
       - gold_axis_2026/research/case_control_v13/test_risk_v15_business_intelligence.py
+      - gold_axis_2026/research/case_control_v13/risk_v16_bi_alarm_priority.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v16_bi_alarm_priority.py
   workflow_dispatch:
 permissions:
   contents: write
@@ -29,6 +31,14 @@ jobs:
         run: |
           cd gold_axis_2026/research/case_control_v13
           python -m unittest test_risk_v15_business_intelligence -v 2>&1 | tee outputs/v15_tests.log
+      - name: Compute actual 2025/2026 business intelligence review priority
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v16_bi_alarm_priority.py 2>&1 | tee outputs/v16_run.log
+      - name: Verify V16 no-prediction and exact unchanged RED scores
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest test_risk_v16_bi_alarm_priority -v 2>&1 | tee outputs/v16_tests.log
       - name: Commit executed explanation artifacts only
         if: success()
         run: |
@@ -36,6 +46,8 @@ jobs:
           git config user.email "gold-risk-research-bot@users.noreply.github.com"
           git add gold_axis_2026/research/case_control_v13/V15_BUSINESS_INTELLIGENCE_TR.md
           git add gold_axis_2026/research/case_control_v13/outputs/v15*
+          git add gold_axis_2026/research/case_control_v13/V16_BI_2026_REPORT_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v16*
           git diff --cached --quiet || (git commit -m "research: executed V15 explain-only BI, no new prediction model [skip ci]" && git push)
       - name: Preserve QA outputs even when unsuccessful
         uses: actions/upload-artifact@v4
@@ -45,5 +57,7 @@ jobs:
           path: |
             gold_axis_2026/research/case_control_v13/V15_BUSINESS_INTELLIGENCE_TR.md
             gold_axis_2026/research/case_control_v13/outputs/v15*
+            gold_axis_2026/research/case_control_v13/V16_BI_2026_REPORT_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v16*
           if-no-files-found: warn
           retention-days: 30
