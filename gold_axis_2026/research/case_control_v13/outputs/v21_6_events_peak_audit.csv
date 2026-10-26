@@ -1,0 +1,7 @@
+event,year,price_peak,original_high_before_peak,additional_watch_before_peak,combined_review_before_peak,first_original_high,first_shadow_fragility,first_either,not_certified_intraday,event_dates_were_known_during_rule_research
+2024_11,2024,2024-10-30,False,True,True,,2024-10-30,2024-10-30,True,True
+2025_04_MAY,2025,2025-04-22,True,False,True,2025-04-14,,2025-04-14,True,True
+2025_10,2025,2025-10-17,True,False,True,2025-10-13,,2025-10-13,True,True
+2026_01,2026,2026-01-29,True,False,True,2026-01-23,,2026-01-23,True,True
+2026_MAY_JUNE,2026,2026-04-17,False,True,True,,2026-04-17,2026-04-17,True,True
+2026_08,2026,2026-08-24,True,False,True,2026-08-21,,2026-08-21,True,True

@@ -1,0 +1,4 @@
+year,original_red_days,original_BI_high_days,new_shadow_watch_days,new_watch_next10_true_5pct,new_watch_next10_false_5pct,new_watch_episodes,new_watch_episodes_true,new_watch_episodes_false,original_BI_peak_coverage,combined_BI_peak_coverage,physical_event_count
+2024,18,11,4,2,2,3,1,2,0,1,1
+2025,32,30,0,0,0,0,0,0,2,2,2
+2026,50,34,1,1,0,1,1,0,2,3,3

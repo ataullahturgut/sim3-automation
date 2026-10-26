@@ -1,0 +1,8 @@
+{
+  "historical_last_day_event_samples": 26,
+  "historical_last_day_negative_control_samples": 74,
+  "positive_case_examples_without_NORMAL_req": 0,
+  "positive_negative_examples_without_NORMAL_req": 0,
+  "supports_generalization": false,
+  "warning": "VERY FEW HISTORICAL CASES. The band was selected after examining 2024 and 2026; not a validated history-derived risk index"
+}

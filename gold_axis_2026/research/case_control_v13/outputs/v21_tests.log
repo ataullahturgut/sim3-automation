@@ -1,0 +1,12 @@
+test_distinct_event_counts_and_daily_score_clocks (test_risk_v21_fragility_shadow.FragilityShadowTests.test_distinct_event_counts_and_daily_score_clocks) ... ok
+test_dont_change_existing_alert_level_and_score (test_risk_v21_fragility_shadow.FragilityShadowTests.test_dont_change_existing_alert_level_and_score) ... ok
+test_exact_five_origin_safe_factors_no_future_leakage (test_risk_v21_fragility_shadow.FragilityShadowTests.test_exact_five_origin_safe_factors_no_future_leakage) ... ok
+test_knew_outcomes_and_admits_did_not_generalize_historically (test_risk_v21_fragility_shadow.FragilityShadowTests.test_knew_outcomes_and_admits_did_not_generalize_historically) ... ok
+test_no_future_outcome_controls_shadow (test_risk_v21_fragility_shadow.FragilityShadowTests.test_no_future_outcome_controls_shadow) ... ok
+test_only_original_normal_may_create_shadow (test_risk_v21_fragility_shadow.FragilityShadowTests.test_only_original_normal_may_create_shadow) ... ok
+test_replay_no_year_metric_hidden (test_risk_v21_fragility_shadow.FragilityShadowTests.test_replay_no_year_metric_hidden) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.045s
+
+OK
