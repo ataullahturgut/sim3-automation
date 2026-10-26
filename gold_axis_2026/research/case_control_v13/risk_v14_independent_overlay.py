@@ -180,9 +180,11 @@ def main():
         assert any(z["peak"].startswith("2013") for z in records), "NO_2013_TRAINING"
         assert n_events>=20 and len(records)>=15, "EVENT_SAMPLE_TOO_SMALL"
         audit.append(dict(family=family,events_discovered=n_events,events_trained=len(records),
+                          events_2013_trained=sum(z["peak"].startswith("2013") for z in records),
                           independent_contexts=n_context,control_count=sum(r["controls"] for r in records),
                           positives=int((y==1).sum()),negatives=int((y==0).sum()),
                           missing_events=json.dumps(skipped),first_print_verified=False))
+        pd.DataFrame([dict(family=family,**z) for z in records]).to_csv(OUT/f"v14_event_control_pairs_{family}.csv",index=False)
         for kind in ("LOGIT","GBM"):
             sc,clf=fit_one(panel,cols,idx,y,w,kind)
             training=clf.predict_proba(sc.transform(panel.iloc[idx][cols]))[:,1]
@@ -199,6 +201,7 @@ def main():
                                    train_end="2022-12-31", features=cols,first_print_verified=False))
             # Audit scores, not probability claims: sample selection biases calibration.
             score_rows.append(pd.DataFrame({"origin":dates,"model":f"{family}_{kind}","risk_score":scored}))
+    pd.concat([pd.read_csv(OUT/f"v14_event_control_pairs_{family}.csv") for family in FEATURE_SETS],ignore_index=True).to_csv(OUT/"v14_event_control_pairs.csv",index=False)
     for name,s in all_alarms.items():
         for yr in (2025,2026):
             x=dates[dates.year==yr]
@@ -246,7 +249,7 @@ def main():
        "yalnız 2025 kapısını geçen aday varsa gölge olarak hesaplanır.",
        "",
        f"- Tarihsel olay sayısı: {audit[0]['events_discovered']}; eğitime alınan olay: {audit[0]['events_trained']}; birleştirilmiş bağlam: {audit[0]['independent_contexts']}.",
-       "- 2013 olayları öğrenime alındı mı: "+str(any("2013" in q for q in str(audit))),
+       f"- 2013 olayları eğitime alınan: {audit[0]['events_2013_trained']} olay.",
        f"- Geçerli 2025 aday: {len(eligible)}.",
        f"- Seçilen araştırma adayı: {selected}.",
        "",
