@@ -1,0 +1,39 @@
+{
+  "method": "Strict exact ISO date join USD per troy oz, external historical file is potentially a different daily price definition",
+  "scope": "2010-2024, 2025 unavailable in comparison files",
+  "reference_url": "https://github.com/vasco-duarte-oikosofy/gold-data-set",
+  "no_auto_substitution": true,
+  "no_price_first_print_PIT_certification": true,
+  "no_interpolation": true,
+  "uncovered_palladium": true,
+  "totalStats": [
+    {
+      "metal": "AU",
+      "db_days": 4041,
+      "externally_paired": 3721,
+      "median_abs_pct": 0.41372177210825534,
+      "p95_abs_pct": 1.6457569777276526,
+      "exception_gt5": 3,
+      "external_commit_sha": "d6b8fd880311a0c711c33f2c5655f0237632ca5d"
+    },
+    {
+      "metal": "AG",
+      "db_days": 4041,
+      "externally_paired": 3722,
+      "median_abs_pct": 0.7358219669777344,
+      "p95_abs_pct": 3.0078427992760504,
+      "exception_gt5": 39,
+      "external_commit_sha": "3ecb1baf9d00edf815b6754390eb9e624b636a1c"
+    },
+    {
+      "metal": "PT",
+      "db_days": 4040,
+      "externally_paired": 3625,
+      "median_abs_pct": 0.7172743574417217,
+      "p95_abs_pct": 2.4351955806813708,
+      "exception_gt5": 7,
+      "external_commit_sha": "6eb096c301952c9553cf1bf250f4f5bb881e3db3"
+    }
+  ],
+  "generated_for": "gold data health v25 research only"
+}
