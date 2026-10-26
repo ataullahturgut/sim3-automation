@@ -202,8 +202,8 @@ def main():
     assert not d.BI_is_live_enabled.any()
     summary=dict(status="RESEARCH_SHADOW_CANDIDATE_NOT_PROMOTED",
         red_alarms_replaced_or_deleted=False,
-        2024_2026_feature_band_selected_with_prior_outcome_knowledge=True,
-        2010_2022_history_has_supporting_cases=False,
+        historical_band_tuned_with_2024_2026=True,
+        historical_2010_2022_has_supporting_cases=False,
         reproducible_retrospective_event_coverage="6/6 (not independent validation)",
         new_watch_days_2024_2026=int(d.BI_v21_fragility_watch.sum()),
         first_print_PIT_certified=False,
