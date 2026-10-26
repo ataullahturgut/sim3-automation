@@ -1,0 +1,32 @@
+name: Gold risk V23 calendar regression
+
+on:
+  push:
+    branches:
+      - research/gold-risk-v23-calendar-safe-audit-20261026
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  calendar-safe-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install audit-only dependencies
+        run: python -m pip install numpy pandas tabulate
+      - name: Run full calendar and frozen V22 replays
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: |
+          python risk_v23_calendar_safe_audit.py
+          python risk_v22_slope_decision.py
+          python risk_v22_episodes_audit.py
+      - name: Run 3 independent regression test suites
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: |
+          python -m unittest -v test_risk_v23_calendar_safe_audit.py test_risk_v22_slope_decision.py test_risk_v22_episode_audit.py
