@@ -1,0 +1,7 @@
+event,year,price_peak,peak_price,V13_onset_proxy,V13_onset_price,already_down_when_proxy_pct,peak_method,volatility_data_publication_PIT_certified
+2024_11,2024,2024-10-30,2783.95,2024-11-06,2726.2,-2.0743907038560327,last_highest_close_of_35_prior_SCORABLE_origins,False
+2025_04_MAY,2025,2025-04-22,3454.7,2025-04-23,3332.85,-3.5270790517266337,last_highest_close_of_35_prior_SCORABLE_origins,False
+2025_10,2025,2025-10-17,4338.25,2025-10-20,4252.75,-1.9708407768109226,last_highest_close_of_35_prior_SCORABLE_origins,False
+2026_01,2026,2026-01-29,5501.7,2026-01-30,5063.45,-7.965719686642315,last_highest_close_of_35_prior_SCORABLE_origins,False
+2026_MAY_JUNE,2026,2026-04-17,4820.77,2026-06-05,4403.77,-8.650070424434276,last_highest_close_of_35_prior_SCORABLE_origins,False
+2026_08,2026,2026-08-24,4646.98,2026-08-26,4621.54,-0.547452323874853,last_highest_close_of_35_prior_SCORABLE_origins,False

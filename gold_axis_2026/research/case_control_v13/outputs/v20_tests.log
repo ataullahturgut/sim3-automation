@@ -1,0 +1,11 @@
+test_all_2024_2025_2026_windows (test_risk_v20_historical_origin_forest.TestedHistoricalWindows.test_all_2024_2025_2026_windows) ... ok
+test_distinct_physical_peaks_per_year (test_risk_v20_historical_origin_forest.TestedHistoricalWindows.test_distinct_physical_peaks_per_year) ... ok
+test_first_print_not_falsely_certified (test_risk_v20_historical_origin_forest.TestedHistoricalWindows.test_first_print_not_falsely_certified) ... ok
+test_immutable_incumbents (test_risk_v20_historical_origin_forest.TestedHistoricalWindows.test_immutable_incumbents) ... ok
+test_models_use_past_only (test_risk_v20_historical_origin_forest.TestedHistoricalWindows.test_models_use_past_only) ... ok
+test_physical_warning_preceded_price_peak (test_risk_v20_historical_origin_forest.TestedHistoricalWindows.test_physical_warning_preceded_price_peak) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.012s
+
+OK

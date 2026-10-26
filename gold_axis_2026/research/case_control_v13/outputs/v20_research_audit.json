@@ -1,0 +1,24 @@
+{
+  "independent_design": false,
+  "feature_set_unchanged": true,
+  "fitted_to_drop_outcome": false,
+  "training_window_choice_fixed_before_computation": true,
+  "model_2024_trained_without_2024_data": true,
+  "model_2025_trained_without_2025_data": true,
+  "model_2026_trained_without_2026_data": true,
+  "stress2026_previously_seen": true,
+  "numerical_first_print_PIT_certified": false,
+  "production_models_untouched": true,
+  "windows_tested": [
+    "SINCE_2023",
+    "TRAILING_3_YEARS",
+    "TRAILING_5_YEARS",
+    "SINCE_2010"
+  ],
+  "three_years_tested": [
+    2024,
+    2025,
+    2026
+  ],
+  "baseline_recall_2024_not_independently_early": true
+}
