@@ -1,0 +1,1 @@
+Authorized 2026-10-26 one-time retrieval of official SLV SpreadsheetML, Fed H15, CME PDFs. No schedule, no model training, no Neon writes.
