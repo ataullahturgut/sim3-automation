@@ -19,11 +19,11 @@ her birinde o yılın hiçbir verisi eğitimde kullanılmadı.
 |   2025 | SINCE_2023       |              232 |         34 |                29 |                    5 |             5 |                    3 |             3 |                                     2 |                               2 |
 |   2025 | TRAILING_3_YEARS |              232 |         29 |                25 |                    4 |             5 |                    2 |             3 |                                     2 |                               2 |
 |   2025 | TRAILING_5_YEARS |              232 |         21 |                17 |                    4 |             5 |                    2 |             3 |                                     2 |                               2 |
-|   2026 | FROZEN_BASELINE  |              161 |         50 |                40 |                   10 |            13 |                    4 |             4 |                                     3 |                               3 |
-|   2026 | SINCE_2010       |              161 |         38 |                29 |                    9 |            13 |                    4 |             4 |                                     3 |                               3 |
-|   2026 | SINCE_2023       |              161 |         46 |                36 |                   10 |            13 |                    4 |             4 |                                     3 |                               3 |
-|   2026 | TRAILING_3_YEARS |              161 |         46 |                36 |                   10 |            13 |                    4 |             4 |                                     3 |                               3 |
-|   2026 | TRAILING_5_YEARS |              161 |         44 |                34 |                   10 |            13 |                    4 |             4 |                                     3 |                               3 |
+|   2026 | FROZEN_BASELINE  |              161 |         50 |                40 |                   10 |            13 |                    4 |             4 |                                     2 |                               3 |
+|   2026 | SINCE_2010       |              161 |         38 |                29 |                    9 |            13 |                    4 |             4 |                                     2 |                               3 |
+|   2026 | SINCE_2023       |              161 |         46 |                36 |                   10 |            13 |                    4 |             4 |                                     2 |                               3 |
+|   2026 | TRAILING_3_YEARS |              161 |         46 |                36 |                   10 |            13 |                    4 |             4 |                                     2 |                               3 |
+|   2026 | TRAILING_5_YEARS |              161 |         44 |                34 |                   10 |            13 |                    4 |             4 |                                     2 |                               3 |
 
 ## CFTC21 koşuları
 
@@ -39,11 +39,11 @@ her birinde o yılın hiçbir verisi eğitimde kullanılmadı.
 |   2025 | SINCE_2023       |         22 |                18 |                    4 |             5 |                                     2 |                               2 |
 |   2025 | TRAILING_3_YEARS |         17 |                13 |                    4 |             5 |                                     2 |                               2 |
 |   2025 | TRAILING_5_YEARS |         16 |                12 |                    4 |             5 |                                     2 |                               2 |
-|   2026 | FROZEN_BASELINE  |         32 |                25 |                    7 |            13 |                                     3 |                               3 |
-|   2026 | SINCE_2010       |         28 |                22 |                    6 |            13 |                                     3 |                               3 |
-|   2026 | SINCE_2023       |         25 |                19 |                    6 |            13 |                                     3 |                               3 |
-|   2026 | TRAILING_3_YEARS |         25 |                19 |                    6 |            13 |                                     3 |                               3 |
-|   2026 | TRAILING_5_YEARS |         40 |                30 |                   10 |            13 |                                     3 |                               3 |
+|   2026 | FROZEN_BASELINE  |         32 |                25 |                    7 |            13 |                                     2 |                               3 |
+|   2026 | SINCE_2010       |         28 |                22 |                    6 |            13 |                                     2 |                               3 |
+|   2026 | SINCE_2023       |         25 |                19 |                    6 |            13 |                                     2 |                               3 |
+|   2026 | TRAILING_3_YEARS |         25 |                19 |                    6 |            13 |                                     2 |                               3 |
+|   2026 | TRAILING_5_YEARS |         40 |                30 |                   10 |            13 |                                     2 |                               3 |
 
 ## Gerçek tepe vs sonradan belirlenmiş V13 olay başlangıcı
 
@@ -62,6 +62,7 @@ her birinde o yılın hiçbir verisi eğitimde kullanılmadı.
 - FRED 10 takvim gün USD gecikmesi kaynak araştırma proxy'sidir, resmî ilk tarih kanıtı değil.
 - 2026 bozuk altın fiyat günü geçmiş veride karantinada tutuldu.
 - Gerçek fiziksel tepe: V13 olay vekilinden önceki skorlanabilir son 35 seansın en yüksek kapanışı.
+- Erken alarm başarı ölçütü: yalnız bu tepe günü ve önceki dört skorlanabilir işlem günündeki RED.
 - Bu tanım mutlak doğru ekonomik düşüş başlangıcını ispatlamaz; 5-gün
   risk etiketine kıyasla daha sıkı bir erkenlik denetimidir.
 - 2025 Nisan/Mayıs ve 2026 Haziran bitişik vaka etiketleri bağımsız sayılmadı.

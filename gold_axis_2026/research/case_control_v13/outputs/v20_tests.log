@@ -6,6 +6,6 @@ test_models_use_past_only (test_risk_v20_historical_origin_forest.TestedHistoric
 test_physical_warning_preceded_price_peak (test_risk_v20_historical_origin_forest.TestedHistoricalWindows.test_physical_warning_preceded_price_peak) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.012s
+Ran 6 tests in 0.008s
 
 OK
