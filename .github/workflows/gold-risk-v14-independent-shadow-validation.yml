@@ -1,0 +1,58 @@
+name: Gold Risk V14 Independent Shadow Replay (research only)
+on:
+  push:
+    branches:
+      - research/gold-risk-v14-independent-event-shadow-20261026
+    paths:
+      - gold_axis_2026/research/case_control_v13/risk_v14_independent_overlay.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v14_independent_overlay.py
+      - gold_axis_2026/research/case_control_v13/V14_REPLAY_TRIGGER.md
+      - .github/workflows/gold-risk-v14-independent-shadow-validation.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  v14-research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install reproducible frozen experiment libraries
+        run: pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+      - name: Run V14 on V13 frozen actual market data (strict PIT off)
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v14_independent_overlay.py 2>&1 | tee outputs/v14_run.log
+      - name: Verify real integration metrics and inclusion of 2013 crashes
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v14_independent_overlay 2>&1 | tee outputs/v14_tests.log
+      - name: Commit research-only outputs (never deploy, never touch Neon)
+        if: success()
+        run: |
+          set -e
+          git config user.name "gold-risk-research-bot"
+          git config user.email "gold-risk-research-bot@users.noreply.github.com"
+          git add gold_axis_2026/research/case_control_v13/V14_REPORT_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v14_freeze.json
+          git add gold_axis_2026/research/case_control_v13/outputs/v14_training_audit.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v14_event_control_pairs.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v14_metrics_2025_2026.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v14_daily_signals.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v14_tests.log
+          git diff --cached --quiet || (git commit -m "research: record executed V14 independent alarm shadow results [skip ci]" && git push)
+      - name: Preserve entire genuine replay and research artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-v14-independent-shadow-evidence
+          path: |
+            gold_axis_2026/research/case_control_v13/V14_REPORT_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v14*
+          if-no-files-found: warn
+          retention-days: 30
