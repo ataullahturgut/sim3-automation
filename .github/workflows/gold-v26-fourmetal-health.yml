@@ -1,0 +1,30 @@
+name: Gold V26 Independent Four-Metal Source Audit
+on:
+  push:
+    branches:
+      - research/gold-data-v26-independent-fourmetal-20261026
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  four-metal-source-comparison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy pandas requests beautifulsoup4
+      - name: Independent GoldPrice 2010-2026 comparator
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python risk_v26_fourmetal_external_comparison.py
+      - name: Keep source audit evidence including failed downloads
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v26-independent-fourmetal-comparison
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v26_fourmetal_independent_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v26_fourmetal_comparison_manifest.json
+          retention-days: 30
