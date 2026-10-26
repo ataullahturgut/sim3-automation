@@ -13,6 +13,13 @@ from importlib.util import spec_from_file_location,module_from_spec
 NY=ZoneInfo('America/New_York')
 A=Path(__file__).with_name('gold_risk_asof_audit_20261026.py')
 sp=spec_from_file_location('source_asof',A); source=module_from_spec(sp); sp.loader.exec_module(source)
+# NYSE Arca market does not trade on weekends and Good Friday.
+# Raw issuer rows remain intact for source SHA and QA; nontrading dates
+# MUST NOT be counted as one of the previous five market sessions.
+NYSE_GOOD_FRIDAY={'2023-04-07','2024-03-29','2025-04-18','2026-04-03'}
+def slv_market_sessions(rows):
+    return [r for r in rows if r['date'].weekday()<5
+            and r['date'].isoformat() not in NYSE_GOOD_FRIDAY]
 EVENTS=['2026-01-22','2026-01-26','2026-01-29','2026-01-30','2026-02-02',
 '2026-03-30','2026-03-31','2026-04-01','2026-04-02','2026-04-03',
 '2026-06-03','2026-06-05','2026-06-17','2026-06-18','2026-08-11','2026-08-25','2026-08-27']
@@ -46,10 +53,10 @@ def row(day,silver,nominal,tips):
     two=released(nominal,'h15',at,'2y',6)
     ten=released(nominal,'h15',at,'10y',6)
     real=released(tips,'tips',at,'real10y',6)
-    all_silver=[q for q in silver if source.earliest_time(q['date'],'slv')<=at]
+    all_silver=[q for q in slv_market_sessions(silver) if source.earliest_time(q['date'],'slv')<=at]
     last_nom=last(nominal,'h15',at,'10y')
     last_real=last(tips,'tips',at,'real10y')
-    last_silver=last(silver,'slv',at,'shares',True)
+    last_silver=last(slv_market_sessions(silver),'slv',at,'shares',True)
     # No crossing a missing issuer-share row to generate fake share changes.
     shift1=(all_silver[-1]['shares']-all_silver[-2]['shares']
         if len(all_silver)>=2 and all(q['shares'] is not None for q in all_silver[-2:]) else None)
@@ -92,11 +99,15 @@ def main():
         if d.weekday()<5: days.append(row(d,silver,nominal,tips))
         d+=dt.timedelta(days=1)
     assert len(days)==994
+    assert len(slv_market_sessions(silver))==956
     april1=next(x for x in days if x['origin']=='2024-04-01')
     april2=next(x for x in days if x['origin']=='2024-04-02')
-    assert april1['slv_share_delta_one_obs'] is None
-    assert april2['slv_share_delta_one_obs'] is None
-    assert april2['slv_share_delta_five_obs'] is None
+    # 2024-03-29 (Good Friday) and 2024-03-31 (Sunday) are NOT
+    # trading sessions: correct five-session window skips both.
+    assert april1['slv_day_proxy']=='2024-03-28'
+    assert april2['slv_day_proxy']=='2024-04-01'
+    assert april1['slv_share_delta_one_obs'] is not None
+    assert april2['slv_share_delta_five_obs'] is not None
     assert all(x['slv_shares']!=0 for x in days if x['slv_shares'] is not None)
     assert all(any(x['origin']==e and x['real10y'] is not None for x in days) for e in EVENTS)
     for filename,records in [('asof_candidate_features_2023_2026_RESEARCH_ONLY.csv',days),
@@ -109,6 +120,8 @@ def main():
     report={'source_sha256_match':True,'source_rows':{'SLV':958,'H15':994,'REAL10Y':953},
       'decision_clock':'17:30 America/New_York',
       'n_weekdays_evaluated':994,
+      'slv_raw_source_rows':958,'slv_valid_market_sessions':956,
+      'slv_nontrading_rows_excluded':['2024-03-29','2024-03-31'],
       'research_candidates_nonnull':{k:sum(x[k] is not None for x in days) for k in features},
       'release_policy':{'H15':'16:15 NY firstprint vintage unknown',
                         'SLV':'T+1 weekday 09 NY unverified proxy',
