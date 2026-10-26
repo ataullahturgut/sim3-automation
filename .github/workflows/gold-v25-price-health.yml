@@ -1,0 +1,44 @@
+name: Gold four-metal V25 price data health gate
+
+on:
+  push:
+    branches:
+      - research/gold-data-health-v25-2010-2026-20261026
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readonly-price-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install reproducible audit-only tools
+        run: python -m pip install numpy pandas tabulate
+      - name: Run V25 data-health report and fail-closed gate tests
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: |
+          python risk_v25_price_health_gate.py --mode report
+          python -m unittest -v test_risk_v25_price_health_gate.py test_risk_v23_calendar_safe_audit.py
+      - name: Require certified training to be blocked
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: |
+          if python risk_v25_price_health_gate.py --mode certify; then
+            echo 'SECURITY FAILURE: unverified prices certified'
+            exit 1
+          else
+            echo 'EXPECTED: unsafe training / live promotion blocked'
+          fi
+      - name: Publish audit output
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v25-price-health-evidence
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v25_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v25_*.json
+          retention-days: 30
