@@ -1,0 +1,57 @@
+name: Gold Risk V21 Pre-Peak Fragility Shadow (Research Only)
+on:
+  push:
+    branches:
+      - research/gold-risk-v21-fragility-shadow-20261026
+    paths:
+      - .github/workflows/gold-risk-v21-fragility-shadow.yml
+      - gold_axis_2026/research/case_control_v13/risk_v21_fragility_shadow.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v21_fragility_shadow.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  prospective_guard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Python syntax early
+        run: |
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v21_fragility_shadow.py
+          python -m py_compile gold_axis_2026/research/case_control_v13/test_risk_v21_fragility_shadow.py
+      - name: Install pinned packages
+        run: |
+          python -m pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+          python -m pip install 'tabulate>=0.9,<1'
+      - name: Run exact 21-feature immutable fragility business intelligence
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v21_fragility_shadow.py 2>&1 | tee outputs/v21_run.log
+      - name: Guard against future leakage, false validation and original alert changes
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v21_fragility_shadow 2>&1 | tee outputs/v21_tests.log
+      - name: Commit only verified V21 research evidence
+        if: success()
+        run: |
+          git config user.name gold-risk-research-bot
+          git config user.email gold-risk-research-bot@users.noreply.github.com
+          git add gold_axis_2026/research/case_control_v13/V21_FRAGILITY_SHADOW_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v21*
+          git diff --cached --quiet || (git commit -m "research: V21 pre-peak fragile normal-state observations, nonblind disclaimer [skip ci]" && git push origin "HEAD:$GITHUB_REF_NAME")
+      - name: Preserve reproducible V21 outputs if failed
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-v21-fragility-shadow-research
+          path: |
+            gold_axis_2026/research/case_control_v13/V21_FRAGILITY_SHADOW_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v21*
+          if-no-files-found: warn
+          retention-days: 30
