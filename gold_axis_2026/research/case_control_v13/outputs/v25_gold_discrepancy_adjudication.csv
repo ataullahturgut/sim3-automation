@@ -1,0 +1,4 @@
+date,db_gold_usd_oz,comparison_westmetall_usd_oz,corroborated_gold_usd_oz,decision,affected_dataset,corroboration_1,corroboration_2,original_data_mutated
+2024-05-17,2381.75,2831.75,2381.75,EXTERNAL_REFERENCE_TRANSCRIPTION_ERROR,Westmetall,https://www.321gold.com/archives/fix2024.html,https://www.bullionworld.in/bw/flipbook/2024/Jun-2024/files/basic-html/page45.html,False
+2026-01-02,4386.85,1386.85,4386.85,EXTERNAL_REFERENCE_TRANSCRIPTION_ERROR,Westmetall,https://www.goldpriceoz.com/historical-london-gold-fixing/,https://www.agosi.de/ek/ek.php/frontend/print_detail_datum/fr/2026-01-02,False
+2026-02-27,3516.02,5174.10,5174.10,RESEARCH_DATABASE_GOLD_OUTLIER,Neon_StakTrakr_2026_snapshot,https://www.westmetall.com/en/markdaten.php?action=table&field=USD_ozt_London&year=2026,https://www.goldpriceoz.com/historical-london-gold-fixing/,False
