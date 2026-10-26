@@ -47,7 +47,10 @@ def rows_to_csv(rows,path):
     with p.open("w",newline="",encoding="utf-8") as f:
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
 def parse_spreadsheetml(content):
-    root=ET.fromstring(content)
+    # Issuer SpreadsheetML 2003 XML contains bare & in HRef attributes; escape
+    # only unescaped ampersands (no numeric data substitutions). Preserve raw SHA.
+    normalized,nfix=re.subn(rb"&(?!amp;|lt;|gt;|quot;|apos;|#\\d+;|#x[0-9A-Fa-f]+;)",b"&amp;",content)
+    root=ET.fromstring(normalized)
     if root.tag.split("}")[-1].lower()!="workbook":raise ValueError("not spreadsheetml Workbook XML")
     sheets={}
     for ws in root.iter():
