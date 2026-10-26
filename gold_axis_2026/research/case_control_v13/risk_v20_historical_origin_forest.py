@@ -147,8 +147,10 @@ def actual_metrics(day,peaks):
         physical=0
         for _,e in first.iterrows():
             peak=pd.Timestamp(e.price_peak)
-            pre=g[(pd.to_datetime(g.origin)<=peak)&
-                  (pd.to_datetime(g.origin)>=peak-pd.Timedelta(days=21))]
+            # Strict local lead window: only five SCORABLE sessions ending
+            # at the actual rolling price peak. Counting unrelated RED
+            # weeks before that peak as a correct early alert is forbidden.
+            pre=g[pd.to_datetime(g.origin)<=peak].tail(5)
             flagged=pre[pre.mark_red]
             before=bool(len(flagged))
             physical+=int(before)
@@ -156,6 +158,7 @@ def actual_metrics(day,peaks):
                  event=e.event,price_peak=e.price_peak,
                  V13_onset=e.V13_onset_proxy,
                  first_red_at_or_before_true_peak=flagged.origin.iloc[0] if before else "",
+                 five_scorable_session_lead_window=True,
                  red_before_actual_decline=before,
                  no_intraday_early_claim=True))
         positive_segments=[]
@@ -238,6 +241,7 @@ def main():
         "- FRED 10 takvim gün USD gecikmesi kaynak araştırma proxy'sidir, resmî ilk tarih kanıtı değil.",
         "- 2026 bozuk altın fiyat günü geçmiş veride karantinada tutuldu.",
         "- Gerçek fiziksel tepe: V13 olay vekilinden önceki skorlanabilir son 35 seansın en yüksek kapanışı.",
+        "- Erken alarm başarı ölçütü: yalnız bu tepe günü ve önceki dört skorlanabilir işlem günündeki RED.",
         "- Bu tanım mutlak doğru ekonomik düşüş başlangıcını ispatlamaz; 5-gün",
         "  risk etiketine kıyasla daha sıkı bir erkenlik denetimidir.",
         "- 2025 Nisan/Mayıs ve 2026 Haziran bitişik vaka etiketleri bağımsız sayılmadı.",
