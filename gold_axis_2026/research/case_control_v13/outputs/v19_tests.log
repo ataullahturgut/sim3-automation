@@ -6,6 +6,6 @@ test_large_2024_case_appears (test_risk_v19_2024_original_replay.Validation.test
 test_new_bi_only_marks_red_or_one_day_yellow (test_risk_v19_2024_original_replay.Validation.test_new_bi_only_marks_red_or_one_day_yellow) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.012s
+Ran 6 tests in 0.014s
 
 OK
