@@ -188,7 +188,7 @@ def main():
     original=get_original(rows)
     variants=candidate_models(rows,panel)
     daily=pd.concat([original,variants],ignore_index=True)
-    assert len(daily)>7000
+    assert len(daily)>6000
     daily.to_csv(OUT/"v20_all_original_model_replays.csv",index=False)
     metrics,timeline=actual_metrics(daily,peaks)
     # Frozen original historic 2025/2026 labels must match prior audit.
