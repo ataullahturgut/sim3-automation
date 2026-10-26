@@ -33,9 +33,11 @@ def compute(gap):
             if group:groups.append(group)
             for group in groups:
                 s=pd.DataFrame(group)
-                mature=s[s.ten_day_mature]
-                ever=bool((mature.next10_min_pct_AUDIT_ONLY<=-5).any())
-                can_assess=len(mature)>0
+                # False only when ALL warning days have valid future prices.
+                # If no day is TRUE and one is censored, episode is UNKNOWN.
+                ever=bool(s.ten_day_status.eq("TRUE_DROP_5PCT").any())
+                all_false=bool(s.ten_day_status.eq("FALSE_DROP_5PCT").all())
+                can_assess=ever or all_false
                 ep.append(dict(year=int(yr),policy=policy,gap_days=gap,
                    first=group[0].origin,last=group[-1].origin,days=len(group),
                    has_full_ten_day_label=can_assess,
@@ -69,9 +71,9 @@ def main():
      (2025,"BASE14_ORIGINAL_RED"):(7,3,4,0),
      (2025,"V22_ACTIVE_RED_ONLY"):(4,3,1,0),
      (2025,"V22_PRIORITIZED_PLUS_WATCH"):(5,3,2,0),
-     (2026,"BASE14_ORIGINAL_RED"):(8,4,3,1),
-     (2026,"V22_ACTIVE_RED_ONLY"):(8,6,2,0),
-     (2026,"V22_PRIORITIZED_PLUS_WATCH"):(9,7,2,0)}
+     (2026,"BASE14_ORIGINAL_RED"):(8,3,4,1),
+     (2026,"V22_ACTIVE_RED_ONLY"):(8,4,3,1),
+     (2026,"V22_PRIORITIZED_PLUS_WATCH"):(9,5,3,1)}
     for k,w in exp.items():
         v=q.loc[k]
         got=(int(v.episodes_total),int(v.episodes_true10),
@@ -107,7 +109,7 @@ def main():
       "  üretir, sadece biri (30 Ekim) düşüşle örtüşür. Bunu saklama.",
       "- 2025: Eski 7 epizot, 4 false; ACTIVE_RED 4 epizot, 1 false.",
       "- 2026: Eski 8 epizot, 3 false, 1 gelecek 10g yetersiz;",
-      "  ACTIVE_RED 8 epizot, 2 false, 0 yetersiz.",
+      "  ACTIVE_RED 8 epizot, 3 false, 1 şüpheli fiyat nedeniyle belirsiz.",
       "- Dört takvim günü epizot ayrımı sabit ve keyfi, 6 ve 10 gün",
       "  sonuçları outputs/v22_episode_sensitivity.csv içinde.",
       "- 2024 WATCH ve 2026 WATCH canli al/sat tetikleyici degildir.",
