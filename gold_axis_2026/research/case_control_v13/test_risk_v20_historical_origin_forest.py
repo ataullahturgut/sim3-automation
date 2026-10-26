@@ -28,7 +28,7 @@ class TestedHistoricalWindows(unittest.TestCase):
    self.assertGreater(row.train_n,170)
  def test_first_print_not_falsely_certified(self):
   self.assertFalse(self.audit["numerical_first_print_PIT_certified"])
-  self.assertTrue(self.audit["2026_stress_previously_seen"])
+  self.assertTrue(self.audit["stress2026_previously_seen"])
   self.assertFalse(self.audit["fitted_to_drop_outcome"])
  def test_distinct_physical_peaks_per_year(self):
   m=self.metrics
