@@ -192,6 +192,16 @@ def score_metrics(data,physical):
 
 def main():
     rows,panel,prior=load_evidence()
+    # Shared 2023-2026 origin-safe 21-variable inputs for time-ordered
+    # cross-year mechanism research. Outcome columns explicitly audit-only.
+    pd.DataFrame([dict(origin=q["origin"],
+        **{name:float(q["features"][j]) for j,name in enumerate(FEATURES)},
+        price=q["gold_price_usd_oz"],
+        next1_pct_AUDIT_ONLY=q["next_day_return_pct"],
+        next5_min_pct_AUDIT_ONLY=q["next5_min_return_pct"],
+        y1_AUDIT_ONLY=q["y_nextday_drop3"],
+        y5_AUDIT_ONLY=q["y_next5_drawdown5"])
+       for q in rows]).to_csv(OUT/"v19_asof_21_variable_panel.csv",index=False)
     y24,origins,train=original_2024(rows)
     analog=asof_analogues(panel,origins,train)
     output=roll_priority(y24,analog,panel)
