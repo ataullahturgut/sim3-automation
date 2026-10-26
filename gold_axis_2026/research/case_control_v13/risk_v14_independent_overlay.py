@@ -120,7 +120,7 @@ def train_cases_and_controls(panel, feature_cols):
     for e in sorted_events:
         lo=int(e["onset_i"])-30
         hi=int(e["trough_i"])+10
-        if lo>last_end:
+        if current<0 or lo>last_end:
             current+=1
         last_end=max(hi,last_end)
         cluster[e["event_id"]]=current
@@ -213,6 +213,11 @@ def main():
               r["groups_hit"]==r["groups"] and
               r["false5"]<baseline2025["false5"]]
     winner=sorted(eligible,key=lambda r:(r["false5"],r["false_episodes"],r["model"]))[0]["model"] if eligible else None
+    # An explanatory independent candidate that survives the 2025 detection gate
+    # is exported separately, even if it fails the false-positive gate.
+    capable=[r for r in v25 if r["model"].endswith("_INDEPENDENT")
+             and r["hit1"]==r["total1"] and r["groups_hit"]==r["groups"]]
+    diag=sorted(capable,key=lambda r:(r["false5"],r["false_episodes"],r["model"]))[0]["model"] if capable else None
     # Before first-print authentication, shadow_mode CANNOT write or replace live signals.
     selected=winner if winner is not None else "BASE14"
     shadow=all_alarms[selected]
@@ -226,13 +231,21 @@ def main():
                          "alarm_day_return_pct":panel.loc[dates,"day_return_pct"].values,
                          "nextday_pct":panel.loc[dates,"future_min1"].values*100,
                          "next5_min_pct":panel.loc[dates,"future_min5"].values*100})
+    chosen["V14_independent_diagnostic_model"]=diag or "NONE"
+    chosen["V14_independent_diagnostic_red"]=all_alarms[diag].values if diag else False
+    if diag:
+        parts=diag.split("_")
+        label=parts[1]+"_"+parts[2] if len(parts)>2 else None
+        dscore=pd.concat(score_rows,ignore_index=True)
+        ds=dscore.loc[dscore.model.eq(label)].set_index("origin")["risk_score"]
+        chosen["V14_independent_diagnostic_score"]=ds.reindex(dates).values
     chosen.to_csv(OUT/"v14_daily_signals.csv",index=False)
     pd.DataFrame(result_rows).to_csv(OUT/"v14_metrics_2025_2026.csv",index=False)
     pd.DataFrame(audit).to_csv(OUT/"v14_training_audit.csv",index=False)
     pd.concat(score_rows,ignore_index=True).to_csv(OUT/"v14_independent_scores.csv",index=False)
     (OUT/"v14_freeze.json").write_text(json.dumps({
         "eligible_2025":len(eligible),"selected_research_candidate":winner,
-        "shadow_model":selected,"live_signal_mode":"UNTOUCHED",
+        "shadow_model":selected,"diagnostic_independent_model":diag,"live_signal_mode":"UNTOUCHED",
         "trained_on_2026":False,"selected_on_2026":False,
         "first_print_certified":False,"intraday_onset_certified":False,
         "signal_approved_for_production":False,"settings":settings,
@@ -240,6 +253,7 @@ def main():
     y26=[r for r in result_rows if r["period"]==2026]
     get=lambda name:next(x for x in y26 if x["model"]==name)
     b=get("BASE14");c=get("CFTC21");shadow_result=get(selected)
+    diag26=get(diag) if diag else None
     note=("\n".join([
        "# V14 — Bağımsız risk katmanı entegrasyonu (GÖLGE MOD)",
        "",
@@ -252,12 +266,14 @@ def main():
        f"- 2013 olayları eğitime alınan: {audit[0]['events_2013_trained']} olay.",
        f"- Geçerli 2025 aday: {len(eligible)}.",
        f"- Seçilen araştırma adayı: {selected}.",
+       f"- Doğrulama yakalaması tam, ama yanlış alarm şartı başarısız bağımsız tanı modeli: {diag or 'yok'}.",
        "",
        "| 2026 model | Kırmızı | Ertesi gün ≥%3 | 5g risk kümesi | Yanlış alarm günü |",
        "|---|---:|---:|---:|---:|",
        f"| BASE14 | {b['red']} | {b['hit1']}/{b['total1']} | {b['groups_hit']}/{b['groups']} | {b['false5']} |",
        f"| CFTC21 | {c['red']} | {c['hit1']}/{c['total1']} | {c['groups_hit']}/{c['groups']} | {c['false5']} |",
        f"| V14 gölge | {shadow_result['red']} | {shadow_result['hit1']}/{shadow_result['total1']} | {shadow_result['groups_hit']}/{shadow_result['groups']} | {shadow_result['false5']} |",
+       (f"| V14 bağımsız (reddedildi) | {diag26['red']} | {diag26['hit1']}/{diag26['total1']} | {diag26['groups_hit']}/{diag26['groups']} | {diag26['false5']} |" if diag26 else ""),
        "",
        "**Üretim kapısı kapalıdır:** ilk yayın sayısal veri vintage ve gerçek seans içi",
        "başlangıç doğrulanmadı. 2026 geçmişte görüldüğünden kör başarı kanıtı değildir.",
@@ -266,7 +282,7 @@ def main():
        ""] ))
     (ROOT/"V14_REPORT_TR.md").write_text(note+"\n")
     print("V14_DONE",json.dumps({"training":audit,"selected":selected,
-                              "eligible2025":len(eligible),"baseline2026":b,
+                              "eligible2025":len(eligible),"independent_diagnostic":diag,"independent_diagnostic_2026":diag26,"baseline2026":b,
                               "cftc2026":c,"shadow2026":shadow_result},default=str))
 
 
