@@ -16,6 +16,13 @@ from sklearn.ensemble import IsolationForest
 ROOT=Path(__file__).parent
 O=ROOT/'outputs';O.mkdir(exist_ok=True)
 FEATURES=['ret5','ret20','ret5_minus_quarter20','rv5','rv20','ma20_gap','drawdown60','vol_expansion']
+# Independent read-only Neon per-year checksums, derived from exact research lineage.
+NEON_YEAR_MD5={
+  '2010':'91fc887a3bc26a77fa859d80a1efa741','2011':'62ae1bdcaecc8a556373c13925256a6e',
+  '2012':'644a3123b9de21971af53cb35dca9274','2013':'ba37e649d3f3ddf182420576edd28902',
+  '2014':'4c33572dc7258371be87029b21730acd','2015':'eeee93d262ec1ab37188b9e5275f5092',
+  '2016':'ad30c632c2187e4021d58a7f33081b31','2017':'3890b3bb93e0593a741aadd53f8b50a2',
+  '2018':'40f2d6974a43b87ba9ba2d2fd26a90f0','2019':'5e274b9094ac09e7742323143505d2b4'}
 
 def features(dates,prices,for_history=True):
     """Causal X_t uses only prices <=t; label references t+1..t+5 only."""
@@ -40,6 +47,10 @@ def historic():
     dates=[r['date'] for r in data]; prices=[float(r['xau_usd_source']) for r in data]
     assert dates[0]=='2010-01-04' and dates[-1]=='2019-12-31'
     assert dates==sorted(set(dates))
+    for year,expected in NEON_YEAR_MD5.items():
+        text=','.join(r['date'].replace('-','')+':'+str(int(round(float(r['xau_usd_source'])*100)))
+                      for r in data if r['date'].startswith(year))
+        assert hashlib.md5(text.encode('utf-8')).hexdigest()==expected, 'NEON_SOURCE_YEAR_MD5_MISMATCH_'+year
     h=features(dates,prices)
     return h,data
 
@@ -170,8 +181,8 @@ def main():
             selected=sorted(valid)[0][2]
     with (O/'v11_daily_comparison.csv').open('w',newline='') as f:
         w=csv.DictWriter(f,fieldnames=daily[0].keys());w.writeheader();w.writerows(daily)
-    result={'research_only':True,'historical_price_first_print_verified':False,'historical_raw_input_days':len(raw),
-      'historic_labeled_rows':len(h),'historic_5day_positive_origin_days':sum(r['five'] for r in h),
+    result={'research_only':True,'historical_price_first_print_verified':False,'historical_raw_input_days':len(raw),'historical_price_csv_sha256':hashlib.sha256((ROOT/'historical_gold_daily_research_2010_2019.csv').read_bytes()).hexdigest(),
+      'historic_labeled_rows':len(h),'historical_source_year_md5_verified':True,'historic_5day_positive_origin_days':sum(r['five'] for r in h),
       'historic_episode_groups':len(matches),'historic_negative_matched_controls':sum(len(r['controls']) for r in matches),
       'historic_times':'2010-2019 only; 2020-2022 not used','historic_validation':diag,
       'research_only_historical_thresholds':thresholds,'model':'RobustScaler + L2 LogisticRegression(C=0.25,class_weight=balanced) PRICE-ONLY; fixed historic quantiles',
