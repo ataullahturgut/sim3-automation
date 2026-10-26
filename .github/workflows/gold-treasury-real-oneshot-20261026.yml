@@ -1,8 +1,5 @@
 name: Gold Treasury Real Source V4 - One Shot
 on:
-  push:
-    branches: [gold-risk-official-download-retry-v4-20261026]
-    paths: ['gold_axis_2026/launchers/gold_treasury_real_once_20261026.txt']
   workflow_dispatch:
 permissions:
   contents: read
