@@ -1,0 +1,4 @@
+family,events_discovered,events_trained,events_2013_trained,independent_contexts,control_count,positives,negatives,missing_events,first_print_verified
+MACRO_METAL,27,27,5,15,81,107,81,[],False
+NO_CFTC,27,27,5,15,81,107,81,[],False
+SMALL,27,27,5,15,81,107,81,[],False

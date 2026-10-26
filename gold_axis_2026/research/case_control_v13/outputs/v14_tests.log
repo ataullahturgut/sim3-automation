@@ -1,0 +1,12 @@
+test_2013_included (test_risk_v14_independent_overlay.V14ResearchTests.test_2013_included) ... ok
+test_2026_did_not_train_or_select (test_risk_v14_independent_overlay.V14ResearchTests.test_2026_did_not_train_or_select) ... ok
+test_candidate_selection_gate (test_risk_v14_independent_overlay.V14ResearchTests.test_candidate_selection_gate) ... ok
+test_control_limit (test_risk_v14_independent_overlay.V14ResearchTests.test_control_limit) ... ok
+test_incumbents_not_changed (test_risk_v14_independent_overlay.V14ResearchTests.test_incumbents_not_changed) ... ok
+test_independent_policy_exists (test_risk_v14_independent_overlay.V14ResearchTests.test_independent_policy_exists) ... ok
+test_origins_matched (test_risk_v14_independent_overlay.V14ResearchTests.test_origins_matched) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.014s
+
+OK
