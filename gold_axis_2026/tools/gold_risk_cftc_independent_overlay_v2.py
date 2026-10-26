@@ -20,6 +20,7 @@ import argparse,csv,hashlib,json,zipfile
 from datetime import date
 from pathlib import Path
 from bisect import bisect_right
+from gold_risk_release_clock_v8 import cftc_conservative_is_available
 import numpy as np
 from sklearn.preprocessing import RobustScaler
 from sklearn.ensemble import IsolationForest
@@ -62,11 +63,11 @@ def merge(base,weekly):
     out=[]
     for q in base:
         d=q["origin"];i=bisect_right(dates,d)-1
-        while i>=0 and weekly["GC"][i]["available"]>d:i-=1
+        while i>=0 and not cftc_conservative_is_available(weekly["GC"][i]["available"],d):i-=1
         if i<4:continue
         gc=weekly["GC"];si=weekly["SI"]
         cur=gc[i]
-        gate(cur["available"]<=d and si[i]["available"]<=d,"UNPUBLISHED_CFTC_FEATURE")
+        gate(cftc_conservative_is_available(cur["available"],d) and cftc_conservative_is_available(si[i]["available"],d),"UNPUBLISHED_CFTC_FEATURE")
         staleness=(date.fromisoformat(d)-date.fromisoformat(cur["available"])).days
         if staleness>21:continue
         getgc=lambda j:gc[j]["net_oi"]
@@ -85,7 +86,7 @@ def merge(base,weekly):
         out.append(item)
     gate(len(out)>850 and any(x["origin"]=="2026-01-29" for x in out),
          "MISSING_ALIGNED_MARKET_ORIGIN")
-    gate(all(x["cftc_available_day"]<=x["origin"] and
+    gate(all(cftc_conservative_is_available(x["cftc_available_day"],x["origin"]) and
         x["usd_release_date"]<=x["origin"] and
         x["yield_last_observation"]<x["origin"] for x in out),"FEATURE_LOOKAHEAD")
     return out
