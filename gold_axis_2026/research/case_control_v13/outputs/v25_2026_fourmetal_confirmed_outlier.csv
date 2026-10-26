@@ -1,0 +1,5 @@
+metal,date,prev_2026_02_26,suspect_2026_02_27,next_2026_03_02,drop_prev_pct,rebound_next_pct,external_2026_02_27_reference,external_reference_type,external_url,data_health_status
+AU,2026-02-27,5178.70,3516.02,5354.59,-32.11,52.29,5174.10,London_gold_AM_fixing,https://www.westmetall.com/en/markdaten.php?action=table&field=USD_ozt_London&year=2026,REJECT_QUARANTINE
+AG,2026-02-27,86.70,62.15,92.49,-28.32,48.82,89.975,London_silver_fixing,https://www.goldpriceoz.com/silver/historical-london-silver-fixing/,REJECT_QUARANTINE
+PT,2026-02-27,2236.96,1585.39,2345.96,-29.13,47.97,2365.00,London_platinum_AM_fixing,https://www.goldpriceoz.com/platinum/historical-london-platinum-fixing/,REJECT_QUARANTINE
+PD,2026-02-27,1761.60,1201.26,1786.32,-31.81,48.70,1818.00,London_palladium_AM_fixing,https://www.goldpriceoz.com/palladium/historical-london-palladium-fixing/,REJECT_QUARANTINE
