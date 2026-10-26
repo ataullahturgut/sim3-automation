@@ -191,8 +191,8 @@ def main():
        stress2026_is_not_blind=True,
        previous_study_of_2026_can_bias_hypothesis=True,
        first_print_PIT_certified=False,production_promoted=False,
-       "y1_2025_added_by_carry":"2025-05-09",
-       "y1_2026_added_by_reversal":"2026-06-09",
+       y1_2025_added_by_carry="2025-05-09",
+       y1_2026_added_by_reversal="2026-06-09",
        rows=len(b),metrics=m.to_dict("records"))
     (OUT/"v18_audit.json").write_text(json.dumps(audit,ensure_ascii=False,indent=2)+"\n")
     cols=["year","policy","marked_days","false5_marked_days",
