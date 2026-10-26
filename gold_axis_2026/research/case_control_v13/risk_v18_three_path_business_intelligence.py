@@ -188,7 +188,7 @@ def main():
        horizon="historical event casebook 2010-22, origin decisions 2025/2026",
        trained_classifier=False,price_prediction_model=False,
        original_BASE14_CFTC21_alerts_unchanged=True,
-       2026_is_not_blind=True,
+       **{"2026_is_not_blind":True},
        previous_study_of_2026_can_bias_hypothesis=True,
        first_print_PIT_certified=False,production_promoted=False,
        "y1_2025_added_by_carry":"2025-05-09",
