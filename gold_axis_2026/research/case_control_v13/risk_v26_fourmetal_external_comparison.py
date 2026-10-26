@@ -29,7 +29,7 @@ def checked_price_frame(raw,metal):
     t.columns=[str(x).lstrip("\ufeff").strip().lower() for x in t.columns]
     if "date" not in t.columns:
         raise ValueError("EXTERNAL_NO_DATE_"+metal+"_"+repr(t.columns.tolist()))
-    value=next((v for v in ("close","value","price","usd_per_oz") if v in t.columns),None)
+    value=next((v for v in ("close_usd_per_troy_oz","close","value","price","usd_per_oz") if v in t.columns),None)
     if not value:
         raise ValueError("EXTERNAL_NO_PRICE_"+metal+"_"+repr(t.columns.tolist()))
     d=pd.to_datetime(t.date,errors="coerce",utc=True)
