@@ -171,7 +171,7 @@ def main():
     summary = dict(model_retrained=False, original_alert_modified=False,
        research_only=True, firstprint_price_PIT_certified=False,
        macro_CFTC_firstprint_PIT_certified=False,
-       2026_fully_blind_validation=False, label_days_are_not_independent_crashes=True,
+       fully_blind_validation_2026=False, label_days_are_not_independent_crashes=True,
        ten_day_horizon="next ten COMPLETE PRICE observations, no sparse decision rows",
        suspicious_price_origin="2026-02-27", suspicious_price_quarantined_not_replaced=True,
        complete_price_rows=len(prices), scored_days=len(d),
