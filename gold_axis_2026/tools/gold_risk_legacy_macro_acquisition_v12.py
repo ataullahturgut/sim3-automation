@@ -90,9 +90,9 @@ for key,url in series.items():
                 date_col=header.index("DATE")
                 def parse(s):return datetime.strptime(s,"%m/%d/%Y").date()
             else:
-                if "DATE" not in header or key.rsplit("_",1)[-1] not in header:
+                if key.rsplit("_",1)[-1] not in header or not ({"DATE","observation_date"} & set(header)):
                     raise ValueError("FRED schema missing "+str(header))
-                date_col=header.index("DATE")
+                date_col=header.index("DATE") if "DATE" in header else header.index("observation_date")
                 def parse(s):return date.fromisoformat(s)
             target=[r for r in rows[1:] if len(r)>date_col and r[date_col] and 2010<=parse(r[date_col]).year<=2019]
             if not target:raise ValueError("no historical 2010-2019 rows")
