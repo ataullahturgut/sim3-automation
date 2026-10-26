@@ -49,7 +49,7 @@ def rows_to_csv(rows,path):
 def parse_spreadsheetml(content):
     # Issuer SpreadsheetML 2003 XML contains bare & in HRef attributes; escape
     # only unescaped ampersands (no numeric data substitutions). Preserve raw SHA.
-    normalized,nfix=re.subn(rb"&(?!amp;|lt;|gt;|quot;|apos;|#\\d+;|#x[0-9A-Fa-f]+;)",b"&amp;",content)
+    normalized,nfix=re.subn(rb"&(?!amp;|lt;|gt;|quot;|apos;|#\d+;|#x[0-9A-Fa-f]+;)",b"&amp;",content)
     root=ET.fromstring(normalized)
     if root.tag.split("}")[-1].lower()!="workbook":raise ValueError("not spreadsheetml Workbook XML")
     sheets={}
