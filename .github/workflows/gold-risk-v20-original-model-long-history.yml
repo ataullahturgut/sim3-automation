@@ -1,0 +1,57 @@
+name: Gold Risk V20 Original Model History Expansion 2010-2026
+on:
+  push:
+    branches:
+      - research/gold-risk-v20-historical-origin-forests-20261026
+    paths:
+      - .github/workflows/gold-risk-v20-original-model-long-history.yml
+      - gold_axis_2026/research/case_control_v13/risk_v20_historical_origin_forest.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v20_historical_origin_forest.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rolling_history:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax contract
+        run: |
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v20_historical_origin_forest.py
+          python -m py_compile gold_axis_2026/research/case_control_v13/test_risk_v20_historical_origin_forest.py
+      - name: Install pinned data packages
+        run: |
+          python -m pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+          python -m pip install 'tabulate>=0.9,<1'
+      - name: Execute 2010/three/five-year historical comparisons with original gold risk math
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v20_historical_origin_forest.py 2>&1 | tee outputs/v20_run.log
+      - name: Verify year-isolated training, all models, real price-peak early warnings
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v20_historical_origin_forest 2>&1 | tee outputs/v20_tests.log
+      - name: Commit only this run evidence
+        if: success()
+        run: |
+          git config user.name gold-risk-research-bot
+          git config user.email gold-risk-research-bot@users.noreply.github.com
+          git add gold_axis_2026/research/case_control_v13/V20_ORIGINAL_MODEL_HISTORICAL_FIT_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v20*
+          git diff --cached --quiet || (git commit -m "research: 2010/3y/5y vs 2023 original risk forest in 2024–2026 [skip ci]" && git push origin "HEAD:$GITHUB_REF_NAME")
+      - name: Save real research outputs even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-v20-rolling-history-results
+          path: |
+            gold_axis_2026/research/case_control_v13/V20_ORIGINAL_MODEL_HISTORICAL_FIT_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v20*
+          if-no-files-found: warn
+          retention-days: 30
