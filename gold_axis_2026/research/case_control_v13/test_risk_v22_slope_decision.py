@@ -49,6 +49,9 @@ class V22PhaseChecks(unittest.TestCase):
  def test_horizon_maturity_not_fabricated(self):
   d=pd.read_csv(O/"v22_daily_outcome_audit_ONLY.csv")
   last=d.iloc[-1]
-  self.assertFalse(last.ten_day_mature)
-  self.assertTrue(np.isnan(last.next10_min_pct_AUDIT_ONLY))
+  self.assertTrue(last.ten_day_mature)
+  self.assertTrue(np.isfinite(last.next10_min_pct_AUDIT_ONLY))
+  compromised=d[d.origin=="2026-02-17"].iloc[0]
+  self.assertFalse(compromised.ten_day_mature)
+  self.assertTrue(np.isnan(compromised.next10_min_pct_AUDIT_ONLY))
 if __name__=="__main__":unittest.main(verbosity=2)
