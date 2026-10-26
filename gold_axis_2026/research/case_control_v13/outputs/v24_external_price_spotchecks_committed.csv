@@ -1,0 +1,6 @@
+date,research_snapshot_usd_oz,secondary_LBMA_AM_usd_oz,secondary_LBMA_PM_usd_oz,snapshot_exact_AM_match,snapshot_exact_PM_match,is_quarantined,source_evidence,first_print_numerical_PIT_certified
+2026-01-29,5501.70,5501.70,5405.00,True,False,False,https://www.doma.srl/fixing-2026/,False
+2026-02-25,5212.10,5171.75,5191.55,False,False,False,https://gold.1prime.ru/amp/20260303/kotirovki-1168924.html,False
+2026-02-26,5178.70,5174.75,5167.35,False,False,False,https://gold.1prime.ru/amp/20260303/kotirovki-1168924.html,False
+2026-02-27,3516.02,5174.10,5222.30,False,False,True,https://gold.1prime.ru/amp/20260303/kotirovki-1168924.html,False
+2026-10-16,4171.07,4181.90,4189.20,False,False,False,https://www.doma.srl/fixing-2026/,False
