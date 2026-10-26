@@ -6,6 +6,6 @@ test_retro_metrics_full_years (test_risk_v22_slope_decision.V22PhaseChecks.test_
 test_watches_only_original_normal (test_risk_v22_slope_decision.V22PhaseChecks.test_watches_only_original_normal) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.053s
+Ran 6 tests in 0.041s
 
 OK
