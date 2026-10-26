@@ -57,7 +57,7 @@ class ActualV18Study(unittest.TestCase):
                     (orig,high,extra))
    self.assertEqual((carry.five_day_label_clusters_hit,
                      carry.nextday3_hits),(events,nextday))
-  self.assertFalse(self.audit["2026_is_not_blind"]==False)
+  self.assertFalse(self.audit["stress2026_is_not_blind"]==False)
   self.assertFalse(self.audit["production_promoted"])
   self.assertFalse(self.audit["price_prediction_model"])
 
