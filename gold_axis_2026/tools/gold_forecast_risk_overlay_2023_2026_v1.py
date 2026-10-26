@@ -7,8 +7,8 @@ ANN error).
 
 SOURCE TIME:
 - CBOE GVZ: issue after NY 17:30, same day's option-close quote eligible.
-- H.10 Broad USD: observations of the prior business week published following
-  Monday at 16:15 NY; first eligible at that Monday 17:30.
+- H.10 Broad USD: Monday 16:15 NY; Tuesday 16:15 if Monday is a Fed
+  holiday. Only after release instant; numeric first-print vintages unverified.
 - H.15 DGS10: conservative at least next observation day after actual obs.
 - Four-metal daily reference spot: historic retrospective non-firstprint;
   not necessarily available as an executable close tick at 17:30. RESEARCH.
@@ -20,6 +20,7 @@ import argparse,csv,json,math,hashlib,os
 from datetime import date,timedelta
 from pathlib import Path
 from bisect import bisect_right
+from gold_risk_release_clock_v8 import next_h10_publication, h10_is_available, h15_previous_day_is_available
 import numpy as np
 import psycopg
 from sklearn.preprocessing import RobustScaler
@@ -102,20 +103,20 @@ def source_extract(outfile,gvzfile):
  print("RISK_OVERLAY_SOURCE_GATE_PASS",len(price_rows),len(gvz),
        {s:len(macro[s]) for s in SERIES},payload["source_sha256"],flush=True)
 def next_monday_after_obs(d):
- # official H.10 previous week released following Monday.
- dt=date.fromisoformat(d)
- days=(7-dt.weekday())%7
- if days==0:days=7
- return (dt+timedelta(days=days)).isoformat()
+ # Legacy function name retained for callers, now returns the actual
+ # Fed-calendar-adjusted H.10 *scheduled* release date (research vintage caveat).
+ return next_h10_publication(d).date().isoformat()
 def series_at_issue(dates,mapping,issue,release_type):
+ # Explicit NY17:30 decision for legacy YYYY-MM-DD; timezone-aware
+ # timestamps are required for TR09 or other intraday use.
  usable=[]
  for dt in dates:
   if release_type=="H10":
-   available=next_monday_after_obs(dt)
+   eligible=h10_is_available(dt,issue)
   elif release_type=="H15_PREVIOUS_DAY":
-   available=(date.fromisoformat(dt)+timedelta(days=1)).isoformat()
+   eligible=h15_previous_day_is_available(dt,issue)
   else:raise ValueError(release_type)
-  if available<=issue:usable.append(dt)
+  if eligible:usable.append(dt)
  return usable
 def rsi(prices):
  v=np.diff(np.log(prices[-15:]))
@@ -260,7 +261,7 @@ def run(s,output):
   "train_2025_for_2026_only":True,
   "2025_diagnostic_fitted_2023_2024_only":True,
   "known_bad_2026_price_date":BAD,"feature_names":FEATURE_NAMES,
-  "date_lag_rules":{"H10":"next Monday after obs week, 16:15 ET",
+  "date_lag_rules":{"H10":"Fed release Monday 16:15 NY, Tuesday if Monday Fed holiday; historical numeric vintage NOT certified",
      "H15":"at least one calendar day after obs",
      "GVZ":"latest observed <= origin after US options close"},
   "families":FAMILIES,"thresholds":THRESHOLDS,
