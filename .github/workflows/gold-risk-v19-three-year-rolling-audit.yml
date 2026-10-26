@@ -49,7 +49,7 @@ jobs:
           git config user.email gold-risk-research-bot@users.noreply.github.com
           git add gold_axis_2026/research/case_control_v13/V19_2024_TRUE_OUT_OF_SAMPLE_TR.md
           git add gold_axis_2026/research/case_control_v13/outputs/v19*
-          git diff --cached --quiet || (git commit -m "research: run original 2024 gold risk and V18 BI with 2023-only fit [skip ci]" && git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME")
+          git diff --cached --quiet || (git commit -m "research: run original 2024 gold risk and V18 BI with 2023-only fit [skip ci]" && git push origin "HEAD:$GITHUB_REF_NAME")
       - name: Preserve evidence even on failure
         if: always()
         uses: actions/upload-artifact@v4
