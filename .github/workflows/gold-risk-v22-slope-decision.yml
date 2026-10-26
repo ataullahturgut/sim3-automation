@@ -1,0 +1,57 @@
+name: Gold Risk V22 Slope Gated Origin Safe Decision Research
+on:
+  push:
+    branches:
+      - research/gold-risk-v22-slope-gated-decision-20261026
+    paths:
+      - .github/workflows/gold-risk-v22-slope-decision.yml
+      - gold_axis_2026/research/case_control_v13/risk_v22_slope_decision.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v22_slope_decision.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verified_three_year_replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fail early on Python syntax errors
+        run: |
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v22_slope_decision.py
+          python -m py_compile gold_axis_2026/research/case_control_v13/test_risk_v22_slope_decision.py
+      - name: Install data packages
+        run: |
+          python -m pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+          python -m pip install 'tabulate>=0.9,<1'
+      - name: Run immutable incumbent gold risk slope intelligence
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v22_slope_decision.py 2>&1 | tee outputs/v22_run.log
+      - name: Strictly compare full 2024 2025 2026 signals and 10 day outcomes
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v22_slope_decision 2>&1 | tee outputs/v22_tests.log
+      - name: Commit real executed evidence, never production data
+        if: success()
+        run: |
+          git config user.name gold-risk-research-bot
+          git config user.email gold-risk-research-bot@users.noreply.github.com
+          git add gold_axis_2026/research/case_control_v13/V22_SLOPE_DECISION_RESULTS_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v22*
+          git diff --cached --quiet || (git commit -m "research: V22 original slope-gated 2024–26 audit, not production [skip ci]" && git push origin "HEAD:$GITHUB_REF_NAME")
+      - name: Preserve report and failed test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-v22-three-year-retro-replay
+          path: |
+            gold_axis_2026/research/case_control_v13/V22_SLOPE_DECISION_RESULTS_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v22*
+          if-no-files-found: warn
+          retention-days: 30
