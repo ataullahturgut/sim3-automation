@@ -1,0 +1,49 @@
+name: Gold Risk V15 Explainable Business Intelligence (no prediction)
+on:
+  push:
+    branches:
+      - research/gold-risk-v15-explainable-bi-20261026
+    paths:
+      - .github/workflows/gold-risk-v15-business-intelligence.yml
+      - gold_axis_2026/research/case_control_v13/risk_v15_business_intelligence.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v15_business_intelligence.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run-bi:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencies
+        run: python -m pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+      - name: Explain original BASE14 and CFTC21 risk scores and compare historical events
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v15_business_intelligence.py 2>&1 | tee outputs/v15_explain.log
+      - name: Prove ALL original 2025/2026 alarm decisions are unchanged
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest test_risk_v15_business_intelligence -v 2>&1 | tee outputs/v15_tests.log
+      - name: Commit executed explanation artifacts only
+        if: success()
+        run: |
+          git config user.name "gold-risk-research-bot"
+          git config user.email "gold-risk-research-bot@users.noreply.github.com"
+          git add gold_axis_2026/research/case_control_v13/V15_BUSINESS_INTELLIGENCE_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v15*
+          git diff --cached --quiet || (git commit -m "research: executed V15 explain-only BI, no new prediction model [skip ci]" && git push)
+      - name: Preserve QA outputs even when unsuccessful
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-risk-v15-explain-only-bi
+          path: |
+            gold_axis_2026/research/case_control_v13/V15_BUSINESS_INTELLIGENCE_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v15*
+          if-no-files-found: warn
+          retention-days: 30
