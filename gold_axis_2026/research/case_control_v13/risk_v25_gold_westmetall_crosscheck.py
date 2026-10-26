@@ -101,6 +101,7 @@ def main():
       "full_gold_source_definition_certified":False,
       "monthly_H1_promotion_allowed":False}
     (OUT/"v25_westmetall_research_manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n")
+    print("V25_WESTMETALL_GT5_OUTLIERS",pd.DataFrame(case).to_string(index=False))
     print("V25_WESTMETALL_RESULTS",pd.DataFrame(results).to_string(index=False))
     print("V25_WESTMETALL_MANIFEST",json.dumps(manifest,ensure_ascii=False))
 
