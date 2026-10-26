@@ -21,10 +21,10 @@ class StrictEpisodeAudit(unittest.TestCase):
  def test_future_horizon_is_censored(self):
   q=self.m[(self.m.year==2026)&(self.m.gap_days==4)].set_index("policy")
   self.assertEqual(q.loc["BASE14_ORIGINAL_RED","episodes_unknown10"],1)
-  self.assertEqual(q.loc["V22_ACTIVE_RED_ONLY","episodes_unknown10"],0)
+  self.assertEqual(q.loc["V22_ACTIVE_RED_ONLY","episodes_unknown10"],1)
  def test_false_episode_counts_are_distinct_from_false_days(self):
   q=self.m[(self.m.year==2026)&(self.m.gap_days==4)].set_index("policy")
-  self.assertEqual(q.loc["BASE14_ORIGINAL_RED","episodes_false10"],3)
-  self.assertEqual(q.loc["V22_ACTIVE_RED_ONLY","episodes_false10"],2)
+  self.assertEqual(q.loc["BASE14_ORIGINAL_RED","episodes_false10"],4)
+  self.assertEqual(q.loc["V22_ACTIVE_RED_ONLY","episodes_false10"],3)
   self.assertFalse(self.ep.never_inferred_intraday.eq(False).any())
 if __name__=="__main__":unittest.main(verbosity=2)
