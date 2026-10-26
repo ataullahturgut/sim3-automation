@@ -141,7 +141,7 @@ def summaries(a,models):
                  percent_direction_correct=100*float(x.direction_correct.mean()),
                  worst_month=str(x.loc[x.error_abs_usd_oz.idxmax(),"target_month"]),
                  Feb_excluded_due_to_invalid_monthly_target=True,
-                 2026_in_sample_or_blind=False,
+                 blind_2026_research_only=True,
                  source_data_firstprints_PIT_proven=False))
     return pd.DataFrame(stat).sort_values("mae_usd_oz")
 
@@ -191,12 +191,12 @@ def main():
            model_code_versions_unchanged=True,ANFIS_CHHHO_original_optimizer=True,
            AOA_ELM_V2_distinct_bugfixed=True,SMA_ELMFIS_V2_distinct_inner_safe=True,
            price_firstprints_PIT_certified=False,
-           2026_backtest_fully_blind=False,
+           fully_blind_2026_backtest=False,
            confirmed_bad_2026_02_27_all4metals_not_propagated_in_censored=True,
            censored_is_full_verified_month_target=False,
            old_raw_Neon_and_model_snapshots_mutated=False,
            source_day_2026_02_27_foreign_reference_same_fixing_definition_certified=False,
-           2026_Feb_excluded_from_comparable_error_metrics=True,
+           Feb_2026_excluded_from_comparable_error_metrics=True,
            no_automatic_deployment=True)
         (O/"v27_2026_monthly_replay_manifest.json").write_text(json.dumps(meta,indent=2)+"\n")
         print("V27_ALL_2026_MONTHS\n"+p.to_string())
