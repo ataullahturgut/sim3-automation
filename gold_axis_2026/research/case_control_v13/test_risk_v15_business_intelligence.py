@@ -39,6 +39,15 @@ class BusinessIntelligenceTests(unittest.TestCase):
         self.assertEqual(len(e[e.peak.str.startswith("2013")]),5)
         self.assertEqual(len(self.h[self.h.type=="MATCHED_NO_DROP"]),81)
 
+    def test_historical_analogue_does_not_modify_alerts(self):
+        a=pd.read_csv(OUT/"v15_historical_parameter_analogues.csv")
+        self.assertTrue((a.nearest_historic_crash_date.str[:4].astype(int)<=2022).all())
+        self.assertTrue((a.nearest_historic_no_crash_date.str[:4].astype(int)<=2022).all())
+        self.assertFalse(a.historical_analog_used_to_change_alarm.any())
+        self.assertTrue(a.does_not_estimate_future_drop_probability.all())
+        existing=self.d[self.d.alert_level=="RED"]
+        self.assertEqual(len(a),len(existing))
+
     def test_no_new_prediction_model(self):
         self.assertFalse(self.audit["classifier_or_forecast_trained"])
         self.assertFalse(self.audit["added_alarm_rule"])
