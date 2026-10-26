@@ -25,10 +25,12 @@ jobs:
           python -m pip install 'tabulate>=0.9,<1'
       - name: Reconstruct actual historic inputs and 2010-2022 case/control formation
         run: |
+          set -o pipefail
           cd gold_axis_2026/research/case_control_v13
           python risk_v17_event_formation.py 2>&1 | tee outputs/v17_run.log
       - name: Check all 31 variables, historical episodes, out-of-period validity, no 2026 selection
         run: |
+          set -o pipefail
           cd gold_axis_2026/research/case_control_v13
           python -m unittest -v test_risk_v17_event_formation 2>&1 | tee outputs/v17_tests.log
       - name: Commit executed research report and actual index/episode outputs
