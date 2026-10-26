@@ -7,6 +7,8 @@ on:
       - .github/workflows/gold-risk-v17-event-formation.yml
       - gold_axis_2026/research/case_control_v13/risk_v17_event_formation.py
       - gold_axis_2026/research/case_control_v13/test_risk_v17_event_formation.py
+      - gold_axis_2026/research/case_control_v13/risk_v17_regime_relative.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v17_regime_relative.py
   workflow_dispatch:
 permissions:
   contents: write
@@ -33,6 +35,16 @@ jobs:
           set -o pipefail
           cd gold_axis_2026/research/case_control_v13
           python -m unittest -v test_risk_v17_event_formation 2>&1 | tee outputs/v17_tests.log
+      - name: Analyze regime-relative changes of every one of 31 original variables
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v17_regime_relative.py 2>&1 | tee outputs/v17r_run.log
+      - name: Confirm broad feature screening and no 2026 data in feature selection
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v17_regime_relative 2>&1 | tee outputs/v17r_tests.log
       - name: Commit executed research report and actual index/episode outputs
         if: success()
         run: |
@@ -40,6 +52,7 @@ jobs:
           git config user.email gold-risk-research-bot@users.noreply.github.com
           git add gold_axis_2026/research/case_control_v13/V17_EVENT_FORMATION_VARIABLE_STUDY_TR.md
           git add gold_axis_2026/research/case_control_v13/outputs/v17*
+          git add gold_axis_2026/research/case_control_v13/V17_REGIME_RELATIVE_REVIEW_TR.md
           git diff --cached --quiet || (git commit -m "research: real V17 gold risk event formation variables and index [skip ci]" && git push)
       - name: Always retain entire V17 run and QA evidence
         if: always()
@@ -49,5 +62,6 @@ jobs:
           path: |
             gold_axis_2026/research/case_control_v13/V17_EVENT_FORMATION_VARIABLE_STUDY_TR.md
             gold_axis_2026/research/case_control_v13/outputs/v17*
+            gold_axis_2026/research/case_control_v13/V17_REGIME_RELATIVE_REVIEW_TR.md
           if-no-files-found: warn
           retention-days: 30
