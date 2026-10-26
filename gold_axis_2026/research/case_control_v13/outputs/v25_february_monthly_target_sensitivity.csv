@@ -1,0 +1,5 @@
+metal,feb_weekdays,original_feb_mean,exclude_suspect_feb_mean,change_if_excluded_usd_per_oz,exclude_is_corrected_target,affected_scope
+AU,20,4934.044500,5008.677368,74.632868,False,February_label_and_March_origin_features
+AG,20,81.100750,82.098158,0.997408,False,February_MR_and_March_origin_features
+PT,20,2099.589000,2126.652105,27.063105,False,February_MR_and_March_origin_features
+PD,20,1706.338500,1732.921579,26.583079,False,February_MR_and_March_origin_features
