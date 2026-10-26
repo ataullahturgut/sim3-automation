@@ -1,0 +1,12 @@
+test_2013_events_in_casebook (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_2013_events_in_casebook) ... ok
+test_every_origin_has_all_original_parameters (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_every_origin_has_all_original_parameters) ... ok
+test_frozen_thresholds (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_frozen_thresholds) ... ok
+test_no_new_prediction_model (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_no_new_prediction_model) ... ok
+test_no_outcome_in_model_inputs (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_no_outcome_in_model_inputs) ... ok
+test_original_alerts_identical_each_origin (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_original_alerts_identical_each_origin) ... ok
+test_original_performance_metrics_unchanged (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_original_performance_metrics_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.474s
+
+OK
