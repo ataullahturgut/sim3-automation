@@ -1,0 +1,59 @@
+name: Gold Risk V18 Three Path Business Intelligence Research
+on:
+  push:
+    branches:
+      - research/gold-risk-v18-three-path-bi-20261026
+    paths:
+      - .github/workflows/gold-risk-v18-three-path-bi.yml
+      - gold_axis_2026/research/case_control_v13/risk_v18_three_path_business_intelligence.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v18_three_path_business_intelligence.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  real-history-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned research dependencies
+        run: |
+          python -m pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+          python -m pip install 'tabulate>=0.9,<1'
+      - name: Analyze original risk scores, historical analogues and existing daily alerts
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v15_business_intelligence.py 2>&1 | tee outputs/v18_ref_v15.log
+          python risk_v16_bi_alarm_priority.py 2>&1 | tee outputs/v18_ref_v16.log
+      - name: Run V18 non-predictive economic risk phase intelligence
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v18_three_path_business_intelligence.py 2>&1 | tee outputs/v18_run.log
+      - name: Verify original risk models were not changed and losses not hidden
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v18_three_path_business_intelligence 2>&1 | tee outputs/v18_tests.log
+      - name: Commit verified research outputs only
+        if: success()
+        run: |
+          git config user.name gold-risk-research-bot
+          git config user.email gold-risk-research-bot@users.noreply.github.com
+          git add gold_axis_2026/research/case_control_v13/V18_THREE_PATH_BI_EVIDENCE_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v18*
+          git diff --cached --quiet || (git commit -m "research: actually executed V18 three-path risk intelligence with unchanged original alarms [skip ci]" && git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME")
+      - name: Always preserve code execution results and test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-risk-v18-three-path-replay
+          path: |
+            gold_axis_2026/research/case_control_v13/V18_THREE_PATH_BI_EVIDENCE_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v18*
+          if-no-files-found: warn
+          retention-days: 30
