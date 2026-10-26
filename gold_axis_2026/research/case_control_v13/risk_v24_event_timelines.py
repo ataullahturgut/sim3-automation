@@ -148,10 +148,60 @@ def research_summary(result):
     m.to_csv(O/"v24_event_year_quality.csv",index=False)
     return m
 
+def family_timeline(e):
+    """Economic families are predeclared, not optimized to flatter alarms.
+
+    April and May 2025 share a macro decline family; the two June 2026
+    legs likewise share one. Credit ONLY the first component's STRICTLY
+    prepeak signal. June 05 signal for June 17 is not a successful forecast
+    of the FIRST June selloff. Unknown March is never called a miss.
+    """
+    names={
+      "2024_11":"2024_NOV",
+      "2025_001":"2025_APR_MAY","2025_002":"2025_APR_MAY",
+      "2025_003":"2025_OCT",
+      "2026_001":"2026_JAN",
+      "2026_002":"2026_MAR",
+      "2026_003":"2026_JUNE","2026_004":"2026_JUNE",
+      "2026_005":"2026_AUG"
+    }
+    tmp=e.copy()
+    tmp["economic_family"]=tmp.event_id.map(names)
+    _gate(tmp.economic_family.notna().all(),"ALL_EVENTS_ASSIGNED_TO_FAMILY")
+    rows=[]
+    for family,g in tmp.groupby("economic_family",sort=True):
+        g=g.sort_values("price_peak")
+        first=g.iloc[0]
+        records=dict(economic_family=family,year=int(first.year),
+            component_events="|".join(g.event_id.astype(str)),
+            first_component_peak=str(first.price_peak),
+            first_component_onset=str(first.original_v13_onset_proxy),
+            component_count=len(g),
+            first_component_prior10_scoreable=int(first.prior10_scoreable_sessions),
+            first_component_first_v22_attention=str(first.V22_first_any_prior10)
+                      if pd.notna(first.V22_first_any_prior10) else "",
+            first_component_verdict=str(first.verdict),
+            family_verdict=(
+              "UNKNOWN_NO_MODEL_COVERAGE"
+              if first.verdict in ("NOT_EVALUABLE_NO_MODEL_SCORES","PARTIAL_COVERAGE")
+              else "EARLY" if first.verdict=="EARLY_PREPEAK_REVIEW"
+              else "MISSED_STRICT_PREPEAK"),
+            economic_family_merging_is_research_judgement=True,
+            blind_validation_2026=False)
+        rows.append(records)
+    result=pd.DataFrame(rows)
+    _gate(len(result)==7,"SEVEN_ECONOMIC_FAMILIES")
+    _gate(result.family_verdict.eq("EARLY").sum()==4,"FOUR_EARLY_FAMILIES")
+    _gate(result.family_verdict.eq("MISSED_STRICT_PREPEAK").sum()==2,"TWO_MISSED_FAMILIES")
+    _gate(result.family_verdict.eq("UNKNOWN_NO_MODEL_COVERAGE").sum()==1,"ONE_UNKNOWN_FAMILY")
+    result.to_csv(O/"v24_seven_economic_families.csv",index=False)
+    return result
+
 def main():
     px,d,ledger=load()
     e=event_timeline(px,d,ledger)
     summary=research_summary(e)
+    families=family_timeline(e)
     caveats=dict(
        model_retrained=False,production_changed=False,neon_modified=False,
        prices_firstprint_PIT_certified=False,macro_CFTC_numeric_firstprint_certified=False,
@@ -173,5 +223,7 @@ def main():
       "prior10_scoreable_sessions","verdict"]].to_string(index=False))
     print("V24_EVENT_YEAR_SUMMARY")
     print(summary.to_string(index=False))
+    print("V24_INDEPENDENT_FAMILY_SUMMARY")
+    print(families.to_string(index=False))
     print("V24_RESEARCH_CAVEATS",json.dumps(caveats,ensure_ascii=False))
 if __name__=="__main__":main()
