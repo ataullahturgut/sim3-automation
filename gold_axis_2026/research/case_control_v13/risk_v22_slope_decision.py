@@ -190,7 +190,7 @@ def main():
       "- Eşikler 2024–2026 vakaları görüldükten sonra araştırıldı: sonuç kör OOS değil.",
       "- 2024/2025/2026 günlük sonuçları az sayıda bağımsız düşüş içerir.",
       "- 2010–22 dar V21 kuralını destekleyen yeterli bağımsız örnek yok.",
-      "- 2026 Mart bozuk veri karantinada, skor döneminin dışında.",
+      "- 27 Şubat 2026 bozuk fiyatı karantinada; etkilenen gelecek 10g sonuçlar UNKNOWN.",
       "- Sözde yanlış alarm sayısı 40->22 yalnız önceliklendirilen gün sayısıdır;",
       "  BASE14 asli 50 kırmızı ve 40 false5 günü değişmedi.",
       "- Olay bazlı öncü zirve inceleme ayrı, 5-gün ve 10-gün sonuçlar ayrı.",
