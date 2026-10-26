@@ -18,6 +18,9 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(self.raw),2526)
         self.assertEqual(hashlib.sha256((ROOT/'historical_gold_daily_research_2010_2019.csv').read_bytes()).hexdigest(),
                          self.r['historical_price_csv_sha256'])
+    def test_10_neon_year_checksum_gates(self):
+        self.assertTrue(self.r['historical_source_year_md5_verified'])
+        self.assertEqual(len(m.NEON_YEAR_MD5),10)
     def test_no_2020_to_2022_leak(self):
         self.assertTrue(all('2010'<=r['origin'][:4]<='2019' for r in self.rows))
     def test_causal_exclusion_of_future(self):
