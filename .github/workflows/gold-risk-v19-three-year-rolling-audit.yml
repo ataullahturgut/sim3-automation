@@ -11,7 +11,7 @@ on:
 permissions:
   contents: write
 jobs:
-  2024-rerun:
+  replay_2024:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
