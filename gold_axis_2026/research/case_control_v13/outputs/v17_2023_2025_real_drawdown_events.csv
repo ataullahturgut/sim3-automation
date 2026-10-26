@@ -1,0 +1,5 @@
+event_id,year,first_label,onset_proxy,peak,trough,realized_drop_pct,pre_onset_at_least_one_flag,first_attention_before_onset,lead_sessions,onset_does_not_establish_intraday_time
+2023_001,2024,2024-11-05,2024-11-06,2024-11-05,2024-11-14,-6.948425376540401,False,,,True
+2023_002,2025,2025-04-22,2025-04-23,2025-04-22,2025-04-28,-5.0959562335369135,False,,,True
+2023_003,2025,2025-05-08,2025-05-09,2025-05-08,2025-05-15,-5.080662057406249,False,,,True
+2023_004,2025,2025-10-17,2025-10-20,2025-10-17,2025-10-28,-9.866881807180317,False,,,True

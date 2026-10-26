@@ -1,0 +1,19 @@
+test_event_precursors_not_onset_or_after (test_risk_v17_event_formation.FormationTests.test_event_precursors_not_onset_or_after) ... ok
+test_full_variable_screen (test_risk_v17_event_formation.FormationTests.test_full_variable_screen) ... ok
+test_historical_case_control_universe (test_risk_v17_event_formation.FormationTests.test_historical_case_control_universe) ... FAIL
+test_if_index_generated_pre2026_only (test_risk_v17_event_formation.FormationTests.test_if_index_generated_pre2026_only) ... ok
+test_no_2026_fitting_or_selection (test_risk_v17_event_formation.FormationTests.test_no_2026_fitting_or_selection) ... ok
+test_no_future_prices_as_feature (test_risk_v17_event_formation.FormationTests.test_no_future_prices_as_feature) ... ok
+
+======================================================================
+FAIL: test_historical_case_control_universe (test_risk_v17_event_formation.FormationTests.test_historical_case_control_universe)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/sim3-automation/sim3-automation/gold_axis_2026/research/case_control_v13/test_risk_v17_event_formation.py", line 31, in test_historical_case_control_universe
+    self.assertEqual(self.history[(self.history.role=="DROP_EVENT")&(self.history.phase==-1)].event_id.nunique(),27)
+AssertionError: 26 != 27
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.013s
+
+FAILED (failures=1)

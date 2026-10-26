@@ -1,0 +1,4 @@
+year,n,index95_threshold,flag_days,future5pct_label_days,overlap_days,negative_flag_days,missed_label_days
+2023,251,69.7503849285122,0,0,0,0,0
+2024,254,69.7503849285122,0,2,0,0,2
+2025,248,69.7503849285122,0,6,0,0,6
