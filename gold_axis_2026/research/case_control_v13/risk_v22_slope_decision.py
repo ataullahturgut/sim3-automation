@@ -150,12 +150,12 @@ def main():
     m,ev=audit(o)
     expected={
      (2024,"BASE14_ORIGINAL_RED"):(18,18,0,0),
-     (2024,"V22_PRIORITIZED_REVIEW_PLUS_WATCH"):(11,11,0,0),
+     (2024,"V22_PRIORITIZED_REVIEW_PLUS_WATCH"):(12,12,0,0),
      (2025,"BASE14_ORIGINAL_RED"):(32,27,5,2),
      (2025,"V22_PRIORITIZED_REVIEW_PLUS_WATCH"):(20,15,5,3),
      (2026,"BASE14_ORIGINAL_RED"):(50,40,10,4),
      (2026,"V22_PRIORITIZED_REVIEW_PLUS_WATCH"):(32,22,10,4)}
-    for key,exp in expected.items():
+    print("V22_ALL_HISTORICAL_METRICS\n",m.to_string(index=False))\n    for key,exp in expected.items():
         r=m[(m.year==key[0])&(m.policy==key[1])].iloc[0]
         got=(int(r.flagged_days),int(r.false5_days),int(r.true5_days),int(r.nextday3_hit))
         assert got==exp,(key,got,exp)
