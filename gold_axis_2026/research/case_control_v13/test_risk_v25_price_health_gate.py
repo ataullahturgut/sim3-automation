@@ -25,6 +25,21 @@ class FourMetalDataHealthV25(unittest.TestCase):
     def test_fail_closed_when_model_attempts_certification(self):
         with self.assertRaisesRegex(RuntimeError,"PRICE_HEALTH_BLOCKED_V25"):
             require_certified(self.audit)
+    def test_source_disagreements_are_adjudicated_not_blindly_replaced(self):
+        a=pd.read_csv(O/"v25_gold_discrepancy_adjudication.csv").set_index("date")
+        self.assertEqual(len(a),3)
+        self.assertEqual(a.loc["2024-05-17","decision"],
+                         "EXTERNAL_REFERENCE_TRANSCRIPTION_ERROR")
+        self.assertEqual(a.loc["2026-01-02","decision"],
+                         "EXTERNAL_REFERENCE_TRANSCRIPTION_ERROR")
+        self.assertEqual(a.loc["2026-02-27","decision"],
+                         "RESEARCH_DATABASE_GOLD_OUTLIER")
+        self.assertTrue((a.original_data_mutated==False).all())
+    def test_all_references_include_independent_corroboration(self):
+        a=pd.read_csv(O/"v25_gold_discrepancy_adjudication.csv")
+        self.assertTrue(a.corroboration_1.str.startswith("https://").all())
+        self.assertTrue(a.corroboration_2.str.startswith("https://").all())
+
     def test_only_one_partial_2021_date_is_ignored_as_not_all_four(self):
         p=pd.read_csv(O/"v25_historical_partial_holiday.csv")
         self.assertEqual(p.date.tolist(),["2021-12-24"])
