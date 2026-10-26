@@ -8,6 +8,6 @@ test_original_alerts_identical_each_origin (test_risk_v15_business_intelligence.
 test_original_performance_metrics_unchanged (test_risk_v15_business_intelligence.BusinessIntelligenceTests.test_original_performance_metrics_unchanged) ... ok
 
 ----------------------------------------------------------------------
-Ran 8 tests in 1.052s
+Ran 8 tests in 1.445s
 
 OK

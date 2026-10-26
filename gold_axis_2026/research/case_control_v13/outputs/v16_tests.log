@@ -1,0 +1,10 @@
+test_2010_2022_historical_comparators_only (test_risk_v16_bi_alarm_priority.RuleQuality.test_2010_2022_historical_comparators_only) ... ok
+test_all_nonred_never_escalate (test_risk_v16_bi_alarm_priority.RuleQuality.test_all_nonred_never_escalate) ... ok
+test_audit_guards (test_risk_v16_bi_alarm_priority.RuleQuality.test_audit_guards) ... ok
+test_frozen_2025_and_retrospective_2026_results (test_risk_v16_bi_alarm_priority.RuleQuality.test_frozen_2025_and_retrospective_2026_results) ... ok
+test_original_alerts_bit_exact (test_risk_v16_bi_alarm_priority.RuleQuality.test_original_alerts_bit_exact) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.020s
+
+OK
