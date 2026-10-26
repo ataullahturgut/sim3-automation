@@ -24,7 +24,7 @@ jobs:
           python risk_v24_source_publication_audit.py
       - name: Strict event and V23 regression tests
         working-directory: gold_axis_2026/research/case_control_v13
-        run: python -m unittest -v test_risk_v24_event_timelines.py test_risk_v24_source_publication_audit.py test_risk_v23_calendar_safe_audit.py
+        run: python -m unittest -v test_risk_v24_event_timelines.py test_risk_v24_source_publication_audit.py test_risk_v24_committed_exports.py test_risk_v23_calendar_safe_audit.py
       - name: Archive complete event and source audit
         uses: actions/upload-artifact@v4
         with:
