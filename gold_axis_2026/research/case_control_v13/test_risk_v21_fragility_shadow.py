@@ -35,8 +35,8 @@ class FragilityShadowTests(unittest.TestCase):
   self.assertEqual(stats.combined_BI_peak_coverage.sum(),6)
   self.assertEqual(stats.original_BI_peak_coverage.sum(),4)
  def test_knew_outcomes_and_admits_did_not_generalize_historically(self):
-  self.assertTrue(self.audit["2024_2026_feature_band_selected_with_prior_outcome_knowledge"])
-  self.assertFalse(self.audit["2010_2022_history_has_supporting_cases"])
+  self.assertTrue(self.audit["historical_band_tuned_with_2024_2026"])
+  self.assertFalse(self.audit["historical_2010_2022_has_supporting_cases"])
   self.assertFalse(self.audit["prospective_holdout_completed"])
   self.assertFalse(self.audit["production_modified"])
   self.assertFalse(self.hist["supports_generalization"])
