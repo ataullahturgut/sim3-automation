@@ -1,0 +1,7 @@
+event,year,peak,original_RED_last5,V22_active_before_or_on_peak,first_V22_attention_last5,hypothesis_was_not_blind
+2024_11,2024,2024-10-30,0,True,2024-10-30,True
+2025_04_MAY,2025,2025-04-22,5,True,2025-04-14,True
+2025_10,2025,2025-10-17,5,True,2025-10-13,True
+2026_01,2026,2026-01-29,5,True,2026-01-23,True
+2026_MAY_JUNE,2026,2026-04-17,0,True,2026-04-17,True
+2026_08,2026,2026-08-24,2,True,2026-08-21,True

@@ -1,0 +1,11 @@
+test_does_not_claim_blind_or_live_success (test_risk_v22_slope_decision.V22PhaseChecks.test_does_not_claim_blind_or_live_success) ... ok
+test_event_peak_not_oversold (test_risk_v22_slope_decision.V22PhaseChecks.test_event_peak_not_oversold) ... ok
+test_horizon_maturity_not_fabricated (test_risk_v22_slope_decision.V22PhaseChecks.test_horizon_maturity_not_fabricated) ... ok
+test_immutable_old_alerts (test_risk_v22_slope_decision.V22PhaseChecks.test_immutable_old_alerts) ... ok
+test_retro_metrics_full_years (test_risk_v22_slope_decision.V22PhaseChecks.test_retro_metrics_full_years) ... ok
+test_watches_only_original_normal (test_risk_v22_slope_decision.V22PhaseChecks.test_watches_only_original_normal) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.053s
+
+OK
