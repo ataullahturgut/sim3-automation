@@ -1,0 +1,5 @@
+model,assessed_months_excluding_unverified_Feb_2026,sum_abs_error_usd_oz,mae_usd_oz,mape_percent,Feb_full_month_label_valid,2026_forecasts_blind,price_firstprint_PIT_verified
+MPA_ANN_ORIGINAL,8,1712.10571,214.01321,4.771146,False,False,False
+CHHHO_ANFIS_ORIGINAL,8,1883.09767,235.38721,5.217980,False,False,False
+SMA_ELMFIS_V2_INNER_SAFE,8,1952.28805,244.03601,5.480504,False,False,False
+AOA_ELM_V2_BUGFIX,8,2129.11607,266.13951,5.887158,False,False,False
