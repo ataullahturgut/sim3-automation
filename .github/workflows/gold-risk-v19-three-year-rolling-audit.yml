@@ -1,0 +1,61 @@
+name: Gold V19 Original-Risk 2024 Rolling Audit
+on:
+  push:
+    branches:
+      - research/gold-risk-v19-three-year-rolling-audit-20261026
+    paths:
+      - .github/workflows/gold-risk-v19-three-year-rolling-audit.yml
+      - gold_axis_2026/research/case_control_v13/risk_v19_2024_original_replay.py
+      - gold_axis_2026/research/case_control_v13/test_risk_v19_2024_original_replay.py
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  2024-rerun:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax first
+        run: |
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v19_2024_original_replay.py
+          python -m py_compile gold_axis_2026/research/case_control_v13/test_risk_v19_2024_original_replay.py
+      - name: Research requirements
+        run: |
+          python -m pip install -r gold_axis_2026/research/case_control_v13/requirements.txt
+          python -m pip install 'tabulate>=0.9,<1'
+      - name: Produce original historical source data and explanations
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v15_business_intelligence.py 2>&1 | tee outputs/v19_reference_v15.log
+      - name: Strictly original model 2024, trained only 2023
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python risk_v19_2024_original_replay.py 2>&1 | tee outputs/v19_run.log
+      - name: Validate 2024 did not enter training and all data are as-of
+        run: |
+          set -o pipefail
+          cd gold_axis_2026/research/case_control_v13
+          python -m unittest -v test_risk_v19_2024_original_replay 2>&1 | tee outputs/v19_tests.log
+      - name: Commit executed evidence report
+        if: success()
+        run: |
+          git config user.name gold-risk-research-bot
+          git config user.email gold-risk-research-bot@users.noreply.github.com
+          git add gold_axis_2026/research/case_control_v13/V19_2024_TRUE_OUT_OF_SAMPLE_TR.md
+          git add gold_axis_2026/research/case_control_v13/outputs/v19*
+          git diff --cached --quiet || (git commit -m "research: run original 2024 gold risk and V18 BI with 2023-only fit [skip ci]" && git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME")
+      - name: Preserve evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-gold-risk-2024-asof
+          path: |
+            gold_axis_2026/research/case_control_v13/V19_2024_TRUE_OUT_OF_SAMPLE_TR.md
+            gold_axis_2026/research/case_control_v13/outputs/v19*
+          if-no-files-found: warn
