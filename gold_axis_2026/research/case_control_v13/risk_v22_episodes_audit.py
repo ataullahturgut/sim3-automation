@@ -2,9 +2,9 @@
 """V22 separate true/false review DAYS from contiguous alert EPISODES.
 
 Important: an episode is not an independent economic shock. Daily targets
-are evaluated over future 10 scored sessions *only after the episode occurs*.
+are evaluated over future 10 complete PRICE sessions *only after the episode occurs*.
 An episode is counted as verified TRUE if at least one in-episode alert day
-has a mature >=5% upcoming fall in its next 10 scored sessions.
+has a mature >=5% upcoming fall in its next 10 complete PRICE sessions.
 Censor unverifiable future outcomes instead of calling them false.
 Original production BASE14 alerts remain unchanged.
 
@@ -84,7 +84,7 @@ def main():
          "retrospective_not_blind":True,
          "original_red_unchanged":True,
          "2024_composite_review_episodes_increased_due_to_nonred_watches":True,
-         "2026_last_original_red_early_sep_no_ten_day_maturity":True,
+         "2026_last_original_red_early_sep_no_ten_day_maturity":False,
          "price_fall_target_only_post_hoc":True}
     (O/"v22_episode_caveat.json").write_text(json.dumps(warning,ensure_ascii=False,indent=2)+"\n")
     report=[
@@ -98,7 +98,7 @@ def main():
       "## Düşüş etiketi ve sansür",
       "Gelecek 10 işlem günü boyunca altının aynı uyarı kapanışına göre",
       "en az %5 aşağı işlem günü kapanışı varsa geriye dönük TRUE.",
-      "Dönem sonundan ötürü gelecek 10 işlem günü görünmüyorsa UNKNOWN.",
+      "Gelecek 10 fiyat oturumu eksikse veya 27 Şubat bozuk fiyatına değiyorsa UNKNOWN.",
       "Epizot TRUE ise en az bir uyarı günü olgun TRUE; bu baştan",
       "tahminin gerçekleştiğini kanıtlamaz.",
       "",
@@ -108,7 +108,7 @@ def main():
       "- 2024: V22 FRAGILITY_WATCH da alarm sayılırsa kompozit 8 epizot",
       "  üretir, sadece biri (30 Ekim) düşüşle örtüşür. Bunu saklama.",
       "- 2025: Eski 7 epizot, 4 false; ACTIVE_RED 4 epizot, 1 false.",
-      "- 2026: Eski 8 epizot, 3 false, 1 gelecek 10g yetersiz;",
+      "- 2026: Eski 8 epizot, 4 false, 1 Şubat bozuk fiyatı nedeniyle belirsiz;",
       "  ACTIVE_RED 8 epizot, 3 false, 1 şüpheli fiyat nedeniyle belirsiz.",
       "- Dört takvim günü epizot ayrımı sabit ve keyfi, 6 ve 10 gün",
       "  sonuçları outputs/v22_episode_sensitivity.csv içinde.",
