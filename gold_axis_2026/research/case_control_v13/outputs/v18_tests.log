@@ -1,0 +1,11 @@
+test_dont_change_existing_red_or_scores (test_risk_v18_three_path_business_intelligence.ActualV18Study.test_dont_change_existing_red_or_scores) ... ok
+test_early_stage_only_daily_proxy (test_risk_v18_three_path_business_intelligence.ActualV18Study.test_early_stage_only_daily_proxy) ... ok
+test_last_day_2025_yellow_continuity (test_risk_v18_three_path_business_intelligence.ActualV18Study.test_last_day_2025_yellow_continuity) ... ok
+test_risk_acceleration_route_rescues_2026_june9 (test_risk_v18_three_path_business_intelligence.ActualV18Study.test_risk_acceleration_route_rescues_2026_june9) ... ok
+test_sensitivity_stats_are_not_red_correction (test_risk_v18_three_path_business_intelligence.ActualV18Study.test_sensitivity_stats_are_not_red_correction) ... ok
+test_three_distinct_path_causes_existing_red (test_risk_v18_three_path_business_intelligence.ActualV18Study.test_three_distinct_path_causes_existing_red) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.042s
+
+OK

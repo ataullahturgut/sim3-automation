@@ -1,0 +1,9 @@
+event,source,onset_proxy,first_original_red_prior_31calendar_days,first_high_attention_prior_31calendar_days,attention_on_onset_close_only,any_attention_prior,intraday_start_unverified
+2023_001,modern_2024_2025_daily_proxy,2024-11-06,,,False,False,True
+2023_002,modern_2024_2025_daily_proxy,2025-04-23,2025-04-04,2025-04-04,True,True,True
+2023_003,modern_2024_2025_daily_proxy,2025-05-09,2025-04-08,2025-04-08,True,True,True
+2023_004,modern_2024_2025_daily_proxy,2025-10-20,2025-10-08,2025-10-08,True,True,True
+2026_001,stress_2026_daily_proxy,2026-01-30,2026-01-21,2026-01-21,True,True,True
+2026_003,stress_2026_daily_proxy,2026-06-05,2026-05-20,,True,False,True
+2026_004,stress_2026_daily_proxy,2026-06-18,2026-05-20,2026-06-05,False,True,True
+2026_005,stress_2026_daily_proxy,2026-08-26,2026-08-10,2026-08-10,True,True,True
