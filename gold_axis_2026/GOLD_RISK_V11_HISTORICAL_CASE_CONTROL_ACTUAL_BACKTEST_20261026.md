@@ -4,7 +4,7 @@
 
 ## Gerçek çalışma
 
-- Neon kaynağından tam ve sabit soy ağacından 2010–2019 **2.526 hafta içi altın referans fiyat kaydı** okundu. 10 yıllık ayırma, 2010-01-04/2019-12-31 uçları ve SHA doğrulandı. Veriler kaynaktaki sonradan hazırlanmış **araştırma** arşividir, ilk yayın değerleri doğrulanmış değildir.
+- Neon kaynağından tam ve sabit soy ağacından 2010–2019 **2.526 hafta içi altın referans fiyat kaydı** okundu. 10 yıllık ayırma, 2010-01-04/2019-12-31 uçları, yerel SHA ve **Neon üzerinde 10/10 yıl için bağımsız tarih+fiyat MD5 eşleşmesi** doğrulandı. Veriler kaynaktaki sonradan hazırlanmış **araştırma** arşividir, ilk yayın değerleri doğrulanmış değildir.
 - 60 işlem günlük geçmiş pencere nedeniyle 2010 başındaki bir eski vaka model eğitiminden çıkartıldı. Kalan etiketler **43 adet gelecek 5 gün >=%5 düşüş başlangıç günü ve 16 bitişik etiket kümesi**; ayrıca aynı yılın trend ve volatilitesine yakın, olaysız **48 negatif karşı örnek** hazırlandı. 17 ham küme fiziksel bağımsız çöküş sayısı değildir.
 - Sekiz geçmişe dönük fiyat özelliği: 5/20 günlük getiri, ivme, 5/20 günlük volatilite, fiyat/20g ortalama farkı, 60 günlük zirveden uzaklık, volatilite genişlemesi. Sadece karar gününe kadar olan fiyatlar özellikte yer alır.
 - Model: `RobustScaler + L2 LogisticRegression(C=0.25, class_weight=balanced)`. **Fiyat seviye forecast yok.** Bu etiketli risk sınıflayıcısının sigmoid skoru **kalibre çöküş olasılığı değildir**.
@@ -40,5 +40,5 @@ python exp_v11_historical_case_control.py
 python -m unittest test_v11.py -v
 ```
 
-Girdiler: V8 SHA ile denetlenen orijinal 2023–2026 overlay ZIP ve CFTC 398-kayıt CSV; 2010–2019 kaynağa sabitli fiyat CSV. Çıktılar: sonuç JSON, her gün uyarı CSV, 48 eşleştirilmiş kontrol CSV.
+Girdiler: V8 SHA ile denetlenen orijinal 2023–2026 overlay ZIP ve CFTC 398-kayıt CSV; 2010–2019 kaynağa sabitli fiyat CSV. Çıktılar: sonuç JSON, her gün uyarı CSV, 48 eşleştirilmiş kontrol CSV. 11/11 birim testi ve temiz klasör yeniden çalıştırmasında üç çıktı dosyasının byte-byte eşleşmesi PASS.
 2010–2019 CSV SHA256: `65cd3e13885571cf2a125e59f6671b97eebb972525bdbc8ab8e103f0f99934d1`.
