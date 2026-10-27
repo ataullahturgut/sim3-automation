@@ -1,0 +1,1088 @@
+{
+  "status": "WEEKLY_CHHHO_ANFIS_REAL_NUMERICAL_RUN_RESEARCH_ONLY",
+  "architecture": "FIRST_ORDER_SUGENO_FIVE_GAUSSIAN_RULES_FOUR_METAL_RETURNS_4_INPUT_4_OUTPUT",
+  "caveat": "NEW_WEEKLY_ADAPTATION_NOT_ORIGINAL_MONTHLY_CHHHO_WEIGHTS; FOUR_INPUTS_VS_ANN_SIXTEEN; RESEARCH_PRICE_NOT_FIRSTPRINT",
+  "optimizer": {
+    "name": "CHAOTIC_HHO_PREMISE_AND_ANFIS_LOCAL_GRADIENT",
+    "population": 12,
+    "generations": 18,
+    "repeats": 2,
+    "validation_repeats": [
+      {
+        "repeat": 0,
+        "seed": 21031205,
+        "validation_loss": 0.7663165967350207
+      },
+      {
+        "repeat": 1,
+        "seed": 21032214,
+        "validation_loss": 0.7570383844673477
+      }
+    ],
+    "local_epochs_selected": 23,
+    "local_mse": 1.1837145391358583,
+    "validation_loss": 0.7570383844673477,
+    "ridge": 0.002
+  },
+  "training": {
+    "trainFrom": "2010-01-18",
+    "trainTo": "2021-12-27",
+    "trainN": 624,
+    "stressEnd": "2026-10-19",
+    "checkFrom": "2022-01-03",
+    "checkTo": "2024-12-30",
+    "checkN": 157,
+    "frozenFitEnd": "2024-12-30",
+    "fittedUsing2025": false,
+    "fittedUsing2026": false
+  },
+  "metrics": {
+    "CHECK_2022_2024_IN_SAMPLE_FINAL_REFIT_NOT_OOS": {
+      "n": 157,
+      "MAPE": 1.202537602703963,
+      "sumAE": 3866.5840490000005,
+      "direction": 96,
+      "pctDirection": 61.146496815286625
+    },
+    "TEST_2025": {
+      "n": 52,
+      "MAPE": 1.8448852482350153,
+      "sumAE": 3411.0213180000005,
+      "direction": 30,
+      "pctDirection": 57.692307692307686
+    },
+    "STRESS_2026": {
+      "n": 42,
+      "MAPE": 3.0649798327121625,
+      "sumAE": 5943.4585529999995,
+      "direction": 24,
+      "pctDirection": 57.14285714285714
+    },
+    "STRESS_2026_QUARANTINE_3W": {
+      "n": 39,
+      "MAPE": 2.986947858372496,
+      "sumAE": 5317.039192,
+      "direction": 23,
+      "pctDirection": 58.97435897435898
+    }
+  },
+  "periods": {
+    "stress2026": [
+      {
+        "week": "2026-01-05",
+        "forecast": 4376.518947,
+        "actual": 4450.46,
+        "origin": 4385.5,
+        "abs_error": 73.941053,
+        "ape": 1.6614249605122098,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-01-12",
+        "forecast": 4475.312026,
+        "actual": 4604.37,
+        "origin": 4450.46,
+        "abs_error": 129.057974,
+        "ape": 2.802945324541869,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-01-19",
+        "forecast": 4012.774103,
+        "actual": 4800.28,
+        "origin": 4604.37,
+        "abs_error": 787.505897,
+        "ape": 16.405415862143265,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-01-26",
+        "forecast": 4861.397369,
+        "actual": 5204.92,
+        "origin": 4800.28,
+        "abs_error": 343.522631,
+        "ape": 6.5999598555913215,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-02-02",
+        "forecast": 5404.645755,
+        "actual": 4878.01,
+        "origin": 5204.92,
+        "abs_error": 526.635755,
+        "ape": 10.796118812931208,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-02-09",
+        "forecast": 5100.305303,
+        "actual": 5022.586,
+        "origin": 4878.01,
+        "abs_error": 77.719303,
+        "ape": 1.5473961669776475,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-02-16",
+        "forecast": 5050.115414,
+        "actual": 4984.158,
+        "origin": 5022.586,
+        "abs_error": 65.957414,
+        "ape": 1.3233411537645876,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-02-23",
+        "forecast": 4970.364502,
+        "actual": 4851.424,
+        "origin": 4984.158,
+        "abs_error": 118.940502,
+        "ape": 2.4516616555093558,
+        "correct": 1,
+        "source_anomaly_exposure": true
+      },
+      {
+        "week": "2026-03-02",
+        "forecast": 4807.997759,
+        "actual": 5197.702,
+        "origin": 4851.424,
+        "abs_error": 389.704241,
+        "ape": 7.497625707382994,
+        "correct": 0,
+        "source_anomaly_exposure": true
+      },
+      {
+        "week": "2026-03-09",
+        "forecast": 5263.244618,
+        "actual": 5145.47,
+        "origin": 5197.702,
+        "abs_error": 117.774618,
+        "ape": 2.288899134491146,
+        "correct": 0,
+        "source_anomaly_exposure": true
+      },
+      {
+        "week": "2026-03-16",
+        "forecast": 5132.88174,
+        "actual": 4858.384,
+        "origin": 5145.47,
+        "abs_error": 274.49774,
+        "ape": 5.649980328170346,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-03-23",
+        "forecast": 4915.154881,
+        "actual": 4445.93,
+        "origin": 4858.384,
+        "abs_error": 469.224881,
+        "ape": 10.554032132773749,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-03-30",
+        "forecast": 4461.506483,
+        "actual": 4637.448,
+        "origin": 4445.93,
+        "abs_error": 175.941517,
+        "ape": 3.7939297050469962,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-04-06",
+        "forecast": 4681.203721,
+        "actual": 4723.524,
+        "origin": 4637.448,
+        "abs_error": 42.320279,
+        "ape": 0.8959471663686592,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-04-13",
+        "forecast": 4748.214162,
+        "actual": 4792.822,
+        "origin": 4723.524,
+        "abs_error": 44.607838,
+        "ape": 0.9307217752472585,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-04-20",
+        "forecast": 4817.842125,
+        "actual": 4745.118,
+        "origin": 4792.822,
+        "abs_error": 72.724125,
+        "ape": 1.5326094060706879,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-04-27",
+        "forecast": 4731.489201,
+        "actual": 4619.4,
+        "origin": 4745.118,
+        "abs_error": 112.089201,
+        "ape": 2.4264883160443365,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-05-04",
+        "forecast": 4574.973684,
+        "actual": 4646.104,
+        "origin": 4619.4,
+        "abs_error": 71.130316,
+        "ape": 1.5309669405403723,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-05-11",
+        "forecast": 4656.451322,
+        "actual": 4671.518,
+        "origin": 4646.104,
+        "abs_error": 15.066678,
+        "ape": 0.3225220915020173,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-05-18",
+        "forecast": 4641.185461,
+        "actual": 4525.124,
+        "origin": 4671.518,
+        "abs_error": 116.061461,
+        "ape": 2.5648238856054553,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-05-25",
+        "forecast": 4551.264762,
+        "actual": 4505.232,
+        "origin": 4525.124,
+        "abs_error": 46.032762,
+        "ape": 1.0217622892886375,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-06-01",
+        "forecast": 4504.483614,
+        "actual": 4467.344,
+        "origin": 4505.232,
+        "abs_error": 37.139614,
+        "ape": 0.831357828200428,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-06-08",
+        "forecast": 4449.966431,
+        "actual": 4218.558,
+        "origin": 4467.344,
+        "abs_error": 231.408431,
+        "ape": 5.48548652288876,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-06-15",
+        "forecast": 4232.011432,
+        "actual": 4279.874,
+        "origin": 4218.558,
+        "abs_error": 47.862568,
+        "ape": 1.1183172154451104,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-06-22",
+        "forecast": 4300.12342,
+        "actual": 4082.532,
+        "origin": 4279.874,
+        "abs_error": 217.59142,
+        "ape": 5.329815426340267,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-06-29",
+        "forecast": 4126.076428,
+        "actual": 4067.032,
+        "origin": 4082.532,
+        "abs_error": 59.044428,
+        "ape": 1.4517817304940193,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-07-06",
+        "forecast": 4071.407567,
+        "actual": 4118.81,
+        "origin": 4067.032,
+        "abs_error": 47.402433,
+        "ape": 1.1508768982224615,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-07-13",
+        "forecast": 4135.196285,
+        "actual": 4027.158,
+        "origin": 4118.81,
+        "abs_error": 108.038285,
+        "ape": 2.6827426444567815,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-07-20",
+        "forecast": 3996.962779,
+        "actual": 4067.342,
+        "origin": 4027.158,
+        "abs_error": 70.379221,
+        "ape": 1.7303492407440795,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-07-27",
+        "forecast": 4083.415006,
+        "actual": 4060.98,
+        "origin": 4067.342,
+        "abs_error": 22.435006,
+        "ape": 0.5524530081792383,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-08-03",
+        "forecast": 4057.216532,
+        "actual": 4175.736,
+        "origin": 4060.98,
+        "abs_error": 118.519468,
+        "ape": 2.8382893028477696,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-08-10",
+        "forecast": 4208.265909,
+        "actual": 4376.36,
+        "origin": 4175.736,
+        "abs_error": 168.094091,
+        "ape": 3.840956653403992,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-08-17",
+        "forecast": 4491.731023,
+        "actual": 4456.846,
+        "origin": 4376.36,
+        "abs_error": 34.885023,
+        "ape": 0.7827289378707357,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-08-24",
+        "forecast": 4475.255384,
+        "actual": 4613.91,
+        "origin": 4456.846,
+        "abs_error": 138.654616,
+        "ape": 3.005143480925054,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-08-31",
+        "forecast": 4654.875449,
+        "actual": 4413.472,
+        "origin": 4613.91,
+        "abs_error": 241.403449,
+        "ape": 5.469694808204845,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-09-07",
+        "forecast": 4348.022386,
+        "actual": 4384.434,
+        "origin": 4413.472,
+        "abs_error": 36.411614,
+        "ape": 0.830474666121565,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-09-14",
+        "forecast": 4369.370526,
+        "actual": 4323.212,
+        "origin": 4384.434,
+        "abs_error": 46.158526,
+        "ape": 1.0676905609844878,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-09-21",
+        "forecast": 4304.363619,
+        "actual": 4312.616,
+        "origin": 4323.212,
+        "abs_error": 8.252381,
+        "ape": 0.19135440536842763,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-09-28",
+        "forecast": 4310.703439,
+        "actual": 4163.84,
+        "origin": 4312.616,
+        "abs_error": 146.863439,
+        "ape": 3.527115331519451,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-10-05",
+        "forecast": 4162.503044,
+        "actual": 4146.456,
+        "origin": 4163.84,
+        "abs_error": 16.047044,
+        "ape": 0.3870062624052561,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-10-12",
+        "forecast": 4140.484946,
+        "actual": 4160.306,
+        "origin": 4146.456,
+        "abs_error": 19.821054,
+        "ape": 0.47643260823191264,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2026-10-19",
+        "forecast": 4155.810256,
+        "actual": 4099.22,
+        "origin": 4160.306,
+        "abs_error": 56.590256,
+        "ape": 1.3805127705520848,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      }
+    ],
+    "test2025": [
+      {
+        "week": "2025-01-06",
+        "forecast": 2634.392578,
+        "actual": 2655.09,
+        "origin": 2630.0125,
+        "abs_error": 20.697422,
+        "ape": 0.7795374778278755,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-01-13",
+        "forecast": 2660.514377,
+        "actual": 2689.07,
+        "origin": 2655.09,
+        "abs_error": 28.555623,
+        "ape": 1.0619144542423382,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-01-20",
+        "forecast": 2698.877456,
+        "actual": 2741.46,
+        "origin": 2689.07,
+        "abs_error": 42.582544,
+        "ape": 1.5532797817890955,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-01-27",
+        "forecast": 2755.396354,
+        "actual": 2767.97,
+        "origin": 2741.46,
+        "abs_error": 12.573646,
+        "ape": 0.45425513507426246,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-02-03",
+        "forecast": 2773.561767,
+        "actual": 2841.76,
+        "origin": 2767.97,
+        "abs_error": 68.198233,
+        "ape": 2.3998590009563747,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-02-10",
+        "forecast": 2863.838565,
+        "actual": 2908.25,
+        "origin": 2841.76,
+        "abs_error": 44.411435,
+        "ape": 1.5270844938501158,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-02-17",
+        "forecast": 2923.16532,
+        "actual": 2926.84,
+        "origin": 2908.25,
+        "abs_error": 3.67468,
+        "ape": 0.12555109729873873,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-02-24",
+        "forecast": 2940.319927,
+        "actual": 2909.85,
+        "origin": 2926.84,
+        "abs_error": 30.469927,
+        "ape": 1.0471304983922658,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-03-03",
+        "forecast": 2900.150273,
+        "actual": 2903.54,
+        "origin": 2909.85,
+        "abs_error": 3.389727,
+        "ape": 0.11674463083601713,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-03-10",
+        "forecast": 2906.6445,
+        "actual": 2934.73,
+        "origin": 2903.54,
+        "abs_error": 28.0855,
+        "ape": 0.9570045485441186,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-03-17",
+        "forecast": 2945.033939,
+        "actual": 3021.87,
+        "origin": 2934.73,
+        "abs_error": 76.836061,
+        "ape": 2.5426659941252585,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-03-24",
+        "forecast": 3044.355889,
+        "actual": 3039.11,
+        "origin": 3021.87,
+        "abs_error": 5.245889,
+        "ape": 0.17261266033876238,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-03-31",
+        "forecast": 3050.955043,
+        "actual": 3119.44,
+        "origin": 3039.11,
+        "abs_error": 68.484957,
+        "ape": 2.195424731564638,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-04-07",
+        "forecast": 3132.694235,
+        "actual": 3078.58,
+        "origin": 3119.44,
+        "abs_error": 54.114235,
+        "ape": 1.7577660934093173,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-04-14",
+        "forecast": 3056.260066,
+        "actual": 3269.1875,
+        "origin": 3078.58,
+        "abs_error": 212.927434,
+        "ape": 6.513160669305136,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-04-21",
+        "forecast": 3308.192482,
+        "actual": 3354.4875,
+        "origin": 3269.1875,
+        "abs_error": 46.295018,
+        "ape": 1.3800921163745405,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-04-28",
+        "forecast": 3376.126464,
+        "actual": 3273.34,
+        "origin": 3354.4875,
+        "abs_error": 102.786464,
+        "ape": 3.140109619158364,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-05-05",
+        "forecast": 3247.317937,
+        "actual": 3354.6625,
+        "origin": 3273.34,
+        "abs_error": 107.344563,
+        "ape": 3.1998617628227546,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-05-12",
+        "forecast": 3371.216927,
+        "actual": 3217.81,
+        "origin": 3354.6625,
+        "abs_error": 153.406927,
+        "ape": 4.767432714213592,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-05-19",
+        "forecast": 3173.123233,
+        "actual": 3284.75,
+        "origin": 3217.81,
+        "abs_error": 111.626767,
+        "ape": 3.3983337273680108,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-05-26",
+        "forecast": 3296.309944,
+        "actual": 3297.4625,
+        "origin": 3284.75,
+        "abs_error": 1.152556,
+        "ape": 0.03495280153300174,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-06-02",
+        "forecast": 3295.737936,
+        "actual": 3361.61,
+        "origin": 3297.4625,
+        "abs_error": 65.872064,
+        "ape": 1.9595391620256637,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-06-09",
+        "forecast": 3387.758012,
+        "actual": 3352.84,
+        "origin": 3361.61,
+        "abs_error": 34.918012,
+        "ape": 1.041445827824105,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-06-16",
+        "forecast": 3340.522761,
+        "actual": 3380.96,
+        "origin": 3352.84,
+        "abs_error": 40.437239,
+        "ape": 1.196028324893765,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-06-23",
+        "forecast": 3384.12181,
+        "actual": 3326.27,
+        "origin": 3380.96,
+        "abs_error": 57.85181,
+        "ape": 1.7392397580137429,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-06-30",
+        "forecast": 3300.550684,
+        "actual": 3328.52,
+        "origin": 3326.27,
+        "abs_error": 27.969316,
+        "ape": 0.8402928767159924,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-07-07",
+        "forecast": 3336.755333,
+        "actual": 3315.68,
+        "origin": 3328.52,
+        "abs_error": 21.075333,
+        "ape": 0.635626280658997,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-07-14",
+        "forecast": 3312.891768,
+        "actual": 3348.67,
+        "origin": 3315.68,
+        "abs_error": 35.778232,
+        "ape": 1.068431113448339,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-07-21",
+        "forecast": 3359.203232,
+        "actual": 3377.3,
+        "origin": 3348.67,
+        "abs_error": 18.096768,
+        "ape": 0.5358353837154927,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-07-28",
+        "forecast": 3391.31328,
+        "actual": 3319.32,
+        "origin": 3377.3,
+        "abs_error": 71.99328,
+        "ape": 2.1689165108789825,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-08-04",
+        "forecast": 3316.729732,
+        "actual": 3371.61,
+        "origin": 3319.32,
+        "abs_error": 54.880268,
+        "ape": 1.6277169549212438,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-08-11",
+        "forecast": 3388.249831,
+        "actual": 3353.75,
+        "origin": 3371.61,
+        "abs_error": 34.499831,
+        "ape": 1.0286941827496978,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-08-18",
+        "forecast": 3347.066342,
+        "actual": 3336.34,
+        "origin": 3353.75,
+        "abs_error": 10.726342,
+        "ape": 0.3215002546530893,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-08-25",
+        "forecast": 3329.137238,
+        "actual": 3390.0375,
+        "origin": 3336.34,
+        "abs_error": 60.900262,
+        "ape": 1.7964480312131987,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-09-01",
+        "forecast": 3405.027306,
+        "actual": 3514.35,
+        "origin": 3390.0375,
+        "abs_error": 109.322694,
+        "ape": 3.1107514622851293,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-09-08",
+        "forecast": 3550.816141,
+        "actual": 3634.86,
+        "origin": 3514.35,
+        "abs_error": 84.043859,
+        "ape": 2.312162208091925,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-09-15",
+        "forecast": 3656.306683,
+        "actual": 3666.72,
+        "origin": 3634.86,
+        "abs_error": 10.413317,
+        "ape": 0.2839954370355958,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-09-22",
+        "forecast": 3680.992057,
+        "actual": 3755.77,
+        "origin": 3666.72,
+        "abs_error": 74.777943,
+        "ape": 1.9910149721207044,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-09-29",
+        "forecast": 3780.528565,
+        "actual": 3848.74,
+        "origin": 3755.77,
+        "abs_error": 68.211435,
+        "ape": 1.772305600598694,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-10-06",
+        "forecast": 3873.888335,
+        "actual": 3995.53,
+        "origin": 3848.74,
+        "abs_error": 121.641665,
+        "ape": 3.04444378836379,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-10-13",
+        "forecast": 4020.166127,
+        "actual": 4193.95,
+        "origin": 3995.53,
+        "abs_error": 173.783873,
+        "ape": 4.143680125781699,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-10-20",
+        "forecast": 4223.925771,
+        "actual": 4160.94,
+        "origin": 4193.95,
+        "abs_error": 62.985771,
+        "ape": 1.5137389751127222,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-10-27",
+        "forecast": 4139.30617,
+        "actual": 3992.8,
+        "origin": 4160.94,
+        "abs_error": 146.50617,
+        "ape": 3.669258914918503,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-11-03",
+        "forecast": 3953.180316,
+        "actual": 3992.48,
+        "origin": 3992.8,
+        "abs_error": 39.299684,
+        "ape": 0.9843426566221803,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-11-10",
+        "forecast": 4007.231389,
+        "actual": 4146.14,
+        "origin": 3992.48,
+        "abs_error": 138.908611,
+        "ape": 3.3503116390884675,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-11-17",
+        "forecast": 4230.707546,
+        "actual": 4066.35,
+        "origin": 4146.14,
+        "abs_error": 164.357546,
+        "ape": 4.041893736248575,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-11-24",
+        "forecast": 4043.939628,
+        "actual": 4133.49,
+        "origin": 4066.35,
+        "abs_error": 89.550372,
+        "ape": 2.166459148910796,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-12-01",
+        "forecast": 4151.867099,
+        "actual": 4212.85,
+        "origin": 4133.49,
+        "abs_error": 60.982901,
+        "ape": 1.4475450279967605,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-12-08",
+        "forecast": 4228.405998,
+        "actual": 4226.69,
+        "origin": 4212.85,
+        "abs_error": 1.715998,
+        "ape": 0.04059910808910108,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-12-15",
+        "forecast": 4244.95192,
+        "actual": 4315.55,
+        "origin": 4226.69,
+        "abs_error": 70.59808,
+        "ape": 1.6358999547112132,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-12-22",
+        "forecast": 4341.157506,
+        "actual": 4456.25,
+        "origin": 4315.55,
+        "abs_error": 115.092494,
+        "ape": 2.582720773218482,
+        "correct": 1,
+        "source_anomaly_exposure": false
+      },
+      {
+        "week": "2025-12-29",
+        "forecast": 4506.47054,
+        "actual": 4385.5,
+        "origin": 4456.25,
+        "abs_error": 120.97054,
+        "ape": 2.7584207082895786,
+        "correct": 0,
+        "source_anomaly_exposure": false
+      }
+    ]
+  },
+  "priceSource": {
+    "repository": "lbruton/StakTrakr",
+    "oldCommit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+    "newCommit": "02964d0324dde362099976c867f5077a369acaa5",
+    "db": "Gold Control Neon",
+    "readOnly": true
+  },
+  "exclusion": [
+    "2026-02-23",
+    "2026-03-02",
+    "2026-03-09"
+  ],
+  "compareANN": {
+    "paired": {
+      "weeks": 39,
+      "ANFIS_MAPE_pct": 2.986947858725241,
+      "ANN_MAPE_pct": 1.8848924722450653,
+      "naive_MAPE_pct": 2.6002461173562197,
+      "ANFIS_direction_count": 23,
+      "ANN_direction_count": 28,
+      "ANFIS_SumAE": 5317.039192,
+      "ANN_SumAE": 3317.683743351578,
+      "ANFIS_better_error_weeks": 11
+    },
+    "unfiltered_diagnostic": {
+      "weeks": 42,
+      "ANFIS_MAPE_pct": 3.064979832767352,
+      "ANN_MAPE_pct": 1.9348186633361781,
+      "naive_MAPE_pct": 2.6624481363562147,
+      "ANFIS_direction_count": 24,
+      "ANN_direction_count": 30,
+      "ANFIS_SumAE": 5943.458553000002,
+      "ANN_SumAE": 3719.4626589109744,
+      "ANFIS_better_error_weeks": 12
+    },
+    "exclusions": [
+      {
+        "week": "2026-02-23",
+        "parity": 341.2559999999994,
+        "originDelta": 0,
+        "sourceAnomalyExposure": true
+      },
+      {
+        "week": "2026-03-02",
+        "parity": 9.094947017729282e-13,
+        "originDelta": 341.2559999999994,
+        "sourceAnomalyExposure": true
+      },
+      {
+        "week": "2026-03-09",
+        "parity": 0,
+        "originDelta": -9.094947017729282e-13,
+        "sourceAnomalyExposure": true
+      }
+    ],
+    "sourceAnnBlob": "adc43fa3780fdff8568566e28770ded11197dcaa",
+    "sourceOctoberBlobs": [
+      "008c5e2477698df2c9bc3b88248ebef1345e5159",
+      "11e48dabc336eed2ec69745b616841ebb988c7d8"
+    ],
+    "noSameTrainingClaim": true,
+    "ANN16FeaturesVsANFIS4Features": true,
+    "ANNExpandingVsANFISFrozen": true
+  },
+  "provenance": {
+    "sourceSQL": "2010-2025 old StakTrakr qualified four-metal observations plus 2026 Jan-Sep pinned 02964d snapshot and Oct GitHub frozen October 1-16 and new commit Oct 19-23",
+    "db": "winter-art-94880101",
+    "readonly": true,
+    "sourceFirstPrintPIT": false,
+    "weekCount": 877,
+    "octDayObservations": 68
+  },
+  "measuredExecutionSeconds": 28.027
+}
