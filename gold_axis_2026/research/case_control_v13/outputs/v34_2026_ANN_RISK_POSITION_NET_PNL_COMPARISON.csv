@@ -1,0 +1,6 @@
+policy,terminal_equity,net_return_pct,max_drawdown_pct,buy_count,sell_count,trade_actions,evaluated_weeks,start_price,last_marked_price,fees_buy_pct,fees_sell_pct,missing_2026_monthly_ANN_weeks,trained_META_only_2024_2025,2026_policy_selected_after_viewing_2026,firstprint_price_and_trading_PIT_certified
+HOLD,88.96500159848537,-11.034998401514628,25.091743718940197,1,0,1,42,4436.7,4011.03,0.8,0.8,3.0,True,False,False
+BENCHMARK_BUY_HOLD,88.96500159848537,-11.034998401514628,25.091743718940197,1,0,1,42,4436.7,4011.03,0.8,0.8,3.0,True,False,False
+BENCHMARK_ALL_CASH,100.0,0.0,0.0,0,0,0,42,,,,,,True,False,False
+WEEKLY_ANN_NO_VETO,68.47844161416006,-31.521558385839942,34.34202117950384,12,12,24,42,4436.7,4011.03,0.8,0.8,3.0,True,False,False
+CONSENSUS_PLUS_V22,90.0774001561456,-9.922599843854396,12.942624777954379,4,4,8,42,4436.7,4011.03,0.8,0.8,3.0,True,False,False

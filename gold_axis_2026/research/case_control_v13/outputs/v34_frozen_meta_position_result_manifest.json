@@ -1,0 +1,43 @@
+{
+  "version": "GOLD_V34_ANN_RISK_POSITION",
+  "meta_train_2024_2025_chosen": {
+    "name": "HOLD",
+    "policy": "HOLD",
+    "threshold": 0.0,
+    "veto": "NONE",
+    "min_weeks": 1
+  },
+  "frozen_selection_score": 115.69614231203765,
+  "train_hold_reference": {
+    "policy": "BENCHMARK_BUY_HOLD",
+    "terminal_equity": 217.42573822485207,
+    "net_return_pct": 117.42573822485207,
+    "max_drawdown_pct": 6.718383651257695,
+    "buy_count": 1,
+    "sell_count": 0,
+    "trade_actions": 1,
+    "evaluated_weeks": 103,
+    "start_price": 2028.0,
+    "last_marked_price": 4480.8,
+    "fees_buy_pct": 0.8,
+    "fees_sell_pct": 0.8,
+    "missing_2026_monthly_ANN_weeks": 0
+  },
+  "year_2026_strategy_net_return_pct": -11.034998401514628,
+  "year_2026_buyhold_net_return_pct": -11.034998401514628,
+  "excess_vs_buyhold_pct_points": 0.0,
+  "no_2026_meta_parameter_tuning": true,
+  "monthly_ANN": "MPA_ANN_ORIGINAL_UNTUNED_V27_V28",
+  "weekly_ANN": "ORIGINAL_WEEKLY_H1_MLP8_TANH_ALPHA1_V1",
+  "alarm_V22": "FROZEN_PRIOR_FRIDAY_ONLY",
+  "year_2026_02_27_approx_price_fixing_certified": false,
+  "weekly_firstprint_price_PIT_certified": false,
+  "macro_firstprint_signal_PIT_certified": false,
+  "trade_execution_is_bank_bid_ask_certified": false,
+  "buy_fee_pct": 0.8,
+  "sell_fee_pct": 0.8,
+  "NOT_LIVE_TRADING": true,
+  "NEON_UNCHANGED": true,
+  "Oct2026_monthly_ANN_GPR_available": false,
+  "missing_2026_10_monthly_cannot_generate_fallback_sell": true
+}
