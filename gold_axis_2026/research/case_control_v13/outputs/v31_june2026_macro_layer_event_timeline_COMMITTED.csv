@@ -1,0 +1,8 @@
+date_TR,time_TR,source,state,market_result,model_prior_params_unchanged,verified_operational_alert
+2026-06-02,17:33,JOLTS,PRIOR_CONTEXT_JOLTS_AVAILABLE,7.618m actual vs 6.88m consensus; hires -419k,TRUE,FALSE
+2026-06-03,15:31,ADP,PRIOR_CONTEXT_ADP_AVAILABLE,122k actual vs 117k consensus,TRUE,FALSE
+2026-06-04,16:45,JOLTS+ADP+historical NFP calendar,PENDING_UNVERIFIED_SCHEDULE,Employment resilience context only; cannot forecast NFP direction,TRUE,FALSE
+2026-06-05,15:30,NFP,AWAIT_REACTION_30M_BAR,172k vs 85k but reaction not mature,TRUE,FALSE
+2026-06-05,16:05,NFP+Twelve Data cached XAU,EVENT_REPRICING_RESEARCH_REVIEW,30min -1.20719pct below frozen 2023-24 -0.99341pct threshold,TRUE,FALSE
+2026-06-10,16:05,CPI+Twelve Data cached XAU,NO_RARE_ADVERSE_REACTION,headline surprise zero and gold +0.39590pct,TRUE,FALSE
+2026-06-17,21:35,FOMC+Twelve Data cached XAU,EVENT_REPRICING_RESEARCH_REVIEW_OUTSIDE_BANK_WINDOW,30min -2.17337pct; bank window closed,TRUE,FALSE
