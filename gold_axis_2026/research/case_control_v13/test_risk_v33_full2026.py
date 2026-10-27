@@ -39,6 +39,12 @@ class Full2026NoFutureLabelTests(unittest.TestCase):
         z=self.d[self.d.five_day_label_status.eq("UNMATURED_OR_PRICE_NOT_FOUND")]
         self.assertTrue(z.next5_drop5_AUDIT_ONLY.isna().all())
         self.assertTrue(z.next5_drop4_AUDIT_ONLY.isna().all())
+    def test_monthly_true_and_false_have_nonnegative_exact_denominator(self):
+        self.assertTrue((self.m.next5_drop5_no_alarm_outcome_days>=0).all())
+        self.assertTrue((self.m.next5_drop5_true_alarm_days>=0).all())
+        self.assertTrue((self.m.next5_drop5_true_alarm_days+
+                         self.m.next5_drop5_no_alarm_outcome_days==
+                         self.m.evaluated_alert_days).all())
     def test_research_only_not_live(self):
         self.assertFalse(self.manifest["candidate_score_timing_PIT_certified"])
         self.assertTrue(self.manifest["no_production_writes"])
