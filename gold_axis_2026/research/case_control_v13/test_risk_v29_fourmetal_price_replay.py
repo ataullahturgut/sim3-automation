@@ -44,7 +44,16 @@ class V29GoldRiskReplayTests(unittest.TestCase):
             row=g[g.price_peak.eq("2026-03-12")]
             self.assertEqual(len(row),1)
             self.assertGreater(row.days_with_model_score.iloc[0],0)
+            self.assertEqual(row.expected_prior10_price_sessions.iloc[0],10)
+            self.assertTrue(row.V22_prepeak_visible.iloc[0])
+            self.assertTrue(row.V22_coverage_complete.iloc[0])
             self.assertFalse(row.numerical_PIT_certified.any())
+    def test_2024_2025_events_preserved_not_falsely_unscorable(self):
+        early=self.events[self.events.year.isin((2024,2025))]
+        self.assertEqual(len(early),8)
+        self.assertTrue((early.days_with_model_score>0).all())
+        self.assertFalse(early.V22_verdict.eq("NO_SCORABLE_DAYS").any())
+
     def test_model_and_overlay_are_not_conflated(self):
         self.assertEqual(set(self.metrics.model),{"BASE14","CFTC21","V22_RESEARCH_REVIEW"})
         self.assertTrue((self.metrics.label_true10+self.metrics.label_false10+
