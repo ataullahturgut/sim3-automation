@@ -40,7 +40,7 @@ jobs:
           pattern: gold-v34-weekly-ANN-shard-*
           merge-multiple: true
           path: gold_axis_2026/research/case_control_v13/outputs/
-      - name: Verify original ANN meta-selection script after duplicate-policy-key fix
+      - name: Verify frozen policy source and numpy-safe outcome manifest script
         working-directory: gold_axis_2026/research/case_control_v13
         run: python -m py_compile gold_v34_position_backtest.py
       - name: Run full 2024-25 trained 2026 frozen AL/TUT/CIK, commission exactly 0.8 per side
