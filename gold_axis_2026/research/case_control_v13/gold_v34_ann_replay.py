@@ -79,7 +79,7 @@ def weekly_snapshot():
     return dict(week_summaries=weeks,targets=targets,
         firstprint_PIT_proven=False,
         weekly_original_hyperparameters_unchanged=True,
-        2026_02_27_external_approximation_same_benchmark_certified=False,
+        external_2026_02_27_same_benchmark_certified=False,
         source="STAKTRAKR_ORIGINAL_2010_SEP_2026_OCT_UPDATED_FIXED_2026_OCT23")
 
 def replay_weekly(snapshot,shard,shards):
