@@ -213,7 +213,7 @@ function run(data,opt={}){
   training:{trainFrom:train[0].week,trainTo:train.at(-1).week,trainN:train.length,checkFrom:val[0].week,
    checkTo:val.at(-1).week,checkN:val.length,frozenFitEnd:full.at(-1).week,
    fittedUsing2025:false,fittedUsing2026:false},metrics:{
-   DEV_2022_2024:metric(scored.dev),TEST_2025:metric(scored.test2025),STRESS_2026:metric(scored.stress2026),
+   CHECK_2022_2024_IN_SAMPLE_FINAL_REFIT_NOT_OOS:metric(scored.dev),TEST_2025:metric(scored.test2025),STRESS_2026:metric(scored.stress2026),
    STRESS_2026_QUARANTINE_3W:metric(cleaned)
   },periods:{stress2026:scored.stress2026,test2025:scored.test2025},
   priceSource:{repository:"lbruton/StakTrakr",oldCommit:"ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
