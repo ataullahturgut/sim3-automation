@@ -214,8 +214,9 @@ def reconstruct_2026_triage(altrows,model_daily,frame):
                and x[7]>=0 and x[16]<0)
         red=a["alert_level"]=="RED"; yellow=a["alert_level"]=="YELLOW"
         p5=float(x[0])*100
-        prior5=(float(testing[k-5]["features"][0])*100) if k>=5 and
-            testing[k-5]["origin"][:4]==date[:4] else float("nan")
+        prior5=(float(testing[k-5]["features"][0])*100
+                if k>=5 and testing[k-5]["origin"][:4]==date[:4]
+                else float("nan"))
         accel=p5-prior5
         P1=bool(red and strong and np.isfinite(accel) and accel>1)
         P2=bool(red and strong and "CFTC_CONFIRMED_RISK_ACCELERATION" in reason)
@@ -344,7 +345,7 @@ def run():
         for f in ("BASE14_original_alert_level","CFTC21_original_alert_level"):
             q=new_decisions[f].eq("RED")
             audited.append(dict(scenario=scenario,model=f.replace("_original_alert_level",""),
-                2026_total_scored=len(new_decisions),newly_recovered_scoreable_days=int(new_decisions.was_previously_unscored.sum()),
+                year_2026_total_scored=len(new_decisions),newly_recovered_scoreable_days=int(new_decisions.was_previously_unscored.sum()),
                 total_RED=int(q.sum()),
                 recovered_RED=int((q&new_decisions.was_previously_unscored).sum()),
                 overlap_original_frozen_RED=int((q&~new_decisions.was_previously_unscored).sum()),
@@ -353,7 +354,7 @@ def run():
                 label_unknown=int((q&new_decisions.next10_outcome_research_only.str.startswith("UNKNOWN")).sum())))
         v=new_decisions.effective_review
         audited.append(dict(scenario=scenario,model="V22_RESEARCH_REVIEW",
-                2026_total_scored=len(new_decisions),
+                year_2026_total_scored=len(new_decisions),
                 newly_recovered_scoreable_days=int(new_decisions.was_previously_unscored.sum()),
                 total_RED=int(v.sum()),recovered_RED=int((v&new_decisions.was_previously_unscored).sum()),
                 overlap_original_frozen_RED=int((v&~new_decisions.was_previously_unscored).sum()),
