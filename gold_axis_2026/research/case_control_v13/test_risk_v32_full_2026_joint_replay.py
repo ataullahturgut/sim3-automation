@@ -30,7 +30,7 @@ class V32Unbiased2026Audit(unittest.TestCase):
         self.assertFalse(self.d.v31_historical_live_signal_eligible.any())
         self.assertFalse(self.d.PIT_price_certified.any())
         self.assertFalse(self.d.any_sell_trade_executed.any())
-        self.assertFalse(self.m["no_live_alarms_sent"])
+        self.assertTrue(self.m["no_live_alarms_sent"])
         self.assertFalse(self.m["macros_prior_consensus_capture_proven"])
     def test_macros_have_precise_release_asof_and_no_backdating(self):
         self.assertEqual(len(self.e),23)
