@@ -92,7 +92,7 @@ def active():
    active_policy_2026_buy_count=int(perf["buy_count"]),
    active_policy_2026_sell_count=int(perf["sell_count"]),
    active_policy_2026_trades=selected_only,
-   2026_result_not_blind_because_active_constraint_added_after_prior_2026_research=True,
+   year_2026_result_not_blind_because_active_constraint_added_after_prior_2026_research=True,
    no_inference_params_changed=True,
    no_neon_mutations=True,
    not_investment_advice_or_real_bank_order=True,
