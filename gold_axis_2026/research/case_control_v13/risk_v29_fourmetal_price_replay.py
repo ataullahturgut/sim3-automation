@@ -279,6 +279,29 @@ def all_price_status(prices,dates):
         mapping[date]=(status,pct)
     return mapping
 
+def frozen_2024_2025_plus_scenario(baseline_v22,scenario_2026):
+    """Pre-2026 original decisions MUST not disappear from nine-event audit."""
+    early=baseline_v22.loc[baseline_v22.year.le(2025),[
+        "origin","BASE14_original_alert_level","effective_review"]].copy()
+    cf24=pd.read_csv(O/"v19_2024_original_models.csv")
+    cf24=cf24.loc[cf24.model.eq("CFTC21"),["origin","alert_level"]]
+    cf25=pd.read_csv(O/"v15_daily_intelligence.csv")
+    cf25=cf25.loc[cf25.model.eq("CFTC21")&
+        cf25.origin.str.startswith("2025"),["origin","alert_level"]]
+    cftc=pd.concat([cf24,cf25],ignore_index=True)
+    must(len(cftc)==486 and cftc.origin.is_unique,"FROZEN_2024_2025_CFTC21_ROWS")
+    early=early.merge(cftc.rename(columns={"alert_level":"CFTC21_original_alert_level"}),
+        on="origin",validate="one_to_one",how="left")
+    must(len(early)==486 and early.CFTC21_original_alert_level.notna().all(),
+         "FROZEN_2024_2025_COMPLETE")
+    keep=["origin","BASE14_original_alert_level",
+          "CFTC21_original_alert_level","effective_review"]
+    result=pd.concat([early[keep],scenario_2026[keep]],ignore_index=True)
+    must(result.origin.is_unique and len(result)==486+len(scenario_2026),
+         "HISTORICAL_FULL_COMPARISON")
+    # Frozen 2024/25 V22 prepeak must match original V24 ledger.
+    return result
+
 def peak_research_result(decisions,calendar):
     ids={v:i for i,v in enumerate(calendar.date)}
     peaks=pd.read_csv(O/"v24_nine_event_compact_audit.csv")
@@ -363,7 +386,8 @@ def run():
                 label_true10=int((v&new_decisions.next10_outcome_research_only.eq("TRUE_DROP_5PCT")).sum()),
                 label_false10=int((v&new_decisions.next10_outcome_research_only.eq("FALSE_DROP_5PCT")).sum()),
                 label_unknown=int((v&new_decisions.next10_outcome_research_only.str.startswith("UNKNOWN")).sum())))
-        e=peak_research_result(new_decisions,calendar)
+        historical=frozen_2024_2025_plus_scenario(baseline_v22,new_decisions)
+        e=peak_research_result(historical,calendar)
         e["scenario"]=scenario
         event_rows.extend(e.to_dict("records"))
         for _,r in restored.iterrows():
