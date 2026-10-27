@@ -40,6 +40,9 @@ jobs:
           pattern: gold-v34-weekly-ANN-shard-*
           merge-multiple: true
           path: gold_axis_2026/research/case_control_v13/outputs/
+      - name: Verify repaired causal asof 2024–2025 optimizer runner syntax
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m py_compile gold_v34_position_backtest.py
       - name: Run full 2024-25 trained 2026 frozen AL/TUT/CIK, commission exactly 0.8 per side
         working-directory: gold_axis_2026/research/case_control_v13
         run: python -u gold_v34_position_backtest.py
