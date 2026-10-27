@@ -1,0 +1,12 @@
+year,family,events,extreme_adverse_research,normal_market_reaction,missing_bars,PIT_certified
+2023,NFP,12,2,9,1,false
+2023,CPI,12,0,11,1,false
+2023,FOMC,8,1,6,1,false
+2024,NFP,12,1,11,0,false
+2024,CPI,12,3,9,0,false
+2024,FOMC,8,1,7,0,false
+2025,NFP,11,0,11,0,false
+2025,CPI,10,0,10,0,false
+2026,NFP,9,1,7,1,false
+2026,CPI,9,0,8,1,false
+2026,FOMC,5,2,3,0,false
