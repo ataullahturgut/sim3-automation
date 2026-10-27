@@ -159,9 +159,9 @@ function run(data,opt={}){
  const stress=sample.filter(x=>x.week>="2026-01-01"&&x.week<="2026-09-21");
  check(train.length>600&&val.length>150&&test.length===52&&stress.length===38,"SPLIT");
  const xm=Array.from({length:D},(_,j)=>mean(train.map(x=>x.X[j])));
- const xs=Array.from({length:D},(_,j)=>std(train.map(x=>x.X[j]),xm[j])));
+ const xs=Array.from({length:D},(_,j)=>std(train.map(x=>x.X[j]),xm[j]));
  const ym=Array.from({length:D},(_,j)=>mean(train.map(x=>x.Y[j])));
- const ys=Array.from({length:D},(_,j)=>std(train.map(x=>x.Y[j]),ym[j])));
+ const ys=Array.from({length:D},(_,j)=>std(train.map(x=>x.Y[j]),ym[j]));
  const Xtr=scale(train.map(z=>z.X),xm,xs),Ytr=scale(train.map(z=>z.Y),ym,ys);
  const Xv=scale(val.map(z=>z.X),xm,xs),Yv=scale(val.map(z=>z.Y),ym,ys);
  const anchor=initAnchor(Xtr);
