@@ -207,7 +207,8 @@ def optimise(w):
     fit=pd.DataFrame(scores).sort_values(["objective_2024_2025","trade_actions","policy"],
              ascending=[False,True,True])
     chosen=fit.iloc[0]
-    cfg={k:chosen[k] for k in ("name","policy","threshold","veto","min_weeks")}
+    cfg={k:(chosen[k].item() if isinstance(chosen[k],np.generic) else chosen[k])
+         for k in ("name","policy","threshold","veto","min_weeks")}
     need(cfg["policy"] in POLICIES,"UNKNOWN_TRAIN_WINNER")
     return cfg,fit,benchmark
 
@@ -253,7 +254,8 @@ def run():
        Oct2026_monthly_ANN_GPR_available=False,
        missing_2026_10_monthly_cannot_generate_fallback_sell=True)
     (O/"v34_frozen_meta_position_result_manifest.json").write_text(
-        json.dumps(portfolio,ensure_ascii=False,indent=2)+"\n")
+        json.dumps(portfolio,ensure_ascii=False,indent=2,
+                    default=lambda v:v.item() if isinstance(v,np.generic) else str(v))+"\n")
     print("V34_SELECTED_POLICY_TRAIN_2024_2025",json.dumps(cfg))
     print("V34_TOP_10_2024_2025_FIT\n"+leader.head(10).to_string(index=False))
     print("V34_2026_NET_PROFITS\n"+row.to_string(index=False))
