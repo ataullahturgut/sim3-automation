@@ -1,0 +1,2 @@
+policy,return_2024_2025_train_pct,return_2026_test_pct,buyhold_2026_return_pct,terminal_100usd,buy_count,sell_count,maxdd_2026_pct,exploratory_2026
+ANN_EITHER|0.0000|NONE|3,101.14145703107793,-18.12603807250851,-11.034998401514628,81.8739619274915,5,4,31.062377197611596,True
