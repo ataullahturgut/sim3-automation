@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - research/gold-monthly-v28-parameters-origin-safe-20261027
+    paths:
+      - 'gold_axis_2026/research/case_control_v13/risk_v28_gold_monthly_parameter_study.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v28_parameter_study.py'
+      - 'gold_axis_2026/research/case_control_v13/outputs/v28_DEV_2022_2025_official_gpr_origin_group_*.csv'
+      - '.github/workflows/gold-v28-monthly-parameters-chronological.yml'
   workflow_dispatch:
 
 permissions:
