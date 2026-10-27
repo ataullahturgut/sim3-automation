@@ -64,6 +64,7 @@ def prepare():
     w["execution_reference_price"]=[float(dic[t]["opens"][0]) for t in w.target_week]
     w["week_end_reference_price"]=[float(dic[t]["closes"][0]) for t in w.target_week]
     w["execution_reference_date"]=[dic[t]["first_observation"] for t in w.target_week]
+    w["week_last_observed_date"]=[dic[t]["last_observation"] for t in w.target_week]
     w["previous_friday_asof_date"]=[dic[origin]["last_observation"] for origin in w.origin_week]
     need((w.previous_friday_asof_date<w.target_week).all(),"RISK_SIGNAL_IN_SAME_TARGET_WEEK")
     before=pd.read_csv(O/"v22_daily_decisions.csv")
@@ -120,7 +121,13 @@ def signal(row,c):
 
 def simulate(w,c,scope):
     df=w[w.date.str[:4].isin(scope)].sort_values("date")
+    # No future 2026 endpoint may decide 2024-2025 meta rule.
+    if "2026" not in scope:
+        df=df[df.week_last_observed_date.le("2025-12-31")]
     need(df.date.is_unique and len(df)>=38,"PORTFOLIO_SAMPLE_EMPTY")
+    if "2026" not in scope:
+        need(df.week_last_observed_date.max()<"2026-01-01",
+             "TRAIN_EVALUATION_LOOKED_AT_2026_PRICES")
     need(df.exec_date_UTC_noon_reference.notna().all(),"MISSING_REFERENCE_EXEC_TIME")
     cash=START_CAPITAL;units=0.;position=0; held_weeks=0;actions=[];equity=[]
     initial=float(df.execution_reference_price.iloc[0])
@@ -156,14 +163,18 @@ def simulate(w,c,scope):
            research_not_real_order=True,
            net_liquidation_value_usd=wealth,
            price_firstprint_PIT_verified=False))
-    final=equity[-1]
+    # Final liquidation is marked at latest observed final-Friday 12:00Z source
+    # after the last trade opportunity (Monday 15:00 TR), with sell fee.
+    final_reference_price=float(df.week_end_reference_price.iloc[-1])
+    final=cash+units*final_reference_price*(1-SELL)
+    equity.append(final)
     drawdown=0.;high=START_CAPITAL
     for eq in equity:
         high=max(high,eq);drawdown=max(drawdown,(high-eq)/high)
     return dict(policy=c["name"],terminal_equity=final,net_return_pct=100*(final/START_CAPITAL-1),
          max_drawdown_pct=100*drawdown,buy_count=buy_n,sell_count=sell_n,
          trade_actions=trades,evaluated_weeks=len(df),
-         start_price=initial,last_marked_price=float(df.week_end_reference_price.iloc[-1]),
+         start_price=initial,last_marked_price=final_reference_price,
          fees_buy_pct=0.8,fees_sell_pct=0.8,
          missing_2026_monthly_ANN_weeks=int(df.monthly_gap_is_ABSTAIN.sum())),actions
 
@@ -175,6 +186,8 @@ def buy_hold(w,scope):
 
 def optimise(w):
     train=w[w.date.str[:4].isin(("2024","2025"))]
+    need(len(train[train.week_last_observed_date.ge("2026-01-01")])<=1,
+         "MORE_THAN_ONE_WEEKS_CROSSES_TRAIN_YEAR")
     benchmark,_=buy_hold(w,("2024","2025"))
     scores=[]
     for c in candidates():
