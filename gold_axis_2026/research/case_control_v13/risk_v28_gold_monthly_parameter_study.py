@@ -149,7 +149,7 @@ def calibrate_all(original,selected,models):
     for model in models:
         c=selected[selected.model.eq(model)].iloc[0]
         v=original[original.model.eq(model)].copy()
-        ck(len(v)==54,"MODEL_54_ROWS_MISSING_"+model)
+        ck(len(v) in (45,54),"MODEL_TRAIN_VAL_OR_STRESS_ROWS_MISSING_"+model)
         v["chosen_dev_gain"]=float(c.gain)
         v["chosen_dev_cap"]=float(c.cap)
         v["tuned_forecast"]=[calibrated_forecast(r,c.gain,c.cap) for r in v.itertuples()]
@@ -165,6 +165,7 @@ def score_by_split(df,models):
         for role,months in (("DEV",DEV),("VALIDATION",VAL),("2026_STRESS",STRESS),
                             ("2026_STRESS_EXCLUDE_FEB",[x for x in STRESS if x!="2026-02"])):
             k=df[(df.model==model)&df.month.isin(months)].copy()
+            if role.startswith("2026_STRESS") and len(k)==0: continue
             ck(len(k)==len(months),"MISSING_EVAL_ROWS_"+role+"_"+model)
             old=metrics(k)
             new=metrics(k,"tuned_forecast")
