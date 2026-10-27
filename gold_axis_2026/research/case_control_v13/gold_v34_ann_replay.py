@@ -60,7 +60,8 @@ def weekly_snapshot():
     end=date.fromisoformat(d.date.max())
     weeks=[]
     for monday,days in sorted(grp.items()):
-        if monday+timedelta(days=6)>end or len(days)<3:continue
+        if (monday+timedelta(days=4)>end or
+            monday+timedelta(days=6)>date(2026,10,27) or len(days)<3):continue
         ordered=sorted(days)
         x=np.array([[days[k][m] for m in weekly.M] for k in ordered],float)
         guard(np.isfinite(x).all() and x.min()>0,"WEEKLY_NONFINITE_SOURCE")
