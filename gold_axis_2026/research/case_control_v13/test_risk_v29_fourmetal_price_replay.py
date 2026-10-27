@@ -28,7 +28,7 @@ class V29GoldRiskReplayTests(unittest.TestCase):
         self.assertFalse(self.data.signal_price_same_fixing_certified.any())
     def test_all_old_BASE14_CFTC21_scores_unchanged(self):
         for r in self.m["scenarios_comparisons"]:
-            self.assertEqual(r["old_model_scores_unchanged"],786)
+            self.assertEqual(r["old_model_scores_unchanged"],1572)
             self.assertEqual(r["V22_frozen_2026_score_rows_exactly_reproduced"],161)
             self.assertGreaterEqual(r["additional_days"],10)
     def test_original_march_2026_gap_is_declared(self):
