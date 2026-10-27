@@ -1,0 +1,67 @@
+name: Gold V28 Origin-Safe Parameter Optimization
+
+on:
+  push:
+    branches:
+      - research/gold-monthly-v28-parameters-origin-safe-20261027
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dev-tune-and-2025-locked-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original models numeric dependencies
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - name: Integrity and chronological parameter selection tests
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m unittest -v test_risk_v28_parameter_study.py
+      - name: Historical model run and DEV-only parameter selection
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v28_gold_monthly_parameter_study.py --phase tune
+      - name: Save immutable frozen tuning plan, 2025 untouched validation and historical forecasts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v28-dev-only-selected-2025-locked-validation
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v28_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v28_*.json
+          retention-days: 90
+
+  evaluate-frozen-parameters-2026:
+    needs: dev-tune-and-2025-locked-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact model requirements
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - name: Download DEV-only immutable frozen model tuning plan
+        uses: actions/download-artifact@v4
+        with:
+          name: gold-v28-dev-only-selected-2025-locked-validation
+          path: gold_axis_2026/research/case_control_v13/outputs/
+          merge-multiple: true
+      - name: 2026 stress evaluation - no refit or hyperparameter re-selection
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v28_gold_monthly_parameter_study.py --phase final
+      - name: Save all month-by-month predictions and metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v28-2026-lock-params-results
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v28_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v28_*.json
+          retention-days: 90
