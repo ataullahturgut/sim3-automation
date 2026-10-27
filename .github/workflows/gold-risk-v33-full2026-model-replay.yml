@@ -1,0 +1,40 @@
+name: Gold V33 2026 FULL Jan-Oct27 risk outputs original frozen parameters
+on:
+  push:
+    branches: [research/gold-risk-v33-2026-complete-observed-through-oct2026-20261027]
+    paths:
+      - 'gold_axis_2026/research/case_control_v13/risk_v33_2026_full_asof_oct27_replay.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v33_full2026.py'
+      - '.github/workflows/gold-risk-v33-full2026-model-replay.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  score-all-2026-asof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 38
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original models
+        run: python -m pip install numpy pandas scipy scikit-learn tabulate
+      - name: Syntax check
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m py_compile risk_v33_2026_full_asof_oct27_replay.py
+      - name: Calculate 2026 full available original model scores and every missing day
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v33_2026_full_asof_oct27_replay.py
+      - name: Verify exact old 187 model dates and no invented future results
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m unittest -v test_risk_v33_full2026.py
+      - name: Save full 2026 daily monthly and model score evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v33-2026-Jan-Oct27-ALL-days-and-models
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v33_2026_jan_oct27_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v33_full_2026_asof_audit_manifest.json
+          retention-days: 90
