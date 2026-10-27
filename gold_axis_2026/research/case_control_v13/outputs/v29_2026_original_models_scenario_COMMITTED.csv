@@ -1,0 +1,7 @@
+scenario,model,scoreable_days,newly_recovered,alarm_days,recovered_alarm_days,baseline_old_alarm_days,future10_true_day_labels,future10_false_day_labels,unknown10_day_labels,certified_price_fix,model_params_unchanged
+AM_MIXED_FIX_REFERENCE_NOT_SAME_SERIES,BASE14,187,26,63,13,50,18,45,0,false,true
+AM_MIXED_FIX_REFERENCE_NOT_SAME_SERIES,CFTC21,187,26,43,11,32,13,30,0,false,true
+AM_MIXED_FIX_REFERENCE_NOT_SAME_SERIES,V22_RESEARCH_REVIEW,187,26,43,11,32,15,28,0,false,true
+PM_MIXED_CLOSE_REFERENCE_NOT_SAME_SERIES,BASE14,187,26,63,13,50,18,45,0,false,true
+PM_MIXED_CLOSE_REFERENCE_NOT_SAME_SERIES,CFTC21,187,26,43,11,32,13,30,0,false,true
+PM_MIXED_CLOSE_REFERENCE_NOT_SAME_SERIES,V22_RESEARCH_REVIEW,187,26,42,10,32,15,27,0,false,true
