@@ -158,8 +158,9 @@ def reconstruct_2026_triage(altrows,model_daily,frame):
         fitted=-forest.score_samples(scaler.transform(X))
         risk=-forest.score_samples(scaler.transform(Y))
         yellow,red=np.quantile(fitted,[.9,.95])
-        score_from_original=model_daily[model_daily.family.eq(
-            "BASE_14" if fam=="BASE14" else "BASE_14_PLUS_CFTC_7")]
+        score_from_original=model_daily[(model_daily.period.eq("2026")) &
+            (model_daily.family.eq("BASE_14" if fam=="BASE14" else
+                                    "BASE_14_PLUS_CFTC_7"))]
         score_from_original=score_from_original.set_index("origin")
         must(len(score_from_original)==len(testing),"EXACT_FULL_DAILY_SCORE_"+fam)
         must(np.allclose(risk,score_from_original.loc[[r["origin"] for r in testing],"risk_score"],
