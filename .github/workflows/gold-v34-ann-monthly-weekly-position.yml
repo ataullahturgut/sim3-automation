@@ -1,0 +1,133 @@
+name: Gold V34 monthly and weekly ANN plus risk positioning no 2026 meta tune
+on:
+  push:
+    branches:
+      - research/gold-v34-ann-weekly-monthly-alert-position-20261027
+    paths:
+      - 'gold_axis_2026/research/case_control_v13/gold_v34_ann_replay.py'
+      - 'gold_axis_2026/research/case_control_v13/gold_v34_position_backtest.py'
+      - '.github/workflows/gold-v34-ann-monthly-weekly-position.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  PYTHONUNBUFFERED: '1'
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original ANN requirements
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - name: Build 2010-Oct2026 historical weekly features from same-source price
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u gold_v34_ann_replay.py --mode source
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v34-four-metal-weekly-pinned-input
+          path: gold_axis_2026/research/case_control_v13/outputs/v34_weekly_ann_input_2010_2026_reconstructed_sensitivity.json
+          retention-days: 60
+  monthly:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original MPA-ANN numerical model requirements
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - name: Run original MPA ANN 33 months with origin historical official GPR vintage
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u gold_v34_ann_replay.py --mode monthly
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v34-monthly-original-MPA-ANN-2024-2026
+          path: gold_axis_2026/research/case_control_v13/outputs/v34_monthly_MPA_ANN_ORIGINAL_2024_2026_33_month_predictions.csv
+          retention-days: 60
+  weekly:
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 70
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0,1,2,3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original MLP8 ANN numerical model requirements
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-v34-four-metal-weekly-pinned-input
+          path: gold_axis_2026/research/case_control_v13/outputs/
+      - name: Fit unchanged weekly ANN at each chronological origin
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u gold_v34_ann_replay.py --mode weekly --shards 4 --shard ${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v34-weekly-ANN-shard-${{ matrix.shard }}
+          path: gold_axis_2026/research/case_control_v13/outputs/v34_weekly_ANN_ORIGINAL_shard${{ matrix.shard }}.csv
+          retention-days: 60
+  portfolio:
+    needs: [monthly,weekly,source]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Portfolio numeric requirements
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-v34-four-metal-weekly-pinned-input
+          path: gold_axis_2026/research/case_control_v13/outputs/
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-v34-monthly-original-MPA-ANN-2024-2026
+          path: gold_axis_2026/research/case_control_v13/outputs/
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gold-v34-weekly-ANN-shard-*
+          merge-multiple: true
+          path: gold_axis_2026/research/case_control_v13/outputs/
+      - name: Select ONLY using 2024-2025 then apply frozen rules in 2026
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u gold_v34_position_backtest.py
+      - name: Persist and publish all numerical results in this independent research branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_monthly_MPA_ANN_ORIGINAL_2024_2026_33_month_predictions.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_weekly_ANN_ORIGINAL_shard*.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_weekly_monthly_risk_joint_input_ASOF.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2024_2025_META_STRATEGY_SELECTION_NO_2026.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2026_ANN_RISK_POSITION_NET_PNL_COMPARISON.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2026_SELECTED_AL_TUT_CIK_EXECUTIONS.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_frozen_meta_position_result_manifest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "results(v34): original weekly+monthly ANN, frozen alarm meta-position rules 2024-25 learn 2026 trades and fees"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-v34-final-position-2026-commission-1p6
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v34_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v34_frozen_meta_position_result_manifest.json
+          retention-days: 90
