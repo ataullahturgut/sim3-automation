@@ -1,0 +1,47 @@
+name: Gold V34 original ANN errors and active-only research appendix
+on:
+  push:
+    branches: [research/gold-v34-ann-weekly-monthly-alert-position-20261027]
+    paths:
+      - 'gold_axis_2026/research/case_control_v13/gold_v34_original_ann_accuracy_and_active_policy_audit.py'
+      - '.github/workflows/gold-v34-original-ann-accuracy-active-policy.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Requirements original models
+        run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - name: Original weekly monthly model errors and 2024-25 active policy
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u gold_v34_original_ann_accuracy_and_active_policy_audit.py
+      - name: Publish risk and ANN accuracy and active-only 2026 trades, research branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_ANN_monthly_weekly_accuracy_2024_2025_2026.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2026_BEST_2024_2025_ACTIVE_POLICY_WEEKLY_DECISIONS.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2026_BEST_2024_2025_ACTIVE_POLICY_TRADES.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_active_policy_research_comparison.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_active_policy_research_manifest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "results(v34): original ANN errors by 2024 2025 2026 and active-only policy stress, not blind"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-v34-ann-errors-active-policy-research
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v34_ANN_monthly_weekly_accuracy_2024_2025_2026.csv
+            gold_axis_2026/research/case_control_v13/outputs/v34_2026_BEST_2024_2025_ACTIVE_POLICY_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v34_active_policy_research_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v34_active_policy_research_manifest.json
