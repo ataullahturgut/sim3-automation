@@ -1,0 +1,403 @@
+{
+  "schema": "2027_MONTHLY_CONDITIONAL_RESEARCH_SCENARIO_V1",
+  "status": "NUMERIC_RUN_NOT_ORIGINAL_MONTHLY_MODEL",
+  "methodLimitations": [
+    "NO_GPR_INPUTS; ORIGINAL CHHHO-ANFIS 8D CURRENT8 AND ORIGINAL REDUCED4 ANN NOT EXECUTED",
+    "4D monthly-price-return surrogates only, 2027 forward prices recursive and conditional",
+    "Predictions for 2026 Oct-Dec are also hypothetical; 2027 months from Jan to Dec have increasing error compounding",
+    "15 percent max absolute monthly return cap for numerical simulation; this is an assumption, not an original model parameter",
+    "2026 Feb-Mar-Apr training outcomes excluded due known Feb27 source outlier affecting lagged data",
+    "StakTrakr reconstructed daily price firstprints not PIT certified",
+    "Validation 2022-2024 used for configuration selection; H1 backtest on frozen 2024 and data thru Sep2026 fitted only in 2027 experimental projection"
+  ],
+  "modelSpec": {
+    "chhho": "New first-order Sugeno Gaussian five-rule 4-input 4-metal monthly one-step return ANFIS, deterministic logistic chaotic HHO + 0.002 ridge and local gradient",
+    "ann": "New feedforward MLP tanh 4->8->4 with Adam and early validation epoch; not original REDUCED4 ANN"
+  },
+  "runConfig": {
+    "lastObserved": "2026-09",
+    "lastObservedGold": 4327.880454545455,
+    "monthlyRows": 201,
+    "initialTrain": [
+      "2010-03",
+      "2021-12"
+    ],
+    "validation": [
+      "2022-01",
+      "2024-12"
+    ],
+    "frozenFitEnds": "2024-12",
+    "fullFitEnds": "2026-09",
+    "sourceAnomalyMonthsExcluded": [
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ],
+    "trainingN": 196,
+    "hho": {
+      "pop": 12,
+      "gens": 18,
+      "repeats": 2,
+      "selection": [
+        {
+          "seed": 24092026,
+          "validation_loss": 0.8265838967719417
+        },
+        {
+          "seed": 24093035,
+          "validation_loss": 0.7527983466519803
+        }
+      ],
+      "localEpochs": 0,
+      "validationMSE": 0.9486333510707021
+    },
+    "ann": {
+      "epochsChosen": 100,
+      "validationOptions": [
+        {
+          "epochs": 50,
+          "loss": 0.8151528425082074
+        },
+        {
+          "epochs": 100,
+          "loss": 0.8012764663140997
+        },
+        {
+          "epochs": 180,
+          "loss": 0.8153756729663889
+        },
+        {
+          "epochs": 300,
+          "loss": 0.8664299807588068
+        },
+        {
+          "epochs": 480,
+          "loss": 0.9987771875799528
+        },
+        {
+          "epochs": 700,
+          "loss": 1.00952420601037
+        }
+      ]
+    }
+  },
+  "heldout2025": {
+    "ANFIS": {
+      "n": 13,
+      "mape_pct": 3.886184717133921,
+      "direction": 12,
+      "sum_ae": 1880.4696293513298
+    },
+    "ANN": {
+      "n": 13,
+      "mape_pct": 3.5916616343016488,
+      "direction": 12,
+      "sum_ae": 1774.642411400212
+    }
+  },
+  "heldout2026_excluding_outliers": {
+    "ANFIS": {
+      "n": 6,
+      "mape_pct": 4.3013367795856245,
+      "direction": 4,
+      "sum_ae": 1145.49379848621
+    },
+    "ANN": {
+      "n": 6,
+      "mape_pct": 5.708853846649594,
+      "direction": 3,
+      "sum_ae": 1517.808931332987
+    }
+  },
+  "monthlyForecast": [
+    {
+      "month": "2026-10",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4337.362057545477,
+          "rawGoldMonthlyLogReturn": 0.0021884227177473288,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4315.903670403411,
+          "rawGoldMonthlyLogReturn": -0.0027711917913639185,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2026-11",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4377.185064375025,
+          "rawGoldMonthlyLogReturn": 0.009139495942729064,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4329.645085586226,
+          "rawGoldMonthlyLogReturn": 0.0031788443144846958,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2026-12",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4427.2710863469265,
+          "rawGoldMonthlyLogReturn": 0.011377548234768262,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4355.020691259862,
+          "rawGoldMonthlyLogReturn": 0.005843789165893288,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-01",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4479.9042221821655,
+          "rawGoldMonthlyLogReturn": 0.01181828057138459,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4385.817206754408,
+          "rawGoldMonthlyLogReturn": 0.007046611157073601,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-02",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4532.286051969029,
+          "rawGoldMonthlyLogReturn": 0.011624792215966694,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4419.199302811205,
+          "rawGoldMonthlyLogReturn": 0.007582553868624272,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-03",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4583.6887664482665,
+          "rawGoldMonthlyLogReturn": 0.011277622043825476,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4453.881588174085,
+          "rawGoldMonthlyLogReturn": 0.007817456510526241,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-04",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4634.191971638452,
+          "rawGoldMonthlyLogReturn": 0.010957770438200006,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4489.290317952213,
+          "rawGoldMonthlyLogReturn": 0.007918647919313782,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-05",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4684.117661626259,
+          "rawGoldMonthlyLogReturn": 0.010715713403943906,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4525.174312220959,
+          "rawGoldMonthlyLogReturn": 0.007961467548628481,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-06",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4733.798568541041,
+          "rawGoldMonthlyLogReturn": 0.010550394914333364,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4561.426254898042,
+          "rawGoldMonthlyLogReturn": 0.007979251371553057,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-07",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4783.501609233213,
+          "rawGoldMonthlyLogReturn": 0.010444872311934205,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4598.001905404131,
+          "rawGoldMonthlyLogReturn": 0.007986490920097762,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-08",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4833.417291495667,
+          "rawGoldMonthlyLogReturn": 0.010380898712458422,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4634.884197562088,
+          "rawGoldMonthlyLogReturn": 0.00798937362158883,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-09",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4883.672515053214,
+          "rawGoldMonthlyLogReturn": 0.010343770128597368,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4672.067565216661,
+          "rawGoldMonthlyLogReturn": 0.007990492793418931,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-10",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4934.348147228635,
+          "rawGoldMonthlyLogReturn": 0.010323075076373719,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4709.551221688132,
+          "rawGoldMonthlyLogReturn": 0.00799091431482722,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-11",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 4985.494398750735,
+          "rawGoldMonthlyLogReturn": 0.010311999311254875,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4747.336331993464,
+          "rawGoldMonthlyLogReturn": 0.007991067073903424,
+          "monthlyReturnCapped": false
+        }
+      }
+    },
+    {
+      "month": "2027-12",
+      "kind": "CONDITIONAL_RECURSIVE_NO_FUTURE_OBSERVATIONS",
+      "models": {
+        "ANFIS": {
+          "forecast": 5037.1422378960615,
+          "rawGoldMonthlyLogReturn": 0.01030632920023084,
+          "monthlyReturnCapped": false
+        },
+        "ANN": {
+          "forecast": 4785.424846568443,
+          "rawGoldMonthlyLogReturn": 0.00799111958210526,
+          "monthlyReturnCapped": false
+        }
+      }
+    }
+  ],
+  "heldoutExamples2025": [
+    {
+      "month": "2025-01",
+      "actual": 2707.584090909091,
+      "origin": 2643.8275,
+      "models": {
+        "ANFIS": {
+          "forecast": 2645.953107179873,
+          "direction_correct": 1
+        },
+        "ANN": {
+          "forecast": 2648.463681348297,
+          "direction_correct": 1
+        }
+      }
+    },
+    {
+      "month": "2025-02",
+      "actual": 2896.6749999999997,
+      "origin": 2707.584090909091,
+      "models": {
+        "ANFIS": {
+          "forecast": 2736.1882084662943,
+          "direction_correct": 1
+        },
+        "ANN": {
+          "forecast": 2740.368958514769,
+          "direction_correct": 1
+        }
+      }
+    },
+    {
+      "month": "2025-03",
+      "actual": 2981.7357142857136,
+      "origin": 2896.6749999999997,
+      "models": {
+        "ANFIS": {
+          "forecast": 2951.0576971965424,
+          "direction_correct": 1
+        },
+        "ANN": {
+          "forecast": 2961.8382766141594,
+          "direction_correct": 1
+        }
+      }
+    }
+  ],
+  "sourceInputBlobSha": "ba977636966683ba5a48ba91f0f9c076e57b4156",
+  "sourceCodeBlobSha": "afb49b9037ab8e9f03549596f684a2770a375512"
+}
