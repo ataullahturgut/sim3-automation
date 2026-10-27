@@ -24,6 +24,7 @@ from sklearn.ensemble import IsolationForest
 import gold_risk_cftc_v8_fixed as original
 import research as v13
 import risk_v15_business_intelligence as v15
+import risk_v19_2024_original_replay as v19
 import risk_v23_calendar_safe_audit as v23
 
 ROOT=Path(__file__).parent
@@ -121,7 +122,7 @@ def source_panel(p,rows):
 
 def historical_analogues(frame):
     hist=pd.read_csv(O/"v15_historical_cases_and_controls.csv")
-    n=original.FEATURES
+    n=v19.FEATURES
     his=frame.loc[:"2022-12-31",n].dropna()
     med=his.median().to_numpy(float)
     iqr=np.maximum((his.quantile(.75)-his.quantile(.25)).to_numpy(float),1e-8)
