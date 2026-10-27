@@ -83,16 +83,16 @@
   },
   "heldout2025": {
     "ANFIS": {
-      "n": 13,
-      "mape_pct": 3.886184717133921,
-      "direction": 12,
-      "sum_ae": 1880.4696293513298
+      "n": 12,
+      "mape_pct": 3.706584331307889,
+      "direction": 11,
+      "sum_ae": 1593.6848770470415
     },
     "ANN": {
-      "n": 13,
-      "mape_pct": 3.5916616343016488,
+      "n": 12,
+      "mape_pct": 3.0985683052903585,
       "direction": 12,
-      "sum_ae": 1774.642411400212
+      "sum_ae": 1323.2605496819215
     }
   },
   "heldout2026_excluding_outliers": {
@@ -399,5 +399,5 @@
     }
   ],
   "sourceInputBlobSha": "ba977636966683ba5a48ba91f0f9c076e57b4156",
-  "sourceCodeBlobSha": "afb49b9037ab8e9f03549596f684a2770a375512"
+  "sourceCodeBlobSha": "5473f923f2aacfe07d923dfc445aeb45697a8946"
 }
