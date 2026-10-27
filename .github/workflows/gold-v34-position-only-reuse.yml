@@ -1,0 +1,69 @@
+name: Gold V34 position only reuse frozen successful ANN artifacts
+on:
+  push:
+    branches: [research/gold-v34-ann-weekly-monthly-alert-position-20261027]
+    paths: ['.github/workflows/gold-v34-position-only-reuse.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  verified-2026-net:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy pandas scipy scikit-learn psycopg[binary]
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 40520584007
+          github-token: ${{ github.token }}
+          name: gold-v34-four-metal-weekly-pinned-input
+          path: gold_axis_2026/research/case_control_v13/outputs/
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 40520584007
+          github-token: ${{ github.token }}
+          name: gold-v34-monthly-original-MPA-ANN-2024-2026
+          path: gold_axis_2026/research/case_control_v13/outputs/
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 40520584007
+          github-token: ${{ github.token }}
+          pattern: gold-v34-weekly-ANN-shard-*
+          merge-multiple: true
+          path: gold_axis_2026/research/case_control_v13/outputs/
+      - name: Run full 2024-25 trained 2026 frozen AL/TUT/CIK, commission exactly 0.8 per side
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u gold_v34_position_backtest.py
+      - name: Commit all original ANN forecasts and position results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_monthly_MPA_ANN_ORIGINAL_2024_2026_33_month_predictions.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_weekly_ANN_ORIGINAL_shard*.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_weekly_monthly_risk_joint_input_ASOF.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2024_2025_META_STRATEGY_SELECTION_NO_2026.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2026_ANN_RISK_POSITION_NET_PNL_COMPARISON.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_2026_SELECTED_AL_TUT_CIK_EXECUTIONS.csv
+          git add gold_axis_2026/research/case_control_v13/outputs/v34_frozen_meta_position_result_manifest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "results(v34): frozen 2024–25 ANN plus risk meta rules 2026 financial outcome and original prediction ledgers"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-v34-net-portfolio-all-strategy-trades
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v34_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v34_frozen_meta_position_result_manifest.json
+          retention-days: 90
