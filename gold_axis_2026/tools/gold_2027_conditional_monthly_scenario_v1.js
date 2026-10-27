@@ -227,7 +227,7 @@ function runMonthlyScenario(source,opt={}){
  const predictCh=(mod,x)=>decode(forecast(mod.theta,mod.betas,x.map((v,i)=>(v-xm[i])/xs[i])));
  const predictAnn=(mod,x)=>decode(ANNPredict(mod,x.map((v,i)=>(v-xm[i])/xs[i])));
  const evaluate=items=>items.map(r=>{const out=[["ANFIS",predictCh(frozenChhho,r.x)[0]],["ANN",predictAnn(frozenAnn,r.x)[0]]];return {month:r.month,actual:r.actual,origin:r.origin,models:Object.fromEntries(out.map(([k,v])=>[k,{forecast:r.origin*Math.exp(v),direction_correct:Number(Math.sign(v)===Math.sign(r.actual-r.origin))}]))};});
- const test2025=evaluate(samples.filter(z=>z.month>="2025-01"&&z.month<="2026-01"));
+ const test2025=evaluate(samples.filter(z=>z.month>="2025-01"&&z.month<"2026-01"));
  const test2026=evaluate(samples.filter(z=>z.month>="2026-01"&&z.month<="2026-10"&&!z.tainted));
  function metrics(rows,mod){
   return {n:rows.length,mape_pct:100*mean(rows.map(x=>Math.abs(x.models[mod].forecast-x.actual)/x.actual)),
