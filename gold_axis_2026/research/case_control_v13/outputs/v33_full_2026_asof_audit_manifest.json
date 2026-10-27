@@ -1,0 +1,107 @@
+{
+  "study": "V33_FULL_AS_AVAILABLE_2026_10_27",
+  "data_end": "2026-10-23",
+  "requested_end": "2026-10-27",
+  "original_model_params_unchanged": true,
+  "original_frozen_187_output_parity": true,
+  "source_price_2026_10_26_27_NOT_FOUND": true,
+  "Oct_2026_NFP_CPI_MACRO_RELEASE_PRECONSENSUS_NOT_FOUND": true,
+  "Oct_2026_V31_event_results_unavailable_not_assumed_no_signal": true,
+  "2026_02_27_price_scenario_same_definiton_not_certified": true,
+  "no_production_writes": true,
+  "no_neon_modification": true,
+  "new_model_scoring_does_not_require_five_future_trading_sessions": true,
+  "missing_five_day_labels_abstain_not_false_alarm": true,
+  "candidate_score_timing_PIT_certified": false,
+  "snapshot_git_new_2026": "9933d45e4fc185e7cefe8ec56740b3974ec8d4a2",
+  "asof_macro_inserted_available_asof_enforced": true,
+  "CFTC_10_20_report_not_available_until_2026_10_27": true,
+  "checks": [
+    {
+      "scenario": "AM_MIXED_FIX_REFERENCE_NOT_SAME_SERIES",
+      "unchanged_prior_origins": 187,
+      "full_weekdays": 214,
+      "price_days": 211,
+      "scored_days": 211,
+      "last_price_date": "2026-10-23",
+      "last_model_score": "2026-10-23",
+      "max_matured_target": "2026-10-16",
+      "score_unmatured_count": 5,
+      "last5_model_rows": [
+        {
+          "date": "2026-10-19",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-20",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-21",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-22",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-23",
+          "model_BASE14_RED": true,
+          "model_CFTC21_RED": true,
+          "model_v22_review": true
+        }
+      ]
+    },
+    {
+      "scenario": "PM_MIXED_CLOSE_REFERENCE_NOT_SAME_SERIES",
+      "unchanged_prior_origins": 187,
+      "full_weekdays": 214,
+      "price_days": 211,
+      "scored_days": 211,
+      "last_price_date": "2026-10-23",
+      "last_model_score": "2026-10-23",
+      "max_matured_target": "2026-10-16",
+      "score_unmatured_count": 5,
+      "last5_model_rows": [
+        {
+          "date": "2026-10-19",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-20",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-21",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-22",
+          "model_BASE14_RED": false,
+          "model_CFTC21_RED": false,
+          "model_v22_review": false
+        },
+        {
+          "date": "2026-10-23",
+          "model_BASE14_RED": true,
+          "model_CFTC21_RED": true,
+          "model_v22_review": true
+        }
+      ]
+    }
+  ]
+}
