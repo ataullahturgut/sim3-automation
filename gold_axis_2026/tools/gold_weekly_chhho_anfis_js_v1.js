@@ -156,8 +156,9 @@ function run(data,opt={}){
  const train=sample.filter(x=>x.week<"2022-01-01");
  const val=sample.filter(x=>x.week>="2022-01-01"&&x.week<"2025-01-01");
  const test=sample.filter(x=>x.week>="2025-01-01"&&x.week<"2026-01-01");
- const stress=sample.filter(x=>x.week>="2026-01-01"&&x.week<="2026-09-21");
- check(train.length>600&&val.length>150&&test.length===52&&stress.length===38,"SPLIT");
+ const stressEnd=opt.stressEnd||"2026-09-21";
+ const stress=sample.filter(x=>x.week>="2026-01-01"&&x.week<=stressEnd);
+ check(train.length>600&&val.length>150&&test.length===52&&stress.length===(stressEnd==="2026-10-19"?42:38),"SPLIT");
  const xm=Array.from({length:D},(_,j)=>mean(train.map(x=>x.X[j])));
  const xs=Array.from({length:D},(_,j)=>std(train.map(x=>x.X[j]),xm[j]));
  const ym=Array.from({length:D},(_,j)=>mean(train.map(x=>x.Y[j])));
@@ -210,7 +211,7 @@ function run(data,opt={}){
   optimizer:{name:"CHAOTIC_HHO_PREMISE_AND_ANFIS_LOCAL_GRADIENT",population:pop,generations:gens,
    repeats,validation_repeats:reps,local_epochs_selected:bestEpoch,
    local_mse:bestMse,validation_loss:best.val,ridge:.002},
-  training:{trainFrom:train[0].week,trainTo:train.at(-1).week,trainN:train.length,checkFrom:val[0].week,
+  training:{trainFrom:train[0].week,trainTo:train.at(-1).week,trainN:train.length,stressEnd,checkFrom:val[0].week,
    checkTo:val.at(-1).week,checkN:val.length,frozenFitEnd:full.at(-1).week,
    fittedUsing2025:false,fittedUsing2026:false},metrics:{
    CHECK_2022_2024_IN_SAMPLE_FINAL_REFIT_NOT_OOS:metric(scored.dev),TEST_2025:metric(scored.test2025),STRESS_2026:metric(scored.stress2026),
