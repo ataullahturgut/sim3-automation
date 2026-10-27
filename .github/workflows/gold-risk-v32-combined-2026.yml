@@ -1,0 +1,41 @@
+name: Gold V32 complete 2026 joint BASE14 CFTC21 V22 plus V31 audit
+on:
+  push:
+    branches:
+      - research/gold-risk-v32-2026-full-year-to-date-combined-audit-20261027
+    paths:
+      - 'gold_axis_2026/research/case_control_v13/risk_v32_2026_full_calendar_joint_replay.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v32_full_2026_joint_replay.py'
+      - '.github/workflows/gold-risk-v32-combined-2026.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  joint-2026-all-days-and-events:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original risk architecture deps only
+        run: python -m pip install numpy pandas scipy scikit-learn tabulate
+      - name: Verify no syntax errors
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m py_compile risk_v32_2026_full_calendar_joint_replay.py test_risk_v32_full_2026_joint_replay.py
+      - name: Replay both V29 price sensitivity scenarios with frozen 2026 scores plus all 23 V31 macro events
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v32_2026_full_calendar_joint_replay.py
+      - name: Independent fail closed timestamp and original-score-parity tests
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m unittest -v test_risk_v32_full_2026_joint_replay.py
+      - name: Persist all days and episode audit outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v32-all-Jan-Sep-2026-base14-cftc21-v22-v31
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v32_*.csv
+            gold_axis_2026/research/case_control_v13/outputs/v32_*.json
+          retention-days: 90
