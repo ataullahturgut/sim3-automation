@@ -1,0 +1,34 @@
+name: Gold V33 2026 Oct source/score coverage hard gate
+on:
+  push:
+    branches: [research/gold-risk-v33-2026-complete-observed-through-oct2026-20261027]
+    paths:
+      - 'gold_axis_2026/research/case_control_v13/risk_v33_price_macro_cftc_coverage_audit.py'
+      - 'gold_axis_2026/research/case_control_v13/outputs/v33_staktrakr_4metals_2026_10_19_to_10_23_FIXED_COMMIT.csv'
+      - '.github/workflows/gold-risk-v33-oct2026-coverage-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  detect-source-cutoffs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Frozen risk-model numeric runtime
+        run: python -m pip install numpy pandas scipy scikit-learn
+      - name: Audit actual dates instead of silently truncating 2026
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v33_price_macro_cftc_coverage_audit.py
+      - name: Export 2026 hard source cutoffs and recent source prices
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v33-2026-full-coverage-gates
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v33_*.json
+            gold_axis_2026/research/case_control_v13/outputs/v33_2026_09_10_same_source_fourmetal_coverage.csv
+          retention-days: 90
