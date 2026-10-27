@@ -203,7 +203,7 @@ def optimise(w):
         # Complexity and drawdown penalty frozen BEFORE testing 2026.
         objective=(perf["net_return_pct"]-.25*perf["max_drawdown_pct"]
                     -.05*perf["trade_actions"])
-        scores.append(dict(**c,**perf,objective_2024_2025=objective))
+        scores.append({**perf,**c,"objective_2024_2025":objective})
     fit=pd.DataFrame(scores).sort_values(["objective_2024_2025","trade_actions","policy"],
              ascending=[False,True,True])
     chosen=fit.iloc[0]
