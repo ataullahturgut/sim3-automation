@@ -1,0 +1,42 @@
+name: Gold V31 macro economic event state layer (research-only)
+on:
+  push:
+    branches:
+      - research/gold-risk-v31-macro-event-layer-20261027
+    paths:
+      - 'gold_axis_2026/research/case_control_v13/risk_v31_macro_event_layer.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v31_macro_event_layer.py'
+      - 'gold_axis_2026/research/case_control_v13/outputs/v31_macro_event_research_2023_2026_108_events.csv'
+      - '.github/workflows/gold-risk-v31-macro-event-layer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-event-time-no-leakage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile as-of state machine
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m py_compile risk_v31_macro_event_layer.py test_risk_v31_macro_event_layer.py
+      - name: Event state gate and 2023-2024 calibration 2025/2026 no-peek tests
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -m unittest -v test_risk_v31_macro_event_layer.py
+      - name: Replay 108 researched NFP/CPI/FOMC release windows
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: python -u risk_v31_macro_event_layer.py
+      - name: Save execution evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v31-macro-events-108-release-windows
+          path: |
+            gold_axis_2026/research/case_control_v13/outputs/v31_historical_macro_overlay_all_108_events.csv
+            gold_axis_2026/research/case_control_v13/outputs/v31_june2026_macro_event_replay.csv
+            gold_axis_2026/research/case_control_v13/outputs/v31_by_year_macro_event_comparison.csv
+            gold_axis_2026/research/case_control_v13/outputs/v31_macro_event_layer_manifest.json
+          retention-days: 90
