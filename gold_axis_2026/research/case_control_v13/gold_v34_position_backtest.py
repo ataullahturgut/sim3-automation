@@ -89,6 +89,14 @@ def prepare():
         if len(r):
             w.at[idx,"prior_BASE14_level"]=r.iloc[-1].BASE14_original_alert_level
             w.at[idx,"prior_V22_review"]=bool(r.iloc[-1].effective_review)
+    missing_risk=w[w.prior_BASE14_level.isna()|w.prior_V22_review.isna()]
+    # First model week Jan 2024 uses a 2023-12 risk origin outside this
+    # frozen 2024+ V22 archive.  Do not invent it or fill from 2024.
+    need(len(missing_risk)<=2 and missing_risk.date.str.startswith("2024").all(),
+         "MISSING_ASOF_RISK_IN_2025_OR_2026")
+    if len(missing_risk):
+        print("V34_EXCLUDE_UNOBSERVED_PRIOR_RISK_WEEK",missing_risk.date.tolist(),flush=True)
+        w=w[~w.index.isin(missing_risk.index)].copy()
     need(w.prior_BASE14_level.notna().all(),"MISSING_ASOF_RISK_FRIDAY")
     need(w.prior_V22_review.notna().all(),"MISSING_PRIOR_V22")
     w["prior_V22_review"]=w.prior_V22_review.map(flag)
