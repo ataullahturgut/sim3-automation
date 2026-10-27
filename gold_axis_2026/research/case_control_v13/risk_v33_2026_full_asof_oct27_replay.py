@@ -218,14 +218,16 @@ def stats_by_month(d):
                 scored_and_matured_label_days=len(valid),alert_days=int(g[col].sum()),
                 evaluated_alert_days=len(x),
                 next5_drop5_true_alarm_days=int(x.next5_drop5_AUDIT_ONLY.fillna(False).sum()),
-                next5_drop5_no_alarm_outcome_days=int((~x.next5_drop5_AUDIT_ONLY.fillna(False)).sum()),
+                next5_drop5_no_alarm_outcome_days=int(x.next5_drop5_AUDIT_ONLY.eq(False).sum()),
                 newly_added_V31_days=int(g.additional_V31_review.sum()),
                 missing_price_days=int((~g.has_same_source_gold).sum()),
                 five_day_immature_score_days=int((g.has_legacy_model_score&
                      g.five_day_label_status.ne("MATURED_RESEARCH")).sum()),
                 price_full_firstprint_certified=False,
                 numerical_2026_history_is_blind=False))
-    return pd.DataFrame(m)
+    result=pd.DataFrame(m)
+    gate((result.next5_drop5_true_alarm_days+result.next5_drop5_no_alarm_outcome_days==result.evaluated_alert_days).all(),"NEGATIVE_OR_WRONG_FALSE_ALERT_COUNTS")
+    return result
 
 def run():
     raw,src,cot,extra_asof=source_and_inputs()
@@ -271,7 +273,7 @@ def run():
        next5_drop5_true_alarm_days=("next5_drop5_true_alarm_days","sum"),
        next5_drop5_no_alarm_outcome_days=("next5_drop5_no_alarm_outcome_days","sum"),
        V31_extra_days=("newly_added_V31_days","sum"),
-       unscored_price_days=("has_price_days","sum"))
+       price_days_with_records=("has_price_days","sum"))
     d.to_csv(O/"v33_2026_jan_oct27_DAILY_all_models_and_outcomes.csv",index=False)
     m.to_csv(O/"v33_2026_jan_oct27_MONTHLY_all_models_and_outcomes.csv",index=False)
     overall.to_csv(O/"v33_2026_jan_oct27_SUMMARY_all_models.csv",index=False)
