@@ -197,7 +197,7 @@ def reconstruct_2026_triage(altrows,model_daily,frame):
                      (a["whatif_top"]=="GVZ" or a["closer_crash"]))
         adj=bool(prev and 0<(pd.Timestamp(date)-pd.Timestamp(prev["origin"])).days<=4)
         today=100*(float(day["gold_price_usd_oz"])/float(testing[k-1]["gold_price_usd_oz"])-1) if adj else float("nan")
-        increase=bool(adj and a["risk_score"]>prev["risk_score"])
+        increase=bool(adj and a["risk_score"]>prev["BASE14_original_score"])
         # V18 path A/B and C. YELLOW may carry only from previous V16 CONFIRMED.
         path_a=bool(a["alert_level"]=="RED" and a["whatif_top"]=="GVZ")
         path_b=bool(a["alert_level"]=="RED" and a["closer_crash"])
