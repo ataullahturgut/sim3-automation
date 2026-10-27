@@ -60,7 +60,9 @@ def accuracy():
  return result
 
 def active():
- w=port.prepare()
+ w=pd.read_csv(O/"v34_weekly_monthly_risk_joint_input_ASOF.csv")
+ check(len(w)>140 and (w.previous_friday_asof_date<w.target_week).all(),
+       "INPUT_ASOF_PRIOR_FRIDAY_PARITY")
  ledger=pd.read_csv(O/"v34_2024_2025_META_STRATEGY_SELECTION_NO_2026.csv")
  check("objective_2024_2025" in ledger,"MISSING_LOCKED_TRAIN_FIT")
  active=ledger[(ledger.buy_count.ge(2))&(ledger.sell_count.ge(2))].copy()
