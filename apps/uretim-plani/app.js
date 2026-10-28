@@ -6,7 +6,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const kClass=q=>q<=0?0:q<=200?1:q<=500?2:q<=1000?3:4;
 const partLabel={1:'1 parti',2:'2 parti',3:'3 parti',4:'4 parti'};
 const list=document.getElementById('selection'), grid=document.getElementById('calendar');
-const state={products:[],scenario:'balanced',oneMonth:5,twoMonth:2,group:1,month:5,product:null,query:'',groupFilter:'all',columnFilter:'all',grouping:'type',sortBy:'batch',sortDirection:'desc',assignments:[],months:Array.from({length:12},()=>[])};
+const state={products:[],scenario:'balanced',oneMonth:5,twoMonth:2,group:1,month:5,product:null,query:'',groupFilter:'all',columnFilter:'all',customColumns:null,grouping:'type',sortBy:'batch',sortDirection:'desc',assignments:[],months:Array.from({length:12},()=>[])};
 const quantity=(n,p,k)=>Math.floor(n/p)+(k<n%p?1:0);
 function buildPlan(){
  const months=Array.from({length:12},()=>[]),load=Array(12).fill(0),plans=[];
@@ -43,7 +43,7 @@ function renderCalendar(){let html='<thead><tr><th class="rowname">Üretim sın�
  }
  html+='</tbody><tfoot><tr><td class="rowname">Aylık toplam</td>'+SHORT.map((_,m)=>`<td>${fmt(sumMonth(m))}</td>`).join('')+'</tr></tfoot>';
  grid.innerHTML=html;
- grid.querySelectorAll('button[data-g]').forEach(b=>b.addEventListener('click',()=>{state.group=+b.dataset.g;state.month=+b.dataset.m;state.product=null;state.query='';state.groupFilter='all';state.columnFilter='all';renderCalendar();renderSelection()}));
+ grid.querySelectorAll('button[data-g]').forEach(b=>b.addEventListener('click',()=>{state.group=+b.dataset.g;state.month=+b.dataset.m;state.product=null;state.query='';state.groupFilter='all';renderCalendar();renderSelection()}));
  const top=Math.max(...Array.from({length:12},(_,m)=>sumMonth(m)))||1;
  document.getElementById('monthly').innerHTML=SHORT.map((m,i)=>`<div class="m"><label>${m}</label><div class="barbox"><div class="bar" style="height:${Math.max(0,100*sumMonth(i)/top)}%"></div></div><div class="qty">${fmt(sumMonth(i))}</div></div>`).join('');
 }
@@ -96,20 +96,62 @@ function renderSelection(){
  const rows=monthlyOf(state.group,state.month).sort((a,b)=>b.partiAdedi-a.partiAdedi),total=rows.reduce((x,p)=>x+p.partiAdedi,0);
  if(!total){list.innerHTML='<div class="empty-state">Bu sınıfta seçilen ay için üretim yok.</div>';return}
  list.innerHTML=`<div class="selected-head"><div><h2>${MONTHS[state.month]} · ${partLabel[state.group]}</h2><p>${rows.length} ürün satırı · Ürün matrislerinin bütün mevcut alanları aynı tabloda</p></div><div class="quantity">${fmt(total)}<small>adet üretim</small></div></div>
- <div class="detail-table-toolbar"><label class="table-search">Ürün ara<input id="searchProduct" placeholder="Stok kodu, model veya teknik özellik ara…" aria-label="Ürün ara" value="${esc(state.query)}"></label><label class="table-filter">Ürün grubu<select id="groupFilter" aria-label="Ürün grubu"><option value="all">Tüm ürünler</option><option value="Şönt">Şönt</option><option value="Harmonik">Harmonik</option></select></label><label class="table-filter">Sütun grubu<select id="columnFilter" aria-label="Sütun grubu"><option value="all">Tüm özellikler</option><option value="plan">Üretim ve miktar</option><option value="technical">Teknik özellikler</option><option value="review">Kıyas, numune ve kaynaklar</option></select></label><label class="table-filter">Grupla<select id="groupBy" aria-label="Gruplama"><option value="type">Şönt / Harmonik</option><option value="family">Ürün ailesi</option><option value="quantity">Üretim adedi aralığı</option><option value="weight">Birim ağırlık aralığı</option><option value="dimensions">Dış ölçü aralığı</option><option value="none">Gruplama yok</option></select></label><label class="table-filter">Sırala<select id="sortBy" aria-label="Sıralama ölçütü"><option value="batch">Bu ay üretim adedi</option><option value="annual">Yıllık adet</option><option value="unitWeight">Birim ağırlık</option><option value="batchWeight">Parti ağırlığı</option><option value="largestEdge">En büyük dış ölçü</option><option value="outerVolume">Yaklaşık dış hacim</option><option value="power">Güç (kVAr)</option><option value="code">Stok kodu</option></select></label><label class="table-filter narrow-filter">Sıralama yönü<select id="sortDirection" aria-label="Sıralama yönü"><option value="desc">Büyükten küçüğe</option><option value="asc">Küçükten büyüğe</option></select></label><span class="table-hint">Gruplar birlikte; her grubun içinde seçilen ölçüte göre sıralanır. Sağa kaydırabilirsiniz →</span></div>
+ <div class="detail-table-toolbar"><label class="table-search">Ürün ara<input id="searchProduct" placeholder="Stok kodu, model veya teknik özellik ara…" aria-label="Ürün ara" value="${esc(state.query)}"></label><label class="table-filter">Ürün grubu<select id="groupFilter" aria-label="Ürün grubu"><option value="all">Tüm ürünler</option><option value="Şönt">Şönt</option><option value="Harmonik">Harmonik</option></select></label><label class="table-filter">Sütun grubu<select id="columnFilter" aria-label="Sütun grubu"><option value="all">Tüm özellikler</option><option value="plan">Üretim ve miktar</option><option value="technical">Teknik özellikler</option><option value="review">Kıyas, numune ve kaynaklar</option><option value="custom">Özel sütun seçimi</option></select></label><details class="column-picker" id="columnPicker"><summary id="columnPickerSummary">Sütun ekle / çıkar</summary><div class="column-picker-panel" id="columnPickerPanel"></div></details><label class="table-filter">Grupla<select id="groupBy" aria-label="Gruplama"><option value="type">Şönt / Harmonik</option><option value="family">Ürün ailesi</option><option value="quantity">Üretim adedi aralığı</option><option value="weight">Birim ağırlık aralığı</option><option value="dimensions">Dış ölçü aralığı</option><option value="none">Gruplama yok</option></select></label><label class="table-filter">Sırala<select id="sortBy" aria-label="Sıralama ölçütü"><option value="batch">Bu ay üretim adedi</option><option value="annual">Yıllık adet</option><option value="unitWeight">Birim ağırlık</option><option value="batchWeight">Parti ağırlığı</option><option value="largestEdge">En büyük dış ölçü</option><option value="outerVolume">Yaklaşık dış hacim</option><option value="power">Güç (kVAr)</option><option value="code">Stok kodu</option></select></label><label class="table-filter narrow-filter">Sıralama yönü<select id="sortDirection" aria-label="Sıralama yönü"><option value="desc">Büyükten küçüğe</option><option value="asc">Küçükten büyüğe</option></select></label><span class="table-hint">Gruplar birlikte; her grubun içinde seçilen ölçüte göre sıralanır. Sağa kaydırabilirsiniz →</span></div>
  <div class="product-table-wrap" role="region" aria-label="Üretim ürünleri ve tüm teknik özellikleri" tabindex="0"><table class="product-table"><thead id="productTableHead"></thead><tbody id="productTableBody"></tbody><tfoot id="productTableFoot"></tfoot></table></div>
  <div class="stack-note"><span id="shownCount"></span> · 32 sütunda üretim, teknik, kıyas, numune ve kaynak bilgileri. <b>—</b> kaynak matriste değerin olmadığı anlamına gelir; doğrulanmamış alanlar kaynakta yazdığı gibi korunur. Aynı stok kodunun farklı açıklamalı kayıtları ayrı satırlardadır.</div>`;
  document.getElementById('searchProduct').addEventListener('input',e=>{state.query=e.target.value;renderProductTable(rows)});
  const filter=document.getElementById('groupFilter');filter.value=state.groupFilter;filter.addEventListener('change',e=>{state.groupFilter=e.target.value;renderProductTable(rows)});
- const columns=document.getElementById('columnFilter');columns.value=state.columnFilter;columns.addEventListener('change',e=>{state.columnFilter=e.target.value;renderProductTable(rows)});
+ const columns=document.getElementById('columnFilter');columns.value=state.columnFilter;columns.addEventListener('change',e=>{if(e.target.value==='custom'&&state.customColumns===null)state.customColumns=activeColumns().map(c=>c.name);else if(e.target.value!=='custom')state.customColumns=null;state.columnFilter=e.target.value;renderProductTable(rows);renderColumnPicker(rows)});
  for(const [id,key] of [['groupBy','grouping'],['sortBy','sortBy'],['sortDirection','sortDirection']]){
   const control=document.getElementById(id);control.value=state[key];control.addEventListener('change',e=>{state[key]=e.target.value;renderProductTable(rows)});
  }
- renderProductTable(rows);
+ renderProductTable(rows);renderColumnPicker(rows);
 }
-function activeColumns(){return COLS.filter((c,i)=>i<2||state.columnFilter==='all'||c.kind===state.columnFilter||(state.columnFilter==='technical'&&c.kind==='identity'))}
+function activeColumns(){return COLS.filter((c,i)=>i<2||(state.customColumns!==null?state.customColumns.includes(c.name):state.columnFilter==='all'||c.kind===state.columnFilter||(state.columnFilter==='technical'&&c.kind==='identity')))}
 
 // Ürün özelliklerinden hesaplanan aralıklar yalnızca sıralama içindir; makine yük kapasitesi değildir.
+
+function renderColumnPicker(rows){
+ const panel=document.getElementById('columnPickerPanel'), summary=document.getElementById('columnPickerSummary');
+ if(!panel||!summary)return;
+ const selected=new Set(activeColumns().map(c=>c.name));
+ summary.textContent='Sütun ekle / çıkar ('+selected.size+'/32)';
+ const groups=[['main','Kimlik (sabit)'],['plan','Üretim ve miktar'],['identity','Ürün sınıflandırması'],['technical','Teknik özellikler'],['review','Kıyas, numune ve kaynaklar']];
+ panel.innerHTML='<div class="picker-title">Gösterilecek sütunları işaretleyin</div>'+
+ '<div class="picker-actions"><button type="button" data-picker-action="all">32 sütunun tamamı</button><button type="button" data-picker-action="minimal">Yalnızca kod ve model</button></div>'+
+ '<input type="search" id="columnPickerSearch" placeholder="Sütun adı ara..." aria-label="Sütun adı ara">'+
+ '<div class="picker-options">'+groups.map(([kind,title])=>'<fieldset class="picker-fieldset"><legend>'+title+'</legend>'+
+ COLS.map((c,i)=>({c,i})).filter(x=>x.c.kind===kind).map(({c,i})=>
+ '<label class="column-option"><input type="checkbox" data-column-index="'+i+'" '+(selected.has(c.name)?'checked ':'')+(i<2?'disabled ':'')+'><span>'+esc(c.name)+'</span></label>'
+ ).join('')+'</fieldset>').join('')+'</div>'+
+ '<div class="picker-foot">Stok kodu ve model sütunları sabit kalır. Diğer 30 sütunu isteğe göre açıp kapatabilirsiniz.</div>';
+ function applySelection(names){
+  state.customColumns=COLS.filter((c,i)=>i<2||names.includes(c.name)).map(c=>c.name);
+  state.columnFilter='custom';
+  document.getElementById('columnFilter').value='custom';
+  renderProductTable(rows);
+  renderColumnPicker(rows);
+ }
+ panel.querySelectorAll('input[data-column-index]').forEach(input=>input.addEventListener('change',()=>{
+  const selectedNow=new Set(activeColumns().map(c=>c.name));
+  const name=COLS[Number(input.dataset.columnIndex)].name;
+  if(input.checked)selectedNow.add(name);else selectedNow.delete(name);
+  applySelection([...selectedNow]);
+ }));
+ panel.querySelectorAll('[data-picker-action]').forEach(button=>button.addEventListener('click',()=>{
+  if(button.dataset.pickerAction==='all'){
+   state.customColumns=null;state.columnFilter='all';
+   document.getElementById('columnFilter').value='all';
+   renderProductTable(rows);renderColumnPicker(rows);
+  }else applySelection(COLS.slice(0,2).map(c=>c.name));
+ }));
+ panel.querySelector('#columnPickerSearch').addEventListener('input',e=>{
+  const q=e.target.value.toLocaleLowerCase('tr-TR');
+  panel.querySelectorAll('.column-option').forEach(label=>{label.hidden=!label.textContent.toLocaleLowerCase('tr-TR').includes(q)});
+  panel.querySelectorAll('.picker-fieldset').forEach(field=>{field.hidden=!Array.from(field.querySelectorAll('.column-option')).some(label=>!label.hidden)});
+ });
+}
+
 function dimensionsOf(p){
  const value=groupRaw(p,'Ölçü G×Y×D (mm)','Dış ölçüler (mm)');
  if(value===null||value===undefined)return null;
