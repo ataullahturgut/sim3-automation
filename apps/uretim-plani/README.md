@@ -84,3 +84,11 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 ### Ek resmî kaynak: 2024 ürün kataloğu
 - Üreticinin İngilizce sitesinde [2024 Product Catalog](https://www.gruparge.com/wp-content/uploads/2024/03/grup-arge-product-catalog-2024.pdf) (96 sayfa) bulunmaktadır. Şönt/harmonik ürün ailelerine ilişkin teknik çizim ve bağlantı şeması karşılaştırması için yardımcı referanstır.
 - Bu katalogda **GAG/GAGG varyant stok kodu** ve **GA5004/GA5006** için birebir teknik satır saptanmadı. Bu yüzden 2026 listeye kıyasla özel varyantlar için doğrulama düzeyini yükseltmek uygun değildir.
+
+## Doğrudan ürüne özel teknik föy (28 Ekim 2026)
+
+- Artık **Stok kodu** tıklandığında ya da **Ürüne özel teknik föy** sütunundaki bağlantıya basıldığında `urun.html?id=<ürün_kayıt_id>` açılır. Bu ayrı ekran **yalnızca seçilen tek ürünün** teknik alanlarını gösterir; Şönt/Harmonik toplu broşürüne götürmez.
+- `urun.html`, aynı klasördeki `urun.js`, `data-packed.js` ve `style.css` ile internet olmadan çalışır. Ürün ID'si kullanıldığı için aynı stok koduyla farklı kayıtlar birbirine karışmaz. Ürün başlığı, temel elektrik/mekanik bilgiler, yıllık plan, bütün kaynak matris alanları ve üretici kaynağı bulunur.
+- İsteğe bağlı **Yazdır / PDF kaydet** düğmesiyle sadece bu tek ürüne ait yerel teknik kart PDF olarak kaydedilebilir. **Bu PDF üreticinin yayımladığı orijinal datasheet değil, uygulamanın kaynak matristen oluşturduğu teknik özet** olduğundan açıkça etiketlidir.
+- Üreticinin resmî 2026/12 listesindeki ilgili sayfa ayrı kaynak bağlantısı olarak korunur. Yayınlanmamış özel G/GG varyantları ve katalog dışı ürünler için doğrulanmış üretici PDF'i varmış gibi davranılmaz.
+- **Toplam 40 sütun**. Gruplama, tik seçimi, sütun sıralama, çoklu filtre ve yıllık üretim planı korunur.
