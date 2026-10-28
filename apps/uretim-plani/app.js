@@ -6,7 +6,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const kClass=q=>q<=0?0:q<=200?1:q<=500?2:q<=1000?3:4;
 const partLabel={1:'1 parti',2:'2 parti',3:'3 parti',4:'4 parti'};
 const list=document.getElementById('selection'), grid=document.getElementById('calendar');
-const state={products:[],scenario:'balanced',oneMonth:5,twoMonth:2,group:1,month:5,product:null,query:'',groupFilter:'all',columnFilter:'all',assignments:[],months:Array.from({length:12},()=>[])};
+const state={products:[],scenario:'balanced',oneMonth:5,twoMonth:2,group:1,month:5,product:null,query:'',groupFilter:'all',columnFilter:'all',grouping:'type',sortBy:'batch',sortDirection:'desc',assignments:[],months:Array.from({length:12},()=>[])};
 const quantity=(n,p,k)=>Math.floor(n/p)+(k<n%p?1:0);
 function buildPlan(){
  const months=Array.from({length:12},()=>[]),load=Array(12).fill(0),plans=[];
@@ -96,15 +96,95 @@ function renderSelection(){
  const rows=monthlyOf(state.group,state.month).sort((a,b)=>b.partiAdedi-a.partiAdedi),total=rows.reduce((x,p)=>x+p.partiAdedi,0);
  if(!total){list.innerHTML='<div class="empty-state">Bu sınıfta seçilen ay için üretim yok.</div>';return}
  list.innerHTML=`<div class="selected-head"><div><h2>${MONTHS[state.month]} · ${partLabel[state.group]}</h2><p>${rows.length} ürün satırı · Ürün matrislerinin bütün mevcut alanları aynı tabloda</p></div><div class="quantity">${fmt(total)}<small>adet üretim</small></div></div>
- <div class="detail-table-toolbar"><label class="table-search">Ürün ara<input id="searchProduct" placeholder="Stok kodu, model veya teknik özellik ara…" aria-label="Ürün ara" value="${esc(state.query)}"></label><label class="table-filter">Ürün grubu<select id="groupFilter" aria-label="Ürün grubu"><option value="all">Tüm ürünler</option><option value="Şönt">Şönt</option><option value="Harmonik">Harmonik</option></select></label><label class="table-filter">Sütun grubu<select id="columnFilter" aria-label="Sütun grubu"><option value="all">Tüm özellikler</option><option value="plan">Üretim ve miktar</option><option value="technical">Teknik özellikler</option><option value="review">Kıyas, numune ve kaynaklar</option></select></label><span class="table-hint">Sağa kaydırarak bütün sütunları inceleyin →</span></div>
+ <div class="detail-table-toolbar"><label class="table-search">Ürün ara<input id="searchProduct" placeholder="Stok kodu, model veya teknik özellik ara…" aria-label="Ürün ara" value="${esc(state.query)}"></label><label class="table-filter">Ürün grubu<select id="groupFilter" aria-label="Ürün grubu"><option value="all">Tüm ürünler</option><option value="Şönt">Şönt</option><option value="Harmonik">Harmonik</option></select></label><label class="table-filter">Sütun grubu<select id="columnFilter" aria-label="Sütun grubu"><option value="all">Tüm özellikler</option><option value="plan">Üretim ve miktar</option><option value="technical">Teknik özellikler</option><option value="review">Kıyas, numune ve kaynaklar</option></select></label><label class="table-filter">Grupla<select id="groupBy" aria-label="Gruplama"><option value="type">Şönt / Harmonik</option><option value="family">Ürün ailesi</option><option value="quantity">Üretim adedi aralığı</option><option value="weight">Birim ağırlık aralığı</option><option value="dimensions">Dış ölçü aralığı</option><option value="none">Gruplama yok</option></select></label><label class="table-filter">Sırala<select id="sortBy" aria-label="Sıralama ölçütü"><option value="batch">Bu ay üretim adedi</option><option value="annual">Yıllık adet</option><option value="unitWeight">Birim ağırlık</option><option value="batchWeight">Parti ağırlığı</option><option value="largestEdge">En büyük dış ölçü</option><option value="outerVolume">Yaklaşık dış hacim</option><option value="power">Güç (kVAr)</option><option value="code">Stok kodu</option></select></label><label class="table-filter narrow-filter">Sıralama yönü<select id="sortDirection" aria-label="Sıralama yönü"><option value="desc">Büyükten küçüğe</option><option value="asc">Küçükten büyüğe</option></select></label><span class="table-hint">Gruplar birlikte; her grubun içinde seçilen ölçüte göre sıralanır. Sağa kaydırabilirsiniz →</span></div>
  <div class="product-table-wrap" role="region" aria-label="Üretim ürünleri ve tüm teknik özellikleri" tabindex="0"><table class="product-table"><thead id="productTableHead"></thead><tbody id="productTableBody"></tbody><tfoot id="productTableFoot"></tfoot></table></div>
  <div class="stack-note"><span id="shownCount"></span> · 32 sütunda üretim, teknik, kıyas, numune ve kaynak bilgileri. <b>—</b> kaynak matriste değerin olmadığı anlamına gelir; doğrulanmamış alanlar kaynakta yazdığı gibi korunur. Aynı stok kodunun farklı açıklamalı kayıtları ayrı satırlardadır.</div>`;
  document.getElementById('searchProduct').addEventListener('input',e=>{state.query=e.target.value;renderProductTable(rows)});
  const filter=document.getElementById('groupFilter');filter.value=state.groupFilter;filter.addEventListener('change',e=>{state.groupFilter=e.target.value;renderProductTable(rows)});
  const columns=document.getElementById('columnFilter');columns.value=state.columnFilter;columns.addEventListener('change',e=>{state.columnFilter=e.target.value;renderProductTable(rows)});
+ for(const [id,key] of [['groupBy','grouping'],['sortBy','sortBy'],['sortDirection','sortDirection']]){
+  const control=document.getElementById(id);control.value=state[key];control.addEventListener('change',e=>{state[key]=e.target.value;renderProductTable(rows)});
+ }
  renderProductTable(rows);
 }
 function activeColumns(){return COLS.filter((c,i)=>i<2||state.columnFilter==='all'||c.kind===state.columnFilter||(state.columnFilter==='technical'&&c.kind==='identity'))}
+
+// Ürün özelliklerinden hesaplanan aralıklar yalnızca sıralama içindir; makine yük kapasitesi değildir.
+function dimensionsOf(p){
+ const value=groupRaw(p,'Ölçü G×Y×D (mm)','Dış ölçüler (mm)');
+ if(value===null||value===undefined)return null;
+ const parts=String(value).replace(/mm/gi,'').replace(/,/g,'.').split(/[×xX*]/).map(x=>Number(x.trim()));
+ return parts.length===3 && parts.every(x=>Number.isFinite(x)&&x>0)?parts:null;
+}
+function bucket(value, edges, labels){
+ if(value===null||value===undefined||!Number.isFinite(value))return {key:'unknown',title:'Bilgisi olmayanlar',order:edges.length+1};
+ for(let i=0;i<edges.length;i++)if(value<=edges[i])return {key:String(i),title:labels[i],order:i};
+ return {key:String(edges.length),title:labels[edges.length],order:edges.length};
+}
+function productionGroup(p){
+ const kg=pWeight(p),dims=dimensionsOf(p),maxEdge=dims?Math.max(...dims):null;
+ if(state.grouping==='type')return {key:p.grup,title:p.grup,order:p.grup==='Şönt'?0:1};
+ if(state.grouping==='family'){
+  const family=raw(p,'Ürün ailesi')||p.aile||'Aile bilgisi yok';
+  const title=p.grup+' · '+String(family);
+  return {key:title,title,order:p.grup==='Şönt'?0:1};
+ }
+ if(state.grouping==='quantity')return bucket(p.partiAdedi,[50,200,500],['1–50 adet','51–200 adet','201–500 adet','501+ adet']);
+ if(state.grouping==='weight')return bucket(kg,[5,15,35,75],['0–5 kg','5–15 kg','15–35 kg','35–75 kg','75 kg üzeri']);
+ if(state.grouping==='dimensions')return bucket(maxEdge,[150,250,400],['En büyük kenar ≤150 mm','151–250 mm','251–400 mm','400 mm üzeri']);
+ return {key:'all',title:'Tüm ürünler',order:0};
+}
+function sortMetric(p){
+ const dims=dimensionsOf(p);
+ switch(state.sortBy){
+  case 'annual':return p.adet;
+  case 'unitWeight':return pWeight(p);
+  case 'batchWeight':return pWeight(p)===null?null:pWeight(p)*p.partiAdedi;
+  case 'largestEdge':return dims?Math.max(...dims):null;
+  case 'outerVolume':return dims?dims.reduce((a,b)=>a*b,1)/1000000:null; // dış kutu geometrisi, litre
+  case 'power':{const value=raw(p,'Güç (kVAr)');const n=typeof value==='number'?value:Number(String(value).replace(',','.'));return value!==null&&value!==undefined&&value!==''&&Number.isFinite(n)?n:null;}
+  case 'code':return p.kod;
+  default:return p.partiAdedi;
+ }
+}
+function productComparator(a,b){
+ const av=sortMetric(a),bv=sortMetric(b);
+ const aMissing=av===null||av===undefined||av==='',bMissing=bv===null||bv===undefined||bv==='';
+ if(aMissing!==bMissing)return aMissing?1:-1; // bilinmeyenler iki yönde de son sırada
+ const direction=state.sortDirection==='asc'?1:-1;
+ let cmp=0;
+ if(!aMissing)cmp=typeof av==='number'&&typeof bv==='number'?av-bv:String(av).localeCompare(String(bv),'tr');
+ if(cmp)return cmp*direction;
+ return String(a.kod).localeCompare(String(b.kod),'tr')||String(a.id).localeCompare(String(b.id),'tr');
+}
+function displayGroupedRows(rows,cols){
+ const groups=new Map();
+ for(const p of rows){
+  const category=productionGroup(p);
+  if(!groups.has(category.key))groups.set(category.key,{...category,items:[]});
+  groups.get(category.key).items.push(p);
+ }
+ const allGroups=[...groups.values()].sort((a,b)=>a.order-b.order||a.title.localeCompare(b.title,'tr'));
+ let html='';
+ for(const group of allGroups){
+  const items=group.items.sort(productComparator);
+  if(state.grouping!=='none'){
+   const qty=items.reduce((sum,p)=>sum+p.partiAdedi,0);
+   const unknown=items.filter(p=>pWeight(p)===null).length;
+   const knownKg=items.reduce((sum,p)=>sum+(pWeight(p)===null?0:pWeight(p)*p.partiAdedi),0);
+   const weightLabel=(unknown===items.length?'Ağırlık verisi yok':fmt(Math.round(knownKg*100)/100)+' kg (bilinen)')+(unknown?' · '+unknown+' üründe kg eksik':'');
+   html+='<tr class="product-group-row"><th scope="rowgroup" colspan="'+cols.length+'"><span class="group-label">'+esc(group.title)+'</span><span class="group-aggregate">'+items.length+' ürün · '+fmt(qty)+' adet · '+esc(weightLabel)+'</span></th></tr>';
+  }
+  for(const p of items){
+   html+='<tr>'+cols.map((c,i)=>{
+    const value=c.get(p),attr=c.long?' class="long-text"':typeof value==='number'?' class="numeric"':'';
+    return '<td'+attr+'>'+(i===0?'<strong>'+presentValue(value,c)+'</strong>':presentValue(value,c))+'</td>';
+   }).join('')+'</tr>';
+  }
+ }
+ return {html,groupCount:allGroups.length};
+}
+
 function renderProductTable(rows){
  const term=state.query.toLocaleLowerCase('tr-TR').trim();
  const shown=rows.filter(p=>{
@@ -114,16 +194,13 @@ function renderProductTable(rows){
  const cols=activeColumns();
  document.getElementById('productTableHead').innerHTML='<tr>'+cols.map(c=>`<th scope="col">${esc(c.name)}</th>`).join('')+'</tr>';
  const body=document.getElementById('productTableBody');
- body.innerHTML=shown.length?shown.map(p=>'<tr>'+cols.map((c,i)=>{
-   const value=c.get(p);
-   const attr=c.long?' class="long-text"':(typeof value==='number'?' class="numeric"':'');
-   return `<td${attr}>${i===0?`<strong>${presentValue(value,c)}</strong>`:presentValue(value,c)}</td>`;
- }).join('')+'</tr>').join(''):`<tr><td colspan="${cols.length}" class="table-no-result">Aramaya uygun ürün yok.</td></tr>`;
+ const grouped=displayGroupedRows(shown,cols);
+ body.innerHTML=shown.length?grouped.html:'<tr><td colspan="'+cols.length+'" class="table-no-result">Aramaya uygun ürün yok.</td></tr>';
  const sumQty=shown.reduce((n,p)=>n+p.partiAdedi,0),unknownKg=shown.filter(p=>pWeight(p)===null).length;
  const sumKg=Math.round(shown.reduce((n,p)=>n+(pWeight(p)===null?0:pWeight(p)*p.partiAdedi),0)*100)/100;
  const totalByName={'Stok kodu':'TOPLAM','Ürün modeli / açıklama':`${shown.length} ürün satırı`,'Bu ay üretim (adet)':fmt(sumQty),'Parti ağırlığı (kg)':unknownKg?fmt(sumKg)+' *':fmt(sumKg)};
  document.getElementById('productTableFoot').innerHTML='<tr>'+cols.map(c=>`<td>${totalByName[c.name]||''}</td>`).join('')+'</tr>';
- document.getElementById('shownCount').textContent=`${shown.length} / ${rows.length} ürün gösteriliyor · ${cols.length} sütun${unknownKg?` · ${unknownKg} üründe ağırlık eksik, toplam kg eksik olabilir`:''}`;
+ document.getElementById('shownCount').textContent=`${shown.length} / ${rows.length} ürün gösteriliyor · ${grouped.groupCount} grup · ${cols.length} sütun${unknownKg?` · ${unknownKg} üründe ağırlık eksik, toplam kg eksik olabilir`:''}`;
 }
 function downloadCSV(){
  const header=['Ürün ID','Ay',...COLS.map(c=>c.name)];
