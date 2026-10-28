@@ -6,7 +6,7 @@ Bu dizin, SIM3 Windows otomasyonunun ana dosyalarını değiştirmeyen bağıms�
 
 1. Bu dizindeki `index.html`, `style.css`, `app.js`, `data-packed.js` dosyalarını aynı klasörde bulundurun.
 2. Windows'ta `index.html` dosyasını Chrome / Edge ile açın. İnternet bağlantısı gerekmez.
-3. Takvimdeki renkli üretim miktarına basın: o ayın ürünleri aşağıda listelenir. **Tüm ürünler tek tabloda alt alta görünür.** Stok kodu, model, parti adedi, yıllık adet, güç, akım, endüktans, faz, p, THDv, ölçüler, ağırlık, bağlantı, sarım tipi, teknik durum ve kaynaklar sütunlarda gösterilir. Tabloda yatay/dikey kaydırma, ürün arama ve şönt/harmonik filtresi vardır; ayrı ürün detayı açılmaz.
+3. Takvimdeki renkli üretim miktarına basın: o ayın ürünleri aşağıda listelenir. **Tüm ürünler tek tabloda alt alta görünür. Şönt kaynağındaki 19, harmonik kaynağındaki 22 özgün alanın tamamı aktarılmıştır.** Üretim ve miktarın yanında kıyas kodu/önerisi, numune/kontrol, kıyas nedeni, yapı referansı, standart/varyant, katalog/teknik veri durumu, inceleme eksikleri, kaynak ve kayıt bilgisi dahil 32 sütun vardır. Tabloda yatay/dikey kaydırma, ürün arama ve şönt/harmonik filtresi vardır; ayrı ürün detayı açılmaz.
 
 ## Temel kurallar
 
