@@ -32,3 +32,10 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 ## Kontrol
 
 `node test_app.js` komutuyla paket yükleme ve toplam sayım testi yapılabilir (Node.js 18+). Tarayıcı için son kullanıcıya Node.js gerekmez.
+
+## Gruplama ve sıralama (ürün tablosu)
+
+- **Grupla:** Şönt / Harmonik (başlangıç görünümü), ürün ailesi, aylık parti adedi aralığı, birim ağırlık aralığı, en büyük dış ölçü aralığı veya gruplama yok.
+- **Sırala:** bu ay üretilecek adet, yıllık adet, birim ağırlık, toplam parti ağırlığı, dış ölçünün en büyük kenarı, yaklaşık geometrik dış hacim, güç veya stok kodu. Küçükten büyüğe / büyükten küçüğe yönü seçilebilir.
+- Her grup başlığında **ürün sayısı, üretim adedi, bilinen toplam parti kg** ve ağırlığı eksik ürün sayısı yer alır. Ağırlık ve ölçüsü eksik olan ürünler ayrıca *Bilgisi olmayanlar* grubuna alınır; sıralamada her iki yönde de sona yerleştirilir.
+- Gruplama ve sıralama yalnızca liste görünümünü etkiler, 45.088 adet/yıl ve üretim ayları değişmez. Aralıklar yatırım amacıyla geçici inceleme sınıflarıdır; malzeme türü, fiilî fırın yerleşimi ve sarım çevrimi bunlardan çıkarılamaz.
