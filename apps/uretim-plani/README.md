@@ -46,3 +46,11 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 - **Stok kodu** ve **Ürün modeli** sabit kalan iki sütundur; diğer 30 sütun ayrı ayrı eklenip çıkarılabilir.
 - **32 sütunun tamamı** ve **Yalnızca kod ve model** hazır kontrolleri, sütun adı araması ve mevcut hızlı **Sütun grubu** şablonları vardır. Özel seçim ay veya üretim partisi değiştiğinde korunur.
 - Sütunları gizlemek veya göstermek veri paketini ve üretim planını değiştirmez; CSV dışa aktarımı tam 32 sütunu korur.
+
+
+## Sütun başlığına tıklayarak sıralama ve çoklu filtre
+- Tabloda **herhangi bir sütun başlığına** basılması grupların içindeki ürünleri o sütuna göre sıralar; ikinci basış artan/azalan yönünü değiştirir. Aktif başlık ▲ / ▼ simgesiyle gösterilir. Boş değerler her iki yönde de sondadır. Ölçü sütunu en büyük dış kenarı esas alır.
+- Üst araç çubuğundaki **Ek filtreler** panelinden sınırsız sayıda sütun koşulu eklenebilir. 32 görünür sütunun tamamı filtrelenebilir; ayrıca en büyük dış ölçü ve yaklaşık geometrik hacim filtre alanı bulunur.
+- Sayısal koşullar: >, ≥, <, ≤, eşit, eşit değil, boş, dolu. Metin koşulları: içerir, içermez, eşit, eşit değil, ile başlar, boş, dolu. Ondalık değerler Türkçe virgülle yazılabilir (örn. 14,5).
+- Farklı koşullar **VE (hepsi)** veya **VEYA (herhangi biri)** yöntemiyle birleştirilir. Ürün grubu seçimi ve genel arama ek filtrelerle VE olarak çalışır.
+- Filtreler yalnızca ürünlerin listelenmesini etkiler; aylık/yıllık üretim planı, ham veriler ve tüm sütunları içeren CSV dışa aktarımı değişmez.
