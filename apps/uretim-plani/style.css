@@ -92,3 +92,8 @@
 .filters-empty{font-size:12px;color:#8495a2;margin:15px 0}
 .multi-filter-panel small{color:#8195a3;display:block;margin-top:12px;line-height:1.4}
 @media(max-width:700px){.multi-filter{flex:1 1 100%}.multi-filter-panel{left:0;right:auto;width:min(690px,calc(100vw - 44px))}.filter-rule{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 30px}.filter-rule .rule-field{grid-column:1 / -1}.filter-rule .rule-op{grid-column:1}.filter-rule .rule-value{grid-column:2}.filter-rule .rule-remove{grid-column:3;grid-row:2}}
+
+/* Resmî 2026/12 teknik karşılaştırma özeti */
+.audit-banner{padding:10px 13px;margin:10px 0;background:#f2f7fa;color:#37556b;border:1px solid #d8e6ed;border-radius:9px;font-size:11px;line-height:1.65}
+.audit-banner strong{color:#164a62}
+.audit-banner a{color:#176f83;text-decoration:underline}
