@@ -66,3 +66,29 @@
 .detail-table-toolbar .column-picker .column-option{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:9px;font-size:12px;font-weight:400;padding:7px 3px}
 .detail-table-toolbar .column-picker .column-option input[type="checkbox"]{width:16px;min-width:16px;max-width:16px;height:16px;min-height:16px;padding:0;margin:0;flex:0 0 16px;box-shadow:none}
 .detail-table-toolbar .column-picker .column-option span{flex:1}
+
+
+/* Tablodaki sütun başlığına basarak iki yönlü sıralama */
+.product-table thead .head-sort{background:transparent;border:0;color:inherit;padding:4px 2px;font:inherit;font-weight:800;text-align:left;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:7px;min-height:24px}
+.product-table thead .head-sort:hover,.product-table thead .head-sort:focus-visible{color:#076a83;text-decoration:underline;outline-offset:2px}
+.product-table thead .head-sort.is-sorted{color:#075b6e}
+.product-table thead .sort-arrow{font-size:12px;color:#60869b;flex-shrink:0}
+/* 32 bilgi alanının tamamı üzerinde VE/VEYA çoklu filtre */
+.multi-filter{position:relative;align-self:end;z-index:16;flex:0 1 185px}
+.multi-filter summary{display:flex;align-items:center;justify-content:space-between;min-height:36px;gap:7px;padding:10px 12px;list-style:none;border:1px solid #9dc9d0;border-radius:9px;cursor:pointer;font-size:12px;font-weight:800;background:#eef6f7;color:#19596a}
+.multi-filter summary::-webkit-details-marker{display:none}
+.multi-filter summary::after{content:"▾"}
+.multi-filter[open] summary::after{content:"▴"}
+.multi-filter-panel{position:absolute;z-index:70;right:0;top:calc(100% + 6px);width:min(690px,calc(100vw - 32px));max-height:min(630px,75vh);overflow:auto;background:white;border:1px solid #c6d9e1;border-radius:12px;box-shadow:0 14px 32px #17304430;padding:16px}
+.filter-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filter-actions b{font-size:12px;margin-right:auto}
+.filter-actions button{border:1px solid #cbdce3;border-radius:7px;background:#f1f7f8;color:#285d70;font-size:11px;font-weight:700;cursor:pointer;padding:8px}
+.detail-table-toolbar .multi-filter .filter-logic{display:flex;flex-direction:row;align-items:center;gap:12px;font-size:11px;margin-bottom:12px}
+.filter-logic select{max-width:260px}
+.filter-rule{display:grid;grid-template-columns:minmax(150px,2fr) minmax(125px,1fr) minmax(100px,1fr) 28px;gap:7px;align-items:center;margin:8px 0}
+.filter-rule select,.filter-rule input{width:100%;min-width:0}
+.filter-rule .rule-remove{background:#fff2f2;border:1px solid #e7cacc;color:#a14141;font-size:18px;font-weight:800;border-radius:7px;cursor:pointer;height:34px}
+.filter-rule input:disabled{background:#f4f7f8;color:#98a9b2}
+.filters-empty{font-size:12px;color:#8495a2;margin:15px 0}
+.multi-filter-panel small{color:#8195a3;display:block;margin-top:12px;line-height:1.4}
+@media(max-width:700px){.multi-filter{flex:1 1 100%}.multi-filter-panel{left:0;right:auto;width:min(690px,calc(100vw - 44px))}.filter-rule{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 30px}.filter-rule .rule-field{grid-column:1 / -1}.filter-rule .rule-op{grid-column:1}.filter-rule .rule-value{grid-column:2}.filter-rule .rule-remove{grid-column:3;grid-row:2}}
