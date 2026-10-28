@@ -80,3 +80,7 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 - **14 satır / 452 yıllık adet:** 12 özel üretim (178 adet), SVC-R 5.0 `GA5004` (112 adet) ve SVC-R 10.0 `GA5006` (162 adet) üreticinin mevcut 2026 listesinde aynı stok koduyla bulunamadı.
 - 2026 fiyat listesi s.27'de üretici **güçlendirilmiş filtreler** ve **siparişe özel üretimler** için kendisiyle iletişim kurulmasını açıkça istiyor. Bu yüzden özel ürünlere katalogda olmadığı halde standart ürün ölçü/ağırlık bilgisi atanmaz.
 - Durumlar üç seviyelidir: **5/5 teknik alan uyumlu / Standart baz model var; varyant doğrulanmadı / Ürün kodu resmî tabloda yok**. 39 bilgi sütununun hepsi filtrelenebilir; üretim planı ve 45.088 adet/yıl değişmedi.
+
+### Ek resmî kaynak: 2024 ürün kataloğu
+- Üreticinin İngilizce sitesinde [2024 Product Catalog](https://www.gruparge.com/wp-content/uploads/2024/03/grup-arge-product-catalog-2024.pdf) (96 sayfa) bulunmaktadır. Şönt/harmonik ürün ailelerine ilişkin teknik çizim ve bağlantı şeması karşılaştırması için yardımcı referanstır.
+- Bu katalogda **GAG/GAGG varyant stok kodu** ve **GA5004/GA5006** için birebir teknik satır saptanmadı. Bu yüzden 2026 listeye kıyasla özel varyantlar için doğrulama düzeyini yükseltmek uygun değildir.
