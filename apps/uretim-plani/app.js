@@ -94,6 +94,7 @@ const OFFICIAL_DATASHEETS={Şönt:'https://www.gruparge.com/wp-content/uploads/2
 const COLS=[
  {name:'Stok kodu',kind:'main',get:p=>p.kod},
  {name:'Ürün modeli / açıklama',kind:'main',get:p=>p.model},
+ {name:'Ürüne özel teknik föy',kind:'main',get:p=>p.id,productCard:true},
  {name:'Grup',kind:'plan',get:p=>p.grup},
  {name:'Yıllık miktar (adet)',kind:'plan',get:p=>p.adet},
  {name:'Parti sayısı',kind:'plan',get:p=>p.parti},
@@ -134,6 +135,7 @@ const COLS=[
 ];
 function presentValue(value,col){
  if(value===null||value===undefined||value==='')return '<span class="missing">—</span>';
+ if(col.productCard)return '<a class="product-sheet-link" href="urun.html?id='+encodeURIComponent(String(value))+'" target="_blank" rel="noopener noreferrer">Bu ürünün föyünü aç ↗</a>';
  if(col.link&&typeof value==='string'&&/^https:\/\//i.test(value))return `<a href="${esc(value)}" target="_blank" rel="noopener noreferrer" title="${col.pdf?'Ürün grubunun resmî teknik PDF dosyası; her model için özel PDF değildir':col.baseReference?'Standart baz modelin verileri; G/GG varyantı doğrulanmış değildir':col.pdfList?'Üreticinin resmî 2026/12 teknik listesi; ilgili sayfaya git':esc(value)}">${col.pdf?'2025 grup datasheet PDF ↗':col.baseReference?'Baz model PDF ↗':col.pdfList?'2026/12 resmî liste ↗':esc(value)}</a>`;
  const v=col.fraction&&typeof value==='number'?(value*100).toLocaleString('tr-TR',{maximumFractionDigits:4})+' %':typeof value==='number'?value.toLocaleString('tr-TR',{maximumFractionDigits:8}):String(value);
  return esc(v);
@@ -270,7 +272,7 @@ function displayGroupedRows(rows,cols){
   for(const p of items){
    html+='<tr>'+cols.map((c,i)=>{
     const value=c.get(p),attr=c.long?' class="long-text"':typeof value==='number'?' class="numeric"':'';
-    return '<td'+attr+'>'+(i===0?'<strong>'+presentValue(value,c)+'</strong>':presentValue(value,c))+'</td>';
+    return '<td'+attr+'>'+(i===0?'<strong><a class="product-code-link" href="urun.html?id='+encodeURIComponent(String(p.id))+'" target="_blank" rel="noopener noreferrer" title="Bu ürünün teknik föyünü aç">'+presentValue(value,c)+'</a></strong>':presentValue(value,c))+'</td>';
    }).join('')+'</tr>';
   }
  }
