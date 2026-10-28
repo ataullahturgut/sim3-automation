@@ -40,3 +40,24 @@
 .product-table .group-label{display:inline-block;font-size:13px;margin-right:16px}
 .product-table .group-aggregate{display:inline-block;font-size:11px;color:#45687c;font-weight:600}
 @media(max-width:700px){.detail-table-toolbar .table-search{max-width:none}.detail-table-toolbar .table-filter{flex:1 1 45%;max-width:none}}
+
+/* Tüm 32 kaynak/hesap sütunundan çoklu seçim */
+.column-picker{position:relative;flex:0 1 210px;align-self:end;z-index:15}
+.column-picker>summary{display:flex;align-items:center;justify-content:space-between;min-height:36px;gap:10px;padding:10px 12px;background:#eef6f7;border:1px solid #9dc9d0;border-radius:9px;cursor:pointer;color:#19596a;font-size:12px;font-weight:800;list-style:none}
+.column-picker>summary::-webkit-details-marker{display:none}
+.column-picker>summary::after{content:"▾";font-size:12px}
+.column-picker[open]>summary::after{content:"▴"}
+.column-picker-panel{position:absolute;top:calc(100% + 6px);right:0;z-index:60;width:min(470px,calc(100vw - 32px));max-height:min(650px,75vh);overflow-y:auto;background:white;border:1px solid #cbdce4;border-radius:12px;box-shadow:0 14px 35px #1730442f;padding:15px}
+.picker-title{font-size:13px;font-weight:800;color:#284d64;margin-bottom:9px}
+.picker-actions{display:flex;gap:9px;margin-bottom:10px;flex-wrap:wrap}
+.picker-actions button{cursor:pointer;border:1px solid #cbdce3;border-radius:7px;background:#f1f7f8;color:#285d70;font-size:11px;font-weight:700;padding:8px}
+#columnPickerSearch{margin-bottom:9px}
+.picker-fieldset{border:0;border-top:1px solid #e4edf1;padding:10px 0 6px;margin:0}
+.picker-fieldset legend{padding:0 7px;font-size:12px;font-weight:750;color:#3c6376}
+.column-option{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:12px;color:#3f5f71;line-height:1.35;padding:6px 2px}
+.column-option input{width:16px;height:16px;flex:0 0 16px;accent-color:#24788a;margin:0;cursor:pointer}
+.column-option input:disabled{cursor:not-allowed}
+.column-option:has(input:disabled){opacity:.7;cursor:default}
+.column-option[hidden],.picker-fieldset[hidden]{display:none}
+.picker-foot{font-size:11px;color:#7c909c;padding-top:10px;border-top:1px solid #e5edf2}
+@media(max-width:700px){.column-picker{flex:1 1 100%}.column-picker-panel{right:0;left:0;width:min(470px,calc(100vw - 44px))}}
