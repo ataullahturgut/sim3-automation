@@ -39,3 +39,10 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 - **Sırala:** bu ay üretilecek adet, yıllık adet, birim ağırlık, toplam parti ağırlığı, dış ölçünün en büyük kenarı, yaklaşık geometrik dış hacim, güç veya stok kodu. Küçükten büyüğe / büyükten küçüğe yönü seçilebilir.
 - Her grup başlığında **ürün sayısı, üretim adedi, bilinen toplam parti kg** ve ağırlığı eksik ürün sayısı yer alır. Ağırlık ve ölçüsü eksik olan ürünler ayrıca *Bilgisi olmayanlar* grubuna alınır; sıralamada her iki yönde de sona yerleştirilir.
 - Gruplama ve sıralama yalnızca liste görünümünü etkiler, 45.088 adet/yıl ve üretim ayları değişmez. Aralıklar yatırım amacıyla geçici inceleme sınıflarıdır; malzeme türü, fiilî fırın yerleşimi ve sarım çevrimi bunlardan çıkarılamaz.
+
+## İsteğe bağlı sütunlar (çoklu tik)
+
+- Ürün listesinin üstündeki **Sütun ekle / çıkar (X/32)** açılır menüsü kaynak matrisleri ve üretim hesaplarındaki 32 sütunu gruplar halinde gösterir. İstenenler tiklenir; seçili olmayanlar tabloda gizlenir. Her tık anında aynı tabloyu günceller.
+- **Stok kodu** ve **Ürün modeli** sabit kalan iki sütundur; diğer 30 sütun ayrı ayrı eklenip çıkarılabilir.
+- **32 sütunun tamamı** ve **Yalnızca kod ve model** hazır kontrolleri, sütun adı araması ve mevcut hızlı **Sütun grubu** şablonları vardır. Özel seçim ay veya üretim partisi değiştiğinde korunur.
+- Sütunları gizlemek veya göstermek veri paketini ve üretim planını değiştirmez; CSV dışa aktarımı tam 32 sütunu korur.
