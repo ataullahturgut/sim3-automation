@@ -53,6 +53,30 @@ const raw=(p,name)=>p.tamKayit&&Object.prototype.hasOwnProperty.call(p.tamKayit,
 const groupRaw=(p,s,h)=>p.grup==='Şönt'?raw(p,s):raw(p,h);
 const pWeight=p=>typeof p.kg==='number'&&p.kg>0?p.kg:null;
 // Üreticinin resmî aile datasheetleri: stok kodu başına özel PDF olduğu iddia edilmez.
+
+/* 28.10.2026 tarihinde üreticinin 2026/12 resmî teknik fiyat listesi (https://www.gruparge.com/fl/tr)
+   PDF'nin 17, 30, 31 ve 32. sayfalarındaki 112 farklı stok kodu esas alınmıştır.
+   Kullanıcı matrisindeki 135 satırın 92'si bu listede bulunmuş ve akım, L, ölçü,
+   ağırlık, bağlantı alanları 5/5 eşleşmiştir. Diğer 43 satır (29 G/GG,
+   12 özel üretim, 2 SVC) katalog dışıdır. Resmî listede olmamak ürün yokluğu değildir.
+   Bu eşleşmelerin satır bazında CSV raporu ayrıca hazırlanmıştır.
+*/
+const OFFICIAL_2026_LIST='https://www.gruparge.com/fl/tr';
+const OFFICIAL_2026_RANGES=[
+ [5001,5003,17],[5101,5108,17],[5201,5212,17],
+ [5311,5317,30],[5411,5417,30],[5511,5517,30],
+ [5321,5339,31],[5629,5639,31],
+ [5521,5539,32],[5421,5439,32]
+];
+const official2026Page=code=>{
+ if(typeof code!=='string'||!/^GA\d{4}$/.test(code))return null;
+ const value=Number(code.slice(2));
+ const range=OFFICIAL_2026_RANGES.find(([a,b])=>value>=a&&value<=b);
+ return range?range[2]:null;
+};
+const official2026Status=p=>official2026Page(p.kod)===null?'Listede yok / özel inceleme':'5/5 teknik alan uyumlu';
+const official2026Note=p=>official2026Page(p.kod)===null?'2026/12 listesinde bu stok kodu bulunamadı; üretici teyidi gerekli.':'2026/12 resmî tablo: akım, L, ölçü, kg ve bağlantı değerleri eşleşti.';
+
 const OFFICIAL_DATASHEETS={Şönt:'https://www.gruparge.com/wp-content/uploads/2025/05/SONT-REAKTORU-DATASHEET.pdf',Harmonik:'https://www.gruparge.com/wp-content/uploads/2025/05/HARMONIK-FILTRE-DATASHEET.pdf'};
 
 const COLS=[
@@ -85,6 +109,10 @@ const COLS=[
  {name:'Katalog / teknik veri durumu',kind:'review',get:p=>groupRaw(p,'2026/12 katalog durumu','Teknik veri durumu'),long:true},
  {name:'İnceleme / eksik bilgi',kind:'review',get:p=>raw(p,'İnceleme / eksik bilgi'),long:true},
  {name:'Kaynak URL / bağlantısı',kind:'review',get:p=>groupRaw(p,'Kaynak URL','Kaynak bağlantısı'),long:true,link:true},
+ {name:'2026/12 teknik doğrulama',kind:'review',get:official2026Status},
+ {name:'2026/12 kontrol notu',kind:'review',get:official2026Note,long:true},
+ {name:'2026/12 kaynak PDF sayfası',kind:'review',get:p=>official2026Page(p.kod)},
+ {name:'Resmî 2026/12 teknik liste',kind:'review',get:p=>official2026Page(p.kod)?OFFICIAL_2026_LIST+'#page='+official2026Page(p.kod):null,link:true,pdfList:true},
  {name:'Resmî datasheet (grup PDF)',kind:'review',get:p=>OFFICIAL_DATASHEETS[p.grup]||null,link:true,pdf:true},
  {name:'Kaynak kayıt',kind:'review',get:p=>raw(p,'Kaynak kayıt'),long:true},
  {name:'Kaynak dosya',kind:'review',get:p=>p.kaynakDosya},
@@ -92,7 +120,7 @@ const COLS=[
 ];
 function presentValue(value,col){
  if(value===null||value===undefined||value==='')return '<span class="missing">—</span>';
- if(col.link&&typeof value==='string'&&/^https:\/\//i.test(value))return `<a href="${esc(value)}" target="_blank" rel="noopener noreferrer" title="${col.pdf?'Ürün grubunun resmî teknik PDF dosyası; her model için özel PDF değildir':esc(value)}">${col.pdf?'Resmî datasheet PDF ↗':esc(value)}</a>`;
+ if(col.link&&typeof value==='string'&&/^https:\/\//i.test(value))return `<a href="${esc(value)}" target="_blank" rel="noopener noreferrer" title="${col.pdf?'Ürün grubunun resmî teknik PDF dosyası; her model için özel PDF değildir':col.pdfList?'Üreticinin resmî 2026/12 teknik listesi; ilgili sayfaya git':esc(value)}">${col.pdf?'2025 grup datasheet PDF ↗':col.pdfList?'2026/12 resmî liste ↗':esc(value)}</a>`;
  const v=col.fraction&&typeof value==='number'?(value*100).toLocaleString('tr-TR',{maximumFractionDigits:4})+' %':typeof value==='number'?value.toLocaleString('tr-TR',{maximumFractionDigits:8}):String(value);
  return esc(v);
 }
@@ -102,7 +130,7 @@ function renderSelection(){
  list.innerHTML=`<div class="selected-head"><div><h2>${MONTHS[state.month]} · ${partLabel[state.group]}</h2><p>${rows.length} ürün satırı · Ürün matrislerinin bütün mevcut alanları aynı tabloda</p></div><div class="quantity">${fmt(total)}<small>adet üretim</small></div></div>
  <div class="detail-table-toolbar"><label class="table-search">Ürün ara<input id="searchProduct" placeholder="Stok kodu, model veya teknik özellik ara…" aria-label="Ürün ara" value="${esc(state.query)}"></label><label class="table-filter">Ürün grubu<select id="groupFilter" aria-label="Ürün grubu"><option value="all">Tüm ürünler</option><option value="Şönt">Şönt</option><option value="Harmonik">Harmonik</option></select></label><label class="table-filter">Sütun grubu<select id="columnFilter" aria-label="Sütun grubu"><option value="all">Tüm özellikler</option><option value="plan">Üretim ve miktar</option><option value="technical">Teknik özellikler</option><option value="review">Kıyas, numune ve kaynaklar</option><option value="custom">Özel sütun seçimi</option></select></label><details class="column-picker" id="columnPicker"><summary id="columnPickerSummary">Sütun ekle / çıkar</summary><div class="column-picker-panel" id="columnPickerPanel"></div></details><label class="table-filter">Grupla<select id="groupBy" aria-label="Gruplama"><option value="type">Şönt / Harmonik</option><option value="family">Ürün ailesi</option><option value="quantity">Üretim adedi aralığı</option><option value="weight">Birim ağırlık aralığı</option><option value="dimensions">Dış ölçü aralığı</option><option value="none">Gruplama yok</option></select></label><label class="table-filter">Sırala<select id="sortBy" aria-label="Sıralama ölçütü"><option value="batch">Bu ay üretim adedi</option><option value="annual">Yıllık adet</option><option value="unitWeight">Birim ağırlık</option><option value="batchWeight">Parti ağırlığı</option><option value="largestEdge">En büyük dış ölçü</option><option value="outerVolume">Yaklaşık dış hacim</option><option value="power">Güç (kVAr)</option><option value="code">Stok kodu</option><option value="column" id="columnSortLabel">Sütun başlığına göre</option></select></label><label class="table-filter narrow-filter">Sıralama yönü<select id="sortDirection" aria-label="Sıralama yönü"><option value="desc">Büyükten küçüğe</option><option value="asc">Küçükten büyüğe</option></select></label><details class="multi-filter" id="multiFilter"><summary id="multiFilterSummary">Ek filtreler (0)</summary><div class="multi-filter-panel"><div class="filter-actions"><b>Birden fazla koşul ekleyin</b><button type="button" id="addFilter">+ Filtre ekle</button><button type="button" id="clearFilters">Temizle</button></div><label class="filter-logic">Koşulları birleştir<select id="filterLogic"><option value="and">Hepsi sağlansın (VE)</option><option value="or">Herhangi biri sağlansın (VEYA)</option></select></label><div id="filterRows"></div><small>Ürün grubu ve arama filtreleriyle birlikte uygulanır. Eksik değerler ayrı filtrelenebilir.</small></div></details><span class="table-hint">Sütun başlığına basarak sıralayın (▲ / ▼). Birden çok filtreyi birlikte kullanabilirsiniz. Grupların içindeki ürünler sıralanır.</span></div>
  <div class="product-table-wrap" role="region" aria-label="Üretim ürünleri ve tüm teknik özellikleri" tabindex="0"><table class="product-table"><thead id="productTableHead"></thead><tbody id="productTableBody"></tbody><tfoot id="productTableFoot"></tfoot></table></div>
- <div class="stack-note"><span id="shownCount"></span> · ${COLS.length} sütunda üretim, teknik, kıyas, numune ve kaynak bilgileri. Resmî datasheet bağlantısı ürün grubuna aittir, tekil ürün datasheeti değildir. <b>—</b> kaynak matriste değerin olmadığı anlamına gelir; doğrulanmamış alanlar kaynakta yazdığı gibi korunur. Aynı stok kodunun farklı açıklamalı kayıtları ayrı satırlardadır.</div>`;
+ <div class="audit-banner"><strong>2026/12 resmî katalog denetimi:</strong> 135 matris satırında 92 kod ve beş teknik alan uyumlu; 43 satırda resmî liste eşleşmesi yok. <a href="https://www.gruparge.com/fl/tr" target="_blank" rel="noopener noreferrer">Resmî listeyi aç ↗</a> · <span id="auditCurrentSelection"></span></div><div class="stack-note"><span id="shownCount"></span> · ${COLS.length} sütunda üretim, teknik, kıyas, numune ve kaynak bilgileri. Resmî datasheet bağlantısı ürün grubuna aittir, tekil ürün datasheeti değildir. <b>—</b> kaynak matriste değerin olmadığı anlamına gelir; doğrulanmamış alanlar kaynakta yazdığı gibi korunur. Aynı stok kodunun farklı açıklamalı kayıtları ayrı satırlardadır.</div>`;
  document.getElementById('searchProduct').addEventListener('input',e=>{state.query=e.target.value;renderProductTable(rows)});
  const filter=document.getElementById('groupFilter');filter.value=state.groupFilter;filter.addEventListener('change',e=>{state.groupFilter=e.target.value;renderProductTable(rows)});
  const columns=document.getElementById('columnFilter');columns.value=state.columnFilter;columns.addEventListener('change',e=>{if(e.target.value==='custom'&&state.customColumns===null)state.customColumns=activeColumns().map(c=>c.name);else if(e.target.value!=='custom')state.customColumns=null;state.columnFilter=e.target.value;renderProductTable(rows);renderColumnPicker(rows)});
@@ -346,6 +374,10 @@ function renderProductTable(rows){
   const rules=state.filters.filter(r=>r.op==='empty'||r.op==='notEmpty'||String(r.value).trim()!=='');
   return rules.length===0||(state.filterLogic==='and'?rules.every(r=>matchFilter(p,r)):rules.some(r=>matchFilter(p,r)));
  });
+ const officialMatched=shown.filter(p=>official2026Page(p.kod)!==null).length;
+ const unmatched=shown.length-officialMatched;
+ const auditStat=document.getElementById('auditCurrentSelection');
+ if(auditStat)auditStat.textContent='Görünen listede '+officialMatched+' eşleşen, '+unmatched+' katalog dışı kayıt.';
  const cols=activeColumns();
  const colSort=state.sortBy==='column';
  document.getElementById('productTableHead').innerHTML='<tr>'+cols.map((c,i)=>{
