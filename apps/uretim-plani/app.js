@@ -6,7 +6,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const kClass=q=>q<=0?0:q<=200?1:q<=500?2:q<=1000?3:4;
 const partLabel={1:'1 parti',2:'2 parti',3:'3 parti',4:'4 parti'};
 const list=document.getElementById('selection'), grid=document.getElementById('calendar');
-const state={products:[],scenario:'balanced',oneMonth:5,twoMonth:2,group:1,month:5,product:null,query:'',groupFilter:'all',assignments:[],months:Array.from({length:12},()=>[])};
+const state={products:[],scenario:'balanced',oneMonth:5,twoMonth:2,group:1,month:5,product:null,query:'',assignments:[],months:Array.from({length:12},()=>[])};
 const quantity=(n,p,k)=>Math.floor(n/p)+(k<n%p?1:0);
 function buildPlan(){
  const months=Array.from({length:12},()=>[]),load=Array(12).fill(0),plans=[];
@@ -43,44 +43,35 @@ function renderCalendar(){let html='<thead><tr><th class="rowname">Üretim sın�
  }
  html+='</tbody><tfoot><tr><td class="rowname">Aylık toplam</td>'+SHORT.map((_,m)=>`<td>${fmt(sumMonth(m))}</td>`).join('')+'</tr></tfoot>';
  grid.innerHTML=html;
- grid.querySelectorAll('button[data-g]').forEach(b=>b.addEventListener('click',()=>{state.group=+b.dataset.g;state.month=+b.dataset.m;state.product=null;state.query='';state.groupFilter='all';renderCalendar();renderSelection()}));
+ grid.querySelectorAll('button[data-g]').forEach(b=>b.addEventListener('click',()=>{state.group=+b.dataset.g;state.month=+b.dataset.m;state.product=null;state.query='';renderCalendar();renderSelection()}));
  const top=Math.max(...Array.from({length:12},(_,m)=>sumMonth(m)))||1;
  document.getElementById('monthly').innerHTML=SHORT.map((m,i)=>`<div class="m"><label>${m}</label><div class="barbox"><div class="bar" style="height:${Math.max(0,100*sumMonth(i)/top)}%"></div></div><div class="qty">${fmt(sumMonth(i))}</div></div>`).join('');
 }
-function formatSpec(v){return v===null||v===undefined||v===''?'—':esc(v)}
-function formatNumber(v){return v===null||v===undefined||v===''?'—':esc(v)}
+const spec=(k,v)=>`<div><dt>${esc(k)}</dt><dd>${v==null||v===''?'Doğrulanmadı':esc(v)}</dd></div>`;
 function renderSelection(){
  const rows=monthlyOf(state.group,state.month).sort((a,b)=>b.partiAdedi-a.partiAdedi),total=rows.reduce((x,p)=>x+p.partiAdedi,0);
  if(!total){list.innerHTML='<div class="empty-state">Bu sınıfta seçilen ay için üretim yok.</div>';return}
- list.innerHTML=`<div class="selected-head"><div><h2>${MONTHS[state.month]} · ${partLabel[state.group]}</h2><p>${rows.length} ürün satırı · Teknik özellikler her ürünün yanında sütun halinde</p></div><div class="quantity">${fmt(total)}<small>adet üretim</small></div></div>
- <div class="detail-table-toolbar"><label class="table-search">Ürün ara<input id="searchProduct" placeholder="Stok kodu, model veya teknik özellik ara…" aria-label="Ürün ara" value="${esc(state.query)}"></label><label class="table-filter">Ürün grubu<select id="groupFilter" aria-label="Ürün grubu"><option value="all">Tüm ürünler</option><option value="Şönt">Şönt</option><option value="Harmonik">Harmonik</option></select></label><span class="table-hint">Tablonun tüm sütunları için yatay kaydırın →</span></div>
- <div class="product-table-wrap" role="region" aria-label="Üretim ürünleri ve teknik özellikleri" tabindex="0"><table class="product-table"><thead><tr>${[
- 'Stok kodu','Ürün / model','Grup','Ürün ailesi','Yıllık adet','Parti adedi','Parti sayısı','Birim kg','Parti toplam kg','Güç (kVAr)','Akım (A)','Endüktans (mH)','Faz','p (%)','THDv','Dış ölçüler (mm)','Bağlantı','Sarım tipi','Teknik veri durumu','Açıklama','Kaynak'
- ].map(h=>`<th scope="col">${h}</th>`).join('')}</tr></thead><tbody id="productTableBody"></tbody><tfoot id="productTableFoot"></tfoot></table></div>
- <div class="stack-note"><span id="shownCount"></span> · Teknik verisi bulunmayan hücreler <b>—</b> olarak işaretlenir. Aynı stok kodu farklı açıklamayla tekrarlanıyorsa ayrı satırlarda korunur. Tabloda hiçbir ürün gizlenmez; yalnızca arama ve grup filtresiyle daraltabilirsiniz.</div>`;
- document.getElementById('searchProduct').addEventListener('input',e=>{state.query=e.target.value;renderProductTable(rows)});
- const filter=document.getElementById('groupFilter');filter.value=state.groupFilter;filter.addEventListener('change',e=>{state.groupFilter=e.target.value;renderProductTable(rows)});
- renderProductTable(rows);
+ if(!state.product||!rows.some(p=>p.id===state.product))state.product=rows[0].id;
+ const selected=rows.find(p=>p.id===state.product)||rows[0];
+ list.innerHTML=`<div class="selected-head"><div><h2>${MONTHS[state.month]} · ${partLabel[state.group]}</h2><p>${rows.length} ürün satırı · Üretim yapılacak ürünlerin detayları</p></div><div class="quantity">${fmt(total)}<small>adet üretim</small></div></div>
+ <div class="detail-layout"><div class="listcard"><div class="card-head"><b>Üretilecek ürünler</b><span>${rows.length} satır</span></div><div class="search-row"><input id="searchProduct" placeholder="Stok kodu, model veya aile ara…" aria-label="Ürün ara" value="${esc(state.query)}"></div><div class="productlist" id="productList"></div></div>
+ <div class="techcard"><div class="card-head"><b>Ürün teknik kartı</b><span>Matris verisi</span></div><div class="tech-body" id="techBody"></div></div></div>
+ <div class="stack-note">Aynı stok kodu farklı açıklamayla tekrar ediyorsa ayrı ürün satırı olarak korunur. Üretim olmayan aylarda boş hücre gösterilir.</div>`;
+ document.getElementById('searchProduct').addEventListener('input',e=>{state.query=e.target.value;renderProductList(rows)});
+ renderProductList(rows);renderTech(selected);
 }
-function renderProductTable(rows){
- const term=state.query.toLocaleLowerCase('tr-TR').trim();
- const shown=rows.filter(p=>{
-  if(state.groupFilter!=='all'&&p.grup!==state.groupFilter)return false;
-  return [p.kod,p.model,p.aile,p.altGrup,p.grup,p.guc,p.akim,p.L,p.faz,p.p,p.thdv,p.olcu,p.baglanti,p.sarim,p.durum,p.aciklama].join(' ').toLocaleLowerCase('tr-TR').includes(term);
- });
- const body=document.getElementById('productTableBody');
- body.innerHTML=shown.length?shown.map(p=>{
-  const kg=typeof p.kg==='number'&&p.kg>0?p.kg:null;
-  const totalKg=kg===null?null:Math.round(p.partiAdedi*kg*100)/100;
-  const source=typeof p.kaynak==='string'&&/^https:\/\//i.test(p.kaynak)?`<a href="${esc(p.kaynak)}" target="_blank" rel="noopener noreferrer" title="${esc(p.kaynak)}">Kaynağı aç</a>`:formatSpec(p.kaynak);
-  const cols=[p.kod,p.model,p.grup,p.aile,fmt(p.adet),fmt(p.partiAdedi),p.parti,kg!==null?fmt(kg):null,totalKg!==null?fmt(totalKg):null,p.guc,p.akim,p.L,p.faz,p.p,p.thdv,p.olcu,p.baglanti,p.sarim,p.durum,p.aciklama];
-  return `<tr>${cols.map((c,i)=>`<td${[4,5,6,7,8,9,10,11,13].includes(i)?' class="numeric"':''}${i===1?` title="${esc(p.model)}"`:''}>${i===0?`<strong>${esc(p.kod)}</strong>`:formatNumber(c)}</td>`).join('')}<td>${source}</td></tr>`;
- }).join(''):'<tr><td colspan="21" class="table-no-result">Aramanıza uygun ürün bulunamadı.</td></tr>';
- const sumQty=shown.reduce((sum,p)=>sum+p.partiAdedi,0);
- const unknownKg=shown.filter(p=>typeof p.kg!=='number'||p.kg<=0).length;
- const sumKg=shown.reduce((sum,p)=>sum+(typeof p.kg==='number'&&p.kg>0?p.kg*p.partiAdedi:0),0);
- document.getElementById('productTableFoot').innerHTML=`<tr><th scope="row">Toplam</th><td>${shown.length} ürün satırı</td><td colspan="3"></td><td class="numeric">${fmt(sumQty)}</td><td colspan="2"></td><td class="numeric">${fmt(Math.round(sumKg*100)/100)}${unknownKg?'*':''}</td><td colspan="12"></td></tr>`;
- document.getElementById('shownCount').textContent=`${shown.length} / ${rows.length} ürün gösteriliyor${unknownKg?` · ${unknownKg} üründe ağırlık bilgisi yok; toplam kg eksik hesaplanmış olabilir`:''}`;
+function renderProductList(rows){
+ const term=state.query.toLocaleLowerCase('tr-TR').trim();const filtered=rows.filter(x=>([x.kod,x.model,x.aile,x.grup].join(' ')).toLocaleLowerCase('tr-TR').includes(term));
+ const el=document.getElementById('productList');
+ el.innerHTML=filtered.length?filtered.map(x=>`<div class="product-item ${state.product===x.id?'selected':''}"><div class="ident"><b>${esc(x.kod)}</b><small title="${esc(x.model)}">${esc(x.model)}</small></div><div class="amount">${fmt(x.partiAdedi)}</div><button class="btn-detail" data-id="${esc(x.id)}" aria-label="${esc(x.kod)} teknik özellikleri">İncele</button></div>`).join(''):'<div class="no-result">Aramaya uygun ürün yok.</div>';
+ el.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.product=b.dataset.id;renderProductList(rows);renderTech(rows.find(x=>x.id===state.product))}));
+}
+function renderTech(p){const el=document.getElementById('techBody');if(!p)return;
+ const kg=typeof p.kg==='number'&&p.kg>0?p.kg:null;
+ const verifiedSource=typeof p.kaynak==='string'&&p.kaynak.startsWith('https://')?`<a class="source-link" href="${esc(p.kaynak)}" target="_blank" rel="noopener noreferrer">Kaynak bağlantısını aç ↗</a>`:`<span class="source-link">${esc(p.kaynak||'Belirtilmemiş')}</span>`;
+ el.innerHTML=`<h3 class="code-model">${esc(p.kod)}</h3><div class="tech-sub">${esc(p.model)} · ${esc(p.grup)}</div><dl class="spec-grid">${[
+ ['Bu ay üretim',fmt(p.partiAdedi)+' adet'],['Yıllık miktar',fmt(p.adet)+' adet'],['Ürün ailesi',p.aile],['Teknik grup',p.altGrup],['Faz',p.faz],['Güç (kVAr)',p.guc],['Akım (A)',p.akim],['Endüktans (mH)',p.L],['p (%)',p.p],['THDv sınıfı',p.thdv],['Dış ölçüler (mm)',p.olcu],['Birim ağırlık (kg)',kg],['Bu parti ağırlığı (kg)',kg!==null?fmt(Math.round(kg*p.partiAdedi*100)/100):null],['Bağlantı',p.baglanti],['Sarım tipi',p.sarim]
+ ].map(x=>spec(...x)).join('')}</dl><div class="notice"><b>Teknik veri durumu:</b> ${esc(p.durum||'Doğrulanmadı')}<br>${esc(p.aciklama||'İşlem reçetesi henüz doğrulanmadı.')}</div><div class="stack-note">${verifiedSource}</div>`
 }
 function downloadCSV(){const header=['Ürün ID','Grup','Stok kodu','Model','Yıllık adet','Parti sayısı','Ay','Parti adedi','Güç kVAr','Akım A','Endüktans mH','Birim kg','Kaynak'];const lines=[header,...state.assignments.map(p=>[p.id,p.grup,p.kod,p.model,p.adet,p.parti,MONTHS[p.month],p.partiAdedi,p.guc,p.akim,p.L,p.kg,p.kaynak])];const text='\ufeff'+lines.map(row=>row.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'}));a.download='sont_harmonik_12_ay_uretim_plani.csv';a.click();URL.revokeObjectURL(a.href)}
 function setup(){for(const id of ['oneMonth','twoMonth']){const select=document.getElementById(id);const candidates=id==='twoMonth'?MONTHS.slice(0,6):MONTHS;select.innerHTML=candidates.map((m,i)=>`<option value="${i}">${m}</option>`).join('');select.value=state[id];select.addEventListener('change',e=>{state[id]=+e.target.value;rerender()})}
