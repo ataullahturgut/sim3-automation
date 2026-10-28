@@ -1,29 +1,34 @@
 # Şönt & Harmonik Üretim Planlama — simulation3
 
-Bu modül, ana SIM3 Windows otomasyonunu değiştirmeyen bağımsız bir tarayıcı uygulamasıdır. **Makine yatırımı için ürün bazlı üretim partilerini görünür kılar; makine kapasitesini henüz hesaplamaz.**
+Bu dizin, SIM3 Windows otomasyonunun ana dosyalarını değiştirmeyen bağımsız bir tarayıcı uygulamasıdır. Hazırlık amacı **makine yatırımı için yıllık üretim takvimi ve parti yüklerini görünür kılmaktır**. Kesin makine kapasitesi hesabı değildir.
 
-## Uygulamayı açma
+## Açma
 
-`apps/uretim-plani` içindeki `index.html`, `app.js`, `style.css`, `data-packed.js` dosyalarını **aynı klasöre** indirin. Windows'ta `index.html` dosyasını Chrome veya Edge ile açın. İnternet bağlantısı ve Excel gerekli değildir.
+1. Bu dizindeki `index.html`, `style.css`, `app.js`, `data-packed.js` dosyalarını aynı klasörde bulundurun.
+2. Windows'ta `index.html` dosyasını Chrome / Edge ile açın. İnternet bağlantısı gerekmez.
+3. Takvimdeki renkli üretim miktarına basın: o ayın ürünleri aşağıda listelenir. **Tüm ürünler tek tabloda alt alta görünür.** Stok kodu, model, parti adedi, yıllık adet, güç, akım, endüktans, faz, p, THDv, ölçüler, ağırlık, bağlantı, sarım tipi, teknik durum ve kaynaklar sütunlarda gösterilir. Tabloda yatay/dikey kaydırma, ürün arama ve şönt/harmonik filtresi vardır; ayrı ürün detayı açılmaz.
 
-Takvimde renkli üretim adedine tıklayın: o ayın üretilecek ürünleri aşağıda listelenir. **Bütün ürünler tek tabloda alt alta görünür.** Teknik özellikler ayrı sütunlardadır; ürün arama ve şönt/harmonik filtreleme yapılabilir. Hiçbir ürün için ayrı bir İncele işlemine gerek yoktur. Arama ve planı CSV olarak indirme seçenekleri de vardır.
+## Temel kurallar
 
-## Parti kuralları
-
-| Yıllık adet | Parti | Aralık |
+| Yıllık miktar | Parti sayısı | Üretim aralığı |
 |---:|---:|---|
 | 1–200 | 1 | Tek sefer |
-| 201–500 | 2 | 6 ayda bir |
-| 501–1.000 | 3 | 4 ayda bir |
-| 1.001 ve üzeri | 4 | 3 ayda bir |
-| 0 | 0 | Üretim yok |
+| 201–500 | 2 | 6 ay |
+| 501–1.000 | 3 | 4 ay |
+| 1.001+ | 4 | 3 ay |
+| 0 | 0 | Üretim dışı |
 
-1 partili **108 ürünün hepsi Haziran** ayında; 2 partili **14 ürünün hepsi Mart ve Eylül** aylarında olacak şekilde başlar. İlgili aylar kullanıcı tarafından birlikte değiştirilebilir. 3 ve 4 partili ürünlerin fazları için Plan A (adet bazında dengeli) veya Plan B (ortak başlangıç) seçilebilir.
+- İlk açılışta **1 partili ürünlerin tamamı Haziran** ayında, **2 partili ürünlerin tamamı Mart/Eylül** aylarında yer alır. Bu aylar seçeneklerden birlikte değiştirilebilir.
+- **Plan A (dengeli dağılım)**: 3 ve 4 partili ürünlerin başlangıç fazlarını adet bazlı dengelemeye çalışır; referans gösterilen GA5102 ve GA5002 ürünlerinin ayları korunur.
+- **Plan B (ortak başlangıç)**: Tüm 3 partilileri Mart/Temmuz/Kasım; 4 partilileri Ocak/Nisan/Temmuz/Ekim aylarında başlatır.
+- Yıllık toplam **45.088 adet**, üretimde **133 satır**, üretim dışı **2 satır**, yıllık **175 parti**.
+- Ürün matrisinde aynı stok kodu farklı model açıklamasıyla tekrar edebiliyor; bunlar birleştirilmeden satır bazında tutulur.
+- **Veriler:** şönt matrisi 25 satır, harmonik matrisi 110 satır. Veri paketi `data-packed.js` içinde sıkıştırılmış olarak bulunur, yeniden veri indirme gerekmez. Kaynak teknik durumları ve uyarılar tablodaki ilgili sütunlarda korunur.
 
-## Veriler ve güvenilirlik
+## Yatırım çalışması için henüz gereken veriler
 
-2026 şönt ürün matrisinden **25**, harmonik ürün matrisinden **110** satır içeren **135 satırlık** veri paketi kullanılır: 35.772 şönt + 9.316 harmonik = **45.088 yıllık adet**. Üretimi olan 133 satır için yıllık 175 üretim partisi planlanır. Sıfır adetli iki satır üretim dışıdır. Aynı kodla farklı açıklamalar satır bazında korunur.
+Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları, impregnasyon yöntemi (VI/VPI), fırın raf/yük düzeni ve proses sıcaklık/süre reçeteleri doğrulanmadan **makine adedi veya kurutma kapasitesi önerisi** yapılmamalıdır.
 
-Elektriksel değerler, ölçüler, ağırlık, bağlantı, teknik veri durumu ve kaynak alanları matristeki içerikten taşınmıştır. Sarım tipi ve proses reçetesi gibi doğrulanmamış alanlar **Doğrulanmadı** olarak gösterilir.
+## Kontrol
 
-**Sınır:** Yıllık toplamları ve parti aylarını hesaplar; sarım, kurutma, VI/VPI, kürleme ve fırın kapasitesi için çevrim süreleri, yük geometrisi ve proses reçeteleri ayrıca doğrulanmalıdır.
+`node test_app.js` komutuyla paket yükleme ve toplam sayım testi yapılabilir (Node.js 18+). Tarayıcı için son kullanıcıya Node.js gerekmez.
