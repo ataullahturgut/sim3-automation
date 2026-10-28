@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ürüne Özel Teknik Föy | Üretim Planlama</title><link rel="stylesheet" href="style.css">
+<style>
+.sheet-wrap{max-width:1060px;margin:25px auto 60px;padding:0 22px}
+.sheet-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.sheet-toolbar a{color:#226c7c;font-size:13px;text-decoration:none;font-weight:700}
+.sheet-toolbar button{cursor:pointer;border:1px solid #b2d1d9;border-radius:10px;background:#ecf6f7;padding:11px 15px;color:#206579;font-weight:800}
+.sheet{background:#fff;border:1px solid #d9e6ec;border-radius:15px;padding:30px;box-shadow:0 5px 18px #193b5110}
+.sheet-label{font-size:11px;font-weight:900;letter-spacing:.11em;color:#2b7788}
+.sheet h1{margin:8px 0 4px;font-size:32px;color:#16394f}
+.sheet h2{margin:22px 0 12px;font-size:16px;border-bottom:1px solid #deebef;padding-bottom:10px;color:#214e63}
+.sheet-lead{font-size:14px;color:#617a89;margin:0 0 12px}
+.sheet-status{font-size:12px;border-radius:9px;padding:11px 13px;background:#edf6f7;color:#28566a;line-height:1.5;margin:15px 0}
+.sheet-status.pending{background:#fff8e9;color:#80673c}
+.sheet-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:18px 0}
+.sheet-stat{background:#f4f8fa;border:1px solid #e5eef3;border-radius:10px;padding:14px}
+.sheet-stat small{display:block;font-size:11px;color:#73899a;margin-bottom:6px}
+.sheet-stat strong{display:block;font-size:18px;color:#23465b;overflow-wrap:anywhere}
+.sheet-specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sheet-spec{display:flex;flex-direction:column;gap:5px;padding:12px;border:1px solid #e1eaf0;border-radius:9px;min-width:0}
+.sheet-spec dt{font-size:11px;color:#748b9a}.sheet-spec dd{font-size:13px;margin:0;font-weight:750;color:#25495e;overflow-wrap:anywhere}
+.sheet-source{padding:13px 16px;background:#f2f7fa;border-radius:9px;font-size:13px;line-height:1.7}
+.sheet-source a{font-weight:750;color:#126c85}
+.sheet-note{font-size:12px;color:#6b8394;line-height:1.6;margin-top:13px}
+.sheet-error{padding:35px;color:#945d36;background:#fff8ef;border:1px solid #e9d2b2;border-radius:10px}
+.sheet-raw{width:100%;border-collapse:collapse;font-size:12px}
+.sheet-raw th,.sheet-raw td{text-align:left;padding:10px 12px;border-bottom:1px solid #e6edf2;vertical-align:top;overflow-wrap:anywhere}
+.sheet-raw th{width:37%;color:#587385;font-weight:650;background:#f6f9fb}
+.sheet-raw tr:nth-child(even) td{background:#fafcfd}
+@media(max-width:650px){.sheet-wrap{padding:0 12px}.sheet{padding:17px}.sheet-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.sheet-specs{grid-template-columns:1fr}.sheet h1{font-size:25px}}
+@media print{body{background:white}.topbar,.sheet-toolbar{display:none!important}.sheet-wrap{margin:0;max-width:none;padding:0}.sheet{box-shadow:none;border:0;padding:0}.sheet h1{font-size:26px}.sheet-spec{break-inside:avoid}.sheet-raw tr{break-inside:avoid}.sheet-note{color:#444}a{color:#111;text-decoration:underline}}
+</style></head>
+<body><header class="topbar"><div class="brand"><span class="brandmark">ÜP</span><div><strong>Üretim Planlama</strong><small>Ürüne özel teknik föy</small></div></div><span class="pill">SIMULATION3</span></header>
+<main class="sheet-wrap"><div class="sheet-toolbar"><a href="index.html">← Üretim listesine dön</a><button type="button" id="printSheet">Yazdır / PDF olarak kaydet</button></div>
+<article class="sheet" id="sheet"><p>Seçilen ürünün teknik bilgileri yükleniyor…</p></article></main>
+<script src="data-packed.js"></script><script src="urun.js"></script></body></html>
