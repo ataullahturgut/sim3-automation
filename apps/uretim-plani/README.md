@@ -61,3 +61,14 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 - Bu PDF'ler üreticinin **ürün grubu** dokümanlarıdır. Her stok kodunun kendisine ait ayrı PDF olduğu veya her modelin mevcut sayfalarda birebir yer aldığı doğrulanmış **değildir**. Bağlantı linkine göre doğru teknik değer olduğu varsayılmamalıdır.
 - Eski kaynak bağlantısı sütunu korunur; yeni sütun tıkla-sırala, çoklu filtre, sütun tik seçimi ve CSV indirmeye dahildir. Toplam **33 sütun** vardır.
 - 135 satırın 92'sinde daha önce ürün bazlı olmayan genel site URL'si, 41'inde yalnızca CSV kaynağı, 2'sinde boş kaynak bağlantısı vardı. Resmî kategori PDF bağlantısı bu eksikliği kısmen giderir; ürün bazlı model/eşleşme denetimi ayrı gereklidir.
+
+## Resmî 2026/12 fiyat listesinin teknik verileri ile 135 ürün denetimi (28.10.2026)
+
+**Resmî kaynak:** https://www.gruparge.com/fl/tr (2026/12 sürüm etiketli fiyat listesi, PDF s.17, 30–32). Ayrıca 2025 tarihli iki grup datasheeti ayrı tutulmaktadır.
+
+- **92/135 kayıt:** aynı stok kodu resmî 2026/12 listesinde var; matrisin **akım, endüktans, ölçüler, ağırlık ve bağlantı** alanları beşer beşer eşleşti (460/460 alan). Bunun 23'ü Şönt, 69'u Harmonik satırı. Üç satırın ürün modeli uzun açıklama içine gömülüdür, doğru model açıklamada bulunur.
+- **43/135 kayıt:** listede aynı stok kodu bulunamadı. 29 G/GG varyantı, 12 `GA5ÖZELHARM` açıklamalı satır ve iki SVC modelidir (`GA5004`, `GA5006`). Bunlar toplam **1.312 adet/yıl**; doğrulama için üreticiye sorulmalıdır. Liste dışında olmak ürünün üretilmediğini göstermez.
+- **Kaynak sürüm farkı:** 2025 datasheet çizimleri ile 2026/12 tablosundaki bazı A/B/C ve G/Y/D ölçüleri farklı. 2026/12 katalog verileri matristeki ölçülerle uyumludur. Belge tarihleri arasında karşılaştırma yapmadan tek bir kesin tasarım ölçüsü kabul edilmemelidir.
+- Uygulamaya **2026/12 teknik doğrulama**, **kontrol notu**, **kaynak PDF sayfası**, **resmî 2026/12 teknik liste** sütunları eklendi. Bunlar çoklu tik, sıralama ve filtreleme ile kullanılabilir. Eski 2025 **grup datasheeti** bağlantısı korunmuştur.
+- Sütun etiketlerinin `5/5 teknik alan uyumlu` olması ilgili 5 **katalog alanının** eşleşmesini ifade eder. Gerçek üretim malzemesi, sarım, impregnasyon ve proses çevrimlerinin doğrulandığı anlamına gelmez.
+- **İşlem:** Ham ürün verisi, miktar, üretim kuralları ve raporlanan değerler değiştirilmedi; 2026/12 bilgileri kontrol katmanı olarak eklenmiştir.
