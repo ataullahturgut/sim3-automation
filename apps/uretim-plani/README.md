@@ -6,7 +6,7 @@ Bu modül, ana SIM3 Windows otomasyonunu değiştirmeyen bağımsız bir tarayı
 
 `apps/uretim-plani` içindeki `index.html`, `app.js`, `style.css`, `data-packed.js` dosyalarını **aynı klasöre** indirin. Windows'ta `index.html` dosyasını Chrome veya Edge ile açın. İnternet bağlantısı ve Excel gerekli değildir.
 
-Takvimde renkli üretim adedine tıklayın: o ayın üretilecek ürünleri aşağıda listelenir. Satırdaki **İncele** düğmesi teknik kartı açar. Arama ve planı CSV olarak indirme seçenekleri de vardır.
+Takvimde renkli üretim adedine tıklayın: o ayın üretilecek ürünleri aşağıda listelenir. **Bütün ürünler tek tabloda alt alta görünür.** Teknik özellikler ayrı sütunlardadır; ürün arama ve şönt/harmonik filtreleme yapılabilir. Hiçbir ürün için ayrı bir İncele işlemine gerek yoktur. Arama ve planı CSV olarak indirme seçenekleri de vardır.
 
 ## Parti kuralları
 
