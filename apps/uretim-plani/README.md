@@ -72,3 +72,11 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 - Uygulamaya **2026/12 teknik doğrulama**, **kontrol notu**, **kaynak PDF sayfası**, **resmî 2026/12 teknik liste** sütunları eklendi. Bunlar çoklu tik, sıralama ve filtreleme ile kullanılabilir. Eski 2025 **grup datasheeti** bağlantısı korunmuştur.
 - Sütun etiketlerinin `5/5 teknik alan uyumlu` olması ilgili 5 **katalog alanının** eşleşmesini ifade eder. Gerçek üretim malzemesi, sarım, impregnasyon ve proses çevrimlerinin doğrulandığı anlamına gelmez.
 - **İşlem:** Ham ürün verisi, miktar, üretim kuralları ve raporlanan değerler değiştirilmedi; 2026/12 bilgileri kontrol katmanı olarak eklenmiştir.
+
+## 2026 resmî liste + güncel yayımlanan katalogla ikinci tur doğrulama (28.10.2026)
+- Üreticinin resmî [2026 fiyat listesi](https://www.gruparge.com/fl/tr) 17, 30–32. sayfalarındaki ürün kodları yeniden kontrol edildi. [Ürün katalogları](https://www.gruparge.com/dokumanlar/kataloglar/) bölümünde halka açık bağlantı 2023 ürün kataloğuna işaret eder; 2026 fiyat listesi tercih edildi.
+- **92 ürün satırı / 43.776 yıllık adet:** doğrudan stok kodu eşleşmesi ve akım, L, ölçü, ağırlık, bağlantı değerleri matrisle uyumlu.
+- **29 G/GG varyant satırı / 860 yıllık adet:** `GAG` veya `GAGG` öneki çıkarıldığında karşılık gelen standart `GA` modelinin resmî 2026 listesinde bulunduğu doğrulandı. **Bu, G/GG varyantının teknik değerlerini doğrulamaz.** Teknik değerler standart baz modelden otomatik kopyalanmaz. Uygulamada varyant için **Standart baz ürün kodu (referans)** ve **Baz ürün teknik liste bağlantısı** gösterilir.
+- **14 satır / 452 yıllık adet:** 12 özel üretim (178 adet), SVC-R 5.0 `GA5004` (112 adet) ve SVC-R 10.0 `GA5006` (162 adet) üreticinin mevcut 2026 listesinde aynı stok koduyla bulunamadı.
+- 2026 fiyat listesi s.27'de üretici **güçlendirilmiş filtreler** ve **siparişe özel üretimler** için kendisiyle iletişim kurulmasını açıkça istiyor. Bu yüzden özel ürünlere katalogda olmadığı halde standart ürün ölçü/ağırlık bilgisi atanmaz.
+- Durumlar üç seviyelidir: **5/5 teknik alan uyumlu / Standart baz model var; varyant doğrulanmadı / Ürün kodu resmî tabloda yok**. 39 bilgi sütununun hepsi filtrelenebilir; üretim planı ve 45.088 adet/yıl değişmedi.
