@@ -61,3 +61,8 @@
 .column-option[hidden],.picker-fieldset[hidden]{display:none}
 .picker-foot{font-size:11px;color:#7c909c;padding-top:10px;border-top:1px solid #e5edf2}
 @media(max-width:700px){.column-picker{flex:1 1 100%}.column-picker-panel{right:0;left:0;width:min(470px,calc(100vw - 44px))}}
+
+/* Sütun seçim menüsündeki kutucukların yatay hizalanması */
+.detail-table-toolbar .column-picker .column-option{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:9px;font-size:12px;font-weight:400;padding:7px 3px}
+.detail-table-toolbar .column-picker .column-option input[type="checkbox"]{width:16px;min-width:16px;max-width:16px;height:16px;min-height:16px;padding:0;margin:0;flex:0 0 16px;box-shadow:none}
+.detail-table-toolbar .column-picker .column-option span{flex:1}
