@@ -6,7 +6,7 @@ Bu dizin, SIM3 Windows otomasyonunun ana dosyalarını değiştirmeyen bağıms�
 
 1. Bu dizindeki `index.html`, `style.css`, `app.js`, `data-packed.js` dosyalarını aynı klasörde bulundurun.
 2. Windows'ta `index.html` dosyasını Chrome / Edge ile açın. İnternet bağlantısı gerekmez.
-3. Takvimdeki renkli üretim miktarına basın: o ayın ürünleri aşağıda listelenir. **Tüm ürünler tek tabloda alt alta görünür. Şönt kaynağındaki 19, harmonik kaynağındaki 22 özgün alanın tamamı aktarılmıştır.** Üretim ve miktarın yanında kıyas kodu/önerisi, numune/kontrol, kıyas nedeni, yapı referansı, standart/varyant, katalog/teknik veri durumu, inceleme eksikleri, kaynak ve kayıt bilgisi dahil 32 sütun vardır. Tabloda yatay/dikey kaydırma, ürün arama ve şönt/harmonik filtresi vardır; ayrı ürün detayı açılmaz.
+3. Takvimdeki renkli üretim miktarına basın: o ayın ürünleri aşağıda listelenir. **Tüm ürünler tek tabloda alt alta görünür. Şönt kaynağındaki 19, harmonik kaynağındaki 22 özgün alanın tamamı aktarılmıştır.** Üretim ve miktarın yanında kıyas kodu/önerisi, numune/kontrol, kıyas nedeni, yapı referansı, standart/varyant, katalog/teknik veri durumu, inceleme eksikleri, kaynak ve kayıt bilgisi dahil 33 sütun vardır. Tabloda yatay/dikey kaydırma, ürün arama ve şönt/harmonik filtresi vardır; ayrı ürün detayı açılmaz.
 
 ## Temel kurallar
 
@@ -42,10 +42,10 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 
 ## İsteğe bağlı sütunlar (çoklu tik)
 
-- Ürün listesinin üstündeki **Sütun ekle / çıkar (X/32)** açılır menüsü kaynak matrisleri ve üretim hesaplarındaki 32 sütunu gruplar halinde gösterir. İstenenler tiklenir; seçili olmayanlar tabloda gizlenir. Her tık anında aynı tabloyu günceller.
-- **Stok kodu** ve **Ürün modeli** sabit kalan iki sütundur; diğer 30 sütun ayrı ayrı eklenip çıkarılabilir.
-- **32 sütunun tamamı** ve **Yalnızca kod ve model** hazır kontrolleri, sütun adı araması ve mevcut hızlı **Sütun grubu** şablonları vardır. Özel seçim ay veya üretim partisi değiştiğinde korunur.
-- Sütunları gizlemek veya göstermek veri paketini ve üretim planını değiştirmez; CSV dışa aktarımı tam 32 sütunu korur.
+- Ürün listesinin üstündeki **Sütun ekle / çıkar (X/32)** açılır menüsü kaynak matrisleri ve üretim hesaplarındaki 33 sütunu gruplar halinde gösterir. İstenenler tiklenir; seçili olmayanlar tabloda gizlenir. Her tık anında aynı tabloyu günceller.
+- **Stok kodu** ve **Ürün modeli** sabit kalan iki sütundur; diğer 31 sütun ayrı ayrı eklenip çıkarılabilir.
+- **33 sütunun tamamı** ve **Yalnızca kod ve model** hazır kontrolleri, sütun adı araması ve mevcut hızlı **Sütun grubu** şablonları vardır. Özel seçim ay veya üretim partisi değiştiğinde korunur.
+- Sütunları gizlemek veya göstermek veri paketini ve üretim planını değiştirmez; CSV dışa aktarımı tam 33 sütunu korur.
 
 
 ## Sütun başlığına tıklayarak sıralama ve çoklu filtre
@@ -54,3 +54,10 @@ Sarım işlemi süreleri, sarım tipi/iletken kesiti, nüve ve bobin boyutları,
 - Sayısal koşullar: >, ≥, <, ≤, eşit, eşit değil, boş, dolu. Metin koşulları: içerir, içermez, eşit, eşit değil, ile başlar, boş, dolu. Ondalık değerler Türkçe virgülle yazılabilir (örn. 14,5).
 - Farklı koşullar **VE (hepsi)** veya **VEYA (herhangi biri)** yöntemiyle birleştirilir. Ürün grubu seçimi ve genel arama ek filtrelerle VE olarak çalışır.
 - Filtreler yalnızca ürünlerin listelenmesini etkiler; aylık/yıllık üretim planı, ham veriler ve tüm sütunları içeren CSV dışa aktarımı değişmez.
+
+## Resmî teknik datasheet PDF'leri (28.10.2026)
+
+- Ürün tablosundaki **Resmî datasheet (grup PDF)** sütunu, her Şönt ürünü için [Şönt Reaktör Datasheet](https://www.gruparge.com/wp-content/uploads/2025/05/SONT-REAKTORU-DATASHEET.pdf); her Harmonik ürünü için [Harmonik Filtre Datasheet](https://www.gruparge.com/wp-content/uploads/2025/05/HARMONIK-FILTRE-DATASHEET.pdf) bağlantısını gösterir.
+- Bu PDF'ler üreticinin **ürün grubu** dokümanlarıdır. Her stok kodunun kendisine ait ayrı PDF olduğu veya her modelin mevcut sayfalarda birebir yer aldığı doğrulanmış **değildir**. Bağlantı linkine göre doğru teknik değer olduğu varsayılmamalıdır.
+- Eski kaynak bağlantısı sütunu korunur; yeni sütun tıkla-sırala, çoklu filtre, sütun tik seçimi ve CSV indirmeye dahildir. Toplam **33 sütun** vardır.
+- 135 satırın 92'sinde daha önce ürün bazlı olmayan genel site URL'si, 41'inde yalnızca CSV kaynağı, 2'sinde boş kaynak bağlantısı vardı. Resmî kategori PDF bağlantısı bu eksikliği kısmen giderir; ürün bazlı model/eşleşme denetimi ayrı gereklidir.
