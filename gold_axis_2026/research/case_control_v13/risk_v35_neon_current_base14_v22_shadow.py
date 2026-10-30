@@ -91,7 +91,7 @@ def source_from_neon(now):
           "LATEST_H15_BEHIND")
     return seen, macro_new
 
-def append_source(src,seen,macro_new,now):
+def append_source(src,seen,macro_new,now,existing_asof):
     previous=src["prices"]
     check(previous[-1]["date"]==DATE_ORIGINAL_CUTOFF,
           "FROZEN_BASE_DATE_CHANGED")
@@ -115,7 +115,7 @@ def append_source(src,seen,macro_new,now):
         appended.append(d)
     check(appended==["2026-10-26","2026-10-27","2026-10-28",DATA_END],
           "CURRENT_WEEK_INCOMPLETE")
-    available={}
+    available=dict(existing_asof)
     for d in sorted(macro_new):
         for series,r in macro_new[d].items():
             target=(src["gvz"] if series=="GVZ_CBOE"
@@ -129,7 +129,8 @@ def append_source(src,seen,macro_new,now):
             # once verified, but THIS current final origin may use all rows
             # physically retrieved before current real inference UTC.
             avail_date=r["available_as_of"].date().isoformat()
-            available[(series,d)]=avail_date
+            if (series,d) not in available:
+                available[(series,d)]=avail_date
     return appended,available,frozen_parity
 
 def original_risk_rows(src,cot,available,now):
@@ -194,12 +195,12 @@ def scores_and_v22(src,cot,rows):
     # pre-September origins (except documented Feb27 source scenarios).
     return predictions,risk
 
-def one_scenario(base,cot,price,macro_new,seen,now,scenario):
+def one_scenario(base,cot,price,macro_new,seen,now,scenario,existing_asof):
     src=copy.deepcopy(base)
     bad=[p for p in src["prices"] if p["date"]=="2026-02-27"]
     check(len(bad)==1,"BAD_FEB27_MISSING")
     bad[0]["metals"]=[float(price[m]) for m in METALS]
-    _,released,overlap=append_source(src,seen,macro_new,now)
+    _,released,overlap=append_source(src,seen,macro_new,now,existing_asof)
     rows,current=original_risk_rows(src,cot,released,now)
     model,triage=scores_and_v22(src,cot,rows)
     today=triage[triage.origin.eq(DATA_END)]
@@ -246,12 +247,12 @@ def main():
     args=ap.parse_args()
     now=datetime.now(timezone.utc)
     seen,macro=source_from_neon(now)
-    raw,cot,_,_,_=v29.historic_evidence()
+    raw, historical_through_oct23, cot, historic_asof=v33.source_and_inputs()
     check(cot["GC"][-1]["available"]=="2026-10-27",
           "CFTC_SOURCE_DATE_UNEXPECTED")
     outcomes=[]
     for scenario,prices in v29.SOURCES.items():
-        outcomes.append(one_scenario(raw,cot,prices,macro,seen,now,scenario))
+        outcomes.append(one_scenario(historical_through_oct23,cot,prices,macro,seen,now,scenario,historic_asof))
     status="RESEARCH_V22_CURRENT_DATE_RUN_COMPLETED_NOT_LIVE"
     if any(outcomes[0][k]!=outcomes[1][k] for k in [
        "base14Level","cftc21Level","v22Level","v22EffectiveReview"]):
