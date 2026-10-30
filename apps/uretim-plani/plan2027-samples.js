@@ -324,8 +324,12 @@ function render(){
  $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(annual)+' adet</span><span><b>Şönt</b> '+qty(totals['Şönt'])+' adet</span>'+
  '<span><b>Harmonik</b> '+qty(totals['Harmonik'])+' adet</span><span><b>Şönt öncelikli inceleme</b> 11 ürün · '+pct(stats.A.annual,totals['Şönt'])+'</span>'+
  '<span class="sample-count">'+chosen.length+' / '+products.length+' ürün</span>';
- $('shuntSampleReview').innerHTML='<b>Şönt makine incelemesi:</b> 11 öncelikli ('+qty(stats.A.annual)+' adet), 8 hedefli ('+qty(stats.B.annual)+' adet), 6 ön kontrol ('+qty(stats.C.annual)+' adet). '+
- '<b>Sarım ve emprenye girişleri Şönt ve Harmonik için ayrı ayrı düzenlenir.</b> Veriler doğrulanmadan makine kapasitesi kesinleştirilmez.';
+ const harmonic=products.filter(p=>p.grup==='Harmonik');
+ if(harmonic.length!==108||totals['Harmonik']!==9316)throw Error('Harmonik 108 ürün / 9.316 adet yıllık toplam tutarsız');
+ const shuntNote='<b>Şönt:</b> 11 öncelikli ('+qty(stats.A.annual)+' adet), 8 hedefli ('+qty(stats.B.annual)+' adet), 6 ön kontrol ('+qty(stats.C.annual)+' adet).';
+ const harmonicNote='<b>Harmonik:</b> '+harmonic.length+' ürün / '+qty(totals['Harmonik'])+' adet/yıl. Numune/kıyas öncelikleri ve kaynak ürün verileri korunur.';
+ const notes=family==='Şönt'?shuntNote:family==='Harmonik'?harmonicNote:shuntNote+' '+harmonicNote;
+ $('shuntSampleReview').innerHTML=notes+' <b>Sarım ve emprenye girişleri iki ürün ailesinde de düzenlenebilir ve ayrı saklanır.</b> Kesin makine kapasitesi için fiziksel ölçüm gerekir.';
 }
 function onCellChange(e){
  const el=e.target;
