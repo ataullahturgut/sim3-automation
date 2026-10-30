@@ -299,6 +299,28 @@ def scores_and_v22(src,cot,rows):
     # pre-September origins (except documented Feb27 source scenarios).
     return predictions,risk
 
+def verify_prior_v33_scores(triage,scenario):
+    frozen=pd.read_csv(HERE/"outputs"/"v33_2026_jan_oct27_DAILY_all_models_and_outcomes.csv")
+    old=frozen.loc[(frozen.scenario.eq(scenario))&
+        (frozen.has_legacy_model_score.eq(True))&
+        (frozen.date.le(DATE_ORIGINAL_CUTOFF))].copy()
+    cols=("BASE14_original_alert_level","CFTC21_original_alert_level",
+          "effective_level","effective_review")
+    z=old.merge(triage, left_on="date",right_on="origin",
+                validate="one_to_one",suffixes=("_old","_new"))
+    check(len(z)>=200 and len(z)==len(old),
+          "NOT_ENOUGH_OLD_SCORES_TO_COMPARE")
+    for col in cols:
+        a=z[col+"_old"]
+        b=z[col+"_new"]
+        check(a.astype(str).tolist()==b.astype(str).tolist(),
+              "ORIGINAL_PREVIOUS_V33_LEVEL_CHANGED_"+col)
+    for col in ("BASE14_original_score","CFTC21_original_score"):
+        check(np.allclose(z[col+"_old"],z[col+"_new"],
+             atol=1e-12,rtol=0),"ORIGINAL_FROZEN_MODEL_NUMERIC_DRIFT_"+col)
+    return len(z)
+
+
 def one_scenario(base,cot,price,macro_new,seen,now,scenario,existing_asof,cftc_evidence):
     src=copy.deepcopy(base)
     bad=[p for p in src["prices"] if p["date"]=="2026-02-27"]
@@ -307,6 +329,7 @@ def one_scenario(base,cot,price,macro_new,seen,now,scenario,existing_asof,cftc_e
     _,released,overlap=append_source(src,seen,macro_new,now,existing_asof)
     rows,current=original_risk_rows(src,cot,released,now)
     model,triage=scores_and_v22(src,cot,rows)
+    unchanged_v33=verify_prior_v33_scores(triage,scenario)
     today=triage[triage.origin.eq(DATA_END)]
     check(len(today)==1,"NO_CURRENT_TRIAGE")
     v=today.iloc[0].to_dict()
@@ -318,8 +341,9 @@ def one_scenario(base,cot,price,macro_new,seen,now,scenario,existing_asof,cftc_e
         sourcePriceKind="STAKTRAKR_UTC_DAILY_REFERENCE_NOT_NY17",
         gold=float(current["gold_price_usd_oz"]),
         scoreInputFeatureCount=len(current["features"]),
-        sourceDaysAppended=(date.fromisoformat(DATA_END)-date(2026,10,23)).days,
+        sourceDaysAppended=len(pd.bdate_range("2026-10-26",DATA_END)),
         sourceOverlapMatchedMetalRows=overlap,
+        originalV33PriorDecisionsAndScoresMatched=unchanged_v33,
         officialCotExtension=cftc_evidence,
         CFTCReportDate=current["cftc_observed_position_date"],
         CFTCConservativeUsableDate=current["cftc_available_date"],
