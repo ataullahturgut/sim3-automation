@@ -69,7 +69,15 @@ const HEADERS=[
  ['Emprenye yöntemi','edit'],['Emprenye çevrimi (dk/parti)','edit']
 ];
 if(HEADERS.length!==28)throw Error('28 sütun şeması geçersiz');
-let products=[],search='',family='Tümü',ready=false,entries={},storageEnabled=true;
+let products=[],search='',family='Tümü',ready=false,entries={},storageEnabled=true,duplicateHarmonicCodes=new Set();
+// Aynı stok kodundaki özel/ayrı sipariş satırları fiziksel olarak farklı olabilir.
+// Tekil ürünlerde eski kod bazlı kayıt uyumluluğu korunur; yinelenenlerde id kullanılır.
+function recordKey(p){
+ return p.grup==='Harmonik'&&duplicateHarmonicCodes.has(p.kod)?String(p.id):p.kod;
+}
+function legacyAmbiguous(){
+ return [...duplicateHarmonicCodes].filter(code=>Object.prototype.hasOwnProperty.call(entries,code));
+}
 function group(p){
  const model=String(p.model||'').toUpperCase(),code=String(p.kod||''),kind=String(p.altGrup||'');
  if(p.grup==='Şönt'){
@@ -177,13 +185,15 @@ function cleanRecord(record){
  if(result.impPart==='none'){result.impMethod='none';delete result.impMethodOther;}
  return result;
 }
-function productFamily(code){
- const p=products.find(p=>p.kod===code);
+function productFamily(key){
+ const p=products.find(p=>recordKey(p)===key);
  return p&&(p.grup==='Şönt'||p.grup==='Harmonik')?p.grup:null;
 }
 function familyRecords(grup){
- const ids=new Set(products.filter(p=>p.grup===grup).map(p=>p.kod));
- return Object.fromEntries(Object.entries(entries).filter(([code])=>ids.has(code)));
+ const keys=new Set(products.filter(p=>p.grup===grup).map(recordKey));
+ // Belirsiz eski birleşik kayıtlar aynen korunur, herhangi satıra aktarılmaz.
+ if(grup==='Harmonik')for(const code of duplicateHarmonicCodes)keys.add(code);
+ return Object.fromEntries(Object.entries(entries).filter(([key])=>keys.has(key)));
 }
 function saveToStorage(grup){
  const spec=STORAGE_SPECS[grup];
@@ -204,7 +214,8 @@ function saveRecord(code,field,value){
 }
 function cleanAll(records,grup){
  if(!records||typeof records!=='object'||Array.isArray(records))throw Error('Kayıt içeriği geçersiz');
- const result={},known=new Set(products.filter(p=>p.grup===grup).map(p=>p.kod));
+ const result={},known=new Set(products.filter(p=>p.grup===grup).map(recordKey));
+ if(grup==='Harmonik')for(const code of duplicateHarmonicCodes)known.add(code);
  for(const [code,record] of Object.entries(records)){
   if(!known.has(code))throw Error('Bilinmeyen '+grup+' ürün kodu: '+code);
   const item=cleanRecord(record);
@@ -225,34 +236,35 @@ function loadSaved(){
   }catch(e){failures.push(grup);}
  }
  if(failures.length){storageEnabled=false;notice(failures.join(', ')+' teknik kaydı okunamadı. JSON yedeğinizi kontrol edin.','error');}
+ else if(legacyAmbiguous().length)notice('Uyarı: '+legacyAmbiguous().length+' yinelenen Harmonik stok koduna ait eski ortak giriş satıra eşleştirilemiyor. JSON yedeğini koruyun; yeni girişler satır bazında ayrılır.','error');
 }
 function notice(message,kind='ok'){
  const el=$('sampleEditNotice');
  if(el){el.textContent=message;el.className='sample-edit-notice'+(kind==='error'?' error':'');}
 }
-function get(p,key){return entries[p.kod]?.[key]??'';}
+function get(p,key){return entries[recordKey(p)]?.[key]??'';}
 function optionList(list,value){return list.map(([k,l])=>'<option value="'+esc(k)+'"'+(String(value)===k?' selected':'')+'>'+esc(l)+'</option>').join('');}
 function select(p,key,options){
  const label={conductor:'İletken türü ve malzemesi',core:'Nüve tipi',impPart:'Emprenye edilen parça',impMethod:'Emprenye yöntemi'}[key]||key;
  const value=get(p,key),otherField={conductor:'conductorOther',core:'coreOther',impMethod:'impMethodOther'}[key];
  const otherActive=otherField&&(value==='other'||(key==='conductor'&&value==='mixed'));
- return '<div class="sample-edit-stack"><select class="sample-edit" data-code="'+esc(p.kod)+'" data-field="'+key+'" aria-label="'+esc(p.kod+' · '+label)+'">'+optionList(options,value)+'</select>'+
+ return '<div class="sample-edit-stack"><select class="sample-edit" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" aria-label="'+esc(p.kod+' · '+label)+'">'+optionList(options,value)+'</select>'+
  (otherActive?textInput(p,otherField,'Diğer / karma açıklaması'):'')+'</div>';
 }
 function numberInput(p,key,placeholder,integer=false){
  const v=get(p,key);
- return '<input class="sample-edit sample-edit-number" type="number" min="'+(integer?'1':'0.001')+'" step="'+(integer?'1':'any')+'" inputmode="decimal" placeholder="'+esc(placeholder)+'" data-code="'+esc(p.kod)+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' '+key)+'">';
+ return '<input class="sample-edit sample-edit-number" type="number" min="'+(integer?'1':'0.001')+'" step="'+(integer?'1':'any')+'" inputmode="decimal" placeholder="'+esc(placeholder)+'" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' '+key)+'">';
 }
 function textInput(p,key,placeholder){
  const v=get(p,key),max=TEXT_LIMITS[key]||100;
- return '<input class="sample-edit sample-edit-text" type="text" maxlength="'+max+'" placeholder="'+esc(placeholder)+'" data-code="'+esc(p.kod)+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' '+key)+'">';
+ return '<input class="sample-edit sample-edit-text" type="text" maxlength="'+max+'" placeholder="'+esc(placeholder)+'" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' '+key)+'">';
 }
 function resinCell(p){
  const mode=get(p,'resinMode'),code=get(p,'resinCode');
  const datalist=p.grup==='Şönt'?'sampleResinCodeListShunt':'sampleResinCodeListHarmonic';
- return '<div class="sample-resin-editor"><select class="sample-edit" data-code="'+esc(p.kod)+'" data-field="resinMode" aria-label="Vernik veya reçine seçimi">'+
+ return '<div class="sample-resin-editor"><select class="sample-edit" data-code="'+esc(recordKey(p))+'" data-field="resinMode" aria-label="Vernik veya reçine seçimi">'+
  optionList([['','Belirlenmedi'],['code','Malzeme kodu gir / seç'],['none','Kullanılmıyor']],mode)+'</select>'+
- (mode==='code'?'<input class="sample-edit sample-edit-text" type="text" list="'+datalist+'" maxlength="90" placeholder="Üretici malzeme kodu" data-code="'+esc(p.kod)+'" data-field="resinCode" value="'+esc(code)+'" aria-label="Üretici vernik reçine kodu">':'')+'</div>';
+ (mode==='code'?'<input class="sample-edit sample-edit-text" type="text" list="'+datalist+'" maxlength="90" placeholder="Üretici malzeme kodu" data-code="'+esc(recordKey(p))+'" data-field="resinCode" value="'+esc(code)+'" aria-label="Üretici vernik reçine kodu">':'')+'</div>';
 }
 function resinCodes(grup){
  return [...new Set(Object.entries(familyRecords(grup)).map(([,x])=>x).filter(x=>x.resinMode==='code'&&x.resinCode).map(x=>x.resinCode))].sort((a,b)=>a.localeCompare(b,'tr'));
@@ -260,7 +272,7 @@ function resinCodes(grup){
 function insulationCell(p){
  const values=get(p,'insulations')||[],summary=values.length?values.join(', '):'Belirlenmedi';
  return '<div class="sample-edit-stack"><details class="sample-multi"><summary>'+esc(summary)+'</summary><div class="sample-multi-content">'+INSULATIONS.map(item=>
- '<label><input type="checkbox" data-code="'+esc(p.kod)+'" data-field="insulations" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</div></details>'+
+ '<label><input type="checkbox" data-code="'+esc(recordKey(p))+'" data-field="insulations" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</div></details>'+
  (values.includes('Diğer')?textInput(p,'insulationOther','Diğer izolasyon açıklaması'):'')+'</div>';
 }
 function editable(p,key){
@@ -315,8 +327,8 @@ function rowCells(p,totals){
  return '<tr class="sample-product-row">'+fields.map((x,i)=>'<td class="sample-cell-'+HEADERS[i][1]+'">'+x+'</td>').join('')+'</tr>';
 }
 function searchVisible(p){
- const info=window.ShuntMachineInvestment?.get(p.kod);
- const hay=p.kod+' '+p.model+' '+group(p)+' '+(info?.reason||'')+' '+Object.values(entries[p.kod]||{}).join(' ')+' '+val(raw(p,'Numune / kontrol'));
+ const info=p.grup==='Şönt'?window.ShuntMachineInvestment?.get(p.kod):null;
+ const hay=p.kod+' '+p.model+' '+group(p)+' '+(info?.reason||'')+' '+Object.values(entries[recordKey(p)]||{}).join(' ')+' '+val(raw(p,'Numune / kontrol'));
  return (family==='Tümü'||p.grup===family)&&hay.toLocaleLowerCase('tr-TR').includes(search.toLocaleLowerCase('tr-TR'));
 }
 function render(){
@@ -347,6 +359,8 @@ function render(){
   if(dl)dl.innerHTML=resinCodes(grup).map(code=>'<option value="'+esc(code)+'"></option>').join('');
  }
  const guide=$('shuntProcurementGuide');if(guide)guide.hidden=family==='Harmonik';
+ const ambiguous=legacyAmbiguous().length;
+ if(ambiguous)notice(ambiguous+' yinelenen Harmonik kodunun eski ortak teknik girdisi satıra güvenle bağlanamadı; JSON yedeğini koruyun. Yeni girişler ayrıdır.','error');
  const shunt=products.filter(p=>p.grup==='Şönt'),stats=Object.fromEntries(['A','B','C'].map(k=>{
   const group=shunt.filter(p=>window.ShuntMachineInvestment?.get(p.kod)?.priority===k);
   return [k,{count:group.length,annual:group.reduce((s,p)=>s+p.annual,0)}];
@@ -442,7 +456,8 @@ async function uploadBackup(){
   }else throw Error('Yedek dosyasının türü tanınmadı');
   const previous=entries,next={...entries};
   for(const grup of groups){
-   const known=new Set(products.filter(p=>p.grup===grup).map(p=>p.kod));
+   const known=new Set(products.filter(p=>p.grup===grup).map(recordKey));
+   if(grup==='Harmonik')for(const code of duplicateHarmonicCodes)known.add(code);
    for(const code of Object.keys(next))if(known.has(code))delete next[code];
    Object.assign(next,imported[grup]);
   }
@@ -469,6 +484,10 @@ function init(list){
  if(!Array.isArray(list)||!list.length)throw Error('Numune sayfası ürün listesi eksik');
  products=list;
  if(products.some(p=>!p.id||!p.kod||!p.grup||!Number.isFinite(p.annual)||p.annual<=0))throw Error('Numune sayfası ürün kaydı geçersiz');
+ const counts=new Map();
+ for(const p of products.filter(p=>p.grup==='Harmonik'))counts.set(p.kod,(counts.get(p.kod)||0)+1);
+ duplicateHarmonicCodes=new Set([...counts].filter(([,n])=>n>1).map(([code])=>code));
+ if(new Set(products.map(p=>p.grup+'|'+recordKey(p))).size!==products.length)throw Error('Teknik kayıt anahtarı çakışması');
  loadSaved();
  $('tabProduction').addEventListener('click',()=>showPage('production'));
  $('tabSamples').addEventListener('click',()=>showPage('samples'));
