@@ -42,6 +42,8 @@ function apply(p){
  // Tek faz SVC/SRM; trifaze SRT, üretici şönt katalog sınıfları.
  const phase=s.model.startsWith('SRT')?3:1;
  p.kg=s.kg;
+ // Teknik föy ve eski plan bu düz alanları kullanır.
+ p.faz=phase;p.guc=s.guc;p.akim=s.akim;p.L=s.L;p.olcu=s.olcu;p.baglanti=s.baglanti;
  p.tamKayit={...original,
   'Faz':phase,
   'Güç (kVAr)':s.guc,'Akım (A)':s.akim,'L (mH)':s.L,
