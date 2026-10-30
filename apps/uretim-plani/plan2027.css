@@ -158,8 +158,8 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .sample-table th.sample-head-model,.sample-table td.sample-cell-model{min-width:174px;max-width:195px}
 .sample-table th.sample-head-code,.sample-table td.sample-cell-code{min-width:124px;max-width:124px}
 .sample-table th.sample-head-sample,.sample-table td.sample-cell-sample{min-width:164px;max-width:185px}
-.sample-table th.sample-head-count,.sample-table td.sample-cell-count,
-.sample-table th.sample-head-percent,.sample-table td.sample-cell-percent{text-align:right;min-width:91px;font-variant-numeric:tabular-nums}
+.sample-table th.sample-head-count,.sample-table td.sample-cell-count{text-align:right;min-width:91px;font-variant-numeric:tabular-nums}
+.sample-table th.sample-head-percent,.sample-table td.sample-cell-percent{text-align:right;min-width:130px;font-variant-numeric:tabular-nums}
 .sample-table td.sample-cell-long{max-width:340px;min-width:190px;white-space:normal;line-height:1.45}
 .sample-table td.sample-cell-text{max-width:220px;min-width:140px;white-space:normal;line-height:1.45}
 .sample-table td.sample-cell-dimension{min-width:132px}
