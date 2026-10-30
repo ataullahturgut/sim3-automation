@@ -47,6 +47,22 @@ const official2026Note=p=>
 
 const OFFICIAL_DATASHEETS={Şönt:'https://www.gruparge.com/wp-content/uploads/2025/05/SONT-REAKTORU-DATASHEET.pdf',Harmonik:'https://www.gruparge.com/wp-content/uploads/2025/05/HARMONIK-FILTRE-DATASHEET.pdf'};
 
+
+function upperGroup(p){
+ const model=String(p.model||'').toUpperCase(),code=String(p.kod||''),kind=String(p.altGrup||'');
+ if(p.grup==='Şönt'){if(model.startsWith('SVC-R'))return 'SVC-R';if(model.startsWith('SRM'))return 'SRM';if(model.startsWith('SRT'))return 'SRT';return 'Diğer Şönt'}
+ if(code.startsWith('GAGG'))return 'HRT-GG varyant';
+ if(code.startsWith('GAG'))return 'HRT-G varyant';
+ if(code==='GA5ÖZELHARM'||(!model.startsWith('HRM')&&!model.startsWith('HRT')))return 'Özel Harmonik';
+ if(model.startsWith('HRM'))return 'HRM';
+ if(kind.includes('5,67'))return 'HRT 5,67';
+ if(kind.includes('14'))return 'HRT 14';
+ if(kind.includes('<%7'))return 'HRT 7/7';
+ return 'HRT 7/8';
+}
+const upperOrder=['SVC-R','SRM','SRT','HRM','HRT 5,67','HRT 7/8','HRT 7/7','HRT 14','HRT-G varyant','HRT-GG varyant','Özel Harmonik'];
+function upperRank(p){const idx=upperOrder.indexOf(upperGroup(p));return idx<0?99:idx}
+
 const COLS=[
  {name:'Stok kodu',kind:'main',get:p=>p.kod},
  {name:'Ürün modeli / açıklama',kind:'main',get:p=>p.model},
@@ -89,6 +105,7 @@ const COLS=[
  {name:'Kaynak dosya',kind:'review',get:p=>p.kaynakDosya},
  {name:'Kaynak Excel satırı',kind:'review',get:p=>p.kaynakSatir}
 ];
+COLS.splice(2,0,{name:'Üst ürün grubu',kind:'main',get:p=>upperGroup(p)});
 function presentValue(value,col){
  if(value===null||value===undefined||value==='')return '<span class="missing">—</span>';
  if(col.productCard)return '<a class="product-sheet-link" href="urun.html?id='+encodeURIComponent(String(value))+'" target="_blank" rel="noopener noreferrer">Bu ürünün föyünü aç ↗</a>';
@@ -98,7 +115,7 @@ function presentValue(value,col){
 }
 
 const root=document.getElementById('monthDetail');
-let selectedMonth=null,rows=[],order=[],search='',family='all',mode='all',customColumns=null,sortColumn='Bu ay üretim (adet)',sortDirection='desc',rules=[],ruleLogic='and',ready=false,ruleId=0;
+let selectedMonth=null,rows=[],order=[],search='',family='all',mode='all',customColumns=null,sortColumn='Üst ürün grubu',sortDirection='desc',rules=[],ruleLogic='and',ready=false,ruleId=0;
 const numericColumns=new Set(['Yıllık miktar (adet)','Parti sayısı','Bu ay üretim (adet)','Birim ağırlık (kg)','Parti ağırlığı (kg)','Faz','Güç (kVAr)','Akım (A / Irms)','Endüktans L (mH)','p (%)','Kaynak Excel satırı']);
 const $=id=>document.getElementById(id);
 const sectionList=[['main','Kimlik ve teknik föy'],['plan','Üretim / ağırlık'],['identity','Sınıflandırma'],['technical','Teknik özellikler'],['review','Kıyas / katalog / datasheet / kaynak']];
@@ -109,16 +126,16 @@ function attach(){
  '<div class="detail-actions">'+
  '<label>Ürün / özellik ara<input id="detailSearch" type="search" placeholder="Kod, model, güç, ölçü, kaynak ara…"></label>'+
  '<label>Ürün ailesi<select id="detailFamily"><option value="all">Tüm ürünler</option><option value="Şönt">Şönt</option><option value="Harmonik">Harmonik</option></select></label>'+
- '<label>Gösterilecek alanlar<select id="detailMode"><option value="all">Tüm 40 sütun</option><option value="technical">Teknik özellikler</option><option value="plan">Üretim ve miktar</option><option value="review">Katalog / datasheet / kıyas</option><option value="custom">Seçtiğim sütunlar</option></select></label>'+
+ '<label>Gösterilecek alanlar<select id="detailMode"><option value="all">Tüm '+COLS.length+' sütun</option><option value="technical">Teknik özellikler</option><option value="plan">Üretim ve miktar</option><option value="review">Katalog / datasheet / kıyas</option><option value="custom">Seçtiğim sütunlar</option></select></label>'+
  '<label>Sırala<select id="detailSort">'+COLS.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('')+'</select></label>'+
  '<label>Sıralama yönü<select id="detailSortDir"><option value="desc">Azalan</option><option value="asc">Artan</option></select></label>'+
  '<button class="btn small" type="button" id="detailExport">↓ Ay detayını CSV indir</button></div>'+
- '<div class="detail-options"><details id="detailColPicker"><summary id="detailColSummary">Sütunları göster / gizle</summary><div class="detail-picker-body"><div class="detail-picker-actions"><button type="button" id="detailAllCols">Tüm 40 sütun</button><button type="button" id="detailMinCols">Sadece kod ve model</button></div><div id="detailCols"></div></div></details>'+
+ '<div class="detail-options"><details id="detailColPicker"><summary id="detailColSummary">Sütunları göster / gizle</summary><div class="detail-picker-body"><div class="detail-picker-actions"><button type="button" id="detailAllCols">Tüm '+COLS.length+' sütun</button><button type="button" id="detailMinCols">Sadece kod ve model</button></div><div id="detailCols"></div></div></details>'+
  '<details id="detailFilterBox"><summary>Gelişmiş filtreler <span id="detailRuleCount">(0)</span></summary><div class="detail-rule-panel"><div class="detail-rule-bar"><button type="button" id="detailAddRule">+ Koşul ekle</button><button type="button" id="detailClearRules">Temizle</button><label>Birleştir <select id="detailLogic"><option value="and">VE (hepsi)</option><option value="or">VEYA (biri)</option></select></label></div><div id="detailRules"></div></div></details></div>'+
  '<p class="detail-audit" id="detailAudit"></p>'+
  '<div class="technical-scroll" role="region" aria-label="Seçilen ay için tüm ürünlerin teknik ve kaynak verileri" tabindex="0"><table class="technical-table"><thead id="detailHead"></thead><tbody id="detailBody"></tbody><tfoot id="detailFoot"></tfoot></table></div>'+
  '<div class="detail-bottom" id="detailShown"></div>'+
- '<p class="detail-source-note">Resmî grup datasheet bağlantıları ürün ailesine aittir; her stok kodu için ayrıca yayımlanmış ürün föyü oldukları iddia edilmez. Özel ve G/GG varyantlarda katalog doğrulaması ayrıca gösterilir.</p>';
+ '<p class="detail-source-note">Aylık detay listesi üst ürün grubuna göre bloklar halinde sıralanır. Resmî grup datasheet bağlantıları ürün ailesine aittir; her stok kodu için ayrıca yayımlanmış ürün föyü oldukları iddia edilmez. Özel ve G/GG varyantlarda katalog doğrulaması ayrıca gösterilir.</p>';
  $('detailClose').addEventListener('click',()=>{selectedMonth=null;root.hidden=true;document.querySelectorAll('.month-open').forEach(b=>b.classList.remove('is-selected'))});
  $('detailSearch').addEventListener('input',e=>{search=e.target.value;renderTable()});
  $('detailFamily').addEventListener('change',e=>{family=e.target.value;renderTable()});
@@ -187,7 +204,8 @@ function getShown(){
  );
  const sort=COLS.find(c=>c.name===sortColumn),orderIndex=new Map(order.map((id,i)=>[id,i]));
  filtered.sort((a,b)=>{
-  if(!sort)return (orderIndex.get(a.id)||0)-(orderIndex.get(b.id)||0);
+  if(!sort)return upperRank(a)-upperRank(b)||(orderIndex.get(a.id)||0)-(orderIndex.get(b.id)||0);
+  if(sortColumn==='Üst ürün grubu')return upperRank(a)-upperRank(b)||b.partiAdedi-a.partiAdedi||(orderIndex.get(a.id)||0)-(orderIndex.get(b.id)||0);
   const aa=valueForSort(a,sort),bb=valueForSort(b,sort);
   if(aa===null&&bb!==null)return 1;if(bb===null&&aa!==null)return -1;
   let diff=0;
@@ -199,8 +217,9 @@ function getShown(){
 function renderTable(){
  if(selectedMonth===null)return;
  const shown=getShown(),cols=activeCols();
+ const groupStarts=new Set(shown.map((p,i)=>i===0||upperGroup(p)!==upperGroup(shown[i-1])?i:-1));
  $('detailHead').innerHTML='<tr>'+cols.map(c=>'<th scope="col"><button type="button" data-sort="'+COLS.indexOf(c)+'" title="Bu sütuna göre sırala">'+esc(c.name)+(c.name===sortColumn?(sortDirection==='desc'?' ▼':' ▲'):' ↕')+'</button></th>').join('')+'</tr>';
- $('detailBody').innerHTML=shown.length?shown.map(p=>'<tr>'+cols.map((c,i)=>{
+ $('detailBody').innerHTML=shown.length?shown.map((p,j)=>'<tr'+(groupStarts.has(j)?' class="detail-group-start"':'')+'>'+cols.map((c,i)=>{
   const v=c.get(p),t=i===0?'<a href="urun.html?id='+encodeURIComponent(p.id)+'" target="_blank" rel="noopener" class="detail-product">'+presentValue(v,c)+'</a>':presentValue(v,c);
   return '<td class="'+(typeof v==='number'?'detail-numeric':'')+(c.long?' detail-long':'')+'">'+t+'</td>';
  }).join('')+'</tr>').join(''):'<tr><td colspan="'+cols.length+'">Seçilen filtrelerle eşleşen ürün yok.</td></tr>';
