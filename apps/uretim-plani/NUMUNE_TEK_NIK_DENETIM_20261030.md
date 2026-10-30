@@ -1,3 +1,5 @@
+> **GÜNCELLENDİ:** Bu rapor ilk fark tespitinin tarihsel kaydıdır. Şönt 25 ürün için teknik veriler uygulamada üretici 2026/12 listesine göre düzeltilmiştir. Güncel ve kapsamlı rapor: [SONT_25_URUN_RESMI_KATALOG_DUZELTME_20261030.md](SONT_25_URUN_RESMI_KATALOG_DUZELTME_20261030.md). Eski fark sayılarının içindeki bağlantı yazımı/M8 ayrımı gerçek bağlantı tipi değişikliği olarak yorumlanmamalıdır.
+
 # Numune / Teknik Veri Denetimi — 30.10.2026
 
 ## Kapsam ve sınırlar
@@ -16,7 +18,7 @@ Aile dağılımı Şönt **9**, Harmonik **8**. Geri kalan 133 aktif ürünün 7
 2026/12 üretici listesindeki **23 standart Şönt** kodu kaynak Excel'le karşılaştırıldığında:
 - **23/23 ölçü farklı**
 - **16/23 ağırlık farklı**
-- **6/23 bağlantı tipi farklı**
+- **3/23 gerçek bağlantı tipi farklı (13/23 metin farklı; montaj cıvatası ayrımı dahil)**
 - Şöntte 2 diğer ürün GA5004, GA5006 için katalog kodu/teknik kimliği doğrulanamadı (teknik teyit gerekli).
 - 17 fiziksel numune adayının **9 Şönt örneğinde ölçü farkı**, **6 Şönt örneğinde ağırlık farkı** bulundu. Diğer 8 Harmonik numune adayında kontrol edilen ölçü ve ağırlık aynıydı.
 
