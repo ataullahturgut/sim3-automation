@@ -1,3 +1,7 @@
+> **GÜNCEL UYGULAMA DURUMU — 30.10.2026, kullanıcı kararıyla seçim genişletildi:** Aşağıdaki metnin 8 numunelik sınıflandırması, **ilk kaynak denetiminin tarihsel kaydıdır**. Mevcut `simulation3/apps/uretim-plani/plan2027-samples.js` sayfasında **3 ilk + 5 kıyas + 5 ilave fiziksel = 13 Harmonik numunesi** seçilidir. İlaveler: **GA5313** (HRM %5,67), **GA5514** (HRM %14), **GA5339** (100 kVAr 44 kg), **GA5639** (100 kVAr 44 kg), **GA5438** (75 kVAr 40 kg). Bu beş ürün daha önce **“3 · Sökmeden kıyas”** olan gruptan yükseltildi. Güncel dağılım **3 + 5 + 5 + 54 sökmeden + 41 kimlik/reçete = 108 satır**. Yıllık fiziksel adayların doğrudan adet toplamı **4.160 / 9.316 = %44,65**; imalat/makine kapsama garantisi değildir. Şönt fiziksel öncelikli 11; iki ailenin fiziksel numune toplamı **24**. 28 sütun, üretim planı, teknik giriş ve kaynak katalog değerleri değişmedi. Gerçek 133 aktif kaynak satırında satır/CSV/sayaç/numune testleri PASS; gerçek tarayıcı görünüm testi yapılmadı.
+
+---
+
 # Harmonik — 108 aktif ürünün numune seçimi ve teknik bilgi denetimi
 **Tarih:** 2026-10-30 · **Yalnız Harmonik** · **Durum: KISMİ DOĞRULAMA — makine kapasitesi onaylanmadı**
 
