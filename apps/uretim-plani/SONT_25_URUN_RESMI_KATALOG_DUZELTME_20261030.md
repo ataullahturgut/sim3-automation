@@ -1,3 +1,5 @@
+> **KAYNAK ÇELİŞKİSİ UYARISI — 30.10.2026:** Bu rapordaki '2026/12 listesiyle düzeltildi' olarak sunulan sayısal ölçü/ağırlık/bağlantı değerleri, doğrudan açılan [Grup Arge /fl/tr 2026/12 PDF s.17](https://www.gruparge.com/fl/tr#page=17) ile **uyuşmuyor** (örn. GA5002 PDF 150×125×121/9 kg, bu rapor 150×125×110/8 kg; GA5205 PDF Pabuç, bu rapor Klemens). Bu belgenin verileri ve ilgili `shunt-official-2026.js` override'ı, revizyon kaynağı açıklığa kavuşturulmadan **makine yatırımı/kazan/fırın boyutlandırması için onaylı veri kabul edilmez**. Yeni ürün inceleme amacı ve 25 ürün kontrolü: [SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md](SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md). Eski karşılaştırma tarihseldir.
+
 # Grup Arge — Şönt Reaktör 25 Ürün Teknik Kaynak Karşılaştırması ve Düzeltme
 
 Denetim tarihi: **30 Ekim 2026**. Kapsam: **25 Şönt ürün**, **35.772 adet/yıl**. **Harmonikler kapsam dışı ve değiştirilmedi.**
