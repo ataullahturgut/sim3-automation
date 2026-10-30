@@ -3,10 +3,14 @@ const MONTHS=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağust
 // Setup kuralı: iki şönt ayı, ardından bir harmonik ayı, yıl boyunca tekrar.
 const FAMILIES=['Şönt','Şönt','Harmonik','Şönt','Şönt','Harmonik','Şönt','Şönt','Harmonik','Şönt','Şönt','Harmonik'];
 const STORAGE_KEY='simulation3.production2027.matrix.v1';
+const CHECKPOINT_KEY=STORAGE_KEY+'.checkpoint';
+const RECOVERY_KEY=STORAGE_KEY+'.unmatched-backup';
+const SNAPSHOT_FORMAT='simulation3-uretim-plani-2027';
+const SNAPSHOT_VERSION=2;
 const $=id=>document.getElementById(id);
 const fmt=x=>Number(x||0).toLocaleString('tr-TR');
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let products=[],byId=new Map(),history=[],rowOrder=[],initialOrder=[],search='',familyFilter='all',active=null,drag=null,rowDrag=null,toastHandle=null,storageEnabled=true;
+let products=[],byId=new Map(),history=[],rowOrder=[],initialOrder=[],search='',familyFilter='all',active=null,drag=null,rowDrag=null,toastHandle=null,storageEnabled=true,restorationWarning='',hasCheckpoint=false;
 async function unzipBase64(b64){
  if(typeof DecompressionStream==='undefined')throw Error('Bu tarayıcı veri sıkıştırma biçimini desteklemiyor. Güncel Chrome/Edge kullanın.');
  const data=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
@@ -39,18 +43,122 @@ function moveRowStep(id,direction){
  repositionRow(id,next.id,direction>0);
 }
 function sumsValid(rows){if(!rows||typeof rows!=='object')return false;for(const p of products){const m=rows[p.id];if(!Array.isArray(m)||m.length!==12||m.some((q,i)=>!Number.isSafeInteger(q)||q<0||(q>0&&FAMILIES[i]!==p.family))||m.reduce((a,b)=>a+b,0)!==p.annual)return false}return true}
-function save(){
- if(!storageEnabled)return;
- try{localStorage.setItem(STORAGE_KEY,JSON.stringify({monthly:cloneRows(),order:rowOrder,history:history.slice(-100)}))}catch(e){storageEnabled=false;$('status').textContent='Yerel kayıt kapalı · CSV ile saklayın'}
+function snapshot(){
+ return {format:SNAPSHOT_FORMAT,version:SNAPSHOT_VERSION,savedAt:new Date().toISOString(),
+  identity:products.map(p=>({id:p.id,kod:p.kod,model:p.model,annual:p.annual,family:p.family})),
+  monthly:cloneRows(),order:rowOrder.slice(),history:history.slice(-100)};
+}
+function note(message,kind='ok'){
+ const n=$('saveNotice');if(n){n.textContent=message;n.className='save-notice'+(kind==='ok'?'':' '+kind)}
+}
+function updateCheckpointButton(){
+ try{hasCheckpoint=!!localStorage.getItem(CHECKPOINT_KEY)}catch(e){hasCheckpoint=false}
+ $('restoreCheckpoint').disabled=!hasCheckpoint;
+}
+function save(makeCheckpoint=false){
+ if(!storageEnabled){note('Tarayıcı kaydı kullanılamıyor. Lütfen “Plan yedeği (.json)” dosyasını indirin.','error');return false}
+ try{
+  const data=JSON.stringify(snapshot());
+  localStorage.setItem(STORAGE_KEY,data);
+  if(localStorage.getItem(STORAGE_KEY)!==data)throw Error('Kayıt doğrulanamadı.');
+  if(makeCheckpoint)localStorage.setItem(CHECKPOINT_KEY,data);
+  const time=new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+  note((makeCheckpoint?'Plan kaydedildi':'Otomatik kaydedildi')+' · '+time+' · Aynı tarayıcıda tekrar açıldığında geri gelir.');
+  updateCheckpointButton();
+  return true;
+ }catch(e){
+  storageEnabled=false;note('Kaydetme başarısız: '+e.message+'. Plan yedeği indirip saklayın.','error');return false;
+ }
+}
+function validHistory(h){
+ return Array.isArray(h)?h.filter(x=>x&&byId.has(x.id)&&((x.kind==='row'&&Number.isInteger(x.fromIndex)&&x.fromIndex>=0&&x.fromIndex<products.length)||((!x.kind||x.kind==='qty')&&Number.isInteger(x.qty)&&x.qty>0&&Number.isInteger(x.from)&&Number.isInteger(x.to)))).slice(-100):[];
+}
+function mergedOrder(saved){
+ if(!Array.isArray(saved))return initialOrder.slice();
+ const current=saved.filter(id=>byId.has(id));
+ const unique=[...new Set(current)];
+ return unique.concat(initialOrder.filter(id=>!unique.includes(id)));
+}
+function applySnapshot(obj,allowPartial=false){
+ if(!obj||!obj.monthly||typeof obj.monthly!=='object'||Array.isArray(obj.monthly))throw Error('Yedek dosyasında aylık üretim verisi bulunamadı.');
+ const applied=[],skipped=[];
+ for(const p of products){
+  const m=obj.monthly[p.id];
+  const ok=Array.isArray(m)&&m.length===12&&m.every((q,i)=>Number.isSafeInteger(q)&&q>=0&&(q===0||FAMILIES[i]===p.family))&&m.reduce((a,b)=>a+b,0)===p.annual;
+  (ok?applied:skipped).push(p.id);
+ }
+ const extra=Object.keys(obj.monthly).filter(id=>!byId.has(id));
+ if(!allowPartial&&(skipped.length||extra.length))throw Error('Yedek, mevcut ürün listesiyle uyuşmuyor: '+skipped.length+' eksik/değişmiş ürün, '+extra.length+' artık bulunmayan ürün. Mevcut plan korunuyor.');
+ if(!applied.length)throw Error('Geçerli ürün kaydı bulunamadı; plan değiştirilmedi.');
+ products.forEach(p=>{if(applied.includes(p.id))p.monthly=obj.monthly[p.id].slice()});
+ rowOrder=mergedOrder(obj.order);
+ history=skipped.length||extra.length?[]:validHistory(obj.history);
+ return {loaded:applied.length,skipped:skipped.length,extra:extra.length};
 }
 function restore(){
+ let raw=null;
  try{
-  const s=localStorage.getItem(STORAGE_KEY);if(!s)return;
-  const obj=JSON.parse(s);if(!sumsValid(obj.monthly)){localStorage.removeItem(STORAGE_KEY);return}
-  products.forEach(p=>p.monthly=obj.monthly[p.id].slice());
-  if(validOrder(obj.order))rowOrder=obj.order.slice();
-  history=Array.isArray(obj.history)?obj.history.filter(x=>x&&byId.has(x.id)&&((x.kind==='row'&&Number.isInteger(x.fromIndex)&&x.fromIndex>=0&&x.fromIndex<products.length)||((!x.kind||x.kind==='qty')&&Number.isInteger(x.qty)&&x.qty>0&&Number.isInteger(x.from)&&Number.isInteger(x.to)))).slice(-100):[];
- }catch(e){storageEnabled=false}
+  raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw)raw=localStorage.getItem(CHECKPOINT_KEY);
+  updateCheckpointButton();
+  if(!raw){note('Başlangıç planı yüklendi. Değişiklikler otomatik kaydedilecek; önemli planlar için JSON yedeği alın.','warn');return}
+  const obj=JSON.parse(raw);
+  const previewMissing=products.some(p=>!obj.monthly||!Object.hasOwn(obj.monthly,p.id));
+  const result=applySnapshot(obj,true);
+  if(result.skipped||result.extra||previewMissing){
+   // Otomatik dönüşüm yapmadan önce, önceki ham verinin ayrı bir kopyasını koru.
+   if(!localStorage.getItem(RECOVERY_KEY))localStorage.setItem(RECOVERY_KEY,raw);
+   restorationWarning=result.loaded+' ürünün kayıtları geri yüklendi; '+result.skipped+' değişmiş/eksik, '+result.extra+' eski ürün kaydı eşleşmedi. Eski veri ayrıca korundu; JSON yedeğinizi saklayın.';
+   note(restorationWarning,'warn');
+  }else note('Önceki kayıtlı plan açıldı: üretim adetleri ve ürün sıralamanız korundu.');
+ }catch(e){
+  restorationWarning='Kayıt okunamadı ('+e.message+'). Eski kayıt silinmedi. “Son kayıtlı plan” veya JSON yedeğini kullanın.';
+  note(restorationWarning,'error');
+ }
+}
+function manualSave(){
+ if(save(true))toast('Plan ve ürün sıralaması kaydedildi. Güvenlik için JSON yedeği de indirebilirsiniz.');
+}
+function downloadSnapshot(){
+ const name='2027_Uretim_Plani_Yedek_'+new Date().toISOString().slice(0,10)+'.json';
+ const json=JSON.stringify(snapshot(),null,2);
+ const url=URL.createObjectURL(new Blob([json],{type:'application/json;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),2000);
+ toast('JSON plan yedeği indirildi: '+name);
+}
+function restoreCheckpoint(){
+ try{
+  const raw=localStorage.getItem(CHECKPOINT_KEY);
+  if(!raw)throw Error('Kayıtlı plan bulunamadı.');
+  const obj=JSON.parse(raw);
+  // Kayıtlı plan, ana verideki eksik veya yeni ürünlerle karıştırılmaz.
+  applySnapshot(obj,false);
+  if(save()) {render();toast('Son elle kaydedilen plan geri yüklendi.')}
+ }catch(e){note('Kayıtlı plan açılamadı: '+e.message,'error')}
+}
+async function importSnapshot(file){
+ if(!file)return;
+ if(file.size>10*1024*1024){note('Yedek dosyası 10 MB sınırını aşıyor.','error');return}
+ try{
+  const obj=JSON.parse(await file.text());
+  if(obj.format!==SNAPSHOT_FORMAT||obj.version!==SNAPSHOT_VERSION)throw Error('Bu dosya uygulamanın desteklediği 2027 JSON yedeği değil.');
+  if(!obj.identity||!Array.isArray(obj.identity))throw Error('Yedekte ürün kimlik bilgileri yok.');
+  // Doğrulama, onaydan önce yapılır; uyumsuz bir dosya mevcut planı değiştiremez.
+  for(const p of products){
+   const id=obj.identity.find(x=>x.id===p.id);
+   if(!id||id.annual!==p.annual||id.family!==p.family)throw Error('Ürün kimliği, yıllık miktar veya sınıf uyuşmuyor: '+p.kod);
+  }
+  for(const p of products){
+   const m=obj.monthly?.[p.id];
+   if(!Array.isArray(m)||m.length!==12||m.some((q,i)=>!Number.isSafeInteger(q)||q<0||(q>0&&FAMILIES[i]!==p.family))||m.reduce((a,b)=>a+b,0)!==p.annual)throw Error('Ürünün yıllık/aylık planı geçersiz: '+p.kod);
+  }
+  if(Object.keys(obj.monthly).length!==products.length)throw Error('Yedekte mevcut ürün sayısından farklı sayıda kayıt bulunuyor.');
+  if(!confirm(file.name+' içindeki kayıtlı plan, mevcut aylık üretim ve satır sırasının yerine yüklensin mi?'))return;
+  applySnapshot(obj,false);
+  if(!save(true))return;
+  render();toast('Yedekten üretim planı ve satır sırası geri yüklendi.');
+ }catch(e){note('Yedek yüklenemedi: '+e.message+' Mevcut plan korunuyor.','error')}
 }
 function sortRows(){return visibleRows()}
 function paintStats(){
@@ -143,6 +251,11 @@ function bindEvents(){
  $('family').addEventListener('change',e=>{familyFilter=e.target.value;render()});
  $('clearFilter').addEventListener('click',()=>{search='';familyFilter='all';$('search').value='';$('family').value='all';render()});
  $('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('export').addEventListener('click',exportCSV);
+ $('savePlan').addEventListener('click',manualSave);
+ $('downloadBackup').addEventListener('click',downloadSnapshot);
+ $('loadBackup').addEventListener('click',()=>$('backupFile').click());
+ $('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];await importSnapshot(file);e.target.value=''});
+ $('restoreCheckpoint').addEventListener('click',restoreCheckpoint);
  $('matrixBody').addEventListener('click',e=>{
   const arrow=e.target.closest('.order-arrow');
   if(arrow){const row=arrow.closest('tr.product-row');moveRowStep(row.dataset.id,arrow.classList.contains('move-up')?-1:1);return}
