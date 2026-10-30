@@ -43,7 +43,7 @@
     <section class="heading sample-page-heading">
       <div><span class="eyebrow">NUMUNE / ÜRÜN TEKNİK KAPSAMI</span>
         <h1>Numune ve teknik kapasite verileri</h1>
-        <p>Şönt için sütun sırası: <b>Ürün bilgileri → Mevcut teknik özellikler → Sarım → Emprenye</b>. Açılır menüler ve ölçü girişleri yalnız Şöntte düzenlenebilir. Harmonik kayıtları korunur.</p>
+        <p>Şönt ve Harmonik için ortak sütun sırası: <b>1 · Ürün → 4 · Mevcut teknik bilgiler → 2 · Sarım → 3 · Emprenye</b>. İki grubun açılır menüleri ve ölçü girişleri düzenlenebilir; kayıtları birbirinden ayrı saklanır.</p>
       </div>
       <div class="actions">
         <button id="sampleExport" type="button" class="btn">↓ CSV indir</button>
@@ -54,7 +54,7 @@
     </section>
     <div id="sampleMetrics" class="sample-metrics" aria-live="polite">Ürünler hazırlanıyor…</div>
     <p id="shuntSampleReview" class="sample-note" aria-live="polite">Şönt makine inceleme öncelikleri yükleniyor…</p>
-    <p id="sampleEditNotice" class="sample-edit-notice" role="status" aria-live="polite">Şönt teknik girişleri bu tarayıcıda otomatik saklanır. Başka cihaz için JSON yedeği indir.</p>
+    <p id="sampleEditNotice" class="sample-edit-notice" role="status" aria-live="polite">Şönt ve Harmonik teknik girişleri bu tarayıcıda ayrı ayrı kaydedilir. İki grubun JSON yedeğini indirerek başka cihaza taşıyabilirsiniz.</p>
     <details id="shuntProcurementGuide" class="shunt-procurement-guide">
       <summary>Şönt: Sarım, emprenye ve fırın satın almak için hangi teknik veriler gerekiyor?</summary>
       <p>Bu ölçüm rehberi reaktör kataloğundan değil; sarım makinesi, VPI/emprenye sistemi, vernik ve fırın üreticilerinin teknik seçim kriterlerinden oluşturuldu. Katalogda olmayan ölçüler tahmin edilmez.</p>
@@ -67,21 +67,22 @@
     </details>
     <section class="surface">
       <div class="matrix-heading sample-table-heading">
-        <div><h2>Ürün ve makine seçim bilgileri</h2><p><b>1 · Ürün</b> → <b>4 · Mevcut teknik bilgiler</b> → <b>2 · Sarım</b> → <b>3 · Emprenye</b>. Değerleri Şönt satırındaki kutulardan gir; “Belirlenmedi” seçimi varsayım değildir.</p></div>
+        <div><h2>Ürün ve makine seçim bilgileri</h2><p><b>1 · Ürün</b> → <b>4 · Mevcut teknik bilgiler</b> → <b>2 · Sarım</b> → <b>3 · Emprenye</b>. Şönt ve Harmonik satırlarında kendi verilerini gir; “Belirlenmedi” varsayım değildir.</p></div>
         <div class="filters">
           <input id="sampleSearch" type="search" placeholder="Ürün kodu, model veya grup ara" aria-label="Numune tablosunda ürün ara">
           <select id="sampleFamily" aria-label="Numune tablosu ürün ailesi"><option value="Tümü">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
           <button id="sampleClear" type="button" class="btn small">Filtreyi temizle</button>
         </div>
       </div>
-      <datalist id="sampleResinCodeList"></datalist>
+      <datalist id="sampleResinCodeListShunt"></datalist>
+      <datalist id="sampleResinCodeListHarmonic"></datalist>
       <div id="sampleTableScroll" class="sample-table-scroll">
         <table class="sample-table" id="sampleTable" aria-label="Numune ve teknik kapsam matrisi">
           <thead id="sampleHead"></thead>
           <tbody id="sampleBody"></tbody>
         </table>
       </div>
-      <p class="sample-note"><b>Şönt:</b> Yalnız fiziksel ölçüm veya onaylı reçete ile yeni veri girilir; varsayılan değer “Belirlenmedi”dir. <b>Vernik:</b> Yazılan veya daha önce girilmiş kodlar, onaylı malzeme listesi sayılmaz; TDS/SDS ile doğrulanmalıdır. <b>İzolasyon:</b> Birden fazla malzeme seçilebilir. <b>Harmonik:</b> Önceki kayıtları değiştirilmez. <b>Kaydetme:</b> Teknik girişler tarayıcıya kaydedilir, diğer cihazlar için JSON yedeği gerekir. Ürün dış ölçü ve toplam kg değerleri bobin ölçüsü veya bobin kg yerine kullanılmaz.</p>
+      <p class="sample-note"><b>Şönt ve Harmonik:</b> Sarım/emprenye alanlarına yalnız fiziksel ölçüm veya onaylı reçeteyle veri girilir. Boş kayıt “Belirlenmedi”dir; mevcut ürün katalog bilgileri ve üretim planı değiştirilmez. <b>Vernik:</b> Girilmiş malzeme kodları TDS/SDS doğrulanmadan onaylı sayılmaz ve ürün aileleri arasında otomatik aktarılmaz. <b>İzolasyon:</b> Çoklu seçim yapılabilir. <b>Kaydetme:</b> Her aile kendi tarayıcı kaydında saklanır, ortak JSON yedeğiyle dışa/içe aktarılır. Ürün dış ölçüsü ve toplam kg değeri gerçek bobin ölçüsü veya ağırlığının yerine geçmez.</p>
     </section>
   </section>
 </main>
