@@ -1,0 +1,43 @@
+name: Gold V37 Multimetal Macro Intraday Shadow (Research Only)
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/gold-v37-multimetal-macro-intraday-20261030
+    paths:
+      - '.github/workflows/gold-v37-multimetal-macro-intraday-shadow.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v37_multimetal_macro_intraday_shadow_v1.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v37_multimetal_macro_intraday_shadow_v1.py'
+permissions:
+  contents: read
+jobs:
+  v37-fail-closed-research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run source, chronology and anti-leakage tests
+        run: |
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v37_multimetal_macro_intraday_shadow_v1.py
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v37_multimetal_macro_intraday_shadow_v1.py -v
+      - name: Install read-only Neon driver
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Require research database connection
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Evaluate original V22 against 4h with three metals, GVZ and 10y context
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v37_multimetal_macro_intraday_shadow_v1 \
+            --out gold-v37-multimetal-macro-intraday-shadow.json
+      - name: Save reproducible statistics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v37-fourmetal-macro-historical-research
+          path: gold-v37-multimetal-macro-intraday-shadow.json
+          if-no-files-found: warn
+          retention-days: 30
