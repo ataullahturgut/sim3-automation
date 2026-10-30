@@ -6,7 +6,6 @@
 <main>
   <nav class="app-section-tabs" role="tablist" aria-label="Uygulama bölümleri">
     <button type="button" id="tabProduction" class="app-section-tab is-active" role="tab" aria-selected="true" aria-controls="productionView">Üretim Planlama</button>
-    <button type="button" id="tabShuntMachine" class="app-section-tab" role="tab" aria-selected="false" aria-controls="shuntMachineView">Şönt · Makine İncelemesi</button>
     <button type="button" id="tabSamples" class="app-section-tab" role="tab" aria-selected="false" aria-controls="sampleView">Numune ve Teknik Kapsam</button>
   </nav>
   <div id="productionView" role="tabpanel" aria-labelledby="tabProduction">
@@ -40,57 +39,19 @@
   <section id="monthDetail" class="surface detail-surface" hidden></section>
   <div class="footnote"><b>Bobin (B*)</b> değerleri üretici tip çizimlerine dayanan ön bilgilerdir; ürün bazlı üretim reçetesiyle kesinleşmemiştir. Başka aileye ayrılmış bir aya aktarım, setup karışmasını önlemek için engellenir. Satır sıralamasını değiştirmek üretim miktarlarını etkilemez; yeni sıra CSV çıktısında korunur. Kaydedilen plan sadece bu tarayıcı/profil ve bu dosya yolu için otomatik geri gelir; bilgisayar değişikliği veya tarayıcı verilerinin silinmesi için JSON dosya yedeğinizi saklayın. <a href="legacy.html">Eski parti senaryosu ekranı</a></div>
   </div>
-  <section id="shuntMachineView" class="sample-view" role="tabpanel" aria-labelledby="tabShuntMachine" hidden>
-    <section class="heading sample-page-heading">
-      <div><span class="eyebrow">ŞÖNT REAKTÖR / MAKİNE YATIRIMI</span>
-        <h1>Makine kapasitesi için incelenecek ürünler</h1>
-        <p>Ürünler zaten elimizde. Amaç yeni numune almak değil; sarım, nüve/montaj, emprenye ve fırın kapasitesini belirlemek için hangi ürünlerin ölçülüp inceleneceğini seçmek.</p>
-      </div>
-      <div class="actions"><button id="shuntMachineExport" class="btn" type="button">↓ İnceleme listesini CSV indir</button></div>
-    </section>
-    <div id="shuntMachineMetrics" class="shunt-investment-metrics" aria-live="polite">Şönt ürünleri yükleniyor…</div>
-    <section class="surface">
-      <div class="matrix-heading sample-table-heading">
-        <div><h2>25 ürün · Fiziksel inceleme öncelikleri</h2><p><b>1:</b> İlk fiziksel inceleme · <b>2:</b> Hedefli yapı kontrolü · <b>3:</b> Sökmeden ön doğrulama. Öncelik, kesin makine kapasitesi onayı değildir.</p></div>
-        <div class="filters">
-          <select id="shuntMachinePriority" aria-label="Makine inceleme önceliği"><option value="all">Tüm öncelikler</option><option value="A">1 · Öncelikli inceleme</option><option value="B">2 · Hedefli kontrol</option><option value="C">3 · Ön doğrulama</option></select>
-          <select id="shuntMachineGroup" aria-label="Şönt ürün grubu"><option value="all">Tüm Şönt grupları</option><option value="SVC-R">SVC-R</option><option value="SRM">SRM</option><option value="SRT">SRT</option></select>
-          <input id="shuntMachineSearch" type="search" placeholder="Ürün kodu veya gerekçe ara" aria-label="Şönt inceleme ürünlerinde ara">
-          <button type="button" id="shuntMachineClear" class="btn small">Temizle</button>
-        </div>
-      </div>
-      <p id="shuntMachineCount" class="shunt-investment-count" role="status">25 Şönt ürün listeleniyor</p>
-      <div class="shunt-investment-scroll">
-        <table class="shunt-investment-table" aria-label="Şönt makine yatırımı için ürün inceleme tablosu">
-          <thead><tr><th>Ürün kodu</th><th>Model</th><th>Grup</th><th>Yıllık adet</th><th>Şönt payı</th><th>İnceleme sırası</th><th>Neden incelenecek?</th><th>Makinede ölçülecek</th></tr></thead>
-          <tbody id="shuntMachineBody"></tbody>
-        </table>
-      </div>
-    </section>
-    <section class="surface shunt-investment-process">
-      <h2>Makine kararı için gerçek üründe ölçülecekler</h2>
-      <div class="shunt-process-grid">
-        <div><strong>Sarım makinesi</strong><p>Gerçek bobin adedi ve ağırlığı, tel/folyo kesiti, tur sayısı, kalıp/mandren, bobin ölçüleri, sarım ve ürün geçiş süreleri.</p></div>
-        <div><strong>Nüve ve montaj</strong><p>Nüve sac/istif ölçüleri, gerçek ağırlık, hava aralığı, bağlantı işlemleri ve taşıma ihtiyacı.</p></div>
-        <div><strong>Vernik / emprenye</strong><p>Bobin mi tam ürün mü işlem görüyor, tank/sepet yerleşimi, parti yükü, kullanılan reçete ve gerçek çevrim süresi.</p></div>
-        <div><strong>Fırın / kurutma</strong><p>Yükleme alanı ve kütlesi, parti başına ürün, sıcaklık ve süre, soğuma/boşaltma çevrimi. Tek vardiya: 9 saat aktif.</p></div>
-      </div>
-      <p class="shunt-investment-warning"><b>Teknik veri uyarısı:</b> Katalog ile uygulamaya geçmiş bazı Şönt ölçü/bağlantı kayıtları arasında kaynak revizyonu uyuşmazlığı tespit edildi. Bu ekrandaki öncelik kararı yıllık ürün adetleri ve yapı çeşitliliğine dayanır; gerçek bobin boyutu, makine adedi ve VPI/fırın hacmi henüz doğrulanmadı. <a href="https://github.com/ataullahturgut/sim3-automation/blob/simulation3/apps/uretim-plani/SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md" target="_blank" rel="noopener">Teknik inceleme raporu</a></p>
-    </section>
-  </section>
   <section id="sampleView" class="sample-view" role="tabpanel" aria-labelledby="tabSamples" hidden>
     <section class="heading sample-page-heading">
       <div><span class="eyebrow">NUMUNE / ÜRÜN TEKNİK KAPSAMI</span>
         <h1>Numune ihtiyaç ve teknik kapsam tablosu</h1>
-        <p>Şönt ve Harmonik aileleri, alt ürün grupları ve ürünleri tek tabloda. Numune durumu, yıllık adet ve ürünün kendi ailesindeki payı (Şönt ya da Harmonik) teknik bilgilerle yan yana.</p>
+        <p>Şönt için makine yatırımı amacıyla mevcut ürünlerden 11 öncelikli inceleme, 8 hedefli kontrol, 6 sökmeden ön doğrulama seçildi. Ürünler elimizde; satın alma listesi değil. Harmonik kaynak incelemesi değiştirilmedi.</p>
       </div>
       <div class="actions"><button id="sampleExport" type="button" class="btn">↓ Tabloyu CSV indir</button></div>
     </section>
     <div id="sampleMetrics" class="sample-metrics" aria-live="polite">Ürünler hazırlanıyor…</div>
-    <p id="shuntSampleReview" class="sample-note" aria-live="polite">Şönt numune temsili kontrol ediliyor…</p>
+    <p id="shuntSampleReview" class="sample-note" aria-live="polite">Şönt makine inceleme öncelikleri yükleniyor…</p>
     <section class="surface">
       <div class="matrix-heading sample-table-heading">
-        <div><h2>Ürün aileleri ve numune ihtiyacı</h2><p>Önce aile başlığı, altında üst ürün grubu, hemen altında tüm ürünlerin teknik satırları.</p></div>
+        <div><h2>Ürün aileleri ve teknik inceleme öncelikleri</h2><p>Önce aile başlığı, altında üst ürün grubu, hemen altında tüm ürünlerin teknik satırları.</p></div>
         <div class="filters">
           <input id="sampleSearch" type="search" placeholder="Ürün, model, numune veya grup ara" aria-label="Numune tablosunda ürün ara">
           <select id="sampleFamily" aria-label="Numune tablosu ürün ailesi"><option value="Tümü">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
@@ -103,7 +64,7 @@
           <tbody id="sampleBody"></tbody>
         </table>
       </div>
-      <p class="sample-note"><b>Numune:</b> Kaynak matriste <b>17 fiziksel numune adayı</b> (6 ilk numune + 11 fiziksel kıyas numunesi) vardır. Tabloda 6'sı “İlk numune”, 11'i “Fiziksel kıyas” olarak ayrılır; sadece katalog/çizim karşılaştırması önerilenler “Kıyas”; katalog/özel reçetesi doğrulanamayanlar “Bilgiler doğrulanmadı” olarak gösterilir. Bunlar satın alma veya ortak üretim yapısı onayı değildir. <b>Bobin*:</b> faz/çizime göre ön bilgidir, fiziksel bobin adedi doğrulanmadı. “—” kaynaktan doğrulanmış değer yok anlamına gelir. Datasheet bağlantıları ürün ailesine aittir. <b>Ailedeki pay (%):</b> Şönt ürünleri 35.772, Harmonik ürünleri 9.316 adetlik kendi aile toplamına göre hesaplanır.</p>
+      <p class="sample-note"><b>Şönt:</b> Ürünler elde mevcuttur. Makine yatırımı için 11 öncelikli fiziksel inceleme + 8 hedefli kontrol + 6 sökmeden ön kontrol belirlenmiştir. GA5001 ve GA5003 önceki 9 öncelikli ürüne eklenmiştir. Bu bir numune satın alma listesi veya kapasite onayı değildir. <b>Harmonik:</b> Mevcut kaynak inceleme statüleri korunmuştur. <b>Bobin*:</b> Ön bilgidir; gerçek fiziksel bobin adedi ve çevrim süresi doğrulanmadı. Şöntte bazı üretici katalog revizyonları ve uygulama ölçüleri uyuşmadığından makine boyutları fiziksel ürün üzerinde teyit edilmelidir.</p>
     </section>
   </section>
 </main>
