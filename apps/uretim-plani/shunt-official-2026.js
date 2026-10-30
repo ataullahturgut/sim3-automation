@@ -17,6 +17,9 @@ const RAW=[["GA5001","SVC-R 1.0",1,4.34,168.38,"120×100×102","Klemens","M8",5,
 const VERIFIED=new Map(RAW.map(r=>[r[0],Object.fromEntries(COLUMNS.map((k,i)=>[k,r[i]]))]));
 const UNVERIFIED=new Set(['GA5004','GA5006']);
 const CATALOG_2023_MATCHED=new Set([...VERIFIED.keys()].filter(k=>k!=='GA5107'&&k!=='GA5108'));
+// 2023 üretici kataloğunda ölçü çizimi D/E ve nominal kablo kesiti açıkça yazan 21 model.
+// Kaynak değerlerin kablo grubu, çizim D ve çizim E alanları birbirinden ayrıdır.
+const CATALOG_EXTRAS=new Map([["GA5001","1(1×2,5)",95,75],["GA5002","1(1×2,5)",105,85],["GA5003","1(1×4)",150,110],["GA5101","1(1×2,5)",null,null],["GA5102","1(1×2,5)",105,95],["GA5103","1(1×4)",150,120],["GA5104","1(1×4)",195,119],["GA5105","1(1×10)",232,126],["GA5106","1(1×16)",232,136],["GA5201","3(1×2,5)",100,55],["GA5202","3(1×2,5)",125,60],["GA5203","3(1×2,5)",125,90],["GA5204","3(1×2,5)",175,75],["GA5205","3(1×2,5)",200,135],["GA5206","3(1×4)",200,145],["GA5207","3(1×4)",350,109],["GA5208","3(1×4)",350,119],["GA5209","3(1×4)",350,139],["GA5210","3(1×6)",420,129],["GA5211","3(1×10)",420,149],["GA5212","3(1×35)",510,229]].map(([code,cable,D,E])=>[code,{cable,D,E}]));
 const str=v=>v==null?'':String(v).replace(/\s+/g,' ').trim();
 const eq=(a,b)=>str(a).replace(/×/g,'x').replace(/\s+/g,'').replace(/,/g,'.').toLocaleLowerCase('tr')===str(b).replace(/×/g,'x').replace(/\s+/g,'').replace(/,/g,'.').toLocaleLowerCase('tr');
 function apply(p){
@@ -43,6 +46,16 @@ function apply(p){
  diff('L (mH)',original['L (mH)'],s.L);
  // Tek faz SVC/SRM; trifaze SRT, üretici şönt katalog sınıfları.
  const phase=s.model.startsWith('SRT')?3:1;
+ const drawing=CATALOG_EXTRAS.get(p.kod)||null;
+ const catalogFields=drawing?{
+  'Nominal kablo kesiti (2023 katalog, mm²)':drawing.cable,
+  'Teknik çizim D (mm, 2023 katalog)':drawing.D,
+  'Teknik çizim E (mm, 2023 katalog)':drawing.E,
+  '2023 katalog aile genel nüve':'Hava aralıklı, yüksek geçirgenlikli demir nüve; ürünün kesin BOM tipi belirtilmiyor',
+  '2023 katalog aile genel sargı':'Alüminyum veya bakır; kod bazında malzeme tercihi belirtilmiyor',
+  '2023 katalog aile genel izolasyon':'Sınıf F (155 °C); ürüne özgü izolasyon reçetesi değil',
+  '2023 katalog aile genel koruma':'Termik NC kontak, 120 °C; seri/ürün teyidi gerekir'
+ }:{};
  p.kg=s.kg;
  // Teknik föy ve eski plan bu düz alanları kullanır.
  p.faz=phase;p.guc=s.guc;p.akim=s.akim;p.L=s.L;p.olcu=s.olcu;p.baglanti=s.baglanti;
@@ -54,14 +67,15 @@ function apply(p){
   '2026/12 katalog durumu':CATALOG_2023_MATCHED.has(p.kod)?'2026/12 fiyat listesi ve 2023 ürün kataloğu kod/teknik uyumlu':'2026/12 fiyat listesi doğrulandı; 2023 katalogda bu ürün kodu yok',
   '2026/12 şönt liste fiyatı (USD)':s.fiyatUsd,
   'Ayak montaj cıvatası':s.montaj,
-  'Termik koruma':'Var (üretici 2023 teknik katalogu)',
+  'Termik koruma':drawing?'2023 üretici kataloğu: işaretli':'2023 ürün kataloğunda bu kod yok; üretici teyidi gerekir',
+  ...catalogFields,
   '2026/12 liste kaynak sayfası':PRICE_URL,
   '2023 katalog kaynak sayfası':CATALOG_URL,
   'Teknik veri revizyon notu':mismatches.length
     ?'Önceki uygulama verisine göre '+mismatches.length+' alan güncellendi. Üretici, ürün dış ölçülerinin değişebileceğini belirtiyor. Kesin seri/BOM ölçüsü imalat öncesi teyit edilmeli.'
     :'Üreticinin fiyat listesi ve ürün kataloğuyla aynı. Kesin imalat BOM/teknik resim teyidi ayrıca gereklidir.'
  };
- p.shuntOfficial={verified:true,code:p.kod,sourceYear:'2026/12',priceList:PRICE_URL,catalog:CATALOG_URL,catalogMatched:CATALOG_2023_MATCHED.has(p.kod),differences:mismatches,model:s.model,mountBolt:s.montaj,priceUsd:s.fiyatUsd};
+ p.shuntOfficial={verified:true,code:p.kod,sourceYear:'2026/12',priceList:PRICE_URL,catalog:CATALOG_URL,catalogMatched:CATALOG_2023_MATCHED.has(p.kod),catalogDrawing:drawing,differences:mismatches,model:s.model,mountBolt:s.montaj,priceUsd:s.fiyatUsd};
  return p;
 }
 function applyAll(records){
