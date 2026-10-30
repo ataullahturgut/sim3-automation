@@ -43,7 +43,7 @@ const official2026Status=p=>
  official2026Page(p.kod)!==null?(p.grup==='Şönt'?(p.shuntOfficial?.verified?'2026/12 fiyat listesi ve üretici kataloğuyla güncellendi':'Şönt teknik veri yüklemesi doğrulanmalı'):'Stok kodu resmî listede; teknik alanlar ayrıca karşılaştırılmalı'):
  official2026BaseCode(p.kod)!==null?'Standart baz model var; varyant doğrulanmadı':'Ürün kodu resmî tabloda yok';
 const official2026Note=p=>
- official2026Page(p.kod)!==null?(p.grup==='Şönt'?'Şönt stok kodunun güç, akım, L, ölçü, kg, bağlantı ve montaj bilgileri Grup Arge 2026/12 fiyat listesi ile güncellendi; 2023 teknik katalogla karşılaştırıldı. Üretim serisi, nüve, bobin ve imalat BOM’u ayrıca teyit edilmelidir.':'Stok kodu 2026/12 üretici listesinde. Kaynak akım, L, ölçü, kg ve bağlantı değerlerinin her biri ayrıca doğrulanmalıdır.'):
+ official2026Page(p.kod)!==null?(p.grup==='Şönt'?'Şönt güç, akım, L, ölçü, kg ve bağlantı alanları Grup Arge 2026/12 fiyat listesinden güncellendi. 2023 kataloğunda aynı kod varsa karşılaştırıldı (GA5107/GA5108 katalogda yok). Kesin imalat BOM, fiziksel bobin ve nüve bilgileri ayrı teyit gerektirir.':'Stok kodu 2026/12 üretici listesinde. Kaynak akım, L, ölçü, kg ve bağlantı değerlerinin her biri ayrıca doğrulanmalıdır.'):
  official2026BaseCode(p.kod)!==null?'Standart '+official2026BaseCode(p.kod)+' üreticinin listesinde. G/GG varyantının akım, endüktans, ölçü, ağırlık ve bağlantısı ayrıca yayımlanmamış; baz ürün değerleri kopyalanmamalı.':
  p.kod==='GA5ÖZELHARM'?'Siparişe özel ürün; 2026 listesinde aynı kodla teknik tablo yok. Üretici teknik föyü gerekli.':
  '2026 listesinde aynı stok koduyla karşılık bulunamadı; üretici teknik föyü gerekli.';
