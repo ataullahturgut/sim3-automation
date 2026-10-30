@@ -35,3 +35,11 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .notice{background:#edf8f2;color:#187044;padding:10px 11px;border-radius:8px;font-size:12px;line-height:1.5;margin:12px 0}.notice.error{background:#fff0ed;color:#a84437}.before-after{display:grid;grid-template-columns:1fr 1fr;gap:8px}.before-after>div{border:1px solid #dce8f2;border-radius:8px;padding:9px}.before-after span{display:block;color:#7b8b9c;font-size:10px}.before-after b{font-size:18px;color:#2c4b69}
 .dialog-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:17px}.toast{display:none;position:fixed;right:18px;bottom:18px;background:#203d5a;color:white;padding:12px 15px;z-index:50;border-radius:9px;box-shadow:0 10px 35px #143c6240;font-size:12px;max-width:380px}.toast.show{display:block}
 @media(max-width:850px){.heading{flex-wrap:wrap}.matrix-heading{align-items:stretch;flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.topmeta #status{display:none}}@media(max-width:520px){main{padding:13px 9px 30px}.topbar{padding:0 12px}.heading h1{font-size:22px}.heading p{font-size:11px}.metrics{gap:7px}.metric{padding:10px}.metric strong{font-size:19px}.filters input{max-width:none;flex:1}.filters select{max-width:none;flex:1}.matrix-scroll{max-height:66vh}.matrix th.col-order,.matrix td.col-order{width:58px;min-width:58px}.matrix th.col-code,.matrix td.col-code{width:116px;min-width:116px;left:58px}.matrix th.col-model,.matrix td.col-model{width:139px;min-width:139px;left:174px}.matrix tfoot th:nth-child(2){left:58px}.matrix tfoot th:nth-child(3){left:174px}.order-arrow{width:16px;height:22px;font-size:12px}.row-handle{width:18px;font-size:17px}.dialog{padding:15px}}
+
+/* 2027 plan kayıt ve geri yükleme kontrol paneli */
+.save-notice{margin:5px 0 13px;padding:10px 13px;background:#e9f5ed;color:#246849;border:1px solid #c7e3d0;border-radius:9px;font-size:12px;font-weight:600}
+.save-notice.warn{background:#fff3df;color:#8c5b19;border-color:#f4d5a6}
+.save-notice.error{background:#fff0ed;color:#a33c34;border-color:#f0c7bd}
+.actions .btn{font-size:12px}
+.actions .btn.primary{background:#206bba;color:#fff;border-color:#206bba}
+@media(max-width:600px){.actions{width:100%}.actions .btn{flex:1 1 43%;white-space:normal}.save-notice{font-size:11px}}
