@@ -3,6 +3,7 @@
 **Güncel giriş:** \`index.html\`. Şönt ve Harmonik üretim planının 133 aktif ürün / 45.088 adet içeren 12 aylık matrisi doğrudan açılır. Ürünler ilk üretim ayı ve aynı aylarda üretim paternine göre alt alta sıralanır. Kaynak teknik bilgiler \`data-packed.js\`, onaylanan aylık üretim planı ve bobin ön değerleri \`plan2027-data.js\` üzerinden gelir.
 
 - **Ürün kodu/model bağlantısı:** \`urun.html?id=<benzersiz ürün kimliği>\` ile mevcut ürüne özgü teknik föy açılır; aynı kod altında farklı açıklama bulunan kayıtlar kaybolmaz.
+- **Satır sıralaması:** Her ürün satırının solundaki **↑ / ↓** okları satırı bir adım hareket ettirir (mobilde de çalışır). **⠿ tutma kolundan** başka bir ürün satırının üstüne/altına sürükleyerek istediğiniz konuma yerleştirebilirsiniz. Satır taşıma ürün miktarını veya üretim ayını değiştirmez. Ürün sırası tarayıcıda saklanır; CSV çıktısı da aynı sıra ile oluşturulur. **Geri al** son satır veya adet değişikliğini geri alır; **Başlangıç planı** miktarlarla birlikte sırayı da ilk haline döndürür.
 - **Adet hücresi:** Kaynak ay, hedef ay ve aktarılacak miktarı seçerek yıllık toplamı koruyan üretim kaydırması; aynı ürün satırının başka ay hücresine sürükle-bırak da mümkün.
 - **Setup kuralı:** Ocak/Şubat, Nisan/Mayıs, Temmuz/Ağustos, Ekim/Kasım yalnız Şönt; Mart/Haziran/Eylül/Aralık yalnız Harmonik. Çapraz aile taşıması engellenir.
 - **Hareket geçmişi:** Son işlemi geri al, başlangıç planına dön, düzenlenmiş planı Excel'de açılabilen UTF-8 CSV olarak dışarı aktar.
