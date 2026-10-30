@@ -227,16 +227,26 @@ function saveToStorage(grup){
  localStorage.setItem(spec.key,JSON.stringify({format:spec.format,version:VERSION,records:familyRecords(grup)}));
 }
 function saveRecord(code,field,value){
- const grup=productFamily(code);
- if(!grup)return;
- const rec={...(entries[code]||{})};
+ const p=products.find(p=>recordKey(p)===code);
+ if(!p){notice('Bu satırın ürün kimliği doğrulanamadı; kayıt yapılmadı.','error');return false;}
+ if(field==='reviewStatus'&&basePriority(p).fixed){
+  notice('Teknik Bilgi Eksik statüsü bu üründe değiştirilemez.','error');return false;
+ }
+ const previous=entries[code];
+ const rec={...(previous||{})};
  if(value===''||(Array.isArray(value)&&!value.length))delete rec[field];else rec[field]=value;
  const next=cleanRecord(rec);
  if(Object.keys(next).length)entries[code]=next;else delete entries[code];
  try{
-  saveToStorage(grup);
-  storageEnabled=true;notice(grup+' teknik girişleri bu tarayıcıya kaydedildi. Başka cihaz için JSON yedeği al.');
- }catch(e){storageEnabled=false;notice(grup+' teknik girişleri tarayıcıya kaydedilemedi. JSON yedeği indir.','error');}
+  saveToStorage(p.grup);
+  storageEnabled=true;notice(p.kod+' · '+p.model+' ('+p.grup+') bilgisi tablo üzerinden kaydedildi.');
+  return true;
+ }catch(e){
+  if(previous)entries[code]=previous;else delete entries[code];
+  storageEnabled=false;
+  notice('Tarayıcıya kaydedilemedi; '+p.kod+' değişikliği geri alındı. JSON yedeğinizi kontrol edin.','error');
+  return false;
+ }
 }
 function cleanAll(records,grup){
  if(!records||typeof records!=='object'||Array.isArray(records))throw Error('Kayıt içeriği geçersiz');
@@ -301,6 +311,14 @@ function insulationCell(p){
  '<label><input type="checkbox" data-code="'+esc(recordKey(p))+'" data-field="insulations" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</div></details>'+
  (values.includes('Diğer')?textInput(p,'insulationOther','Diğer izolasyon açıklaması'):'')+'</div>';
 }
+function inlineStatusCell(p){
+ const status=priority(p);
+ if(basePriority(p).fixed)return '<span class="sample-status unknown" title="'+esc(status.hint)+'">Teknik Bilgi Eksik</span>';
+ const selected=get(p,'reviewStatus')||({'Ana Numune':'main','Karşılaştırma Numunesi':'compare','Dış Kontrol':'external'}[basePriority(p).label]||'external');
+ return '<select class="sample-edit sample-status-edit" data-code="'+esc(recordKey(p))+'" data-field="reviewStatus"'+
+ ' aria-label="'+esc(p.kod+' · '+p.model+' · inceleme türü')+'" title="'+esc(p.kod+' · '+p.model+' · inceleme türü')+'">'+
+ optionList([['main','Ana Numune'],['compare','Karşılaştırma Numunesi'],['external','Dış Kontrol']],selected)+'</select>';
+}
 function technicalCell(p,key){
  const v=get(p,key);
  if(v===''||v===undefined||v===null||Array.isArray(v)&&!v.length)return '<span class="sample-original">—</span>';
@@ -352,7 +370,7 @@ function rowCells(p,totals){
   esc(p.model),
   '<strong class="sample-amount">'+qty(p.annual)+'</strong>',
   pct(p.annual,totals[p.grup]),
-  '<span class="sample-status '+esc(priorityData.className)+'" title="'+esc(priorityData.hint)+'">'+esc(priorityData.label)+'</span>',
+  inlineStatusCell(p),
   esc(val(byFamily(p,'Ölçü G×Y×D (mm)','Dış ölçüler (mm)'))),
   esc(val(typeof p.kg==='number'&&p.kg>0?p.kg:null)),
   esc(val(byFamily(p,'Bağlantı tipi','Bağlantı'))),
@@ -362,7 +380,7 @@ function rowCells(p,totals){
   esc(p.grup==='Harmonik'?technicalDisplay(p,'p (%)'):val(raw(p,'p (%)')??p.p)),
   esc(p.grup==='Harmonik'?technicalDisplay(p,'THDv tasarım sınıfı'):val(raw(p,'THDv tasarım sınıfı')??p.thdv)),
   '<a href="'+esc(DATASHEETS[p.grup])+'" target="_blank" rel="noopener">PDF</a>',
-  ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>technicalCell(p,k))
+  ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>editable(p,k))
  ];
  if(fields.length!==HEADERS.length)throw Error('28 teknik sütun eşleşmedi: '+p.kod+' '+fields.length);
  return '<tr class="sample-product-row">'+fields.map((x,i)=>'<td class="sample-cell-'+HEADERS[i][1]+'">'+x+'</td>').join('')+'</tr>';
@@ -432,6 +450,33 @@ function render(){
  const note=family==='Şönt'?shuntNote:family==='Harmonik'?harmonicNote:shuntNote+' '+harmonicNote;
  $('shuntSampleReview').innerHTML=note+' <b>İnceleme türünü ve teknik bilgileri değiştirmek için Ürün Seç / Düzenle ekranını kullanın.</b>';
 
+}
+function onInlineChange(e){
+ const el=e.target;
+ const key=el?.dataset?.field,code=el?.dataset?.code;
+ if(!key||!code)return;
+ const p=products.find(x=>recordKey(x)===code);
+ if(!p||!INPUTS.includes(key))return;
+ if(key==='reviewStatus'&&basePriority(p).fixed){render();return;}
+ if(key==='insulations'){
+  const existing=Array.isArray(get(p,key))?get(p,key):[];
+  const next=el.checked?[...new Set([...existing,el.value])]:existing.filter(x=>x!==el.value);
+  if(!saveRecord(code,key,next)){render();return;}
+  if(el.value==='Diğer'){render();return;}
+  const detail=el.closest?.('details'),label=detail?.querySelector?.('summary');
+  if(label)label.textContent=next.length?next.join(', '):'Belirlenmedi';
+  return;
+ }
+ const value=validInput(key,el.value);
+ if(value===null){
+  notice('Geçersiz değer: '+p.kod+' · '+p.model+'. Lütfen pozitif ve uygun ölçü girin.','error');
+  if('value' in el)el.value=String(get(p,key)??'');
+  return;
+ }
+ if(!saveRecord(code,key,value)){render();return;}
+ if(key==='reviewStatus'||['conductor','core','impPart','resinMode','impMethod','resinCode'].includes(key)){
+  render();
+ }
 }
 function download(name,content,type){
  const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');
@@ -712,6 +757,7 @@ function init(list){
   const id=button?.dataset?.editId||e.target?.dataset?.editId;
   if(id)editProductById(id);
  });
+ $('sampleBody').addEventListener('change',onInlineChange);
  $('sampleOpenPicker').addEventListener('click',openPicker);
  $('samplePickSearch').addEventListener('input',renderPicker);
  $('samplePickFamily').addEventListener('change',renderPicker);
