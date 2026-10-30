@@ -106,6 +106,13 @@ function group(p){
  if(kind.includes('<%7')||/\/7-7/.test(model))return 'HRT 7/7';
  return 'HRT 7/8';
 }
+const HARMONIC_ADDITIONAL_SAMPLES={
+ 'GA5313':'HRM %5,67 sınıfını fiziksel olarak temsil etmek; GA5412 ile bobin/sarım yapısı aynı kabul edilmez.',
+ 'GA5514':'HRM %14 sınıfını incelemek; farklı p oranında bobin ve iletken ölçümü.',
+ 'GA5339':'HRT 100 kVAr, 44 kg, 355×310×190 mm; ağır ve büyük gövde sınırı.',
+ 'GA5639':'HRT 100 kVAr, 44 kg, THDv<%7; farklı p/THDv sınıfında büyük gövde.',
+ 'GA5438':'HRT 75 kVAr, 40 kg, 295×255×205 mm; derinlik ve dış ölçü sınırı.'
+};
 function priority(p){
  if(p.grup==='Şönt'){
   const m=window.ShuntMachineInvestment?.get(p.kod);
@@ -119,13 +126,15 @@ function priority(p){
  const first=['GA5436','GA5426','GA5412'],compare=['GA5636','GA5536','GA5429','GA5336','GA5415'];
  if(status.startsWith('1 ·')||first.includes(code))return {label:'İlk fiziksel numune',rank:0,className:'main',hint:'Kaynak ilk numunesi; tüm yapıların temsili henüz kanıtlanmadı'};
  if(status.startsWith('2 ·')||compare.includes(code))return {label:'Fiziksel kıyas numunesi',rank:0,className:'main',hint:'Kaynak fiziksel kıyas adayı'};
- if(status.startsWith('3 ·'))return {label:'Sökmeden kıyas',rank:1,className:'compare',hint:'Katalog/görsel kıyası; sarım eşdeğerliği kanıtı değildir'};
- if(status.includes('Kimlik')||/^(GAG|GAGG)/.test(code)||code==='GA5ÖZELHARM')return {label:'Kimlik / reçete teyidi',rank:2,className:'unknown',hint:'Ürüne özgü teknik çizim ve imalat reçetesi gerekli'};
+ if(Object.prototype.hasOwnProperty.call(HARMONIC_ADDITIONAL_SAMPLES,code))
+  return {label:'İlave fiziksel numune',rank:1,className:'main',hint:HARMONIC_ADDITIONAL_SAMPLES[code]+' Sargı/proses ölçümleri hâlen doğrulanmalı.'};
+ if(status.startsWith('3 ·'))return {label:'Sökmeden kıyas',rank:2,className:'compare',hint:'Katalog/görsel kıyası; sarım eşdeğerliği kanıtı değildir'};
+ if(status.includes('Kimlik')||/^(GAG|GAGG)/.test(code)||code==='GA5ÖZELHARM')return {label:'Kimlik / reçete teyidi',rank:3,className:'unknown',hint:'Ürüne özgü teknik çizim ve imalat reçetesi gerekli'};
  const m=code.match(/^GA(\d{4})$/),n=m?Number(m[1]):0;
  const ranges=[[5311,5317],[5411,5417],[5511,5517],[5321,5339],[5629,5639],[5521,5539],[5421,5439]];
  return ranges.some(([lo,hi])=>n>=lo&&n<=hi)?
-  {label:'Sökmeden kıyas',rank:1,className:'compare',hint:'Üretici katalog kıyası; fiziksel eşdeğerlik kanıtı değil'}:
-  {label:'Kimlik / reçete teyidi',rank:2,className:'unknown',hint:'Ürün tasarım kimliği veya imalat reçetesi eksik'};
+  {label:'Sökmeden kıyas',rank:2,className:'compare',hint:'Üretici katalog kıyası; fiziksel eşdeğerlik kanıtı değil'}:
+  {label:'Kimlik / reçete teyidi',rank:3,className:'unknown',hint:'Ürün tasarım kimliği veya imalat reçetesi eksik'};
 }
 function specialHarmonic(p){
  return p.grup==='Harmonik'&&(/^(?:GAG|GAGG)/.test(p.kod)||p.kod==='GA5ÖZELHARM');
@@ -367,14 +376,28 @@ function render(){
  }));
  if(shunt.length!==25||totals['Şönt']!==35772||stats.A.count!==11||stats.B.count!==8||stats.C.count!==6||
     stats.A.annual!==32654||stats.B.annual!==2512||stats.C.annual!==606)throw Error('Şönt 11/8/6 ve miktar tutarlılık denetimi başarısız');
- const chosen=products.filter(searchVisible);
- $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(annual)+' adet</span><span><b>Şönt</b> '+qty(totals['Şönt'])+' adet</span>'+
- '<span><b>Harmonik</b> '+qty(totals['Harmonik'])+' adet</span><span><b>Şönt öncelikli inceleme</b> 11 ürün · '+pct(stats.A.annual,totals['Şönt'])+'</span>'+
- '<span class="sample-count">'+chosen.length+' / '+products.length+' ürün</span>';
  const harmonic=products.filter(p=>p.grup==='Harmonik');
  if(harmonic.length!==108||totals['Harmonik']!==9316)throw Error('Harmonik 108 ürün / 9.316 adet yıllık toplam tutarsız');
+ const original=harmonic.filter(p=>priority(p).label==='İlk fiziksel numune');
+ const comparison=harmonic.filter(p=>priority(p).label==='Fiziksel kıyas numunesi');
+ const additional=harmonic.filter(p=>priority(p).label==='İlave fiziksel numune');
+ const physical=[...original,...comparison,...additional];
+ const docOnly=harmonic.filter(p=>priority(p).label==='Sökmeden kıyas').length;
+ const unverified=harmonic.filter(p=>priority(p).label==='Kimlik / reçete teyidi').length;
+ const physicalAnnual=physical.reduce((n,p)=>n+p.annual,0);
+ if(original.length!==3||comparison.length!==5||additional.length!==5||
+    physical.length!==13||physicalAnnual!==4160||docOnly!==54||unverified!==41||
+    new Set(physical.map(p=>p.kod)).size!==13)
+    throw Error('Harmonik 13 numune / 5 ilave / 54 kıyas bütünlük kontrolü başarısız');
+ const chosen=products.filter(searchVisible);
+ $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(annual)+' adet</span><span><b>Şönt</b> '+qty(totals['Şönt'])+' adet</span>'+
+ '<span><b>Harmonik</b> '+qty(totals['Harmonik'])+' adet</span><span><b>Şönt numunesi</b> 11</span>'+
+ '<span><b>Harmonik numunesi</b> 13</span><span><b>Toplam fiziksel numune</b> 24</span>'+
+ '<span class="sample-count">'+chosen.length+' / '+products.length+' ürün</span>';
  const shuntNote='<b>Şönt:</b> 11 öncelikli ('+qty(stats.A.annual)+' adet), 8 hedefli ('+qty(stats.B.annual)+' adet), 6 ön kontrol ('+qty(stats.C.annual)+' adet).';
- const harmonicNote='<b>Harmonik:</b> '+harmonic.length+' ürün / '+qty(totals['Harmonik'])+' adet/yıl. Numune/kıyas öncelikleri ve kaynak ürün verileri korunur.';
+ const harmonicNote='<b>Harmonik:</b> <b>13 fiziksel inceleme numunesi</b> (3 ilk + 5 kıyas + 5 ilave), '+
+  qty(physicalAnnual)+' adet/yıl ('+pct(physicalAnnual,totals['Harmonik'])+'), '+
+  docOnly+' sökmeden kıyas ve '+unverified+' kimlik/reçete teyidi.';
  const notes=family==='Şönt'?shuntNote:family==='Harmonik'?harmonicNote:shuntNote+' '+harmonicNote;
  $('shuntSampleReview').innerHTML=notes+' <b>Sarım ve emprenye girişleri iki ürün ailesinde de düzenlenebilir ve ayrı saklanır.</b> Kesin makine kapasitesi için fiziksel ölçüm gerekir.';
 }
