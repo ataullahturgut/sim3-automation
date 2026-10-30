@@ -214,3 +214,31 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .shunt-procurement-steps strong{display:block;font-size:12px;color:#2f536c}
 .shunt-procurement-steps p{font-size:11px;line-height:1.6;color:#617c90;margin:6px 0 0}
 @media(max-width:850px){.shunt-procurement-steps{grid-template-columns:1fr}}
+
+
+/* Onaylanan 28 sütun: 5 ürün + 10 mevcut teknik + 9 sarım + 4 emprenye */
+.sample-table .sample-head-groups th{position:sticky;top:0;left:auto!important;z-index:10;height:30px;min-height:30px;min-width:0;max-width:none;background:#dce8f2;color:#31536d;text-align:left;padding:7px 10px;font-size:11px;white-space:nowrap}
+.sample-table .sample-head-groups th:nth-child(2){background:#e8eef4}
+.sample-table .sample-head-groups th:nth-child(3){background:#dceef4}
+.sample-table .sample-head-groups th:nth-child(4){background:#edf0e7}
+.sample-table .sample-head-fields th{position:sticky;top:30px;z-index:6;background:#eaf1f7}
+.sample-table .sample-head-fields th:first-child{position:sticky;left:0;z-index:9;background:#dce8f1}
+.sample-table .sample-head-fields th:nth-child(2){position:sticky;left:124px;z-index:9;background:#dce8f1}
+.sample-table th.sample-head-edit,.sample-table td.sample-cell-edit{min-width:166px;max-width:260px;white-space:normal}
+.sample-table td.sample-cell-edit{background:#fcfdff;padding:6px 7px;vertical-align:top}
+.sample-table tr.sample-product-row:hover td.sample-cell-edit{background:#f2f8fc}
+.sample-table .sample-edit{display:block;width:100%;max-width:238px;min-height:31px;border:1px solid #c9d8e5;border-radius:6px;background:#fff;color:#304e65;padding:5px 7px;font-size:11px;line-height:1.4;box-sizing:border-box}
+.sample-table .sample-edit:focus-visible{outline:2px solid #84b8e1;outline-offset:1px}
+.sample-table .sample-edit-number{min-width:115px;max-width:146px;font-variant-numeric:tabular-nums}
+.sample-table .sample-edit-text{min-width:150px;max-width:235px}
+.sample-table .sample-edit::placeholder{color:#9badba}
+.sample-table .sample-resin-editor{display:flex;flex-direction:column;gap:5px;min-width:160px}
+.sample-multi{width:185px;max-width:235px;border:1px solid #c9d8e5;border-radius:6px;background:#fff}
+.sample-multi summary{padding:7px;cursor:pointer;color:#365a72;font-size:11px;line-height:1.3;overflow-wrap:anywhere}
+.sample-multi[open]{min-width:220px}
+.sample-multi-content{display:flex;flex-direction:column;gap:6px;padding:8px 7px;border-top:1px solid #e1e9ef;background:#fff}
+.sample-multi-content label{display:flex;align-items:flex-start;gap:6px;cursor:pointer;font-size:11px;line-height:1.3;white-space:normal}
+.sample-multi-content input{margin:1px 0 0}
+.sample-original{color:#637c8e}
+.sample-edit-notice{margin:0 0 11px;padding:9px 13px;background:#f0f6fa;border:1px solid #dbe6ef;border-radius:8px;font-size:11px;color:#456b84}
+.sample-edit-notice.error{background:#fff1ee;border-color:#f2cec6;color:#9e4c3d}
