@@ -1,0 +1,150 @@
+(()=>{'use strict';
+const MONTHS=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+// Setup kuralı: iki şönt ayı, ardından bir harmonik ayı, yıl boyunca tekrar.
+const FAMILIES=['Şönt','Şönt','Harmonik','Şönt','Şönt','Harmonik','Şönt','Şönt','Harmonik','Şönt','Şönt','Harmonik'];
+const STORAGE_KEY='simulation3.production2027.matrix.v1';
+const $=id=>document.getElementById(id);
+const fmt=x=>Number(x||0).toLocaleString('tr-TR');
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let products=[],byId=new Map(),history=[],search='',familyFilter='all',active=null,drag=null,toastHandle=null,storageEnabled=true;
+async function unzipBase64(b64){
+ if(typeof DecompressionStream==='undefined')throw Error('Bu tarayıcı veri sıkıştırma biçimini desteklemiyor. Güncel Chrome/Edge kullanın.');
+ const data=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
+ return JSON.parse(await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('gzip'))).text());
+}
+function monthlyTotal(i){return products.reduce((n,p)=>n+p.monthly[i],0)}
+function totalAnnual(){return products.reduce((n,p)=>n+p.annual,0)}
+function firstMonth(p){return p.monthly.findIndex(v=>v>0)}
+function pattern(p){return p.monthly.map((v,i)=>v>0?i:null).filter(v=>v!==null).join('-')}
+function monthsName(p){return p.monthly.map((v,i)=>v>0?MONTHS[i]:null).filter(Boolean).join(' · ')}
+function cloneRows(){return Object.fromEntries(products.map(p=>[p.id,p.monthly.slice()]))}
+function sumsValid(rows){if(!rows||typeof rows!=='object')return false;for(const p of products){const m=rows[p.id];if(!Array.isArray(m)||m.length!==12||m.some((q,i)=>!Number.isSafeInteger(q)||q<0||(q>0&&FAMILIES[i]!==p.family))||m.reduce((a,b)=>a+b,0)!==p.annual)return false}return true}
+function save(){
+ if(!storageEnabled)return;
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify({monthly:cloneRows(),history:history.slice(-100)}))}catch(e){storageEnabled=false;$('status').textContent='Yerel kayıt kapalı · CSV ile saklayın'}
+}
+function restore(){
+ try{
+  const s=localStorage.getItem(STORAGE_KEY);if(!s)return;
+  const obj=JSON.parse(s);if(!sumsValid(obj.monthly)){localStorage.removeItem(STORAGE_KEY);return}
+  products.forEach(p=>p.monthly=obj.monthly[p.id].slice());
+  history=Array.isArray(obj.history)?obj.history.filter(x=>byId.has(x.id)&&Number.isInteger(x.qty)).slice(-100):[];
+ }catch(e){storageEnabled=false}
+}
+function sortRows(){return products.filter(p=>(familyFilter==='all'||p.family===familyFilter)&&(p.kod+' '+p.model).toLocaleLowerCase('tr-TR').includes(search.toLocaleLowerCase('tr-TR'))).sort((a,b)=>firstMonth(a)-firstMonth(b)||a.family.localeCompare(b.family,'tr')||pattern(a).localeCompare(pattern(b))||b.annual-a.annual||a.kod.localeCompare(b.kod,'tr'))}
+function paintStats(){
+ const max=Math.max(...MONTHS.map((_,i)=>monthlyTotal(i)));
+ const figures=[['Yıllık üretim',fmt(totalAnnual()),'Şönt + Harmonik'],['Ürün kaydı',fmt(products.length),'Kaynak 135 · 2 üretimsiz'],['En yüksek ay',fmt(max),'Yıllık ürün adedi karşılaştırması'],['Yapılan aktarım',fmt(history.length),'Bu tarayıcıdaki plan değişiklikleri']];
+ $('metrics').innerHTML=figures.map(x=>'<div class="metric"><label>'+x[0]+'</label><strong>'+x[1]+'</strong><small>'+x[2]+'</small></div>').join('');
+ $('changeCount').textContent=fmt(history.length);$('undo').disabled=!history.length;
+}
+function render(){
+ paintStats();
+ $('matrixHead').innerHTML='<tr><th class="col-code">Ürün kodu</th><th class="col-model">Ürün adı / Model</th><th class="col-coil">Bobin*</th>'+
+  MONTHS.map((m,i)=>'<th class="col-month">'+m+'<span class="month-type '+(FAMILIES[i]==='Şönt'?'s':'h')+'">'+FAMILIES[i]+'</span><span class="month-sum">'+fmt(monthlyTotal(i))+'</span></th>').join('')+'<th class="col-total">Yıllık</th></tr>';
+ $('matrixFoot').innerHTML='<tr><th>TOPLAM</th><th></th><th></th>'+MONTHS.map((_,i)=>'<th>'+fmt(monthlyTotal(i))+'</th>').join('')+'<th>'+fmt(totalAnnual())+'</th></tr>';
+ let previous='',html='';
+ for(const p of sortRows()){
+  const key=firstMonth(p)+'|'+p.family+'|'+pattern(p);
+  if(key!==previous){
+   previous=key;html+='<tr class="group-row"><td colspan="16">'+esc(p.family.toLocaleUpperCase('tr-TR'))+' · '+esc(monthsName(p))+'<span class="group-note">Aynı ayları paylaşan ürünler alt alta</span></td></tr>';
+  }
+  const link='urun.html?id='+encodeURIComponent(p.id);
+  const label=esc(p.kod)+(p.coil===null?'':' ('+p.coil+'B*)');
+  html+='<tr class="product-row" data-id="'+esc(p.id)+'"><td class="col-code"><a class="product-link" href="'+link+'" title="Ürün teknik föyünü aç" target="_blank" rel="noopener">'+label+'</a></td>'+
+   '<td class="col-model" title="'+esc(p.model)+'"><a class="model-link" href="'+link+'" target="_blank" rel="noopener">'+esc(p.model)+'</a></td>'+
+   '<td class="col-coil" title="'+(p.coil===null?'Fiziksel bobin sayısı bilinmiyor':'Yalnızca üretici tip çizimi ön verisi; kesin üretim reçetesi değil')+'">'+(p.coil===null?'<span class="uncertain">?</span>':p.coil+'B*')+'</td>';
+  for(let m=0;m<12;m++){const v=p.monthly[m];html+='<td class="month-cell" data-id="'+esc(p.id)+'" data-month="'+m+'">'+
+   (v?'<button type="button" draggable="true" class="qty '+(p.family==='Harmonik'?'h':'')+'" aria-label="'+esc(p.kod)+' '+MONTHS[m]+' '+fmt(v)+' adet; başka aya taşı" title="Aktarmak için tıklayın veya aynı ürünün başka ayına sürükleyin">'+fmt(v)+'</button>':'<span class="empty">·</span>')+'</td>'}
+  html+='<td class="col-total">'+fmt(p.annual)+'</td></tr>';
+ }
+ $('matrixBody').innerHTML=html;
+}
+function toast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastHandle);toastHandle=setTimeout(()=>t.classList.remove('show'),3300)}
+function setSourceOptions(p){$('from').innerHTML=MONTHS.map((m,i)=>'<option value="'+i+'" '+(i===active.from?'selected':'')+' '+(!p.monthly[i]?'disabled':'')+'>'+m+' ('+fmt(p.monthly[i])+')</option>').join('')}
+function setTargetOptions(){ $('to').innerHTML=MONTHS.map((m,i)=>'<option value="'+i+'" '+(i===active.to?'selected':'')+'>'+m+' · '+FAMILIES[i]+'</option>').join('') }
+function openDialog(id,month,to){
+ const p=byId.get(id);if(!p||!p.monthly[month])return;
+ active={id,from:month,to:Number.isInteger(to)?to:FAMILIES.findIndex((f,i)=>i!==month&&f===p.family),qty:p.monthly[month]};
+ $('selectedCode').textContent=p.kod+(p.coil===null?'':' ('+p.coil+'B*)');$('selectedCode').href='urun.html?id='+encodeURIComponent(id);
+ $('selectedModel').textContent=p.model;$('selectedFamily').textContent=p.family;
+ setSourceOptions(p);setTargetOptions();$('quantity').value=active.qty;
+ $('backdrop').classList.add('open');preview();$('quantity').focus();$('quantity').select();
+}
+function closeDialog(){$('backdrop').classList.remove('open');active=null}
+function validate(){
+ if(!active)return {ok:false,msg:'Ürün seçilmedi.'};
+ const p=byId.get(active.id),from=active.from,to=active.to,q=active.qty;
+ if(from===to)return {ok:false,msg:'Kaynak ay ile hedef ay farklı olmalı.'};
+ if(FAMILIES[to]!==p.family)return {ok:false,msg:'Setup kısıtı: '+MONTHS[to]+' yalnız '+FAMILIES[to]+' üretimi için ayrılmış. '+p.family+' aktarılamaz.'};
+ if(!Number.isSafeInteger(q)||q<1||q>p.monthly[from])return {ok:false,msg:'1 ile '+fmt(p.monthly[from])+' arasında tam sayı girin.'};
+ const oldParts=p.monthly.filter(v=>v>0).length;
+ const newParts=p.monthly.map((v,i)=>i===from?v-q:i===to?v+q:v).filter(v=>v>0).length;
+ return {ok:true,msg:fmt(q)+' adet '+MONTHS[from]+' → '+MONTHS[to]+' taşınacak. Yıllık '+fmt(p.annual)+' adet aynı kalır.'+(oldParts!==newParts?' Üretim partisi '+oldParts+' → '+newParts+' olacak.':'')};
+}
+function preview(){
+ if(!active)return;const p=byId.get(active.id),v=validate();
+ $('notice').className='notice'+(v.ok?'':' error');$('notice').textContent=v.msg;
+ $('confirm').disabled=!v.ok;
+ $('beforeAfter').innerHTML='<div><span>'+MONTHS[active.from]+' · Sonra</span><b>'+fmt(p.monthly[active.from]-(Number.isFinite(active.qty)?active.qty:0))+'</b></div><div><span>'+MONTHS[active.to]+' · Sonra</span><b>'+fmt(p.monthly[active.to]+(Number.isFinite(active.qty)?active.qty:0))+'</b></div>';
+}
+function applyMove(){
+ const valid=validate();if(!valid.ok){preview();return}
+ const p=byId.get(active.id),h={id:active.id,from:active.from,to:active.to,qty:active.qty};
+ p.monthly[h.from]-=h.qty;p.monthly[h.to]+=h.qty;history.push(h);save();closeDialog();render();
+ toast(p.kod+': '+fmt(h.qty)+' adet '+MONTHS[h.from]+' → '+MONTHS[h.to]+' aktarıldı.');
+}
+function undo(){
+ const h=history.pop();if(!h)return;const p=byId.get(h.id);
+ if(!p||p.monthly[h.to]<h.qty){history.push(h);toast('Son değişiklik geri alınamadı.');return}
+ p.monthly[h.to]-=h.qty;p.monthly[h.from]+=h.qty;save();render();toast('Son taşıma geri alındı.');
+}
+function reset(){
+ if(!confirm('Bu tarayıcıda yaptığınız bütün üretim değişiklikleri silinsin ve başlangıç 2027 planı yüklensin mi?'))return;
+ products.forEach(p=>p.monthly=p.initial.slice());history=[];save();render();toast('Başlangıç üretim planına dönüldü.');
+}
+function exportCSV(){
+ const rows=[['Ürün kimliği','Stok kodu','Model','Ürün ailesi','Bobin ön değeri','Bobin doğrulama','Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık','Yıllık adet']];
+ for(const p of products)rows.push([p.id,p.kod,p.model,p.family,p.coil===null?'':p.coil,p.coil===null?'Doğrulanmadı':'Tip çizimi ön değeri; reçete onayı yok',...p.monthly,p.annual]);
+ const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='2027_Uretim_Matrisi_Duzenlenmis.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('Güncel plan CSV dosyası olarak indirildi.');
+}
+function bindEvents(){
+ $('search').addEventListener('input',e=>{search=e.target.value;render()});
+ $('family').addEventListener('change',e=>{familyFilter=e.target.value;render()});
+ $('clearFilter').addEventListener('click',()=>{search='';familyFilter='all';$('search').value='';$('family').value='all';render()});
+ $('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('export').addEventListener('click',exportCSV);
+ $('matrixBody').addEventListener('click',e=>{
+  const btn=e.target.closest('.qty');if(!btn)return;const cell=btn.closest('.month-cell');openDialog(cell.dataset.id,+cell.dataset.month);
+ });
+ $('matrixBody').addEventListener('dragstart',e=>{const btn=e.target.closest('.qty');if(!btn)return;const cell=btn.closest('.month-cell');drag={id:cell.dataset.id,month:+cell.dataset.month};if(e.dataTransfer){e.dataTransfer.setData('text/plain',drag.id);e.dataTransfer.effectAllowed='move'}});
+ $('matrixBody').addEventListener('dragover',e=>{const cell=e.target.closest('.month-cell');if(!drag||!cell)return;e.preventDefault();cell.classList.add(cell.dataset.id===drag.id&&FAMILIES[+cell.dataset.month]===byId.get(drag.id).family?'drop-ok':'drop-warn')});
+ $('matrixBody').addEventListener('dragleave',e=>{const cell=e.target.closest('.month-cell');if(cell)cell.classList.remove('drop-ok','drop-warn')});
+ $('matrixBody').addEventListener('drop',e=>{const cell=e.target.closest('.month-cell');if(!drag||!cell)return;e.preventDefault();cell.classList.remove('drop-ok','drop-warn');const d=drag;drag=null;if(d.id!==cell.dataset.id){toast('Sürükleme yalnızca aynı ürünün farklı ayına yapılabilir.');return}openDialog(d.id,d.month,+cell.dataset.month)});
+ $('matrixBody').addEventListener('dragend',()=>{drag=null;document.querySelectorAll('.drop-ok,.drop-warn').forEach(x=>x.classList.remove('drop-ok','drop-warn'))});
+ $('close').addEventListener('click',closeDialog);$('cancel').addEventListener('click',closeDialog);
+ $('backdrop').addEventListener('click',e=>{if(e.target===$('backdrop'))closeDialog()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDialog()});
+ $('from').addEventListener('change',e=>{if(!active)return;active.from=+e.target.value;active.qty=Math.min(active.qty,byId.get(active.id).monthly[active.from]);$('quantity').value=active.qty;preview()});
+ $('to').addEventListener('change',e=>{if(!active)return;active.to=+e.target.value;preview()});
+ $('quantity').addEventListener('input',e=>{if(!active)return;active.qty=Number(e.target.value);preview()});
+ $('allQty').addEventListener('click',()=>{if(!active)return;active.qty=byId.get(active.id).monthly[active.from];$('quantity').value=active.qty;preview()});
+ $('hundred').addEventListener('click',()=>{if(!active)return;active.qty=Math.min(100,byId.get(active.id).monthly[active.from]);$('quantity').value=active.qty;preview()});
+ $('confirm').addEventListener('click',applyMove);
+}
+async function boot(){
+ try{
+  if(!window.PRODUCTS_GZIP_B64||!window.PRODUCTION_PLAN_2027_GZIP_B64)throw Error('Ürün veya 2027 plan dosyası bulunamadı.');
+  const [records,plan]=await Promise.all([unzipBase64(window.PRODUCTS_GZIP_B64),unzipBase64(window.PRODUCTION_PLAN_2027_GZIP_B64)]);
+  const data=new Map(records.map(p=>[p.id,p]));
+  products=plan.map(([id,monthly,coil])=>{
+   const p=data.get(id);if(!p||p.adet<=0)throw Error('Eksik veya uyumsuz ürün kimliği: '+id);
+   return {...p,annual:p.adet,monthly:monthly.slice(),initial:monthly.slice(),family:p.grup,coil};
+  });
+  byId=new Map(products.map(p=>[p.id,p]));
+  if(products.length!==133||byId.size!==133||!sumsValid(cloneRows())||totalAnnual()!==45088)throw Error('Kaynak plan tutarlılık kontrolünden geçmedi.');
+  restore();bindEvents();render();$('status').textContent='133 ürün · 45.088 adet';
+ }catch(e){$('status').textContent='Veri yükleme hatası';$('matrixBody').innerHTML='<tr><td colspan="16" style="text-align:left;padding:18px;color:#a33">Plan açılamadı: '+esc(e.message)+'</td></tr>';console.error(e)}
+}
+boot();
+})();
