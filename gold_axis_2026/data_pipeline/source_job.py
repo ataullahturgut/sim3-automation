@@ -120,6 +120,14 @@ def collect_source(source: str, mode: str) -> dict:
         elif source == "fred_indices":
             observations.extend(collect_fred_indices(run_id, retrieved_at, mode))
 
+        elif source == "fred_macro":
+            # Respects separate registered FRED IDs / retrieval-time PIT floor;
+            # never overwrite FRB H15 or EFFR_NYFED direct authority series.
+            observations.extend(collect_fred_indices(
+                run_id, retrieved_at, mode,
+                series_ids=["DGS10_FRED", "DEXCHUS_FRED", "DTWEXBGS_FRED"],
+            ))
+
         elif source == "twelve_market":
             observations.extend(collect_twelve_market(run_id, retrieved_at, mode))
 
@@ -155,7 +163,7 @@ def collect_source(source: str, mode: str) -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--source", choices=["xau", "cboe", "fed", "fred_indices", "twelve_market", "gpr"], required=True)
+    p.add_argument("--source", choices=["xau", "cboe", "fed", "fred_indices", "fred_macro", "twelve_market", "gpr"], required=True)
     p.add_argument("--mode", choices=["hourly", "daily", "backfill"], default="daily")
     p.add_argument("--persist", action="store_true")
     args = p.parse_args()

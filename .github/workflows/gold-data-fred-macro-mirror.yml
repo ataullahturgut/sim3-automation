@@ -1,0 +1,46 @@
+name: Gold Data FRED Macro Mirror (separate authority lineage)
+
+# Independent FRED-approved mirror lane. It MUST NOT overwrite direct Fed
+# H.15 / H.10 / NY Fed source identifiers or change their source roles.
+on:
+  workflow_call:
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
+      FRED_API_KEY:
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-data-fred-macro
+  cancel-in-progress: false
+
+jobs:
+  ingest-macro:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install data plane requirements
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require source credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$FRED_API_KEY"
+      - name: Import approved and separately named FRED source series
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/fred_indices_api.py
+          python gold_axis_2026/data_pipeline/source_job.py \
+            --source fred_macro --mode daily --persist
+      - name: Verify provenance, availability floor and freshness from Neon
+        run: python gold_axis_2026/data_pipeline/verify_fred_macro_mirror.py

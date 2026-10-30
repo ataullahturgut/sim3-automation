@@ -32,6 +32,30 @@ INDEX_SERIES = {
         "unit": "index",
         "status": "APPROVED_PRIVATE_MODEL_USE_NO_PUBLIC_RAW_REDISTRIBUTION",
     },
+    # Approved and separately registered FRED authority mirrors. Preserve
+    # their own series IDs, provider version and first-access retrieval floor.
+    # NEVER relabel one of these as direct FRB DDP / NY Fed / DXY.
+    "DGS10_FRED": {
+        "fred_id": "DGS10",
+        "semantic": "DGS10",
+        "source": "FRED; upstream Federal Reserve Board H.15",
+        "unit": "percent",
+        "status": "APPROVED",
+    },
+    "DEXCHUS_FRED": {
+        "fred_id": "DEXCHUS",
+        "semantic": "DEXCHUS",
+        "source": "FRED; upstream Federal Reserve Board H.10",
+        "unit": "CNY per USD",
+        "status": "APPROVED_WITH_AVAILABILITY_LAG",
+    },
+    "DTWEXBGS_FRED": {
+        "fred_id": "DTWEXBGS",
+        "semantic": "DTWEXBGS",
+        "source": "FRED; upstream Federal Reserve Board H.10",
+        "unit": "index",
+        "status": "APPROVED_PROXY_ONLY",
+    },
 }
 
 
@@ -125,7 +149,11 @@ def _fetch_one(
 def collect_fred_indices(run_id: str, retrieved_at, mode: str, series_ids: Iterable[str] | None = None):
     session = requests.Session()
     session.headers.update(base.HEADERS)
-    requested = list(series_ids or INDEX_SERIES.keys())
+    # Keep the vetted equity index lane unchanged; macro authorities are a
+    # distinct workflow/lineage and cannot block pre-existing index ingestion.
+    requested = list(series_ids) if series_ids is not None else [
+        "SP500_FRED", "DJIA_FRED", "NASDAQ100_FRED"
+    ]
     unknown = sorted(set(requested) - set(INDEX_SERIES))
     if unknown:
         raise ValueError(f"UNKNOWN_FRED_INDEX_SERIES:{unknown}")
