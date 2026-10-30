@@ -47,7 +47,18 @@ function official(p){
    6 "İlk fiziksel numune", 11 "Kıyas numunesi". */
 const PRIMARY_SAMPLE_CODES=new Set(['GA5002','GA5106','GA5212','GA5436','GA5426','GA5412']);
 const PHYSICAL_COMPARISON_CODES=new Set(['GA5102','GA5104','GA5108','GA5204','GA5207','GA5209','GA5636','GA5536','GA5429','GA5336','GA5415']);
+function machineReview(p){return p.grup==='Şönt'?window.ShuntMachineInvestment?.get(p.kod)||null:null;}
 function sampleStatus(p){
+ const machine=machineReview(p);
+ if(p.grup==='Şönt'){
+  if(!machine)throw Error('Şönt makine inceleme kaydı yok: '+p.kod);
+  const levels={A:{label:'1 · Öncelikli inceleme',type:'main',physical:true},
+                B:{label:'2 · Hedefli kontrol',type:'compare',physical:false},
+                C:{label:'3 · Sökmeden kontrol',type:'unknown',physical:false}};
+  const level=levels[machine.priority];
+  return {...level,priority:machine.priority,hint:machine.reason+' · Ölçüm: '+machine.focus+' · Henüz kapasite onayı yok.',shuntClass:'shunt-'+machine.priority};
+ }
+ // Harmonik kaynak statüleri değiştirilmez.
  const code=String(p.kod||'').trim().toUpperCase();
  if(PRIMARY_SAMPLE_CODES.has(code))return {label:'İlk numune',type:'main',hint:'Kaynak inceleme matrisi: ilk fiziksel numune adayı. Satın alma kararı değildir.',physical:true,priority:'ilk'};
  if(PHYSICAL_COMPARISON_CODES.has(code))return {label:'Fiziksel kıyas',type:'main',hint:'Kaynak inceleme matrisi: ayrıca fiziksel kıyas için önerilen numune. Satın alma kararı değildir.',physical:true,priority:'kıyas'};
@@ -56,6 +67,8 @@ function sampleStatus(p){
 }
 function sampleAudit(p){return p.grup==='Şönt'?window.ShuntSampleReview2026?.get(p.kod)||null:null;}
 function reviewText(p){
+ const m=machineReview(p);
+ if(m)return m.reason;
  const note=raw(p,'Seçilme veya kıyas nedeni')||raw(p,'İnceleme / eksik bilgi');
  return val(note);
 }
@@ -85,7 +98,7 @@ function technicalPhase(p){
 }
 function catalogReview(p){
  const old=byFamily(p,'2026/12 katalog durumu','Teknik veri durumu');
- if(p.grup==='Şönt'&&p.shuntOfficial?.verified)return '2026/12 üretici fiyat listesiyle güncellendi; 2023 katalog ortak kodlarıyla karşılaştırıldı. İmalat BOM/çizim teyidi gerekli.';
+ if(p.grup==='Şönt'&&p.shuntOfficial?.verified)return 'Katalog/revizyon değerlerinde uyuşmazlık tespit edildi; makine boyutlandırmasında fiilî ürün ölçümü esas alınmalıdır.';
  if(p.grup==='Şönt'&&!p.shuntOfficial?.verified)return 'Şönt kodu resmî 2026/12 listesinde doğrulanmadı. Üretici teknik çizimi gerekli.';
  return old;
 }
@@ -101,21 +114,21 @@ function technicalFields(p){
   verifiedField(p,'Nüve tipi'),verifiedField(p,'Tel / levha'),verifiedField(p,'İzolasyon'),verifiedField(p,'Vernik / emprenye'),
   byFamily(p,'Sarım tipi (tel/folyo)','Sarım iletken biçimi'),
   raw(p,'Yapı referansı (2025 çizimi)'),
-  raw(p,'Teknik inceleme grubu'),
+  machineReview(p)?'Şönt makine yatırımı · '+sampleStatus(p).label:raw(p,'Teknik inceleme grubu'),
   reviewText(p),
   catalogReview(p),
-  (sampleAudit(p)?sampleAudit(p).reason:raw(p,'İnceleme / eksik bilgi')),
+  machineReview(p)?('Ölçüm odağı: '+machineReview(p).focus+'. Fiziksel bobin/proses çevrimi henüz ölçülmedi.'):raw(p,'İnceleme / eksik bilgi'),
   p.kaynakDosya,p.kaynakSatir
  ];
 }
 const HEADERS=[
- ['Ürün kodu','code'],['Model / açıklama','model'],['Numune / inceleme','sample'],
+ ['Ürün kodu','code'],['Model / açıklama','model'],['İnceleme önceliği','sample'],
  ['Yıllık adet','count'],['Ailedeki pay (%)','percent'],
  ['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],['L (mH)','small'],
  ['p (%)','small'],['THDv','value'],['Ölçüler (mm)','dimension'],['Ağırlık (kg)','small'],
  ['Bağlantı','value'],['Bobin*','small'],['Nüve','value'],['Tel / levha','value'],['İzolasyon','value'],['Vernik / emprenye','value'],['Sarım / iletken','value'],
  ['Yapı / çizim referansı','value'],['Teknik inceleme sınıfı','text'],
- ['Seçilme / kıyas nedeni','long'],['Katalog durumu','long'],
+ ['İnceleme gerekçesi','long'],['Katalog durumu','long'],
  ['Eksik teknik bilgiler','long'],['Kaynak dosya','text'],['Kaynak satırı','small'],
  ['Ürün föyü','link'],['Aile datasheet','link'],['Kaynak bağlantısı','link']
 ];
@@ -131,14 +144,14 @@ function summarize(){
  return {groups,familyTotals,annual:products.reduce((t,p)=>t+(Number(p.annual)||0),0)};
 }
 function visible(p){
- return (family==='Tümü'||p.grup===family)&&(p.kod+' '+p.model+' '+group(p)+' '+val(raw(p,'Numune / kontrol'),'')).toLocaleLowerCase('tr-TR').includes(search.toLocaleLowerCase('tr-TR'));
+ return (family==='Tümü'||p.grup===family)&&(p.kod+' '+p.model+' '+group(p)+' '+val(raw(p,'Numune / kontrol'),'')+' '+(machineReview(p)?.reason||'')+' '+(machineReview(p)?.focus||'')).toLocaleLowerCase('tr-TR').includes(search.toLocaleLowerCase('tr-TR'));
 }
 function rowCells(p,g,totals){
  const t=technicalFields(p),status=sampleStatus(p);
  const fields=[
   '<a class="sample-product-link" href="urun.html?id='+encodeURIComponent(p.id)+'" target="_blank" rel="noopener">'+esc(p.kod)+'</a>',
   esc(val(t[1])),
-  '<span class="sample-status '+status.type+'" title="'+esc(status.hint)+'">'+esc(status.label)+'</span>',
+  '<span class="sample-status '+status.type+(status.shuntClass?' '+status.shuntClass:'')+'" title="'+esc(status.hint)+'">'+esc(status.label)+'</span>',
   '<strong class="sample-amount">'+qty(p.annual)+'</strong>',
   pct(p.annual,totals.familyTotals[p.grup]),
   ...t.slice(4).map(v=>esc(val(v))),
@@ -165,8 +178,9 @@ function render(){
    if(!found.length)continue;
    const groupPosition=GROUPS[fam].indexOf(gn);
    const sorted=found.slice().sort((a,b)=>{
-    const weight=sampleStatus(a).type==='main'?0:sampleStatus(a).type==='compare'?1:2;
-    const weightB=sampleStatus(b).type==='main'?0:sampleStatus(b).type==='compare'?1:2;
+    const statusA=sampleStatus(a),statusB=sampleStatus(b);
+    const weight=a.grup==='Şönt'?{A:0,B:1,C:2}[statusA.priority]:statusA.type==='main'?0:statusA.type==='compare'?1:2;
+    const weightB=b.grup==='Şönt'?{A:0,B:1,C:2}[statusB.priority]:statusB.type==='main'?0:statusB.type==='compare'?1:2;
     return weight-weightB||b.annual-a.annual||a.kod.localeCompare(b.kod,'tr');
    });
    groupRows.push('<tr class="sample-group-row"><td colspan="'+HEADERS.length+'"><span class="sample-group-name">'+esc(gn)+'</span><span>'+qty(g.annual)+' adet</span><span>'+esc(fam)+' içindeki pay '+pct(g.annual,totals.familyTotals[fam])+'</span><span class="sample-muted">'+g.all.length+' ürün'+(found.length!==g.all.length?' · '+found.length+' gösteriliyor':'')+'</span></td></tr>');
@@ -177,16 +191,14 @@ function render(){
   body.push(...groupRows);
  }
  $('sampleBody').innerHTML=body.join('')||'<tr><td colspan="'+HEADERS.length+'" class="sample-empty">Arama kriterlerine uygun ürün yok.</td></tr>';
- const sr=window.ShuntSampleReview2026;
- if(sr&&$('shuntSampleReview')){
-  const shuntProducts=products.filter(p=>p.grup==='Şönt');
-  const physical=shuntProducts.filter(p=>sr.get(p.kod)?.physical);
-  const physicalQty=physical.reduce((n,p)=>n+Number(p.annual||0),0);
-  const qtyClass=kind=>shuntProducts.filter(p=>sr.get(p.kod)?.kind===kind).reduce((n,p)=>n+Number(p.annual||0),0);
-  $('shuntSampleReview').innerHTML='<b>Şönt numune denetimi:</b> '+physical.length+' fiziksel numune adayı ('+qty(physicalQty)+' adet/yıl; '+pct(physicalQty,totals.familyTotals['Şönt'])+'). Diğer 16 ürünün 9\'u katalog/çizim kıyası, 3\'ünde bağlantısı farklı ürüne yönlendirme ('+qty(qtyClass('baglanti_farki'))+' adet), 2\'sinde fiziksel referans yok ('+qty(qtyClass('referans_numunesi_yok'))+' adet), 2 kodun üretici teyidi eksik ('+qty(qtyClass('kimlik_belirsiz'))+' adet). <b>Bu fiziksel üretim kapsama onayı değildir.</b>';
- }
-
- $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(totals.annual)+' adet</span><span><b>Şönt</b> '+qty(totals.familyTotals['Şönt'])+' adet'+'</span><span><b>Harmonik</b> '+qty(totals.familyTotals['Harmonik'])+' adet'+'</span><span><b>Fiziksel numune adayları</b> '+products.filter(p=>sampleStatus(p).physical).length+' ürün (6 ilk + 11 kıyas)</span><span class="sample-count">'+shown.length+' / '+products.length+' ürün</span>';
+ const shunt=products.filter(p=>p.grup==='Şönt');
+ const stats=Object.fromEntries(['A','B','C'].map(priority=>{
+  const matching=shunt.filter(p=>machineReview(p)?.priority===priority);
+  return [priority,{count:matching.length,annual:matching.reduce((s,p)=>s+p.annual,0)}];
+ }));
+ if(stats.A.count!==11||stats.B.count!==8||stats.C.count!==6||stats.A.annual!==32654||stats.B.annual!==2512||stats.C.annual!==606)throw Error('Şönt 11+8+6 yatırım inceleme toplami tutarsız');
+ $('shuntSampleReview').innerHTML='<b>Şönt makine yatırımı · mevcut ürün inceleme listesi:</b> Öncelikli <b>'+stats.A.count+' ürün / '+qty(stats.A.annual)+' adet (%'+(100*stats.A.annual/totals.familyTotals['Şönt']).toFixed(2).replace('.',',')+')</b>; hedefli yapı kontrolü <b>'+stats.B.count+' ürün / '+qty(stats.B.annual)+' adet</b>; sökmeden ön doğrulama <b>'+stats.C.count+' ürün / '+qty(stats.C.annual)+' adet</b>. <b>GA5001 ve GA5003 önceki 9 ürüne eklendi.</b> Ürünler zaten elde: satın alma listesi değildir. Kesin sarım, nüve, emprenye ve fırın kapasitesi fiziksel ölçüm gerektirir.';
+ $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(totals.annual)+' adet</span><span><b>Şönt</b> '+qty(totals.familyTotals['Şönt'])+' adet</span><span><b>Harmonik</b> '+qty(totals.familyTotals['Harmonik'])+' adet</span><span><b>Şönt öncelikli inceleme</b> 11 ürün · '+pct(stats.A.annual,totals.familyTotals['Şönt'])+' üretim adedi</span><span class="sample-count">'+shown.length+' / '+products.length+' ürün</span>';
 }
 function exportCSV(){
  const t=summarize();
@@ -206,32 +218,28 @@ function exportCSV(){
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='2027-numune-teknik-kapsam.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 }
 function showPage(name){
- const machine=name==='machine',sample=name==='samples',production=!machine&&!sample;
- $('productionView').hidden=!production;
- $('shuntMachineView').hidden=!machine;
+ const sample=name==='samples';
+ $('productionView').hidden=sample;
  $('sampleView').hidden=!sample;
- for(const [id,active] of [['tabProduction',production],['tabShuntMachine',machine],['tabSamples',sample]]){
-  $(id).classList.toggle('is-active',active);
-  $(id).setAttribute('aria-selected',String(active));
- }
- document.title=(machine?'Şönt Makine İncelemesi':sample?'Numune ve Teknik Kapsam':'Üretim Planlama')+' | Üretim Yönetimi';
+ $('tabProduction').classList.toggle('is-active',!sample);
+ $('tabSamples').classList.toggle('is-active',sample);
+ $('tabProduction').setAttribute('aria-selected',String(!sample));
+ $('tabSamples').setAttribute('aria-selected',String(sample));
+ document.title=(sample?'Numune ve Teknik Kapsam':'Üretim Planlama')+' | Şönt ve Harmonik';
  if(sample)render();
- if(machine)window.ShuntMachineInvestment.render();
 }
 function init(list){
  if(!Array.isArray(list)||!list.length)throw Error('Ürün verileri yüklenmeden numune görünümü açılamaz.');
  products=list;
  if(products.some(p=>!p.id||!p.kod||!p.grup||!Number.isFinite(p.annual)||p.annual<=0))throw Error('Numune sayfası ürün verileri geçersiz.');
- window.ShuntMachineInvestment.init(products);
  $('tabProduction').addEventListener('click',()=>showPage('production'));
- $('tabShuntMachine').addEventListener('click',()=>showPage('machine'));
  $('tabSamples').addEventListener('click',()=>showPage('samples'));
  $('sampleSearch').addEventListener('input',e=>{search=e.target.value||'';render()});
  $('sampleFamily').addEventListener('change',e=>{family=e.target.value;render()});
  $('sampleClear').addEventListener('click',()=>{family='Tümü';search='';$('sampleSearch').value='';$('sampleFamily').value='Tümü';render()});
  $('sampleExport').addEventListener('click',exportCSV);
  initComplete=true;render();
- showPage(location.hash==='#sont-makine'?'machine':location.hash==='#numune'?'samples':'production');
+ showPage(location.hash==='#sont-makine'||location.hash==='#numune'?'samples':'production');
 }
 window.SampleCoverageMatrix={init,render,group,status:sampleStatus,columns:HEADERS.length};
 })();
