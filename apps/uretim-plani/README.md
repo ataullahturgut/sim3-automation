@@ -1,3 +1,15 @@
+## Numune ve Teknik Kapsam — ayrı ana başlık (30.10.2026)
+
+**Giriş:** `index.html` üstündeki iki ana başlık: **Üretim Planlama** ve **Numune ve Teknik Kapsam**. İkinci başlıkta aylık üretim takvimi veya üretim ayı sütunları bulunmaz. Üretim planı, geçmiş kayıtları, kurtarma ve JSON yedek biçimi değiştirilmemiştir.
+
+**Numune tablosu:** Kaynak ürün verisindeki 133 ürün **tek geniş tabloda**, önce **Şönt / Harmonik** aile başlıkları, sonra **SVC-R, SRM, SRT / HRM, HRT 5,67, HRT 7/8, HRT 7/7, HRT 14, G, GG, özel** grup başlıkları ve her grubun altında bütün ürünler olarak yer alır. Aile ve grup başlıklarında yıllık adet, aile içi ve genel %; ürün satırlarında yıllık adet, **grup / aile / genel** yüzde payları doğrudan hesaplanır. Grup ve aile filtreleri yalnız görünen satırları değiştirir; yüzdelerin paydası her zaman tüm ürünlerin gerçek toplamıdır.
+
+**Tek satırda 32 sütun:** Ürün kodu, model, **Numune / inceleme**, yıllık adet, 3 pay, faz, güç, akım, L, p, THDv, ölçü, kg, bağlantı, bobin ön bilgi, nüve, tel/levha, izolasyon, vernik/emprenye, sarım/iletken, çizim ve inceleme sınıfı, kıyas nedeni, katalog durumu, eksik bilgiler, kaynak dosya/satır, ürün föyü, grup datasheet ve kaynak. İlk iki ürün sütunu yatay kaydırırken sabit; arama, aile filtresi ve CSV indirme vardır. Bilinmeyen malzeme ve proses değerleri **Doğrulanmadı** olarak gösterilir, uydurulmaz.
+
+**Numune/inceleme etiketleri:** Kaynağın `1 · İlk fiziksel numune` ve `2 · Kıyas numunesi` kayıtları **Ana numune** (fiziksel incelenmesi önerilen numune; ikinci tür fiziksel kıyas amaçlıdır); `3 · Sökmeden kıyas` **Kıyas**; üretici 2026 resmî listesinde kodu veya kaynak numune sınıfı eşleşmeyen ürünler **Bilgiler doğrulanmadı**. Bunlar **numune satın alındı / kapsanan ürünler onaylandı / eş bobin-nüve kullanılır** anlamına gelmez. Özellikle G/GG varyantları ve GA5004/GA5006 için teknik bilgi üretici listesiyle doğrulanmamıştır.
+
+**Gereksiz üç sütun yok:** `Ana numune referansı`, `Numune satın alma`, `Kapsama sonucu` sütunları bu ekranda bulunmaz. Kaynakta mevcut kıyas açıklamaları `Seçilme / kıyas nedeni` sütununda görünür. `Bobin*` ön değeri faz/çizim temelli tahmindir, fiziksel bobin sayısı onayı değildir. CSV mevcut tablonun filtresini izler.
+
 ## Üst ürün grubu optimizasyonu (30.10.2026)
 
 - **Şönt:** SVC-R → SRM → SRT. **Harmonik:** HRM, HRT (5,67 / 7-8 / 7-7 / 14), G/GG varyantları ve Özel Harmonik. Ürün aileleri farklı aylarda, üst ürün grupları kendi bloklarında sıralanır. Kullanıcı isterse `Üst gruba göre sırala` ile daha önce elle değiştirdiği satır sırasını bu düzene getirir.
