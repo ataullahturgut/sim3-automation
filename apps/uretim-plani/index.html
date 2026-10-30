@@ -43,9 +43,10 @@
     <section class="heading sample-page-heading">
       <div><span class="eyebrow">NUMUNE / ÜRÜN TEKNİK KAPSAMI</span>
         <h1>Numune ve teknik kapasite verileri</h1>
-        <p>Şönt ve Harmonik için ortak sütun sırası: <b>1 · Ürün → 4 · Mevcut teknik bilgiler → 2 · Sarım → 3 · Emprenye</b>. İki grubun açılır menüleri ve ölçü girişleri düzenlenebilir; kayıtları birbirinden ayrı saklanır.</p>
+        <p>Şönt ve Harmonik için ortak sütun sırası: <b>1 · Ürün → 4 · Mevcut teknik bilgiler → 2 · Sarım → 3 · Emprenye</b>. İnceleme türünü ve teknik ölçüleri seçtiğiniz ürünün ayrı düzenleme ekranında değiştirebilirsiniz; kayıtlar ürün ve aile bazında saklanır.</p>
       </div>
       <div class="actions">
+        <button id="sampleOpenPicker" type="button" class="btn primary">Ürün Seç / Düzenle</button>
         <button id="sampleExport" type="button" class="btn">↓ CSV indir</button>
         <button id="sampleBackup" type="button" class="btn">↓ Teknik veri yedeği (JSON)</button>
         <button id="sampleImport" type="button" class="btn">↑ Teknik veri yükle</button>
@@ -67,7 +68,7 @@
     </details>
     <section class="surface">
       <div class="matrix-heading sample-table-heading">
-        <div><h2>Ürün ve makine seçim bilgileri</h2><p><b>1 · Ürün</b> → <b>4 · Mevcut teknik bilgiler</b> → <b>2 · Sarım</b> → <b>3 · Emprenye</b>. Şönt ve Harmonik satırlarında kendi verilerini gir; “Belirlenmedi” varsayım değildir.</p></div>
+        <div><h2>Ürün ve makine seçim bilgileri</h2><p><b>1 · Ürün</b> → <b>4 · Mevcut teknik bilgiler</b> → <b>2 · Sarım</b> → <b>3 · Emprenye</b>. Arama ile ürün bulup “Düzenle”ye basın. Teknik alanlar tabloda yalnızca okunur; kayıt için seçilen ürünün formunu kullanın. “Belirlenmedi” varsayım değildir.</p></div>
         <div class="filters">
           <input id="sampleSearch" type="search" placeholder="Ürün kodu, model veya grup ara" aria-label="Numune tablosunda ürün ara">
           <select id="sampleFamily" aria-label="Numune tablosu ürün ailesi"><option value="Tümü">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
@@ -85,6 +86,43 @@
       <p class="sample-note"><b>Şönt ve Harmonik:</b> Sarım/emprenye alanlarına yalnız fiziksel ölçüm veya onaylı reçeteyle veri girilir. Boş kayıt “Belirlenmedi”dir; mevcut ürün katalog bilgileri ve üretim planı değiştirilmez. <b>Vernik:</b> Girilmiş malzeme kodları TDS/SDS doğrulanmadan onaylı sayılmaz ve ürün aileleri arasında otomatik aktarılmaz. <b>İzolasyon:</b> Çoklu seçim yapılabilir. <b>Kaydetme:</b> Her aile kendi tarayıcı kaydında saklanır, ortak JSON yedeğiyle dışa/içe aktarılır. Ürün dış ölçüsü ve toplam kg değeri gerçek bobin ölçüsü veya ağırlığının yerine geçmez.</p>
     </section>
   </section>
+    <section id="sampleEditor" class="sample-editor-overlay" role="dialog" aria-modal="true" aria-labelledby="sampleEditorTitle" hidden>
+      <div class="sample-editor-dialog">
+        <div class="sample-editor-heading">
+          <div>
+            <span class="eyebrow">NUMUNE / TEKNİK VERİ KAYDI</span>
+            <h2 id="sampleEditorTitle">Ürün seç</h2>
+            <p>Ürün kodunu, modeli ve yıllık üretim miktarını kontrol ederek yalnız seçtiğiniz ürünü düzenleyin.</p>
+          </div>
+          <button id="sampleEditorClose" type="button" class="btn" aria-label="Ürün düzenleme ekranını kapat">Kapat ✕</button>
+        </div>
+        <div id="samplePickerArea" class="sample-picker-area">
+          <div class="sample-picker-controls">
+            <label>Ürün ara (kod veya model)<input id="samplePickSearch" type="search" placeholder="Örn. GA5436 veya HRT 50" autocomplete="off"></label>
+            <label>Ürün grubu<select id="samplePickFamily">
+              <option value="Tümü">Şönt + Harmonik</option>
+              <option value="Şönt">Şönt</option>
+              <option value="Harmonik">Harmonik</option>
+            </select></label>
+          </div>
+          <p id="samplePickCount" class="sample-editor-help">Ürünler listeleniyor…</p>
+          <label for="samplePickList" class="sample-picker-label">Düzenlenecek ürünü seç</label>
+          <select id="samplePickList" class="sample-picker-list" size="10" aria-label="Düzenlenecek ürün listesi"></select>
+          <div class="sample-editor-actions"><button id="samplePickerConfirm" type="button" class="btn primary" disabled>Seçilen Ürünü Aç</button></div>
+        </div>
+        <div id="sampleEditArea" class="sample-edit-area" hidden>
+          <div id="sampleEditorIdentity" class="sample-editor-identity" aria-live="polite"></div>
+          <p class="sample-editor-help">Bu formdaki değişiklikler yalnız <b>Bu Ürüne Kaydet</b> düğmesine basınca kaydedilir. Başka bir ürüne geçmeden önce kaydedin veya değişiklikleri iptal edin.</p>
+          <form id="sampleEditorForm" class="sample-editor-form" novalidate></form>
+          <p id="sampleEditorMessage" class="sample-editor-message" role="status" aria-live="polite"></p>
+          <div class="sample-editor-actions">
+            <button id="sampleEditorBack" type="button" class="btn">← Ürün seçimine dön</button>
+            <button id="sampleEditorCancel" type="button" class="btn">Değişiklikleri iptal et</button>
+            <button id="sampleEditorSave" type="button" class="btn primary">Bu Ürüne Kaydet</button>
+          </div>
+        </div>
+      </div>
+    </section>
 </main>
 <div id="backdrop" class="backdrop" role="presentation">
   <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
