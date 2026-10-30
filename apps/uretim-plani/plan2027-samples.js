@@ -84,7 +84,8 @@ function technicalPhase(p){
 }
 function catalogReview(p){
  const old=byFamily(p,'2026/12 katalog durumu','Teknik veri durumu');
- if(p.grup==='Şönt'&&official(p))return 'Üretici 2026/12 listesiyle ölçü farkı var; kg/bağlantı ve ürün revizyonu doğrulanmalı. Kaynak değer değişmedi.';
+ if(p.grup==='Şönt'&&p.shuntOfficial?.verified)return '2026/12 üretici fiyat listesi ve 2023 ürün kataloğuyla güncellendi. Kesin imalat BOM/çizim teyidi gerekli.';
+ if(p.grup==='Şönt'&&!p.shuntOfficial?.verified)return 'Şönt kodu resmî 2026/12 listesinde doğrulanmadı. Üretici teknik çizimi gerekli.';
  return old;
 }
 function technicalFields(p){
