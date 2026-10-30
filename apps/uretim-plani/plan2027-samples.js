@@ -58,7 +58,7 @@ const INTEGER=new Set(['coilCount','turns']);
 const TEXT_LIMITS={conductorOther:90,conductorSize:90,coilDimensions:140,coreOther:90,insulationOther:90,resinCode:90,impMethodOther:90};
 const HEADERS=[
  ['Ürün kodu','code'],['Model / açıklama','model'],['Yıllık üretim adedi','count'],
- ['Ailedeki payı (%)','percent'],['İnceleme önceliği','sample'],
+ ['Ailedeki payı (%)','percent'],['İnceleme türü','sample'],
  ['Ürün dış ölçüleri (mm)','dimension'],['Ürün toplam ağırlığı (kg)','weight'],
  ['Bağlantı','value'],['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],
  ['L (mH)','small'],['p (%)','small'],['THDv','value'],['Aile datasheet','link'],
@@ -284,23 +284,23 @@ function select(p,key,options){
  const label={conductor:'İletken türü ve malzemesi',core:'Nüve tipi',impPart:'Emprenye edilen parça',impMethod:'Emprenye yöntemi'}[key]||key;
  const value=get(p,key),otherField={conductor:'conductorOther',core:'coreOther',impMethod:'impMethodOther'}[key];
  const otherActive=otherField&&(value==='other'||(key==='conductor'&&value==='mixed'));
- return '<div class="sample-edit-stack"><select class="sample-edit" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" aria-label="'+esc(p.kod+' · '+label)+'">'+optionList(options,value)+'</select>'+
+ return '<div class="sample-edit-stack"><select class="sample-edit" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" aria-label="'+esc(p.kod+' / '+p.model+' · '+label)+'">'+optionList(options,value)+'</select>'+
  (otherActive?textInput(p,otherField,'Diğer / karma açıklaması'):'')+'</div>';
 }
 function numberInput(p,key,placeholder,integer=false){
  const v=get(p,key);
- return '<input class="sample-edit sample-edit-number" type="number" min="'+(integer?'1':'0.001')+'" step="'+(integer?'1':'any')+'" inputmode="decimal" placeholder="'+esc(placeholder)+'" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' '+key)+'">';
+ return '<input class="sample-edit sample-edit-number" type="number" min="'+(integer?'1':'0.001')+'" step="'+(integer?'1':'any')+'" inputmode="decimal" placeholder="'+esc(placeholder)+'" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' / '+p.model+' · '+key)+'">';
 }
 function textInput(p,key,placeholder){
  const v=get(p,key),max=TEXT_LIMITS[key]||100;
- return '<input class="sample-edit sample-edit-text" type="text" maxlength="'+max+'" placeholder="'+esc(placeholder)+'" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' '+key)+'">';
+ return '<input class="sample-edit sample-edit-text" type="text" maxlength="'+max+'" placeholder="'+esc(placeholder)+'" data-code="'+esc(recordKey(p))+'" data-field="'+key+'" value="'+esc(v)+'" aria-label="'+esc(p.kod+' / '+p.model+' · '+key)+'">';
 }
 function resinCell(p){
  const mode=get(p,'resinMode'),code=get(p,'resinCode');
  const datalist=p.grup==='Şönt'?'sampleResinCodeListShunt':'sampleResinCodeListHarmonic';
- return '<div class="sample-resin-editor"><select class="sample-edit" data-code="'+esc(recordKey(p))+'" data-field="resinMode" aria-label="Vernik veya reçine seçimi">'+
+ return '<div class="sample-resin-editor"><select class="sample-edit" data-code="'+esc(recordKey(p))+'" data-field="resinMode" aria-label="'+esc(p.kod+' / '+p.model+' · Vernik/reçine seçimi')+'">'+
  optionList([['','Belirlenmedi'],['code','Malzeme kodu gir / seç'],['none','Kullanılmıyor']],mode)+'</select>'+
- (mode==='code'?'<input class="sample-edit sample-edit-text" type="text" list="'+datalist+'" maxlength="90" placeholder="Üretici malzeme kodu" data-code="'+esc(recordKey(p))+'" data-field="resinCode" value="'+esc(code)+'" aria-label="Üretici vernik reçine kodu">':'')+'</div>';
+ (mode==='code'?'<input class="sample-edit sample-edit-text" type="text" list="'+datalist+'" maxlength="90" placeholder="Üretici malzeme kodu" data-code="'+esc(recordKey(p))+'" data-field="resinCode" value="'+esc(code)+'" aria-label="'+esc(p.kod+' / '+p.model+' · vernik/reçine kodu')+'">':'')+'</div>';
 }
 function resinCodes(grup){
  return [...new Set(Object.entries(familyRecords(grup)).map(([,x])=>x).filter(x=>x.resinMode==='code'&&x.resinCode).map(x=>x.resinCode))].sort((a,b)=>a.localeCompare(b,'tr'));
