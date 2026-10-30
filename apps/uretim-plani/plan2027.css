@@ -128,3 +128,11 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .upper-label{display:inline-block;padding:4px 7px;border-radius:5px;background:#edf2f6;color:#2e566c;border:1px solid #d5e1e8;font-weight:750;font-size:10px;white-space:nowrap}
 .matrix tbody tr.group-transition td{border-top:2px solid #b1c5d3}
 @media(max-width:520px){.matrix td.col-upper,.matrix th.col-upper{width:117px;min-width:117px}.upper-label{white-space:normal}}
+
+
+/* Üst gruba göre sıralanan aylık detay tablosunun ince grup ayracı */
+.technical-table tbody tr.detail-group-start td{border-top:2px solid #9eb7ca}
+.technical-table tbody tr.detail-group-start td:nth-child(1),
+.technical-table tbody tr.detail-group-start td:nth-child(2){border-top:2px solid #9eb7ca}
+.technical-table td:nth-child(3){font-weight:780;color:#35677f;background:#f3f7fa}
+.technical-table tbody tr:hover td:nth-child(3){background:#eaf3fa}
