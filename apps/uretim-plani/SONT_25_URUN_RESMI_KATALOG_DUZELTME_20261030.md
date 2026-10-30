@@ -11,6 +11,7 @@ Denetim tarihi: **30 Ekim 2026**. Kapsam: **25 Şönt ürün**, **35.772 adet/y�
 ## Kontrol sonucu
 - **23/25** ürünün teknik satırı 2026/12 üretici listesinde mevcut. **GA5004 ve GA5006** için aynı kodla teknik satır bulunamadı: **değer türetilmedi, doğrulama gerekli**.
 - Eski matrise göre **23/23 ölçü**, **16/23 ağırlık**, **3/23 gerçek bağlantı tipi** farklı; **13/23 bağlantı metni** ayrıca değişir (M8/M10 ayak cıvatası ayrı alana taşındığı için). Güç farkı 0; akım farkı 0; L farkı 0.
+- Ürün katalogunda ayrıca 21 ortak model için **nominal kablo kesiti** ve teknik çizimlerde varsa **D/E ölçüleri** alındı; SRM 1.0 için çizimin D/E alanları kaynakta boş olduğundan sayısal değer türetilmedi. GA5107/GA5108 katalogda yer almadığından bunların kablo ve D/E değerleri çıkarılmadı. Genel katalogdaki hava aralıklı demir nüve, Al/Cu sarım olasılığı ve sınıf F izolasyon yalnızca **ürün ailesi genel bilgisi** olarak ürün föyüne yazıldı; modelin gerçek malzeme/izolasyon BOM'u olarak kabul edilmedi.
 - Güncellenen uygulama alanları: `p.kg`, `p.faz`, `p.guc`, `p.akim`, `p.L`, `p.olcu`, `p.baglanti` ve bunların `tamKayit` içindeki teknik eşleri. 2026 liste fiyatı (USD), ayak cıvatası, resmî PDF referansı ve orijinal kaynağa göre revizyon notu eklenmiştir.
 - 45.088 genel yıllık adet, 35.772 Şönt adedi, ürün kimlikleri, üretim ayları, numune önerileri, sıralama ve tarayıcıda kaydedilen kullanıcı planı **değiştirilmedi**. Kaynak sıkıştırılmış arşiv korunur; her uygulama ekranının veri yüklemesinde ortak `shunt-official-2026.js` düzeltme katmanı devreye girer.
 
