@@ -1,3 +1,19 @@
+# 2027 ana ekran: düzenlenebilir 12 aylık üretim matrisi (30.10.2026)
+
+**Güncel giriş:** \`index.html\`. Şönt ve Harmonik üretim planının 133 aktif ürün / 45.088 adet içeren 12 aylık matrisi doğrudan açılır. Ürünler ilk üretim ayı ve aynı aylarda üretim paternine göre alt alta sıralanır. Kaynak teknik bilgiler \`data-packed.js\`, onaylanan aylık üretim planı ve bobin ön değerleri \`plan2027-data.js\` üzerinden gelir.
+
+- **Ürün kodu/model bağlantısı:** \`urun.html?id=<benzersiz ürün kimliği>\` ile mevcut ürüne özgü teknik föy açılır; aynı kod altında farklı açıklama bulunan kayıtlar kaybolmaz.
+- **Adet hücresi:** Kaynak ay, hedef ay ve aktarılacak miktarı seçerek yıllık toplamı koruyan üretim kaydırması; aynı ürün satırının başka ay hücresine sürükle-bırak da mümkün.
+- **Setup kuralı:** Ocak/Şubat, Nisan/Mayıs, Temmuz/Ağustos, Ekim/Kasım yalnız Şönt; Mart/Haziran/Eylül/Aralık yalnız Harmonik. Çapraz aile taşıması engellenir.
+- **Hareket geçmişi:** Son işlemi geri al, başlangıç planına dön, düzenlenmiş planı Excel'de açılabilen UTF-8 CSV olarak dışarı aktar.
+- **Kayıt sınırı:** Değişiklikler **sadece kullanılan tarayıcının localStorage alanında** saklanır; GitHub, başka bilgisayar veya çok kullanıcılı merkezi sunucuya aktarılmaz. Başka cihazda aynı düzen için CSV dışarı alınmalıdır. Tarayıcı yerel dosyalar için depolamayı engellerse CSV indirin.
+- **Bobin bilgisi:** \`(nB*)\` etiketleri tip çizimi ön verisidir. Gerçek bobin üretim reçetesiyle doğrulanmadı; bilinmeyenler **?**.
+- **Eski otomatik parti senaryosu:** \`legacy.html\` üzerinden hâlâ erişilebilir. 2027 ana matrise bu eski senaryonun ay seçimleri uygulanmaz.
+
+\`index.html\`, \`plan2027.js\`, \`plan2027.css\`, \`data-packed.js\`, \`plan2027-data.js\`, \`urun.html\`, \`urun.js\` aynı dizinde bulunmalı. Güncel Chrome/Edge önerilir (\`DecompressionStream\` desteği gerekir).
+
+---
+
 # Şönt & Harmonik Üretim Planlama — simulation3
 
 Bu dizin, SIM3 Windows otomasyonunun ana dosyalarını değiştirmeyen bağımsız bir tarayıcı uygulamasıdır. Hazırlık amacı **makine yatırımı için yıllık üretim takvimi ve parti yüklerini görünür kılmaktır**. Kesin makine kapasitesi hesabı değildir.
