@@ -1,3 +1,6 @@
+### Sade üretim payı metriği — 30.10.2026
+Numune tablosunda ürün satırlarında eski üç sütun (`Grup payı`, `Aile payı`, `Genel pay`) **tek `Toplamdaki pay (%)`** sütununa indirildi: `ürünün yıllık adedi / tüm aktif ürünlerin yıllık toplamı × 100`. Aile başlığı ve üst grup başlığı yalnız `yıllık adet` ile `yıllık üretimdeki yüzde payı` gösterir; üç farklı paydayla kullanıcıyı meşgul etmez. Yüzde payı filtrelere göre değişmez; Şönt/Harmonik toplamı 45.088 adettir. CSV dışa aktarımında da yalnız tek yüzde vardır. Teknik alanlar, numune sınıflandırması, 2027 üretim planı ve saklanan kullanıcı kayıtları değiştirilmedi. Toplam numune tablosu 30 sütundur (önceden 32).
+
 ### Numune etiketi kaynak uyumsuzluğu düzeltmesi — 30.10.2026
 Ekran görüntüsünde GA5002, GA5106, GA5104, GA5108 gibi ürünler yanlışlıkla `Bilgiler doğrulanmadı` gösteriliyordu. Sebep: sıkıştırılmış ürün nesnesindeki `tamKayit["Numune / kontrol"]` değeri, bazı kaynakta numune olarak işaretlenen ürünlerde boştu; kod yalnız bu değere dayanıyordu.
 
