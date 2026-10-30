@@ -44,10 +44,10 @@ const INSULATIONS=[
  'Emaye kaplama','DMD','NMN','Elektriksel izolasyon kâğıdı',
  'Presbant','Polyester (PET) film','Poliimid film','Cam elyaf','Diğer'
 ];
-const INPUTS=['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','resinCode','impMethod','impCycle'];
+const INPUTS=['coilCount','conductor','conductorOther','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','coreOther','insulations','insulationOther','impPart','resinMode','resinCode','impMethod','impMethodOther','impCycle'];
 const NUMERIC=new Set(['coilCount','coilWeightKg','turns','windingMinutes','impCycle']);
 const INTEGER=new Set(['coilCount','turns']);
-const TEXT_LIMITS={conductorSize:90,coilDimensions:140,resinCode:90};
+const TEXT_LIMITS={conductorOther:90,conductorSize:90,coilDimensions:140,coreOther:90,insulationOther:90,resinCode:90,impMethodOther:90};
 const HEADERS=[
  ['Ürün kodu','code'],['Model / açıklama','model'],['Yıllık üretim adedi','count'],
  ['Şönt / aile payı (%)','percent'],['İnceleme önceliği','sample'],
@@ -133,7 +133,11 @@ function cleanRecord(record){
   if(v!==null&&v!==''&&!(Array.isArray(v)&&!v.length))result[field]=v;
  }
  if(result.resinMode!=='code')delete result.resinCode;
- if(result.impPart==='none')result.impMethod='none';
+ if(!['other','mixed'].includes(result.conductor))delete result.conductorOther;
+ if(result.core!=='other')delete result.coreOther;
+ if(result.impMethod!=='other')delete result.impMethodOther;
+ if(!(result.insulations||[]).includes('Diğer'))delete result.insulationOther;
+ if(result.impPart==='none'){result.impMethod='none';delete result.impMethodOther;}
  return result;
 }
 function saveRecord(code,field,value){
@@ -173,7 +177,11 @@ function notice(message,kind='ok'){
 function get(p,key){return entries[p.kod]?.[key]??'';}
 function optionList(list,value){return list.map(([k,l])=>'<option value="'+esc(k)+'"'+(String(value)===k?' selected':'')+'>'+esc(l)+'</option>').join('');}
 function select(p,key,options){
- return '<select class="sample-edit" data-code="'+esc(p.kod)+'" data-field="'+key+'" aria-label="'+esc(p.kod+' · '+HEADERS.find(x=>x[0])?.[0])+'">'+optionList(options,get(p,key))+'</select>';
+ const label={conductor:'İletken türü ve malzemesi',core:'Nüve tipi',impPart:'Emprenye edilen parça',impMethod:'Emprenye yöntemi'}[key]||key;
+ const value=get(p,key),otherField={conductor:'conductorOther',core:'coreOther',impMethod:'impMethodOther'}[key];
+ const otherActive=otherField&&(value==='other'||(key==='conductor'&&value==='mixed'));
+ return '<div class="sample-edit-stack"><select class="sample-edit" data-code="'+esc(p.kod)+'" data-field="'+key+'" aria-label="'+esc(p.kod+' · '+label)+'">'+optionList(options,value)+'</select>'+
+ (otherActive?textInput(p,otherField,'Diğer / karma açıklaması'):'')+'</div>';
 }
 function numberInput(p,key,placeholder,integer=false){
  const v=get(p,key);
@@ -194,8 +202,9 @@ function resinCodes(){
 }
 function insulationCell(p){
  const values=get(p,'insulations')||[],summary=values.length?values.join(', '):'Belirlenmedi';
- return '<details class="sample-multi"><summary>'+esc(summary)+'</summary><div class="sample-multi-content">'+INSULATIONS.map(item=>
- '<label><input type="checkbox" data-code="'+esc(p.kod)+'" data-field="insulations" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</div></details>';
+ return '<div class="sample-edit-stack"><details class="sample-multi"><summary>'+esc(summary)+'</summary><div class="sample-multi-content">'+INSULATIONS.map(item=>
+ '<label><input type="checkbox" data-code="'+esc(p.kod)+'" data-field="insulations" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</div></details>'+
+ (values.includes('Diğer')?textInput(p,'insulationOther','Diğer izolasyon açıklaması'):'')+'</div>';
 }
 function harmonicOriginal(p,key){
  const map={
@@ -305,6 +314,7 @@ function onCellChange(e){
   const existing=entries[code]?.insulations||[];
   const next=el.checked?[...new Set([...existing,el.value])]:existing.filter(v=>v!==el.value);
   saveRecord(code,key,next);
+  if(el.value==='Diğer'){render();return;}
   const d=el.closest('details');if(d){const summary=d.querySelector('summary');if(summary)summary.textContent=next.length?next.join(', '):'Belirlenmedi';}
   return;
  }
@@ -314,7 +324,7 @@ function onCellChange(e){
  if(key==='resinMode'){
   if(v!=='code')saveRecord(code,'resinCode','');
   render();
- }else if(key==='resinCode')render();
+ }else if(key==='resinCode'||['conductor','core','impMethod'].includes(key))render();
 }
 function download(name,content,type){
  const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');
@@ -331,7 +341,14 @@ function exportCsv(){
     const index={conductor:16,core:22,insulations:23,impPart:24,impMethod:26};
     for(const [key,i]of Object.entries(index)){
      const opts={conductor:CONDUCTOR,core:CORES,impPart:PARTS,impMethod:METHODS};
-     fields[i]=key==='insulations'?(get(p,key)||[]).join(', '):(opts[key].find(x=>x[0]===get(p,key))?.[1]||'Belirlenmedi');
+     if(key==='insulations'){
+      const selected=get(p,key)||[];
+      fields[i]=selected.map(x=>x==='Diğer'&&get(p,'insulationOther')?'Diğer: '+get(p,'insulationOther'):x).join(', ');
+     }else{
+      const label=opts[key].find(x=>x[0]===get(p,key))?.[1]||'Belirlenmedi';
+      const extra={conductor:'conductorOther',core:'coreOther',impMethod:'impMethodOther'}[key];
+      fields[i]=label+(extra&&get(p,extra)?' · '+get(p,extra):'');
+     }
     }
     fields[25]=get(p,'resinMode')==='none'?'Kullanılmıyor':get(p,'resinMode')==='code'?(get(p,'resinCode')||'Kod girilecek'):'Belirlenmedi';
    }
