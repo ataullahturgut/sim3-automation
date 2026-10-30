@@ -42,13 +42,19 @@
   <section id="sampleView" class="sample-view" role="tabpanel" aria-labelledby="tabSamples" hidden>
     <section class="heading sample-page-heading">
       <div><span class="eyebrow">NUMUNE / ÜRÜN TEKNİK KAPSAMI</span>
-        <h1>Numune ihtiyaç ve teknik kapsam tablosu</h1>
-        <p>Şönt için makine yatırımı amacıyla mevcut ürünlerden 11 öncelikli inceleme, 8 hedefli kontrol, 6 sökmeden ön doğrulama seçildi. Ürünler elimizde; satın alma listesi değil. Harmonik kaynak incelemesi değiştirilmedi.</p>
+        <h1>Numune ve teknik kapasite verileri</h1>
+        <p>Şönt için sütun sırası: <b>Ürün bilgileri → Mevcut teknik özellikler → Sarım → Emprenye</b>. Açılır menüler ve ölçü girişleri yalnız Şöntte düzenlenebilir. Harmonik kayıtları korunur.</p>
       </div>
-      <div class="actions"><button id="sampleExport" type="button" class="btn">↓ Tabloyu CSV indir</button></div>
+      <div class="actions">
+        <button id="sampleExport" type="button" class="btn">↓ CSV indir</button>
+        <button id="sampleBackup" type="button" class="btn">↓ Teknik veri yedeği (JSON)</button>
+        <button id="sampleImport" type="button" class="btn">↑ Teknik veri yükle</button>
+        <input id="sampleImportFile" type="file" accept=".json,application/json" hidden>
+      </div>
     </section>
     <div id="sampleMetrics" class="sample-metrics" aria-live="polite">Ürünler hazırlanıyor…</div>
     <p id="shuntSampleReview" class="sample-note" aria-live="polite">Şönt makine inceleme öncelikleri yükleniyor…</p>
+    <p id="sampleEditNotice" class="sample-edit-notice" role="status" aria-live="polite">Şönt teknik girişleri bu tarayıcıda otomatik saklanır. Başka cihaz için JSON yedeği indir.</p>
     <details id="shuntProcurementGuide" class="shunt-procurement-guide">
       <summary>Şönt: Sarım, emprenye ve fırın satın almak için hangi teknik veriler gerekiyor?</summary>
       <p>Bu ölçüm rehberi reaktör kataloğundan değil; sarım makinesi, VPI/emprenye sistemi, vernik ve fırın üreticilerinin teknik seçim kriterlerinden oluşturuldu. Katalogda olmayan ölçüler tahmin edilmez.</p>
@@ -61,20 +67,21 @@
     </details>
     <section class="surface">
       <div class="matrix-heading sample-table-heading">
-        <div><h2>Ürün aileleri ve teknik inceleme öncelikleri</h2><p>Önce aile başlığı, altında üst ürün grubu, hemen altında tüm ürünlerin teknik satırları.</p></div>
+        <div><h2>Ürün ve makine seçim bilgileri</h2><p><b>1 · Ürün</b> → <b>4 · Mevcut teknik bilgiler</b> → <b>2 · Sarım</b> → <b>3 · Emprenye</b>. Değerleri Şönt satırındaki kutulardan gir; “Belirlenmedi” seçimi varsayım değildir.</p></div>
         <div class="filters">
-          <input id="sampleSearch" type="search" placeholder="Ürün, model, numune veya grup ara" aria-label="Numune tablosunda ürün ara">
+          <input id="sampleSearch" type="search" placeholder="Ürün kodu, model veya grup ara" aria-label="Numune tablosunda ürün ara">
           <select id="sampleFamily" aria-label="Numune tablosu ürün ailesi"><option value="Tümü">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
           <button id="sampleClear" type="button" class="btn small">Filtreyi temizle</button>
         </div>
       </div>
+      <datalist id="sampleResinCodeList"></datalist>
       <div id="sampleTableScroll" class="sample-table-scroll">
         <table class="sample-table" id="sampleTable" aria-label="Numune ve teknik kapsam matrisi">
           <thead id="sampleHead"></thead>
           <tbody id="sampleBody"></tbody>
         </table>
       </div>
-      <p class="sample-note"><b>Şönt:</b> Ürünler elde mevcuttur. Makine yatırımı için 11 öncelikli fiziksel inceleme + 8 hedefli kontrol + 6 sökmeden ön kontrol belirlenmiştir. GA5001 ve GA5003 önceki 9 öncelikli ürüne eklenmiştir. Bu bir numune satın alma listesi veya kapasite onayı değildir. <b>Harmonik:</b> Mevcut kaynak inceleme statüleri korunmuştur. <b>Şönt bobin:</b> fiziksel bobin adedi henüz ölçülmedi. <b>Harmonik 1*/3*:</b> yalnız plan ön bilgisidir; fiziksel bobin sayısı onayı değildir. Dış ölçüler ve ürün kg bilgileri bobin/parti yükünün yerine geçmez. Şöntte bazı üretici katalog revizyonları ve uygulama ölçüleri uyuşmadığından makine boyutları fiziksel ürün üzerinde teyit edilmelidir.</p>
+      <p class="sample-note"><b>Şönt:</b> Yalnız fiziksel ölçüm veya onaylı reçete ile yeni veri girilir; varsayılan değer “Belirlenmedi”dir. <b>Vernik:</b> Yazılan veya daha önce girilmiş kodlar, onaylı malzeme listesi sayılmaz; TDS/SDS ile doğrulanmalıdır. <b>İzolasyon:</b> Birden fazla malzeme seçilebilir. <b>Harmonik:</b> Önceki kayıtları değiştirilmez. <b>Kaydetme:</b> Teknik girişler tarayıcıya kaydedilir, diğer cihazlar için JSON yedeği gerekir. Ürün dış ölçü ve toplam kg değerleri bobin ölçüsü veya bobin kg yerine kullanılmaz.</p>
     </section>
   </section>
 </main>
