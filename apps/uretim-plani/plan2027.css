@@ -139,7 +139,7 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 
 
 /* Ana navigasyon: planlama ve numune tek uygulamada ayrı ekranlar. */
-#productionView[hidden],#sampleView[hidden],#shuntMachineView[hidden]{display:none!important}
+#productionView[hidden],#sampleView[hidden]{display:none!important}
 .app-section-tabs{display:flex;align-items:center;gap:18px;border-bottom:1px solid #dbe5ee;margin:-7px 0 22px;padding:0 2px}
 .app-section-tab{border:0;border-bottom:3px solid transparent;background:transparent;color:#678094;font-weight:750;font-size:14px;padding:13px 4px 12px;margin-bottom:-1px;white-space:nowrap;transition:color .15s,border-color .15s}
 .app-section-tab:hover{color:#1f526f}
@@ -193,40 +193,9 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .sample-empty{padding:25px!important;text-align:center;color:#6f8294}
 @media(max-width:800px){.app-section-tabs{gap:14px;overflow:auto}.app-section-tab{font-size:12px}.sample-metrics{gap:8px}.sample-metrics .sample-count{margin-left:0}.sample-table-heading{align-items:stretch}.sample-table-scroll{max-height:68vh}.sample-table th,.sample-table td{padding:7px 8px}}
 
-
-/* Şönt makine yatırımı: eldeki ürünlerin inceleme sırası (üretim miktarı ve fiyat değil). */
-.shunt-investment-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 16px}
-.shunt-investment-metrics>div{padding:14px 16px;background:#fff;border:1px solid #dee7ee;border-radius:10px;min-width:0}
-.shunt-investment-metrics small{display:block;color:#71869a;font-size:11px;font-weight:650}
-.shunt-investment-metrics strong{display:block;color:#183d59;font-size:22px;margin:2px 0;font-weight:850}
-.shunt-investment-metrics span{color:#527084;font-weight:650;font-size:11px}
-.shunt-investment-count{padding:8px 16px;margin:0;color:#5e768a;border-top:1px solid #edf2f5;font-size:11px}
-.shunt-investment-scroll{overflow:auto;max-height:min(67vh,730px);border-top:1px solid #e5edf3;scrollbar-color:#bfcedb #f4f7fa}
-.shunt-investment-table{border-collapse:separate;border-spacing:0;min-width:1260px;width:100%;table-layout:auto;font-size:11px;color:#314e62}
-.shunt-investment-table td,.shunt-investment-table th{padding:10px 11px;text-align:left;border-bottom:1px solid #e9eff4;vertical-align:top;line-height:1.5}
-.shunt-investment-table th{position:sticky;top:0;background:#ecf2f7;color:#31516b;z-index:4;font-weight:820;white-space:nowrap}
-.shunt-investment-table th:first-child,.shunt-investment-table td:first-child{position:sticky;left:0;z-index:2;min-width:120px;background:#fff}
-.shunt-investment-table th:first-child{background:#e1eaf3;z-index:5}
-.shunt-investment-table tr:hover td{background:#f7fafd}
-.shunt-investment-table tr:hover td:first-child{background:#f7fafd}
-.shunt-investment-table .shunt-num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.shunt-investment-table .shunt-code{color:#1f6c9d;text-decoration:none;font-weight:850}
-.shunt-investment-table .shunt-code:hover{text-decoration:underline}
-.shunt-investment-table td:nth-child(7){min-width:250px;max-width:375px}
-.shunt-investment-table td:nth-child(8){min-width:185px;max-width:280px}
-.shunt-investment-table td:nth-child(2){min-width:145px;white-space:nowrap}
-.shunt-investment-table td:nth-child(6){min-width:210px}
-.shunt-level{display:inline-block;border-radius:5px;font-size:11px;font-weight:740;padding:4px 7px;white-space:nowrap}
-.shunt-level.level-A{background:#e5f1f8;color:#285778}
-.shunt-level.level-B{background:#f3efe5;color:#746039}
-.shunt-level.level-C{background:#f0f3f6;color:#637485}
-.shunt-investment-process{padding:18px;margin-top:16px}
-.shunt-investment-process h2{font-size:16px;margin:0 0 13px;color:#254761}
-.shunt-process-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.shunt-process-grid>div{background:#f6f9fb;padding:13px;border:1px solid #e4ebf1;border-radius:9px}
-.shunt-process-grid strong{color:#355974;font-size:12px}
-.shunt-process-grid p{color:#688093;font-size:11px;line-height:1.65;margin:6px 0 0}
-.shunt-investment-warning{padding:12px 13px;background:#fff9ef;border:1px solid #ead7b9;border-radius:8px;color:#76582e;font-size:11px;line-height:1.7;margin:14px 0 0}
-.shunt-investment-warning a{color:#246997}
-@media(max-width:900px){.shunt-investment-metrics,.shunt-process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.shunt-investment-metrics,.shunt-process-grid{grid-template-columns:1fr 1fr;gap:7px}.shunt-investment-metrics>div{padding:10px}.shunt-investment-metrics strong{font-size:19px}.shunt-investment-process{padding:12px}.shunt-process-grid>div{padding:9px}}
+/* Mevcut numune/teknik kapsam sayfasında Şönt makine inceleme öncelikleri */
+.sample-status.shunt-A{color:#235b77;font-weight:850}
+.sample-status.shunt-B{color:#806328;font-weight:750}
+.sample-status.shunt-C{color:#647d8c}
+.sample-table tr.sample-product-row:has(.sample-status.shunt-A) td.sample-cell-sample{background:#f0f7fb}
+.sample-table tr.sample-product-row:has(.sample-status.shunt-B) td.sample-cell-sample{background:#faf7ef}
