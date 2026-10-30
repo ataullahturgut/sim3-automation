@@ -60,6 +60,10 @@ function sourceLink(p){
  const url=byFamily(p,'Kaynak URL','Kaynak bağlantısı');
  return typeof url==='string'&&/^https?:\/\//i.test(url)?url:null;
 }
+function verifiedField(p,name){
+ const v=raw(p,name);
+ return v===null||v===undefined||String(v).trim()===''||/bilinmiyor|doğrulanmadı|belirsiz/i.test(String(v))?'Doğrulanmadı':v;
+}
 function technicalFields(p){
  return [
   p.kod,p.model,sampleStatus(p).label,p.annual,
@@ -69,6 +73,7 @@ function technicalFields(p){
   byFamily(p,'Ölçü G×Y×D (mm)','Dış ölçüler (mm)'),
   typeof p.kg==='number'&&p.kg>0?p.kg:null,
   byFamily(p,'Bağlantı tipi','Bağlantı'),provisionalCoil(p),
+  verifiedField(p,'Nüve tipi'),verifiedField(p,'Tel / levha'),verifiedField(p,'İzolasyon'),verifiedField(p,'Vernik / emprenye'),
   byFamily(p,'Sarım tipi (tel/folyo)','Sarım iletken biçimi'),
   raw(p,'Yapı referansı (2025 çizimi)'),
   raw(p,'Teknik inceleme grubu'),
@@ -83,7 +88,7 @@ const HEADERS=[
  ['Yıllık adet','count'],['Grup payı','percent'],['Aile payı','percent'],['Genel pay','percent'],
  ['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],['L (mH)','small'],
  ['p (%)','small'],['THDv','value'],['Ölçüler (mm)','dimension'],['Ağırlık (kg)','small'],
- ['Bağlantı','value'],['Bobin*','small'],['Sarım / iletken','value'],
+ ['Bağlantı','value'],['Bobin*','small'],['Nüve','value'],['Tel / levha','value'],['İzolasyon','value'],['Vernik / emprenye','value'],['Sarım / iletken','value'],
  ['Yapı / çizim referansı','value'],['Teknik inceleme sınıfı','text'],
  ['Seçilme / kıyas nedeni','long'],['Katalog durumu','long'],
  ['Eksik teknik bilgiler','long'],['Kaynak dosya','text'],['Kaynak satırı','small'],
