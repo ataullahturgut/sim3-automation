@@ -1,3 +1,7 @@
+## Harmonik başlangıç envanteri — 30.10.2026
+
+Şönt numune denetimini izleyen [HARMONIK_2026_KAYNAK_ENVANTERI_20261030.md](HARMONIK_2026_KAYNAK_ENVANTERI_20261030.md): 108 aktif Harmonik satırı (110 kaynaktan 2 sıfır miktarlı satır çıkarılmış), yıllık 9.316 adet, 8 fiziksel numune adayı, 59 doküman kıyası, 41 kimlik/reçete teyidi gereken ürün satırı. Harmonik teknik fiyat/katalog alanları henüz yeniden doğrulanıp güncellenmedi. Şönt 25 ürün araştırmasından bağımsızdır.
+
 ## Şönt 9 fiziksel numune — 25 ürün temsil denetimi (30.10.2026)
 
 **Yeni tamamlanan çalışma:** [SONT_NUMUNE_TEMSIL_DENETIMI_20261030.md](SONT_NUMUNE_TEMSIL_DENETIMI_20261030.md).
