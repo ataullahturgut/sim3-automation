@@ -1,3 +1,10 @@
+### Numune etiketi kaynak uyumsuzluğu düzeltmesi — 30.10.2026
+Ekran görüntüsünde GA5002, GA5106, GA5104, GA5108 gibi ürünler yanlışlıkla `Bilgiler doğrulanmadı` gösteriliyordu. Sebep: sıkıştırılmış ürün nesnesindeki `tamKayit["Numune / kontrol"]` değeri, bazı kaynakta numune olarak işaretlenen ürünlerde boştu; kod yalnız bu değere dayanıyordu.
+
+Numune statüsü artık `Reaktor_Ortak_Uretim_ve_Numune_Matrisi_2026.xlsx` kaynak kontrolüne dayalı açık 17 kod listesinden atanır: 6 **İlk fiziksel numune** (GA5002, GA5106, GA5212, GA5436, GA5426, GA5412), 11 **ayrı fiziksel kıyas numunesi** (GA5102, GA5104, GA5108, GA5204, GA5207, GA5209, GA5636, GA5536, GA5429, GA5336, GA5415). Diğer 2026 katalog eşleşmeli ürünler `Kıyas`, eşleşmesi olmayanlar `Bilgiler doğrulanmadı` olur. Her aday ekranda `Ana numune` etiketi taşır; hover açıklaması ilk numune ile fiziksel kıyası ayırır. Satın alma kararı verilmiş değildir.
+
+Kaynak 135 satır içerir; iki ürünün yıllık adedi 0 olduğundan uygulamadaki aktif ürün sayısı **133**'tür. Test edilen 133 aktif üründe **17 ana numune adayı + 73 kıyas + 43 doğrulanmamış** tespit edildi; yıllık toplam 45.088 adettir. Bu 43 sayısı yalnız `Numune / inceleme` sınıfındaki teknik eşleşme durumudur, fiziksel bobin farklılığı tespiti değildir. Görseldeki boş faz hücreleri de SVC-R/SRM/HRM tek faz, SRT/HRT üç faz ürün sınıfı ile kaynak bazında tamamlanmıştır; G/GG özel ürünlerde faz tahmini yapılmaz. Sahte doğrulanmış değer üretilmez.
+
 ## Numune ve Teknik Kapsam — ayrı ana başlık (30.10.2026)
 
 **Giriş:** `index.html` üstündeki iki ana başlık: **Üretim Planlama** ve **Numune ve Teknik Kapsam**. İkinci başlıkta aylık üretim takvimi veya üretim ayı sütunları bulunmaz. Üretim planı, geçmiş kayıtları, kurtarma ve JSON yedek biçimi değiştirilmemiştir.
