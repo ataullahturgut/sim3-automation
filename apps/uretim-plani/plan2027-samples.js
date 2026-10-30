@@ -1,7 +1,7 @@
 /* Numune ve Teknik Kapsam — 2027 ürün portföyü.
-   Üretim planından bağımsız görünüm. Yıllık miktarlar ürün verisinden,
-   numune statüsü yalnız kaynak inceleme önerisinden türetilir.
-   Fiziksel ortak üretim / numune kapsama onayı varsayılmaz. */
+   Şönt: eldeki ürünlerin makine yatırımı için A(11)/B(8)/C(6) inceleme önceliği.
+   Harmonik: mevcut 2026 kaynak matrisindeki statüler korunur.
+   Yıllık üretim, teknik kapasiteler veya satın alma statüsü bu sayfada değiştirilmez. */
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -40,11 +40,8 @@ function official(p){
  const m=String(p.kod||'').match(/^GA(\d{4})$/);
  return !!m&&OFFICIAL_RANGES.some(([lo,hi])=>Number(m[1])>=lo&&Number(m[1])<=hi);
 }
-/* 2026 ortak numune matrisi: kaynak dosyadaki fiziksel inceleme adayları.
-   Paketlenmiş ürün teknik kaydının "Numune / kontrol" alanı bazı ürünlerde
-   boş olduğundan tek başına o alana güvenilmez (GA5002/GA5106 vb.).
-   Yalnızca 17 kaynakta açıkça işaretlenmiş ürün burada adaydır.
-   6 "İlk fiziksel numune", 11 "Kıyas numunesi". */
+/* Eski 2026 kaynak matrisi: yalnız Harmonik için geçerli inceleme etiketleri.
+   Şönt'te bu eski kodlar kullanılmaz, machineReview() güncel seçimi sağlar. */
 const PRIMARY_SAMPLE_CODES=new Set(['GA5002','GA5106','GA5212','GA5436','GA5426','GA5412']);
 const PHYSICAL_COMPARISON_CODES=new Set(['GA5102','GA5104','GA5108','GA5204','GA5207','GA5209','GA5636','GA5536','GA5429','GA5336','GA5415']);
 function machineReview(p){return p.grup==='Şönt'?window.ShuntMachineInvestment?.get(p.kod)||null:null;}
@@ -65,7 +62,6 @@ function sampleStatus(p){
  if(official(p))return {label:'Kıyas',type:'compare',hint:'2026 katalog karşılığı mevcut; kaynak numune matrisi doküman/sökmeden kıyas öneriyor. Fiziksel yapısal kapsam onayı değildir.',physical:false};
  return {label:'Bilgiler doğrulanmadı',type:'unknown',hint:'2026/12 katalogda teknik eşleşme veya özel ürün reçetesi doğrulanmadı. Bobin farkı saptanmış değildir.',physical:false};
 }
-function sampleAudit(p){return p.grup==='Şönt'?window.ShuntSampleReview2026?.get(p.kod)||null:null;}
 function reviewText(p){
  const m=machineReview(p);
  if(m)return m.reason;
