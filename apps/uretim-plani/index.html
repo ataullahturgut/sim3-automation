@@ -1,27 +1,34 @@
 <!doctype html>
-<html lang="tr">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Üretim Planlama | Şönt & Harmonik</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2027 Üretim Planlama | Şönt ve Harmonik</title><link rel="stylesheet" href="plan2027.css"></head>
 <body>
-<div class="shell">
-  <header class="topbar"><div class="brand"><span class="brandmark">ÜP</span><div><strong>Üretim Planlama</strong><small>Şönt reaktör &amp; harmonik filtre</small></div></div><div class="topright"><span class="pill">SIMULATION3 · İlk sürüm</span><span id="sourceBadge" class="source-badge">Veriler yükleniyor</span></div></header>
-  <main>
-    <div class="heading"><div><span class="eyebrow">YILLIK ÜRETİM · 12 AY</span><h1>Üretim parti takvimi</h1><p>Renkli üretim adedine tıklayın; ürünlerin tamamını 40 sütunluk teknik ve kıyas bilgileriyle birlikte tek tabloda görün.</p></div><button id="downloadBtn" class="button secondary">↓ Planı CSV indir</button></div>
-    <section class="stats" id="stats" aria-label="Üretim özeti"></section>
-    <section class="panel controls"><div class="panel-title"><div><h2>Planlama kuralları</h2><p>Yıllık adet kademeleri sabittir. 1 ve 2 partili ürünlerin ayları ortaktır.</p></div><div class="mini-pill">Toplam 12 ay</div></div>
-      <div class="rules"><span><b>1–200</b> <em>1 parti</em></span><span><b>201–500</b> <em>2 parti</em></span><span><b>501–1.000</b> <em>3 parti</em></span><span><b>1.001+</b> <em>4 parti</em></span></div>
-      <div class="control-row"><label>Üretim senaryosu<select id="scenario"><option value="balanced">Plan A · Dengeli dağılım</option><option value="fixed">Plan B · Ortak başlangıç</option></select></label><label>1 partili ürünlerin ayı<select id="oneMonth"></select></label><label>2 partili ürünlerin ilk ayı<select id="twoMonth"></select></label><div class="hint">2. üretim otomatik olarak 6 ay sonra. 3 partide 4, 4 partide 3 ay aralık korunur.</div></div>
-    </section>
-    <section class="panel calendar-panel"><div class="panel-title"><div><h2>12 aylık takvim</h2><p>Boş hücrede üretim yoktur. Renkli adetler tıklanabilir.</p></div><div class="legend"><span class="dot one"></span>1 parti <span class="dot two"></span>2 parti <span class="dot three"></span>3 parti <span class="dot four"></span>4 parti</div></div>
-      <div class="table-scroll"><table class="calendar" id="calendar"><caption class="sr-only">Aylık üretim partileri</caption></table></div>
-      <div class="monthly" id="monthly"></div>
-    </section>
-    <section class="panel selection" id="selection"><div class="empty-state"><strong>Bir üretim miktarına tıklayın</strong><p>Örneğin Haziran'daki 1 parti hücresine basınca o ayın bütün ürünleri teknik özellik sütunlarıyla tek tabloda açılacak.</p></div></section>
-    <footer>Kaynak: Yüklenen 2026 şönt ve harmonik ürün matrisleri. Teknik bilgisi doğrulanmamış alanlar ayrı işaretlenir. Bu sürüm makine çevrim süresi veya fırın kapasitesi tahmini yapmaz.</footer>
-  </main>
+<header class="topbar"><div class="brand"><span class="brand-mark">ÜP</span><span><b>Üretim Planlama</b><small>Şönt Reaktör · Harmonik Filtre</small></span></div><div class="topmeta"><span class="chip">2027 · 12 Aylık Matris</span><span id="status">Veriler yükleniyor…</span></div></header>
+<main>
+  <section class="heading"><div><span class="eyebrow">ÜRETİM PLANLAMA / YILLIK TAKVİM</span><h1>12 aylık üretim matrisi</h1><p>Benzer üretim aylarına sahip ürünler alt alta. <b>Ürün adına</b> tıklayın: teknik föy açılır. <b>Adet hücresine</b> tıklayın: başka aya taşıyın.</p></div>
+  <div class="actions"><button id="undo" class="btn" disabled>↶ Geri al</button><button id="export" class="btn">↓ CSV indir</button><button id="reset" class="btn secondary">Başlangıç planı</button></div></section>
+  <section id="metrics" class="metrics"></section>
+  <section class="surface">
+    <div class="matrix-heading"><div><h2>Yıllık ürün ve üretim tablosu</h2><p>133 üretilecek ürün · Tek ürün / satır · Ocak–Aralık yatay kaydırılabilir</p></div><div class="filters">
+      <input id="search" type="search" placeholder="Ürün kodu veya model ara" aria-label="Ürün ara">
+      <select id="family" aria-label="Ürün ailesi"><option value="all">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
+      <button id="clearFilter" class="btn small">Filtreyi temizle</button>
+    </div></div>
+    <div class="matrix-scroll" id="matrixScroll"><table class="matrix" id="matrix"><thead id="matrixHead"></thead><tbody id="matrixBody"></tbody><tfoot id="matrixFoot"></tfoot></table></div>
+    <div class="legend"><span><b>Şönt</b> ayları mavi, <b>Harmonik</b> ayları turuncu işaretlidir. Boş hücre: üretim yok.</span><span><b id="changeCount">0</b> hareket · Değişiklikler bu tarayıcıda saklanır.</span></div>
+  </section>
+  <div class="footnote"><b>Bobin (B*)</b> değerleri üretici tip çizimlerine dayanan ön bilgilerdir; ürün bazlı üretim reçetesiyle kesinleşmemiştir. Başka aileye ayrılmış bir aya aktarım, setup karışmasını önlemek için engellenir. <a href="legacy.html">Eski parti senaryosu ekranı</a></div>
+</main>
+<div id="backdrop" class="backdrop" role="presentation">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <div class="dialog-title"><div><span class="eyebrow">AYLAR ARASI ÜRETİM AKTARIMI</span><h2 id="dialogTitle">Üretimi taşı</h2></div><button id="close" class="close" aria-label="Kapat">✕</button></div>
+    <div class="product-summary"><div><a id="selectedCode" target="_blank" rel="noopener" href="#">Ürün kodu</a><div id="selectedModel"></div></div><span id="selectedFamily" class="tag"></span></div>
+    <div class="fields"><label>Kaynak ay<select id="from"></select></label><label>Hedef ay<select id="to"></select></label></div>
+    <label class="quantity-label">Aktarılacak miktar (adet)<input id="quantity" type="number" min="1" step="1"></label>
+    <div class="shortcuts"><button type="button" id="allQty">Tamamı</button><button type="button" id="hundred">100 adet</button></div>
+    <p id="notice" class="notice"></p><div id="beforeAfter" class="before-after"></div>
+    <div class="dialog-actions"><button id="cancel" class="btn">Vazgeç</button><button id="confirm" class="btn primary">Üretimi aktar</button></div>
+  </section>
 </div>
-<script src="data-packed.js"></script><script src="app.js"></script>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="data-packed.js"></script><script src="plan2027-data.js"></script><script src="plan2027.js"></script>
 </body></html>
