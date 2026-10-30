@@ -49,6 +49,16 @@
     </section>
     <div id="sampleMetrics" class="sample-metrics" aria-live="polite">Ürünler hazırlanıyor…</div>
     <p id="shuntSampleReview" class="sample-note" aria-live="polite">Şönt makine inceleme öncelikleri yükleniyor…</p>
+    <details id="shuntProcurementGuide" class="shunt-procurement-guide">
+      <summary>Şönt: Sarım, emprenye ve fırın satın almak için hangi teknik veriler gerekiyor?</summary>
+      <p>Bu ölçüm rehberi reaktör kataloğundan değil; sarım makinesi, VPI/emprenye sistemi, vernik ve fırın üreticilerinin teknik seçim kriterlerinden oluşturuldu. Katalogda olmayan ölçüler tahmin edilmez.</p>
+      <div class="shunt-procurement-steps">
+        <div><strong>1 · Sarım makinesi</strong><p>Gerçek bobin sayısı/ürün, bobin iç/dış geometrisi ve kg, Cu/Al tel veya folyo ölçüsü, sarım eni, tur/katman, kalıp, sarım dk/bobin ve model değişim dk.</p></div>
+        <div><strong>2 · Emprenye sistemi</strong><p>İşlem gören parça: bobin mi tam reaktör mü? Sepet ölçüsü ve kapasitesi, malzemenin TDS/SDS'si, daldırma/vakum/VPI seçimi, vakum-basınç değerleri ve parti toplam çevrimi.</p></div>
+        <div><strong>3 · Kurutma / kürleme fırını</strong><p>Gerçek yükün ölçüsü ve kg, yerleşim ve sepet başına adet, TDS'ye göre sıcaklık-süre, yüklü ısınma-soğuma ve toplam çevrim; solvent/VOC/yangın güvenliği.</p></div>
+      </div>
+      <p><b>Uyarı:</b> Ürünün dış ölçüsü bobin ölçüsü değildir; toplam ürün ağırlığı bobin veya sepet ağırlığı yerine geçmez. 9 saat vardiyada kapasite hesabı gerçek sürelerden yapılacaktır. <a href="https://github.com/ataullahturgut/sim3-automation/blob/simulation3/apps/uretim-plani/SONT_SARIM_EMPRENYE_FIRIN_MAKINE_ALIMI_GEREKLI_VERILER_20261030.md" target="_blank" rel="noopener">Bağımsız üretici kaynaklı teknik şartname</a></p>
+    </details>
     <section class="surface">
       <div class="matrix-heading sample-table-heading">
         <div><h2>Ürün aileleri ve teknik inceleme öncelikleri</h2><p>Önce aile başlığı, altında üst ürün grubu, hemen altında tüm ürünlerin teknik satırları.</p></div>
@@ -64,7 +74,7 @@
           <tbody id="sampleBody"></tbody>
         </table>
       </div>
-      <p class="sample-note"><b>Şönt:</b> Ürünler elde mevcuttur. Makine yatırımı için 11 öncelikli fiziksel inceleme + 8 hedefli kontrol + 6 sökmeden ön kontrol belirlenmiştir. GA5001 ve GA5003 önceki 9 öncelikli ürüne eklenmiştir. Bu bir numune satın alma listesi veya kapasite onayı değildir. <b>Harmonik:</b> Mevcut kaynak inceleme statüleri korunmuştur. <b>Bobin*:</b> Ön bilgidir; gerçek fiziksel bobin adedi ve çevrim süresi doğrulanmadı. Şöntte bazı üretici katalog revizyonları ve uygulama ölçüleri uyuşmadığından makine boyutları fiziksel ürün üzerinde teyit edilmelidir.</p>
+      <p class="sample-note"><b>Şönt:</b> Ürünler elde mevcuttur. Makine yatırımı için 11 öncelikli fiziksel inceleme + 8 hedefli kontrol + 6 sökmeden ön kontrol belirlenmiştir. GA5001 ve GA5003 önceki 9 öncelikli ürüne eklenmiştir. Bu bir numune satın alma listesi veya kapasite onayı değildir. <b>Harmonik:</b> Mevcut kaynak inceleme statüleri korunmuştur. <b>Şönt bobin:</b> fiziksel bobin adedi henüz ölçülmedi. <b>Harmonik 1*/3*:</b> yalnız plan ön bilgisidir; fiziksel bobin sayısı onayı değildir. Dış ölçüler ve ürün kg bilgileri bobin/parti yükünün yerine geçmez. Şöntte bazı üretici katalog revizyonları ve uygulama ölçüleri uyuşmadığından makine boyutları fiziksel ürün üzerinde teyit edilmelidir.</p>
     </section>
   </section>
 </main>
