@@ -10,7 +10,7 @@ const SNAPSHOT_VERSION=2;
 const $=id=>document.getElementById(id);
 const fmt=x=>Number(x||0).toLocaleString('tr-TR');
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let products=[],byId=new Map(),history=[],rowOrder=[],initialOrder=[],search='',familyFilter='all',active=null,drag=null,rowDrag=null,toastHandle=null,storageEnabled=true,restorationWarning='',hasCheckpoint=false;
+let products=[],byId=new Map(),history=[],rowOrder=[],initialOrder=[],groupKeys=[],allGroupsVisible=false,search='',familyFilter='all',active=null,drag=null,rowDrag=null,toastHandle=null,storageEnabled=true,restorationWarning='',hasCheckpoint=false;
 async function unzipBase64(b64){
  if(typeof DecompressionStream==='undefined')throw Error('Bu tarayıcı veri sıkıştırma biçimini desteklemiyor. Güncel Chrome/Edge kullanın.');
  const data=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
@@ -21,6 +21,46 @@ function totalAnnual(){return products.reduce((n,p)=>n+p.annual,0)}
 function firstMonth(p){return p.monthly.findIndex(v=>v>0)}
 function pattern(p){return p.monthly.map((v,i)=>v>0?i:null).filter(v=>v!==null).join('-')}
 function monthsName(p){return p.monthly.map((v,i)=>v>0?MONTHS[i]:null).filter(Boolean).join(' · ')}
+
+const GROUP_PALETTE=[
+ ['#DCEAFF','#275DA5','#BDD5FA'],['#F0E2FB','#7A45A1','#DEC6F2'],
+ ['#DAF2E7','#23815A','#B6E4D0'],['#FFF0D6','#9F671C','#F4D6A7'],
+ ['#E4EDF4','#52748D','#CADBE8'],['#FCE5E0','#A6534B','#F2C7C0'],
+ ['#DCF3F6','#217A88','#B9E3EB'],['#F9E7EF','#A74E75','#EFC8DA'],
+ ['#ECF0D7','#677C27','#DAE3AE'],['#E7E5F9','#6662AE','#D0C9EE']
+];
+// Üretim yapılan aylar ve ürün ailesi aynıysa aynı grup/rengi kullanılır.
+function groupKey(p){return p.family+'|'+pattern(p)}
+function ensureGroup(key){let i=groupKeys.indexOf(key);if(i<0){groupKeys.push(key);i=groupKeys.length-1}return i+1}
+function groupInfo(p){
+ const id=ensureGroup(groupKey(p));
+ let colors=GROUP_PALETTE[id-1];
+ if(!colors){const hue=Math.round(((id-11)*137.508+207)%360);colors=['hsl('+hue+',65%,92%)','hsl('+hue+',55%,32%)','hsl('+hue+',49%,80%)']}
+ return {id,colors};
+}
+function groupStyle(g){return '--group-bg:'+g.colors[0]+';--group-ink:'+g.colors[1]+';--group-border:'+g.colors[2]}
+function initializeGroups(){
+ const totals=new Map();
+ for(const p of products){const key=groupKey(p);totals.set(key,(totals.get(key)||0)+p.annual)}
+ groupKeys=[...totals.keys()].sort((a,b)=>totals.get(b)-totals.get(a)||a.localeCompare(b,'tr'));
+}
+function groupsFromBackup(saved){
+ if(!Array.isArray(saved))return;
+ for(const key of saved)if(typeof key==='string'&&key.length<100&&key.includes('|'))ensureGroup(key);
+}
+function renderGroupLegend(){
+ const used=new Map();
+ for(const p of products){
+  const g=groupInfo(p),key=groupKey(p);
+  const entry=used.get(key)||{id:g.id,colors:g.colors,qty:0,count:0,family:p.family,months:monthsName(p)};
+  entry.qty+=p.annual;entry.count++;used.set(key,entry);
+ }
+ const entries=[...used.values()].sort((a,b)=>a.id-b.id);
+ const shown=allGroupsVisible?entries:entries.slice(0,6);
+ const body=shown.map(g=>'<span class="group-key" style="'+groupStyle(g)+'" title="'+esc(g.family+' · '+g.months+' · '+g.count+' ürün · '+fmt(g.qty)+' adet')+'"><strong>G'+g.id+'</strong><span>'+esc(g.months)+'</span></span>').join('');
+ $('groupLegend').innerHTML=body+(entries.length>6?'<button class="group-expand" type="button">'+(allGroupsVisible?'Daha az göster':'Tüm '+entries.length+' grubu göster')+'</button>':'');
+}
+
 function cloneRows(){return Object.fromEntries(products.map(p=>[p.id,p.monthly.slice()]))}
 function validOrder(order){return Array.isArray(order)&&order.length===products.length&&new Set(order).size===products.length&&order.every(id=>byId.has(id))}
 function defaultCompare(a,b){return firstMonth(a)-firstMonth(b)||a.family.localeCompare(b.family,'tr')||pattern(a).localeCompare(pattern(b))||b.annual-a.annual||a.kod.localeCompare(b.kod,'tr')}
@@ -46,7 +86,7 @@ function sumsValid(rows){if(!rows||typeof rows!=='object')return false;for(const
 function snapshot(){
  return {format:SNAPSHOT_FORMAT,version:SNAPSHOT_VERSION,savedAt:new Date().toISOString(),
   identity:products.map(p=>({id:p.id,kod:p.kod,model:p.model,annual:p.annual,family:p.family})),
-  monthly:cloneRows(),order:rowOrder.slice(),history:history.slice(-100)};
+  monthly:cloneRows(),order:rowOrder.slice(),groupKeys:groupKeys.slice(),history:history.slice(-100)};
 }
 function note(message,kind='ok'){
  const n=$('saveNotice');if(n){n.textContent=message;n.className='save-notice'+(kind==='ok'?'':' '+kind)}
@@ -92,6 +132,7 @@ function applySnapshot(obj,allowPartial=false){
  if(!applied.length)throw Error('Geçerli ürün kaydı bulunamadı; plan değiştirilmedi.');
  products.forEach(p=>{if(applied.includes(p.id))p.monthly=obj.monthly[p.id].slice()});
  rowOrder=mergedOrder(obj.order);
+ groupsFromBackup(obj.groupKeys);
  history=skipped.length||extra.length?[]:validHistory(obj.history);
  return {loaded:applied.length,skipped:skipped.length,extra:extra.length};
 }
@@ -259,6 +300,7 @@ function bindEvents(){
  $('search').addEventListener('input',e=>{search=e.target.value;render()});
  $('family').addEventListener('change',e=>{familyFilter=e.target.value;render()});
  $('clearFilter').addEventListener('click',()=>{search='';familyFilter='all';$('search').value='';$('family').value='all';render()});
+ $('groupLegend').addEventListener('click',e=>{if(e.target.closest('.group-expand')){allGroupsVisible=!allGroupsVisible;renderGroupLegend()}});
  $('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('export').addEventListener('click',exportCSV);
  $('savePlan').addEventListener('click',manualSave);
  $('downloadBackup').addEventListener('click',downloadSnapshot);
@@ -306,6 +348,7 @@ async function boot(){
   });
   byId=new Map(products.map(p=>[p.id,p]));
   initialOrder=products.slice().sort(defaultCompare).map(p=>p.id);rowOrder=initialOrder.slice();
+  initializeGroups();
   if(products.length!==133||byId.size!==133||!sumsValid(cloneRows())||totalAnnual()!==45088)throw Error('Kaynak plan tutarlılık kontrolünden geçmedi.');
   restore();bindEvents();render();$('status').textContent='133 ürün · 45.088 adet';
  }catch(e){$('status').textContent='Veri yükleme hatası';$('matrixBody').innerHTML='<tr><td colspan="17" style="text-align:left;padding:18px;color:#a33">Plan açılamadı: '+esc(e.message)+'</td></tr>';console.error(e)}
