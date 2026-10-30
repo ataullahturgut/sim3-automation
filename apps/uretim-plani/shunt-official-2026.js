@@ -48,6 +48,7 @@ function apply(p){
   'Faz':phase,
   'Güç (kVAr)':s.guc,'Akım (A)':s.akim,'L (mH)':s.L,
   'Ölçü G×Y×D (mm)':s.olcu,'Bağlantı tipi':s.baglanti,
+  'Ağırlık (kg)':s.kg,
   '2026/12 katalog durumu':'Üretici 2026/12 fiyat listesi ve 2023 ürün katalogu ile doğrulandı',
   '2026/12 şönt liste fiyatı (USD)':s.fiyatUsd,
   'Ayak montaj cıvatası':s.montaj,
