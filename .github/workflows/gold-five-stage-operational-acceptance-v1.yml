@@ -1,0 +1,45 @@
+name: Gold Five-Stage Operational Acceptance V1 (read-only)
+on:
+  push:
+    branches: [main, audit/gold-operational-five-stage-gates-20261030]
+    paths:
+      - '.github/workflows/gold-five-stage-operational-acceptance-v1.yml'
+      - 'gold_axis_2026/data_pipeline/gold_five_stage_operational_acceptance_v1.py'
+      - 'gold_axis_2026/data_pipeline/test_gold_five_stage_operational_acceptance_v1.py'
+  workflow_dispatch:
+  schedule:
+    # Report only; this schedule never emits forecasts, trades or signals.
+    - cron: '40 14 * * 1-5'
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check syntax and regression safeguards
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/gold_five_stage_operational_acceptance_v1.py
+          python -m unittest gold_axis_2026/data_pipeline/test_gold_five_stage_operational_acceptance_v1.py -v
+      - name: Install read-only Neon client
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Verify database availability
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Evaluate source, forecast, risk, portfolio and app stage gates
+        run: |
+          python gold_axis_2026/data_pipeline/gold_five_stage_operational_acceptance_v1.py \
+            --out gold-five-stage-operational-audit.json
+      - name: Preserve factual results even while the system is blocked
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-five-stage-operational-acceptance
+          path: gold-five-stage-operational-audit.json
+          if-no-files-found: warn
+          retention-days: 30
