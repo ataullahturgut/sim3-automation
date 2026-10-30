@@ -77,9 +77,11 @@ jobs:
           manifest="$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md)"
           grep -Fq '**Manifest version:** 3.00' <<<"$manifest"
           grep -Fq '**Canonical branch:** gold-r4-direction-engine' <<<"$manifest"
-          grep -Fq 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' <<<"$manifest"
-          grep -Fq 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' <<<"$manifest"
           snapshot="$(git show origin/gold-r4-direction-engine:.github/workflows/gold-control-production-display-snapshot-refresh.yml)"
+          # Target-context markers are defined by the snapshot publisher,
+          # not by the separate gold direction-engine research manifest.
+          grep -Fq 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' <<<"$snapshot"
+          grep -Fq 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' <<<"$snapshot"
           grep -Fq 'GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142' <<<"$snapshot"
           echo 'V142_DEFAULT_BRANCH_DISPATCHER_AUTHORITY_PASS'
 
@@ -104,7 +106,6 @@ jobs:
   core-daily:
     if: >-
       (github.event_name == 'schedule' && (github.event.schedule == '45 23 * * *' || github.event.schedule == '25 6 * * *')) ||
-      (github.event_name == 'push') ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'core-daily')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
     with:
@@ -129,7 +130,6 @@ jobs:
 
   fred-macro:
     if: >-
-      (github.event_name == 'push') ||
       (github.event_name == 'schedule' && (github.event.schedule == '55 6 * * 2-6' || github.event.schedule == '55 18 * * 2-6')) ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'fred-macro')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-fred-macro-mirror.yml@gold-r4-direction-engine
@@ -137,12 +137,10 @@ jobs:
 
   xau-ny17:
     if: >-
-      (github.event_name == 'push') ||
       (github.event_name == 'schedule' && github.event.schedule == '10 22 * * 1-5') ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'xau-ny17')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
     with:
-      # One-time repair after merge covers all 21–29 Oct NY17 trade dates.
-      # All subsequent routine time-based runs use the existing seven days.
-      reconcile_days: ${{ github.event_name == 'push' && 14 || 7 }}
+      # Catch-up completed 2026-10-30; routine approved seven-day reconcile.
+      reconcile_days: 7
     secrets: inherit
