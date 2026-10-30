@@ -75,8 +75,8 @@ jobs:
             fi
           done
           manifest="$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md)"
-          grep -Fq '**Manifest version:** 1.42' <<<"$manifest"
-          grep -Fq 'default-branch scheduling surface' <<<"$manifest"
+          grep -Fq '**Manifest version:** 3.00' <<<"$manifest"
+          grep -Fq '**Canonical branch:** gold-r4-direction-engine' <<<"$manifest"
           grep -Fq 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' <<<"$manifest"
           grep -Fq 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' <<<"$manifest"
           snapshot="$(git show origin/gold-r4-direction-engine:.github/workflows/gold-control-production-display-snapshot-refresh.yml)"
@@ -137,7 +137,12 @@ jobs:
 
   xau-ny17:
     if: >-
+      (github.event_name == 'push') ||
       (github.event_name == 'schedule' && github.event.schedule == '10 22 * * 1-5') ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'xau-ny17')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
+    with:
+      # One-time repair after merge covers all 21–29 Oct NY17 trade dates.
+      # All subsequent routine time-based runs use the existing seven days.
+      reconcile_days: ${{ github.event_name == 'push' && 14 || 7 }}
     secrets: inherit
