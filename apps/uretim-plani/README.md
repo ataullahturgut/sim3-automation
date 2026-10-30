@@ -7,7 +7,11 @@
 - **Adet hücresi:** Kaynak ay, hedef ay ve aktarılacak miktarı seçerek yıllık toplamı koruyan üretim kaydırması; aynı ürün satırının başka ay hücresine sürükle-bırak da mümkün.
 - **Setup kuralı:** Ocak/Şubat, Nisan/Mayıs, Temmuz/Ağustos, Ekim/Kasım yalnız Şönt; Mart/Haziran/Eylül/Aralık yalnız Harmonik. Çapraz aile taşıması engellenir.
 - **Hareket geçmişi:** Son işlemi geri al, başlangıç planına dön, düzenlenmiş planı Excel'de açılabilen UTF-8 CSV olarak dışarı aktar.
-- **Kayıt sınırı:** Değişiklikler **sadece kullanılan tarayıcının localStorage alanında** saklanır; GitHub, başka bilgisayar veya çok kullanıcılı merkezi sunucuya aktarılmaz. Başka cihazda aynı düzen için CSV dışarı alınmalıdır. Tarayıcı yerel dosyalar için depolamayı engellerse CSV indirin.
+- **Otomatik kayıt:** Her üretim aktarımı ve ürün satırı sıralaması \`localStorage\` içine anında kaydedilir. Aynı Chrome profili, aynı \`file://\` dosya yolu ve silinmemiş site verisiyle tekrar açıldığında miktar/satır sırası geri yüklenir.
+- **Kaydet:** Üstteki \`Kaydet\` düğmesi güncel planı kaydeder, ek olarak \`Son kayıtlı plan\` için ayrı bir kayıt noktası oluşturur. Düzenleme/yanlış sıfırlama sonrasında bu düğmeyle son elle kaydedilmiş noktaya dönülebilir.
+- **Plan yedeği (.json) / Yedeği yükle:** Planı tüm ürünlerin aylık miktarları, kimlikleri ve **elle ayarlanmış sıra bilgisi** dahil dosyaya indirin; başka bilgisayarda veya tarayıcı verisi silinince yükleyin. \`CSV indir\` rapor içindir, **geri yükleme dosyası değildir**.
+- **Güncelleme güvenliği:** Önceki kayıttaki ürün kimliği/adedi değiştiğinde kayıt dosyası **sessizce silinmez**; eşleşebilen ürünler okunur, uyumsuz eski ham plan ayrıca yerel kurtarma anahtarında korunur ve ekranda uyarı gösterilir. Ürün listesinin değiştiği durumlarda kapsamlı veri aktarımı ayrıca kontrol gerektirir.
+- **Kayıt sınırı:** Bu sürüm **Neon/GitHub sunucusuna merkezi kayıt yapmaz**. Tarayıcıya/cihaza özgüdür; özel gezinti, farklı tarayıcı profili, tarayıcı verilerini silme veya \`index.html\` dosyasını farklı bir yola taşıma, otomatik geri yüklemeyi engelleyebilir. Güvenli koruma için her önemli plan revizyonundan sonra JSON yedeğini ayrı yerde saklayın.
 - **Bobin bilgisi:** \`(nB*)\` etiketleri tip çizimi ön verisidir. Gerçek bobin üretim reçetesiyle doğrulanmadı; bilinmeyenler **?**.
 - **Eski otomatik parti senaryosu:** \`legacy.html\` üzerinden hâlâ erişilebilir. 2027 ana matrise bu eski senaryonun ay seçimleri uygulanmaz.
 
