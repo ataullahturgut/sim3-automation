@@ -158,9 +158,17 @@ def append_source(src,seen,macro_new,now,existing_asof):
         for series,r in macro_new[d].items():
             target=(src["gvz"] if series=="GVZ_CBOE"
                     else src["macro"][series])
+            if d<=DATE_ORIGINAL_CUTOFF:
+                # Freeze every V33 October vintage observation (including
+                # earlier missing values). Never backfill historical scores
+                # from an API record first captured only on 30 October.
+                if d in target:
+                    check(abs(float(target[d])-float(r["value"]))<1e-7,
+                          "REVISED_OLD_MACRO_"+series+"_"+d)
+                continue
             if d in target:
                 check(abs(float(target[d])-float(r["value"]))<1e-7,
-                      "REVISED_OLD_MACRO_"+series+"_"+d)
+                      "REVISED_NEW_MACRO_"+series+"_"+d)
             else:
                 target[d]=float(r["value"])
             # Historical 2026 values can only be used as-of origin day
