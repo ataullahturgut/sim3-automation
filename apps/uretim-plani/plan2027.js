@@ -447,7 +447,9 @@ async function boot(){
   if(products.length!==133||byId.size!==133||optimizedPlan.size!==133||!sumsValid(cloneRows())||totalAnnual()!==45088)throw Error('Kaynak veya optimize edilen plan tutarlılık kontrolünden geçmedi.');
   const expectedMonths=[3895,4856,2203,4257,4909,2409,3902,4949,2190,4121,4883,2514];
   if(expectedMonths.some((expected,i)=>monthlyTotal(i)!==expected)||products.reduce((n,p)=>n+p.monthly.filter(v=>v>0).length,0)!==175||countGroupMonth(p=>p.monthly)!==34)throw Error('Üst grup optimize planının aylık, parti veya üst grup tutarlılığı doğrulanamadı.');
-  restore();bindEvents();render();$('status').textContent='133 ürün · 45.088 adet';
+  restore();bindEvents();render();
+  if(window.SampleCoverageMatrix){try{window.SampleCoverageMatrix.init(products)}catch(sampleError){console.error('Numune ve Teknik Kapsam görünümü yüklenemedi:',sampleError);$('sampleMetrics').textContent='Numune tablosu hazırlanamadı: '+sampleError.message}}
+  $('status').textContent='133 ürün · 45.088 adet';
  }catch(e){$('status').textContent='Veri yükleme hatası';$('matrixBody').innerHTML='<tr><td colspan="19" style="text-align:left;padding:18px;color:#a33">Plan açılamadı: '+esc(e.message)+'</td></tr>';console.error(e)}
 }
 boot();
