@@ -6,6 +6,7 @@
 <main>
   <nav class="app-section-tabs" role="tablist" aria-label="Uygulama bölümleri">
     <button type="button" id="tabProduction" class="app-section-tab is-active" role="tab" aria-selected="true" aria-controls="productionView">Üretim Planlama</button>
+    <button type="button" id="tabShuntMachine" class="app-section-tab" role="tab" aria-selected="false" aria-controls="shuntMachineView">Şönt · Makine İncelemesi</button>
     <button type="button" id="tabSamples" class="app-section-tab" role="tab" aria-selected="false" aria-controls="sampleView">Numune ve Teknik Kapsam</button>
   </nav>
   <div id="productionView" role="tabpanel" aria-labelledby="tabProduction">
@@ -39,6 +40,44 @@
   <section id="monthDetail" class="surface detail-surface" hidden></section>
   <div class="footnote"><b>Bobin (B*)</b> değerleri üretici tip çizimlerine dayanan ön bilgilerdir; ürün bazlı üretim reçetesiyle kesinleşmemiştir. Başka aileye ayrılmış bir aya aktarım, setup karışmasını önlemek için engellenir. Satır sıralamasını değiştirmek üretim miktarlarını etkilemez; yeni sıra CSV çıktısında korunur. Kaydedilen plan sadece bu tarayıcı/profil ve bu dosya yolu için otomatik geri gelir; bilgisayar değişikliği veya tarayıcı verilerinin silinmesi için JSON dosya yedeğinizi saklayın. <a href="legacy.html">Eski parti senaryosu ekranı</a></div>
   </div>
+  <section id="shuntMachineView" class="sample-view" role="tabpanel" aria-labelledby="tabShuntMachine" hidden>
+    <section class="heading sample-page-heading">
+      <div><span class="eyebrow">ŞÖNT REAKTÖR / MAKİNE YATIRIMI</span>
+        <h1>Makine kapasitesi için incelenecek ürünler</h1>
+        <p>Ürünler zaten elimizde. Amaç yeni numune almak değil; sarım, nüve/montaj, emprenye ve fırın kapasitesini belirlemek için hangi ürünlerin ölçülüp inceleneceğini seçmek.</p>
+      </div>
+      <div class="actions"><button id="shuntMachineExport" class="btn" type="button">↓ İnceleme listesini CSV indir</button></div>
+    </section>
+    <div id="shuntMachineMetrics" class="shunt-investment-metrics" aria-live="polite">Şönt ürünleri yükleniyor…</div>
+    <section class="surface">
+      <div class="matrix-heading sample-table-heading">
+        <div><h2>25 ürün · Fiziksel inceleme öncelikleri</h2><p><b>1:</b> İlk fiziksel inceleme · <b>2:</b> Hedefli yapı kontrolü · <b>3:</b> Sökmeden ön doğrulama. Öncelik, kesin makine kapasitesi onayı değildir.</p></div>
+        <div class="filters">
+          <select id="shuntMachinePriority" aria-label="Makine inceleme önceliği"><option value="all">Tüm öncelikler</option><option value="A">1 · Öncelikli inceleme</option><option value="B">2 · Hedefli kontrol</option><option value="C">3 · Ön doğrulama</option></select>
+          <select id="shuntMachineGroup" aria-label="Şönt ürün grubu"><option value="all">Tüm Şönt grupları</option><option value="SVC-R">SVC-R</option><option value="SRM">SRM</option><option value="SRT">SRT</option></select>
+          <input id="shuntMachineSearch" type="search" placeholder="Ürün kodu veya gerekçe ara" aria-label="Şönt inceleme ürünlerinde ara">
+          <button type="button" id="shuntMachineClear" class="btn small">Temizle</button>
+        </div>
+      </div>
+      <p id="shuntMachineCount" class="shunt-investment-count" role="status">25 Şönt ürün listeleniyor</p>
+      <div class="shunt-investment-scroll">
+        <table class="shunt-investment-table" aria-label="Şönt makine yatırımı için ürün inceleme tablosu">
+          <thead><tr><th>Ürün kodu</th><th>Model</th><th>Grup</th><th>Yıllık adet</th><th>Şönt payı</th><th>İnceleme sırası</th><th>Neden incelenecek?</th><th>Makinede ölçülecek</th></tr></thead>
+          <tbody id="shuntMachineBody"></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="surface shunt-investment-process">
+      <h2>Makine kararı için gerçek üründe ölçülecekler</h2>
+      <div class="shunt-process-grid">
+        <div><strong>Sarım makinesi</strong><p>Gerçek bobin adedi ve ağırlığı, tel/folyo kesiti, tur sayısı, kalıp/mandren, bobin ölçüleri, sarım ve ürün geçiş süreleri.</p></div>
+        <div><strong>Nüve ve montaj</strong><p>Nüve sac/istif ölçüleri, gerçek ağırlık, hava aralığı, bağlantı işlemleri ve taşıma ihtiyacı.</p></div>
+        <div><strong>Vernik / emprenye</strong><p>Bobin mi tam ürün mü işlem görüyor, tank/sepet yerleşimi, parti yükü, kullanılan reçete ve gerçek çevrim süresi.</p></div>
+        <div><strong>Fırın / kurutma</strong><p>Yükleme alanı ve kütlesi, parti başına ürün, sıcaklık ve süre, soğuma/boşaltma çevrimi. Tek vardiya: 9 saat aktif.</p></div>
+      </div>
+      <p class="shunt-investment-warning"><b>Teknik veri uyarısı:</b> Katalog ile uygulamaya geçmiş bazı Şönt ölçü/bağlantı kayıtları arasında kaynak revizyonu uyuşmazlığı tespit edildi. Bu ekrandaki öncelik kararı yıllık ürün adetleri ve yapı çeşitliliğine dayanır; gerçek bobin boyutu, makine adedi ve VPI/fırın hacmi henüz doğrulanmadı. <a href="https://github.com/ataullahturgut/sim3-automation/blob/simulation3/apps/uretim-plani/SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md" target="_blank" rel="noopener">Teknik inceleme raporu</a></p>
+    </section>
+  </section>
   <section id="sampleView" class="sample-view" role="tabpanel" aria-labelledby="tabSamples" hidden>
     <section class="heading sample-page-heading">
       <div><span class="eyebrow">NUMUNE / ÜRÜN TEKNİK KAPSAMI</span>
@@ -80,5 +119,5 @@
   </section>
 </div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
-<script src="data-packed.js"></script><script src="shunt-official-2026.js"></script><script src="plan2027-data.js"></script><script src="plan2027-upper-groups-data.js"></script><script src="shunt-sample-review-2026.js"></script><script src="plan2027-samples.js"></script><script src="plan2027.js"></script><script src="plan2027-detail.js"></script>
+<script src="data-packed.js"></script><script src="shunt-official-2026.js"></script><script src="plan2027-data.js"></script><script src="plan2027-upper-groups-data.js"></script><script src="shunt-sample-review-2026.js"></script><script src="shunt-machine-investment.js"></script><script src="plan2027-samples.js"></script><script src="plan2027.js"></script><script src="plan2027-detail.js"></script>
 </body></html>
