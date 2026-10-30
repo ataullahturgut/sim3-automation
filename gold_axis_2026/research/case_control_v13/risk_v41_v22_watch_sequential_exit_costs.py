@@ -91,7 +91,7 @@ def enhance(bars):
   priorlow24=min(close[max(0,i-96):i]) if i>0 else p
   out.append({"ts":ts,"date":ts.date(),"p":p,"ema":ema,
               "r4":r4,"cusum":cusum,"prior24high":prior24,
-              "prior24low":priorlow,"sigma":sigma,
+              "prior24low":priorlow24,"sigma":sigma,
               "usable4h":r4 is not None})
  return out
 
