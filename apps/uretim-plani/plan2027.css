@@ -296,3 +296,23 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .sample-table .sample-status-edit{font-weight:730;max-width:200px;min-width:178px}
 .sample-table .sample-edit:focus{border-color:#3e86b3;box-shadow:0 0 0 2px rgba(62,134,179,.14)}
 .sample-table .sample-edit-number{text-align:right}
+
+/* İnceleme türü: uzun Türkçe etiketler tam görünsün; 28 sütun yatay kaydırılabilir. */
+.sample-table th.sample-head-sample,.sample-table td.sample-cell-sample{
+ min-width:328px!important;width:328px!important;max-width:none!important;
+}
+.sample-table td.sample-cell-sample{padding:8px 12px!important}
+.sample-table td.sample-cell-sample .sample-status-edit{
+ display:block!important;width:100%!important;min-width:300px!important;max-width:none!important;
+ min-height:42px!important;padding:8px 36px 8px 12px!important;
+ font-size:13px!important;font-weight:740!important;line-height:1.4!important;
+ box-sizing:border-box!important;text-overflow:clip!important;white-space:nowrap!important;
+}
+.sample-table .sample-status.unknown{display:inline-block;max-width:300px;white-space:normal}
+.sample-backup-status{
+ margin:-3px 0 11px;padding:10px 13px;border:1px solid #e0d5b9;border-radius:8px;
+ background:#fffaf0;color:#795b25;font-size:12px;line-height:1.5
+}
+.sample-backup-status strong{color:#5f4211}
+.sample-backup-status.saved{border-color:#c4ded6;background:#f1faf6;color:#2f6253}
+.sample-backup-status.warning{border-color:#e4b8b0;background:#fff3f1;color:#944537}
