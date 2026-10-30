@@ -192,6 +192,15 @@ def extend_official_cot(cot,official,now):
         for market in ("GC","SI"):
             z=overlap[market]
             prior=cot[market][-1]
+            print("CFTC_FROZEN_OFFICIAL_OVERLAP_DIAGNOSTIC",json.dumps({
+                "market":market,"date":last,
+                "frozen_net_fraction":float(prior["mm_net_fraction_oi"]),
+                "official_net_fraction":float(z["managed_money_net_over_oi"]),
+                "frozen_oi":float(prior["open_interest"]),
+                "official_oi":float(z["open_interest"]),
+                "frozen_short":float(prior["managed_money_short"]),
+                "official_short":float(z["managed_money_short"])
+                },sort_keys=True),flush=True)
             check(abs(float(prior["mm_net_fraction_oi"])-
                       float(z["managed_money_net_over_oi"]))<=1e-9,
                   "CFTC_OFFICIAL_VS_FROZEN_OVERLAP_NET_"+market)
