@@ -136,3 +136,59 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .technical-table tbody tr.detail-group-start td:nth-child(2){border-top:2px solid #9eb7ca}
 .technical-table td:nth-child(3){font-weight:780;color:#35677f;background:#f3f7fa}
 .technical-table tbody tr:hover td:nth-child(3){background:#eaf3fa}
+
+
+/* Ana navigasyon: planlama ve numune tek uygulamada ayrı ekranlar. */
+#productionView[hidden],#sampleView[hidden]{display:none!important}
+.app-section-tabs{display:flex;align-items:center;gap:18px;border-bottom:1px solid #dbe5ee;margin:-7px 0 22px;padding:0 2px}
+.app-section-tab{border:0;border-bottom:3px solid transparent;background:transparent;color:#678094;font-weight:750;font-size:14px;padding:13px 4px 12px;margin-bottom:-1px;white-space:nowrap;transition:color .15s,border-color .15s}
+.app-section-tab:hover{color:#1f526f}
+.app-section-tab.is-active{border-color:#226cab;color:#174c74}
+.app-section-tab:focus-visible{outline:2px solid #3687b6;outline-offset:3px}
+.sample-view{min-width:0}
+.sample-page-heading{margin-bottom:12px}
+.sample-metrics{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:white;border:1px solid #dfe7ef;border-radius:10px;padding:13px 17px;margin:0 0 13px;color:#476077;font-size:12px}
+.sample-metrics b{color:#193d58;margin-right:5px}
+.sample-metrics .sample-count{margin-left:auto;color:#6d8496;font-size:11px}
+.sample-table-heading input{max-width:290px}
+.sample-table-scroll{overflow:auto;max-height:min(75vh,800px);min-height:280px;border-top:1px solid #e1e9f0;scrollbar-color:#b9c9d7 #f4f7fa;overscroll-behavior:contain}
+.sample-table{border-collapse:separate;border-spacing:0;min-width:100%;width:max-content;table-layout:auto;font-size:11px;color:#2f4759}
+.sample-table th,.sample-table td{padding:8px 10px;border-right:1px solid #e5ebf0;border-bottom:1px solid #e5ebf0;vertical-align:middle;white-space:nowrap;min-width:86px}
+.sample-table th{position:sticky;top:0;background:#e7eef5;font-weight:800;color:#2c4e67;text-align:left;z-index:5;height:41px}
+.sample-table th.sample-head-model,.sample-table td.sample-cell-model{min-width:174px;max-width:195px}
+.sample-table th.sample-head-code,.sample-table td.sample-cell-code{min-width:124px;max-width:124px}
+.sample-table th.sample-head-sample,.sample-table td.sample-cell-sample{min-width:164px;max-width:185px}
+.sample-table th.sample-head-count,.sample-table td.sample-cell-count,
+.sample-table th.sample-head-percent,.sample-table td.sample-cell-percent{text-align:right;min-width:91px;font-variant-numeric:tabular-nums}
+.sample-table td.sample-cell-long{max-width:340px;min-width:190px;white-space:normal;line-height:1.45}
+.sample-table td.sample-cell-text{max-width:220px;min-width:140px;white-space:normal;line-height:1.45}
+.sample-table td.sample-cell-dimension{min-width:132px}
+.sample-table td.sample-cell-value{min-width:135px;max-width:200px;white-space:normal;line-height:1.45}
+.sample-table tbody tr.sample-product-row:hover td{background:#f5f9fd}
+.sample-table tbody tr.sample-product-row td.sample-cell-code,
+.sample-table tbody tr.sample-product-row td.sample-cell-model{position:sticky;background:white;z-index:3}
+.sample-table tbody tr.sample-product-row td.sample-cell-code{left:0}
+.sample-table tbody tr.sample-product-row td.sample-cell-model{left:124px}
+.sample-table tbody tr.sample-product-row:hover td.sample-cell-code,
+.sample-table tbody tr.sample-product-row:hover td.sample-cell-model{background:#f5f9fd}
+.sample-table thead th:first-child{position:sticky;left:0;z-index:8;background:#dce8f1}
+.sample-table thead th:nth-child(2){position:sticky;left:124px;z-index:8;background:#dce8f1}
+.sample-family-row td{padding:12px 13px;background:#dbe8f2;color:#204c6c;font-weight:850;border-bottom:1px solid #bbd1e1}
+.sample-family-row td>*{margin-right:22px}
+.sample-family-row td span:first-child{font-size:14px;letter-spacing:.02em}
+.sample-family-row td strong{font-size:12px}
+.sample-group-row td{padding:9px 13px;background:#f0f5f9;color:#43647b;border-bottom:1px solid #d1e0eb;font-weight:650}
+.sample-group-row td>*{margin-right:19px}
+.sample-group-row td .sample-group-name{color:#245776;font-weight:900;font-size:12px}
+.sample-group-row td .sample-muted{font-size:10px;color:#8195a3;font-weight:550}
+.sample-product-link{color:#246b9e;text-decoration:none;font-weight:850}
+.sample-product-link:hover{text-decoration:underline}
+.sample-table .sample-amount{color:#243d54;font-size:11px}
+.sample-table td a:not(.sample-product-link){color:#286b9b;text-underline-offset:3px;font-size:11px}
+.sample-status{display:inline-flex;align-items:center;white-space:normal;max-width:160px;line-height:1.3;font-weight:740;font-size:11px}
+.sample-status.main{color:#215e75}
+.sample-status.compare{color:#567386}
+.sample-status.unknown{color:#935d39}
+.sample-note{margin:0;padding:11px 16px 14px;color:#708496;font-size:11px;line-height:1.7;background:#fafcfd}
+.sample-empty{padding:25px!important;text-align:center;color:#6f8294}
+@media(max-width:800px){.app-section-tabs{gap:14px;overflow:auto}.app-section-tab{font-size:12px}.sample-metrics{gap:8px}.sample-metrics .sample-count{margin-left:0}.sample-table-heading{align-items:stretch}.sample-table-scroll{max-height:68vh}.sample-table th,.sample-table td{padding:7px 8px}}
