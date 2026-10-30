@@ -269,11 +269,12 @@ function updateBackupStatus(errorText=''){
   el.innerHTML='<strong>KAYIT HATASI:</strong> '+esc(errorText)+
    ' <b>Bu değişikliği kaydedilmiş kabul etmeyin.</b> Mevcut kayıtlarınızın JSON yedeğini alın.';
  }else{
-  el.className='sample-backup-status'+(entered?' saved':'');
+  el.className='sample-backup-status'+(storageRecoveryMessage?' warning':entered?' saved':'');
   el.innerHTML='<strong>Yerel kayıt:</strong> '+esc(date)+' · '+qty(entered)+
    ' ürün için giriş mevcut. Her aile için ana ve ikinci tarayıcı kopyası tutulur.'+
    ' <strong>Önemli:</strong> Bunlar aynı tarayıcıda; bilgisayar/ tarayıcı verisi silinirse birlikte kaybolabilir.'+
-   ' <b>↓ Teknik veri yedeği (JSON)</b> ile dosyayı ayrı yerde saklayın. Sunucu/bulut senkronizasyonu yok.';
+   ' <b>↓ Teknik veri yedeği (JSON)</b> ile dosyayı ayrı yerde saklayın. Sunucu/bulut senkronizasyonu yok.'+
+   (storageRecoveryMessage?'<br><strong>Uyarı:</strong> '+esc(storageRecoveryMessage):'');
  }
 }
 function saveRecord(code,field,value){
@@ -313,19 +314,52 @@ function cleanAll(records,grup){
  return result;
 }
 function loadSaved(){
- const failures=[];
+ const failures=[],recovered=[];
  for(const grup of ['Şönt','Harmonik']){
-  const spec=STORAGE_SPECS[grup];
-  try{
-   const data=localStorage.getItem(spec.key);
-   if(!data)continue;
-   const parsed=JSON.parse(data);
-   if(parsed?.format!==spec.format||parsed.version!==VERSION)throw Error('Geçersiz teknik kayıt sürümü');
-   Object.assign(entries,cleanAll(parsed.records,grup));
-  }catch(e){failures.push(grup);}
+  const keys=storageKeys(grup);
+  let found=false,hadData=false;
+  for(const [kind,key] of [['primary',keys.primary],['mirror',keys.mirror],['previous',keys.previous]]){
+   let stored=null;
+   try{
+    stored=localStorage.getItem(key);
+    if(!stored)continue;
+    hadData=true;
+    const parsed=JSON.parse(stored);
+    if(parsed?.format!==keys.format||parsed.version!==VERSION)throw Error('Yedek türü uyumsuz');
+    const cleaned=cleanAll(parsed.records,grup);
+    Object.assign(entries,cleaned);
+    lastSavedAt[grup]=typeof parsed.savedAt==='string'&&!isNaN(Date.parse(parsed.savedAt))?parsed.savedAt:null;
+    found=true;
+    if(kind!=='primary'){
+     recovered.push(grup+' ('+kind+')');
+     try{localStorage.setItem(keys.primary,stored);}catch(recoveryError){
+      failures.push(grup+' geri yükleme yazılamadı');
+     }
+    }
+    // Eski sürümün yalnız ana anahtarı olabilir: eksik ikinci kopyayı oluştur.
+    try{
+     if(localStorage.getItem(keys.mirror)!==stored)localStorage.setItem(keys.mirror,stored);
+    }catch(mirrorError){
+     recovered.push(grup+' (ikinci kopya oluşturulamadı)');
+    }
+    break;
+   }catch(error){
+    if(kind==='previous')failures.push(grup+' kaydı');
+   }
+  }
+  if(!found&&hadData&&!failures.some(x=>x.includes(grup)))failures.push(grup+' kaydı');
  }
- if(failures.length){storageEnabled=false;notice(failures.join(', ')+' teknik kaydı okunamadı. JSON yedeğinizi kontrol edin.','error');}
- else if(legacyAmbiguous().length)notice('Uyarı: '+legacyAmbiguous().length+' yinelenen Harmonik stok koduna ait eski ortak giriş satıra eşleştirilemiyor. JSON yedeğini koruyun; yeni girişler satır bazında ayrılır.','error');
+ if(failures.length){
+  storageEnabled=false;
+  storageRecoveryMessage=failures.join(', ')+' okunamadı. JSON yedeğini kontrol edin.';
+  notice(storageRecoveryMessage,'error');
+ }else if(recovered.length){
+  storageRecoveryMessage='Kayıt kurtarma: '+recovered.join(', ')+'. Harici JSON yedeği alın.';
+  notice(storageRecoveryMessage,'error');
+ }else if(legacyAmbiguous().length){
+  storageRecoveryMessage=legacyAmbiguous().length+' yinelenen Harmonik stok koduna ait eski ortak giriş satıra eşleştirilemiyor. JSON yedeğini koruyun.';
+  notice(storageRecoveryMessage,'error');
+ }
 }
 function notice(message,kind='ok'){
  const el=$('sampleEditNotice');
@@ -566,6 +600,7 @@ function exportCsv(){
 function downloadBackup(){
  const records={'Şönt':familyRecords('Şönt'),'Harmonik':familyRecords('Harmonik')};
  download('sont-harmonik-makine-teknik-girisler.json',JSON.stringify({format:BACKUP_FORMAT,version:VERSION,exportedAt:new Date().toISOString(),records},null,2),'application/json;charset=utf-8');
+ notice('JSON yedeği hazırlandı. İndirilen dosyayı tarayıcıdan ayrı, güvenli bir klasörde saklayın.');
 }
 async function uploadBackup(){
  const el=$('sampleImportFile'),file=el?.files?.[0];
@@ -594,22 +629,28 @@ async function uploadBackup(){
    for(const code of Object.keys(next))if(known.has(code))delete next[code];
    Object.assign(next,imported[grup]);
   }
-  const storedBefore=Object.fromEntries(groups.map(grup=>[grup,localStorage.getItem(STORAGE_SPECS[grup].key)]));
+  const storedBefore=Object.fromEntries(groups.map(grup=>{
+   const keys=storageKeys(grup);
+   return [grup,Object.fromEntries(['primary','mirror','previous'].map(kind=>[kind,localStorage.getItem(keys[kind])]))];
+  }));
   entries=next;
   try{
    for(const grup of groups)saveToStorage(grup);
   }catch(e){
    entries=previous;
+   let failedRollback=false;
    for(const grup of groups){
-    try{
-     const old=storedBefore[grup],key=STORAGE_SPECS[grup].key;
-     if(old===null)localStorage.removeItem(key);else localStorage.setItem(key,old);
-    }catch(rollbackError){/* geri yükleme başarısızsa kullanıcı bilgilendirilir */}
+    const keys=storageKeys(grup),old=storedBefore[grup];
+    for(const kind of ['primary','mirror','previous']){
+     try{restoreValue(keys[kind],old[kind]);}catch(rollbackError){failedRollback=true;}
+    }
    }
-   throw Error('Tarayıcıya yazılamadı. Önce JSON yedeğinizi koruyun');
+   throw Error(failedRollback?
+    'Kayıt hatası ve geri yükleme eksik. JSON yedeğinizi koruyun!':
+    'Tarayıcıya yazılamadı. Önce JSON yedeğinizi koruyun');
   }
   storageEnabled=true;
-  render();notice('Teknik yedek yüklendi: '+groups.join(' + ')+'. Kayıtlar ayrı saklandı.');
+  render();updateBackupStatus();notice('Teknik yedek yüklendi: '+groups.join(' + ')+'. Ana ve ikinci yerel kopya doğrulandı.');
  }catch(e){notice('Yedek yüklenemedi: '+e.message,'error');}
  finally{el.value='';}
 }
