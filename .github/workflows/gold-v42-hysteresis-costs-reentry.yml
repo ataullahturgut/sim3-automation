@@ -1,0 +1,41 @@
+name: Gold V42 Cost Aware Hysteresis Re-Entry Historical Research
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/gold-v42-transaction-cost-hysteresis-reentry-20261030]
+    paths:
+      - '.github/workflows/gold-v42-hysteresis-costs-reentry.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v42_cost_aware_reentry_hysteresis.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v42_cost_aware_reentry_hysteresis.py'
+permissions:
+  contents: read
+jobs:
+  neon-historical-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check no lookahead and complete equity accounting
+        run: |
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v41_v22_watch_sequential_exit_costs.py gold_axis_2026/research/case_control_v13/test_risk_v42_cost_aware_reentry_hysteresis.py -v
+      - name: Read-only PostgreSQL driver
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Require private Neon URI
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Calibrate 2025 re-entry, compare on 2026 original V22
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v42_cost_aware_reentry_hysteresis \
+            --out gold-v42-cost-aware-hysteresis-reentry.json
+      - name: Archive full 15 minute trading and daily performance audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v42-cost-aware-hysteresis-evidence
+          path: gold-v42-cost-aware-hysteresis-reentry.json
+          retention-days: 30
+          if-no-files-found: warn
