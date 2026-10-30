@@ -1,0 +1,55 @@
+name: Gold StakTrakr 4-metal UTC reference daily append (research ledger)
+on:
+  push:
+    branches: [feature/gold-v34-v22-live-dependency-gates-20261030]
+    paths:
+      - 'gold_axis_2026/data_pipeline/staktrakr_fourmetal_reference_ingest_v1.py'
+      - '.github/workflows/gold-staktrakr-fourmetal-reference-ingest-v1.yml'
+  workflow_dispatch:
+  # Schedules run ONLY once merged into main and verified.
+  schedule:
+    - cron: '45 1 * * *'
+    - cron: '45 10 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: staktrakr-reference-collector-v1
+  cancel-in-progress: false
+
+jobs:
+  collect-four-metal-daily:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install database writer
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Validate exact consumer code
+        run: python -m py_compile gold_axis_2026/data_pipeline/staktrakr_fourmetal_reference_ingest_v1.py
+      - name: Validate no publication or historical-PIT assumption
+        run: |
+          python gold_axis_2026/data_pipeline/staktrakr_fourmetal_reference_ingest_v1.py \
+            --mode dry-run --out staktrakr_fourmetal_dryrun.json
+      - name: Require database connection
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Append only public 4-metal UTC reference (no existing tables modified)
+        run: |
+          python gold_axis_2026/data_pipeline/staktrakr_fourmetal_reference_ingest_v1.py \
+            --mode apply --allow-research-only --out staktrakr_fourmetal_applied.json
+      - name: Preserve fetch and insertion evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: staktrakr-fourmetal-reference-ingest-evidence
+          path: |
+            staktrakr_fourmetal_dryrun.json
+            staktrakr_fourmetal_applied.json
+          retention-days: 30
+          if-no-files-found: warn
