@@ -434,6 +434,8 @@ async function boot(){
   if(!window.PRODUCTS_GZIP_B64||!window.PRODUCTION_PLAN_2027_GZIP_B64||!window.UPPER_GROUP_OPTIMIZED_2027_GZIP_B64)throw Error('Ürün, mevcut plan veya üst grup optimizasyon dosyası eksik.');
   const [records,plan,upperPlan]=await Promise.all([unzipBase64(window.PRODUCTS_GZIP_B64),unzipBase64(window.PRODUCTION_PLAN_2027_GZIP_B64),unzipBase64(window.UPPER_GROUP_OPTIMIZED_2027_GZIP_B64)]);
   optimizedPlan=new Map(upperPlan);
+  if(!window.ShuntOfficial2026)throw Error('Şönt resmî teknik veri dosyası eksik.');
+  window.ShuntOfficial2026.applyAll(records);
   const data=new Map(records.map(p=>[p.id,p]));
   products=plan.map(([id,monthly,coil])=>{
    const p=data.get(id);if(!p||p.adet<=0)throw Error('Eksik veya uyumsuz ürün kimliği: '+id);
