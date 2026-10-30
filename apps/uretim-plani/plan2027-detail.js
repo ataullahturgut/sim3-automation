@@ -37,10 +37,10 @@ const official2026BaseCode=code=>{
  return base&&official2026Page(base)!==null?base:null;
 };
 const official2026Status=p=>
- official2026Page(p.kod)!==null?'5/5 teknik alan uyumlu':
+ official2026Page(p.kod)!==null?(p.grup==='Şönt'?'Kod eşleşti; üreticiyle ölçü farkı var, revizyon teyidi gerekli':'Stok kodu resmî listede; teknik alanlar ayrıca karşılaştırılmalı'):
  official2026BaseCode(p.kod)!==null?'Standart baz model var; varyant doğrulanmadı':'Ürün kodu resmî tabloda yok';
 const official2026Note=p=>
- official2026Page(p.kod)!==null?'2026/12 resmî tablo: akım, L, ölçü, kg ve bağlantı değerleri eşleşti.':
+ official2026Page(p.kod)!==null?(p.grup==='Şönt'?'2026/12 resmî üretici listesinde Şönt ürünleri için ölçü farklılıkları bulundu; ağırlık ve bağlantı da farklı olabilir. Bu kaynak kayıtları otomatik değiştirilmedi; BOM/üretim revizyonunu doğrulayın.':'Stok kodu 2026/12 üretici listesinde. Kaynak akım, L, ölçü, kg ve bağlantı değerlerinin her biri ayrıca doğrulanmalıdır.'):
  official2026BaseCode(p.kod)!==null?'Standart '+official2026BaseCode(p.kod)+' üreticinin listesinde. G/GG varyantının akım, endüktans, ölçü, ağırlık ve bağlantısı ayrıca yayımlanmamış; baz ürün değerleri kopyalanmamalı.':
  p.kod==='GA5ÖZELHARM'?'Siparişe özel ürün; 2026 listesinde aynı kodla teknik tablo yok. Üretici teknik föyü gerekli.':
  '2026 listesinde aynı stok koduyla karşılık bulunamadı; üretici teknik föyü gerekli.';
