@@ -1,0 +1,62 @@
+name: Gold Weekly Live ANN and Risk Readiness V1
+
+# Only reads approved market observations. NEVER issues a forecast or trade.
+# A green data-ingestion run does not certify the V34/V22 production executors.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-weekly-live-readiness-v1.yml'
+      - 'gold_axis_2026/data_pipeline/gold_weekly_live_readiness_v1.py'
+  workflow_dispatch:
+  schedule:
+    - cron: '15 2 * * 2-6'
+    - cron: '15 14 * * 2-6'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-weekly-live-readiness-v1
+  cancel-in-progress: true
+
+jobs:
+  self-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m py_compile gold_axis_2026/data_pipeline/gold_weekly_live_readiness_v1.py
+      - run: python gold_axis_2026/data_pipeline/gold_weekly_live_readiness_v1.py --self-test
+
+  read-only-neon-audit:
+    needs: self-test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install read-only Postgres client
+        run: pip install 'psycopg[binary]>=3.2,<4'
+      - name: Verify Neon connection is configured
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Audit market freshness and whether live model issuers exist
+        run: |
+          python gold_axis_2026/data_pipeline/gold_weekly_live_readiness_v1.py \
+            --out /tmp/gold-weekly-live-readiness.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-weekly-live-readiness
+          path: /tmp/gold-weekly-live-readiness.json
+          if-no-files-found: warn
+          retention-days: 14
