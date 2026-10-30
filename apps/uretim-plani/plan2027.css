@@ -119,3 +119,12 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .detail-bottom{padding:10px 18px;color:#39647d;font-weight:700;font-size:11px;background:#f8fbfe}
 .detail-source-note{padding:0 18px 15px;font-size:11px;color:#73899a;line-height:1.6}
 @media(max-width:650px){.detail-bar{padding:14px 12px}.detail-bar h2{font-size:18px}.detail-actions{padding:5px 12px 12px}.detail-options{padding:0 12px 12px}.technical-scroll{max-height:63vh}.technical-table td:nth-child(1),.technical-table th:nth-child(1){min-width:112px;max-width:112px}.technical-table td:nth-child(2),.technical-table th:nth-child(2){left:112px;min-width:138px;max-width:138px}}
+
+/* Üst ürün grubu → grup içi ürün sırası; aylık döngü renginden ayrı tutulur. */
+.group-plan-summary{font-size:12px;color:#4b6880;background:#f1f6fb;border:1px solid #dce8f2;border-radius:9px;padding:10px 13px;margin-bottom:11px;font-weight:650}
+.matrix{min-width:1778px}
+.matrix th.col-upper{width:124px}
+.matrix td.col-upper{text-align:left;padding:3px 5px;white-space:normal;min-width:124px}
+.upper-label{display:inline-block;padding:4px 7px;border-radius:5px;background:#edf2f6;color:#2e566c;border:1px solid #d5e1e8;font-weight:750;font-size:10px;white-space:nowrap}
+.matrix tbody tr.group-transition td{border-top:2px solid #b1c5d3}
+@media(max-width:520px){.matrix td.col-upper,.matrix th.col-upper{width:117px;min-width:117px}.upper-label{white-space:normal}}
