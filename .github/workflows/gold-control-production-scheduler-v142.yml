@@ -23,6 +23,9 @@ on:
     - cron: '35 1 * * 2-6'
     - cron: '45 12 * * 2-6'
     - cron: '10 22 * * 1-5'
+    # Independently validated FRED H.15/H.10 mirror; separate from direct DDP.
+    - cron: '55 6 * * 2-6'
+    - cron: '55 18 * * 2-6'
   workflow_dispatch:
     inputs:
       lane:
@@ -37,6 +40,7 @@ on:
           - fred-indices
           - twelve-market
           - xau-ny17
+          - fred-macro
 
 
 permissions:
@@ -60,6 +64,7 @@ jobs:
             .github/workflows/gold-data-fred-indices.yml \
             .github/workflows/gold-data-twelve-market.yml \
             .github/workflows/gold-data-xau-ny17.yml \
+            .github/workflows/gold-data-fred-macro-mirror.yml \
             .github/workflows/gold-control-production-display-snapshot-refresh.yml
           do
             text="$(git show origin/gold-r4-direction-engine:$f)"
@@ -120,6 +125,14 @@ jobs:
       (github.event_name == 'schedule' && (github.event.schedule == '35 1 * * 2-6' || github.event.schedule == '45 12 * * 2-6')) ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'twelve-market')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-twelve-market.yml@gold-r4-direction-engine
+    secrets: inherit
+
+  fred-macro:
+    if: >-
+      (github.event_name == 'push') ||
+      (github.event_name == 'schedule' && (github.event.schedule == '55 6 * * 2-6' || github.event.schedule == '55 18 * * 2-6')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'fred-macro')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-fred-macro-mirror.yml@gold-r4-direction-engine
     secrets: inherit
 
   xau-ny17:
