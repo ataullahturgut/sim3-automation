@@ -75,10 +75,11 @@ jobs:
             fi
           done
           manifest="$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md)"
-          grep -Fq '**Manifest version:** 1.42' <<<"$manifest"
-          grep -Fq 'default-branch scheduling surface' <<<"$manifest"
-          grep -Fq 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' <<<"$manifest"
-          grep -Fq 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' <<<"$manifest"
+          # Manifest V3.00 owns RESEARCH governance, not scheduler V1.42.
+          # Previous hard-coded V1.42 grep made a healthy dispatcher fail.
+          grep -Fq '**Manifest version:** 3.00' <<<"$manifest"
+          grep -Fq '**Canonical branch:** gold-r4-direction-engine' <<<"$manifest"
+          grep -Fq 'Production Neon is the authority' <<<"$manifest"
           snapshot="$(git show origin/gold-r4-direction-engine:.github/workflows/gold-control-production-display-snapshot-refresh.yml)"
           grep -Fq 'GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142' <<<"$snapshot"
           echo 'V142_DEFAULT_BRANCH_DISPATCHER_AUTHORITY_PASS'
