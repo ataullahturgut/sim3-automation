@@ -6,6 +6,8 @@ Eski Excel ile: 23 ölçü farkı, 16 ağırlık farkı, **3 gerçek bağlantı 
 
 **Tüm ekranlar güncel veri katmanını yükler:** `index.html` (üretim planı + numune tablosu), `urun.html` (ürün föyü), `legacy.html` (eski parti planı). **Harmonik verisi, yıllık üretim adetleri, aylık dağılımlar, kullanıcı tarayıcı yedekleri değiştirilmedi.** Sıkıştırılmış orijinal arşiv olduğu gibi kalır; açılışta otorite katmanı şönt teknik verilerini düzeltir. Üretici katalog verileri fiziksel imalat BOM'unun yerine geçmez.
 
+**Ek katalog alanları (21 kod):** 2023 ürün kataloğundan nominal kablo kesiti, teknik çizim D/E ölçüsü (kaynakta varsa) ve yalnız aile geneli olarak etiketlenen nüve, sarım malzemesi, izolasyon ve termik açıklamaları ürün föylerine eklendi. GA5107/GA5108 için bu katalog bilgileri türetilmedi.
+
 Satır bazında 25 ürün için eski/yeni bilgiler: [SONT_25_URUN_RESMI_KATALOG_DUZELTME_20261030.md](SONT_25_URUN_RESMI_KATALOG_DUZELTME_20261030.md).
 
 ## Teknik/numune kaynak farkı uyarısı (30.10.2026)
