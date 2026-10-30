@@ -199,3 +199,18 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .sample-status.shunt-C{color:#647d8c}
 .sample-table tr.sample-product-row:has(.sample-status.shunt-A) td.sample-cell-sample{background:#f0f7fb}
 .sample-table tr.sample-product-row:has(.sample-status.shunt-B) td.sample-cell-sample{background:#faf7ef}
+
+
+/* Mevcut Numune ve Teknik Kapsam tablosunda üç makine alımının ölçüm rehberi */
+.shunt-procurement-guide{margin:0 0 12px;border:1px solid #d9e4ec;border-radius:10px;background:#fff;color:#405f75}
+.shunt-procurement-guide[hidden]{display:none!important}
+.shunt-procurement-guide summary{padding:12px 15px;font-size:12px;font-weight:850;color:#255b7e;cursor:pointer}
+.shunt-procurement-guide[open] summary{border-bottom:1px solid #e5edf3}
+.shunt-procurement-guide>p{padding:0 15px;margin:11px 0;font-size:11px;line-height:1.65;color:#637f91}
+.shunt-procurement-guide>p:last-child{margin-bottom:15px}
+.shunt-procurement-guide a{color:#246b9b}
+.shunt-procurement-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:5px 15px}
+.shunt-procurement-steps>div{border:1px solid #e4ebf0;background:#f8fafc;border-radius:8px;padding:12px}
+.shunt-procurement-steps strong{display:block;font-size:12px;color:#2f536c}
+.shunt-procurement-steps p{font-size:11px;line-height:1.6;color:#617c90;margin:6px 0 0}
+@media(max-width:850px){.shunt-procurement-steps{grid-template-columns:1fr}}
