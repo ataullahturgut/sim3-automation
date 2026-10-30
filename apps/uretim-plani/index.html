@@ -2,8 +2,13 @@
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2027 Üretim Planlama | Şönt ve Harmonik</title><link rel="stylesheet" href="plan2027.css"></head>
 <body>
-<header class="topbar"><div class="brand"><span class="brand-mark">ÜP</span><span><b>Üretim Planlama</b><small>Şönt Reaktör · Harmonik Filtre</small></span></div><div class="topmeta"><span class="chip">2027 · 12 Aylık Matris</span><span id="status">Veriler yükleniyor…</span></div></header>
+<header class="topbar"><div class="brand"><span class="brand-mark">ÜP</span><span><b>Üretim Yönetimi</b><small>Şönt Reaktör · Harmonik Filtre</small></span></div><div class="topmeta"><span class="chip">2027 · Şönt &amp; Harmonik</span><span id="status">Veriler yükleniyor…</span></div></header>
 <main>
+  <nav class="app-section-tabs" role="tablist" aria-label="Uygulama bölümleri">
+    <button type="button" id="tabProduction" class="app-section-tab is-active" role="tab" aria-selected="true" aria-controls="productionView">Üretim Planlama</button>
+    <button type="button" id="tabSamples" class="app-section-tab" role="tab" aria-selected="false" aria-controls="sampleView">Numune ve Teknik Kapsam</button>
+  </nav>
+  <div id="productionView" role="tabpanel" aria-labelledby="tabProduction">
   <section class="heading"><div><span class="eyebrow">ÜRETİM PLANLAMA / YILLIK TAKVİM</span><h1>12 aylık üretim matrisi</h1><p>Benzer üretim aylarına sahip ürünler alt alta. <b>↑ ↓ veya ⠿</b> ile satır sıralayın. <b>Ürün adına</b> tıklayın: teknik föy. <b>Adet hücresine</b> tıklayın: başka aya taşıyın.</p></div>
   <div class="actions">
   <button id="sortUpper" class="btn">≡ Üst gruba göre sırala</button>
@@ -22,7 +27,7 @@
   <div id="groupPlanSummary" class="group-plan-summary" role="status">Ürün grupları denetleniyor…</div>
   <section id="metrics" class="metrics"></section>
   <section class="surface">
-    <div class="matrix-heading"><div><h2>Yıllık ürün ve üretim tablosu</h2><p>Üst ürün grubu → ürün → 12 aylık üretim. SVC-R / SRM / SRT ve Harmonik alt aileleri kendi içinde alt alta.</p><p>Bir ayın başlığına basarak o ayın <b>40 sütunluk teknik ürün listesini</b> açabilirsiniz.</p><p>133 üretilecek ürün · Üst gruba göre bloklar · G renkleri aynı üretim ayı desenini gösterir · ↑ ↓ veya ⠿ ile sıra değiştirin</p></div><div class="filters">
+    <div class="matrix-heading"><div><h2>Yıllık ürün ve üretim tablosu</h2><p>Üst ürün grubu → ürün → 12 aylık üretim. SVC-R / SRM / SRT ve Harmonik alt aileleri kendi içinde alt alta.</p><p>Bir ayın başlığına basarak o ayın <b>41 sütunluk teknik ürün listesini</b> açabilirsiniz.</p><p>133 üretilecek ürün · Üst gruba göre bloklar · G renkleri aynı üretim ayı desenini gösterir · ↑ ↓ veya ⠿ ile sıra değiştirin</p></div><div class="filters">
       <input id="search" type="search" placeholder="Ürün kodu veya model ara" aria-label="Ürün ara">
       <select id="family" aria-label="Ürün ailesi"><option value="all">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
       <button id="clearFilter" class="btn small">Filtreyi temizle</button>
@@ -33,6 +38,34 @@
   </section>
   <section id="monthDetail" class="surface detail-surface" hidden></section>
   <div class="footnote"><b>Bobin (B*)</b> değerleri üretici tip çizimlerine dayanan ön bilgilerdir; ürün bazlı üretim reçetesiyle kesinleşmemiştir. Başka aileye ayrılmış bir aya aktarım, setup karışmasını önlemek için engellenir. Satır sıralamasını değiştirmek üretim miktarlarını etkilemez; yeni sıra CSV çıktısında korunur. Kaydedilen plan sadece bu tarayıcı/profil ve bu dosya yolu için otomatik geri gelir; bilgisayar değişikliği veya tarayıcı verilerinin silinmesi için JSON dosya yedeğinizi saklayın. <a href="legacy.html">Eski parti senaryosu ekranı</a></div>
+  </div>
+  <section id="sampleView" class="sample-view" role="tabpanel" aria-labelledby="tabSamples" hidden>
+    <section class="heading sample-page-heading">
+      <div><span class="eyebrow">NUMUNE / ÜRÜN TEKNİK KAPSAMI</span>
+        <h1>Numune ihtiyaç ve teknik kapsam tablosu</h1>
+        <p>Şönt ve Harmonik aileleri, alt ürün grupları ve ürünleri tek tabloda. Numune durumu, yıllık adet, yüzde paylar ve teknik bilgiler yan yana.</p>
+      </div>
+      <div class="actions"><button id="sampleExport" type="button" class="btn">↓ Tabloyu CSV indir</button></div>
+    </section>
+    <div id="sampleMetrics" class="sample-metrics" aria-live="polite">Ürünler hazırlanıyor…</div>
+    <section class="surface">
+      <div class="matrix-heading sample-table-heading">
+        <div><h2>Ürün aileleri ve numune ihtiyacı</h2><p>Önce aile başlığı, altında üst ürün grubu, hemen altında tüm ürünlerin teknik satırları.</p></div>
+        <div class="filters">
+          <input id="sampleSearch" type="search" placeholder="Ürün, model, numune veya grup ara" aria-label="Numune tablosunda ürün ara">
+          <select id="sampleFamily" aria-label="Numune tablosu ürün ailesi"><option value="Tümü">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
+          <button id="sampleClear" type="button" class="btn small">Filtreyi temizle</button>
+        </div>
+      </div>
+      <div id="sampleTableScroll" class="sample-table-scroll">
+        <table class="sample-table" id="sampleTable" aria-label="Numune ve teknik kapsam matrisi">
+          <thead id="sampleHead"></thead>
+          <tbody id="sampleBody"></tbody>
+        </table>
+      </div>
+      <p class="sample-note"><b>Numune:</b> “Ana numune” fiziksel incelenmesi önerilen üründür; “Kıyas” teknik olarak karşılaştırılacak üründür. “Bilgiler doğrulanmadı” kaynak katalog eşleşmesinin veya numune sınıfının net olmadığını gösterir. Bunlar satın alma veya ortak üretim yapısı onayı değildir. <b>Bobin*:</b> faz/çizime göre ön bilgidir, fiziksel bobin adedi doğrulanmadı. “—” kaynaktan doğrulanmış değer yok anlamına gelir. Datasheet bağlantıları ürün ailesine aittir.</p>
+    </section>
+  </section>
 </main>
 <div id="backdrop" class="backdrop" role="presentation">
   <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
@@ -46,5 +79,5 @@
   </section>
 </div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
-<script src="data-packed.js"></script><script src="plan2027-data.js"></script><script src="plan2027-upper-groups-data.js"></script><script src="plan2027.js"></script><script src="plan2027-detail.js"></script>
+<script src="data-packed.js"></script><script src="plan2027-data.js"></script><script src="plan2027-upper-groups-data.js"></script><script src="plan2027-samples.js"></script><script src="plan2027.js"></script><script src="plan2027-detail.js"></script>
 </body></html>
