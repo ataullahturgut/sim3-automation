@@ -37,6 +37,32 @@ RESEARCH="RESEARCH_SHADOW_UNCERTIFIED_ORIGINAL_FOURMETAL_V22_V35"
 def check(ok,key):
     if not bool(ok): raise AssertionError("V35_V22_NEON_GUARD_"+key)
 
+def latest_completed_fourmetal_date(now):
+    uri=os.getenv("NEON_DATABASE_URL","")
+    check(bool(uri),"NEON_URL_MISSING")
+    with psycopg.connect(uri,connect_timeout=12,row_factory=dict_row,
+                         options="-c default_transaction_read_only=on") as db:
+        with db.cursor() as cur:
+            cur.execute("""
+              SELECT max(price_date) AS latest_complete
+              FROM (
+                SELECT price_date
+                FROM gold_weekly_live.staktrakr_daily_utc_reference_v1
+                WHERE price_date >= DATE '2026-10-29' AND price_date < %s
+                  AND EXTRACT(ISODOW FROM price_date)<=5
+                GROUP BY price_date
+                HAVING count(DISTINCT metal)=4
+              ) d
+            """,(now.date(),))
+            row=cur.fetchone()
+    check(row["latest_complete"] is not None, "NO_COMPLETE_LATEST_WEEKDAY")
+    result=row["latest_complete"]
+    check(result.isoformat()>="2026-10-29" and result.year==2026,
+          "LATEST_DATE_OUT_OF_SUPPORTED_2026_HORIZON")
+    check((now.date()-result).days<=5,"STAK_REFERENCE_FEED_STALE")
+    return result.isoformat()
+
+
 def source_from_neon(now):
     uri=os.getenv("NEON_DATABASE_URL","").strip()
     check(bool(uri),"NEON_URL_MISSING")
@@ -63,6 +89,18 @@ def source_from_neon(now):
                ORDER BY series_id,observation_ts,available_as_of ASC
             """,(list(MACRO),DATA_END))
             macro=cur.fetchall()
+            cur.execute("""
+              SELECT DISTINCT ON (market,report_date)
+                market,contract_code,report_date,open_interest,
+                managed_money_long,managed_money_short,
+                managed_money_net_over_oi,managed_money_short_over_oi,
+                raw_row_sha256,earliest_model_use_date,retrieved_utc
+              FROM gold_weekly_live.cftc_gc_si_futuresonly_official_v1
+              WHERE report_date >= DATE '2026-10-20'
+                AND report_date <= %s
+              ORDER BY market,report_date,retrieved_utc ASC
+            """,(DATA_END,))
+            official_cot=cur.fetchall()
     seen=defaultdict(dict)
     for row in prices:
         d=row["price_date"].isoformat()
@@ -89,7 +127,7 @@ def source_from_neon(now):
     check("GVZ_CBOE" in macro_new[DATA_END],"NO_LATEST_GVZ")
     check("DGS10_FRB_H15" in macro_new["2026-10-28"],
           "LATEST_H15_BEHIND")
-    return seen, macro_new
+    return seen, macro_new, official_cot
 
 def append_source(src,seen,macro_new,now,existing_asof):
     previous=src["prices"]
@@ -113,8 +151,8 @@ def append_source(src,seen,macro_new,now,existing_asof):
         src["prices"].append(dict(date=d,metals=[
             float(seen[d][m]["spot_usd_oz"]) for m in METALS]))
         appended.append(d)
-    check(appended==["2026-10-26","2026-10-27","2026-10-28",DATA_END],
-          "CURRENT_WEEK_INCOMPLETE")
+    expected=pd.bdate_range("2026-10-26",DATA_END).strftime("%Y-%m-%d").tolist()
+    check(appended==expected,"CURRENT_WEEK_INCOMPLETE")
     available=dict(existing_asof)
     for d in sorted(macro_new):
         for series,r in macro_new[d].items():
@@ -132,6 +170,63 @@ def append_source(src,seen,macro_new,now,existing_asof):
             if (series,d) not in available:
                 available[(series,d)]=avail_date
     return appended,available,frozen_parity
+
+def extend_official_cot(cot,official,now):
+    """Only add strictly later paired official weekly reports. Historical frozen
+    GC/SI rows never rewritten. Missing/modified overlap is reported as
+    unverified source differences and blocks promotion.
+    """
+    last=cot["GC"][-1]["date"]
+    check(last==cot["SI"][-1]["date"],"CFTC_ORIGINAL_MARKET_MISALIGNED")
+    by=defaultdict(dict)
+    for row in official:
+        d=row["report_date"].isoformat()
+        m=row["market"]
+        check(m in ("GC","SI"),"CFTC_UNKNOWN_MARKET")
+        check(m not in by[d],"CFTC_DUPLICATE_WEEK")
+        check(row["retrieved_utc"]<=now,"CFTC_FUTURE_FIRST_CAPTURE")
+        by[d][m]=row
+    overlap=by.get(last)
+    if overlap:
+        check(set(overlap)=={"GC","SI"},"CFTC_OFFICIAL_OVERLAP_MISSING_MARKET")
+        for market in ("GC","SI"):
+            z=overlap[market]
+            prior=cot[market][-1]
+            check(abs(float(prior["mm_net_fraction_oi"])-
+                      float(z["managed_money_net_over_oi"]))<=1e-9,
+                  "CFTC_OFFICIAL_VS_FROZEN_OVERLAP_NET_"+market)
+            check(abs(float(prior["managed_money_short"])/float(prior["open_interest"])-
+                      float(z["managed_money_short_over_oi"]))<=1e-9,
+                  "CFTC_OFFICIAL_VS_FROZEN_OVERLAP_SHORT_"+market)
+    added=[]
+    for d in sorted(by):
+        if d<=last:continue
+        day=by[d]
+        check(set(day)=={"GC","SI"},"UNPAIRED_NEW_CFTC_"+d)
+        allowed=day["GC"]["earliest_model_use_date"]
+        check(day["SI"]["earliest_model_use_date"]==allowed,
+              "DIFFERENT_CFTC_MARKET_AVAILABILITY")
+        check(day["GC"]["contract_code"]=="088691" and
+              day["SI"]["contract_code"]=="084691",
+              "CFTC_WRONG_CONTRACT_CODE")
+        check(allowed>date.fromisoformat(d),"CFTC_BEFORE_PUBLICATION")
+        # Keep first actual capture and conservative usable date, not guessed
+        # historical publication time. Original release-clock helper handles
+        # as-of eligibility by the (future) observation day.
+        for m in ("GC","SI"):
+            z=day[m]
+            cot[m].append({
+              "date":d,"available":allowed.isoformat(),
+              "quality":"OFFICIAL_SOCRATA_FIRST_CAPTURE_CONSERVATIVE_LAG",
+              "mm_net_fraction_oi":float(z["managed_money_net_over_oi"]),
+              "open_interest":float(z["open_interest"]),
+              "managed_money_net":float(z["managed_money_long"]-z["managed_money_short"]),
+              "managed_money_short":float(z["managed_money_short"]),
+            })
+        added.append(d)
+    return {"originalLastReport":last,"newReportDates":added,
+            "frozenOfficialOverlapVerified":bool(overlap)}
+
 
 def original_risk_rows(src,cot,available,now):
     # Original v8 make_rows source dynamically frozen but NO changes to its
@@ -195,7 +290,7 @@ def scores_and_v22(src,cot,rows):
     # pre-September origins (except documented Feb27 source scenarios).
     return predictions,risk
 
-def one_scenario(base,cot,price,macro_new,seen,now,scenario,existing_asof):
+def one_scenario(base,cot,price,macro_new,seen,now,scenario,existing_asof,cftc_evidence):
     src=copy.deepcopy(base)
     bad=[p for p in src["prices"] if p["date"]=="2026-02-27"]
     check(len(bad)==1,"BAD_FEB27_MISSING")
@@ -214,7 +309,9 @@ def one_scenario(base,cot,price,macro_new,seen,now,scenario,existing_asof):
         sourcePriceKind="STAKTRAKR_UTC_DAILY_REFERENCE_NOT_NY17",
         gold=float(current["gold_price_usd_oz"]),
         scoreInputFeatureCount=len(current["features"]),
-        sourceDaysAppended=4,sourceOverlapMatchedMetalRows=overlap,
+        sourceDaysAppended=(date.fromisoformat(DATA_END)-date(2026,10,23)).days,
+        sourceOverlapMatchedMetalRows=overlap,
+        officialCotExtension=cftc_evidence,
         CFTCReportDate=current["cftc_observed_position_date"],
         CFTCConservativeUsableDate=current["cftc_available_date"],
         CFTCReleaseQuality=current["cftc_publication_status"],
@@ -246,13 +343,16 @@ def main():
     ap.add_argument("--write-shadow",action="store_true")
     args=ap.parse_args()
     now=datetime.now(timezone.utc)
-    seen,macro=source_from_neon(now)
-    raw, historical_through_oct23, cot, historic_asof=v33.source_and_inputs()
+    global DATA_END
+    DATA_END=latest_completed_fourmetal_date(now)
+    seen,macro,official_cot=source_from_neon(now)
+    raw,historical_through_oct23,cot,historic_asof=v33.source_and_inputs()
+    cftc_evidence=extend_official_cot(cot,official_cot,now)
     check(cot["GC"][-1]["available"]=="2026-10-27",
           "CFTC_SOURCE_DATE_UNEXPECTED")
     outcomes=[]
     for scenario,prices in v29.SOURCES.items():
-        outcomes.append(one_scenario(historical_through_oct23,cot,prices,macro,seen,now,scenario,historic_asof))
+        outcomes.append(one_scenario(historical_through_oct23,cot,prices,macro,seen,now,scenario,historic_asof,cftc_evidence))
     status="RESEARCH_V22_CURRENT_DATE_RUN_COMPLETED_NOT_LIVE"
     if any(outcomes[0][k]!=outcomes[1][k] for k in [
        "base14Level","cftc21Level","v22Level","v22EffectiveReview"]):
@@ -274,8 +374,9 @@ def main():
             with db.cursor() as cur:
                 written=0
                 for row in outcomes:
-                    material=json.dumps(row,sort_keys=True,allow_nan=False)
-                    h=hashlib.sha256(material.encode()).hexdigest()
+                    stable={k:v for k,v in row.items() if k not in ("runAtUTC",)}
+                    h=hashlib.sha256(json.dumps(
+                        stable,sort_keys=True,allow_nan=False).encode()).hexdigest()
                     cur.execute(sql,(DATA_END,row["scenario"],h,
                         row["base14Level"],row["base14Score"],
                         row["cftc21Level"],row["cftc21Score"],row["v22Level"],
