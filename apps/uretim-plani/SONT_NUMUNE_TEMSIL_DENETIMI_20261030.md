@@ -1,3 +1,5 @@
+> **MAKİNE YATIRIMI İÇİN GEÇERLİ KARAR / 30.10.2026:** Bu belgedeki 'numune satın alma' dili, gerçek amaç açısından hatalıdır. 25 ürün zaten elde bulunmaktadır. Güncel makine seçimi amaçlı inceleme listesi ve güncel /fl/tr 2026/12 PDF ile uygulama kaynak ayrışması için [SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md](SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md) esas alınmalıdır. Eski 9 liste yalnız önceki inceleme seçiminin tarihsel kaydıdır. Bu belgedeki 'GA5205/GA5206 klemens, GA5207 bara' varsayımları doğrudan erişilen resmî /fl/tr PDF s.17 ile uyuşmuyor; yeni raporda gerçek PDF değerleri not edildi.
+
 # Şönt numune temsil denetimi — 25 ürün, 2026-10-30
 
 ## Denetimin sorusu
