@@ -99,18 +99,25 @@ function restore(){
  let raw=null;
  try{
   raw=localStorage.getItem(STORAGE_KEY);
-  if(!raw)raw=localStorage.getItem(CHECKPOINT_KEY);
+  const savedPoint=localStorage.getItem(CHECKPOINT_KEY);
   updateCheckpointButton();
-  if(!raw){note('Başlangıç planı yüklendi. Değişiklikler otomatik kaydedilecek; önemli planlar için JSON yedeği alın.','warn');return}
-  const obj=JSON.parse(raw);
-  const previewMissing=products.some(p=>!obj.monthly||!Object.hasOwn(obj.monthly,p.id));
+  if(!raw&&!savedPoint){note('Başlangıç planı yüklendi. Değişiklikler otomatik kaydedilecek; önemli planlar için JSON yedeği alın.','warn');return}
+  let obj,usedCheckpoint=false;
+  try{obj=JSON.parse(raw||savedPoint);usedCheckpoint=!raw}
+  catch(parseError){
+   // Bozuk asıl kayıt silinmez; son sağlam elle kayıt noktası varsa kurtarılır.
+   if(raw&&!localStorage.getItem(RECOVERY_KEY))localStorage.setItem(RECOVERY_KEY,raw);
+   if(!savedPoint)throw parseError;
+   obj=JSON.parse(savedPoint);usedCheckpoint=true;
+  }
   const result=applySnapshot(obj,true);
-  if(result.skipped||result.extra||previewMissing){
-   // Otomatik dönüşüm yapmadan önce, önceki ham verinin ayrı bir kopyasını koru.
-   if(!localStorage.getItem(RECOVERY_KEY))localStorage.setItem(RECOVERY_KEY,raw);
-   restorationWarning=result.loaded+' ürünün kayıtları geri yüklendi; '+result.skipped+' değişmiş/eksik, '+result.extra+' eski ürün kaydı eşleşmedi. Eski veri ayrıca korundu; JSON yedeğinizi saklayın.';
+  if(result.skipped||result.extra){
+   const archived=raw||savedPoint;
+   if(!localStorage.getItem(RECOVERY_KEY))localStorage.setItem(RECOVERY_KEY,archived);
+   restorationWarning=result.loaded+' ürün geri yüklendi; '+result.skipped+' eksik/değişmiş, '+result.extra+' eski ürün eşleşmedi. Eski kayıt ayrı saklandı; JSON yedeğini koruyun.';
    note(restorationWarning,'warn');
-  }else note('Önceki kayıtlı plan açıldı: üretim adetleri ve ürün sıralamanız korundu.');
+  }else if(usedCheckpoint)note('Önceki otomatik kayıt okunamadı; son elle kaydedilen sağlam plan açıldı.','warn');
+  else note('Önceki kayıtlı plan açıldı: üretim adetleri ve ürün sıralamanız korundu.');
  }catch(e){
   restorationWarning='Kayıt okunamadı ('+e.message+'). Eski kayıt silinmedi. “Son kayıtlı plan” veya JSON yedeğini kullanın.';
   note(restorationWarning,'error');
@@ -236,8 +243,10 @@ function undo(){
  p.monthly[h.to]-=h.qty;p.monthly[h.from]+=h.qty;save();render();toast('Son üretim aktarımı geri alındı.');
 }
 function reset(){
- if(!confirm('Bu tarayıcıda yaptığınız bütün üretim değişiklikleri silinsin ve başlangıç 2027 planı yüklensin mi?'))return;
- products.forEach(p=>p.monthly=p.initial.slice());rowOrder=initialOrder.slice();history=[];save();render();toast('Üretim miktarları ve satır sırası başlangıç planına döndü.');
+ if(!confirm('Bu tarayıcıdaki üretim değişiklikleri başlangıç planına döndürülecek. Son elle kaydedilen plan kurtarma için korunacak. Devam edilsin mi?'))return;
+ // Önceden elle kaydedilmiş bir kayıt yoksa, sıfırlama öncesi otomatik kurtarma noktası oluştur.
+ if(!hasCheckpoint&&!save(true)){toast('Kurtarma kaydı oluşturulamadığı için sıfırlama iptal edildi. Önce JSON yedeğini indirin.');return}
+ products.forEach(p=>p.monthly=p.initial.slice());rowOrder=initialOrder.slice();history=[];save();render();toast('Başlangıç planına dönüldü; son kaydedilen plana geri dönebilirsiniz.');
 }
 function exportCSV(){
  const rows=[['Sıra','Ürün kimliği','Stok kodu','Model','Ürün ailesi','Bobin ön değeri','Bobin doğrulama','Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık','Yıllık adet']];
