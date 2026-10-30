@@ -12,9 +12,12 @@ const pWeight=p=>typeof p.kg==='number'&&p.kg>0?p.kg:null;
 
 /* 28.10.2026 tarihinde üreticinin 2026/12 resmî teknik fiyat listesi (https://www.gruparge.com/fl/tr)
    PDF'nin 17, 30, 31 ve 32. sayfalarındaki 112 farklı stok kodu esas alınmıştır.
-   Kullanıcı matrisindeki 135 satırın 92'si bu listede bulunmuş ve akım, L, ölçü,
-   ağırlık, bağlantı alanları 5/5 eşleşmiştir. Diğer 43 satır (29 G/GG,
+   Kullanıcı matrisindeki 135 satırın 92'si üreticinin stok kodu listesinde
+   bulunmuştur; bu katalog kodu eşleşmesi bütün teknik alanların eşleştiği anlamına
+   GELMEZ. 30.10.2026 karşılaştırmasında 23/23 standart Şönt ürününde ölçü farkı,
+   16 ağırlık farkı ve 6 bağlantı farkı bulunmuştur. Diğer 43 satır (29 G/GG,
    12 özel üretim, 2 SVC) katalog dışıdır. Resmî listede olmamak ürün yokluğu değildir.
+   Ayrıntı: NUMUNE_TEK_NIK_DENETIM_20261030.md
    Bu eşleşmelerin satır bazında CSV raporu ayrıca hazırlanmıştır.
 */
 const OFFICIAL_2026_LIST='https://www.gruparge.com/fl/tr';
