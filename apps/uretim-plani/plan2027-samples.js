@@ -206,28 +206,32 @@ function exportCSV(){
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='2027-numune-teknik-kapsam.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 }
 function showPage(name){
- const sample=name==='samples';
- $('productionView').hidden=sample;
+ const machine=name==='machine',sample=name==='samples',production=!machine&&!sample;
+ $('productionView').hidden=!production;
+ $('shuntMachineView').hidden=!machine;
  $('sampleView').hidden=!sample;
- $('tabProduction').classList.toggle('is-active',!sample);
- $('tabSamples').classList.toggle('is-active',sample);
- $('tabProduction').setAttribute('aria-selected',String(!sample));
- $('tabSamples').setAttribute('aria-selected',String(sample));
- document.title=(sample?'Numune ve Teknik Kapsam':'Üretim Planlama')+' | Şönt ve Harmonik';
+ for(const [id,active] of [['tabProduction',production],['tabShuntMachine',machine],['tabSamples',sample]]){
+  $(id).classList.toggle('is-active',active);
+  $(id).setAttribute('aria-selected',String(active));
+ }
+ document.title=(machine?'Şönt Makine İncelemesi':sample?'Numune ve Teknik Kapsam':'Üretim Planlama')+' | Üretim Yönetimi';
  if(sample)render();
+ if(machine)window.ShuntMachineInvestment.render();
 }
 function init(list){
  if(!Array.isArray(list)||!list.length)throw Error('Ürün verileri yüklenmeden numune görünümü açılamaz.');
  products=list;
  if(products.some(p=>!p.id||!p.kod||!p.grup||!Number.isFinite(p.annual)||p.annual<=0))throw Error('Numune sayfası ürün verileri geçersiz.');
+ window.ShuntMachineInvestment.init(products);
  $('tabProduction').addEventListener('click',()=>showPage('production'));
+ $('tabShuntMachine').addEventListener('click',()=>showPage('machine'));
  $('tabSamples').addEventListener('click',()=>showPage('samples'));
  $('sampleSearch').addEventListener('input',e=>{search=e.target.value||'';render()});
  $('sampleFamily').addEventListener('change',e=>{family=e.target.value;render()});
  $('sampleClear').addEventListener('click',()=>{family='Tümü';search='';$('sampleSearch').value='';$('sampleFamily').value='Tümü';render()});
  $('sampleExport').addEventListener('click',exportCSV);
  initComplete=true;render();
- showPage(location.hash==='#numune'?'samples':'production');
+ showPage(location.hash==='#sont-makine'?'machine':location.hash==='#numune'?'samples':'production');
 }
 window.SampleCoverageMatrix={init,render,group,status:sampleStatus,columns:HEADERS.length};
 })();
