@@ -23,7 +23,7 @@ const STORAGE_SPECS={
 };
 const GROUPS={
  'Şönt':['SVC-R','SRM','SRT','Diğer Şönt'],
- 'Harmonik':['HRM','HRT 5,67','HRT 7/8','HRT 7/7','HRT 14','HRT-G varyant','HRT-GG varyant','Özel Harmonik']
+ 'Harmonik':['HRM 5,67','HRM 7','HRM 14','HRT 5,67','HRT 7/8','HRT 7/7','HRT 14','HRT-G varyant','HRT-GG varyant','Özel Harmonik']
 };
 const DATASHEETS={
  'Şönt':'https://www.gruparge.com/wp-content/uploads/2025/05/SONT-REAKTORU-DATASHEET.pdf',
@@ -81,10 +81,21 @@ function group(p){
  if(code.startsWith('GAGG'))return 'HRT-GG varyant';
  if(code.startsWith('GAG'))return 'HRT-G varyant';
  if(code==='GA5ÖZELHARM'||(!model.startsWith('HRM')&&!model.startsWith('HRT')))return 'Özel Harmonik';
- if(model.startsWith('HRM'))return 'HRM';
- if(kind.includes('5,67'))return 'HRT 5,67';
- if(kind.includes('14'))return 'HRT 14';
- if(kind.includes('<%7'))return 'HRT 7/7';
+ if(/^GA531\d/.test(code))return 'HRM 5,67';
+ if(/^GA541\d/.test(code))return 'HRM 7';
+ if(/^GA551\d/.test(code))return 'HRM 14';
+ if(model.startsWith('HRM')){
+  if(/\/5[.,]67/.test(model))return 'HRM 5,67';
+  if(/\/14/.test(model))return 'HRM 14';
+  return 'HRM 7';
+ }
+ if(/^GA53[23]\d/.test(code))return 'HRT 5,67';
+ if(/^GA56[23]\d/.test(code))return 'HRT 7/7';
+ if(/^GA54[23]\d/.test(code))return 'HRT 7/8';
+ if(/^GA55[23]\d/.test(code))return 'HRT 14';
+ if(kind.includes('5,67')||/\/5[.,]67/.test(model))return 'HRT 5,67';
+ if(kind.includes('14')||/\/14/.test(model))return 'HRT 14';
+ if(kind.includes('<%7')||/\/7-7/.test(model))return 'HRT 7/7';
  return 'HRT 7/8';
 }
 function priority(p){
@@ -96,14 +107,32 @@ function priority(p){
    hint:m.reason+' · Ölçüm: '+m.focus+' · Henüz kapasite onayı yok.'};
  }
  const code=String(p.kod||'').toUpperCase();
+ const status=String(raw(p,'Numune / kontrol')||'');
  const first=['GA5436','GA5426','GA5412'],compare=['GA5636','GA5536','GA5429','GA5336','GA5415'];
- if(first.includes(code))return {label:'İlk numune',rank:0,className:'main',hint:'Kaynak inceleme matrisi'};
- if(compare.includes(code))return {label:'Fiziksel kıyas',rank:0,className:'main',hint:'Kaynak inceleme matrisi'};
+ if(status.startsWith('1 ·')||first.includes(code))return {label:'İlk fiziksel numune',rank:0,className:'main',hint:'Kaynak ilk numunesi; tüm yapıların temsili henüz kanıtlanmadı'};
+ if(status.startsWith('2 ·')||compare.includes(code))return {label:'Fiziksel kıyas numunesi',rank:0,className:'main',hint:'Kaynak fiziksel kıyas adayı'};
+ if(status.startsWith('3 ·'))return {label:'Sökmeden kıyas',rank:1,className:'compare',hint:'Katalog/görsel kıyası; sarım eşdeğerliği kanıtı değildir'};
+ if(status.includes('Kimlik')||/^(GAG|GAGG)/.test(code)||code==='GA5ÖZELHARM')return {label:'Kimlik / reçete teyidi',rank:2,className:'unknown',hint:'Ürüne özgü teknik çizim ve imalat reçetesi gerekli'};
  const m=code.match(/^GA(\d{4})$/),n=m?Number(m[1]):0;
  const ranges=[[5311,5317],[5411,5417],[5511,5517],[5321,5339],[5629,5639],[5521,5539],[5421,5439]];
  return ranges.some(([lo,hi])=>n>=lo&&n<=hi)?
-  {label:'Kıyas',rank:1,className:'compare',hint:'Kaynak katalog kıyası'}:
-  {label:'Bilgiler doğrulanmadı',rank:2,className:'unknown',hint:'Kaynak inceleme matrisi'};
+  {label:'Sökmeden kıyas',rank:1,className:'compare',hint:'Üretici katalog kıyası; fiziksel eşdeğerlik kanıtı değil'}:
+  {label:'Kimlik / reçete teyidi',rank:2,className:'unknown',hint:'Ürün tasarım kimliği veya imalat reçetesi eksik'};
+}
+function specialHarmonic(p){
+ return p.grup==='Harmonik'&&(/^(?:GAG|GAGG)/.test(p.kod)||p.kod==='GA5ÖZELHARM');
+}
+function technicalDisplay(p,field){
+ const source=raw(p,field);
+ if(p.grup!=='Harmonik')return val(source);
+ if(specialHarmonic(p)){
+  if(source===null||source===undefined||source==='')return 'Doğrulanmadı';
+  return val(source)+' (sipariş kaydı; teyitsiz)';
+ }
+ if(field==='THDv tasarım sınıfı'&&(group(p)==='HRT 7/7'||group(p)==='HRT 7/8')){
+  return group(p)==='HRT 7/7'?'<%7':'<%8';
+ }
+ return val(source);
 }
 function summary(){
  const groups=new Map(),totals={'Şönt':0,'Harmonik':0};
@@ -256,7 +285,10 @@ function originalFields(p){
   byFamily(p,'Bağlantı tipi','Bağlantı'),
   raw(p,'Faz')??p.faz,raw(p,'Güç (kVAr)')??p.guc,
   byFamily(p,'Akım (A)','Akım (Irms, A)')??p.akim,
-  raw(p,'L (mH)')??p.L,raw(p,'p (%)')??p.p,raw(p,'THDv tasarım sınıfı')??p.thdv,DATASHEETS[p.grup],
+  raw(p,'L (mH)')??p.L,
+  p.grup==='Harmonik'?technicalDisplay(p,'p (%)'):raw(p,'p (%)')??p.p,
+  p.grup==='Harmonik'?technicalDisplay(p,'THDv tasarım sınıfı'):raw(p,'THDv tasarım sınıfı')??p.thdv,
+  DATASHEETS[p.grup],
   ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>get(p,k))
  ];
 }
@@ -273,8 +305,9 @@ function rowCells(p,totals){
   esc(val(byFamily(p,'Bağlantı tipi','Bağlantı'))),
   esc(val(raw(p,'Faz')??p.faz)),esc(val(raw(p,'Güç (kVAr)')??p.guc)),
   esc(val(byFamily(p,'Akım (A)','Akım (Irms, A)')??p.akim)),
-  esc(val(raw(p,'L (mH)')??p.L)),esc(val(raw(p,'p (%)')??p.p)),
-  esc(val(raw(p,'THDv tasarım sınıfı')??p.thdv)),
+  esc(val(raw(p,'L (mH)')??p.L)),
+  esc(p.grup==='Harmonik'?technicalDisplay(p,'p (%)'):val(raw(p,'p (%)')??p.p)),
+  esc(p.grup==='Harmonik'?technicalDisplay(p,'THDv tasarım sınıfı'):val(raw(p,'THDv tasarım sınıfı')??p.thdv)),
   '<a href="'+esc(DATASHEETS[p.grup])+'" target="_blank" rel="noopener">PDF</a>',
   ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>editable(p,k))
  ];
