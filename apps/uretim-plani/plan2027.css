@@ -287,3 +287,12 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .sample-editor-message{min-height:18px;margin:11px 0 0;color:#356078;font-weight:700;font-size:12px}
 @media(max-width:760px){.sample-editor-overlay{padding:0}.sample-editor-dialog{border-radius:0;max-height:100vh;height:100vh}.sample-editor-heading,.sample-picker-area,.sample-edit-area{padding:14px}.sample-editor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sample-picker-controls{grid-template-columns:1fr}}
 @media(max-width:460px){.sample-editor-grid{grid-template-columns:1fr}.sample-editor-heading h2{font-size:18px}.sample-editor-identity{align-items:flex-start;flex-direction:column}}
+
+
+/* İki giriş yolu: doğrudan tablo düzenleme + ayrı ürün formu */
+.sample-table tbody tr.sample-product-row:focus-within td{background:#e9f4fd!important}
+.sample-table tbody tr.sample-product-row:focus-within td.sample-cell-code,
+.sample-table tbody tr.sample-product-row:focus-within td.sample-cell-model{background:#dceefd!important;box-shadow:inset 0 0 0 1px #a1c8e4}
+.sample-table .sample-status-edit{font-weight:730;max-width:200px;min-width:178px}
+.sample-table .sample-edit:focus{border-color:#3e86b3;box-shadow:0 0 0 2px rgba(62,134,179,.14)}
+.sample-table .sample-edit-number{text-align:right}
