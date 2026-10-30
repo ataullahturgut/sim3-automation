@@ -3,6 +3,8 @@ name: Gold Control Production Scheduler V1.42
 # DATA INGESTION RESUMED 2026-10-30 after explicit user request.
 # This workflow only refreshes source observations/snapshots. It DOES NOT issue
 # weekly ANN forecasts, V22/BASE14 live alerts, or investment instructions.
+# Hourly snapshot publication remains MANUAL: archived runtime status is not
+# a verified current forecast and must not be auto-republished as live.
 # All jobs have source-time / canonical persistence checks; separate live
 # readiness workflow reports BLOCKED until genuine executors are verified.
 on:
@@ -12,7 +14,6 @@ on:
     paths: ['.github/workflows/gold-control-production-scheduler-v142.yml']
   schedule:
     - cron: '17 * * * *'
-    - cron: '27 * * * *'
     - cron: '45 23 * * *'
     - cron: '25 6 * * *'
     - cron: '15 1 * * 2-6'
