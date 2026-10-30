@@ -70,10 +70,22 @@ function verifiedField(p,name){
  const v=raw(p,name);
  return v===null||v===undefined||String(v).trim()===''||/bilinmiyor|doğrulanmadı|belirsiz/i.test(String(v))?'Doğrulanmadı':v;
 }
+// Kaynak numune matrisinde doğrulanmış temel ürün sınıfı. Paket kayıttaki
+// Faz alanı boşsa yalnız aile kodundan kesin ayırt edilebilen tipler doldurulur.
+// G/GG ve özel modeller için faz tahmini yapılmaz.
+function technicalPhase(p){
+ const recorded=raw(p,'Faz');
+ if(recorded!==null&&recorded!==undefined&&recorded!=='')return recorded;
+ const code=String(p.kod||'').trim().toUpperCase(),model=String(p.model||'').trim().toUpperCase();
+ if(code.startsWith('GAG')||code==='GA5ÖZELHARM')return null;
+ if(model.startsWith('SVC-R')||model.startsWith('SRM')||model.startsWith('HRM'))return 1;
+ if(model.startsWith('SRT')||model.startsWith('HRT'))return 3;
+ return null;
+}
 function technicalFields(p){
  return [
   p.kod,p.model,sampleStatus(p).label,p.annual,
-  raw(p,'Faz'),raw(p,'Güç (kVAr)'),
+  technicalPhase(p),raw(p,'Güç (kVAr)'),
   byFamily(p,'Akım (A)','Akım (Irms, A)'),raw(p,'L (mH)'),
   raw(p,'p (%)'),raw(p,'THDv tasarım sınıfı'),
   byFamily(p,'Ölçü G×Y×D (mm)','Dış ölçüler (mm)'),
