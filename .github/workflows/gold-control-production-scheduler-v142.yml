@@ -1,6 +1,8 @@
 name: Gold Control Production Scheduler V1.42
 
 # DATA INGESTION RESUMED 2026-10-30 after explicit user request.
+# SECOND CATCH-UP ON MERGE AFTER FED SOURCE ISOLATION FIX (PR #151).
+# Still data-only; no weekly ANN or V22/BASE14 live signal issuance.
 # This workflow only refreshes source observations/snapshots. It DOES NOT issue
 # weekly ANN forecasts, V22/BASE14 live alerts, or investment instructions.
 # Hourly snapshot publication remains MANUAL: archived runtime status is not
