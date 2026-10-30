@@ -1,4 +1,16 @@
-## Numune/teknik kapsam — güvenli ürün seçme ve formdan kaydetme (30.10.2026)
+## GÜNCEL — Her iki teknik veri girişi birlikte açık (30.10.2026)
+
+**DÜZELTME:** Kullanıcı hem tablo hücresine doğrudan giriş hem de ayrı ürünü seçip güvenle kaydetme istemişti; geçici olarak tablonun salt okunur yapılması yanlıştı ve **geri alındı**.
+
+- **1. Tablo üzerinden giriş:** 28 sütunun 13 sarım/emprenye teknik alanında açılır seçimler, sayısal alanlar, vernik kodu ve izolasyon çoklu seçim yeniden **düzenlenebilir**. İnceleme türü **Ana Numune / Karşılaştırma Numunesi / Dış Kontrol** olarak satırdaki açılır menüyle değişebilir. **Teknik Bilgi Eksik** sabittir. Tablo alanı değiştirildiğinde **otomatik kayıt** yapılır. Veri girişinde ürün satırı vurgulanır, giriş alanlarının adı ürün kodu/modelini içerir.
+- **2. Ürün Seç / Düzenle:** Kod/model araması + benzersiz satır kimliğiyle seçim; seçilen ürünün ayrı sarım/emprenye ve inceleme türü formu. Bu form **“Bu Ürüne Kaydet”** basılana kadar kayıt yapmaz. Kaydet ve iptal davranışı korunur.
+- **Ortak veri:** İki yol aynı ürün/aile bazlı tarayıcı kaydını okur/yazar. Yeni tablo girişi ürün formunu yeniden açınca görünür; formda kaydedilen bilgiler de anında tabloya yansır. Yinelenen `GA5ÖZELHARM` gibi stok kodlarının farklı satırları birbirinden ayrı tutulur. Geçersiz sayısal veriler reddedilir; tarayıcı yazma hatasında kayıt önceki güvenli hâline geri alınır.
+- **Sınıflandırma ve sayılar:** Başlangıç sınıfları Şönt 11 Ana + 8 Karşılaştırma + 6 Dış = 25; Harmonik 3 Ana + 10 Karşılaştırma + 54 Dış + 41 Teknik Bilgi Eksik = 108. Başlangıç fiziksel numune adedi **32** (Şönt 19, Harmonik 13). Kullanıcı statü değiştirince sayaçlar otomatik yeniden hesaplanır. 2027 planı ve katalog teknik değerleri değiştirilmedi.
+- **Doğrulama:** Gerçek kaynak matrisinin **133 aktif satırı** (25 Şönt + 108 Harmonik), 28 sütun ve iki düzenleme yolu birlikte mantıksal DOM testinde **PASS**: satır içi giriş ve otomatik kayıt, formun tablo kaydını okuması, açıkça kaydetme, form→tablo yansıması, tarayıcı yeniden açılışında kayıtlar, kimliği aynı stok kodlarının izolasyonu, sabit eksik statü, sayısal doğrulama, yerel yazma hatasında rollback, CSV ve JSON. **Gerçek Chrome görsel testi yapılmadı.**
+
+---
+
+## TARİHSEL — Ürün seçme formu ilk kurulduğundaki geçici salt-okunur tablo (30.10.2026)
 
 **GÜNCEL UYGULAMA:** Şönt ve Harmonik **28 sütunlu** Numune ve Teknik Kapsam tablosu, **yalnızca okuma** moduna alındı. Ürün kodunun altında **Düzenle** ve üstte **Ürün Seç / Düzenle** bulunur. Yeni ürün seçme ekranında stok kodu/model araması, Şönt/Harmonik filtresi ve **benzersiz satır kimliğini** gösteren seçim listesi vardır. Açılan ürün formunda seçilen ürünün **kod, model, aile, yıllık miktar, satır kimliği** sabit gösterilir. İnceleme sınıfı ve 13 sarım/emprenye sütununun verileri burada girilir, **yalnız “Bu Ürüne Kaydet”** ile tek ürünün kaydı saklanır. Formda yapılan değişiklikler kaydedilene kadar tabloyu veya tarayıcı verisini değiştirmez. İptal/geri/çıkışta kaydedilmeyen değişiklikler için uyarı vardır. Geçersiz sayısal değerler reddedilir. Aynı stok kodunu paylaşan ürünlerde **farklı satır kimliğiyle ayrı** veri kaydı tutulur.
 
