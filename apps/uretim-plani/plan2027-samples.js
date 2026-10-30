@@ -82,6 +82,11 @@ function technicalPhase(p){
  if(model.startsWith('SRT')||model.startsWith('HRT'))return 3;
  return null;
 }
+function catalogReview(p){
+ const old=byFamily(p,'2026/12 katalog durumu','Teknik veri durumu');
+ if(p.grup==='Şönt'&&official(p))return 'Üretici 2026/12 listesiyle ölçü farkı var; kg/bağlantı ve ürün revizyonu doğrulanmalı. Kaynak değer değişmedi.';
+ return old;
+}
 function technicalFields(p){
  return [
   p.kod,p.model,sampleStatus(p).label,p.annual,
@@ -96,7 +101,7 @@ function technicalFields(p){
   raw(p,'Yapı referansı (2025 çizimi)'),
   raw(p,'Teknik inceleme grubu'),
   reviewText(p),
-  byFamily(p,'2026/12 katalog durumu','Teknik veri durumu'),
+  catalogReview(p),
   raw(p,'İnceleme / eksik bilgi'),
   p.kaynakDosya,p.kaynakSatir
  ];
