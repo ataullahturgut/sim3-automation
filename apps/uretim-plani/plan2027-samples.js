@@ -556,20 +556,20 @@ function renderPicker(){
  const matches=products.filter(p=>(fam==='Tümü'||p.grup===fam)&&
   (p.kod+' '+p.model+' '+group(p)+' '+p.annual+' '+recordKey(p)).toLocaleLowerCase('tr-TR').includes(q));
  const list=$('samplePickList');
- list.innerHTML=matches.map(p=>'<option value="'+esc(p.id)+'"'+(p.id===pickerId?' selected':'')+'>'+
+ list.innerHTML=matches.map(p=>'<option value="'+esc(p.id)+'"'+(String(p.id)===pickerId?' selected':'')+'>'+
  esc(p.grup+' · '+p.kod+' · '+p.model+' · '+qty(p.annual)+' adet/yıl'+
  (duplicateHarmonicCodes.has(p.kod)?' · Satır '+p.id:''))+'</option>').join('');
- if(!matches.some(p=>p.id===pickerId))pickerId='';
+ if(!matches.some(p=>String(p.id)===pickerId))pickerId='';
  list.value=pickerId;
  $('samplePickerConfirm').disabled=!pickerId;
  $('samplePickCount').textContent=matches.length+' ürün bulundu. Aynı kodlu ürünlerde model ve satır kimliğini kontrol edin.';
 }
 function selectPickerItem(id){
- pickerId=products.some(p=>p.id===id)?id:'';
+ pickerId=products.some(p=>String(p.id)===String(id))?String(id):'';
  $('samplePickerConfirm').disabled=!pickerId;
 }
 function editProductById(id){
- const p=products.find(x=>x.id===id);
+ const p=products.find(x=>String(x.id)===String(id));
  if(!p){notice('Ürün satırı bulunamadı.','error');return;}
  if(!promptDiscard())return;
  editorProduct=p;editorDraft={...(entries[recordKey(p)]||{})};
@@ -642,7 +642,7 @@ function updateEditorDraft(e){
 function saveEditor(){
  const p=editorProduct;
  if(!p||!editorDraft){notice('Önce ürün seçin.','error');return;}
- const key=recordKey(p),current=products.find(x=>x.id===p.id);
+ const key=recordKey(p),current=products.find(x=>String(x.id)===String(p.id));
  if(!current||recordKey(current)!==key){$('sampleEditorMessage').textContent='Ürün kimliği uyuşmadı. Kayıt yapılmadı.';return;}
  if(basePriority(p).fixed)delete editorDraft.reviewStatus;
  // Geçersiz sayısal giriş sessizce silinemez: kayıt öncesi doğrulanır.
@@ -722,6 +722,7 @@ function init(list){
  $('sampleEditorBack').addEventListener('click',editorBack);
  $('sampleEditorCancel').addEventListener('click',editorCancel);
  $('sampleEditorSave').addEventListener('click',saveEditor);
+ $('sampleEditorForm').addEventListener('submit',e=>e.preventDefault());
  $('sampleEditorForm').addEventListener('input',e=>{
   if(e.target?.type==='text'||e.target?.type==='number')updateEditorDraft(e);
  });
