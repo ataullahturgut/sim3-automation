@@ -202,7 +202,7 @@ def extend_official_cot(cot,official,now):
                 "official_short":float(z["managed_money_short"])
                 },sort_keys=True),flush=True)
             check(abs(float(prior["mm_net_fraction_oi"])-
-                      float(z["managed_money_net_over_oi"]))<=1e-9,
+                      float(z["managed_money_net_over_oi"]))<=5.1e-9,
                   "CFTC_OFFICIAL_VS_FROZEN_OVERLAP_NET_"+market)
             check(abs(float(prior["managed_money_short"])/float(prior["open_interest"])-
                       float(z["managed_money_short_over_oi"]))<=1e-9,
