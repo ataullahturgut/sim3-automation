@@ -5,12 +5,13 @@ const FAMILIES=['Şönt','Şönt','Harmonik','Şönt','Şönt','Harmonik','Şön
 const STORAGE_KEY='simulation3.production2027.matrix.v1';
 const CHECKPOINT_KEY=STORAGE_KEY+'.checkpoint';
 const RECOVERY_KEY=STORAGE_KEY+'.unmatched-backup';
+const UPPER_BACKUP_KEY=STORAGE_KEY+'.before-upper-optimization';
 const SNAPSHOT_FORMAT='simulation3-uretim-plani-2027';
 const SNAPSHOT_VERSION=2;
 const $=id=>document.getElementById(id);
 const fmt=x=>Number(x||0).toLocaleString('tr-TR');
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let products=[],byId=new Map(),history=[],rowOrder=[],initialOrder=[],groupKeys=[],allGroupsVisible=false,search='',familyFilter='all',active=null,drag=null,rowDrag=null,toastHandle=null,storageEnabled=true,restorationWarning='',hasCheckpoint=false;
+let products=[],byId=new Map(),history=[],rowOrder=[],initialOrder=[],optimizedPlan=new Map(),groupKeys=[],allGroupsVisible=false,search='',familyFilter='all',active=null,drag=null,rowDrag=null,toastHandle=null,storageEnabled=true,restorationWarning='',hasCheckpoint=false;
 async function unzipBase64(b64){
  if(typeof DecompressionStream==='undefined')throw Error('Bu tarayıcı veri sıkıştırma biçimini desteklemiyor. Güncel Chrome/Edge kullanın.');
  const data=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
@@ -63,7 +64,86 @@ function renderGroupLegend(){
 
 function cloneRows(){return Object.fromEntries(products.map(p=>[p.id,p.monthly.slice()]))}
 function validOrder(order){return Array.isArray(order)&&order.length===products.length&&new Set(order).size===products.length&&order.every(id=>byId.has(id))}
-function defaultCompare(a,b){return firstMonth(a)-firstMonth(b)||a.family.localeCompare(b.family,'tr')||pattern(a).localeCompare(pattern(b))||b.annual-a.annual||a.kod.localeCompare(b.kod,'tr')}
+const UPPER_GROUP_ORDER=['SVC-R','SRM','SRT','HRM','HRT 5,67','HRT 7/8','HRT 7/7','HRT 14','HRT-G varyant','HRT-GG varyant','Özel Harmonik'];
+function upperGroup(p){
+ const model=String(p.model||'').toUpperCase(),code=String(p.kod||''),kind=String(p.altGrup||'');
+ if(p.family==='Şönt'){
+  if(model.startsWith('SVC-R'))return 'SVC-R';
+  if(model.startsWith('SRM'))return 'SRM';
+  if(model.startsWith('SRT'))return 'SRT';
+  return 'Diğer Şönt';
+ }
+ if(code.startsWith('GAGG'))return 'HRT-GG varyant';
+ if(code.startsWith('GAG'))return 'HRT-G varyant';
+ if(code==='GA5ÖZELHARM'||(!model.startsWith('HRM')&&!model.startsWith('HRT')))return 'Özel Harmonik';
+ if(model.startsWith('HRM'))return 'HRM';
+ if(kind.includes('5,67'))return 'HRT 5,67';
+ if(kind.includes('14'))return 'HRT 14';
+ if(kind.includes('<%7'))return 'HRT 7/7';
+ return 'HRT 7/8';
+}
+function upperRank(p){
+ const i=UPPER_GROUP_ORDER.indexOf(upperGroup(p));return i<0?99:i;
+}
+function defaultCompare(a,b){
+ return (a.family==='Şönt'?0:1)-(b.family==='Şönt'?0:1)
+  ||upperRank(a)-upperRank(b)||firstMonth(a)-firstMonth(b)
+  ||pattern(a).localeCompare(pattern(b))||b.annual-a.annual||a.kod.localeCompare(b.kod,'tr');
+}
+function sortedUpperIds(){
+ return products.slice().sort(defaultCompare).map(p=>p.id);
+}
+function countGroupMonth(monthlyLookup){
+ const used=new Set();
+ for(const p of products){
+  const m=monthlyLookup(p);
+  for(let i=0;i<12;i++)if(m[i]>0)used.add(upperGroup(p)+'|'+i);
+ }
+ return used.size;
+}
+function upperPlanIsActive(){
+ return products.length>0&&products.every(p=>optimizedPlan.has(p.id)&&p.monthly.every((x,i)=>optimizedPlan.get(p.id)[i]===x));
+}
+function updateUpperControls(){
+ const isActive=upperPlanIsActive(),current=countGroupMonth(p=>p.monthly),proposed=countGroupMonth(p=>optimizedPlan.get(p.id)||p.monthly);
+ $('applyUpper').disabled=isActive;
+ try{$('returnBeforeUpper').disabled=!localStorage.getItem(UPPER_BACKUP_KEY)}catch(e){$('returnBeforeUpper').disabled=true}
+ $('groupPlanSummary').textContent='Üst grup optimizasyonu: '+current+' → '+proposed+' grup-ay üretim bloğu · '+(isActive?'Yeni grup planı etkin.':'Mevcut kayıtlı plan korunuyor; uygulamak için düğmeye basın.')+' · Bobin değerleri ön tahmindir.';
+}
+function sortUpperGroups(){
+ const desired=sortedUpperIds(),before=rowOrder.slice();
+ if(before.every((x,i)=>x===desired[i])){toast('Ürünler zaten üst gruplarına göre sıralı.');return}
+ history.push({kind:'full-order',order:before});
+ rowOrder=desired;save();render();toast('Ürünler SVC-R / SRM / SRT ve Harmonik üst gruplarına göre sıralandı.');
+}
+function applyUpperOptimization(){
+ if(upperPlanIsActive()){toast('Üst grup optimizasyonu zaten etkin.');return}
+ if(!confirm('133 ürünün üretim ayları grup bazlı optimizasyona göre değiştirilecek. Mevcut miktarlar ve satır sırası güvenli yedeğe alınacak. Devam edilsin mi?'))return;
+ let previous;
+ try{
+  previous=JSON.stringify(snapshot());
+  localStorage.setItem(UPPER_BACKUP_KEY,previous);
+  if(localStorage.getItem(UPPER_BACKUP_KEY)!==previous)throw Error('Önceki planın yedeği doğrulanamadı.');
+ }catch(e){note('İşlem iptal: mevcut planın kurtarma kaydı oluşturulamadı. Önce JSON yedeğini indirin. '+e.message,'error');return}
+ products.forEach(p=>p.monthly=optimizedPlan.get(p.id).slice());
+ rowOrder=sortedUpperIds();history=[];
+ if(!save()){
+  applySnapshot(JSON.parse(previous),false);
+  note('Kayıt doğrulanamadı; önceki plan geri yüklendi. JSON yedeği alın.','error');
+  render();return;
+ }
+ render();toast('2027 üst grup planı uygulandı; önceki planınız ayrıca saklandı.');
+}
+function returnBeforeUpper(){
+ try{
+  const raw=localStorage.getItem(UPPER_BACKUP_KEY);
+  if(!raw)throw Error('Kurtarma noktası bulunamadı.');
+  const obj=JSON.parse(raw);
+  if(!confirm('Üst grup optimizasyonundan önceki üretim miktarlarını ve satır sırasını geri yüklemek istiyor musunuz?'))return;
+  applySnapshot(obj,false);if(!save())throw Error('Tarayıcı kaydı başarısız.');
+  render();toast('Optimizasyondan önceki üretim planı geri yüklendi.');
+ }catch(e){note('Geri dönüş başarısız: '+e.message,'error')}
+}
 function visibleRows(){return rowOrder.map(id=>byId.get(id)).filter(p=>p&&(familyFilter==='all'||p.family===familyFilter)&&(p.kod+' '+p.model).toLocaleLowerCase('tr-TR').includes(search.toLocaleLowerCase('tr-TR')))}
 function repositionRow(id,targetId,after){
  if(id===targetId||!byId.has(id)||!byId.has(targetId))return false;
@@ -112,7 +192,7 @@ function save(makeCheckpoint=false){
  }
 }
 function validHistory(h){
- return Array.isArray(h)?h.filter(x=>x&&byId.has(x.id)&&((x.kind==='row'&&Number.isInteger(x.fromIndex)&&x.fromIndex>=0&&x.fromIndex<products.length)||((!x.kind||x.kind==='qty')&&Number.isInteger(x.qty)&&x.qty>0&&Number.isInteger(x.from)&&Number.isInteger(x.to)))).slice(-100):[];
+ return Array.isArray(h)?h.filter(x=>x&&((x.kind==='full-order'&&validOrder(x.order))||(byId.has(x.id)&&((x.kind==='row'&&Number.isInteger(x.fromIndex)&&x.fromIndex>=0&&x.fromIndex<products.length)||((!x.kind||x.kind==='qty')&&Number.isInteger(x.qty)&&x.qty>0&&Number.isInteger(x.from)&&Number.isInteger(x.to)))))).slice(-100):[];
 }
 function mergedOrder(saved){
  if(!Array.isArray(saved))return initialOrder.slice();
@@ -218,6 +298,7 @@ function paintStats(){
 }
 function render(){
  paintStats();
+ updateUpperControls();
  renderGroupLegend();
  $('matrixHead').innerHTML='<tr><th class="col-order">Sıra</th><th class="col-group">Grup</th><th class="col-code">Ürün kodu</th><th class="col-model">Ürün adı / Model</th><th class="col-coil">Bobin*</th>'+
   MONTHS.map((m,i)=>'<th class="col-month"><button type="button" class="month-open'+(window.ProductionMonthDetails&&window.ProductionMonthDetails.month()===i?' is-selected':'')+'" data-month="'+i+'" title="'+m+' ayının tüm teknik özelliklerini ve datasheet bağlantılarını aç">'+m+'<span class="month-type '+(FAMILIES[i]==='Şönt'?'s':'h')+'">'+FAMILIES[i]+'</span><span class="month-sum">'+fmt(monthlyTotal(i))+'</span><span class="month-action">Detay ▾</span></button></th>').join('')+'<th class="col-total">Yıllık</th></tr>';
@@ -277,6 +358,9 @@ function applyMove(){
 }
 function undo(){
  const h=history.pop();if(!h)return;const p=byId.get(h.id);
+ if(h.kind==='full-order'){
+  rowOrder=h.order.slice();save();render();toast('Önceki ürün sıralaması geri yüklendi.');return;
+ }
  if(h.kind==='row'){
   const at=rowOrder.indexOf(h.id);
   if(at<0){history.push(h);toast('Satır sıralaması geri alınamadı.');return}
@@ -304,6 +388,9 @@ function bindEvents(){
  $('search').addEventListener('input',e=>{search=e.target.value;render()});
  $('family').addEventListener('change',e=>{familyFilter=e.target.value;render()});
  $('clearFilter').addEventListener('click',()=>{search='';familyFilter='all';$('search').value='';$('family').value='all';render()});
+ $('sortUpper').addEventListener('click',sortUpperGroups);
+ $('applyUpper').addEventListener('click',applyUpperOptimization);
+ $('returnBeforeUpper').addEventListener('click',returnBeforeUpper);
  $('groupLegend').addEventListener('click',e=>{if(e.target.closest('.group-expand')){allGroupsVisible=!allGroupsVisible;renderGroupLegend()}});
  $('undo').addEventListener('click',undo);$('reset').addEventListener('click',reset);$('export').addEventListener('click',exportCSV);
  $('savePlan').addEventListener('click',manualSave);
