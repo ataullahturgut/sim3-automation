@@ -169,7 +169,17 @@ def generate(mode, now):
         for step in range(0, (start-date(2026,10,26)).days+1, 7):
             monday=date(2026,10,26)+timedelta(days=step)
             friday=monday+timedelta(days=4)
-            w, ev=new_week_summary(rows,monday,friday,now)
+            try:
+                w, ev=new_week_summary(rows,monday,friday,now)
+            except RuntimeError as exc:
+                if any(code in str(exc) for code in (
+                        "ORIGIN_FRIDAY_NOT_YET_AVAILABLE",
+                        "ORIGIN_FOUR_METAL_ALIGNED_LT3")):
+                    return {**report,
+                            "status":"BLOCKED_PUBLIC_FRIDAY_FOURMETAL_NOT_YET_PUBLISHED",
+                            "blockedWeek":monday.isoformat(),
+                            "forecast":None},None
+                raise
             require(w["week_monday"] not in {h["week_monday"] for h in weeks},
                     "ORIGIN_WEEK_OVERLAPS_FROZEN")
             weeks.append(w)
