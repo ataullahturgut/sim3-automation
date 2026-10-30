@@ -515,6 +515,182 @@ async function uploadBackup(){
  }catch(e){notice('Yedek yüklenemedi: '+e.message,'error');}
  finally{el.value='';}
 }
+/* Ayrı ürün düzenleme ekranı: seçim ve düzenleme süresince hiçbir kayıt otomatik değişmez. */
+let editorProduct=null,editorDraft=null,editorDirty=false,pickerId='';
+const EDIT_FIELDS=[
+ ['coilCount','Bobin adedi / ürün','number','1'],
+ ['conductor','İletken türü ve malzemesi','select',CONDUCTOR],
+ ['conductorOther','Diğer / karma iletken açıklaması','text','Diğer iletken biçimi'],
+ ['conductorSize','İletken kesiti (mm)','text','Ø çap veya en × kalınlık'],
+ ['coilDimensions','Bobin ölçüleri (mm)','text','İç / dış / sarım eni'],
+ ['coilWeightKg','Bobin ağırlığı (kg)','number','0.001'],
+ ['turns','Tur sayısı','number','1'],
+ ['windingMinutes','Sarım süresi (dk / bobin)','number','0.001'],
+ ['core','Nüve tipi','select',CORES],
+ ['coreOther','Diğer nüve açıklaması','text','Diğer nüve tipi'],
+ ['insulations','İzolasyon tipi','multi',INSULATIONS],
+ ['insulationOther','Diğer izolasyon açıklaması','text','Diğer izolasyon malzemesi'],
+ ['impPart','Emprenye edilen parça','select',PARTS],
+ ['resinMode','Vernik / reçine seçimi','select',[['','Belirlenmedi'],['code','Malzeme kodu gir / seç'],['none','Kullanılmıyor']]],
+ ['resinCode','Vernik / reçine malzeme kodu','text','Üretici ürün kodu'],
+ ['impMethod','Emprenye yöntemi','select',METHODS],
+ ['impMethodOther','Diğer emprenye yöntemi açıklaması','text','Diğer yöntem'],
+ ['impCycle','Emprenye çevrimi (dk / parti)','number','0.001']
+];
+function promptDiscard(){
+ return !editorDirty||typeof window.confirm!=='function'||window.confirm('Bu üründe henüz kaydedilmemiş değişiklikler var. Değişiklikleri iptal edip çıkmak istiyor musunuz?');
+}
+function openPicker(){
+ if(!promptDiscard())return;
+ editorProduct=null;editorDraft=null;editorDirty=false;
+ $('sampleEditor').hidden=false;
+ $('samplePickerArea').hidden=false;$('sampleEditArea').hidden=true;
+ $('sampleEditorTitle').textContent='Ürün seç';
+ $('samplePickSearch').value='';$('samplePickFamily').value=family;
+ pickerId='';renderPicker();
+ if(typeof $('samplePickSearch').focus==='function')$('samplePickSearch').focus();
+}
+function renderPicker(){
+ const q=String($('samplePickSearch').value||'').toLocaleLowerCase('tr-TR').trim();
+ const fam=$('samplePickFamily').value;
+ const matches=products.filter(p=>(fam==='Tümü'||p.grup===fam)&&
+  (p.kod+' '+p.model+' '+group(p)+' '+p.annual+' '+recordKey(p)).toLocaleLowerCase('tr-TR').includes(q));
+ const list=$('samplePickList');
+ list.innerHTML=matches.map(p=>'<option value="'+esc(p.id)+'"'+(p.id===pickerId?' selected':'')+'>'+
+ esc(p.grup+' · '+p.kod+' · '+p.model+' · '+qty(p.annual)+' adet/yıl'+
+ (duplicateHarmonicCodes.has(p.kod)?' · Satır '+p.id:''))+'</option>').join('');
+ if(!matches.some(p=>p.id===pickerId))pickerId='';
+ list.value=pickerId;
+ $('samplePickerConfirm').disabled=!pickerId;
+ $('samplePickCount').textContent=matches.length+' ürün bulundu. Aynı kodlu ürünlerde model ve satır kimliğini kontrol edin.';
+}
+function selectPickerItem(id){
+ pickerId=products.some(p=>p.id===id)?id:'';
+ $('samplePickerConfirm').disabled=!pickerId;
+}
+function editProductById(id){
+ const p=products.find(x=>x.id===id);
+ if(!p){notice('Ürün satırı bulunamadı.','error');return;}
+ if(!promptDiscard())return;
+ editorProduct=p;editorDraft={...(entries[recordKey(p)]||{})};
+ if(Array.isArray(editorDraft.insulations))editorDraft.insulations=[...editorDraft.insulations];
+ editorDirty=false;
+ $('sampleEditor').hidden=false;
+ $('samplePickerArea').hidden=true;$('sampleEditArea').hidden=false;
+ $('sampleEditorTitle').textContent='Ürün teknik bilgilerini düzenle';
+ $('sampleEditorIdentity').innerHTML='<strong>'+esc(p.kod)+' · '+esc(p.model)+'</strong>'+
+ '<span>'+esc(p.grup)+' / '+esc(group(p))+' · '+qty(p.annual)+' adet/yıl</span>'+
+ '<span>Ürün kayıt kimliği: '+esc(p.id)+(duplicateHarmonicCodes.has(p.kod)?' · Bu stok kodu farklı ürünlerde tekrar kullanılıyor.':'')+'</span>';
+ renderEditorForm();
+}
+function editField(field,caption,type,opts){
+ const value=editorDraft[field]??'';
+ const key=esc(field),label=esc(caption);
+ if(type==='select')return '<label class="sample-editor-field">'+label+
+  '<select data-field="'+key+'">'+optionList(opts,value)+'</select></label>';
+ if(type==='multi'){
+  const values=Array.isArray(value)?value:[];
+  return '<fieldset class="sample-editor-field sample-editor-multi"><legend>'+label+'</legend>'+
+  opts.map(item=>'<label><input type="checkbox" data-field="'+key+'" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</fieldset>';
+ }
+ if(type==='number')return '<label class="sample-editor-field">'+label+
+  '<input data-field="'+key+'" type="number" inputmode="decimal" min="'+opts+'" step="'+(opts==='1'?'1':'any')+
+  '" value="'+esc(value)+'" placeholder="Ölçüm bekliyor"></label>';
+ const datalist=field==='resinCode'?(editorProduct.grup==='Şönt'?'sampleResinCodeListShunt':'sampleResinCodeListHarmonic'):'';
+ return '<label class="sample-editor-field">'+label+
+ '<input data-field="'+key+'" type="text" maxlength="'+(TEXT_LIMITS[field]||90)+'"'+(datalist?' list="'+datalist+'"':'')+
+ ' value="'+esc(value)+'" placeholder="'+esc(opts)+'"></label>';
+}
+function renderEditorForm(){
+ if(!editorProduct||!editorDraft)return;
+ const p=editorProduct,base=basePriority(p);
+ const selectValue=editorDraft.reviewStatus||({ 'Ana Numune':'main','Karşılaştırma Numunesi':'compare','Dış Kontrol':'external'}[base.label]||'external');
+ const statusHtml=base.fixed?
+  '<div class="sample-editor-fixed"><b>İnceleme türü: Teknik Bilgi Eksik</b><p>Bu statü, ürünün kimliği ve reçetesi doğrulanmadan değiştirilemez. Teknik veriler yine de girilebilir.</p></div>':
+  '<label class="sample-editor-field">İnceleme türü'+
+  '<select data-field="reviewStatus">'+optionList([['main','Ana Numune'],['compare','Karşılaştırma Numunesi'],['external','Dış Kontrol']],selectValue)+'</select></label>';
+ const visible=(f)=>{
+  if(f==='conductorOther')return ['mixed','other'].includes(editorDraft.conductor);
+  if(f==='coreOther')return editorDraft.core==='other';
+  if(f==='insulationOther')return (editorDraft.insulations||[]).includes('Diğer');
+  if(f==='impMethodOther')return editorDraft.impMethod==='other';
+  if(f==='resinCode')return editorDraft.resinMode==='code';
+  return true;
+ };
+ const fields=(names)=>EDIT_FIELDS.filter(([id])=>names.includes(id)&&visible(id)).map(a=>editField(...a)).join('');
+ $('sampleEditorForm').innerHTML='<fieldset class="sample-editor-section"><legend>1 · İnceleme türü</legend>'+statusHtml+'</fieldset>'+
+ '<fieldset class="sample-editor-section"><legend>2 · Sarım makinesi bilgileri</legend><div class="sample-editor-grid">'+
+ fields(['coilCount','conductor','conductorOther','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','coreOther','insulations','insulationOther'])+'</div></fieldset>'+
+ '<fieldset class="sample-editor-section"><legend>3 · Emprenye bilgileri</legend><div class="sample-editor-grid">'+
+ fields(['impPart','resinMode','resinCode','impMethod','impMethodOther','impCycle'])+'</div></fieldset>';
+ $('sampleEditorMessage').textContent=editorDirty?'Kaydedilmemiş değişiklikler var.':'';
+ $('sampleEditorSave').disabled=false;
+}
+function updateEditorDraft(e){
+ if(!editorProduct||!editorDraft)return;
+ const el=e.target,field=el?.dataset?.field;
+ if(!field||!INPUTS.includes(field)||basePriority(editorProduct).fixed&&field==='reviewStatus')return;
+ if(field==='insulations'){
+  const list=Array.isArray(editorDraft.insulations)?editorDraft.insulations:[];
+  editorDraft.insulations=el.checked?[...new Set([...list,el.value])]:list.filter(x=>x!==el.value);
+ }else editorDraft[field]=el.value;
+ editorDirty=true;
+ const rerender=['conductor','core','impMethod','resinMode','insulations'].includes(field);
+ if(rerender)renderEditorForm();
+ else $('sampleEditorMessage').textContent='Kaydedilmemiş değişiklikler var.';
+}
+function saveEditor(){
+ const p=editorProduct;
+ if(!p||!editorDraft){notice('Önce ürün seçin.','error');return;}
+ const key=recordKey(p),current=products.find(x=>x.id===p.id);
+ if(!current||recordKey(current)!==key){$('sampleEditorMessage').textContent='Ürün kimliği uyuşmadı. Kayıt yapılmadı.';return;}
+ if(basePriority(p).fixed)delete editorDraft.reviewStatus;
+ // Geçersiz sayısal giriş sessizce silinemez: kayıt öncesi doğrulanır.
+ for(const [field,value]of Object.entries(editorDraft)){
+  if(!INPUTS.includes(field))continue;
+  if(value===''||value===null||value===undefined)continue;
+  const valid=validInput(field,value);
+  if(valid===null){
+   $('sampleEditorMessage').textContent='Geçersiz değer: '+(EDIT_FIELDS.find(x=>x[0]===field)?.[1]||field)+'. Kayıt yapılmadı.';
+   return;
+  }
+ }
+ const next=cleanRecord(editorDraft),previous=entries[key];
+ if(Object.keys(next).length)entries[key]=next;else delete entries[key];
+ try{saveToStorage(p.grup);}
+ catch(error){
+  if(previous)entries[key]=previous;else delete entries[key];
+  $('sampleEditorMessage').textContent='Kaydedilemedi: tarayıcı depolama hatası. Değişiklikler taslakta duruyor.';
+  return;
+ }
+ editorDirty=false;
+ editorDraft={...next};
+ if(Array.isArray(next.insulations))editorDraft.insulations=[...next.insulations];
+ render();
+ renderEditorForm();
+ $('sampleEditorMessage').textContent='Kaydedildi: '+p.kod+' / '+p.model+' · Yalnız bu ürün güncellendi.';
+ notice(p.kod+' · '+p.model+' teknik bilgileri kaydedildi.','ok');
+}
+function closeEditor(){
+ if(!promptDiscard())return;
+ $('sampleEditor').hidden=true;
+ editorProduct=null;editorDraft=null;editorDirty=false;
+}
+function editorBack(){
+ if(!promptDiscard())return;
+ editorProduct=null;editorDraft=null;editorDirty=false;
+ $('sampleEditArea').hidden=true;$('samplePickerArea').hidden=false;
+ $('sampleEditorTitle').textContent='Ürün seç';
+ renderPicker();
+}
+function editorCancel(){
+ if(!editorProduct)return;
+ editorDraft={...(entries[recordKey(editorProduct)]||{})};
+ if(Array.isArray(editorDraft.insulations))editorDraft.insulations=[...editorDraft.insulations];
+ editorDirty=false;renderEditorForm();
+ $('sampleEditorMessage').textContent='Kaydedilmeyen değişiklikler iptal edildi.';
+}
+
 function init(list){
  if(!Array.isArray(list)||!list.length)throw Error('Numune sayfası ürün listesi eksik');
  products=list;
@@ -531,7 +707,27 @@ function init(list){
  $('sampleClear').addEventListener('click',()=>{
   search='';family='Tümü';$('sampleSearch').value='';$('sampleFamily').value='Tümü';render();
  });
- $('sampleBody').addEventListener('change',onCellChange);
+ $('sampleBody').addEventListener('click',e=>{
+  const button=e.target?.closest?.('[data-edit-id]');
+  const id=button?.dataset?.editId||e.target?.dataset?.editId;
+  if(id)editProductById(id);
+ });
+ $('sampleOpenPicker').addEventListener('click',openPicker);
+ $('samplePickSearch').addEventListener('input',renderPicker);
+ $('samplePickFamily').addEventListener('change',renderPicker);
+ $('samplePickList').addEventListener('change',e=>selectPickerItem(e.target.value));
+ $('samplePickList').addEventListener('dblclick',()=>{if(pickerId)editProductById(pickerId)});
+ $('samplePickerConfirm').addEventListener('click',()=>{if(pickerId)editProductById(pickerId)});
+ $('sampleEditorClose').addEventListener('click',closeEditor);
+ $('sampleEditorBack').addEventListener('click',editorBack);
+ $('sampleEditorCancel').addEventListener('click',editorCancel);
+ $('sampleEditorSave').addEventListener('click',saveEditor);
+ $('sampleEditorForm').addEventListener('input',e=>{
+  if(e.target?.type==='text'||e.target?.type==='number')updateEditorDraft(e);
+ });
+ $('sampleEditorForm').addEventListener('change',e=>{
+  if(e.target?.type!=='text'&&e.target?.type!=='number')updateEditorDraft(e);
+ });
  $('sampleExport').addEventListener('click',exportCsv);
  $('sampleBackup').addEventListener('click',downloadBackup);
  $('sampleImport').addEventListener('click',()=>$('sampleImportFile').click());
