@@ -97,23 +97,41 @@ def apply_append(records):
     uri = os.getenv("NEON_DATABASE_URL", "").strip()
     if not uri:
         raise ValueError("NEON_DATABASE_URL_REQUIRED")
-    # Connection applies only to the separate research-quality ledger.
+    # One atomic INSERT .. ON CONFLICT, even for the full 2026 snapshot.
+    payload = json.dumps([
+        {"metal": m, "price_date": d.isoformat(),
+         "spot_usd_oz": format(price, "f"), "source_row_timestamp": stamp,
+         "source_event": event, "upstream_provider": provider,
+         "source_row_sha256": row_sha, "raw_snapshot_sha256": batch_sha,
+         "source_url": url}
+        for (m, d, price, stamp, event, provider, row_sha, batch_sha, url)
+        in records
+    ], ensure_ascii=False, separators=(",", ":"))
     sql = """
+      WITH staged AS (
+        SELECT * FROM jsonb_to_recordset(%s::jsonb) AS x(
+          metal text, price_date date, spot_usd_oz numeric,
+          source_row_timestamp text, source_event text, upstream_provider text,
+          source_row_sha256 text, raw_snapshot_sha256 text, source_url text
+        )
+      ), inserted AS (
         INSERT INTO gold_weekly_live.staktrakr_daily_utc_reference_v1
           (metal, price_date, spot_usd_oz, source_row_timestamp,
            source_event, upstream_provider, source_row_sha256,
            raw_snapshot_sha256, source_url)
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        SELECT metal, price_date, spot_usd_oz, source_row_timestamp,
+               source_event, upstream_provider, source_row_sha256,
+               raw_snapshot_sha256, source_url
+        FROM staged
         ON CONFLICT (metal,price_date,source_row_sha256) DO NOTHING
         RETURNING id
+      )
+      SELECT count(*) FROM inserted
     """
-    written = 0
     with psycopg.connect(uri, connect_timeout=15) as db:
         with db.cursor() as cur:
-            for row in records:
-                cur.execute(sql, row)
-                if cur.fetchone() is not None:
-                    written += 1
+            cur.execute(sql, (payload,))
+            written = int(cur.fetchone()[0])
         db.commit()
     return written
 
