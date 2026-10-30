@@ -1,0 +1,55 @@
+name: Gold BASE14 CFTC21 V22 daily Neon shadow (no trading)
+on:
+  schedule:
+    - cron: '20 11 * * *'
+    - cron: '20 23 * * *'
+  workflow_dispatch:
+  push:
+    branches: [feature/gold-v22-cftc-daily-research-shadow-20261030]
+    paths:
+      - .github/workflows/gold-v22-original-daily-neon-shadow-v1.yml
+permissions:
+  contents: read
+concurrency:
+  group: gold-base14-cftc21-v22-asof-research-shadow-v1
+  cancel-in-progress: false
+jobs:
+  original-risk-score:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Pinned exact original research model, not a moving source ref.
+          ref: e15e8158ce53be28a0107add58e87727be216521
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require immutable original V22 scorer source
+        run: test "$(git rev-parse HEAD)" = e15e8158ce53be28a0107add58e87727be216521
+      - name: Restore frozen original risk training inputs without rewriting
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          mkdir -p inputs
+          unzip -oq frozen_inputs.zip -d inputs
+          test -f inputs/source.zip
+          test -f inputs/CFTC_GC_SI_2023_2026_QUALITY_GATED.csv
+      - name: Install exact original original-feature risk runtime
+        run: python -m pip install 'numpy>=1.26,<3' 'pandas>=2.2,<3' 'scipy>=1.12,<2' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Compute latest completed four-metal BASE14/CFTC21 and V22 with 211-day legacy parity
+        working-directory: gold_axis_2026/research/case_control_v13
+        run: |
+          python -u risk_v35_neon_current_base14_v22_shadow.py \
+            --write-shadow --out v35_current_research_risk.json
+      - name: Preserve exact score, risk and no-PIT/no-trade report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-base14-cftc21-v22-daily-research-score
+          path: gold_axis_2026/research/case_control_v13/v35_current_research_risk.json
+          retention-days: 30
+          if-no-files-found: warn
