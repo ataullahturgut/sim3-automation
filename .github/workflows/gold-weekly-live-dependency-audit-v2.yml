@@ -1,0 +1,58 @@
+name: Gold V34 V22 Read-Only Dependency Gate V2
+
+# Separate staging branch: a green audit run is NOT a live ANN/V22 forecast.
+on:
+  push:
+    branches:
+      - feature/gold-v34-v22-live-dependency-gates-20261030
+    paths:
+      - 'gold_axis_2026/data_pipeline/gold_weekly_live_dependency_gate_v2.py'
+      - 'gold_axis_2026/data_pipeline/test_gold_weekly_live_dependency_gate_v2.py'
+      - '.github/workflows/gold-weekly-live-dependency-audit-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-invariants:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax check and nine fail-closed cases
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/gold_weekly_live_dependency_gate_v2.py \
+            gold_axis_2026/data_pipeline/test_gold_weekly_live_dependency_gate_v2.py
+          cd gold_axis_2026/data_pipeline
+          python -m unittest -v test_gold_weekly_live_dependency_gate_v2
+
+  read-only-neon:
+    needs: offline-invariants
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'psycopg[binary]>=3.2,<4'
+      - name: Verify configured read-only database
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Audit original V34 input origin and V22/BASE14 live issuers
+        run: |
+          python gold_axis_2026/data_pipeline/gold_weekly_live_dependency_gate_v2.py \
+            --out /tmp/gold-v34-v22-readiness-v2.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-v34-v22-readiness-v2
+          path: /tmp/gold-v34-v22-readiness-v2.json
+          if-no-files-found: warn
+          retention-days: 14
