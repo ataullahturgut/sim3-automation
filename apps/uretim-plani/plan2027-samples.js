@@ -221,10 +221,60 @@ function familyRecords(grup){
  if(grup==='Harmonik')for(const code of duplicateHarmonicCodes)keys.add(code);
  return Object.fromEntries(Object.entries(entries).filter(([key])=>keys.has(key)));
 }
-function saveToStorage(grup){
+const STORAGE_BACKUP_SUFFIX='.mirror';
+const STORAGE_PREVIOUS_SUFFIX='.previous';
+const lastSavedAt={'Şönt':null,'Harmonik':null};
+let storageRecoveryMessage='';
+function storageKeys(grup){
  const spec=STORAGE_SPECS[grup];
- if(!spec)throw Error('Geçersiz ürün ailesi: '+grup);
- localStorage.setItem(spec.key,JSON.stringify({format:spec.format,version:VERSION,records:familyRecords(grup)}));
+ if(!spec)throw Error('Bilinmeyen ürün ailesi: '+grup);
+ return {primary:spec.key,mirror:spec.key+STORAGE_BACKUP_SUFFIX,previous:spec.key+STORAGE_PREVIOUS_SUFFIX,format:spec.format};
+}
+function restoreValue(key,old){
+ if(old===null)localStorage.removeItem(key);else localStorage.setItem(key,old);
+}
+function saveToStorage(grup){
+ const keys=storageKeys(grup);
+ const now=new Date().toISOString();
+ const payload=JSON.stringify({format:keys.format,version:VERSION,savedAt:now,records:familyRecords(grup)});
+ // İlk yazımdan önce bir önceki sağlam durum saklanır. Güncel verinin ikinci
+ // kopyası da doğrulanır. İkisi de aynı tarayıcıda olduğundan dış yedek DEĞİLDİR.
+ const originals={primary:localStorage.getItem(keys.primary),mirror:localStorage.getItem(keys.mirror)};
+ try{
+  if(originals.primary!==null&&originals.primary!==payload){
+   const old=JSON.parse(originals.primary);
+   if(old?.format!==keys.format||old.version!==VERSION)throw Error('Önceki kayıt geçersiz; üzerine yazılmadı');
+   localStorage.setItem(keys.previous,originals.primary);
+  }
+  localStorage.setItem(keys.primary,payload);
+  localStorage.setItem(keys.mirror,payload);
+  if(localStorage.getItem(keys.primary)!==payload||localStorage.getItem(keys.mirror)!==payload)
+   throw Error('Kayıt doğrulaması başarısız');
+ }catch(e){
+  try{restoreValue(keys.primary,originals.primary);}catch(restoreError){}
+  try{restoreValue(keys.mirror,originals.mirror);}catch(restoreError){}
+  throw Error('Tarayıcı kaydı doğrulanamadı: '+e.message);
+ }
+ lastSavedAt[grup]=now;
+ return now;
+}
+function updateBackupStatus(errorText=''){
+ const el=$('sampleBackupStatus');if(!el)return;
+ const entered=Object.keys(entries).length;
+ const dates=Object.values(lastSavedAt).filter(Boolean).sort();
+ const latest=dates.length?dates[dates.length-1]:null;
+ const date=latest?new Date(latest).toLocaleString('tr-TR'):'Henüz kayıt yok';
+ if(errorText){
+  el.className='sample-backup-status warning';
+  el.innerHTML='<strong>KAYIT HATASI:</strong> '+esc(errorText)+
+   ' <b>Bu değişikliği kaydedilmiş kabul etmeyin.</b> Mevcut kayıtlarınızın JSON yedeğini alın.';
+ }else{
+  el.className='sample-backup-status'+(entered?' saved':'');
+  el.innerHTML='<strong>Yerel kayıt:</strong> '+esc(date)+' · '+qty(entered)+
+   ' ürün için giriş mevcut. Her aile için ana ve ikinci tarayıcı kopyası tutulur.'+
+   ' <strong>Önemli:</strong> Bunlar aynı tarayıcıda; bilgisayar/ tarayıcı verisi silinirse birlikte kaybolabilir.'+
+   ' <b>↓ Teknik veri yedeği (JSON)</b> ile dosyayı ayrı yerde saklayın. Sunucu/bulut senkronizasyonu yok.';
+ }
 }
 function saveRecord(code,field,value){
  const p=products.find(p=>recordKey(p)===code);
@@ -238,13 +288,16 @@ function saveRecord(code,field,value){
  const next=cleanRecord(rec);
  if(Object.keys(next).length)entries[code]=next;else delete entries[code];
  try{
-  saveToStorage(p.grup);
-  storageEnabled=true;notice(p.kod+' · '+p.model+' ('+p.grup+') bilgisi tablo üzerinden kaydedildi.');
+  const savedAt=saveToStorage(p.grup);
+  storageEnabled=true;
+  updateBackupStatus();
+  notice('Tarayıcıya kaydedildi ('+new Date(savedAt).toLocaleTimeString('tr-TR')+'): '+p.kod+' · '+p.model+' ('+p.grup+'). JSON dış yedeğini saklayın.');
   return true;
  }catch(e){
   if(previous)entries[code]=previous;else delete entries[code];
   storageEnabled=false;
-  notice('Tarayıcıya kaydedilemedi; '+p.kod+' değişikliği geri alındı. JSON yedeğinizi kontrol edin.','error');
+  updateBackupStatus(''+p.kod+' / '+p.model+' satırında kayıt başarısız oldu.');
+  notice('Kaydedilemedi; '+p.kod+' değişikliği geri alındı. JSON yedeğinizi kontrol edin.','error');
   return false;
  }
 }
@@ -702,9 +755,10 @@ function saveEditor(){
  }
  const next=cleanRecord(editorDraft),previous=entries[key];
  if(Object.keys(next).length)entries[key]=next;else delete entries[key];
- try{saveToStorage(p.grup);}
+ try{saveToStorage(p.grup);updateBackupStatus();}
  catch(error){
   if(previous)entries[key]=previous;else delete entries[key];
+  updateBackupStatus(''+p.kod+' / '+p.model+' formu kaydedilemedi.');
   $('sampleEditorMessage').textContent='Kaydedilemedi: tarayıcı depolama hatası. Değişiklikler taslakta duruyor.';
   return;
  }
@@ -779,7 +833,7 @@ function init(list){
  $('sampleBackup').addEventListener('click',downloadBackup);
  $('sampleImport').addEventListener('click',()=>$('sampleImportFile').click());
  $('sampleImportFile').addEventListener('change',uploadBackup);
- ready=true;render();
+ ready=true;render();updateBackupStatus();
  showPage(location.hash==='#numune'||location.hash==='#sont-makine'?'samples':'production');
 }
 function showPage(name){
