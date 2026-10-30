@@ -324,7 +324,7 @@ function onCellChange(e){
  if(key==='resinMode'){
   if(v!=='code')saveRecord(code,'resinCode','');
   render();
- }else if(key==='resinCode'||['conductor','core','impMethod'].includes(key))render();
+ }else if(key==='resinCode'||['conductor','core','impMethod','impPart'].includes(key))render();
 }
 function download(name,content,type){
  const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');
