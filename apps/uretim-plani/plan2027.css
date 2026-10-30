@@ -59,3 +59,63 @@ main{max-width:1760px;margin:auto;padding:24px 22px 50px}.heading{display:flex;j
 .matrix tbody tr.group-transition td{border-top:1px solid #b9ccda}
 .matrix tbody tr.product-row .col-group{background:var(--group-bg)}
 .matrix tbody tr.product-row:hover .col-group{background:var(--group-bg)}
+
+
+/* Aya tıklayınca açılan eski 40 sütunlu ürün teknik liste ekranı */
+.month-open{display:flex;flex-direction:column;justify-content:center;align-items:center;width:100%;min-width:0;gap:2px;padding:4px 1px;border:1px solid transparent;border-radius:7px;background:transparent;color:#31516f;font-weight:800;font-size:11px;cursor:pointer}
+.month-open:hover,.month-open:focus-visible{border-color:#89b8dc;background:#e8f3fc;outline:0}
+.month-open.is-selected{border-color:#3682bb;background:#dfedfc;box-shadow:inset 0 0 0 1px #8ab8e2}
+.month-open .month-type{width:100%;max-width:90px;margin:1px auto 0}
+.month-open .month-sum{margin-top:1px}
+.month-action{font-size:9px;font-weight:800;color:#286e9c}
+.matrix thead th:has(.month-open){padding:3px 2px;height:76px}
+.detail-surface{margin-top:18px;padding:0;scroll-margin-top:15px}
+.detail-surface[hidden]{display:none!important}
+.detail-bar{display:flex;align-items:start;justify-content:space-between;gap:16px;padding:19px 19px 12px}
+.detail-bar h2{font-size:21px;margin:3px 0;color:#183c59}
+.detail-bar p{font-size:12px;color:#668095;margin:4px 0}
+.detail-eyebrow{font-size:10px;letter-spacing:.08em;font-weight:850;color:#3683a7}
+.detail-actions{display:flex;gap:9px;align-items:end;flex-wrap:wrap;padding:4px 18px 12px}
+.detail-actions label{display:flex;flex:1 1 175px;flex-direction:column;gap:5px;color:#597085;font-size:11px;font-weight:750}
+.detail-actions input,.detail-actions select{height:36px;border:1px solid #ccdae6;padding:7px 8px;border-radius:7px;background:white;color:#294963;min-width:110px;width:100%;outline-color:#6bafd7;font-size:12px}
+.detail-actions .btn{height:36px;font-size:11px}
+.detail-options{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 12px}
+.detail-options details{border:1px solid #d6e1e9;border-radius:8px;position:relative;background:#f8fafc;max-width:100%}
+.detail-options summary{padding:9px 12px;cursor:pointer;font-size:11px;color:#2c617e;font-weight:800}
+.detail-options details[open]{background:white}
+.detail-picker-body,.detail-rule-panel{position:relative;z-index:7;min-width:260px;max-height:320px;overflow:auto;background:white;padding:12px;border-top:1px solid #e4eaf1}
+.detail-picker-actions{display:flex;gap:8px;margin-bottom:11px}
+.detail-picker-actions button,.detail-rule-panel button{border:1px solid #c5d9e8;background:#edf5fc;color:#336a91;font-size:11px;padding:6px;border-radius:6px;cursor:pointer}
+.detail-picker-body #detailCols{display:flex;flex-wrap:wrap;gap:12px;max-width:850px}
+.detail-picker-body fieldset{border:1px solid #e3e9f0;border-radius:8px;display:flex;flex-direction:column;min-width:180px;flex:1;margin:0;padding:9px}
+.detail-picker-body legend{font-size:11px;color:#55748c;font-weight:850}
+.detail-picker-body label{font-size:11px;color:#416178;display:flex;align-items:center;gap:6px;margin:4px 0;cursor:pointer}
+.detail-rule-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.detail-rule-bar label{font-size:11px;color:#61778b}
+.detail-rule-bar select{margin-left:4px}
+.detail-rule{display:flex;gap:7px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.detail-rule select,.detail-rule input,.detail-rule-bar select{padding:7px;border:1px solid #ccdbe6;border-radius:6px;font-size:11px;color:#31516d}
+.detail-rule select:first-child{min-width:170px;max-width:230px}
+.detail-rule input{max-width:120px}
+.detail-rule button{font-size:15px;font-weight:800}
+.detail-audit{padding:9px 18px;background:#eef5f9;color:#52728a;font-size:11px;margin:0;border-top:1px solid #e2ebf2}
+.technical-scroll{overflow:auto;max-height:min(65vh,660px);min-height:180px;border-top:1px solid #e2eaf0;scrollbar-color:#c5d1df #f6f8fb}
+.technical-table{border-collapse:separate;border-spacing:0;font-size:11px;width:max-content;min-width:100%;background:white}
+.technical-table th,.technical-table td{border-right:1px solid #e1e8ee;border-bottom:1px solid #e4eaf0;padding:8px 10px;text-align:left;vertical-align:top;white-space:nowrap;min-width:128px;max-width:400px}
+.technical-table thead th{position:sticky;top:0;z-index:5;background:#e7eef6;color:#294965;min-height:43px;font-size:11px}
+.technical-table thead button{border:0;background:transparent;padding:2px 0;text-align:left;white-space:nowrap;color:#2b536e;font-size:11px;font-weight:850;cursor:pointer}
+.technical-table thead button:hover{text-decoration:underline}
+.technical-table td:nth-child(1),.technical-table th:nth-child(1){position:sticky;left:0;min-width:130px;max-width:130px;background:white;z-index:3}
+.technical-table td:nth-child(2),.technical-table th:nth-child(2){position:sticky;left:130px;min-width:190px;max-width:190px;background:white;z-index:3}
+.technical-table thead th:nth-child(1),.technical-table thead th:nth-child(2){z-index:8;background:#d9e7f3}
+.technical-table tbody tr:hover td{background:#f2f8fd}
+.technical-table tbody tr:hover td:nth-child(1),.technical-table tbody tr:hover td:nth-child(2){background:#f2f8fd}
+.technical-table .detail-long{max-width:380px;white-space:normal;line-height:1.5}
+.technical-table .detail-numeric{text-align:right;font-variant-numeric:tabular-nums}
+.technical-table tfoot td{position:sticky;bottom:0;background:#e9f2f9!important;color:#224c69;font-weight:850;z-index:5}
+.technical-table .detail-product{font-weight:850;color:#2772a2;text-decoration:none}
+.technical-table a{color:#236cab;text-decoration:underline;text-underline-offset:2px}
+.technical-table .missing{color:#b4c0ca}
+.detail-bottom{padding:10px 18px;color:#39647d;font-weight:700;font-size:11px;background:#f8fbfe}
+.detail-source-note{padding:0 18px 15px;font-size:11px;color:#73899a;line-height:1.6}
+@media(max-width:650px){.detail-bar{padding:14px 12px}.detail-bar h2{font-size:18px}.detail-actions{padding:5px 12px 12px}.detail-options{padding:0 12px 12px}.technical-scroll{max-height:63vh}.technical-table td:nth-child(1),.technical-table th:nth-child(1){min-width:112px;max-width:112px}.technical-table td:nth-child(2),.technical-table th:nth-child(2){left:112px;min-width:138px;max-width:138px}}
