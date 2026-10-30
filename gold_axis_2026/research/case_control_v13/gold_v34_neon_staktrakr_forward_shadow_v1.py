@@ -151,24 +151,33 @@ def generate(mode, now):
     require(bool(uri), "NEON_DATABASE_URL_MISSING")
     with psycopg.connect(uri,connect_timeout=15,row_factory=dict_row,
                          options="-c default_transaction_read_only=on") as db:
-        # Oct19-23 immutable overlap and current target's origin week.
+        # October 19-23 same-source overlap must match the frozen V34 history.
+        # Subsequent weeks must come from the new daily Neon ledger, never
+        # from target-week prices or another price reference.
         rows=read_recent(db,date(2026,10,19),end)
     historic,raw=fetch_history()
     overlap=validate_frozen_october(raw,rows)
     if mode=="retrospective":
         weeks=[w for w in historic if w["week_monday"]<target.isoformat()]
-        origin=historic[-1]
-        audit={"sourceOverlapMatchedRows":overlap,"originSource":"FROZEN_V34_WEEKLY_SNAPSHOT"}
-    else:
-        require(target.isoformat()=="2026-11-02",
-                "FORWARD_FUTURE_SOURCE_REQUIRES_ROLLING_HISTORY_UPDATE")
-        origin,src=new_week_summary(rows,start,end,now)
-        weeks=[w for w in historic if w["week_monday"]<target.isoformat()]
-        require(all(w["week_monday"]!=origin["week_monday"] for w in weeks),
-                "ORIGIN_WEEK_OVERLAPS_FROZEN")
-        weeks.append(origin)
         audit={"sourceOverlapMatchedRows":overlap,
-               "originSource":"NEON_STAKTRAKR_UTC_DAILY_REFERENCE","currentInput":src}
+               "originSource":"FROZEN_V34_WEEKLY_SNAPSHOT"}
+    else:
+        require(start>=date(2026,10,26),
+                "FORWARD_ORIGIN_OVERLAPS_FROZEN_RESEARCH_WEEK")
+        weeks=[w for w in historic if w["week_monday"]<target.isoformat()]
+        add = []
+        for step in range(0, (start-date(2026,10,26)).days+1, 7):
+            monday=date(2026,10,26)+timedelta(days=step)
+            friday=monday+timedelta(days=4)
+            w, ev=new_week_summary(rows,monday,friday,now)
+            require(w["week_monday"] not in {h["week_monday"] for h in weeks},
+                    "ORIGIN_WEEK_OVERLAPS_FROZEN")
+            weeks.append(w)
+            add.append(ev)
+        audit={"sourceOverlapMatchedRows":overlap,
+               "originSource":"NEON_STAKTRAKR_UTC_DAILY_REFERENCE",
+               "appendedWeeks":len(add),
+               "appendedWeekEvidence":add}
     result=forward.infer(weeks,target.isoformat())
     require(result["feature_dim"]==16 and result["model"]==MODEL,
             "WRONG_MODEL_OR_FEATURES")
