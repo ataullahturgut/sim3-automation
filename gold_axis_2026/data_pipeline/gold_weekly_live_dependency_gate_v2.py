@@ -13,7 +13,6 @@ import os
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 METALS = ("AU", "AG", "PT", "PD")
 RESEARCH_ONLY = "RESEARCH_GIT_SNAPSHOT_NOT_PIT"
@@ -32,10 +31,11 @@ def target_monday(now):
 
 def completed_origin(target):
     prev_friday = target - timedelta(days=3)
-    # New York 17:00 automatically maps to UTC 21:00 in EDT and 22:00 in EST.
-    # Zoneinfo uses the IANA timezone; no fixed offset at DST transitions.
-    return datetime(prev_friday.year, prev_friday.month, prev_friday.day, 17,
-                    tzinfo=ZoneInfo("America/New_York")).astimezone(timezone.utc)
+    # StakTrakr is a UTC-DAY reference, not the NY17 session close.
+    # Friday's entire UTC day must end before a complete week is available.
+    # The source may publish later; every input must be seen before issuance.
+    return datetime(prev_friday.year, prev_friday.month, prev_friday.day,
+                    tzinfo=timezone.utc) + timedelta(days=1)
 
 
 def inspect_metals(rows, now, target=None):
@@ -77,7 +77,7 @@ def inspect_metals(rows, now, target=None):
             else:
                 if isinstance(captured, str):
                     captured = datetime.fromisoformat(captured.replace("Z", "+00:00"))
-                if captured.tzinfo is None or captured > origin:
+                if captured.tzinfo is None or captured > now:
                     late_capture.append((str(d), metal, str(captured)))
     if now < origin:
         status = "BLOCKED_ORIGIN_NOT_CLOSED"
@@ -95,7 +95,7 @@ def inspect_metals(rows, now, target=None):
         "status": status,
         "targetWeekMonday": target.isoformat(),
         "originWeekMonday": start.isoformat(),
-        "originFridayNY17UTCReference": origin.isoformat(),
+        "earliestCompleteUTCWeekCutoff": origin.isoformat(),
         "originComplete": now >= origin,
         "fourMetalAlignedDays": len(aligned),
         "alignedDates": [d.isoformat() for d in aligned],
@@ -172,10 +172,12 @@ def from_neon(now):
             """, (list(REQUIRED),))
             market = evaluate_sources(cur.fetchall(), now)
             cur.execute("""
-                SELECT price_date, metal, evidence_status, source_captured_at
-                FROM gold_monthly_h1.staktrakr_2026_git_snapshot_daily_v1
+                SELECT DISTINCT ON (price_date,metal)
+                    price_date,metal,evidence_class AS evidence_status,
+                    first_observed_utc AS source_captured_at
+                FROM gold_weekly_live.staktrakr_daily_utc_reference_v1
                 WHERE price_date BETWEEN %s AND %s
-                ORDER BY price_date, metal
+                ORDER BY price_date,metal,first_observed_utc DESC
             """, (origin_monday, origin_friday))
             four = inspect_metals(cur.fetchall(), now, target)
             cur.execute("SELECT count(*) AS n FROM gold_weekly_live.weekly_forecast_records")
