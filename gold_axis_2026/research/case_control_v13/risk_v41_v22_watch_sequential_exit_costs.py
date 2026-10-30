@@ -123,7 +123,7 @@ def bar_session(diaries,year,rows):
 def simulate(data,diary,param,year):
  max_drop,neg4,cusum_min,require_ema,kind=param
  candles=[r for r in data if r["ts"].year==year]
- if len(candles)<15000:raise ValueError("MISSING_YEAR_BARS_"+str(year))
+ if len(candles)<20:raise ValueError("MISSING_YEAR_BARS_"+str(year))
  signals=bar_session(diary,year,candles)
  signal_set=set(signals)
  # Starting position: $100, first executable bar costs 0.8% upfront.
@@ -221,6 +221,8 @@ def pick_model(validation):
 def run():
  raw=get_bars()
  byyear={y:enhance([x for x in raw if x[0].year==y]) for y in (2024,2025,2026)}
+ for y,b in byyear.items():
+  if len(b)<15000:raise ValueError("YEAR_COVERAGE_TOO_LOW_"+str(y))
  di2024=synthetic_diary(byyear[2024])
  di2025=synthetic_diary(byyear[2025])
  di2026=get_2026_diary()
