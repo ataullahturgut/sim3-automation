@@ -25,11 +25,11 @@ class TestLiveDependencies(unittest.TestCase):
         a = inspect_metals(rows(), FRIDAY_PRE_CLOSE)
         self.assertEqual(a["status"], "BLOCKED_ORIGIN_NOT_CLOSED")
 
-    def test_ny17_dst_origin_summer_and_winter(self):
+    def test_staktrakr_utc_day_origin_independent_of_ny_dst(self):
         self.assertEqual(completed_origin(date(2026, 11, 2)),
-                         datetime(2026, 10, 30, 21, tzinfo=UTC))
+                         datetime(2026, 10, 31, 0, tzinfo=UTC))
         self.assertEqual(completed_origin(date(2026, 11, 9)),
-                         datetime(2026, 11, 6, 22, tzinfo=UTC))
+                         datetime(2026, 11, 7, 0, tzinfo=UTC))
 
     def test_all_good_four_metals_only_candidate(self):
         a = inspect_metals(rows(), SATURDAY_AFTER)
