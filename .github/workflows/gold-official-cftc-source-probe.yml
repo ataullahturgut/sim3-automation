@@ -1,0 +1,21 @@
+name: Gold official CFTC GC SI keyless API probe
+on:
+  push:
+    branches: [research/gold-v22-neon-current-risk-20261030]
+    paths:
+      - '.github/workflows/gold-official-cftc-source-probe.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v35_cftc_official_free_api_probe.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  api-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check official GC/SI CFTC disaggregated futures-only data and schema
+        run: python gold_axis_2026/research/case_control_v13/risk_v35_cftc_official_free_api_probe.py
