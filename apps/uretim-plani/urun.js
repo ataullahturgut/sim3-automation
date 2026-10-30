@@ -56,6 +56,8 @@ async function start(){
   const bytes=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
   const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
   const records=JSON.parse(await new Response(stream).text());
+  if(!window.ShuntOfficial2026)throw Error('Şönt resmî teknik veri dosyası eksik.');
+  window.ShuntOfficial2026.applyAll(records);
   const p=records.find(r=>String(r.id)===id);
   if(!p)throw Error('Bu ürün kimliği kaynak matrisinde bulunamadı: '+id);
   render(p);
