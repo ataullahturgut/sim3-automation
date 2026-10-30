@@ -69,17 +69,17 @@ def replay(rows,diary,year,style):
       if pending is None:
        pending=(i,"SELL")
   elif pending is None and style!="NEVER_REENTER":
-   if last_exit is None or (day-last_exit).days<3 or r["r4"] is None:continue
-   # no signal in the past no_risk_days calendar days, as of now
+   # Each no-reentry condition leaves cash and equity accounting intact.
+   eligible=(last_exit is not None and (day-last_exit).days>=3 and
+             r["r4"] is not None and i>=max(96,n_bars))
    most_recent=(day-last_warn).days if last_warn else 999
-   if most_recent<=no_risk_days:continue
-   if i<max(96,n_bars):continue
-   prior_high=max(x["p"] for x in rows[i-n_bars:i])
-   minimum_price=last_exit_px*(1+break_even)
-   improving=(p>r["ema"] and r["r4"]>.0025)
-   breakout=(p>r["ema"] and r["r4"]>.0025 if ema_only else p>prior_high and r["r4"]>.0025)
-   if breakout and p>=minimum_price and improving and i+1<len(rows):
-    pending=(i,"BUY")
+   if eligible and most_recent>no_risk_days:
+    prior_high=max(x["p"] for x in rows[i-n_bars:i])
+    minimum_price=last_exit_px*(1+break_even)
+    improving=(p>r["ema"] and r["r4"]>.0025)
+    breakout=(improving if ema_only else p>prior_high and r["r4"]>.0025)
+    if breakout and p>=minimum_price and improving and i+1<len(rows):
+     pending=(i,"BUY")
   eq=gold*p*(1-SELL_COST) if hold else cash
   maxval=max(maxval,eq)
   mdd=min(mdd,eq/maxval-1)
