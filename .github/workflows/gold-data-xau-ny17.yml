@@ -2,6 +2,12 @@ name: Gold Data XAU NY17 Canonical
 
 on:
   workflow_call:
+    inputs:
+      reconcile_days:
+        description: 'Number of past NY trading calendar days to reconcile; normal 7, verified catch-up max 14'
+        type: number
+        required: false
+        default: 7
     secrets:
       NEON_DATABASE_URL:
         required: true
@@ -48,4 +54,4 @@ jobs:
         run: |
           python gold_axis_2026/data_pipeline/twelve_xau_ny17.py \
             --persist \
-            --reconcile-days 7
+            --reconcile-days "${{ inputs.reconcile_days }}"
