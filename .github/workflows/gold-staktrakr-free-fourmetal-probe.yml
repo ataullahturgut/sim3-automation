@@ -1,0 +1,33 @@
+name: Gold four-metal StakTrakr current public source probe
+on:
+  push:
+    branches: [feature/gold-v34-v22-live-dependency-gates-20261030]
+    paths:
+      - 'gold_axis_2026/data_pipeline/staktrakr_public_feed_probe_v1.py'
+      - '.github/workflows/gold-staktrakr-free-fourmetal-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-four-metal-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile source parser
+        run: python -m py_compile gold_axis_2026/data_pipeline/staktrakr_public_feed_probe_v1.py
+      - name: Fetch today's four-metal UTC-day source from StakTrakr API and GitHub
+        run: python gold_axis_2026/data_pipeline/staktrakr_public_feed_probe_v1.py
+      - name: Preserve provenance and coverage report (research-only, no Neon writes)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-staktrakr-fourmetal-public-api-probe
+          path: staktrakr_public_feed_probe_v1_report.json
+          retention-days: 30
+          if-no-files-found: warn
