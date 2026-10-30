@@ -103,7 +103,7 @@ function technicalFields(p){
 }
 const HEADERS=[
  ['Ürün kodu','code'],['Model / açıklama','model'],['Numune / inceleme','sample'],
- ['Yıllık adet','count'],['Toplamdaki pay (%)','percent'],
+ ['Yıllık adet','count'],['Ailedeki pay (%)','percent'],
  ['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],['L (mH)','small'],
  ['p (%)','small'],['THDv','value'],['Ölçüler (mm)','dimension'],['Ağırlık (kg)','small'],
  ['Bağlantı','value'],['Bobin*','small'],['Nüve','value'],['Tel / levha','value'],['İzolasyon','value'],['Vernik / emprenye','value'],['Sarım / iletken','value'],
@@ -133,7 +133,7 @@ function rowCells(p,g,totals){
   esc(val(t[1])),
   '<span class="sample-status '+status.type+'" title="'+esc(status.hint)+'">'+esc(status.label)+'</span>',
   '<strong class="sample-amount">'+qty(p.annual)+'</strong>',
-  pct(p.annual,totals.annual),
+  pct(p.annual,totals.familyTotals[p.grup]),
   ...t.slice(4).map(v=>esc(val(v))),
   '<a href="urun.html?id='+encodeURIComponent(p.id)+'" target="_blank" rel="noopener">Teknik föy</a>',
   '<a href="'+esc(datasheets[p.grup]||'#')+'" target="_blank" rel="noopener">PDF</a>',
@@ -146,7 +146,7 @@ function render(){
  if(!initComplete)return;
  const totals=summarize(),familyList=['Şönt','Harmonik'];
  const shown=products.filter(visible),body=[];
- const head='<tr>'+HEADERS.map(([label,type])=>'<th scope="col" class="sample-head-'+type+'">'+esc(label)+'</th>').join('')+'</tr>';
+ const head='<tr>'+HEADERS.map(([label,type])=>'<th scope="col" class="sample-head-'+type+'"'+(type==='percent'?' title="Şönt ürünü Şönt toplamına, Harmonik ürünü Harmonik toplamına bölünür."':'')+'>'+esc(label)+'</th>').join('')+'</tr>';
  $('sampleHead').innerHTML=head;
  for(const fam of familyList){
   if(family!=='Tümü'&&family!==fam)continue;
@@ -162,15 +162,15 @@ function render(){
     const weightB=sampleStatus(b).type==='main'?0:sampleStatus(b).type==='compare'?1:2;
     return weight-weightB||b.annual-a.annual||a.kod.localeCompare(b.kod,'tr');
    });
-   groupRows.push('<tr class="sample-group-row"><td colspan="'+HEADERS.length+'"><span class="sample-group-name">'+esc(gn)+'</span><span>'+qty(g.annual)+' adet</span><span>Yıllık üretimin '+pct(g.annual,totals.annual)+'’si</span><span class="sample-muted">'+g.all.length+' ürün'+(found.length!==g.all.length?' · '+found.length+' gösteriliyor':'')+'</span></td></tr>');
+   groupRows.push('<tr class="sample-group-row"><td colspan="'+HEADERS.length+'"><span class="sample-group-name">'+esc(gn)+'</span><span>'+qty(g.annual)+' adet</span><span>'+esc(fam)+' içindeki pay '+pct(g.annual,totals.familyTotals[fam])+'</span><span class="sample-muted">'+g.all.length+' ürün'+(found.length!==g.all.length?' · '+found.length+' gösteriliyor':'')+'</span></td></tr>');
    for(const p of sorted)groupRows.push(rowCells(p,g,totals));
   }
   if(!groupRows.length)continue;
-  body.push('<tr class="sample-family-row"><td colspan="'+HEADERS.length+'"><span>'+esc(fam.toLocaleUpperCase('tr-TR'))+'</span><strong>'+qty(totals.familyTotals[fam])+' adet/yıl</strong><span>Yıllık üretimin '+pct(totals.familyTotals[fam],totals.annual)+'’si</span></td></tr>');
+  body.push('<tr class="sample-family-row"><td colspan="'+HEADERS.length+'"><span>'+esc(fam.toLocaleUpperCase('tr-TR'))+'</span><strong>'+qty(totals.familyTotals[fam])+' adet/yıl</strong><span>Ürün yüzdeleri '+esc(fam)+' toplamına göre</span></td></tr>');
   body.push(...groupRows);
  }
  $('sampleBody').innerHTML=body.join('')||'<tr><td colspan="'+HEADERS.length+'" class="sample-empty">Arama kriterlerine uygun ürün yok.</td></tr>';
- $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(totals.annual)+' adet</span><span><b>Şönt</b> '+qty(totals.familyTotals['Şönt'])+' · '+pct(totals.familyTotals['Şönt'],totals.annual)+'</span><span><b>Harmonik</b> '+qty(totals.familyTotals['Harmonik'])+' · '+pct(totals.familyTotals['Harmonik'],totals.annual)+'</span><span><b>Fiziksel numune adayları</b> '+products.filter(p=>sampleStatus(p).physical).length+' ürün (6 ilk + 11 kıyas)</span><span class="sample-count">'+shown.length+' / '+products.length+' ürün</span>';
+ $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(totals.annual)+' adet</span><span><b>Şönt</b> '+qty(totals.familyTotals['Şönt'])+' adet'+'</span><span><b>Harmonik</b> '+qty(totals.familyTotals['Harmonik'])+' adet'+'</span><span><b>Fiziksel numune adayları</b> '+products.filter(p=>sampleStatus(p).physical).length+' ürün (6 ilk + 11 kıyas)</span><span class="sample-count">'+shown.length+' / '+products.length+' ürün</span>';
 }
 function exportCSV(){
  const t=summarize();
@@ -179,7 +179,7 @@ function exportCSV(){
   const g=t.groups.get(fam+'|'+gn);if(!g)continue;
   for(const p of g.all.filter(visible)){
    const values=technicalFields(p);
-   const add=[p.kod,p.model,sampleStatus(p).label,p.annual,pct(p.annual,t.annual),...values.slice(4),
+   const add=[p.kod,p.model,sampleStatus(p).label,p.annual,pct(p.annual,t.familyTotals[fam]),...values.slice(4),
     'urun.html?id='+p.id,datasheets[fam],sourceLink(p)||''];
    if(add.length!==HEADERS.length)throw Error('CSV alan eşleşmesi başarısız.');
    rows.push([fam,gn,...add]);
