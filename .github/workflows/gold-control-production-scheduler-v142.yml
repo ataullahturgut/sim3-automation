@@ -106,7 +106,6 @@ jobs:
   core-daily:
     if: >-
       (github.event_name == 'schedule' && (github.event.schedule == '45 23 * * *' || github.event.schedule == '25 6 * * *')) ||
-      (github.event_name == 'push') ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'core-daily')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
     with:
@@ -131,7 +130,6 @@ jobs:
 
   fred-macro:
     if: >-
-      (github.event_name == 'push') ||
       (github.event_name == 'schedule' && (github.event.schedule == '55 6 * * 2-6' || github.event.schedule == '55 18 * * 2-6')) ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'fred-macro')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-fred-macro-mirror.yml@gold-r4-direction-engine
@@ -139,12 +137,10 @@ jobs:
 
   xau-ny17:
     if: >-
-      (github.event_name == 'push') ||
       (github.event_name == 'schedule' && github.event.schedule == '10 22 * * 1-5') ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'xau-ny17')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
     with:
-      # One-time repair after merge covers all 21–29 Oct NY17 trade dates.
-      # All subsequent routine time-based runs use the existing seven days.
-      reconcile_days: ${{ github.event_name == 'push' && 14 || 7 }}
+      # Catch-up completed 2026-10-30; routine approved seven-day reconcile.
+      reconcile_days: 7
     secrets: inherit
