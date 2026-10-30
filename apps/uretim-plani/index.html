@@ -4,19 +4,19 @@
 <body>
 <header class="topbar"><div class="brand"><span class="brand-mark">ÜP</span><span><b>Üretim Planlama</b><small>Şönt Reaktör · Harmonik Filtre</small></span></div><div class="topmeta"><span class="chip">2027 · 12 Aylık Matris</span><span id="status">Veriler yükleniyor…</span></div></header>
 <main>
-  <section class="heading"><div><span class="eyebrow">ÜRETİM PLANLAMA / YILLIK TAKVİM</span><h1>12 aylık üretim matrisi</h1><p>Benzer üretim aylarına sahip ürünler alt alta. <b>Ürün adına</b> tıklayın: teknik föy açılır. <b>Adet hücresine</b> tıklayın: başka aya taşıyın.</p></div>
+  <section class="heading"><div><span class="eyebrow">ÜRETİM PLANLAMA / YILLIK TAKVİM</span><h1>12 aylık üretim matrisi</h1><p>Benzer üretim aylarına sahip ürünler alt alta. <b>↑ ↓ veya ⠿</b> ile satır sıralayın. <b>Ürün adına</b> tıklayın: teknik föy. <b>Adet hücresine</b> tıklayın: başka aya taşıyın.</p></div>
   <div class="actions"><button id="undo" class="btn" disabled>↶ Geri al</button><button id="export" class="btn">↓ CSV indir</button><button id="reset" class="btn secondary">Başlangıç planı</button></div></section>
   <section id="metrics" class="metrics"></section>
   <section class="surface">
-    <div class="matrix-heading"><div><h2>Yıllık ürün ve üretim tablosu</h2><p>133 üretilecek ürün · Tek ürün / satır · Ocak–Aralık yatay kaydırılabilir</p></div><div class="filters">
+    <div class="matrix-heading"><div><h2>Yıllık ürün ve üretim tablosu</h2><p>133 üretilecek ürün · Her satırın solundaki ↑ ↓ veya ⠿ ile sıra değiştirin · Ocak–Aralık yatay kaydırılabilir</p></div><div class="filters">
       <input id="search" type="search" placeholder="Ürün kodu veya model ara" aria-label="Ürün ara">
       <select id="family" aria-label="Ürün ailesi"><option value="all">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
       <button id="clearFilter" class="btn small">Filtreyi temizle</button>
     </div></div>
     <div class="matrix-scroll" id="matrixScroll"><table class="matrix" id="matrix"><thead id="matrixHead"></thead><tbody id="matrixBody"></tbody><tfoot id="matrixFoot"></tfoot></table></div>
-    <div class="legend"><span><b>Şönt</b> ayları mavi, <b>Harmonik</b> ayları turuncu işaretlidir. Boş hücre: üretim yok.</span><span><b id="changeCount">0</b> hareket · Değişiklikler bu tarayıcıda saklanır.</span></div>
+    <div class="legend"><span><b>Şönt</b> ayları mavi, <b>Harmonik</b> ayları turuncu işaretlidir. Boş hücre: üretim yok.</span><span><b id="changeCount">0</b> hareket · Miktarlar ve satır sırası bu tarayıcıda saklanır.</span></div>
   </section>
-  <div class="footnote"><b>Bobin (B*)</b> değerleri üretici tip çizimlerine dayanan ön bilgilerdir; ürün bazlı üretim reçetesiyle kesinleşmemiştir. Başka aileye ayrılmış bir aya aktarım, setup karışmasını önlemek için engellenir. <a href="legacy.html">Eski parti senaryosu ekranı</a></div>
+  <div class="footnote"><b>Bobin (B*)</b> değerleri üretici tip çizimlerine dayanan ön bilgilerdir; ürün bazlı üretim reçetesiyle kesinleşmemiştir. Başka aileye ayrılmış bir aya aktarım, setup karışmasını önlemek için engellenir. Satır sıralamasını değiştirmek üretim miktarlarını etkilemez; yeni sıra CSV çıktısında korunur. <a href="legacy.html">Eski parti senaryosu ekranı</a></div>
 </main>
 <div id="backdrop" class="backdrop" role="presentation">
   <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
