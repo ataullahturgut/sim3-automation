@@ -1,0 +1,30 @@
+name: Gold BASE14 V22 original source restoration and Neon current probe
+on:
+  push:
+    branches: [research/gold-v22-neon-current-risk-20261030]
+    paths: ['.github/workflows/gold-v22-neon-source-probe-v1.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show original archived source layout, no secret content
+        run: |
+          echo "ROOT"
+          find gold_axis_2026/research/case_control_v13 -maxdepth 1 -name '*.zip' -printf '%f %s bytes\n'
+          echo "TOP 70 ZIP ENTRIES"
+          unzip -Z -1 gold_axis_2026/research/case_control_v13/frozen_inputs.zip | head -70
+          echo "IS ARCHIVE CONSISTENT"
+          unzip -tq gold_axis_2026/research/case_control_v13/frozen_inputs.zip | tail -2
+      - name: Extract and check essential original model training inputs
+        run: |
+          cd gold_axis_2026/research/case_control_v13
+          mkdir -p inputs
+          unzip -oq frozen_inputs.zip -d inputs
+          find inputs -maxdepth 2 -type f -printf '%P %s bytes\n' | head -65
+          test -f inputs/source.zip || echo "MISSING inputs/source.zip"
+          test -f inputs/CFTC_GC_SI_2023_2026_QUALITY_GATED.csv || echo "MISSING inputs/CFTC_GC_SI_2023_2026_QUALITY_GATED.csv"
