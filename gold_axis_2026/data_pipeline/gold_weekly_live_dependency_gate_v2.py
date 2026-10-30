@@ -13,6 +13,7 @@ import os
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 METALS = ("AU", "AG", "PT", "PD")
 RESEARCH_ONLY = "RESEARCH_GIT_SNAPSHOT_NOT_PIT"
@@ -31,10 +32,10 @@ def target_monday(now):
 
 def completed_origin(target):
     prev_friday = target - timedelta(days=3)
-    # Only origin after Friday 21:00 UTC (NY 17:00 in EDT).
-    # This is a conservative *October* reference; full DST production clock
-    # must be independently verified before prospective issuance.
-    return datetime(prev_friday.year, prev_friday.month, prev_friday.day, 21, tzinfo=timezone.utc)
+    # New York 17:00 automatically maps to UTC 21:00 in EDT and 22:00 in EST.
+    # Zoneinfo uses the IANA timezone; no fixed offset at DST transitions.
+    return datetime(prev_friday.year, prev_friday.month, prev_friday.day, 17,
+                    tzinfo=ZoneInfo("America/New_York")).astimezone(timezone.utc)
 
 
 def inspect_metals(rows, now, target=None):
