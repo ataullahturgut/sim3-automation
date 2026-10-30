@@ -108,7 +108,14 @@ def collect_source(source: str, mode: str) -> dict:
                 raise ValueError(f"CBOE_REQUIRED_SERIES_MISSING:{sorted(required-found)}")
 
         elif source == "fed":
-            observations.extend(collect_fed_direct(run_id, retrieved_at, mode))
+            fed_errors = []
+            observations.extend(collect_fed_direct(run_id, retrieved_at, mode, errors=fed_errors))
+            for error in fed_errors:
+                quality_events.append(qevent(
+                    run_id, error["series"], error["code"], error["detail"],
+                    {"source_job": "fed", "upstream": "OFFICIAL_DIRECT_ONLY",
+                     "fallback_not_used": True},
+                ))
 
         elif source == "fred_indices":
             observations.extend(collect_fred_indices(run_id, retrieved_at, mode))

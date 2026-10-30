@@ -222,22 +222,36 @@ def _collect_effr(session: requests.Session, run_id: str, retrieved_at, mode: st
     return out
 
 
-def collect_fed_direct(run_id: str, retrieved_at, mode: str):
+def collect_fed_direct(run_id: str, retrieved_at, mode: str, errors=None):
+    """Fail-closed per-source retrieval. Each Fed release remains independent.
+
+    errors=None retains the old all-or-nothing library contract.
+    errors=list enables pipeline partial recording without hiding a missing
+    direct authority series or silently substituting a FRED mirror.
+    """
     session = requests.Session()
     session.headers.update(base.HEADERS)
+    observations = []
+    required = ("DGS10_FRB_H15", "DEXCHUS_FRB_H10", "DTWEXBGS_FRB_H10", "EFFR_NYFED")
+    for series in required:
+        try:
+            if series == "EFFR_NYFED":
+                got = _collect_effr(session, run_id, retrieved_at, mode)
+            else:
+                got = _collect_frb_series(session, run_id, retrieved_at, mode, [series])
+            if not got or series not in {item.series_id for item in got}:
+                raise ValueError("FED_DIRECT_REQUIRED_SERIES_MISSING:" + series)
+            observations.extend(got)
+        except Exception as exc:
+            if errors is None:
+                raise
+            errors.append({
+                "series": series,
+                "code": "FED_DIRECT_SERIES_UNAVAILABLE",
+                "detail": type(exc).__name__ + ": " + str(exc),
+            })
 
-    observations = _collect_frb_series(
-        session,
-        run_id,
-        retrieved_at,
-        mode,
-        ["DGS10_FRB_H15", "DEXCHUS_FRB_H10", "DTWEXBGS_FRB_H10"],
-    )
-    observations.extend(_collect_effr(session, run_id, retrieved_at, mode))
-
-    required = {"DGS10_FRB_H15", "DEXCHUS_FRB_H10", "DTWEXBGS_FRB_H10", "EFFR_NYFED"}
-    found = {o.series_id for o in observations}
-    missing = sorted(required - found)
-    if missing:
+    missing = sorted(set(required) - {item.series_id for item in observations})
+    if missing and errors is None:
         raise ValueError(f"FED_DIRECT_REQUIRED_SERIES_MISSING:{missing}")
     return observations

@@ -96,6 +96,9 @@ jobs:
           python -m py_compile gold_axis_2026/data_pipeline/fed_direct.py
           python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
           python -m py_compile gold_axis_2026/data_pipeline/source_job.py
+      - name: Verify Fed isolation without market network requests
+        if: matrix.source == 'fed'
+        run: python gold_axis_2026/data_pipeline/test_fed_direct_source_isolation_v1.py
       - name: Collect and persist ${{ matrix.source }}
         run: python gold_axis_2026/data_pipeline/source_job.py --source "${{ matrix.source }}" --mode "$INGEST_MODE" --persist
 
