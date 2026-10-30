@@ -300,12 +300,12 @@ function render(){
  paintStats();
  updateUpperControls();
  renderGroupLegend();
- $('matrixHead').innerHTML='<tr><th class="col-order">Sıra</th><th class="col-group">Grup</th><th class="col-code">Ürün kodu</th><th class="col-model">Ürün adı / Model</th><th class="col-coil">Bobin*</th>'+
+ $('matrixHead').innerHTML='<tr><th class="col-order">Sıra</th><th class="col-group">Grup</th><th class="col-code">Ürün kodu</th><th class="col-model">Ürün adı / Model</th><th class="col-upper">Üst grup</th><th class="col-coil">Bobin*</th>'+
   MONTHS.map((m,i)=>'<th class="col-month"><button type="button" class="month-open'+(window.ProductionMonthDetails&&window.ProductionMonthDetails.month()===i?' is-selected':'')+'" data-month="'+i+'" title="'+m+' ayının tüm teknik özelliklerini ve datasheet bağlantılarını aç">'+m+'<span class="month-type '+(FAMILIES[i]==='Şönt'?'s':'h')+'">'+FAMILIES[i]+'</span><span class="month-sum">'+fmt(monthlyTotal(i))+'</span><span class="month-action">Detay ▾</span></button></th>').join('')+'<th class="col-total">Yıllık</th></tr>';
- $('matrixFoot').innerHTML='<tr><th></th><th></th><th>TOPLAM</th><th></th><th></th>'+MONTHS.map((_,i)=>'<th>'+fmt(monthlyTotal(i))+'</th>').join('')+'<th>'+fmt(totalAnnual())+'</th></tr>';
+ $('matrixFoot').innerHTML='<tr><th></th><th></th><th>TOPLAM</th><th></th><th></th><th></th>'+MONTHS.map((_,i)=>'<th>'+fmt(monthlyTotal(i))+'</th>').join('')+'<th>'+fmt(totalAnnual())+'</th></tr>';
  let html='',shown=sortRows();
  for(let i=0;i<shown.length;i++){
-  const p=shown[i],g=groupInfo(p),prev=shown[i-1],groupStart=!prev||groupKey(prev)!==groupKey(p),link='urun.html?id='+encodeURIComponent(p.id);
+  const p=shown[i],g=groupInfo(p),prev=shown[i-1],groupStart=!prev||upperGroup(prev)!==upperGroup(p),link='urun.html?id='+encodeURIComponent(p.id);
   const label=esc(p.kod)+(p.coil===null?'':' ('+p.coil+'B*)');
   const up=i===0?' disabled':'',down=i===shown.length-1?' disabled':'';
   html+='<tr class="product-row'+(groupStart?' group-transition':'')+'" style="'+groupStyle(g)+'" data-id="'+esc(p.id)+'"><td class="col-order"><div class="order-controls">'+
@@ -314,6 +314,7 @@ function render(){
    '<span class="row-handle" draggable="true" role="img" aria-label="Satırı sürükleyerek taşı" title="Satırı tutup başka satırın üzerine sürükle">⠿</span>'+
    '</div></td><td class="col-group"><span class="group-chip" title="'+esc(p.family+' · '+monthsName(p))+'">G'+g.id+'</span></td><td class="col-code"><a class="product-link" href="'+link+'" title="Ürün teknik föyünü aç" target="_blank" rel="noopener">'+label+'</a></td>'+
    '<td class="col-model" title="'+esc(p.model)+'"><a class="model-link" href="'+link+'" target="_blank" rel="noopener">'+esc(p.model)+'</a></td>'+
+   '<td class="col-upper" title="'+esc(upperGroup(p))+'"><span class="upper-label">'+esc(upperGroup(p))+'</span></td>'+
    '<td class="col-coil" title="'+(p.coil===null?'Fiziksel bobin sayısı bilinmiyor':'Yalnızca üretici tip çizimi ön verisi; kesin üretim reçetesi değil')+'">'+(p.coil===null?'<span class="uncertain">?</span>':p.coil+'B*')+'</td>';
   for(let m=0;m<12;m++){const v=p.monthly[m];html+='<td class="month-cell" data-id="'+esc(p.id)+'" data-month="'+m+'">'+
    (v?'<button type="button" draggable="true" class="qty group-qty" aria-label="'+esc(p.kod)+' '+MONTHS[m]+' '+fmt(v)+' adet; başka aya taşı" title="Aktarmak için tıklayın veya aynı ürünün başka ayına sürükleyin">'+fmt(v)+'</button>':'<span class="empty">·</span>')+'</td>'}
@@ -430,19 +431,22 @@ function bindEvents(){
 }
 async function boot(){
  try{
-  if(!window.PRODUCTS_GZIP_B64||!window.PRODUCTION_PLAN_2027_GZIP_B64)throw Error('Ürün veya 2027 plan dosyası bulunamadı.');
-  const [records,plan]=await Promise.all([unzipBase64(window.PRODUCTS_GZIP_B64),unzipBase64(window.PRODUCTION_PLAN_2027_GZIP_B64)]);
+  if(!window.PRODUCTS_GZIP_B64||!window.PRODUCTION_PLAN_2027_GZIP_B64||!window.UPPER_GROUP_OPTIMIZED_2027_GZIP_B64)throw Error('Ürün, mevcut plan veya üst grup optimizasyon dosyası eksik.');
+  const [records,plan,upperPlan]=await Promise.all([unzipBase64(window.PRODUCTS_GZIP_B64),unzipBase64(window.PRODUCTION_PLAN_2027_GZIP_B64),unzipBase64(window.UPPER_GROUP_OPTIMIZED_2027_GZIP_B64)]);
+  optimizedPlan=new Map(upperPlan);
   const data=new Map(records.map(p=>[p.id,p]));
   products=plan.map(([id,monthly,coil])=>{
    const p=data.get(id);if(!p||p.adet<=0)throw Error('Eksik veya uyumsuz ürün kimliği: '+id);
-   return {...p,annual:p.adet,monthly:monthly.slice(),initial:monthly.slice(),family:p.grup,coil};
+   const proposed=optimizedPlan.get(id);
+   if(!Array.isArray(proposed)||proposed.length!==12||proposed.some(x=>!Number.isSafeInteger(x)||x<0)||proposed.reduce((a,b)=>a+b,0)!==p.adet)throw Error('Üst grup optimizasyonunun ürün verisi uyumsuz: '+id);
+   return {...p,annual:p.adet,monthly:proposed.slice(),initial:proposed.slice(),previousDefault:monthly.slice(),family:p.grup,coil};
   });
   byId=new Map(products.map(p=>[p.id,p]));
   initialOrder=products.slice().sort(defaultCompare).map(p=>p.id);rowOrder=initialOrder.slice();
   initializeGroups();
-  if(products.length!==133||byId.size!==133||!sumsValid(cloneRows())||totalAnnual()!==45088)throw Error('Kaynak plan tutarlılık kontrolünden geçmedi.');
+  if(products.length!==133||byId.size!==133||optimizedPlan.size!==133||!sumsValid(cloneRows())||totalAnnual()!==45088)throw Error('Kaynak veya optimize edilen plan tutarlılık kontrolünden geçmedi.');
   restore();bindEvents();render();$('status').textContent='133 ürün · 45.088 adet';
- }catch(e){$('status').textContent='Veri yükleme hatası';$('matrixBody').innerHTML='<tr><td colspan="18" style="text-align:left;padding:18px;color:#a33">Plan açılamadı: '+esc(e.message)+'</td></tr>';console.error(e)}
+ }catch(e){$('status').textContent='Veri yükleme hatası';$('matrixBody').innerHTML='<tr><td colspan="19" style="text-align:left;padding:18px;color:#a33">Plan açılamadı: '+esc(e.message)+'</td></tr>';console.error(e)}
 }
 boot();
 })();
