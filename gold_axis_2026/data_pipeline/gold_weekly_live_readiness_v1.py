@@ -138,8 +138,11 @@ def self_test():
     assert stale["marketData"]["status"] == "BLOCKED"
     assert all(item["status"] == "STALE" for item in stale["marketData"]["series"])
     assert report(now, rows, 10, 10)["status"] == "BLOCKED_NOT_LIVE"
-    assert business_days_since(date(2026, 10, 31), date(2026, 10, 30)) \
-        if False else True
+    try:
+        business_days_since(date(2026, 10, 31), date(2026, 10, 30))
+        raise AssertionError("FUTURE_DATE_ACCEPTED")
+    except ValueError as exc:
+        assert str(exc) == "FUTURE_OBSERVATION_DATE"
     print("GOLD_WEEKLY_LIVE_READINESS_SELF_TEST_PASS")
 
 
