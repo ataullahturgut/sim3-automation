@@ -220,7 +220,7 @@ function render(){
  paintStats();
  renderGroupLegend();
  $('matrixHead').innerHTML='<tr><th class="col-order">Sıra</th><th class="col-group">Grup</th><th class="col-code">Ürün kodu</th><th class="col-model">Ürün adı / Model</th><th class="col-coil">Bobin*</th>'+
-  MONTHS.map((m,i)=>'<th class="col-month">'+m+'<span class="month-type '+(FAMILIES[i]==='Şönt'?'s':'h')+'">'+FAMILIES[i]+'</span><span class="month-sum">'+fmt(monthlyTotal(i))+'</span></th>').join('')+'<th class="col-total">Yıllık</th></tr>';
+  MONTHS.map((m,i)=>'<th class="col-month"><button type="button" class="month-open'+(window.ProductionMonthDetails&&window.ProductionMonthDetails.month()===i?' is-selected':'')+'" data-month="'+i+'" title="'+m+' ayının tüm teknik özelliklerini ve datasheet bağlantılarını aç">'+m+'<span class="month-type '+(FAMILIES[i]==='Şönt'?'s':'h')+'">'+FAMILIES[i]+'</span><span class="month-sum">'+fmt(monthlyTotal(i))+'</span><span class="month-action">Detay ▾</span></button></th>').join('')+'<th class="col-total">Yıllık</th></tr>';
  $('matrixFoot').innerHTML='<tr><th></th><th></th><th>TOPLAM</th><th></th><th></th>'+MONTHS.map((_,i)=>'<th>'+fmt(monthlyTotal(i))+'</th>').join('')+'<th>'+fmt(totalAnnual())+'</th></tr>';
  let html='',shown=sortRows();
  for(let i=0;i<shown.length;i++){
@@ -239,6 +239,7 @@ function render(){
   html+='<td class="col-total">'+fmt(p.annual)+'</td></tr>';
  }
  $('matrixBody').innerHTML=html;
+ if(window.ProductionMonthDetails)window.ProductionMonthDetails.refresh(products,rowOrder);
 }
 function toast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastHandle);toastHandle=setTimeout(()=>t.classList.remove('show'),3300)}
 function setSourceOptions(p){$('from').innerHTML=MONTHS.map((m,i)=>'<option value="'+i+'" '+(i===active.from?'selected':'')+' '+(!p.monthly[i]?'disabled':'')+'>'+m+' ('+fmt(p.monthly[i])+')</option>').join('')}
@@ -299,6 +300,7 @@ function exportCSV(){
 }
 function clearDragStyles(){document.querySelectorAll('.row-drop-before,.row-drop-after,.row-dragging,.drop-ok,.drop-warn').forEach(x=>x.classList.remove('row-drop-before','row-drop-after','row-dragging','drop-ok','drop-warn'))}
 function bindEvents(){
+ $('matrixHead').addEventListener('click',e=>{const btn=e.target.closest('.month-open');if(!btn)return;if(!window.ProductionMonthDetails){toast('Teknik detay modülü yüklenemedi. plan2027-detail.js dosyasını kontrol edin.');return}window.ProductionMonthDetails.open(Number(btn.dataset.month),products,rowOrder)});
  $('search').addEventListener('input',e=>{search=e.target.value;render()});
  $('family').addEventListener('change',e=>{familyFilter=e.target.value;render()});
  $('clearFilter').addEventListener('click',()=>{search='';familyFilter='all';$('search').value='';$('family').value='all';render()});
