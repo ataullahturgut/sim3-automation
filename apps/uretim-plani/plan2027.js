@@ -84,6 +84,7 @@ function moveRowStep(id,direction){
 }
 function sumsValid(rows){if(!rows||typeof rows!=='object')return false;for(const p of products){const m=rows[p.id];if(!Array.isArray(m)||m.length!==12||m.some((q,i)=>!Number.isSafeInteger(q)||q<0||(q>0&&FAMILIES[i]!==p.family))||m.reduce((a,b)=>a+b,0)!==p.annual)return false}return true}
 function snapshot(){
+ for(const p of products)ensureGroup(groupKey(p));
  return {format:SNAPSHOT_FORMAT,version:SNAPSHOT_VERSION,savedAt:new Date().toISOString(),
   identity:products.map(p=>({id:p.id,kod:p.kod,model:p.model,annual:p.annual,family:p.family})),
   monthly:cloneRows(),order:rowOrder.slice(),groupKeys:groupKeys.slice(),history:history.slice(-100)};
@@ -217,23 +218,24 @@ function paintStats(){
 }
 function render(){
  paintStats();
- $('matrixHead').innerHTML='<tr><th class="col-order">Sıra</th><th class="col-code">Ürün kodu</th><th class="col-model">Ürün adı / Model</th><th class="col-coil">Bobin*</th>'+
+ renderGroupLegend();
+ $('matrixHead').innerHTML='<tr><th class="col-order">Sıra</th><th class="col-group">Grup</th><th class="col-code">Ürün kodu</th><th class="col-model">Ürün adı / Model</th><th class="col-coil">Bobin*</th>'+
   MONTHS.map((m,i)=>'<th class="col-month">'+m+'<span class="month-type '+(FAMILIES[i]==='Şönt'?'s':'h')+'">'+FAMILIES[i]+'</span><span class="month-sum">'+fmt(monthlyTotal(i))+'</span></th>').join('')+'<th class="col-total">Yıllık</th></tr>';
- $('matrixFoot').innerHTML='<tr><th></th><th>TOPLAM</th><th></th><th></th>'+MONTHS.map((_,i)=>'<th>'+fmt(monthlyTotal(i))+'</th>').join('')+'<th>'+fmt(totalAnnual())+'</th></tr>';
+ $('matrixFoot').innerHTML='<tr><th></th><th></th><th>TOPLAM</th><th></th><th></th>'+MONTHS.map((_,i)=>'<th>'+fmt(monthlyTotal(i))+'</th>').join('')+'<th>'+fmt(totalAnnual())+'</th></tr>';
  let html='',shown=sortRows();
  for(let i=0;i<shown.length;i++){
-  const p=shown[i],link='urun.html?id='+encodeURIComponent(p.id);
+  const p=shown[i],g=groupInfo(p),prev=shown[i-1],groupStart=!prev||groupKey(prev)!==groupKey(p),link='urun.html?id='+encodeURIComponent(p.id);
   const label=esc(p.kod)+(p.coil===null?'':' ('+p.coil+'B*)');
   const up=i===0?' disabled':'',down=i===shown.length-1?' disabled':'';
-  html+='<tr class="product-row" data-id="'+esc(p.id)+'"><td class="col-order"><div class="order-controls">'+
+  html+='<tr class="product-row'+(groupStart?' group-transition':'')+'" style="'+groupStyle(g)+'" data-id="'+esc(p.id)+'"><td class="col-order"><div class="order-controls">'+
    '<button type="button" class="order-arrow move-up" title="Satırı yukarı taşı" aria-label="'+esc(p.kod)+' satırını yukarı taşı"'+up+'>↑</button>'+
    '<button type="button" class="order-arrow move-down" title="Satırı aşağı taşı" aria-label="'+esc(p.kod)+' satırını aşağı taşı"'+down+'>↓</button>'+
    '<span class="row-handle" draggable="true" role="img" aria-label="Satırı sürükleyerek taşı" title="Satırı tutup başka satırın üzerine sürükle">⠿</span>'+
-   '</div></td><td class="col-code"><a class="product-link" href="'+link+'" title="Ürün teknik föyünü aç" target="_blank" rel="noopener">'+label+'</a></td>'+
+   '</div></td><td class="col-group"><span class="group-chip" title="'+esc(p.family+' · '+monthsName(p))+'">G'+g.id+'</span></td><td class="col-code"><a class="product-link" href="'+link+'" title="Ürün teknik föyünü aç" target="_blank" rel="noopener">'+label+'</a></td>'+
    '<td class="col-model" title="'+esc(p.model)+'"><a class="model-link" href="'+link+'" target="_blank" rel="noopener">'+esc(p.model)+'</a></td>'+
    '<td class="col-coil" title="'+(p.coil===null?'Fiziksel bobin sayısı bilinmiyor':'Yalnızca üretici tip çizimi ön verisi; kesin üretim reçetesi değil')+'">'+(p.coil===null?'<span class="uncertain">?</span>':p.coil+'B*')+'</td>';
   for(let m=0;m<12;m++){const v=p.monthly[m];html+='<td class="month-cell" data-id="'+esc(p.id)+'" data-month="'+m+'">'+
-   (v?'<button type="button" draggable="true" class="qty '+(p.family==='Harmonik'?'h':'')+'" aria-label="'+esc(p.kod)+' '+MONTHS[m]+' '+fmt(v)+' adet; başka aya taşı" title="Aktarmak için tıklayın veya aynı ürünün başka ayına sürükleyin">'+fmt(v)+'</button>':'<span class="empty">·</span>')+'</td>'}
+   (v?'<button type="button" draggable="true" class="qty group-qty" aria-label="'+esc(p.kod)+' '+MONTHS[m]+' '+fmt(v)+' adet; başka aya taşı" title="Aktarmak için tıklayın veya aynı ürünün başka ayına sürükleyin">'+fmt(v)+'</button>':'<span class="empty">·</span>')+'</td>'}
   html+='<td class="col-total">'+fmt(p.annual)+'</td></tr>';
  }
  $('matrixBody').innerHTML=html;
@@ -351,7 +353,7 @@ async function boot(){
   initializeGroups();
   if(products.length!==133||byId.size!==133||!sumsValid(cloneRows())||totalAnnual()!==45088)throw Error('Kaynak plan tutarlılık kontrolünden geçmedi.');
   restore();bindEvents();render();$('status').textContent='133 ürün · 45.088 adet';
- }catch(e){$('status').textContent='Veri yükleme hatası';$('matrixBody').innerHTML='<tr><td colspan="17" style="text-align:left;padding:18px;color:#a33">Plan açılamadı: '+esc(e.message)+'</td></tr>';console.error(e)}
+ }catch(e){$('status').textContent='Veri yükleme hatası';$('matrixBody').innerHTML='<tr><td colspan="18" style="text-align:left;padding:18px;color:#a33">Plan açılamadı: '+esc(e.message)+'</td></tr>';console.error(e)}
 }
 boot();
 })();
