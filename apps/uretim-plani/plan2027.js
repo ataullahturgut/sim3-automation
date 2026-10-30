@@ -46,12 +46,11 @@ function render(){
  let previous='',html='';
  for(const p of sortRows()){
   const key=firstMonth(p)+'|'+p.family+'|'+pattern(p);
-  if(key!==previous){
-   previous=key;html+='<tr class="group-row"><td colspan="16">'+esc(p.family.toLocaleUpperCase('tr-TR'))+' · '+esc(monthsName(p))+'<span class="group-note">Aynı ayları paylaşan ürünler alt alta</span></td></tr>';
-  }
+  const patternStart=key!==previous;
+  previous=key;
   const link='urun.html?id='+encodeURIComponent(p.id);
   const label=esc(p.kod)+(p.coil===null?'':' ('+p.coil+'B*)');
-  html+='<tr class="product-row" data-id="'+esc(p.id)+'"><td class="col-code"><a class="product-link" href="'+link+'" title="Ürün teknik föyünü aç" target="_blank" rel="noopener">'+label+'</a></td>'+
+  html+='<tr class="product-row'+(patternStart?' cycle-start':'')+'" data-id="'+esc(p.id)+'"><td class="col-code"><a class="product-link" href="'+link+'" title="Ürün teknik föyünü aç" target="_blank" rel="noopener">'+label+'</a></td>'+
    '<td class="col-model" title="'+esc(p.model)+'"><a class="model-link" href="'+link+'" target="_blank" rel="noopener">'+esc(p.model)+'</a></td>'+
    '<td class="col-coil" title="'+(p.coil===null?'Fiziksel bobin sayısı bilinmiyor':'Yalnızca üretici tip çizimi ön verisi; kesin üretim reçetesi değil')+'">'+(p.coil===null?'<span class="uncertain">?</span>':p.coil+'B*')+'</td>';
   for(let m=0;m<12;m++){const v=p.monthly[m];html+='<td class="month-cell" data-id="'+esc(p.id)+'" data-month="'+m+'">'+
