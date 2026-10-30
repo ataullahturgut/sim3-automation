@@ -52,7 +52,7 @@ const INSULATIONS=[
  'Emaye kaplama','DMD','NMN','Elektriksel izolasyon kâğıdı',
  'Presbant','Polyester (PET) film','Poliimid film','Cam elyaf','Diğer'
 ];
-const INPUTS=['coilCount','conductor','conductorOther','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','coreOther','insulations','insulationOther','impPart','resinMode','resinCode','impMethod','impMethodOther','impCycle'];
+const INPUTS=['coilCount','conductor','conductorOther','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','coreOther','insulations','insulationOther','impPart','resinMode','resinCode','impMethod','impMethodOther','impCycle','reviewStatus'];
 const NUMERIC=new Set(['coilCount','coilWeightKg','turns','windingMinutes','impCycle']);
 const INTEGER=new Set(['coilCount','turns']);
 const TEXT_LIMITS={conductorOther:90,conductorSize:90,coilDimensions:140,coreOther:90,insulationOther:90,resinCode:90,impMethodOther:90};
@@ -113,11 +113,11 @@ const HARMONIC_ADDITIONAL_SAMPLES={
  'GA5639':'HRT 100 kVAr, 44 kg, THDv<%7; farklı p/THDv sınıfında büyük gövde.',
  'GA5438':'HRT 75 kVAr, 40 kg, 295×255×205 mm; derinlik ve dış ölçü sınırı.'
 };
-function priority(p){
+function basePriority(p){
  if(p.grup==='Şönt'){
   const m=window.ShuntMachineInvestment?.get(p.kod);
   if(!m)throw Error('Şönt inceleme kaydı bulunamadı: '+p.kod);
-  const labels={A:'1 · Öncelikli inceleme',B:'2 · Hedefli kontrol',C:'3 · Sökmeden kontrol'};
+  const labels={A:'Ana Numune',B:'Karşılaştırma Numunesi',C:'Dış Kontrol'};
   return {label:labels[m.priority],rank:'ABC'.indexOf(m.priority),className:'shunt-'+m.priority,
    hint:m.reason+' · Ölçüm: '+m.focus+' · Henüz kapasite onayı yok.'};
  }
@@ -127,19 +127,30 @@ function priority(p){
  // Her iki ailenin görüntülenen etiketleri aynı: öncelikli, hedefli, sökmeden.
  // Harmonik 3 ilk numune öncelikli; diğer 5 eski + 5 yeni fiziksel numune hedefli.
  if(status.startsWith('1 ·')||first.includes(code))
-  return {label:'1 · Öncelikli inceleme',rank:0,className:'main',hint:'Fiziksel numune. Kaynak ilk numune; tüm ürünlerin temsili henüz kanıtlanmadı.'};
+  return {label:'Ana Numune',rank:0,className:'main',hint:'Fiziksel numune. Kaynak ilk numune; tüm ürünlerin temsili henüz kanıtlanmadı.'};
  if(status.startsWith('2 ·')||compare.includes(code))
-  return {label:'2 · Hedefli kontrol',rank:1,className:'main',hint:'Fiziksel numune. Kaynak kıyas adayı; bobin ve proses ortaklığı henüz kanıtlanmadı.'};
+  return {label:'Karşılaştırma Numunesi',rank:1,className:'compare',hint:'Fiziksel numune. Kaynak kıyas adayı; bobin ve proses ortaklığı henüz kanıtlanmadı.'};
  if(Object.prototype.hasOwnProperty.call(HARMONIC_ADDITIONAL_SAMPLES,code))
-  return {label:'2 · Hedefli kontrol',rank:1,className:'main',hint:'Fiziksel numune. '+HARMONIC_ADDITIONAL_SAMPLES[code]+' Sargı/proses ölçümleri doğrulanacak.'};
+  return {label:'Karşılaştırma Numunesi',rank:1,className:'compare',hint:'Fiziksel numune. '+HARMONIC_ADDITIONAL_SAMPLES[code]+' Sargı/proses ölçümleri doğrulanacak.'};
  if(status.startsWith('3 ·'))
-  return {label:'3 · Sökmeden kontrol',rank:2,className:'compare',hint:'Katalog/görsel kıyası; fiziksel sarım eşdeğerliği kanıtlanmadı.'};
- if(status.includes('Kimlik')||/^(GAG|GAGG)/.test(code)||code==='GA5ÖZELHARM')return {label:'Kimlik / reçete teyidi',rank:3,className:'unknown',hint:'Ürüne özgü teknik çizim ve imalat reçetesi gerekli'};
+  return {label:'Dış Kontrol',rank:2,className:'external',hint:'Katalog/görsel ve dış ölçü kontrolü; ürün sökülmez.'};
+ if(status.includes('Kimlik')||/^(GAG|GAGG)/.test(code)||code==='GA5ÖZELHARM')return {label:'Teknik Bilgi Eksik',rank:3,className:'unknown',fixed:true,hint:'Ürüne özgü teknik çizim ve imalat reçetesi gerekli'};
  const m=code.match(/^GA(\d{4})$/),n=m?Number(m[1]):0;
  const ranges=[[5311,5317],[5411,5417],[5511,5517],[5321,5339],[5629,5639],[5521,5539],[5421,5439]];
  return ranges.some(([lo,hi])=>n>=lo&&n<=hi)?
-  {label:'3 · Sökmeden kontrol',rank:2,className:'compare',hint:'Üretici katalog kıyası; fiziksel eşdeğerlik kanıtı değil'}:
-  {label:'Kimlik / reçete teyidi',rank:3,className:'unknown',hint:'Ürün tasarım kimliği veya imalat reçetesi eksik'};
+  {label:'Dış Kontrol',rank:2,className:'external',hint:'Ürün açılmadan dış ölçü, ağırlık, bağlantı ve katalog kontrolü'}:
+  {label:'Teknik Bilgi Eksik',rank:3,className:'unknown',fixed:true,hint:'Önce ürün kimliği ve üretim reçetesi doğrulanmalı'};
+}
+const REVIEW_STATUSES={main:{label:'Ana Numune',rank:0,className:'main'},
+ compare:{label:'Karşılaştırma Numunesi',rank:1,className:'compare'},
+ external:{label:'Dış Kontrol',rank:2,className:'external'}};
+function priority(p){
+ const base=basePriority(p);
+ if(base.fixed)return base; // Teknik bilgi eksik ürünleri serbestçe sınıflandırma.
+ const selection=entries[recordKey(p)]?.reviewStatus;
+ return selection&&REVIEW_STATUSES[selection]?{
+  ...base,...REVIEW_STATUSES[selection],hint:base.hint+' · İnceleme sınıfı kullanıcı tarafından değiştirildi.'
+ }:base;
 }
 function specialHarmonic(p){
  return p.grup==='Harmonik'&&(/^(?:GAG|GAGG)/.test(p.kod)||p.kod==='GA5ÖZELHARM');
@@ -169,6 +180,7 @@ function summary(){
 function validInput(field,v){
  if(!INPUTS.includes(field))return null;
  if(field==='insulations')return Array.isArray(v)&&v.length<=INSULATIONS.length&&v.every(x=>INSULATIONS.includes(x))?[...new Set(v)]:null;
+ if(field==='reviewStatus')return ['main','compare','external'].includes(v)?v:null;
  if(NUMERIC.has(field)){
   if(v===''||v===null||v===undefined)return '';
   const n=Number(v);
@@ -289,6 +301,20 @@ function insulationCell(p){
  '<label><input type="checkbox" data-code="'+esc(recordKey(p))+'" data-field="insulations" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</div></details>'+
  (values.includes('Diğer')?textInput(p,'insulationOther','Diğer izolasyon açıklaması'):'')+'</div>';
 }
+function technicalCell(p,key){
+ const v=get(p,key);
+ if(v===''||v===undefined||v===null||Array.isArray(v)&&!v.length)return '<span class="sample-original">—</span>';
+ const list={conductor:CONDUCTOR,core:CORES,impPart:PARTS,impMethod:METHODS}[key];
+ let value;
+ if(key==='insulations')value=v.map(x=>x==='Diğer'&&get(p,'insulationOther')?'Diğer: '+get(p,'insulationOther'):x).join(', ');
+ else if(key==='resinMode')value=v==='none'?'Kullanılmıyor':v==='code'?(get(p,'resinCode')||'Malzeme kodu bekliyor'):'Belirlenmedi';
+ else if(list){
+  value=list.find(([x])=>x===v)?.[1]||v;
+  const extra={conductor:'conductorOther',core:'coreOther',impMethod:'impMethodOther'}[key];
+  if(extra&&get(p,extra))value+=' · '+get(p,extra);
+ }else value=String(v);
+ return '<span class="sample-original">'+esc(value)+'</span>';
+}
 function editable(p,key){
  if(p.grup!=='Şönt'&&p.grup!=='Harmonik')return '—';
  if(key==='coilCount'||key==='turns')return numberInput(p,key,'—',true);
@@ -321,7 +347,8 @@ function originalFields(p){
 function rowCells(p,totals){
  const priorityData=priority(p);
  const fields=[
-  '<a class="sample-product-link" href="urun.html?id='+encodeURIComponent(p.id)+'" target="_blank" rel="noopener">'+esc(p.kod)+'</a>',
+  '<div class="sample-row-identity"><a class="sample-product-link" href="urun.html?id='+encodeURIComponent(p.id)+'" target="_blank" rel="noopener">'+esc(p.kod)+'</a>'+
+  '<button type="button" class="sample-row-edit" data-edit-id="'+esc(p.id)+'">Düzenle</button></div>',
   esc(p.model),
   '<strong class="sample-amount">'+qty(p.annual)+'</strong>',
   pct(p.annual,totals[p.grup]),
@@ -335,7 +362,7 @@ function rowCells(p,totals){
   esc(p.grup==='Harmonik'?technicalDisplay(p,'p (%)'):val(raw(p,'p (%)')??p.p)),
   esc(p.grup==='Harmonik'?technicalDisplay(p,'THDv tasarım sınıfı'):val(raw(p,'THDv tasarım sınıfı')??p.thdv)),
   '<a href="'+esc(DATASHEETS[p.grup])+'" target="_blank" rel="noopener">PDF</a>',
-  ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>editable(p,k))
+  ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>technicalCell(p,k))
  ];
  if(fields.length!==HEADERS.length)throw Error('28 teknik sütun eşleşmedi: '+p.kod+' '+fields.length);
  return '<tr class="sample-product-row">'+fields.map((x,i)=>'<td class="sample-cell-'+HEADERS[i][1]+'">'+x+'</td>').join('')+'</tr>';
@@ -375,56 +402,36 @@ function render(){
  const guide=$('shuntProcurementGuide');if(guide)guide.hidden=family==='Harmonik';
  const ambiguous=legacyAmbiguous().length;
  if(ambiguous)notice(ambiguous+' yinelenen Harmonik kodunun eski ortak teknik girdisi satıra güvenle bağlanamadı; JSON yedeğini koruyun. Yeni girişler ayrıdır.','error');
- const shunt=products.filter(p=>p.grup==='Şönt'),stats=Object.fromEntries(['A','B','C'].map(k=>{
-  const group=shunt.filter(p=>window.ShuntMachineInvestment?.get(p.kod)?.priority===k);
-  return [k,{count:group.length,annual:group.reduce((s,p)=>s+p.annual,0)}];
- }));
- if(shunt.length!==25||totals['Şönt']!==35772||stats.A.count!==11||stats.B.count!==8||stats.C.count!==6||
-    stats.A.annual!==32654||stats.B.annual!==2512||stats.C.annual!==606)throw Error('Şönt 11/8/6 ve miktar tutarlılık denetimi başarısız');
+ const shunt=products.filter(p=>p.grup==='Şönt');
  const harmonic=products.filter(p=>p.grup==='Harmonik');
- if(harmonic.length!==108||totals['Harmonik']!==9316)throw Error('Harmonik 108 ürün / 9.316 adet yıllık toplam tutarsız');
- const primary=harmonic.filter(p=>priority(p).label==='1 · Öncelikli inceleme');
- const targeted=harmonic.filter(p=>priority(p).label==='2 · Hedefli kontrol');
- const physical=[...primary,...targeted];
- const docOnly=harmonic.filter(p=>priority(p).label==='3 · Sökmeden kontrol').length;
- const unverified=harmonic.filter(p=>priority(p).label==='Kimlik / reçete teyidi').length;
- const physicalAnnual=physical.reduce((n,p)=>n+p.annual,0);
- if(primary.length!==3||targeted.length!==10||
-    physical.length!==13||physicalAnnual!==4160||docOnly!==54||unverified!==41||
-    new Set(physical.map(p=>p.kod)).size!==13||
-    Object.keys(HARMONIC_ADDITIONAL_SAMPLES).some(code=>!targeted.some(p=>p.kod===code)))
-    throw Error('Harmonik 13 numune / 10 hedefli / 54 sökmeden bütünlük kontrolü başarısız');
+ if(shunt.length!==25||harmonic.length!==108||totals['Şönt']!==35772||totals['Harmonik']!==9316)
+  throw Error('Kaynak ürün miktarları ve adetleri tutarsız');
+ const classifications=[{grup:'Şönt',arr:shunt},{grup:'Harmonik',arr:harmonic}].map(x=>{
+  const counts={main:0,compare:0,external:0,missing:0,annual:0};
+  for(const p of x.arr){
+   const status=priority(p);
+   if(status.label==='Ana Numune'){counts.main++;counts.annual+=p.annual;}
+   else if(status.label==='Karşılaştırma Numunesi'){counts.compare++;counts.annual+=p.annual;}
+   else if(status.label==='Dış Kontrol')counts.external++;
+   else if(status.label==='Teknik Bilgi Eksik')counts.missing++;
+   else throw Error('Bilinmeyen inceleme sınıfı '+status.label);
+  }
+  if(counts.main+counts.compare+counts.external+counts.missing!==x.arr.length)throw Error('Sınıflandırma eksik');
+  return {...counts,grup:x.grup,total:x.arr.length};
+ });
+ const sc=classifications[0],hc=classifications[1];
  const chosen=products.filter(searchVisible);
  $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(annual)+' adet</span><span><b>Şönt</b> '+qty(totals['Şönt'])+' adet</span>'+
- '<span><b>Harmonik</b> '+qty(totals['Harmonik'])+' adet</span><span><b>Şönt numunesi</b> 11</span>'+
- '<span><b>Harmonik numunesi</b> 13</span><span><b>Toplam fiziksel numune</b> 24</span>'+
+ '<span><b>Harmonik</b> '+qty(totals['Harmonik'])+' adet</span>'+
+ '<span><b>Şönt numunesi</b> '+(sc.main+sc.compare)+'</span>'+
+ '<span><b>Harmonik numunesi</b> '+(hc.main+hc.compare)+'</span>'+
+ '<span><b>Toplam numune</b> '+(sc.main+sc.compare+hc.main+hc.compare)+'</span>'+
  '<span class="sample-count">'+chosen.length+' / '+products.length+' ürün</span>';
- const shuntNote='<b>Şönt:</b> 11 öncelikli ('+qty(stats.A.annual)+' adet), 8 hedefli ('+qty(stats.B.annual)+' adet), 6 ön kontrol ('+qty(stats.C.annual)+' adet).';
- const harmonicNote='<b>Harmonik:</b> <b>13 numune</b> (3 öncelikli + 10 hedefli), '+
-  qty(physicalAnnual)+' adet/yıl ('+pct(physicalAnnual,totals['Harmonik'])+'), '+
-  docOnly+' sökmeden kontrol ve '+unverified+' kimlik/reçete teyidi.';
- const notes=family==='Şönt'?shuntNote:family==='Harmonik'?harmonicNote:shuntNote+' '+harmonicNote;
- $('shuntSampleReview').innerHTML=notes+' <b>Sarım ve emprenye girişleri iki ürün ailesinde de düzenlenebilir ve ayrı saklanır.</b> Kesin makine kapasitesi için fiziksel ölçüm gerekir.';
-}
-function onCellChange(e){
- const el=e.target;
- if(!el?.dataset?.code||!el.dataset.field)return;
- const code=el.dataset.code,key=el.dataset.field;
- if(key==='insulations'){
-  const existing=entries[code]?.insulations||[];
-  const next=el.checked?[...new Set([...existing,el.value])]:existing.filter(v=>v!==el.value);
-  saveRecord(code,key,next);
-  if(el.value==='Diğer'){render();return;}
-  const d=el.closest('details');if(d){const summary=d.querySelector('summary');if(summary)summary.textContent=next.length?next.join(', '):'Belirlenmedi';}
-  return;
- }
- const v=validInput(key,el.value);
- if(v===null){notice('Geçersiz değer. Sayısal alanlara pozitif değer girilmeli.','error');el.focus();return;}
- saveRecord(code,key,v);
- if(key==='resinMode'){
-  if(v!=='code')saveRecord(code,'resinCode','');
-  render();
- }else if(key==='resinCode'||['conductor','core','impMethod','impPart'].includes(key))render();
+ const shuntNote='<b>Şönt:</b> '+sc.main+' Ana Numune, '+sc.compare+' Karşılaştırma Numunesi, '+sc.external+' Dış Kontrol.';
+ const harmonicNote='<b>Harmonik:</b> '+hc.main+' Ana Numune, '+hc.compare+' Karşılaştırma Numunesi, '+hc.external+' Dış Kontrol, '+hc.missing+' Teknik Bilgi Eksik. '+qty(hc.annual)+' adet/yıl seçili numunelerin doğrudan üretim miktarı.';
+ const note=family==='Şönt'?shuntNote:family==='Harmonik'?harmonicNote:shuntNote+' '+harmonicNote;
+ $('shuntSampleReview').innerHTML=note+' <b>İnceleme türünü ve teknik bilgileri değiştirmek için Ürün Seç / Düzenle ekranını kullanın.</b>';
+
 }
 function download(name,content,type){
  const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');
