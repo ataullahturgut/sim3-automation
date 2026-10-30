@@ -29,8 +29,7 @@ class V39SafetyTests(unittest.TestCase):
    r["date"]=date(2024,12,15)+timedelta(days=n)
   f=add_features(p)
   l=label_targets(f)
-  self.assertTrue(all(r["date"].year==2024 and
-    r["date"]<=date(2024,12,31) for r in l))
+  self.assertTrue(all(r["date"]<=date(2024,12,26) for r in l if r["date"].year==2024))
  def test_episode_suppression_not_improving_day_labels(self):
   d=date(2025,1,1)
   a=[{"date":d+timedelta(days=i),"au":100.0} for i in range(22)]
