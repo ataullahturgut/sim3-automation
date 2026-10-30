@@ -149,7 +149,11 @@ def _fetch_one(
 def collect_fred_indices(run_id: str, retrieved_at, mode: str, series_ids: Iterable[str] | None = None):
     session = requests.Session()
     session.headers.update(base.HEADERS)
-    requested = list(series_ids or INDEX_SERIES.keys())
+    # Keep the vetted equity index lane unchanged; macro authorities are a
+    # distinct workflow/lineage and cannot block pre-existing index ingestion.
+    requested = list(series_ids) if series_ids is not None else [
+        "SP500_FRED", "DJIA_FRED", "NASDAQ100_FRED"
+    ]
     unknown = sorted(set(requested) - set(INDEX_SERIES))
     if unknown:
         raise ValueError(f"UNKNOWN_FRED_INDEX_SERIES:{unknown}")
