@@ -1,0 +1,44 @@
+name: Gold V39 Low-False-Alarm Risk Prior and 4-Metal Confirmation Research
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/gold-v39-regime-confirmation-false-alarm-budget-20261030
+    paths:
+      - '.github/workflows/gold-v39-risk-budget-frozen-validation.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v39_ridge_prior_fourmetal_confirmation.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v39_ridge_prior_fourmetal_confirmation.py'
+permissions:
+  contents: read
+jobs:
+  V39-prospective-style-historical-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test no lookahead and calibration limits
+        run: |
+          python -m pip install 'numpy>=1.26,<3' 'scikit-learn>=1.4,<2'
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v39_ridge_prior_fourmetal_confirmation.py
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v39_ridge_prior_fourmetal_confirmation.py -v
+      - name: Install read-only PostgreSQL client
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Ensure Neon read-only source exists
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Fit 2024 only, budget 2025 only, evaluate 2026 (not blind)
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v39_ridge_prior_fourmetal_confirmation \
+            --out gold-v39-false-alarm-budget-comparison.json
+      - name: Archive report even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v39-fourmetal-lowfalse-validation
+          path: gold-v39-false-alarm-budget-comparison.json
+          retention-days: 30
+          if-no-files-found: warn
