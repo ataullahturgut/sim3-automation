@@ -1,3 +1,17 @@
+## Şönt 9 fiziksel numune — 25 ürün temsil denetimi (30.10.2026)
+
+**Yeni tamamlanan çalışma:** [SONT_NUMUNE_TEMSIL_DENETIMI_20261030.md](SONT_NUMUNE_TEMSIL_DENETIMI_20261030.md).
+İlk 9 numune adayı değiştirilmedi: 3 ilk fiziksel + 6 fiziksel kıyas. Doğrudan yıllık üretimleri 22.238/35.772 = **%62,17**.
+Diğer 16 ürün kaynak matrisi ve üretici 2026/12 teknik değerleriyle yeniden kontrol edildi:
+- 9 ürün / 11.794 adet: aynı aile/bağlantıda katalog ve çizim kıyası, fiziksel eşdeğerlik **henüz kanıtlanmadı**.
+- 3 ürün / 1.256 adet: kaynak kıyas referansının bağlantısı farklı (GA5105, GA5205, GA5206).
+- 2 ürün / 210 adet: kaynakta kullanılan GA5211 fiziksel numuneler arasında yer almıyor (GA5210, GA5211).
+- 2 ürün / 274 adet: GA5004, GA5006 resmî kod/teknik listede doğrulanmadı.
+
+**Satın alma kararı yok**; GA5105, GA5206, GA5211 yalnız **koşullu inceleme adayları**, ek 3 numune siparişi verilmiş değildir. Ürünlerin gerçek nüve, sarım, bobin kalıbı, tel/folyo ve izolasyon yapısı üretici BOM/çizim/fiziksel söküm ile teyit edilmelidir.
+
+**Uygulama:** `shunt-sample-review-2026.js`, numune sayfasında ilk ve fiziksel kıyas ürünlerini ayrı gösterir; 25 Şönt satırının `Eksik teknik bilgiler` alanında neden ve kaynak sınıfı görünür. Yıllık üretim, aylık plan, Harmonik veri seti **değişmedi**.
+
 ## Şönt resmî teknik kayıtları düzeltildi — 30.10.2026
 
 **Tek doğru Şönt teknik kaynak katmanı:** `shunt-official-2026.js`. Grup Arge'nin **2026/12 fiyat listesi** (basılı sayfa 17) ve **2023 ürün kataloğu** (ortak 21 stok kodu) karşılaştırıldı. 25 Şönt ürününden 23 kodun güç, akım, endüktans, ölçü, birim ağırlık, bağlantı tipi, ayak montaj cıvatası ve liste fiyatı (USD) uygulamada düzeltildi. GA5107 ve GA5108 2023 katalogda yok, fakat 2026 listesinde var. GA5004 ve GA5006 resmî listede bulunmadı, teknik değer **türetilmedi**.
