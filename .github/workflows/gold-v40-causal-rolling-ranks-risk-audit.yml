@@ -1,0 +1,43 @@
+name: Gold V40 Causal Rolling Risk Ranks - False Alarm Budget Research
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/gold-v40-rolling-rank-sequential-risk-budget-20261030]
+    paths:
+      - '.github/workflows/gold-v40-causal-rolling-ranks-risk-audit.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v40_causal_rolling_risk_rank.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v40_causal_rolling_risk_rank.py'
+permissions:
+  contents: read
+jobs:
+  evaluate-regime-drift:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate causal features and rolling rank
+        run: |
+          python -m pip install 'numpy>=1.26,<3' 'scikit-learn>=1.4,<2'
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v40_causal_rolling_risk_rank.py
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v39_ridge_prior_fourmetal_confirmation.py gold_axis_2026/research/case_control_v13/test_risk_v40_causal_rolling_risk_rank.py -v
+      - name: Install read-only database driver
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Require Neon research access
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Replay 2024 fit, 2025 calibration, 2026 frozen risk rank
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v40_causal_rolling_risk_rank \
+            --out gold-v40-causal-rolling-risk-rank.json
+      - name: Preserve all actual test metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v40-rolling-percentile-rank-research
+          path: gold-v40-causal-rolling-risk-rank.json
+          retention-days: 30
+          if-no-files-found: warn
