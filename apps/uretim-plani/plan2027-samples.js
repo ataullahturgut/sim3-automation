@@ -1,7 +1,8 @@
-/* Numune ve Teknik Kapsam — Şönt makine yatırımı teknik veri girişi.
+/* Numune ve Teknik Kapsam — Şönt ve Harmonik sarım/emprenye teknik veri girişi.
    Onaylanan düzen: 1 Ürün(5) → 4 Mevcut teknik(10) → 2 Sarım(9) → 3 Emprenye(4).
-   Şönt alanları fiziksel ölçüm olmadan varsayımla doldurulmaz.
-   Harmonik kayıtları okunur; Şönt taslak girişleri ayrı yerel depoda saklanır. */
+   İki ailenin teknik girişleri birbirinden ayrı tarayıcı kayıtlarında tutulur;
+   Şöntün eski v1 kayıtları ve ürünlerin kaynak/üretim planı verileri korunur.
+   Fiziksel ölçüm olmadan varsayımsal makine bilgisi doldurulmaz. */
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -10,9 +11,16 @@ const pct=(v,n)=>n?(100*v/n).toLocaleString('tr-TR',{minimumFractionDigits:2,max
 const val=v=>v===null||v===undefined||v===''||/^(?:unresolved|unknown|bilinmiyor|belirsiz)$/i.test(String(v))?'—':typeof v==='number'?v.toLocaleString('tr-TR'):String(v);
 const raw=(p,k)=>p.tamKayit&&Object.prototype.hasOwnProperty.call(p.tamKayit,k)?p.tamKayit[k]:null;
 const byFamily=(p,shunt,harmonic)=>raw(p,p.grup==='Şönt'?shunt:harmonic);
-const STORAGE='simulation3.shunt.machine-inputs.v1';
-const FORMAT='simulation3-shunt-machine-inputs';
 const VERSION=1;
+const SHUNT_STORAGE='simulation3.shunt.machine-inputs.v1';
+const HARMONIC_STORAGE='simulation3.harmonic.machine-inputs.v1';
+const SHUNT_FORMAT='simulation3-shunt-machine-inputs';
+const HARMONIC_FORMAT='simulation3-harmonic-machine-inputs';
+const BACKUP_FORMAT='simulation3-reactor-machine-inputs';
+const STORAGE_SPECS={
+ 'Şönt':{key:SHUNT_STORAGE,format:SHUNT_FORMAT},
+ 'Harmonik':{key:HARMONIC_STORAGE,format:HARMONIC_FORMAT}
+};
 const GROUPS={
  'Şönt':['SVC-R','SRM','SRT','Diğer Şönt'],
  'Harmonik':['HRM','HRT 5,67','HRT 7/8','HRT 7/7','HRT 14','HRT-G varyant','HRT-GG varyant','Özel Harmonik']
@@ -50,7 +58,7 @@ const INTEGER=new Set(['coilCount','turns']);
 const TEXT_LIMITS={conductorOther:90,conductorSize:90,coilDimensions:140,coreOther:90,insulationOther:90,resinCode:90,impMethodOther:90};
 const HEADERS=[
  ['Ürün kodu','code'],['Model / açıklama','model'],['Yıllık üretim adedi','count'],
- ['Şönt / aile payı (%)','percent'],['İnceleme önceliği','sample'],
+ ['Ailedeki payı (%)','percent'],['İnceleme önceliği','sample'],
  ['Ürün dış ölçüleri (mm)','dimension'],['Ürün toplam ağırlığı (kg)','weight'],
  ['Bağlantı','value'],['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],
  ['L (mH)','small'],['p (%)','small'],['THDv','value'],['Aile datasheet','link'],
@@ -140,35 +148,54 @@ function cleanRecord(record){
  if(result.impPart==='none'){result.impMethod='none';delete result.impMethodOther;}
  return result;
 }
+function productFamily(code){
+ const p=products.find(p=>p.kod===code);
+ return p&&(p.grup==='Şönt'||p.grup==='Harmonik')?p.grup:null;
+}
+function familyRecords(grup){
+ const ids=new Set(products.filter(p=>p.grup===grup).map(p=>p.kod));
+ return Object.fromEntries(Object.entries(entries).filter(([code])=>ids.has(code)));
+}
+function saveToStorage(grup){
+ const spec=STORAGE_SPECS[grup];
+ if(!spec)throw Error('Geçersiz ürün ailesi: '+grup);
+ localStorage.setItem(spec.key,JSON.stringify({format:spec.format,version:VERSION,records:familyRecords(grup)}));
+}
 function saveRecord(code,field,value){
- if(!products.some(p=>p.grup==='Şönt'&&p.kod===code))return;
+ const grup=productFamily(code);
+ if(!grup)return;
  const rec={...(entries[code]||{})};
  if(value===''||(Array.isArray(value)&&!value.length))delete rec[field];else rec[field]=value;
  const next=cleanRecord(rec);
  if(Object.keys(next).length)entries[code]=next;else delete entries[code];
  try{
-  localStorage.setItem(STORAGE,JSON.stringify({format:FORMAT,version:VERSION,records:entries}));
-  storageEnabled=true;notice('Teknik girişler bu tarayıcıya otomatik kaydedildi. Başka cihaz için JSON yedeği al.');
- }catch(e){storageEnabled=false;notice('Tarayıcıya kaydedilemedi. Veriler kaybolmadan JSON yedeği indir.','error');}
+  saveToStorage(grup);
+  storageEnabled=true;notice(grup+' teknik girişleri bu tarayıcıya kaydedildi. Başka cihaz için JSON yedeği al.');
+ }catch(e){storageEnabled=false;notice(grup+' teknik girişleri tarayıcıya kaydedilemedi. JSON yedeği indir.','error');}
 }
-function loadSaved(){
- try{
-  const data=localStorage.getItem(STORAGE);
-  if(!data)return;
-  const parsed=JSON.parse(data);
-  if(parsed?.format!==FORMAT||parsed.version!==VERSION||!parsed.records||typeof parsed.records!=='object')throw Error('Geçersiz teknik kayıt');
-  entries=cleanAll(parsed.records);
- }catch(e){storageEnabled=false;notice('Önceki kayıt okunamadı. Teknik veri yedeğinizi kontrol edin.','error');}
-}
-function cleanAll(records){
+function cleanAll(records,grup){
  if(!records||typeof records!=='object'||Array.isArray(records))throw Error('Kayıt içeriği geçersiz');
- const result={},known=new Set(products.filter(p=>p.grup==='Şönt').map(p=>p.kod));
+ const result={},known=new Set(products.filter(p=>p.grup===grup).map(p=>p.kod));
  for(const [code,record] of Object.entries(records)){
-  if(!known.has(code))throw Error('Bilinmeyen Şönt ürün kodu: '+code);
+  if(!known.has(code))throw Error('Bilinmeyen '+grup+' ürün kodu: '+code);
   const item=cleanRecord(record);
   if(Object.keys(item).length)result[code]=item;
  }
  return result;
+}
+function loadSaved(){
+ const failures=[];
+ for(const grup of ['Şönt','Harmonik']){
+  const spec=STORAGE_SPECS[grup];
+  try{
+   const data=localStorage.getItem(spec.key);
+   if(!data)continue;
+   const parsed=JSON.parse(data);
+   if(parsed?.format!==spec.format||parsed.version!==VERSION)throw Error('Geçersiz teknik kayıt sürümü');
+   Object.assign(entries,cleanAll(parsed.records,grup));
+  }catch(e){failures.push(grup);}
+ }
+ if(failures.length){storageEnabled=false;notice(failures.join(', ')+' teknik kaydı okunamadı. JSON yedeğinizi kontrol edin.','error');}
 }
 function notice(message,kind='ok'){
  const el=$('sampleEditNotice');
@@ -193,12 +220,13 @@ function textInput(p,key,placeholder){
 }
 function resinCell(p){
  const mode=get(p,'resinMode'),code=get(p,'resinCode');
+ const datalist=p.grup==='Şönt'?'sampleResinCodeListShunt':'sampleResinCodeListHarmonic';
  return '<div class="sample-resin-editor"><select class="sample-edit" data-code="'+esc(p.kod)+'" data-field="resinMode" aria-label="Vernik veya reçine seçimi">'+
  optionList([['','Belirlenmedi'],['code','Malzeme kodu gir / seç'],['none','Kullanılmıyor']],mode)+'</select>'+
- (mode==='code'?'<input class="sample-edit sample-edit-text" type="text" list="sampleResinCodeList" maxlength="90" placeholder="Üretici malzeme kodu" data-code="'+esc(p.kod)+'" data-field="resinCode" value="'+esc(code)+'" aria-label="Üretici vernik reçine kodu">':'')+'</div>';
+ (mode==='code'?'<input class="sample-edit sample-edit-text" type="text" list="'+datalist+'" maxlength="90" placeholder="Üretici malzeme kodu" data-code="'+esc(p.kod)+'" data-field="resinCode" value="'+esc(code)+'" aria-label="Üretici vernik reçine kodu">':'')+'</div>';
 }
-function resinCodes(){
- return [...new Set(Object.values(entries).filter(x=>x.resinMode==='code'&&x.resinCode).map(x=>x.resinCode))].sort((a,b)=>a.localeCompare(b,'tr'));
+function resinCodes(grup){
+ return [...new Set(Object.entries(familyRecords(grup)).map(([,x])=>x).filter(x=>x.resinMode==='code'&&x.resinCode).map(x=>x.resinCode))].sort((a,b)=>a.localeCompare(b,'tr'));
 }
 function insulationCell(p){
  const values=get(p,'insulations')||[],summary=values.length?values.join(', '):'Belirlenmedi';
@@ -206,18 +234,8 @@ function insulationCell(p){
  '<label><input type="checkbox" data-code="'+esc(p.kod)+'" data-field="insulations" value="'+esc(item)+'"'+(values.includes(item)?' checked':'')+'> '+esc(item)+'</label>').join('')+'</div></details>'+
  (values.includes('Diğer')?textInput(p,'insulationOther','Diğer izolasyon açıklaması'):'')+'</div>';
 }
-function harmonicOriginal(p,key){
- const map={
-  conductor:raw(p,'Tel / levha')||raw(p,'Sarım iletken biçimi'),
-  core:raw(p,'Nüve tipi'),
-  insulations:raw(p,'İzolasyon'),
-  resinMode:raw(p,'Vernik / emprenye'),
-  coilCount:p.coil===1||p.coil===3?p.coil+'*':null
- };
- return Object.prototype.hasOwnProperty.call(map,key)?val(map[key]):'—';
-}
 function editable(p,key){
- if(p.grup!=='Şönt')return '<span class="sample-original" title="Harmonik kaynağındaki mevcut bilgi; Şönt veri giriş ekranından değiştirilemez">'+esc(harmonicOriginal(p,key))+'</span>';
+ if(p.grup!=='Şönt'&&p.grup!=='Harmonik')return '—';
  if(key==='coilCount'||key==='turns')return numberInput(p,key,'—',true);
  if(['coilWeightKg','windingMinutes','impCycle'].includes(key))return numberInput(p,key,'—');
  if(key==='conductor')return select(p,key,CONDUCTOR);
@@ -239,7 +257,7 @@ function originalFields(p){
   raw(p,'Faz')??p.faz,raw(p,'Güç (kVAr)')??p.guc,
   byFamily(p,'Akım (A)','Akım (Irms, A)')??p.akim,
   raw(p,'L (mH)')??p.L,raw(p,'p (%)')??p.p,raw(p,'THDv tasarım sınıfı')??p.thdv,DATASHEETS[p.grup],
-  ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>p.grup==='Şönt'?get(p,k):harmonicOriginal(p,k))
+  ...['coilCount','conductor','conductorSize','coilDimensions','coilWeightKg','turns','windingMinutes','core','insulations','impPart','resinMode','impMethod','impCycle'].map(k=>get(p,k))
  ];
 }
 function rowCells(p,totals){
@@ -291,7 +309,10 @@ function render(){
   }
  }
  $('sampleBody').innerHTML=body.join('')||'<tr><td colspan="'+HEADERS.length+'" class="sample-empty">Arama kriterlerine uygun ürün bulunamadı.</td></tr>';
- const dl=$('sampleResinCodeList');if(dl)dl.innerHTML=resinCodes().map(code=>'<option value="'+esc(code)+'"></option>').join('');
+ for(const grup of ['Şönt','Harmonik']){
+  const dl=$(grup==='Şönt'?'sampleResinCodeListShunt':'sampleResinCodeListHarmonic');
+  if(dl)dl.innerHTML=resinCodes(grup).map(code=>'<option value="'+esc(code)+'"></option>').join('');
+ }
  const guide=$('shuntProcurementGuide');if(guide)guide.hidden=family==='Harmonik';
  const shunt=products.filter(p=>p.grup==='Şönt'),stats=Object.fromEntries(['A','B','C'].map(k=>{
   const group=shunt.filter(p=>window.ShuntMachineInvestment?.get(p.kod)?.priority===k);
@@ -304,7 +325,7 @@ function render(){
  '<span><b>Harmonik</b> '+qty(totals['Harmonik'])+' adet</span><span><b>Şönt öncelikli inceleme</b> 11 ürün · '+pct(stats.A.annual,totals['Şönt'])+'</span>'+
  '<span class="sample-count">'+chosen.length+' / '+products.length+' ürün</span>';
  $('shuntSampleReview').innerHTML='<b>Şönt makine incelemesi:</b> 11 öncelikli ('+qty(stats.A.annual)+' adet), 8 hedefli ('+qty(stats.B.annual)+' adet), 6 ön kontrol ('+qty(stats.C.annual)+' adet). '+
- '<b>Sarım ve emprenye girişleri yalnız Şönt için düzenlenir.</b> Veriler doğrulanmadan makine kapasitesi kesinleştirilmez.';
+ '<b>Sarım ve emprenye girişleri Şönt ve Harmonik için ayrı ayrı düzenlenir.</b> Veriler doğrulanmadan makine kapasitesi kesinleştirilmez.';
 }
 function onCellChange(e){
  const el=e.target;
@@ -337,7 +358,7 @@ function exportCsv(){
   for(const p of g.all.filter(searchVisible)){
    const fields=originalFields(p);fields[3]=pct(p.annual,totals[fam]);
    // Doğrudan teknik giriş verisi ayrı, insan okunur değerler CSV'de.
-   if(p.grup==='Şönt'){
+   if(p.grup==='Şönt'||p.grup==='Harmonik'){
     const index={conductor:16,core:22,insulations:23,impPart:24,impMethod:26};
     for(const [key,i]of Object.entries(index)){
      const opts={conductor:CONDUCTOR,core:CORES,impPart:PARTS,impMethod:METHODS};
@@ -359,7 +380,8 @@ function exportCsv(){
  download('2027-numune-teknik-kapsam.csv','\ufeff'+rows.map(r=>r.map(encode).join(';')).join('\r\n'),'text/csv;charset=utf-8');
 }
 function downloadBackup(){
- download('sont-makine-teknik-girisler.json',JSON.stringify({format:FORMAT,version:VERSION,exportedAt:new Date().toISOString(),records:entries},null,2),'application/json;charset=utf-8');
+ const records={'Şönt':familyRecords('Şönt'),'Harmonik':familyRecords('Harmonik')};
+ download('sont-harmonik-makine-teknik-girisler.json',JSON.stringify({format:BACKUP_FORMAT,version:VERSION,exportedAt:new Date().toISOString(),records},null,2),'application/json;charset=utf-8');
 }
 async function uploadBackup(){
  const el=$('sampleImportFile'),file=el?.files?.[0];
@@ -367,12 +389,42 @@ async function uploadBackup(){
  try{
   if(file.size>1000000)throw Error('Yedek dosyası çok büyük');
   const json=JSON.parse(await file.text());
-  if(json?.format!==FORMAT||json.version!==VERSION)throw Error('Yedek türü veya sürümü uyuşmuyor');
-  const imported=cleanAll(json.records);
-  const previous=entries;entries=imported;
-  try{localStorage.setItem(STORAGE,JSON.stringify({format:FORMAT,version:VERSION,records:entries}));storageEnabled=true;}
-  catch(e){entries=previous;throw Error('Tarayıcıya yazılamadı; önce verinin JSON yedeğini indirin')}
-  render();notice('Teknik kayıt yedeği yüklendi. Veriler bu tarayıcıya kaydedildi.');
+  if(json?.version!==VERSION)throw Error('Yedek sürümü uyuşmuyor');
+  let groups=[];
+  let imported={};
+  if(json.format===BACKUP_FORMAT){
+   if(!json.records||typeof json.records!=='object'||Array.isArray(json.records)||
+      !Object.prototype.hasOwnProperty.call(json.records,'Şönt')||
+      !Object.prototype.hasOwnProperty.call(json.records,'Harmonik'))throw Error('Yedekte aile kayıtları eksik');
+   groups=['Şönt','Harmonik'];
+   for(const grup of groups)imported[grup]=cleanAll(json.records[grup],grup);
+  }else if(json.format===SHUNT_FORMAT||json.format===HARMONIC_FORMAT){
+   // Daha önce indirilmiş Şönt v1 yedekleri geçerli kalır.
+   const grup=json.format===SHUNT_FORMAT?'Şönt':'Harmonik';
+   groups=[grup];imported[grup]=cleanAll(json.records,grup);
+  }else throw Error('Yedek dosyasının türü tanınmadı');
+  const previous=entries,next={...entries};
+  for(const grup of groups){
+   const known=new Set(products.filter(p=>p.grup===grup).map(p=>p.kod));
+   for(const code of Object.keys(next))if(known.has(code))delete next[code];
+   Object.assign(next,imported[grup]);
+  }
+  const storedBefore=Object.fromEntries(groups.map(grup=>[grup,localStorage.getItem(STORAGE_SPECS[grup].key)]));
+  entries=next;
+  try{
+   for(const grup of groups)saveToStorage(grup);
+  }catch(e){
+   entries=previous;
+   for(const grup of groups){
+    try{
+     const old=storedBefore[grup],key=STORAGE_SPECS[grup].key;
+     if(old===null)localStorage.removeItem(key);else localStorage.setItem(key,old);
+    }catch(rollbackError){/* geri yükleme başarısızsa kullanıcı bilgilendirilir */}
+   }
+   throw Error('Tarayıcıya yazılamadı. Önce JSON yedeğinizi koruyun');
+  }
+  storageEnabled=true;
+  render();notice('Teknik yedek yüklendi: '+groups.join(' + ')+'. Kayıtlar ayrı saklandı.');
  }catch(e){notice('Yedek yüklenemedi: '+e.message,'error');}
  finally{el.value='';}
 }
