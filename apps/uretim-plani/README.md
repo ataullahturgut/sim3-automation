@@ -1,3 +1,13 @@
+## Şönt resmî teknik kayıtları düzeltildi — 30.10.2026
+
+**Tek doğru Şönt teknik kaynak katmanı:** `shunt-official-2026.js`. Grup Arge'nin **2026/12 fiyat listesi** (basılı sayfa 17) ve **2023 ürün kataloğu** (ortak 21 stok kodu) karşılaştırıldı. 25 Şönt ürününden 23 kodun güç, akım, endüktans, ölçü, birim ağırlık, bağlantı tipi, ayak montaj cıvatası ve liste fiyatı (USD) uygulamada düzeltildi. GA5107 ve GA5108 2023 katalogda yok, fakat 2026 listesinde var. GA5004 ve GA5006 resmî listede bulunmadı, teknik değer **türetilmedi**.
+
+Eski Excel ile: 23 ölçü farkı, 16 ağırlık farkı, **3 gerçek bağlantı türü farkı**; bağlantı alanında toplam 13 metin farkı (M8/M10 montaj civatasının bağlantı tipinden ayrılmasını içerir). Eski raporlarda görülen 6 bağlantı hatası sayılamaz; farklı yazım ile gerçek bağlantı değişikliği ayrılmıştır.
+
+**Tüm ekranlar güncel veri katmanını yükler:** `index.html` (üretim planı + numune tablosu), `urun.html` (ürün föyü), `legacy.html` (eski parti planı). **Harmonik verisi, yıllık üretim adetleri, aylık dağılımlar, kullanıcı tarayıcı yedekleri değiştirilmedi.** Sıkıştırılmış orijinal arşiv olduğu gibi kalır; açılışta otorite katmanı şönt teknik verilerini düzeltir. Üretici katalog verileri fiziksel imalat BOM'unun yerine geçmez.
+
+Satır bazında 25 ürün için eski/yeni bilgiler: [SONT_25_URUN_RESMI_KATALOG_DUZELTME_20261030.md](SONT_25_URUN_RESMI_KATALOG_DUZELTME_20261030.md).
+
 ## Teknik/numune kaynak farkı uyarısı (30.10.2026)
 
 **ÖNEMLİ:** Üretici `https://www.gruparge.com/fl/tr` 2026/12 listesiyle 23 standart Şönt stok kodu karşılaştırıldığında 23 ölçü, 16 kg ve 6 bağlantı farkı bulunmuştur. Önceki dosyalardaki `5/5 teknik alan uyumlu` kabulü geri çekilmiştir. 17 fiziksel numune adayı kaynağa uygundur fakat yeterli fiziksel kapsama henüz onaylanmamıştır. Kaynak miktarları, aylık üretim planı ve teknik verilerin kendisi **otomatik değiştirilmemiştir**. `NUMUNE_TEK_NIK_DENETIM_20261030.md` belgesini inceleyin. Teknik farklar üretici/çizim revizyonu ile doğrulanmalıdır.
