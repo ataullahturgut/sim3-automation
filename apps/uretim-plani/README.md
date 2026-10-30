@@ -1,3 +1,7 @@
+## Şönt makine yatırımı — mevcut ürün incelemesi (30.10.2026)
+
+**GÜNCEL AMAÇ:** Kullanıcının elinde bulunan 25 Şönt ürününden **makine seçimi ve 9 saatlik vardiyada gerçek kapasite ölçümü** için fiziksel örneklerin belirlenmesi; **numune satın alma değil**. [SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md](SONT_MAKINE_YATIRIMI_URUN_SECIMI_20261030.md) bu amaçta esas denetim dosyasıdır. Mevcut 9 fiziksel inceleme ürününe **GA5001 + GA5003** eklenerek **11 öncelikli ürün / 32.654 adet-yıl / %91,28 adet kapsaması** seçildi; B grubunda 8 hedefli, C grubunda 6 sökmeden kontrol ürünü var. Bu **bobin veya makine saatleri kapsaması değildir**. **Kritik:** /fl/tr 2026/12 PDF'sinin güncel ölçü/bağlantıları ile `shunt-official-2026.js` içindeki aynı PDF'ye atfedilen değerler uyuşmuyor; fiziksel ölçüm veya kaynak revizyon eşleştirmesi yapılmadan makine modeli, VPI tankı, fırın kabini veya kapasite hesabı onaylanamaz. Eski 'numune satın alma' yorumları bu yatırım amacı için geçersizdir.
+
 ## Harmonik başlangıç envanteri — 30.10.2026
 
 Şönt numune denetimini izleyen [HARMONIK_2026_KAYNAK_ENVANTERI_20261030.md](HARMONIK_2026_KAYNAK_ENVANTERI_20261030.md): 108 aktif Harmonik satırı (110 kaynaktan 2 sıfır miktarlı satır çıkarılmış), yıllık 9.316 adet, 8 fiziksel numune adayı, 59 doküman kıyası, 41 kimlik/reçete teyidi gereken ürün satırı. Harmonik teknik fiyat/katalog alanları henüz yeniden doğrulanıp güncellenmedi. Şönt 25 ürün araştırmasından bağımsızdır.
