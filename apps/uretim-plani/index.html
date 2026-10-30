@@ -43,7 +43,7 @@
     <section class="heading sample-page-heading">
       <div><span class="eyebrow">NUMUNE / ÜRÜN TEKNİK KAPSAMI</span>
         <h1>Numune ve teknik kapasite verileri</h1>
-        <p>Şönt ve Harmonik için ortak sütun sırası: <b>1 · Ürün → 4 · Mevcut teknik bilgiler → 2 · Sarım → 3 · Emprenye</b>. İnceleme türünü ve teknik ölçüleri seçtiğiniz ürünün ayrı düzenleme ekranında değiştirebilirsiniz; kayıtlar ürün ve aile bazında saklanır.</p>
+        <p>Şönt ve Harmonik için ortak sütun sırası: <b>1 · Ürün → 4 · Mevcut teknik bilgiler → 2 · Sarım → 3 · Emprenye</b>. İki giriş yolu da açıktır: tablodaki açılır menü ve ölçü hücrelerinden doğrudan giriş veya <b>Ürün Seç / Düzenle</b> ekranından tek ürünü düzenleyip kaydetme. Teknik kayıtlar ürün ve aile bazında saklanır.</p>
       </div>
       <div class="actions">
         <button id="sampleOpenPicker" type="button" class="btn primary">Ürün Seç / Düzenle</button>
@@ -68,7 +68,7 @@
     </details>
     <section class="surface">
       <div class="matrix-heading sample-table-heading">
-        <div><h2>Ürün ve makine seçim bilgileri</h2><p><b>1 · Ürün</b> → <b>4 · Mevcut teknik bilgiler</b> → <b>2 · Sarım</b> → <b>3 · Emprenye</b>. Arama ile ürün bulup “Düzenle”ye basın. Teknik alanlar tabloda yalnızca okunur; kayıt için seçilen ürünün formunu kullanın. “Belirlenmedi” varsayım değildir.</p></div>
+        <div><h2>Ürün ve makine seçim bilgileri</h2><p><b>1 · Ürün</b> → <b>4 · Mevcut teknik bilgiler</b> → <b>2 · Sarım</b> → <b>3 · Emprenye</b>. İstersen hücreleri doğrudan düzenle (değişiklikler otomatik kaydedilir), istersen aramayla ürünü bulup “Düzenle” ekranından toplu giriş yap ve “Bu Ürüne Kaydet”e bas. Seçtiğin ürün kodu/modeli satırda ve formda görünür. “Belirlenmedi” varsayım değildir.</p></div>
         <div class="filters">
           <input id="sampleSearch" type="search" placeholder="Ürün kodu, model veya grup ara" aria-label="Numune tablosunda ürün ara">
           <select id="sampleFamily" aria-label="Numune tablosu ürün ailesi"><option value="Tümü">Şönt + Harmonik</option><option value="Şönt">Yalnız Şönt</option><option value="Harmonik">Yalnız Harmonik</option></select>
@@ -83,7 +83,7 @@
           <tbody id="sampleBody"></tbody>
         </table>
       </div>
-      <p class="sample-note"><b>Şönt ve Harmonik:</b> Sarım/emprenye alanlarına yalnız fiziksel ölçüm veya onaylı reçeteyle veri girilir. Boş kayıt “Belirlenmedi”dir; mevcut ürün katalog bilgileri ve üretim planı değiştirilmez. <b>Vernik:</b> Girilmiş malzeme kodları TDS/SDS doğrulanmadan onaylı sayılmaz ve ürün aileleri arasında otomatik aktarılmaz. <b>İzolasyon:</b> Çoklu seçim yapılabilir. <b>Kaydetme:</b> Her aile kendi tarayıcı kaydında saklanır, ortak JSON yedeğiyle dışa/içe aktarılır. Ürün dış ölçüsü ve toplam kg değeri gerçek bobin ölçüsü veya ağırlığının yerine geçmez.</p>
+      <p class="sample-note"><b>Şönt ve Harmonik:</b> Sarım/emprenye alanlarına yalnız fiziksel ölçüm veya onaylı reçeteyle veri girilir. Boş kayıt “Belirlenmedi”dir; mevcut ürün katalog bilgileri ve üretim planı değiştirilmez. <b>Vernik:</b> Girilmiş malzeme kodları TDS/SDS doğrulanmadan onaylı sayılmaz ve ürün aileleri arasında otomatik aktarılmaz. <b>İzolasyon:</b> Çoklu seçim yapılabilir. <b>Kaydetme:</b> Tablodaki girişler alan değiştirildiğinde otomatik kaydedilir; ürün formu ise yalnız <b>Bu Ürüne Kaydet</b> ile kaydeder. Her aile kendi tarayıcı kaydında saklanır, ortak JSON yedeğiyle dışa/içe aktarılır. Ürün dış ölçüsü ve toplam kg değeri gerçek bobin ölçüsü veya ağırlığının yerine geçmez.</p>
     </section>
   </section>
     <section id="sampleEditor" class="sample-editor-overlay" role="dialog" aria-modal="true" aria-labelledby="sampleEditorTitle" hidden>
