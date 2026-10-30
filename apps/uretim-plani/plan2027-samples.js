@@ -40,13 +40,19 @@ function official(p){
  const m=String(p.kod||'').match(/^GA(\d{4})$/);
  return !!m&&OFFICIAL_RANGES.some(([lo,hi])=>Number(m[1])>=lo&&Number(m[1])<=hi);
 }
+/* 2026 ortak numune matrisi: kaynak dosyadaki fiziksel inceleme adayları.
+   Paketlenmiş ürün teknik kaydının "Numune / kontrol" alanı bazı ürünlerde
+   boş olduğundan tek başına o alana güvenilmez (GA5002/GA5106 vb.).
+   Yalnızca 17 kaynakta açıkça işaretlenmiş ürün burada adaydır.
+   6 "İlk fiziksel numune", 11 "Kıyas numunesi". */
+const PRIMARY_SAMPLE_CODES=new Set(['GA5002','GA5106','GA5212','GA5436','GA5426','GA5412']);
+const PHYSICAL_COMPARISON_CODES=new Set(['GA5102','GA5104','GA5108','GA5204','GA5207','GA5209','GA5636','GA5536','GA5429','GA5336','GA5415']);
 function sampleStatus(p){
- if(!official(p))return {label:'Bilgiler doğrulanmadı',type:'unknown',hint:'Ürün kodu/teknik değerlerin 2026 resmî liste eşleşmesi doğrulanmadı.'};
- const source=String(raw(p,'Numune / kontrol')||'').toLocaleLowerCase('tr-TR');
- if(source.includes('ilk fiziksel numune'))return {label:'Ana numune',type:'main',hint:'Kaynak: ilk fiziksel numune önerisi. Henüz satın alma veya inceleme onayı değildir.'};
- if(source.includes('kıyas numunesi'))return {label:'Ana numune',type:'main',hint:'Kaynak: ayrıca fiziksel kıyas numunesi önerisi. Henüz satın alma/onay değildir.'};
- if(source.includes('sökmeden kıyas')||source.includes('kıyas'))return {label:'Kıyas',type:'compare',hint:'Kaynak: fiziksel söküm yapılmadan teknik karşılaştırma önerisi.'};
- return {label:'Bilgiler doğrulanmadı',type:'unknown',hint:'Numune/teknik inceleme sınıfı kaynakta net değil.'};
+ const code=String(p.kod||'').trim().toUpperCase();
+ if(PRIMARY_SAMPLE_CODES.has(code))return {label:'Ana numune',type:'main',hint:'Kaynak inceleme matrisi: ilk fiziksel numune adayı. Satın alma kararı değildir.',physical:true,priority:'ilk'};
+ if(PHYSICAL_COMPARISON_CODES.has(code))return {label:'Ana numune',type:'main',hint:'Kaynak inceleme matrisi: ayrı alınması önerilen fiziksel kıyas numunesi. Satın alma kararı değildir.',physical:true,priority:'kıyas'};
+ if(official(p))return {label:'Kıyas',type:'compare',hint:'2026 katalog karşılığı mevcut; kaynak numune matrisi doküman/sökmeden kıyas öneriyor. Fiziksel yapısal kapsam onayı değildir.',physical:false};
+ return {label:'Bilgiler doğrulanmadı',type:'unknown',hint:'2026/12 katalogda teknik eşleşme veya özel ürün reçetesi doğrulanmadı. Bobin farkı saptanmış değildir.',physical:false};
 }
 function reviewText(p){
  const note=raw(p,'Seçilme veya kıyas nedeni')||raw(p,'İnceleme / eksik bilgi');
@@ -152,7 +158,7 @@ function render(){
   body.push(...groupRows);
  }
  $('sampleBody').innerHTML=body.join('')||'<tr><td colspan="'+HEADERS.length+'" class="sample-empty">Arama kriterlerine uygun ürün yok.</td></tr>';
- $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(totals.annual)+' adet</span><span><b>Şönt</b> '+qty(totals.familyTotals['Şönt'])+' · '+pct(totals.familyTotals['Şönt'],totals.annual)+'</span><span><b>Harmonik</b> '+qty(totals.familyTotals['Harmonik'])+' · '+pct(totals.familyTotals['Harmonik'],totals.annual)+'</span><span class="sample-count">'+shown.length+' / '+products.length+' ürün</span>';
+ $('sampleMetrics').innerHTML='<span><b>Yıllık toplam</b> '+qty(totals.annual)+' adet</span><span><b>Şönt</b> '+qty(totals.familyTotals['Şönt'])+' · '+pct(totals.familyTotals['Şönt'],totals.annual)+'</span><span><b>Harmonik</b> '+qty(totals.familyTotals['Harmonik'])+' · '+pct(totals.familyTotals['Harmonik'],totals.annual)+'</span><span><b>Fiziksel numune adayları</b> '+products.filter(p=>sampleStatus(p).physical).length+' ürün (6 ilk + 11 kıyas)</span><span class="sample-count">'+shown.length+' / '+products.length+' ürün</span>';
 }
 function exportCSV(){
  const t=summarize();
