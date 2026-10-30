@@ -33,6 +33,7 @@ function apply(p){
    '2026/12 liste kaynak sayfası':PRICE_URL,
    '2023 katalog kaynak sayfası':CATALOG_URL,
    'Teknik veri revizyon notu':'GA5004 / GA5006 için resmî kod eşleşmesi yok; katalog değerleri türetilmedi.'};
+  p.durum='Üretici 2026/12 listesinde kod/teknik eşleşmesi doğrulanmadı';
   p.shuntOfficial={verified:false,code:p.kod,priceList:PRICE_URL,catalog:CATALOG_URL,differences:[]};
   return p;
  }
@@ -57,6 +58,7 @@ function apply(p){
   '2023 katalog aile genel koruma':'Termik NC kontak, 120 °C; seri/ürün teyidi gerekir'
  }:{};
  p.kg=s.kg;
+ p.durum=CATALOG_2023_MATCHED.has(p.kod)?'Üretici 2026/12 liste ve 2023 katalog teknik doğrulaması':'Üretici 2026/12 fiyat listesi teknik doğrulaması';
  // Teknik föy ve eski plan bu düz alanları kullanır.
  p.faz=phase;p.guc=s.guc;p.akim=s.akim;p.L=s.L;p.olcu=s.olcu;p.baglanti=s.baglanti;
  p.tamKayit={...original,
