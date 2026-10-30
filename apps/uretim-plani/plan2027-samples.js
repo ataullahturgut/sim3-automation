@@ -62,12 +62,6 @@ function sampleStatus(p){
  if(official(p))return {label:'Kıyas',type:'compare',hint:'2026 katalog karşılığı mevcut; kaynak numune matrisi doküman/sökmeden kıyas öneriyor. Fiziksel yapısal kapsam onayı değildir.',physical:false};
  return {label:'Bilgiler doğrulanmadı',type:'unknown',hint:'2026/12 katalogda teknik eşleşme veya özel ürün reçetesi doğrulanmadı. Bobin farkı saptanmış değildir.',physical:false};
 }
-function reviewText(p){
- const m=machineReview(p);
- if(m)return m.reason;
- const note=raw(p,'Seçilme veya kıyas nedeni')||raw(p,'İnceleme / eksik bilgi');
- return val(note);
-}
 function provisionalCoil(p){
  if(p.coil===1||p.coil===3)return p.coil+'*';
  return '—';
@@ -92,12 +86,6 @@ function technicalPhase(p){
  if(model.startsWith('SRT')||model.startsWith('HRT'))return 3;
  return null;
 }
-function catalogReview(p){
- const old=byFamily(p,'2026/12 katalog durumu','Teknik veri durumu');
- if(p.grup==='Şönt'&&p.shuntOfficial?.verified)return 'Katalog/revizyon değerlerinde uyuşmazlık tespit edildi; makine boyutlandırmasında fiilî ürün ölçümü esas alınmalıdır.';
- if(p.grup==='Şönt'&&!p.shuntOfficial?.verified)return 'Şönt kodu resmî 2026/12 listesinde doğrulanmadı. Üretici teknik çizimi gerekli.';
- return old;
-}
 function technicalFields(p){
  return [
   p.kod,p.model,sampleStatus(p).label,p.annual,
@@ -109,11 +97,6 @@ function technicalFields(p){
   byFamily(p,'Bağlantı tipi','Bağlantı'),provisionalCoil(p),
   verifiedField(p,'Nüve tipi'),verifiedField(p,'Tel / levha'),verifiedField(p,'İzolasyon'),verifiedField(p,'Vernik / emprenye'),
   byFamily(p,'Sarım tipi (tel/folyo)','Sarım iletken biçimi'),
-  raw(p,'Yapı referansı (2025 çizimi)'),
-  machineReview(p)?'Şönt makine yatırımı · '+sampleStatus(p).label:raw(p,'Teknik inceleme grubu'),
-  reviewText(p),
-  catalogReview(p),
-  machineReview(p)?('Ölçüm odağı: '+machineReview(p).focus+'. Fiziksel bobin/proses çevrimi henüz ölçülmedi.'):raw(p,'İnceleme / eksik bilgi'),
   p.kaynakDosya,p.kaynakSatir
  ];
 }
@@ -123,9 +106,7 @@ const HEADERS=[
  ['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],['L (mH)','small'],
  ['p (%)','small'],['THDv','value'],['Ölçüler (mm)','dimension'],['Ağırlık (kg)','small'],
  ['Bağlantı','value'],['Bobin*','small'],['Nüve','value'],['Tel / levha','value'],['İzolasyon','value'],['Vernik / emprenye','value'],['Sarım / iletken','value'],
- ['Yapı / çizim referansı','value'],['Teknik inceleme sınıfı','text'],
- ['İnceleme gerekçesi','long'],['Katalog durumu','long'],
- ['Eksik teknik bilgiler','long'],['Kaynak dosya','text'],['Kaynak satırı','small'],
+ ['Kaynak dosya','text'],['Kaynak satırı','small'],
  ['Ürün föyü','link'],['Aile datasheet','link'],['Kaynak bağlantısı','link']
 ];
 let products=[],search='',family='Tümü',catalog=HEADERS,initComplete=false;
