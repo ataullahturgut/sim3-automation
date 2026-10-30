@@ -62,13 +62,21 @@ function sampleStatus(p){
  if(official(p))return {label:'Kıyas',type:'compare',hint:'2026 katalog karşılığı mevcut; kaynak numune matrisi doküman/sökmeden kıyas öneriyor. Fiziksel yapısal kapsam onayı değildir.',physical:false};
  return {label:'Bilgiler doğrulanmadı',type:'unknown',hint:'2026/12 katalogda teknik eşleşme veya özel ürün reçetesi doğrulanmadı. Bobin farkı saptanmış değildir.',physical:false};
 }
+// Şönt'te fazdan/şemadan fiziksel bobin adedi türetilmez.
 function provisionalCoil(p){
+ if(p.grup==='Şönt')return 'Ölçüm bekliyor';
  if(p.coil===1||p.coil===3)return p.coil+'*';
  return '—';
 }
 function verifiedField(p,name){
  const v=raw(p,name);
- return v===null||v===undefined||String(v).trim()===''||/bilinmiyor|doğrulanmadı|belirsiz/i.test(String(v))?'Doğrulanmadı':v;
+ const missing=v===null||v===undefined||String(v).trim()===''||/^(?:unresolved|unknown|bilinmiyor|doğrulanmadı|belirsiz|null|undefined|—)$/i.test(String(v).trim());
+ if(missing)return p.grup==='Şönt'?'Ölçüm bekliyor':'Doğrulanmadı';
+ return v;
+}
+function shuntProcessField(p,name,missingText){
+ const v=verifiedField(p,name);
+ return p.grup==='Şönt'&&v==='Ölçüm bekliyor'?missingText:v;
 }
 // Kaynak numune matrisinde doğrulanmış temel ürün sınıfı. Paket kayıttaki
 // Faz alanı boşsa yalnız aile kodundan kesin ayırt edilebilen tipler doldurulur.
@@ -91,16 +99,19 @@ function technicalFields(p){
   byFamily(p,'Ölçü G×Y×D (mm)','Dış ölçüler (mm)'),
   typeof p.kg==='number'&&p.kg>0?p.kg:null,
   byFamily(p,'Bağlantı tipi','Bağlantı'),provisionalCoil(p),
-  verifiedField(p,'Nüve tipi'),verifiedField(p,'Tel / levha'),verifiedField(p,'İzolasyon'),verifiedField(p,'Vernik / emprenye'),
-  byFamily(p,'Sarım tipi (tel/folyo)','Sarım iletken biçimi')
+  shuntProcessField(p,'Nüve tipi','Nüve çizimi / ölçüm gerekli'),
+  shuntProcessField(p,'Tel / levha','İletken kesiti / malzeme gerekli'),
+  shuntProcessField(p,'İzolasyon','İzolasyon reçetesi gerekli'),
+  shuntProcessField(p,'Vernik / emprenye','Vernik TDS/SDS ve proses gerekli'),
+  p.grup==='Şönt'?shuntProcessField(p,'Sarım tipi (tel/folyo)','Sarım reçetesi gerekli'):raw(p,'Sarım iletken biçimi')
  ];
 }
 const HEADERS=[
  ['Ürün kodu','code'],['Model / açıklama','model'],['İnceleme önceliği','sample'],
  ['Yıllık adet','count'],['Ailedeki pay (%)','percent'],
  ['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],['L (mH)','small'],
- ['p (%)','small'],['THDv','value'],['Ölçüler (mm)','dimension'],['Ağırlık (kg)','small'],
- ['Bağlantı','value'],['Bobin*','small'],['Nüve','value'],['Tel / levha','value'],['İzolasyon','value'],['Vernik / emprenye','value'],['Sarım / iletken','value'],
+ ['p (%)','small'],['THDv','value'],['Ürün dış ölçüsü (mm)','dimension'],['Ürün toplam kg','small'],
+ ['Bağlantı','value'],['Bobin / ürün (adet)','value'],['Nüve','value'],['İletken (tür/kesit)','value'],['İzolasyon','value'],['Emprenye (malzeme/proses)','value'],['Sarım / iletken','value'],
  ['Aile datasheet','link']
 ];
 let products=[],search='',family='Tümü',catalog=HEADERS,initComplete=false;
@@ -137,6 +148,7 @@ function render(){
  const shown=products.filter(visible),body=[];
  const head='<tr>'+HEADERS.map(([label,type])=>'<th scope="col" class="sample-head-'+type+'"'+(type==='percent'?' title="Şönt ürünü Şönt toplamına, Harmonik ürünü Harmonik toplamına bölünür."':'')+'>'+esc(label)+'</th>').join('')+'</tr>';
  $('sampleHead').innerHTML=head;
+ if($('shuntProcurementGuide'))$('shuntProcurementGuide').hidden=family==='Harmonik';
  for(const fam of familyList){
   if(family!=='Tümü'&&family!==fam)continue;
   const groupRows=[];
