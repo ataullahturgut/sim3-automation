@@ -92,8 +92,7 @@ function technicalFields(p){
   typeof p.kg==='number'&&p.kg>0?p.kg:null,
   byFamily(p,'Bağlantı tipi','Bağlantı'),provisionalCoil(p),
   verifiedField(p,'Nüve tipi'),verifiedField(p,'Tel / levha'),verifiedField(p,'İzolasyon'),verifiedField(p,'Vernik / emprenye'),
-  byFamily(p,'Sarım tipi (tel/folyo)','Sarım iletken biçimi'),
-  p.kaynakSatir
+  byFamily(p,'Sarım tipi (tel/folyo)','Sarım iletken biçimi')
  ];
 }
 const HEADERS=[
@@ -102,8 +101,7 @@ const HEADERS=[
  ['Faz','small'],['Güç (kVAr)','small'],['Akım (A)','small'],['L (mH)','small'],
  ['p (%)','small'],['THDv','value'],['Ölçüler (mm)','dimension'],['Ağırlık (kg)','small'],
  ['Bağlantı','value'],['Bobin*','small'],['Nüve','value'],['Tel / levha','value'],['İzolasyon','value'],['Vernik / emprenye','value'],['Sarım / iletken','value'],
- ['Kaynak satırı','small'],
- ['Ürün föyü','link'],['Aile datasheet','link']
+ ['Aile datasheet','link']
 ];
 let products=[],search='',family='Tümü',catalog=HEADERS,initComplete=false;
 function summarize(){
@@ -128,7 +126,6 @@ function rowCells(p,g,totals){
   '<strong class="sample-amount">'+qty(p.annual)+'</strong>',
   pct(p.annual,totals.familyTotals[p.grup]),
   ...t.slice(4).map(v=>esc(val(v))),
-  '<a href="urun.html?id='+encodeURIComponent(p.id)+'" target="_blank" rel="noopener">Teknik föy</a>',
   '<a href="'+esc(datasheets[p.grup]||'#')+'" target="_blank" rel="noopener">PDF</a>'
  ];
  if(fields.length!==HEADERS.length)throw Error('Numune tablosu sütun eşleşme hatası: '+fields.length+' ≠ '+HEADERS.length);
@@ -180,7 +177,7 @@ function exportCSV(){
   for(const p of g.all.filter(visible)){
    const values=technicalFields(p);
    const add=[p.kod,p.model,sampleStatus(p).label,p.annual,pct(p.annual,t.familyTotals[fam]),...values.slice(4),
-    'urun.html?id='+p.id,datasheets[fam]];
+    datasheets[fam]];
    if(add.length!==HEADERS.length)throw Error('CSV alan eşleşmesi başarısız.');
    rows.push([fam,gn,...add]);
   }
