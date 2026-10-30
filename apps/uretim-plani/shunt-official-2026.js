@@ -66,7 +66,7 @@ function applyAll(records){
  const matching=records.filter(p=>p&&p.grup==='Şönt');
  const seen=new Set(matching.map(p=>p.kod));
  if(matching.length!==25||seen.size!==25||matching.some(p=>!VERIFIED.has(p.kod)&&!UNVERIFIED.has(p.kod)))throw Error('Şönt resmî liste kapsaması eksik: '+matching.length+' ürün');
- records.forEach(app);
+ records.forEach(apply);
  const verified=matching.filter(p=>p.shuntOfficial&&p.shuntOfficial.verified);
  const unknown=matching.filter(p=>p.shuntOfficial&&!p.shuntOfficial.verified);
  if(verified.length!==23||unknown.length!==2)throw Error('Şönt 23+2 doğrulama koşulu sağlanmadı');
