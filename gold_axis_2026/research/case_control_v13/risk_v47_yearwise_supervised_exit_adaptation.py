@@ -114,8 +114,7 @@ def fit_model(df,f,train_until,calib_start,calib_until):
     sample=np.arange(550,len(df),8)
     day=df.ts.dt.date.astype(str).to_numpy()
     train=sample[(day[sample]>= "2020-01-01")&
-                 (day[sample] <= train_until)&
-                 ((sample%8)==0)]
+                 (day[sample] <= train_until)]
     calibrate=sample[(day[sample]>=calib_start)&(day[sample]<=calib_until)]
     yt=first_hit_down_label(df,train)
     yc=first_hit_down_label(df,calibrate)
