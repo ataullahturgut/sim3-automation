@@ -110,7 +110,7 @@ def causal_signal(bars,low,high,rule):
         if signal_condition(rule,current,running_peak,bars[max(low,j-1)]):
             # Explicitly avoid same candle executable fill. Find next
             # sequential observed bar; track >15m gaps.
-            if j+1>=len(bars):return None
+            if j+1>=high or j+1>=len(bars):return None
             nxt=bars[j+1]
             return {
                 "warningDate":str(bars[low]["date"]),"signalUTC":str(current["ts"]),
@@ -130,12 +130,16 @@ def future_sessions(bars,start_index,num_sessions):
     # completed distinct market dates. Do not over-count intraday samples.
     seen=set()
     end=start_index
+    first_future=None
     for k in range(start_index+1,len(bars)):
         d=bars[k]["date"]
-        if d not in seen:seen.add(d)
-        if len(seen)>num_sessions:break
+        if d<=bars[start_index]["date"]:continue
+        if d not in seen:
+            if len(seen)>=num_sessions:break
+            seen.add(d)
+            if first_future is None:first_future=k
         end=k+1
-    return bars[start_index+1:end],len(seen)>=num_sessions
+    return bars[first_future:end] if first_future is not None else [],len(seen)>=num_sessions
 
 def retrospect(bars,lo,hi,alert):
     start=bars[lo]["p"]
