@@ -1,0 +1,44 @@
+name: Gold V49 Online Competing Risk Adaptive EXIT, 2025-26 Audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/gold-v49-online-competing-risks-exit-20261031]
+    paths:
+      - '.github/workflows/gold-v49-online-competing-risk-exit.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v49_online_three_class_exit.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v49_online_three_class_exit.py'
+permissions:
+  contents: read
+jobs:
+  three-class-matured-label-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install read-only Neon+ML dependencies
+        run: python -m pip install 'psycopg[binary]>=3.2,<4' 'numpy>=1.26,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Test competing event order and immature labeling
+        run: |
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v49_online_three_class_exit.py gold_axis_2026/research/case_control_v13/test_risk_v48_online_adaptive_sell_only.py -v
+      - name: Require Neon read-only research access
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Train monthly 3-class post-V22 adaptive sell watch, evaluate 2025/2026
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v49_online_three_class_exit \
+            --out gold-v49-online-competing-risk-2025-2026.json
+      - name: Preserve every evaluated risk-event decision
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v49-three-class-upside-downside-exit-audit
+          path: gold-v49-online-competing-risk-2025-2026.json
+          retention-days: 30
+          if-no-files-found: warn
