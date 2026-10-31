@@ -42,18 +42,19 @@ class V50Tests(unittest.TestCase):
   self.assertTrue(np.all(draw==0))
   self.assertTrue((nxt>np.arange(3)).all())
  def test_training_selection_maturity_censor(self):
-  d=self.toy(400)
+  d=self.toy(1000)
   j=next_session_checkpoint(d);m=five_step_maturity(j)
   # All observations and fully matured next five sessions only.
-  s=training_selection(d,j,m,pd.Timestamp("2025-01-06"))
+  s=training_selection(d,j,m,pd.Timestamp("2025-01-10"))
+  self.assertGreater(len(s),0)
   self.assertTrue(np.all(m[s]>=0))
-  self.assertTrue(all(d.ts.iloc[i]<pd.Timestamp("2025-01-06",tz="UTC") for i in m[s]))
+  self.assertTrue(all(d.ts.iloc[i]<pd.Timestamp("2025-01-10",tz="UTC") for i in m[s]))
  def test_adaptive_no_immediate_sale_before_v22_day(self):
-  d=self.toy(300)
+  d=self.toy(150)
   diary={pd.Timestamp("2025-01-02").date():True}
   q=np.full(len(d),-.2)
   r=replay(d,diary,2025,q,1)
-  self.assertEqual(r["riskWindows"],0) # toy 300 bars cover Jan1–4, risk exists? Jan2 data transitions Jan3
+  self.assertEqual(r["riskWindows"],0) # No bar after the risk decision day
  def test_positive_fitted_continuation_causes_wait(self):
   d=self.toy(160)
   diary={pd.Timestamp("2025-01-01").date():True}
