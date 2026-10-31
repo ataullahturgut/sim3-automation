@@ -21,7 +21,7 @@ class V44Checks(unittest.TestCase):
   bars=[fake(d,100-i) for i,d in enumerate(dates)]
   out,mature=future_prices(bars,0)
   self.assertTrue(mature)
-  self.assertEqual(len(out),5)
+  self.assertEqual(len(out),6) # two price observations belong to the same NY17 session
  def test_immature_not_false(self):
   bars=[fake(self.t(i),100) for i in (6,7,8)]
   o,mature=future_prices(bars,0)
