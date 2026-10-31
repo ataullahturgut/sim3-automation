@@ -1,0 +1,46 @@
+name: Gold V50 Regime-Switching Fitted-Q Adaptive Optimal Exit Research
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/gold-v50-regime-fitted-stopping-20261031
+    paths:
+      - '.github/workflows/gold-v50-regime-fitted-stopping-2025-26.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v50_regime_fitted_optimal_stopping.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v50_regime_fitted_optimal_stopping.py'
+permissions:
+  contents: read
+jobs:
+  fitted-q-five-session-learned-exit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install read-only historical learning dependencies
+        run: python -m pip install 'psycopg[binary]>=3.2,<4' 'numpy>=1.26,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Test finite-horizon maturity, causal gated exits and regime assignments
+        run: |
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v50_regime_fitted_optimal_stopping.py -v
+          python -m py_compile gold_axis_2026/research/case_control_v13/risk_v50_regime_fitted_optimal_stopping.py
+      - name: Require data source
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Train monthly on strictly matured past, replay each 2025 and 2026 V22 watch
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v50_regime_fitted_optimal_stopping \
+            --out gold-v50-regime-fitted-stopping-2025-2026.json
+      - name: Archive complete regime fit and exit-signal event audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v50-five-session-fitted-q-regime-research
+          path: gold-v50-regime-fitted-stopping-2025-2026.json
+          retention-days: 30
+          if-no-files-found: warn
