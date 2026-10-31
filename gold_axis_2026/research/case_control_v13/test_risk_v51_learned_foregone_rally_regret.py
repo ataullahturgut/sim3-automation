@@ -30,8 +30,8 @@ class V51Tests(unittest.TestCase):
   self.assertEqual(a[0],0)
   self.assertAlmostEqual(b[0],.1,places=4)
  def test_training_maturity_has_full_20_day_horizon(self):
-  d=self.df(n=5500)
-  origin=pd.Timestamp("2022-02-20")
+  d=self.df(n=30000)
+  origin=pd.Timestamp("2022-11-01")
   sample=mature_training_rows(d,origin)
   self.assertTrue(len(sample)>0)
   self.assertTrue(all(d.ts.iloc[int(i)]+pd.Timedelta(days=20)<origin.tz_localize("UTC") for i in sample))
