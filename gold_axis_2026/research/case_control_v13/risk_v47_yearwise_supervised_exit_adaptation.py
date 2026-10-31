@@ -226,6 +226,14 @@ def replay(df,features,diary,year,prob,cutoff,mode):
         fp=sig["proxyFillPrice"]
         sig["next5Mature"]=True
         sig["future5Down4"]=bool(np.min(future)/fp<=.96)
+        # Priority target: did a substantial sell-worthy fall arrive BEFORE
+        # a subsequent +2% rally? A 4% fall after a 2% rally is NOT a timely exit.
+        downside=np.flatnonzero(future/fp<=.96)
+        upside=np.flatnonzero(future/fp>=1.02)
+        sig["future5Down4BeforeUp2"]=bool(
+            len(downside)>0 and (len(upside)==0 or downside[0]<upside[0]))
+        sig["future5Up2BeforeDown4"]=bool(
+            len(upside)>0 and (len(downside)==0 or upside[0]<downside[0]))
         sig["future5LowestPct"]=round(100*(np.min(future)/fp-1),3)
         sig["future5MaxRisePct"]=round(100*(np.max(future)/fp-1),3)
         # Looking forward here only audits missed upside, never inference.
@@ -235,9 +243,13 @@ def replay(df,features,diary,year,prob,cutoff,mode):
     signaled=[x for x in episodes if x["signal"] is not None]
     evals=[x["signal"] for x in signaled if x["signal"].get("next5Mature")]
     wins=[x for x in evals if x["future5Down4"]]
+    firstwins=[x for x in evals if x["future5Down4BeforeUp2"]]
+    upfirst=[x for x in evals if x["future5Up2BeforeDown4"]]
     return {"episodes":len(episodes),"signals":len(signaled),
        "valid5SessionSignals":len(evals),"hits4pct":len(wins),
        "noHit4pct":len(evals)-len(wins),
+       "down4BeforeUp2":len(firstwins),
+       "up2BeforeDown4":len(upfirst),
        "missedEventsByNoSignal":len(episodes)-len(signaled),
        "meanPostExitUpsidePct":round(float(np.mean([x["missedRallyInRiskWindowPct"]
            for x in evals if x.get("missedRallyInRiskWindowPct") is not None])),3) if evals else None,
@@ -315,6 +327,7 @@ def run():
                    "2024Levels":cuts},
         "posthocThresholdMarginRobustnessNotForModelSelection":margin,
         "note":"Not all target labels are actual risk episodes; whole-market down-vs-up barriers",
+        "primaryPreferredOutcome":"future5Down4BeforeUp2, rather than retrospective min fall after interim rally",
         "source":"Neon HistData 15m historical, not executable broker quotes",
         "diaryVersion":{"2025":origin[2025],"2026":origin[2026]},
         "evaluationYearResults":out,"summary":summary,
