@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """V45 robustness: risk-watch duration 4..16d, full 2024-2026 V22 research.
 
+Uses V44 strict completed NY17 five-session outcome labeling.
 No 2026 fitted threshold selection or 'one perfect duration'. All options are
 evaluated to expose bookkeeping sensitivity and avoid hidden April false exit.
 """
