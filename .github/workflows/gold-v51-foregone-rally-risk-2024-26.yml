@@ -7,6 +7,8 @@ on:
       - '.github/workflows/gold-v51-foregone-rally-risk-2024-26.yml'
       - 'gold_axis_2026/research/case_control_v13/risk_v51_learned_foregone_rally_regret.py'
       - 'gold_axis_2026/research/case_control_v13/test_risk_v51_learned_foregone_rally_regret.py'
+      - 'gold_axis_2026/research/case_control_v13/risk_v52_physical_decline_episode_recall.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v52_physical_decline_episode_recall.py'
 permissions:
   contents: read
 jobs:
@@ -27,7 +29,7 @@ jobs:
         run: python -m pip install 'psycopg[binary]>=3.2,<4' 'numpy>=1.26,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
       - name: Test label maturation, direct future rally and downside cost
         run: |
-          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v51_learned_foregone_rally_regret.py gold_axis_2026/research/case_control_v13/test_risk_v50_regime_fitted_optimal_stopping.py -v
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v51_learned_foregone_rally_regret.py gold_axis_2026/research/case_control_v13/test_risk_v52_physical_decline_episode_recall.py gold_axis_2026/research/case_control_v13/test_risk_v50_regime_fitted_optimal_stopping.py -v
           python -m py_compile gold_axis_2026/research/case_control_v13/risk_v51_learned_foregone_rally_regret.py
       - name: Require real research dataset
         run: test -n "$NEON_DATABASE_URL"
@@ -35,11 +37,18 @@ jobs:
         run: |
           python -m gold_axis_2026.research.case_control_v13.risk_v51_learned_foregone_rally_regret \
             --out gold-v51-regime-missed-rally-and-risk-2024-2026.json
+      - name: Independent physical 4pct drawdown crossings vs prior V22 warnings and exits
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v52_physical_decline_episode_recall \
+            --research-json gold-v51-regime-missed-rally-and-risk-2024-2026.json \
+            --out gold-v52-physical-decline-recall-2024-2026.json
       - name: Keep all month-cohort fits and event-level outcomes
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: gold-v51-missed-rally-cost-aware-exit-2024-26
-          path: gold-v51-regime-missed-rally-and-risk-2024-2026.json
+          path: |
+            gold-v51-regime-missed-rally-and-risk-2024-2026.json
+            gold-v52-physical-decline-recall-2024-2026.json
           retention-days: 30
           if-no-files-found: warn
