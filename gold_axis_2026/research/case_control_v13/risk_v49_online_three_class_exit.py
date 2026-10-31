@@ -175,7 +175,7 @@ def run():
       "V22Provenance":{"2025":origin[2025],"2026":origin[2026]},
       "summary":totals,"yearDetail":outcomes,
       "riskWarnings":[
-        "2015/2026 known to research; this is not blind forward testing",
+        "2025/2026 known to research; this is not blind forward testing",
         "No unified firstprint V22 series for 2024–26",
         "No independent physical decline episode recall yet",
         "A lost rising rally after a signal remains a serious error even if a later drop follows",
