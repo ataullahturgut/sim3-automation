@@ -32,7 +32,7 @@ class V47Tests(unittest.TestCase):
   df=self.synthetic([100]*4+[95]*4+[105]*16)
   a=first_hit_down_label(df,np.array([0]))
   b=df.copy()
-  b.loc[5:,"p"]=500.0
+  b.loc[4:,"p"]=500.0
   self.assertEqual(len(a),1)
   self.assertNotEqual(int(a[0]),int(first_hit_down_label(b,np.array([0]))[0]))
  def test_feature_frame_does_not_use_future_data(self):
