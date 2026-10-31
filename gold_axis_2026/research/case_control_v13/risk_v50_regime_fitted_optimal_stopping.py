@@ -258,7 +258,7 @@ def replay(df,diary,year,qvalues,persistence):
         s["fiveWorstPct"]=round(100*(float(future.min())/s["fillPrice"]-1),3)
         s["fiveBestPct"]=round(100*(float(future.max())/s["fillPrice"]-1),3)
         # Retrospective opportunity cost, NOT used in the signal decision.
-        t0=int(np.searchsorted(ts.to_numpy(),pd.Timestamp(s["fillUTC"]).to_datetime64()))
+        t0=int(np.searchsorted(timestamps_ns,pd.Timestamp(s["fillUTC"]).value))
         risk_stop=idx
         if "endUTC" in e:
             risk_stop=int(np.searchsorted(timestamps_ns,pd.Timestamp(e["endUTC"]).value))
