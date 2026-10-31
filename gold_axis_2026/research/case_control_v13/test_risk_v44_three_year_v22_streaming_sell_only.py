@@ -17,11 +17,17 @@ class V44Checks(unittest.TestCase):
                    date(2026,1,9))
  def test_real_market_next_five(self):
   dates=[self.t(8,21),self.t(9,20),self.t(11,23),
-         self.t(12,20),self.t(13,20),self.t(14,20),self.t(15,20)]
+         self.t(12,20),self.t(13,20),self.t(14,20),self.t(15,21,45)]
   bars=[fake(d,100-i) for i,d in enumerate(dates)]
   out,mature=future_prices(bars,0)
   self.assertTrue(mature)
   self.assertEqual(len(out),6) # two price observations belong to the same NY17 session
+ def test_fifth_trading_session_partial_is_unknown(self):
+  dates=[self.t(8,21),self.t(9,20),self.t(11,23),
+         self.t(12,20),self.t(13,20),self.t(14,20),self.t(15,20)]
+  bars=[fake(d,100-i) for i,d in enumerate(dates)]
+  _,mature=future_prices(bars,0)
+  self.assertFalse(mature)
  def test_immature_not_false(self):
   bars=[fake(self.t(i),100) for i in (6,7,8)]
   o,mature=future_prices(bars,0)
