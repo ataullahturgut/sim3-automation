@@ -38,7 +38,7 @@ class V48Tests(unittest.TestCase):
   self.assertEqual(a[0][270],b[0][270])
   self.assertEqual(a[2][270],b[2][270])
  def test_does_not_start_watch_before_v22_last_complete_day(self):
-  d=self.make([100.0]*300)
+  d=self.make([100.0]*180)
   f=feature_frame(d)
   metric=normalized_metrics(d,f)
   diary={date(2025,4,4):True}
