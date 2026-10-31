@@ -194,6 +194,7 @@ def replay(df,diary,year,qvalues,persistence):
     start,end=int(ys[0]),int(ys[-1])+1
     px=df.p.to_numpy()
     ts=df.ts
+    timestamps_ns=df.ts.astype("int64").to_numpy()
     prior_day=None;last_warn=None;state="IDLE"
     episode=None;episodes=[];pending=None;streak=0
     for j in range(start,end):
@@ -241,7 +242,7 @@ def replay(df,diary,year,qvalues,persistence):
     for e in episodes:
         s=e["signal"]
         if not s or not s["fill15m"]:continue
-        idx=int(np.searchsorted(ts.to_numpy(),pd.Timestamp(s["fillUTC"]).to_datetime64()))
+        idx=int(np.searchsorted(timestamps_ns,pd.Timestamp(s["fillUTC"]).value))
         if idx>=len(px):continue
         ss=session[idx]
         if ss+FUTURE_SESSIONS>int(session[-1]):continue
@@ -260,12 +261,12 @@ def replay(df,diary,year,qvalues,persistence):
         t0=int(np.searchsorted(ts.to_numpy(),pd.Timestamp(s["fillUTC"]).to_datetime64()))
         risk_stop=idx
         if "endUTC" in e:
-            risk_stop=int(np.searchsorted(ts.to_numpy(),pd.Timestamp(e["endUTC"]).to_datetime64()))
+            risk_stop=int(np.searchsorted(timestamps_ns,pd.Timestamp(e["endUTC"]).value))
         if risk_stop>t0:
             s["rallyMissedWithinRiskPct"]=round(100*max(0,float(px[t0:risk_stop+1].max())/s["fillPrice"]-1),3)
         # Additional +20 calendar day missed rally (regardless of risk expiry)
         stop_ts=pd.Timestamp(s["fillUTC"])+pd.Timedelta(days=20)
-        bound=int(np.searchsorted(ts.to_numpy(),stop_ts.to_datetime64(),side="right"))
+        bound=int(np.searchsorted(timestamps_ns,stop_ts.value,side="right"))
         s["rallyMissed20CalendarDaysPct"]=round(
             100*max(0,float(px[t0:bound].max())/s["fillPrice"]-1),3)
     signals=[e for e in episodes if e["signal"]]
