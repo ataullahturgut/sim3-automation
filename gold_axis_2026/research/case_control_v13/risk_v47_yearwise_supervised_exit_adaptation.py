@@ -278,6 +278,18 @@ def run():
           mode:replay(df,f,diaries[2026],2026,new26,t,mode)
           for mode in ("ML_PROB_TREND","ML_PLUS_STRUCT")
         }
+    # POST-HOC ROBUSTNESS AUDIT ONLY: evaluate ±20% of previously fixed 2024
+    # 95th percentile cutoff, DO NOT optimize on 2025 or 2026 results.
+    margin={}
+    for label,year,probs in (
+         ("2025_frozen",2025,p_frozen),
+         ("2026_prior_years_refit",2026,new26)):
+        margin[label]={}
+        for scale in (.8,.9,.95,1.,1.05,1.1,1.2):
+            cutoff=cuts["0.95"]*scale
+            x=replay(df,f,diaries[year],year,probs,cutoff,"ML_PLUS_STRUCT")
+            margin[label][str(scale)]={k:v for k,v in x.items() if k!="events"}
+    # These sweeps show instability; cannot pick the best from a held-out year.
     summary={y:{cohort:{q:{mode:{k:v for k,v in result.items() if k!="events"}
                         for mode,result in d.items()} for q,d in vals.items()}
                  for cohort,vals in result.items()} for y,result in out.items()}
@@ -288,6 +300,7 @@ def run():
         "training":{"frozen":train,"2026PriorYearsRecalibrated":train26},
         "cutoffs":{"selection":"2024_unlabeled_prediction_quantiles_only",
                    "2024Levels":cuts},
+        "posthocThresholdMarginRobustnessNotForModelSelection":margin,
         "note":"Not all target labels are actual risk episodes; whole-market down-vs-up barriers",
         "source":"Neon HistData 15m historical, not executable broker quotes",
         "diaryVersion":{"2025":origin[2025],"2026":origin[2026]},
