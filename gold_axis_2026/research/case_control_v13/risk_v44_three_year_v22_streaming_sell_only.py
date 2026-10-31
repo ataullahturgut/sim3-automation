@@ -15,10 +15,11 @@ IMPORTANT:
 """
 from __future__ import annotations
 import os,csv,json,hashlib,argparse,math
-from datetime import date
+from datetime import date,timedelta
 from pathlib import Path
 from collections import defaultdict
 from statistics import mean,median
+from zoneinfo import ZoneInfo
 from gold_axis_2026.research.case_control_v13.risk_v41_v22_watch_sequential_exit_costs import get_bars,enhance,V33
 
 ROOT=Path(__file__).parent
@@ -30,7 +31,7 @@ CONFIG={
  "TRAIL3_4H_NEG1":{"draw":.03,"r4":-.01,"low":False,"type":"trailing"},
  "STRUCTURAL_1_4H_NEG1P5":{"draw":.01,"r4":-.015,"low":True,"type":"structure"},
 }
-COVERAGE={2024:24000,2025:23000,2026:16000}
+COVERAGE={2024:23000,2025:23000,2026:16000}
 MAX_WARN_AGE_CALENDAR_DAYS=12
 PRICE_FREQUENCY_MIN=15
 TARGET_FUTURE_MARKET_DAYS=5
@@ -165,18 +166,31 @@ class Stream:
             self.pending["fillCandidateValid"]=False
             self.pending.pop("signalTimestamp",None)
 
+NY=ZoneInfo("America/New_York")
+
+def market_session(ts):
+    """New York 17:00 daily cut; Sunday session belongs Monday.
+    Distinct MARKET sessions, not UTC dates. Future price labels only.
+    """
+    local=ts.astimezone(NY)
+    # FX trading week roll 17:00 ET; Sunday 17:00 => Monday session.
+    day=local.date()+(timedelta(days=1) if local.hour>=17 else timedelta(days=0))
+    return day
+
 def future_prices(bars,start_idx):
-    # Score only distinct price sessions strictly AFTER fill calendar date.
+    # Price rows of exactly 5 distinct subsequent NY17 FX market sessions;
+    # exclude the whole session containing fill. No hindsight in signals.
+    start_session=market_session(bars[start_idx]["ts"])
     seen=[]
-    result=[]
-    bar_day=bars[start_idx]["date"]
+    prices=[]
     for row in bars[start_idx+1:]:
-        if row["date"]<=bar_day:continue
-        if not seen or seen[-1]!=row["date"]:
-            if len(seen)==TARGET_FUTURE_MARKET_DAYS:break
-            seen.append(row["date"])
-        result.append(row["p"])
-    return result,len(seen)==TARGET_FUTURE_MARKET_DAYS
+        session=market_session(row["ts"])
+        if session<=start_session:continue
+        if not seen or seen[-1]!=session:
+            if len(seen)>=TARGET_FUTURE_MARKET_DAYS:break
+            seen.append(session)
+        prices.append(row["p"])
+    return prices,len(seen)==TARGET_FUTURE_MARKET_DAYS
 
 def score(stream,bars):
     idx={str(b["ts"]):i for i,b in enumerate(bars)}
