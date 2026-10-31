@@ -183,14 +183,23 @@ def future_prices(bars,start_idx):
     start_session=market_session(bars[start_idx]["ts"])
     seen=[]
     prices=[]
+    completed_five=False
+    last_future_bar=None
     for row in bars[start_idx+1:]:
         session=market_session(row["ts"])
         if session<=start_session:continue
         if not seen or seen[-1]!=session:
-            if len(seen)>=TARGET_FUTURE_MARKET_DAYS:break
+            if len(seen)>=TARGET_FUTURE_MARKET_DAYS:
+                completed_five=True
+                break
             seen.append(session)
         prices.append(row["p"])
-    return prices,len(seen)==TARGET_FUTURE_MARKET_DAYS
+        last_future_bar=row["ts"]
+    if len(seen)==TARGET_FUTURE_MARKET_DAYS and last_future_bar is not None:
+        local=last_future_bar.astimezone(NY)
+        if local.hour==16 and local.minute>=30:
+            completed_five=True
+    return prices,len(seen)==TARGET_FUTURE_MARKET_DAYS and completed_five
 
 def score(stream,bars):
     idx={str(b["ts"]):i for i,b in enumerate(bars)}
