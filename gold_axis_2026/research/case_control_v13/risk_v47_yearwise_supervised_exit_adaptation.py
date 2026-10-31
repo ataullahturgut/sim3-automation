@@ -268,6 +268,17 @@ def run():
               mode:replay(df,f,diaries[year],year,p_frozen,t,mode)
               for mode in ("STRUCT_ONLY","ML_PROB_TREND","ML_PLUS_STRUCT")
             }
+    # 2025 annual model: 2020-2023 train (labels embargoed by Dec16),
+    # recalibrate strictly on 2024, apply to 2025. No 2025 outcomes read.
+    model25,cal25,train25=fit_model(df,f,"2023-12-16","2024-01-01","2024-12-17")
+    new25=np.zeros(len(df),dtype="float64")
+    new25[years==2025]=proba(model25,cal25,f.loc[years==2025])
+    out["2025"]["refit_through2023_calib2024"]={}
+    for q,t in cuts.items():
+        out["2025"]["refit_through2023_calib2024"][q]={
+          mode:replay(df,f,diaries[2025],2025,new25,t,mode)
+          for mode in ("ML_PROB_TREND","ML_PLUS_STRUCT")
+        }
     # Annual update at start of 2026, using information no later than 2025-12-17:
     model26,cal26,train26=fit_model(df,f,"2024-12-16","2025-01-01","2025-12-17")
     new26=np.zeros(len(df),dtype="float64")
@@ -283,6 +294,7 @@ def run():
     margin={}
     for label,year,probs in (
          ("2025_frozen",2025,p_frozen),
+         ("2025_prior_years_refit",2025,new25),
          ("2026_prior_years_refit",2026,new26)):
         margin[label]={}
         for scale in (.8,.9,.95,1.,1.05,1.1,1.2):
@@ -297,7 +309,8 @@ def run():
         "status":"HISTORICAL_RESEARCH_NOT_PIT_NOT_BLIND",
         "features":list(FEATURES),
         "learningTarget":"within_current_remainder_plus_next_5_NY17_trading_sessions_hit_down4_before_up2",
-        "training":{"frozen":train,"2026PriorYearsRecalibrated":train26},
+        "training":{"frozen":train,"2025PriorYearsRecalibrated":train25,
+                      "2026PriorYearsRecalibrated":train26},
         "cutoffs":{"selection":"2024_unlabeled_prediction_quantiles_only",
                    "2024Levels":cuts},
         "posthocThresholdMarginRobustnessNotForModelSelection":margin,
