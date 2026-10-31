@@ -1,0 +1,41 @@
+name: Gold V45 Three-Year V22 Warning-Duration Robustness Analysis
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/gold-v44-three-year-streaming-exit-validation-20261031]
+    paths:
+      - '.github/workflows/gold-v45-three-year-robustness.yml'
+      - 'gold_axis_2026/research/case_control_v13/risk_v45_v22_watch_duration_robustness.py'
+      - 'gold_axis_2026/research/case_control_v13/test_risk_v45_v22_watch_duration_robustness.py'
+permissions:
+  contents: read
+jobs:
+  replay-six-warning-duration-settings:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit tests including streaming V44 baseline
+        run: |
+          python -m unittest gold_axis_2026/research/case_control_v13/test_risk_v45_v22_watch_duration_robustness.py gold_axis_2026/research/case_control_v13/test_risk_v44_three_year_v22_streaming_sell_only.py -v
+      - name: Install DB
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Source available
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Execute 2024 2025 2026 multi-watch-duration robustness
+        run: |
+          python -m gold_axis_2026.research.case_control_v13.risk_v45_v22_watch_duration_robustness \
+            --out gold-v45-2024-2026-six-duration-robustness.json
+      - name: Preserve original event-level outputs for all six durations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v45-three-year-six-expiry-research
+          path: gold-v45-2024-2026-six-duration-robustness.json
+          retention-days: 30
+          if-no-files-found: warn
