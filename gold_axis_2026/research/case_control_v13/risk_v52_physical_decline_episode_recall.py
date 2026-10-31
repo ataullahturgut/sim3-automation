@@ -16,6 +16,7 @@ import argparse,json
 from collections import deque
 from pathlib import Path
 import pandas as pd
+import numpy as np
 import gold_axis_2026.research.case_control_v13.risk_v47_yearwise_supervised_exit_adaptation as v47
 import gold_axis_2026.research.case_control_v13.risk_v44_three_year_v22_streaming_sell_only as v44
 
@@ -49,6 +50,21 @@ def physical_crossings(df):
             armed=True
     return events
 
+def earliest_eligible_risk_times(df,diary):
+    """Use an entire day D V22 label only at first observed market bar
+    strictly AFTER D. Never pretend a warning was visible at D 00:00.
+    Firstprint is not verified, so even this is optimistic day+1 proxy.
+    """
+    days=np.asarray(df.day.to_numpy(),dtype="datetime64[D]")
+    times=df.ts
+    usable=[]
+    for day,alert in diary.items():
+        if not alert:continue
+        after=int(np.searchsorted(days,np.datetime64(day),side="right"))
+        if after<len(df):
+            usable.append(times.iloc[after])
+    return usable
+
 def audit(report,df):
     events=physical_crossings(df)
     v22,_=v44.read_diaries()
@@ -60,7 +76,7 @@ def audit(report,df):
             "R1_GUARD_4":s["1.0"]["LEARNED_REGRET_REGIME_GUARD"]["4"],
             "R1_5_GUARD_4":s["1.5"]["LEARNED_REGRET_REGIME_GUARD"]["4"],
         }
-        warning_days=[pd.Timestamp(d).tz_localize("UTC") for d,yes in v22[year].items() if yes]
+        warning_days=earliest_eligible_risk_times(df,v22[year])
         signals={key:[pd.Timestamp(x["signal"]["timeUTC"])
                        for x in data["events"] if x["signal"]]
                  for key,data in choices.items()}
@@ -83,7 +99,7 @@ def audit(report,df):
       "schema":"GOLD_V52_INDEPENDENT_PHYSICAL_FIVE_SESSION_4PCT_DRAWDOWN_CROSSINGS",
       "status":"RETROSPECTIVE_NONCANONICAL_SOURCE_NOT_FIRSTPRINT",
       "definition":"first -4% from current+past4 NY17 trading-session maximum; re-arm when drawdown <2%",
-      "match":"V22 risk day or prior-ten-calendar-days V51 EXIT, no future signal matching",
+      "match":"V22 label day+1 first available market bar or V51 exit in prior ten calendar days, never assumed day-start known",
       "parameters":{"sessions":TRAILING_SESSIONS,"dropPct":4,
                     "rearmPct":2,"leadWindowDays":10},
       "limitations":[
@@ -91,6 +107,7 @@ def audit(report,df):
          "Grouping depends on 2% recovery threshold, can merge separate declines",
          "10-day match is arbitrary sensitivity definition, not model training",
          "V22 historical different vintages and neither firstprint-certified",
+         "V22 dated D enters only at first observed bar with date > D; same-day declines do not count as prewarned",
          "Candidate XAUUSD close not executable bid/ask or universal truth",
          "Precision measures and sell-after-cross episodes are not counted here",
       ],
