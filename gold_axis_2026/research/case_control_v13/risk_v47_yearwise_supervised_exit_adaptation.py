@@ -155,7 +155,7 @@ def replay(df,features,diary,year,prob,cutoff,mode):
     last_day=None
     p=df.p.to_numpy()
     t=df.ts
-    lows=p.rolling(96,min_periods=72).min().shift(1).to_numpy()
+    lows=df.p.rolling(96,min_periods=72).min().shift(1).to_numpy()
     for k in range(start,end):
         date=df.day.iloc[k]
         ts=t.iloc[k]
