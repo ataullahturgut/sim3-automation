@@ -1,0 +1,55 @@
+name: Gold V46 Prospective First-Observed Four-Metal 15m Price Ledger NO Trade
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - data/gold-v46-firstseen-15m-signal-readiness-20261031
+      - main
+    paths:
+      - '.github/workflows/gold-v46-prospective-firstseen-15m-shadow.yml'
+      - 'gold_axis_2026/data_pipeline/staktrakr_first_observed_15m_shadow_v46.py'
+      - 'gold_axis_2026/data_pipeline/test_staktrakr_first_observed_15m_shadow_v46.py'
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: gold-v46-prospective-source-first-observed
+  cancel-in-progress: false
+jobs:
+  research-shadow-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fail closed if source data or V22 is unavailable
+        run: |
+          python -m unittest gold_axis_2026/data_pipeline/test_staktrakr_first_observed_15m_shadow_v46.py -v
+          python -m py_compile gold_axis_2026/data_pipeline/staktrakr_first_observed_15m_shadow_v46.py
+      - name: Probe real current public StakTrakr spot snapshot without writing
+        run: |
+          python -m gold_axis_2026.data_pipeline.staktrakr_first_observed_15m_shadow_v46 \
+            --mode probe --out gold-v46-current-15m-probe.json
+      - name: Install write-safe append-only database client
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Enforce existing research Neon connection
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Append NEW first-seen collector observations to separate shadow ledger
+        run: |
+          python -m gold_axis_2026.data_pipeline.staktrakr_first_observed_15m_shadow_v46 \
+            --mode apply --out gold-v46-firstseen-appended.json
+      - name: Preserve source timestamps, SHA, collector vs publication distinction
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-v46-prospective-15m-first-observed-research
+          path: |
+            gold-v46-current-15m-probe.json
+            gold-v46-firstseen-appended.json
+          retention-days: 14
+          if-no-files-found: warn
